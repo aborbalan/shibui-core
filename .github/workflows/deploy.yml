@@ -31,12 +31,12 @@ jobs:
         working-directory: .
 
       - name: 📦 Build Library (Genera el dist y los .d.ts)
-        run: npm run build
+        run: npm run build -w @shibui/ui
 
       - name: ✅ Type Check & Lint
         run: |
-          npm run type-check
-          npm run lint
+          npm run type-check -w @shibui/ui
+          npm run lint -w @shibui/ui
 
       - name: 🎡 Build Storybook
         run: npm run build-storybook
