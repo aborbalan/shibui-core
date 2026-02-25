@@ -22,7 +22,7 @@ jobs:
       - name: 🏗️ Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.12.0
+          node-version: 22.13.0
           cache: 'npm'
 
       - name: 📦 Install Dependencies
@@ -43,7 +43,7 @@ jobs:
       - name: 🎡 Build Storybook
         run: npm run build-storybook
         working-directory: packages/shibui-ui
-        
+
       - name: 🚀 Deploy to Firebase
         # Usamos la config de firebase que está dentro de la carpeta de la lib
         run: npx firebase-tools deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}" --project lib-ui-b67c5
