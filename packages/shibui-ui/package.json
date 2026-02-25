@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "rimraf dist && tsc && vite build",
     "pack:local": "npm run build && npm pack",
     "preview": "vite preview",
     "postbuild": "npm run type-check",
