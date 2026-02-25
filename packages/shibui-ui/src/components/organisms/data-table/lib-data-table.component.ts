@@ -80,7 +80,7 @@ export class LibDataTable<T extends TableRowData> extends LitElement {
 
     switch (col.type) {
       case 'badge': {
-        const variant = (row as Record<string, unknown>).variant as string || 'neutral';
+        const variant = (row as Record<string, any>)['variant'] as string || 'neutral';
         return html`<lib-badge .variant="${variant}">${value}</lib-badge>`;
       } 
 

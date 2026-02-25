@@ -1,7 +1,17 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler", /* O 'node' si usas versiones antiguas */
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true, /* Importante para evitar conflictos entre tipos de React y Lit */
+    "paths": {
+      "@shibui/ui": ["../../packages/shibui-ui/src/index.ts"],
+      "@shibui/ui/*": ["../../packages/shibui-ui/src/*"]    }
+  },
+  "include": [
+    "src", 
+    "src/custom-elements.d.ts", "src/vite-env.d.ts" // <--- RUTA DIRECTA AL FICHERO
   ]
 }
