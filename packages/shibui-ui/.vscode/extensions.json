@@ -1,0 +1,18 @@
+{
+    "recommendations": [
+      "yoavblenn.pretty-ts-errors", // Fundamental: Errores legibles
+      "usernamehw.errorlens",      // Fundamental: Errores a la vista
+      "dbaeumer.vscode-eslint",    // Calidad de código
+      "esbenp.prettier-vscode",    // Formato automático
+      "wallabyjs.console-ninja",   // Logs en tiempo real
+      "eamodio.gitlens",           // Historial de cambios
+      "streetsidesoftware.code-spell-checker", // Evitar typos en nombres
+      "streetsidesoftware.code-spell-checker-spanish",
+      "ms-vscode.vscode-json",     // Soporte mejorado JSON
+      "redhat.vscode-yaml"         // Para configs de CI/CD o Vite
+    ],
+    "unwantedRecommendations": [
+      "ms-python.python",
+      "ms-vscode.powershell"
+    ]
+  }

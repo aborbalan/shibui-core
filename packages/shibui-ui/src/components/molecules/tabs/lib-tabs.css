@@ -1,0 +1,85 @@
+:host {
+  display: block;
+
+  --lib-tabs-border-color: var(--lib-color-neutral-90, #e0e0e0);
+  --lib-tabs-active-color: var(--lib-color-primary, #007bff);
+}
+
+.tabs-header {
+  display: flex;
+  flex-direction: row;
+
+  /* Importante: Alineamos al final para que los botones "pisen" el borde */
+  align-items: flex-end;
+  gap: var(--lib-space-md, 1rem);
+  padding: 0;
+  background: transparent;
+  width: 100%;
+}
+
+.tab-item {
+  /* ... tus estilos de botón ... */
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  margin-bottom: -1px; /* TRUCO: Pisa el borde del padre para que no se vea doble línea */
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+/* La barrita azul de la pestaña activa */
+.tab-item.is-active {
+  border-bottom: 2px solid var(--lib-tabs-active-color);
+  color: var(--lib-tabs-active-color);
+}
+
+/* Para el loading, nos aseguramos que no empuje la barra hacia abajo */
+.tabs-header div,
+.tab-skeleton {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--lib-color-neutral-40, #666);
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.tab-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tab-button:hover:not(:disabled) {
+  color: var(--lib-tabs-active-color);
+}
+
+.tab-button.is-active {
+  color: var(--lib-tabs-active-color);
+}
+
+/* La línea debajo de la pestaña activa */
+.tab-button.is-active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--lib-tabs-active-color);
+}
+
+.tabs-content {
+  padding: var(--lib-space-sm, 0.5rem);
+}

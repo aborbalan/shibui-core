@@ -1,0 +1,16 @@
+[
+  {
+    "name": "minScore",
+    "expected": 0.95,
+    "actual": 0.91,
+    "values": [
+      0.91
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "https://lib-ui-b67c5.web.app/iframe.html?id=atoms-button--primary"
+  }
+]

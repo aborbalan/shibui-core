@@ -1,0 +1,27 @@
+:host {
+    display: block;
+    background: var(--lib-color-bg);
+    border-radius: var(--lib-radius-md);
+    box-shadow: var(--lib-shadow-sm);
+    padding: var(--lib-space-lg);
+    margin-bottom: var(--lib-space-xl);
+    border: 1px solid var(--lib-color-border);
+  }
+  
+  .card-header {
+    margin-bottom: var(--lib-space-md);
+    border-bottom: 1px solid var(--lib-color-border);
+    padding-bottom: var(--lib-space-sm);
+  }
+  
+  ::slotted(h2) {
+    margin: 0;
+    font-size: var(--lib-font-size-lg);
+    color: var(--lib-color-primary);
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-md);
+  }

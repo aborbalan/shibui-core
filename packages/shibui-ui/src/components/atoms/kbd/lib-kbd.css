@@ -1,0 +1,42 @@
+:host {
+  display: inline-block;
+  vertical-align: middle;
+  font-family: var(--lib-font-family, sans-serif);
+}
+
+.kbd-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2em;
+  padding: 0.2em 0.5em;
+  font-family: var(
+    --lib-font-family-mono,
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace
+  );
+  font-size: 0.85em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--lib-color-neutral-10, #333);
+  background-color: var(--lib-color-neutral-98, #fafafa);
+  border: 1px solid var(--lib-color-neutral-80, #ccc);
+  border-radius: 4px;
+
+  /* Efecto de sombra para parecer una tecla física */
+  box-shadow:
+    0 2px 0 0 var(--lib-color-neutral-80, #ccc),
+    0 0 0 1px #fff inset;
+  white-space: nowrap;
+  user-select: none;
+}
+
+p,
+div {
+  font-family: var(--lib-font-family, sans-serif);
+  color: #333;
+}

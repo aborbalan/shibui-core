@@ -1,0 +1,36 @@
+:host {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.progress-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+svg {
+  transform: rotate(-90deg); /* Inicio en la parte superior */
+}
+
+circle {
+  fill: none;
+}
+
+.track {
+  stroke: #edf2f7; /* Gris suave */
+}
+
+.indicator {
+  stroke: #3182ce; /* Azul principal */
+  transition: stroke-dashoffset 0.35s ease;
+}
+
+.label {
+  position: absolute;
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #2d3748;
+}

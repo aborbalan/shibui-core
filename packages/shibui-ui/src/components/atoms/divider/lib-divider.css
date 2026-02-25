@@ -1,0 +1,81 @@
+:host {
+  display: block;
+
+  --divider-color: #e2e8f0;
+  --divider-thickness: 1px;
+  --divider-gap: 16px;
+}
+
+:host([orientation="horizontal"]) {
+  width: 100%;
+  margin: 16px 0;
+}
+
+:host([orientation="vertical"]) {
+  display: inline-flex;
+  height: 100%;
+  min-height: 1em;
+  vertical-align: middle;
+  margin: 0 16px;
+  width: var(--divider-thickness);
+}
+
+.divider-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+:host([orientation="vertical"]) .divider-container {
+  flex-direction: column;
+}
+
+.line {
+  background-color: var(--divider-color);
+  flex-grow: 1;
+}
+
+:host([align="left"]) .line-before {
+  flex-grow: 0;
+}
+:host([align="right"]) .line-after {
+  flex-grow: 0;
+}
+
+/* Ajustes de grosor según orientación */
+:host([orientation="horizontal"]) .line {
+  height: var(--divider-thickness);
+}
+
+:host([orientation="vertical"]) .line {
+  width: var(--divider-thickness);
+}
+
+/* Estilo Faded (Degradado) */
+:host([faded][orientation="horizontal"]) .line-before {
+  background: linear-gradient(to right, transparent, var(--divider-color));
+}
+
+:host([faded][orientation="horizontal"]) .line-after {
+  background: linear-gradient(to left, transparent, var(--divider-color));
+}
+
+/* Manejo del Slot (Texto/Icono) */
+.content {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Si el slot está vacío, quitamos el gap */
+.content:empty {
+  display: none;
+}
+
+.content:not(:empty) {
+  padding: 0 var(--divider-gap);
+  font-size: 12px;
+  color: #718096;
+  text-transform: uppercase;
+  font-weight: 600;
+}

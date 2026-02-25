@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    // Strict TypeScript - Pillar 1
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": false,
+    "checkJs": false,
+    
+    // Maximum strictness
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+    
+    // Emission
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+    
+    // Decorators for Lit
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    
+    // Interoperability
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src/**/*",
+    "vite-env.d.ts",
+    "commitlint.config.cjs",
+    ".husky/**/*",
+    "vite.config.ts",
+    "models/**/*", "architecture/base-components/lib-list.model.ts",
+  ],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}

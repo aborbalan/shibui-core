@@ -1,0 +1,69 @@
+name: CI/CD - Build & Deploy
+
+on:
+  push:
+    branches: 
+      - main
+      - develop
+      - feature/**
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    # Definimos que por defecto los comandos se ejecuten en la carpeta de la lib
+    defaults:
+      run:
+        working-directory: packages/shibui-ui
+
+    steps:
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: 'npm'
+
+      - name: 📦 Install Dependencies
+        # Forzamos la ejecución en la raíz para instalar todo el monorepo
+        run: npm ci
+        working-directory: .
+
+      - name: 📦 Build Library (Genera el dist y los .d.ts)
+        run: npm run build
+
+      - name: ✅ Type Check & Lint
+        run: |
+          npm run type-check
+          npm run lint
+
+      - name: 🎡 Build Storybook
+        run: npm run build-storybook
+
+      - name: 🚀 Deploy to Firebase
+        # Usamos la config de firebase que está dentro de la carpeta de la lib
+        run: npx firebase-tools deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}" --project lib-ui-b67c5
+
+      - name: 📢 Notify Discord
+        if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+        env:
+          DISCORD_URL: ${{ secrets.DISCORD_WEBHOOK }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          COMMIT_AUTHOR: ${{ github.actor }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          CLEAN_MSG=$(echo "$COMMIT_MSG" | tr -d '"' | tr -d '\n' | tr -d '\r')
+
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d "{
+                 \"content\": \"🚀 **Nueva actualización de @shibui/ui**\",
+                 \"embeds\": [{
+                   \"title\": \"Versión $VERSION desplegada con éxito\",
+                   \"description\": \"**Cambios:** $CLEAN_MSG\n**Autor:** $COMMIT_AUTHOR\",
+                   \"url\": \"https://lib-ui-b67c5.web.app\",
+                   \"color\": 5814783,
+                   \"footer\": { \"text\": \"Shibui UI - CI/CD System\" }
+                 }]
+               }" "$DISCORD_URL"

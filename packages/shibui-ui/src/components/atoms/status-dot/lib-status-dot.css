@@ -1,0 +1,63 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 10px;
+  height: 10px;
+}
+
+.status-dot-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.dot {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--dot-color, #ccc);
+  z-index: 2;
+}
+
+.pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--dot-color, #ccc);
+  animation: pulse-animation 2s infinite;
+  z-index: 1;
+  opacity: 0.6;
+}
+
+/* Variantes */
+:host([variant="success"]) {
+  --dot-color: var(--lib-color-success, #28a745);
+}
+:host([variant="danger"]) {
+  --dot-color: var(--lib-color-danger, #dc3545);
+}
+:host([variant="warning"]) {
+  --dot-color: var(--lib-color-warning, #ffc107);
+}
+:host([variant="info"]) {
+  --dot-color: var(--lib-color-primary, #007aff);
+}
+:host([variant="neutral"]) {
+  --dot-color: var(--lib-color-neutral-60, #999);
+}
+
+@keyframes pulse-animation {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}

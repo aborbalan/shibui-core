@@ -1,0 +1,57 @@
+:host {
+  display: inline-block;
+}
+
+.close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: var(--lib-radius-sm, 4px);
+  color: var(--lib-color-text-muted);
+}
+
+/* --- Variantes basadas en Tokens --- */
+
+.close-btn.neutral:hover {
+  background-color: var(--lib-color-neutral-90);
+  color: var(--lib-color-neutral-10);
+}
+
+.close-btn.primary:hover {
+  background-color: var(--lib-color-primary-light);
+  color: var(--lib-color-primary);
+}
+
+.close-btn.danger:hover {
+  background-color: var(--lib-color-danger-light);
+  color: var(--lib-color-danger);
+}
+
+.close-btn.white {
+  color: white;
+  opacity: 0.8;
+}
+
+.close-btn.white:hover {
+  background-color: rgb(255, 255, 255, 0.2);
+  opacity: 1;
+}
+
+.close-btn.sm {
+  width: var(--lib-size-sm, 24px);
+  height: var(--lib-size-sm, 24px);
+}
+
+.close-btn.md {
+  width: var(--lib-size-md, 32px);
+  height: var(--lib-size-md, 32px);
+}
+
+.close-btn.lg {
+  width: var(--lib-size-lg, 40px);
+  height: var(--lib-size-lg, 40px);
+}

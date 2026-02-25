@@ -1,0 +1,31 @@
+/* lib-icon.css */
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  line-height: 0;
+  /* Eliminamos width y height de aquí */
+}
+
+.icon-wrapper {
+  display: flex;
+  /* El tamaño se aplica aquí, donde la variable es visible */
+  width: var(--lib-icon-size, 1em);
+  height: var(--lib-icon-size, 1em);
+  color: currentColor;
+}
+
+svg {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  fill: currentColor;
+}
+
+
+/* Clases de variante vinculadas a tus tokens de color */
+.variant-primary { color: var(--lib-color-primary); }
+.variant-secondary { color: var(--lib-color-secondary); }
+.variant-success { color: var(--lib-color-success); }
+.variant-danger { color: var(--lib-color-danger); }

@@ -1,0 +1,41 @@
+:host {
+  display: block;
+  margin-bottom: var(--lib-space-md, 16px);
+  font-family: var(--lib-font-family, sans-serif);
+}
+
+.form-field-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lib-space-xs, 4px);
+}
+
+.label {
+  font-size: var(--lib-font-size-sm, 14px);
+  font-weight: 600;
+  color: var(--lib-color-neutral-10, #333);
+}
+
+.label.required::after {
+  content: " *";
+  color: var(--lib-color-danger, #ff4d4d);
+}
+
+.helper-text,
+.error-text {
+  font-size: var(--lib-font-size-xs, 12px);
+  margin-top: 2px;
+}
+
+.helper-text {
+  color: var(--lib-color-neutral-40, #666);
+}
+
+.error-text {
+  color: var(--lib-color-danger, #ff4d4d);
+}
+
+/* Estado de Error */
+:host([error]) .label {
+  color: var(--lib-color-danger, #ff4d4d);
+}

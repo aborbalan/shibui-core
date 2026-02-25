@@ -1,0 +1,49 @@
+:host {
+  display: inline-block;
+}
+
+.spinner {
+  border-radius: 50%;
+  border: 2px solid rgb(0, 0, 0, 0.1);
+  border-top-color: var(--spinner-color, var(--lib-color-primary, #007aff));
+  animation: spin 0.8s linear infinite;
+  box-sizing: border-box;
+}
+
+/* Tamaños expandidos para que el linter sea feliz */
+.size-sm {
+  width: 16px;
+  height: 16px;
+  border-width: 2px;
+}
+
+.size-md {
+  width: 32px;
+  height: 32px;
+  border-width: 3px;
+}
+
+.size-lg {
+  width: 48px;
+  height: 48px;
+  border-width: 4px;
+}
+
+/* Variantes expandidas */
+.variant-primary {
+  --spinner-color: var(--lib-color-primary);
+}
+
+.variant-secondary {
+  --spinner-color: var(--lib-color-secondary);
+}
+
+.variant-white {
+  --spinner-color: #fff;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

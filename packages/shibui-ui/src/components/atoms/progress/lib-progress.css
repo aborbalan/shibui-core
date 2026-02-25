@@ -1,0 +1,56 @@
+:host {
+  display: block;
+  width: 100%;
+
+  --progress-height: 8px;
+  --progress-track-color: #e2e8f0;
+  --progress-bar-color: #3b82f6;
+  --progress-radius: 999px;
+  --progress-animation-duration: 1.5s;
+}
+
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.track {
+  flex-grow: 1;
+  height: var(--progress-height);
+  background-color: var(--progress-track-color);
+  border-radius: var(--progress-radius);
+  overflow: hidden;
+  position: relative;
+}
+
+.bar {
+  height: 100%;
+  background-color: var(--progress-bar-color);
+  border-radius: var(--progress-radius);
+  transition: width 0.3s ease;
+}
+
+/* Animación para el modo Indeterminado */
+:host([indeterminate]) .bar {
+  width: 30% !important;
+  position: absolute;
+  animation: indeterminate var(--progress-animation-duration) infinite linear;
+  left: -30%;
+}
+
+@keyframes indeterminate {
+  0% {
+    left: -30%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.value-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a5568;
+  min-width: 35px;
+}

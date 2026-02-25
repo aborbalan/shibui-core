@@ -1,0 +1,21 @@
+/* lib-label.css */
+:host {
+    display: inline-block;
+    margin-bottom: var(--lib-space-xs, 4px);
+  }
+  
+  label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--lib-font-family);
+    font-size: var(--lib-font-size-sm); /* Usamos el token pequeño para etiquetas */
+    font-weight: 600;
+    color: var(--lib-color-text);
+    cursor: pointer;
+  }
+  
+  .required-indicator {
+    color: var(--lib-color-danger); /* Usamos el token de peligro para el asterisco */
+    font-weight: bold;
+  }

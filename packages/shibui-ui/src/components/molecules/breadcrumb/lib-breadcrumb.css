@@ -1,0 +1,47 @@
+:host {
+  display: block;
+  font-family: var(--lib-font-main, sans-serif);
+}
+
+.breadcrumb-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 8px;
+}
+
+/* Fusionamos aquí los estilos de item */
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* El gap que añadimos para el icono */
+  font-size: 14px;
+  color: var(--lib-color-neutral-600, #666);
+}
+
+.breadcrumb-link {
+  color: var(--lib-color-primary-500, #007bff);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb-link:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-current {
+  color: var(--lib-color-neutral-900, #333);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+/* Fusionamos aquí los estilos del separador */
+.separator {
+  margin: 0 4px; /* El margen que añadimos */
+  display: flex;
+  align-items: center;
+  color: var(--lib-color-neutral-400, #999);
+}

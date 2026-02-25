@@ -1,0 +1,130 @@
+/* lib-input.css */
+:host {
+  display: block; /* Permite que el componente tenga dimensiones */
+  width: 100%;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lib-space-xs);
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--lib-space-sm);
+  padding: 0 var(--lib-space-md);
+  background: var(--lib-input-bg);
+  border: 1px solid var(--lib-input-border);
+  border-radius: var(--lib-radius-md);
+
+  /* Esto solucionará el problema del alto 0 */
+  min-height: 42px;
+  box-sizing: border-box;
+  transition: border-color var(--lib-transition-base);
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--lib-input-focus);
+}
+
+input {
+  flex: 1;
+  height: 100%; /* El input ocupa todo el alto del wrapper */
+  border: none;
+  background: transparent;
+  font-family: var(--lib-font-family);
+  font-size: var(--lib-font-size-md);
+  color: var(--lib-color-text);
+  padding: var(--lib-space-sm) 0;
+  outline: none;
+  padding-right: var(--lib-space-xs);
+}
+
+/* Alineación de iconos inyectados */
+::slotted(lib-icon) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lib-color-neutral-80);
+}
+
+/* lib-input.css */
+
+/* borrar */
+:host([glass]) .input-wrapper {
+  background: none !important; /* Quitamos el blanco sólido */
+  border: none !important; /* Quitamos el borde gris estándar */
+}
+
+/* El texto debe ser blanco para que se lea sobre el cristal */
+:host([glass]) input {
+  color: white !important;
+}
+
+:host([glass]) input::placeholder {
+  color: rgb(255, 255, 255, 0.7);
+}
+
+.input-group.has-error .input-wrapper {
+  border-color: var(--lib-color-error, #ef4444);
+}
+
+.input-group.has-error .input-wrapper:focus-within {
+  box-shadow: 0 0 0 1px var(--lib-color-error, #ef4444);
+}
+
+.input-group.has-error lib-label {
+  --lib-label-color: var(
+    --lib-color-error,
+    #ef4444
+  ); /* Si tu componente label soporta variables */
+
+  color: var(--lib-color-error, #ef4444);
+}
+
+.error-message {
+  color: var(--lib-color-error, #ef4444);
+  font-size: var(--lib-font-size-sm, 0.75rem);
+  margin-top: var(--lib-space-xs, 4px);
+  font-weight: 500;
+
+  /* Animación sutil de entrada */
+  animation: fade-in 0.2s ease-out;
+}
+
+.clear-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--lib-color-surface-soft, #f1f5f9);
+  color: var(--lib-color-text-muted, #64748b);
+  border: none;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: var(--lib-space-xs);
+}
+
+.clear-button:hover {
+  background: var(--lib-color-error-soft, #fee2e2);
+  color: var(--lib-color-error, #ef4444);
+  transform: scale(1.1);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

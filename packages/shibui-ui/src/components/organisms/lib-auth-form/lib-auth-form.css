@@ -1,0 +1,51 @@
+/* src/components/organisms/auth-form/lib-auth-form.css */
+
+:host {
+  display: block;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lib-space-lg, 20px);
+}
+
+.form-actions {
+  margin-top: var(--lib-space-xl, 24px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--lib-space-md, 12px);
+}
+
+.error-message {
+  background: rgb(255, 77, 77, 0.1);
+  color: #ff4d4d;
+  padding: var(--lib-space-sm, 10px);
+  border-radius: var(--lib-radius-sm, 4px);
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid rgb(255, 77, 77, 0.2);
+}
+
+/* Estilos para el botón de envío (mientras no tengamos lib-button) */
+.submit-btn {
+  padding: 12px;
+  background: var(--lib-color-primary, #007bff);
+  color: white;
+  border: none;
+  border-radius: var(--lib-radius-md, 8px);
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.submit-btn:hover {
+  opacity: 0.9;
+}
+
+.submit-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

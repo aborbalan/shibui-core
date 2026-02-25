@@ -1,0 +1,130 @@
+:host {
+  display: inline-block;
+
+  --lib-button-height: auto;
+  --lib-button-padding-y: var(--lib-space-sm, 8px); /* Reducimos el alto base */
+  --lib-button-padding-x: var(--lib-space-lg, 16px);
+}
+
+:host([custom-padding]) {
+  --lib-button-padding: var(--custom-padding);
+}
+
+button {
+  font-family: var(--lib-font-family);
+  font-size: var(--lib-font-size-base);
+  font-weight: 500;
+  line-height: 1.5;
+  border: 1px solid transparent;
+  border-radius: var(--lib-radius-md);
+  cursor: pointer;
+  transition: all var(--lib-transition-base);
+  box-shadow: var(--lib-shadow-sm);
+  outline: none;
+
+  /* Padding por defecto o personalizado */
+  padding: var(--lib-button-padding, var(--lib-space-md) var(--lib-space-lg));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lib-space-sm);
+}
+
+:host([size="sm"]) {
+  --lib-button-padding-y: 4px;
+  --lib-button-padding-x: 8px;
+
+  font-size: 0.85rem;
+}
+
+:host([size="md"]) {
+  --lib-button-padding-y: 8px;
+  --lib-button-padding-x: 16px;
+
+  font-size: 1rem;
+}
+
+:host([size="lg"]) {
+  --lib-button-padding-y: 12px;
+  --lib-button-padding-x: 24px;
+
+  font-size: 1.1rem;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--lib-color-primary);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- VARIANTE PRIMARY --- */
+:host([variant="primary"]) button {
+  background-color: var(--lib-color-primary);
+  color: var(--lib-color-bg); /* Texto blanco sobre fondo azul */
+}
+
+/* --- VARIANTE SECONDARY (Corregida para legibilidad) --- */
+:host([variant="secondary"]) button {
+  background-color: var(--lib-color-bg); /* Fondo blanco */
+  color: var(--lib-color-neutral-10); /* Texto oscuro para que se vea */
+  border-color: var(--lib-color-neutral-80);
+}
+
+:host([variant="danger"]) button {
+  background-color: var(--lib-color-danger);
+  color: var(--lib-color-on-danger);
+}
+
+:host([variant="ghost"]) button {
+  background-color: transparent;
+  color: var(--lib-color-neutral-10);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+:host([size="sm"]) button {
+  font-size: var(--lib-font-size-sm);
+  padding: var(--lib-space-xs) var(--lib-space-sm);
+}
+:host([size="md"]) button {
+  font-size: var(--lib-font-size-base);
+}
+
+:host([size="lg"]) button {
+  font-size: var(--lib-font-size-lg);
+  padding: var(--lib-space-lg) var(--lib-space-xl);
+}
+
+:host([glass]) button {
+  background: rgb(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgb(255, 255, 255, 0.2);
+  box-shadow: none;
+}
+
+:host([glass][variant="primary"]) button {
+  color: var(--lib-color-primary);
+  border-color: rgb(var(--lib-color-primary-rgb), 0.3);
+}
+
+:host([glass][variant="danger"]) button {
+  color: var(--lib-color-danger);
+  border-color: rgb(var(--lib-color-danger-rgb), 0.3);
+}
+
+:host([variant="secondary"]) button:hover:not(:disabled) {
+  background-color: var(--lib-color-neutral-95);
+}
+
+:host([variant="danger"]) button:hover:not(:disabled) {
+  background-color: var(--lib-color-danger-hover);
+}
+
+:host([variant="ghost"]) button:hover:not(:disabled) {
+  background-color: var(--lib-color-neutral-95);
+}

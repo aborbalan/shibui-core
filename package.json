@@ -1,0 +1,17 @@
+{
+  "name": "shibui-ecosystem",
+  "private": true,
+  "description": "Monorepo para testing de componentes Shibui UI",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "start:react": "npm run dev -w apps/app-react",
+    "start:svelte": "npm run dev -w apps/app-svelte",
+    "start:angular": "npm run start -w apps/app-angular",
+    "dev:all": "concurrently -n \"REACT,SVELTE,ANGULAR\" -c \"cyan,magenta,blue\" \"npm run start:react\" \"npm run start:svelte\" \"npm run start:angular\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

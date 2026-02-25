@@ -1,0 +1,62 @@
+:host {
+  display: block;
+
+  --skeleton-bg: var(--lib-color-neutral-90, #e0e0e0);
+  --skeleton-highlight: var(--lib-color-neutral-95, rgb(255, 255, 255, 0.5));
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--skeleton-bg);
+  border-radius: var(--lib-radius-md, 4px);
+}
+
+/* Variantes de forma */
+:host([variant="circle"]) .skeleton {
+  border-radius: 50%;
+}
+
+:host([variant="text"]) .skeleton {
+  border-radius: 2px;
+  margin-bottom: 0.5em;
+}
+
+/* Animación Shimmer (Barrido de luz) */
+:host([animated]) .skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--skeleton-highlight),
+    transparent
+  );
+  animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Animación Pulse (Opcional, si prefieres un parpadeo suave) */
+:host([animated="pulse"]) .skeleton {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

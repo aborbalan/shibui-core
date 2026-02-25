@@ -1,0 +1,50 @@
+:host {
+  display: block;
+}
+
+.text-list {
+  margin: 0;
+  padding: 0;
+  list-style-position: inside;
+  font-family: var(--lib-font-family, sans-serif);
+}
+
+.list-item {
+  padding: var(--lib-space-xs, 4px) 0;
+  color: var(--lib-color-neutral-10, #1a1a1a);
+  font-size: var(--lib-font-size-md, 1rem);
+  line-height: 1.5;
+}
+
+/* Estilos del Skeleton */
+.skeleton-line {
+  display: inline-block;
+  vertical-align: middle;
+  width: 70%;
+  height: 0.8rem;
+  background-color: var(--lib-color-neutral-90, #e0e0e0);
+  border-radius: var(--lib-radius-sm, 4px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animación de brillo (shimmer) */
+.skeleton-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    rgb(255, 255, 255, 0) 0,
+    rgb(255, 255, 255, 0.5) 50%,
+    rgb(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}

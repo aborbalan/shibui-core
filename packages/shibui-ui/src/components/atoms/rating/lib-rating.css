@@ -1,0 +1,34 @@
+:host {
+  display: inline-block;
+  user-select: none;
+}
+
+.rating-container {
+  display: flex;
+  gap: 4px;
+  cursor: pointer;
+}
+
+:host([readonly]) .rating-container {
+  cursor: default;
+}
+
+.star {
+  font-size: 1.5rem;
+  color: #e2e8f0; /* Color estrella vacía */
+  transition:
+    transform 0.1s ease,
+    color 0.1s ease;
+}
+
+.star.active {
+  color: #f6ad55; /* Color estrella rellena (Naranja) */
+}
+
+.star:not(.readonly):hover {
+  transform: scale(1.2);
+}
+
+:host([readonly]) .star {
+  transform: none;
+}

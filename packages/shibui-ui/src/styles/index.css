@@ -1,0 +1,136 @@
+/**
+ * Base styles for UI library
+ * 
+ * Pillar 2: Modern Native CSS
+ * - CSS Variables for theming
+ * - CSS Layers for organization
+ * - No heavy preprocessor dependencies
+ * 
+ * This file imports shared styles and sets up the base layer structure
+ */
+
+/* Import shared styles (tokens, variables, etc.) */
+@import './shared/index.css';
+
+/* CSS Layers - Modern organization */
+@layer reset, base, components, utilities;
+
+/* Basic reset for components */
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+/* Base styles for components */
+@layer base {
+  /* Common base styles can be added here */
+}
+
+/* Utilities */
+@layer utilities {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--lib-font-family); /* Use the globally defined font */
+  min-height: 100vh;
+}
+
+.main-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr; /* Sidebar fixed width, content takes rest */
+  grid-template-rows: 1fr;
+  min-height: 100vh;
+  background-color: var(--lib-color-bg);
+}
+
+.sidebar {
+  grid-area: 1 / 1 / 2 / 2; /* Position in grid */
+  background-color: oklch(95% 0.01 270); /* Light background for sidebar */
+  padding: var(--lib-space-lg);
+  color: var(--lib-color-text);
+  border-right: 1px solid var(--lib-color-border);
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  margin-bottom: var(--lib-space-lg);
+  color: var(--lib-color-primary);
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: var(--lib-space-sm);
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: var(--lib-color-text);
+  font-weight: 500;
+  padding: var(--lib-space-xs) var(--lib-space-sm);
+  display: block;
+  border-radius: var(--lib-radius-sm);
+  transition: background-color var(--lib-transition-base);
+}
+
+.sidebar a:hover {
+  background-color: oklch(90% 0.01 270);
+}
+
+.content-area {
+  grid-area: 1 / 2 / 2 / 3; /* Position in grid */
+  padding: var(--lib-space-xl);
+}
+
+.demo-section {
+  margin-bottom: var(--lib-space-xl);
+  padding-bottom: var(--lib-space-xl);
+  border-bottom: 1px solid var(--lib-color-border);
+}
+
+.demo-section:last-of-type {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lib-space-md);
+  margin-top: var(--lib-space-md);
+}
+
+/* Font comparison sections */
+.font-section {
+  margin-top: var(--lib-space-lg);
+  padding-left: var(--lib-space-md);
+  border-left: 4px solid var(--lib-color-primary);
+}
+
+.font-jakarta h3, .font-jakarta p, .font-jakarta lib-button {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.font-figtree h3, .font-figtree p, .font-figtree lib-button {
+  font-family: 'Figtree', sans-serif;
+}

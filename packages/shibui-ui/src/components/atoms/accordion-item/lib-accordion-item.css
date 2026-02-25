@@ -1,0 +1,59 @@
+:host {
+  display: block;
+  border-bottom: 1px solid #e2e8f0;
+
+  --accordion-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a202c;
+  transition: background-color 0.2s;
+}
+
+.header:hover {
+  background-color: #f7fafc;
+}
+
+.icon {
+  font-size: 0.75rem;
+  transition: transform var(--accordion-transition);
+  color: #a0aec0;
+}
+
+:host([open]) .icon {
+  transform: rotate(180deg);
+}
+
+.content-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--accordion-transition);
+  overflow: hidden;
+}
+
+:host([open]) .content-wrapper {
+  grid-template-rows: 1fr;
+}
+
+.content {
+  min-height: 0;
+}
+
+/* Espaciado para el contenido inyectado vía slot */
+.content ::slotted(*) {
+  padding: 0 1.25rem 1.25rem;
+  margin: 0;
+  color: #4a5568;
+  line-height: 1.6;
+}

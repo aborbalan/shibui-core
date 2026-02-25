@@ -1,0 +1,46 @@
+:host {
+  display: inline-flex;
+  border-radius: var(--lib-radius-md);
+}
+
+/* Alineación vertical opcional */
+:host([vertical]) {
+  flex-direction: column;
+}
+
+/* Estilos comunes para todos los botones del grupo */
+::slotted(lib-button) {
+  --lib-radius-md: 0; /* Anulamos el radio por defecto del botón */
+}
+
+/* Primer botón: Mantiene redondeado izquierdo (o superior en vertical) */
+:host(:not([vertical])) ::slotted(lib-button:first-of-type) {
+  --lib-radius-md: var(--lib-radius-md-base, 8px) 0 0
+    var(--lib-radius-md-base, 8px);
+}
+
+/* Último botón: Mantiene redondeado derecho (o inferior en vertical) */
+:host(:not([vertical])) ::slotted(lib-button:last-of-type) {
+  --lib-radius-md: 0 var(--lib-radius-md-base, 8px)
+    var(--lib-radius-md-base, 8px) 0;
+}
+
+/* Solapamiento de bordes para evitar grosor doble */
+:host(:not([vertical])) ::slotted(lib-button:not(:first-of-type)) {
+  margin-left: -1px;
+}
+
+/* --- MODO VERTICAL --- */
+:host([vertical]) ::slotted(lib-button:first-of-type) {
+  --lib-radius-md: var(--lib-radius-md-base, 8px) var(--lib-radius-md-base, 8px)
+    0 0;
+}
+
+:host([vertical]) ::slotted(lib-button:last-of-type) {
+  --lib-radius-md: 0 0 var(--lib-radius-md-base, 8px)
+    var(--lib-radius-md-base, 8px);
+}
+
+:host([vertical]) ::slotted(lib-button:not(:first-of-type)) {
+  margin-top: -1px;
+}

@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 1px 3px 0 rgb(0, 0, 0, 0.1);
+}
+
+.accordion-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Eliminamos el borde inferior del último hijo para que no choque con el del padre */
+::slotted(lib-accordion-item:last-of-type) {
+  border-bottom: none;
+}

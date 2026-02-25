@@ -1,0 +1,32 @@
+:host {
+  display: inline-block;
+}
+
+.copy-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: var(--lib-color-neutral-95, #f5f5f5);
+  border: 1px solid var(--lib-color-neutral-80, #ddd);
+  border-radius: var(--lib-radius-md, 4px);
+  padding: 6px;
+  transition: all 0.2s ease;
+  color: var(--lib-color-neutral-10, #333);
+}
+
+.copy-button:hover {
+  background: var(--lib-color-neutral-90, #eee);
+  border-color: var(--lib-color-primary, #007aff);
+}
+
+.copy-button.success {
+  background: var(--lib-color-success-bg, #e6ffed);
+  border-color: var(--lib-color-success, #28a745);
+  color: var(--lib-color-success, #28a745);
+}
+
+.icon {
+  font-size: 16px;
+  font-family: monospace; /* Temp placeholder */
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System Showcase</title>
+    
+    <link rel="stylesheet" href="/src/styles/index.css">
+    <script type="module" src="/src/index.ts"></script>
+</head>
+<body class="main-layout"> 
+  
+  <lib-sidebar>
+    <h2>Lib-UI Docs</h2>
+    <nav>
+        <a href="#typography">Typography</a>
+        <a href="#buttons">Buttons</a>
+        <a href="#icons">Icons</a>
+        <a href="#labels">Labels</a>
+        <a href="#inputs">Inputs</a>
+    </nav>
+</lib-sidebar>
+
+    <main class="content-area"> <section id="labels" class="demo-section">
+            <lib-card>
+                <h2 slot="header">Atoms: Labels</h2>
+                <div class="grid">
+                    <lib-label>Nombre Completo</lib-label>
+                    <lib-label required>Correo Electrónico</lib-label>
+                </div>
+            </lib-card>
+        </section>
+
+        <section id="inputs" class="demo-section">
+            <lib-card>
+                <h2 slot="header">Molecules: Inputs</h2>
+                <div style="max-width: 400px; display: flex; flex-direction: column; gap: 1.5rem;">
+                    <lib-input label="Nombre de usuario" placeholder="Escribe tu nick..." required></lib-input>
+                    <lib-input label="Búsqueda" placeholder="Buscar componentes...">
+                        <lib-icon slot="prefix" name="gear" size="sm"></lib-icon>
+                    </lib-input>
+                </div>
+            </lib-card>
+        </section>
+
+        <section style="padding: 40px; display: flex; flex-direction: column; gap: 20px;">
+  
+            <h2>Pruebas de Select Option</h2>
+          
+            <div>
+              <p>1. Opción básica (Texto):</p>
+              <lib-select-option value="1">Opción sencilla</lib-select-option>
+            </div>
+          
+            <div>
+              <p>2. Opción con Icono:</p>
+              <lib-select-option value="2">
+                <lib-icon name="settings" size="sm"></lib-icon>
+                <span>Configuración</span>
+              </lib-select-option>
+            </div>
+          
+            <div>
+              <p>3. Opción Seleccionada:</p>
+              <lib-select-option value="3" selected>
+                <strong>VIP:</strong> Acceso Total
+              </lib-select-option>
+            </div>
+          
+            <div>
+              <p>4. Opción Deshabilitada:</p>
+              <lib-select-option value="4" disabled>
+                No puedes pasar
+              </lib-select-option>
+            </div>
+
+            <lib-select label="Países" placeholder="Elige uno...">
+                <lib-select-option value="es">España</lib-select-option>
+                <lib-select-option value="fr">Francia</lib-select-option>
+                <lib-select-option value="it">Italia</lib-select-option>
+              </lib-select>
+          
+          </section>
+
+        <section id="icons-grid" class="demo-section">
+            <lib-card>
+                <h2 slot="header">Showcase de Iconos</h2>
+                <div class="grid">
+                    <lib-icon name="heart" size="sm" variant="primary"></lib-icon>
+                    <lib-icon name="user-circle" size="md" variant="success"></lib-icon>
+                    <lib-icon name="trash" size="lg" variant="danger"></lib-icon>
+                    <lib-icon name="gear" size="xl" variant="warning"></lib-icon>
+                </div>
+            </lib-card>
+        </section>
+
+        <section id="typography" class="demo-section">
+            <lib-card>
+                <h2 slot="header">Fuentes del Sistema</h2>
+                <div class="font-section font-jakarta"> <h3>Plus Jakarta Sans (Primary)</h3>
+                    <p style="font-size: 2rem; font-weight: 700;">Aa Bb Cc Dd 123</p>
+                </div>
+                <div class="font-section font-figtree"> <h3>Figtree (Alternative)</h3>
+                    <p style="font-size: 1.5rem;">Aa Bb Cc Dd 123</p>
+                </div>
+            </lib-card>
+        </section>
+
+        <section id="buttons" class="demo-section">
+            <lib-card>
+                <h2 slot="header">Botones y Variantes</h2>
+                <div class="button-group"> <lib-button variant="primary">Primary</lib-button>
+                    <lib-button variant="secondary">Secondary</lib-button>
+                    <lib-button variant="danger">Danger</lib-button>
+                </div>
+            </lib-card>
+        </section>
+
+    </main>
+</body>
+</html>

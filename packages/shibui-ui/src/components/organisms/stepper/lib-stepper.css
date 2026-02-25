@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.stepper-container {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  gap: 1rem;
+}
+
+/* Línea de fondo que conecta los pasos */
+.stepper-container::before {
+  content: "";
+  position: absolute;
+  top: 18px; /* Mitad del círculo del paso */
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #e2e8f0;
+  z-index: 0;
+}

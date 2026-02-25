@@ -1,0 +1,52 @@
+:host {
+  display: block;
+  font-family: var(--lib-font-main, sans-serif);
+}
+
+dialog {
+  border: none;
+  border-radius: 8px;
+  padding: 0;
+  box-shadow: 0 10px 25px rgb(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  background: white;
+}
+
+/* El fondo oscuro */
+dialog::backdrop {
+  background: rgb(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.dialog-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog-content {
+  padding: 20px;
+}
+
+.dialog-footer {
+  padding: 12px 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}

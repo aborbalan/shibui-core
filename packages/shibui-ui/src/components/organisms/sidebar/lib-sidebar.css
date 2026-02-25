@@ -1,0 +1,44 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ocupa el alto del padre */
+    background-color: oklch(95% 0.01 270); /* Tu color de sidebar del index.css */
+    border-right: 1px solid var(--lib-color-border);
+    box-sizing: border-box;
+  }
+  
+  .sidebar-wrapper {
+    padding: var(--lib-space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-md);
+  }
+  
+  /* Estilos para el contenido inyectado */
+  ::slotted(h2), ::slotted(h3) {
+    margin: 0;
+    font-size: var(--lib-font-size-lg);
+    color: var(--lib-color-primary);
+    margin-bottom: var(--lib-space-sm);
+  }
+  
+  ::slotted(nav) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-xs);
+  }
+  
+  /* Estilizamos los links que el usuario pase */
+  ::slotted(a) {
+    text-decoration: none;
+    color: var(--lib-color-text);
+    font-weight: 500;
+    padding: var(--lib-space-xs) var(--lib-space-sm);
+    display: block;
+    border-radius: var(--lib-radius-sm);
+    transition: background-color var(--lib-transition-base);
+  }
+  
+  ::slotted(a:hover) {
+    background-color: oklch(90% 0.01 270);
+  }

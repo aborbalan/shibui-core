@@ -1,0 +1,92 @@
+{
+  "name": "@shibui/ui",
+  "version": "1.0.0",
+  "description": "Librería UI agnóstica construida con Web Components y Lit",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles": "./dist/styles.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "pack:local": "npm run build && npm pack",
+    "preview": "vite preview",
+    "postbuild": "npm run type-check",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --config .config/.eslintrc.json --ignore-path .config/.eslintignore",
+    "format": "prettier --write \"src/**/*.ts\" --config .config/.prettierrc.json",
+    "start": "npm run dev",
+    "s": "npm run dev",
+    "prepare": "husky",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "lighthouse": "lhci autorun --config=./.config/lighthouserc.cjs",
+    "analyze": "cem analyze --litelement --exclude dist"
+  },
+  "keywords": [
+    "web-components",
+    "lit",
+    "ui-library",
+    "agnostic",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "lit": "^3.0.0"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^5.0.0",
+    "@commitlint/cli": "^20.4.1",
+    "@commitlint/config-conventional": "^20.4.1",
+    "@custom-elements-manifest/analyzer": "^0.11.0",
+    "@lhci/cli": "^0.15.1",
+    "@storybook/addon-a11y": "^10.2.6",
+    "@storybook/addon-docs": "^10.2.6",
+    "@storybook/addon-vitest": "^10.2.6",
+    "@storybook/web-components-vite": "^10.2.6",
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vitest/browser-playwright": "^4.0.18",
+    "@vitest/coverage-v8": "^4.0.18",
+    "eslint": "^8.56.0",
+    "eslint-plugin-storybook": "^10.2.6",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "lit": "^3.0.0",
+    "playwright": "^1.58.1",
+    "prettier": "^3.1.1",
+    "sass": "^1.97.2",
+    "storybook": "^10.2.6",
+    "stylelint": "^17.1.1",
+    "stylelint-config-standard": "^40.0.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "@phosphor-icons/core": "^2.1.1"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,html.ts}": [
+      "eslint --config .config/.eslintrc.json --fix --max-warnings=0"
+    ],
+    "src/**/*.css": [
+      "stylelint --config .config/.stylelintrc.json --fix",
+      "prettier --write"
+    ]
+  },
+  "customElements": "custom-elements.json"
+}

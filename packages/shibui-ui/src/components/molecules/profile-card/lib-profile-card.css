@@ -1,0 +1,31 @@
+:host {
+  display: block;
+  max-width: 320px;
+}
+
+.profile-card-body {
+  display: flex;
+  align-items: center;
+  gap: var(--lib-space-lg, 16px);
+}
+
+.info,
+.info-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--lib-font-family, sans-serif);
+  font-size: var(--lib-font-size-md, 1rem);
+  color: var(--lib-color-neutral-10, #333);
+}
+
+.role {
+  margin: 0;
+  font-family: var(--lib-font-family, sans-serif);
+  font-size: var(--lib-font-size-sm, 0.875rem);
+  color: var(--lib-color-neutral-40, #666);
+}

@@ -1,0 +1,33 @@
+/**
+ * Shared Styles
+ * 
+ * This folder contains shared style definitions:
+ * - Design tokens (tokens.css)
+ * - CSS Variables
+ * - Common utilities
+ * - Base styles
+ *
+ * For detailed documentation on spacing scales and other shared style concepts, refer to: `docs/styles/shared/index.md`
+ */
+
+@import './tokens.css';
+
+/* src/styles/index.css */
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr; /* Sidebar de 250px y contenido el resto */
+    min-height: 100vh;
+  }
+  
+  /* Estilos de posicionamiento para el showcase */
+  lib-sidebar {
+    position: sticky; /* Se queda fija al hacer scroll */
+    top: 0;
+    height: 100vh;
+  }
+  
+  .content-area {
+    padding: var(--lib-space-xl);
+    background-color: var(--lib-color-bg);
+  }

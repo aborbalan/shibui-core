@@ -1,0 +1,69 @@
+:host {
+  font-family: inherit;
+  display: inline-block;
+
+  --switch-width: 44px;
+  --switch-height: 24px;
+  --switch-bg-off: var(--lib-color-neutral-300, #ccc);
+  --switch-bg-on: var(--lib-color-primary, #3b82f6);
+  --thumb-size: 18px;
+  --thumb-color: white;
+}
+
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+  user-select: none;
+  font-family: sans-serif;
+}
+
+/* Escondemos el checkbox nativo pero mantenemos su funcionalidad */
+input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: relative;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  background-color: var(--switch-bg-off);
+  border-radius: var(--switch-height);
+  transition: background-color 0.2s ease;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: var(--thumb-size);
+  width: var(--thumb-size);
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--thumb-color);
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgb(0, 0, 0, 0.2);
+}
+
+input:checked + .slider {
+  background-color: var(--switch-bg-on);
+}
+
+input:checked + .slider::before {
+  transform: translateX(calc(var(--switch-width) - var(--thumb-size) - 6px));
+}
+
+input:focus-visible + .slider {
+  outline: 2px solid var(--lib-color-primary);
+  outline-offset: 2px;
+}
+
+input:disabled + .slider {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

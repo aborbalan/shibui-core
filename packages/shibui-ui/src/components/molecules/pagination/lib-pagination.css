@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  font-family: sans-serif;
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ellipsis {
+  color: #a0aec0;
+  padding: 0 4px;
+  user-select: none;
+}
+
+/* Ajuste fino para los botones de número para que sean más cuadrados */
+lib-button[variant="neutral"] {
+  --custom-padding: 0 12px;
+}

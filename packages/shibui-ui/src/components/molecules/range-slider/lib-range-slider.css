@@ -1,0 +1,86 @@
+:host {
+  display: block;
+
+  --slider-track-color: #e2e8f0;
+  --slider-progress-color: #3b82f6;
+  --slider-thumb-color: #fff;
+  --slider-thumb-border: #3b82f6;
+}
+
+.range-container {
+  padding: 10px 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+.label {
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.values {
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+.slider-wrapper {
+  position: relative;
+  height: 6px;
+  width: 100%;
+}
+
+.track {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: var(--slider-track-color);
+  border-radius: 5px;
+}
+
+.progress {
+  position: absolute;
+  height: 100%;
+  background: var(--slider-progress-color);
+  border-radius: 5px;
+}
+
+.range-input {
+  position: absolute;
+  width: 100%;
+  top: -7px;
+  height: 20px;
+  background: none;
+  pointer-events: none;
+  appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+/* Estilo del manejador (Thumb) */
+.range-input::-webkit-slider-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--slider-thumb-border);
+  background: var(--slider-thumb-color);
+  pointer-events: auto;
+  appearance: none;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgb(0, 0, 0, 0.2);
+}
+
+.range-input::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--slider-thumb-border);
+  background: var(--slider-thumb-color);
+  pointer-events: auto;
+  cursor: pointer;
+}
