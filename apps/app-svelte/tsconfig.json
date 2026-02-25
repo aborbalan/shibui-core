@@ -1,7 +1,14 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@shibui/ui": ["../../packages/shibui-ui/src/index.ts"],
+      "@shibui/ui/*": ["../../packages/shibui-ui/src/*"]
+    }
+  },
+  "include": [
+    "src/**/*.svelte",
+    "src/**/*.d.ts",
+    "src/**/*.ts"
   ]
 }

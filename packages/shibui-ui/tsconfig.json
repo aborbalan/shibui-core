@@ -48,7 +48,7 @@
     "commitlint.config.cjs",
     ".husky/**/*",
     "vite.config.ts",
-    "models/**/*", "architecture/base-components/lib-list.model.ts",
+    "models/**/*", "architecture/base-components/lib-list.model.ts", "../../apps/app-react/src/custom-elements.d.ts",
   ],
   "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }
