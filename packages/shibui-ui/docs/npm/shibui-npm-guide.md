@@ -31,11 +31,11 @@ Puntos de entrada para que el consumidor encuentre los componentes y sus tipos c
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.ts"
     }
   },
   "files": ["dist"],
@@ -101,7 +101,7 @@ Antes de publicar, valida la librería instalándola en un proyecto real sin nec
 ## 5. Checklist de Publicación
 
 - [ ] `npm run build` ejecutado sin errores
-- [ ] Tipos generados en `/dist/index.d.ts`
+- [ ] Tipos generados en `/dist/index.ts`
 - [ ] Probado localmente con `.tgz`
 - [ ] `"private": true` eliminado del `package.json`
 - [ ] Versión actualizada en `package.json`
