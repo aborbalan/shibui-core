@@ -24,13 +24,13 @@
     "lint-staged": "^16.2.7",
     "typescript": "^5.9.3"
   },
-  "lint-staged": {
-    "src/**/*.{ts,html.ts}": [
-      "eslint --config .config/.eslintrc.json --fix --max-warnings=0"
-    ],
-    "src/**/*.css": [
-      "stylelint --config .config/.stylelintrc.json --fix",
-      "prettier --write"
-    ]
-  }
+"lint-staged": {
+  "**/*.{ts,html.ts}": [
+    "eslint --config .config/.eslintrc.json --fix --max-warnings=0"
+  ],
+  "**/*.css": [
+    "stylelint --config .config/.stylelintrc.json --fix",
+    "prettier --write"
+  ]
+}
 }
