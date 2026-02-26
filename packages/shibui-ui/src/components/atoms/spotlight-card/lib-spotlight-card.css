@@ -1,0 +1,36 @@
+:host {
+  display: block;
+}
+
+.spotlight-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #121212; /* Un gris muy oscuro */
+  border: 1px solid rgb(255, 255, 255, 0.1);
+
+  --mouse-x: 0px;
+  --mouse-y: 0px;
+}
+
+/* El brillo lo ponemos en el AFTER y encima de todo */
+.spotlight-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  /* El haz de luz: un poco más intenso para que lo veas bien ahora */
+  background: radial-gradient(
+    500px circle at var(--mouse-x) var(--mouse-y),
+    rgb(255, 255, 255, 0.1),
+    transparent 80%
+  );
+  z-index: 10;
+  pointer-events: none; /* Crucial para que puedas clicar lo de dentro */
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem;
+}

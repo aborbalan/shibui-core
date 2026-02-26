@@ -16,7 +16,9 @@
     "lint-staged": "lint-staged",
     "type-check": "npx tsc --noEmit --project packages/shibui-ui/tsconfig.json",
     "lint": "eslint . --config .config/.eslintrc.json --ignore-path .config/.eslintignore",
-    "format": "prettier --write \"src/**/*.ts\" --config .config/.prettierrc.json"
+    "format": "prettier --write \"src/**/*.ts\" --config .config/.prettierrc.json",
+    "storybook": "npm run storybook -w packages/shibui-ui",
+  "build-storybook": "npm run build-storybook -w packages/shibui-ui"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
