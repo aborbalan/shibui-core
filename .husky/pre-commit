@@ -1,1 +1,5 @@
-npm run lint-staged
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Ejecutamos el chequeo de tipos a través de npm para evitar el paquete falso
+npm run type-check -w @shibui/ui && npm run lint-staged
