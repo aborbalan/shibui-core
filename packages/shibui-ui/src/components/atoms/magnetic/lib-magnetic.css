@@ -1,0 +1,11 @@
+:host {
+  display: inline-block;
+  touch-action: none; /* Importante para no interferir con el scroll en móvil */
+}
+
+.magnetic-wrapper {
+  display: inline-block;
+  will-change: transform;
+  /* El secreto está en esta transición suave */
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
