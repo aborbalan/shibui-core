@@ -1,7 +1,6 @@
 {
   "name": "shibui-ecosystem",
   "private": true,
-  
   "description": "Monorepo para testing de componentes Shibui UI",
   "workspaces": [
     "apps/*",
@@ -12,9 +11,25 @@
     "start:svelte": "npm run dev -w apps/app-svelte",
     "start:angular": "npm run start -w apps/app-angular",
     "dev:all": "concurrently -n \"REACT,SVELTE,ANGULAR\" -c \"cyan,magenta,blue\" \"npm run start:react\" \"npm run start:svelte\" \"npm run start:angular\"",
-    "build": "npm run build -w @shibui/ui"
+    "build": "npm run build -w @shibui/ui",
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
+
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7"
+  },
+"lint-staged": {
+    "packages/shibui-ui/src/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "apps/**/*.{ts,tsx,svelte,angular}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
+
 }
