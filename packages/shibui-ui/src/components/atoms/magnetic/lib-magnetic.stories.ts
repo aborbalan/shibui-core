@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components';
+import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import './lib-magnetic.component';
 import '../button/lib-button.component'; // Asegúrate de que esta ruta sea correcta

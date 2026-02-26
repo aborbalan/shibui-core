@@ -1,4 +1,4 @@
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import styles from './lib-magnetic.css?inline';
 
@@ -14,7 +14,7 @@ export class LibMagnetic extends LitElement {
 
   @query('.magnetic-wrapper') _wrapper!: HTMLElement;
 
-  override render() {
+  override render():TemplateResult {
     return html`
       <div 
         class="magnetic-wrapper"
@@ -26,7 +26,7 @@ export class LibMagnetic extends LitElement {
     `;
   }
 
-  private _handleMouseMove(e: MouseEvent) {
+  private _handleMouseMove(e: MouseEvent):void {
     const { left, top, width, height } = this.getBoundingClientRect();
     
     // Calculamos la distancia del cursor respecto al centro del elemento
@@ -39,7 +39,7 @@ export class LibMagnetic extends LitElement {
     this._wrapper.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
   }
 
-  private _handleMouseLeave() {
+  private _handleMouseLeave():void {
     // Retorno suave a la posición inicial
     this._wrapper.style.transform = `translate(0px, 0px)`;
   }
