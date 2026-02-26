@@ -1,4 +1,4 @@
-import { html, nothing, TemplateResult } from 'lit';
+import { html, TemplateResult } from 'lit';
 import type { LibSize, LibVariant } from '../../../types';
 
 export interface ButtonTemplateProps {
@@ -9,6 +9,7 @@ export interface ButtonTemplateProps {
   handleClick: (event: Event) => void;
   variant: LibVariant;
   size: LibSize;
+  glass: boolean;
   customPadding?: string | undefined;
 }
 
@@ -18,18 +19,23 @@ export interface ButtonTemplateProps {
  * @returns TemplateResult para ser renderizado por Lit.
  */
 export function buttonTemplate(props: ButtonTemplateProps): TemplateResult {
+
+  const innerButton = html`     <button
+        id="${props.buttonId}"
+        type="${props.type}"
+        ?disabled="${props.disabled}"
+        @click="${props.handleClick}"
+      >
+        <slot name="prefix"></slot>
+        <slot></slot>
+        <slot name="suffix"></slot>
+      </button>`
+
   return html`
-    <button
-      id="${props.buttonId}"
-      type="${props.type}"
-      ?disabled="${props.disabled}"
-      aria-label="${props.ariaLabel || nothing}"
-      @click="${props.handleClick}"
-      style="${props.customPadding ? `--custom-padding: ${props.customPadding}` : ''}"
-    >
-      <slot name="prefix"></slot>
-      <slot></slot>
-      <slot name="suffix"></slot>
-    </button>
+  ${props.glass 
+    ? html`<div class="glass-container ${props.glass ? 'is-glass' : ''} ${props.variant}">${innerButton}</div>`
+    : html`<div class="solid-container ${props.variant}">${innerButton}</div>`
+  }
+    
   `;
 }

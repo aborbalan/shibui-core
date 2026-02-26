@@ -1,63 +1,42 @@
-@layer tokens {
-  :root {
-    /* --- 1. COLORS (OKLCH System) --- */
-    
-    /* Brand: Blue (H=250) */
-    --lib-color-primary-h: 250;
-    --lib-color-primary-c: 0.2;
-    --lib-color-primary: oklch(60% var(--lib-color-primary-c) var(--lib-color-primary-h));
-    --lib-color-primary-hover: oklch(50% var(--lib-color-primary-c) var(--lib-color-primary-h));
+:host {
+  /* --- 1. ESCALA DE AIRE (Armonía de 4px) --- */
+  --lib-spacing-unit: 0.25rem;
+  --lib-space-xs: var(--lib-spacing-unit); /* 4px */
+  --lib-space-sm: calc(var(--lib-spacing-unit) * 2); /* 8px */
+  --lib-space-md: calc(
+    var(--lib-spacing-unit) * 4
+  ); /* 16px - El Estándar de Oro */
+  --lib-space-lg: calc(var(--lib-spacing-unit) * 6); /* 24px */
+  --lib-space-xl: calc(var(--lib-spacing-unit) * 8); /* 32px */
 
-    /* Danger: Red (H=25) - ¡NUEVO! */
-    --lib-color-danger-h: 25;
-    --lib-color-danger-c: 0.22;
-    --lib-color-danger: oklch(62% var(--lib-color-danger-c) var(--lib-color-danger-h));
-    --lib-color-danger-hover: oklch(52% var(--lib-color-danger-c) var(--lib-color-danger-h));
+  /* --- 2. PALETA ZEN (OKLCH) --- */
+  --lib-shibui-kaki: oklch(45% 0.05 45deg); /* Acento orgánico */
+  --lib-shibui-water: oklch(55% 0.06 210deg); /* Primario sereno */
+  --lib-shibui-paper: oklch(98% 0.01 60deg); /* Superficie cálida */
+  --lib-shibui-ink: oklch(25% 0.02 45deg); /* Texto principal */
 
-    /* Functional Colors (Accessibility) */
-    --lib-color-text: oklch(20% 0.02 var(--lib-color-primary-h));
-    --lib-color-bg: oklch(100% 0 0); /* White */
-    --lib-color-on-primary: oklch(100% 0 0); /* Text on primary background */
-    --lib-color-on-danger: oklch(100% 0 0);  /* Text on danger background */
-    --lib-color-border: oklch(90% 0.01 var(--lib-color-primary-h));
+  /* --- 3. MAPEADO SEMÁNTICO BASE --- */
+  --lib-color-primary: var(--lib-shibui-water);
+  --lib-color-bg: var(--lib-shibui-paper);
+  --lib-color-text: var(--lib-shibui-ink);
 
-    /* Neutrals for states */
-    --lib-color-neutral-0: oklch(98% 0 0);
-    --lib-color-neutral-10: oklch(10% 0.01 var(--lib-color-primary-h));
-    --lib-color-neutral-80: oklch(80% 0.01 var(--lib-color-primary-h));
-    --lib-color-neutral-95: oklch(95% 0.01 var(--lib-color-primary-h));
+  /* Borde "Enso": sutil al 18% */
+  --lib-color-border: oklch(25% 0.02 45deg / 0.18);
 
-    /* --- Tokens para lib-input (Anticipándonos) --- */
-    --lib-input-bg: var(--lib-color-bg);
-    --lib-input-border: var(--lib-color-neutral-80);
-    --lib-input-focus: var(--lib-color-primary);
-    --lib-input-error: var(--lib-color-danger);
+  /* --- 4. TIPOGRAFÍA ELEGANTE --- */
+  --lib-font-family-base: "Plus Jakarta Sans", sans-serif;
+  --lib-font-family-display: "Georgia", serif;
+  --lib-letter-spacing-elegant: 0.15em;
 
-    /* --- 2. TYPOGRAPHY --- */
-    --lib-font-family: 'Plus Jakarta Sans', 'Figtree', system-ui, -apple-system, sans-serif;
-    --lib-font-size-sm: 0.875rem; 
-    --lib-font-size-base: 1rem;   
-    
-    /* ALIAS SEGURO: md ahora apunta a base */
-    --lib-font-size-md: var(--lib-font-size-base); 
-    
-    --lib-font-size-lg: 1.125rem; 
-    --lib-font-size-xl: 1.25rem;
+  /* --- 5. EXTENSIÓN: GLASSMORPHISM SHIBUI ("Efecto Agua") --- */
+  --lib-glass-bg: oklch(98% 0.01 60deg / 0.4); /* Base Paper al 40% */
+  --lib-glass-blur: blur(12px) saturate(120%);
+  --lib-glass-border: 0.8px solid oklch(100% 0 0deg / 0.15); /* Borde casi imperceptible */
 
-    /* Resto de tokens (Radius, Shadows, etc.) se mantienen igual... */
-    --lib-radius-md: 8px;
-    --lib-transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-    --lib-shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.2);
+  /* --- 6. EXTENSIÓN: SPOTLIGHT METÁLICO ("Kintsugi Digital") --- */
+  --lib-spotlight-color: var(--lib-shibui-kaki);
+  --lib-spotlight-opacity: 0.12;
 
-    --lib-spacing-base: 0.25rem;
-  --lib-space-xs: var(--lib-spacing-base);
-  --lib-space-sm: calc(var(--lib-spacing-base) * 2);
-  --lib-space-md: calc(var(--lib-spacing-base) * 4);
-  --lib-space-lg: calc(var(--lib-spacing-base) * 6);
-  --lib-space-xl: calc(var(--lib-spacing-base) * 8);
-  
-  /* Fuentes */
-  --lib-font-family: 'Plus Jakarta Sans', sans-serif;
-  }
-  /* ... tus bloques de espaciado se mantienen intactos */
+  /* Ruido sutil para textura de metal/seda */
+  --lib-metal-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
