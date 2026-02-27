@@ -4,8 +4,9 @@
 }
 
 button {
-  font-family: var(--lib-font-family-base);
+  font-family: var(--lib-font-mono);
   font-size: var(--lib-font-size-base);
+  text-transform: var(--lib-text-transform);
   font-weight: 500;
   padding: var(--lib-space-sm) var(--lib-space-md);
   display: flex;
@@ -52,17 +53,27 @@ button.lib-button {
 }
 
 .solid-container.primary {
-  background-color: var(--lib-shibui-water);
-  border-color: transparent;
+  background-color: var(--color-celadon-500);
+  border-color: var(--color-ink-100);
 }
+
+.solid-container.primary:hover:not(:has(button:disabled)) {
+  background-color: var(--color-celadon-400); /* Un tono más claro en hover */
+}
+
+.solid-container.danger {
+  background-color: var(--color-kaki-500);
+  border-color: var(--color-ink-100);
+}
+
+.solid-container.danger:hover:not(:has(button:disabled)) {
+  background-color: var(--color-kaki-400);
+}
+
 .solid-container.primary button {
   color: white;
 }
 
-.solid-container.danger {
-  background-color: var(--lib-shibui-kaki);
-  border-color: transparent;
-}
 .solid-container.danger button {
   color: white;
 }
@@ -87,7 +98,6 @@ button.lib-button {
 
   /* Receta de cristal */
   background: rgb(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px) saturate(150%);
   backdrop-filter: blur(12px) saturate(150%);
 
   /* El brillo que añadiste (Enso light) */

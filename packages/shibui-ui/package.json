@@ -67,7 +67,7 @@
     "lit": "^3.0.0",
     "playwright": "^1.58.1",
     "prettier": "^3.1.1",
-    "sass": "^1.97.2",
+    "sass": "^1.97.3",
     "storybook": "^10.2.6",
     "stylelint": "^17.1.1",
     "stylelint-config-standard": "^40.0.0",
