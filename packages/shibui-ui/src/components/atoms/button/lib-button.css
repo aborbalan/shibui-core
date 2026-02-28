@@ -1,223 +1,149 @@
-@layer tokens, reset, components;
-
-/* ============================================================
-   LIB-BUTTON — Shibui UI
-   Variantes: primary · secondary · ghost · accent · danger
-   Modificadores: glass · size (sm/md/lg) · disabled
-   ============================================================ */
-
-@layer reset {
-  :host {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
+:host {
+  display: inline-block;
+  vertical-align: middle;
 }
 
-@layer components {
+button {
+  font-family: var(--lib-font-mono);
+  font-size: var(--lib-font-size-base);
+  text-transform: var(--lib-text-transform);
+  font-weight: 500;
+  padding: var(--lib-space-sm) var(--lib-space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lib-space-sm);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--lib-shibui-ink);
+  width: 100%;
+  height: 100%;
+  outline: none;
+  transition: inherit;
+  position: relative;
+  z-index: 2; /* Siempre por encima del pseudo-elemento glass */
+}
 
-  /* ── Base ── */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--lib-space-sm);
-    font-family: var(--lib-font-mono);
-    font-size: var(--text-xs);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-wider);
-    text-transform: uppercase;
-    white-space: nowrap;
-    line-height: 1;
-    padding: var(--lib-space-sm) var(--lib-space-md);
-    width: 100%;
+/* --- ESTILO BASE DEL BOTÓN (Común para ambos) --- */
+button.lib-button {
+  font-family: var(--lib-font-family-base);
+  font-size: var(--lib-font-size-base);
+  font-weight: 500;
+  padding: var(--lib-space-sm) var(--lib-space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lib-space-sm);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+  outline: none;
+}
 
-    /* Borde transparente base — todos los botones tienen el mismo box-model */
-    border: var(--lib-border-width) solid transparent;
-    border-radius: var(--radius-none);
-    background: transparent;
-    cursor: pointer;
-    outline: none;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    transition:
-      background   var(--duration-base) var(--ease-default),
-      color        var(--duration-base) var(--ease-default),
-      border-color var(--duration-base) var(--ease-default),
-      box-shadow   var(--duration-base) var(--ease-default),
-      transform    var(--duration-fast) var(--ease-default);
-  }
+/* --- CASO A: CONTENEDOR SÓLIDO (Variantes normales) --- */
+.solid-container {
+  border-radius: var(--lib-radius-md, 8px);
+  border: 1px solid var(--lib-color-border);
+  background-color: var(--lib-shibui-paper);
+  transition: all 0.3s ease;
+}
 
-  /* Slots por encima del ::after sweep */
-  .btn ::slotted(*) {
-    position: relative;
-    z-index: 1;
-  }
+.solid-container.primary {
+  background-color: var(--color-celadon-500);
+  border-color: var(--color-ink-100);
+}
 
-  .btn:active:not(:disabled) {
-    transform: translateY(1px);
-  }
+.solid-container.primary:hover:not(:has(button:disabled)) {
+  background-color: var(--color-celadon-400); /* Un tono más claro en hover */
+}
 
-  /* ── Sizes ── */
-  :host([size="sm"]) .btn {
-    padding: var(--lib-space-xs) var(--lib-space-sm);
-    font-size: 10px;
-  }
+.solid-container.danger {
+  background-color: var(--color-kaki-500);
+  border-color: var(--color-ink-100);
+}
 
-  :host([size="lg"]) .btn {
-    padding: var(--lib-space-md) var(--lib-space-lg);
-    font-size: var(--text-sm);
-    letter-spacing: var(--tracking-widest);
-  }
+.solid-container.danger:hover:not(:has(button:disabled)) {
+  background-color: var(--color-kaki-400);
+}
 
-  /* ── Disabled ── */
-  :host([disabled]) .btn {
-    opacity: 0.38;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
+.solid-container.primary button {
+  color: white;
+}
 
-  /* ============================================================
-     VARIANTES SÓLIDAS
-     ============================================================ */
+.solid-container.danger button {
+  color: white;
+}
 
-  /* ── Primary — fondo oscuro + sweep kaki al hover ── */
-  :host([variant="primary"]) .btn {
-    background: var(--color-washi-900);
-    color: var(--color-washi-50);
-  }
+/* 1. EL CONTENEDOR (La base estructural) */
+.glass-container {
+  display: inline-flex;
+  border-radius: var(--lib-radius-md, 8px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden; /* Cambiado por seguridad */
+  border: 1px solid transparent;
+}
 
-  :host([variant="primary"]) .btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--color-kaki-400);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--duration-slow) var(--ease-out);
-    z-index: 0;
-  }
+/* 2. LA CAPA MÁGICA (El pseudo-elemento con el filtro) */
+.glass-container.is-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
 
-  :host([variant="primary"]) .btn:hover::after {
-    transform: scaleX(1);
-  }
+  /* Receta de cristal */
+  background: rgb(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px) saturate(150%);
 
-  /* ── Secondary — borde + hover invertido ── */
-  :host([variant="secondary"]) .btn {
-    background: transparent;
-    color: var(--text-primary);
-    border-color: var(--border-strong);
-  }
+  /* El brillo que añadiste (Enso light) */
+  background-image: linear-gradient(
+    135deg,
+    rgb(255, 255, 255, 0.35) 0%,
+    rgb(255, 255, 255, 0.05) 50%,
+    rgb(255, 255, 255, 0) 100%
+  );
+  border: 1px solid rgb(255, 255, 255, 0.2);
+  z-index: 1; /* Debajo del texto, encima del fondo */
+}
 
-    /* ── Ghost — sin fondo ── */
-    :host([variant="ghost"]) .btn {
-      background: transparent;
-      color: var(--text-secondary);
-    }
+/* Tinte para Glass Primary */
+.glass-container.is-glass.primary::before {
+  background-color: rgb(100, 149, 237, 0.2);
+}
 
-      /* ── Accent — kaki sólido ── */
-  :host([variant="accent"]) .btn {
-    background: var(--color-kaki-400);
-    color: var(--color-white);
-  }
+/* 3. EL BOTÓN (Solo texto e interacción) */
 
+/* Color del texto en Glass (Contraste alto) */
+.glass-container.is-glass button {
+  color: var(--lib-shibui-paper) !important;
+  text-shadow: 0 1px 2px rgb(0, 0, 0, 0.2);
+}
 
+/* 4. VARIANTES SÓLIDAS (Normales) */
+.glass-container:not(.is-glass).primary {
+  background-color: var(--lib-shibui-water);
+}
 
-      :host([glass]) .btn {
-        border-radius: var(--radius-md);
-        padding: var(--lib-space-sm) var(--lib-space-md);
-        backdrop-filter: var(--lib-glass-filter);
-        background: var(--lib-glass-bg);
-        border: var(--lib-glass-border);
-        box-shadow: var(--lib-glass-shadow);
-        color: var(--lib-glass-text);
-        text-shadow: var(--lib-glass-text-shadow);
-      }
+.glass-container:not(.is-glass).primary button {
+  color: white;
+}
 
-            /* ── Danger — borde rojo ── */
-            :host([variant="danger"]) .btn {
-              background: transparent;
-              color: var(--color-error);
-              border-color: var(--color-error);
-            }
-      
-      
-  :host([variant="primary"]) .btn:hover {
-    box-shadow: var(--shadow-md);
-  }
-  
+.glass-container:has(button:disabled) {
+  opacity: 0.5;
+  filter: grayscale(1);
+  cursor: not-allowed;
+}
 
+/* 5. INTERACCIÓN HOVER */
+.glass-container:hover:not(:has(button:disabled)) {
+  transform: translateY(-1px);
+}
 
-
-  :host([variant="secondary"]) .btn:hover {
-    background: var(--color-washi-900);
-    color: var(--color-washi-50);
-    border-color: var(--color-washi-900);
-  }
-
-
-
-  :host([variant="ghost"]) .btn:hover {
-    color: var(--text-primary);
-    background: var(--color-ink-10);
-  }
-
-
-
-  :host([variant="accent"]) .btn:hover {
-    background: var(--color-kaki-500);
-    box-shadow: var(--shadow-md);
-  }
-
-
-
-
-  :host([variant="danger"]) .btn:hover {
-    background: var(--color-error);
-    color: var(--color-white);
-  }
-
-  /* ============================================================
-     GLASS — Efecto Agua
-     ============================================================ */
-
-
-  /* Reflexión de luz — ::before */
-  :host([glass]) .btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: var(--lib-glass-shine);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  :host([glass]) .btn:hover {
-    box-shadow: var(--lib-glass-shadow-hover);
-    transform: translateY(-1px);
-  }
-
-  /* Glass + Primary → variante water */
-  :host([glass][variant="primary"]) .btn {
-    background: var(--lib-glass-bg-water);
-    border-color: oklch(100% 0 0deg / 0.25);
-  }
-
-  /* Glass + Accent → variante kaki */
-  :host([glass][variant="accent"]) .btn {
-    background: var(--lib-glass-bg-kaki);
-    border-color: oklch(45% 0.05 45deg / 0.35);
-  }
-
-  /* Glass anula el sweep ::after del primary */
-  :host([glass][variant="primary"]) .btn::after {
-    display: none;
-  }
+.glass-container.is-glass:hover:not(:has(button:disabled))::before {
+  background-color: rgb(255, 255, 255, 0.25);
 }
