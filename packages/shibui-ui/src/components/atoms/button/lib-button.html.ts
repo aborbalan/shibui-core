@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+import { html, nothing, TemplateResult } from 'lit';
 import type { LibSize, LibVariant } from '../../../types';
 
 export interface ButtonTemplateProps {
@@ -12,30 +12,25 @@ export interface ButtonTemplateProps {
   glass: boolean;
   customPadding?: string | undefined;
 }
-
+    
 /**
  * Plantilla base para el componente lib-button.
- * @param props - Propiedades de configuración del botón.
- * @returns TemplateResult para ser renderizado por Lit.
+ * Renderiza un único <button> estilizado vía :host() selectors.
  */
 export function buttonTemplate(props: ButtonTemplateProps): TemplateResult {
-
-  const innerButton = html`     <button
-        id="${props.buttonId}"
-        type="${props.type}"
-        ?disabled="${props.disabled}"
-        @click="${props.handleClick}"
-      >
-        <slot name="prefix"></slot>
-        <slot></slot>
-        <slot name="suffix"></slot>
-      </button>`
-
   return html`
-  ${props.glass 
-    ? html`<div class="glass-container ${props.glass ? 'is-glass' : ''} ${props.variant}">${innerButton}</div>`
-    : html`<div class="solid-container ${props.variant}">${innerButton}</div>`
-  }
-    
+    <button
+      id="${props.buttonId}"
+      type="${props.type}"
+      ?disabled="${props.disabled}"
+      aria-label="${props.ariaLabel ?? nothing}"
+      style="${props.customPadding ? `padding: ${props.customPadding}` : nothing}"
+      @click="${props.handleClick}"
+      class="btn"
+    >
+      <slot name="prefix"></slot>
+      <slot></slot>
+      <slot name="suffix"></slot>
+    </button>
   `;
 }

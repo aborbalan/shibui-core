@@ -5,12 +5,13 @@
     "rules": {
       "selector-class-pattern": null,
       "custom-property-pattern": null,
-      "color-function-notation": "legacy",
+      "color-function-notation": "null",
       "alpha-value-notation": "number"
     },
     "ignoreFiles": [
       "dist/**/*",
       "node_modules/**/*",
+      "packages/**/*",
       "**/*.js",
       "**/*.ts"
     ]

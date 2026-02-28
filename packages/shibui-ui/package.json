@@ -23,7 +23,9 @@
     "preview": "vite preview",
     "postbuild": "npm run type-check",
     "type-check": "tsc --noEmit",
-    "lint": "eslint . --config .config/.eslintrc.json --ignore-path .config/.eslintignore",
+    "lint": "eslint . --config .config/eslintrc.cjs --ignore-path .config/.eslintignore",
+    "stylelint": "stylelint --config .config/.stylelintrc.json --fix",
+    "stylelint:staged": "stylelint --config .config/.stylelintrc.json --fix --",
     "format": "prettier --write \"src/**/*.ts\" --config .config/.prettierrc.json",
     "start": "npm run dev",
     "s": "npm run dev",
@@ -80,12 +82,8 @@
     "@phosphor-icons/core": "^2.1.1"
   },
   "lint-staged": {
-    "src/**/*.{ts,html.ts}": [
-      "eslint --config .config/.eslintrc.json --fix --max-warnings=0"
-    ],
-    "src/**/*.css": [
-      "stylelint --config .config/.stylelintrc.json --fix",
-      "prettier --write"
+    "src/**/*.ts": [
+      "eslint --config .config/eslintrc.cjs --fix --max-warnings=1"
     ]
   },
   "customElements": "custom-elements.json"

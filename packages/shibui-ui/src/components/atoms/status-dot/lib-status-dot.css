@@ -37,15 +37,19 @@
 :host([variant="success"]) {
   --dot-color: var(--lib-color-success, #28a745);
 }
+
 :host([variant="danger"]) {
   --dot-color: var(--lib-color-danger, #dc3545);
 }
+
 :host([variant="warning"]) {
   --dot-color: var(--lib-color-warning, #ffc107);
 }
+
 :host([variant="info"]) {
   --dot-color: var(--lib-color-primary, #007aff);
 }
+
 :host([variant="neutral"]) {
   --dot-color: var(--lib-color-neutral-60, #999);
 }

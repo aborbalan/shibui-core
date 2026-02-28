@@ -13,14 +13,14 @@
   /* El tamaño se aplica aquí, donde la variable es visible */
   width: var(--lib-icon-size, 1em);
   height: var(--lib-icon-size, 1em);
-  color: currentColor;
+  color: currentcolor;
 }
 
 svg {
   display: block;
   width: 100% !important;
   height: 100% !important;
-  fill: currentColor;
+  fill: currentcolor;
 }
 
 
