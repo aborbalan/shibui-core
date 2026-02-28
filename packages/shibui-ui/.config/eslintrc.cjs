@@ -1,32 +1,32 @@
-{
-  "root": true,
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": 2022,
-    "sourceType": "module",
-    "project": ["./tsconfig.json", "./.config/tsconfig.json"]
+module.exports = {
+  root: true,
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 2022,
+    sourceType: "module",
+    project: ["./tsconfig.json", "./.config/tsconfig.json"]
   },
-  "plugins": [
+  plugins: [
     "@typescript-eslint"
   ],
-  "extends": [
+  extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:storybook/recommended"
   ],
-  "rules": {
+  rules: {
     "@typescript-eslint/explicit-function-return-type": "warn",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
-        "argsIgnorePattern": "^_"
+        argsIgnorePattern: "^_"
       }
     ],
     "@typescript-eslint/no-explicit-any": "error"
   },
-  "ignorePatterns": [
+  ignorePatterns: [
     "dist",
     "node_modules",
     "*.d.ts"
   ]
-}
+};

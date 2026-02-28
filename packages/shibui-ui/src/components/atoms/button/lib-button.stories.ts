@@ -3,29 +3,45 @@ import { html, TemplateResult } from 'lit';
 import './lib-button.component';
 import type { LibButton } from './lib-button.component';
 
-// Definimos los argumentos que acepta la historia, incluyendo el contenido del slot
 type LibButtonStoryArgs = LibButton & { slotContent?: string | TemplateResult };
 
 const meta: Meta<LibButtonStoryArgs> = {
   title: 'Components/Atoms/Button',
   component: 'lib-button',
+  parameters: {
+    backgrounds: {
+      default: 'washi',
+      values: [
+        { name: 'washi',   value: '#FAF7F4' },
+        { name: 'dark',    value: '#221C16' },
+        { name: 'gradient', value: 'linear-gradient(135deg, #0f1923 0%, #1a2535 50%, #0d1f2d 100%)' },
+      ],
+    },
+  },
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'danger', 'ghost', 'neutral'],
+      options: ['primary', 'secondary', 'ghost', 'accent', 'danger'],
+      description: 'Variante visual del botón',
     },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
+      description: 'Tamaño del botón',
     },
-    disabled: { control: 'boolean' },
-    glass: { control: 'boolean' },
+    disabled: {
+      control: 'boolean',
+      description: 'Estado deshabilitado',
+    },
+    glass: {
+      control: 'boolean',
+      description: 'Activa el efecto Agua (glassmorphism)',
+    },
   },
-  // Tipamos el retorno como TemplateResult para evitar el error de ESLint
   render: (args): TemplateResult => html`
-    <lib-button 
-      .variant=${args.variant} 
-      .size=${args.size} 
+    <lib-button
+      variant=${args.variant}
+      size=${args.size}
       ?disabled=${args.disabled}
       ?glass=${args.glass}
     >
@@ -37,30 +53,94 @@ const meta: Meta<LibButtonStoryArgs> = {
 export default meta;
 type Story = StoryObj<LibButtonStoryArgs>;
 
+/* ── Playground ── */
+export const Playground: Story = {
+  args: {
+    variant: 'primary',
+    size: 'md',
+    disabled: false,
+    glass: false,
+    slotContent: 'Shibui Button',
+  },
+};
+
+/* ── Variantes ── */
 export const AllVariants: Story = {
+  name: 'All Variants',
   render: (): TemplateResult => html`
-    <div style="display: flex; gap: var(--lib-space-md); align-items: center;">
-      <lib-button variant="primary">Water (Primary)</lib-button>
-      <lib-button variant="danger">Kaki (Danger)</lib-button>
-      <lib-button variant="neutral">Ink (Neutral)</lib-button>
+    <div style="display: flex; flex-wrap: wrap; gap: var(--lib-space-md); align-items: center; padding: var(--lib-space-lg);">
+      <lib-button variant="primary">Primary</lib-button>
+      <lib-button variant="secondary">Secondary</lib-button>
       <lib-button variant="ghost">Ghost</lib-button>
+      <lib-button variant="accent">Accent</lib-button>
+      <lib-button variant="danger">Danger</lib-button>
     </div>
   `,
 };
 
+/* ── Tamaños ── */
+export const Sizes: Story = {
+  render: (): TemplateResult => html`
+    <div style="display: flex; flex-wrap: wrap; gap: var(--lib-space-md); align-items: center; padding: var(--lib-space-lg);">
+      <lib-button variant="primary" size="sm">Small</lib-button>
+      <lib-button variant="primary" size="md">Medium</lib-button>
+      <lib-button variant="primary" size="lg">Large</lib-button>
+    </div>
+  `,
+};
+
+/* ── Disabled ── */
+export const Disabled: Story = {
+  render: (): TemplateResult => html`
+    <div style="display: flex; flex-wrap: wrap; gap: var(--lib-space-md); align-items: center; padding: var(--lib-space-lg);">
+      <lib-button variant="primary"   ?disabled=${true}>Primary</lib-button>
+      <lib-button variant="secondary" ?disabled=${true}>Secondary</lib-button>
+      <lib-button variant="ghost"     ?disabled=${true}>Ghost</lib-button>
+      <lib-button variant="accent"    ?disabled=${true}>Accent</lib-button>
+      <lib-button variant="danger"    ?disabled=${true}>Danger</lib-button>
+    </div>
+  `,
+};
+
+/* ── Glass — Efecto Agua ── */
 export const GlassEffect: Story = {
+  name: 'Glass — Efecto Agua',
+  parameters: {
+    backgrounds: { default: 'gradient' },
+  },
   render: (): TemplateResult => html`
     <div style="
-      padding: 60px; 
-      /* Un fondo con patrón para ver el desenfoque */
-      background:rgb(27, 8, 8) url('https://grainy-gradients.vercel.app/noise.svg');
-      background-blend-mode: overlay;
-      display: flex; 
-      gap: 20px;
+      padding: var(--lib-space-xl);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--lib-space-md);
+      align-items: center;
       justify-content: center;
     ">
-      <lib-button glass variant="primary">Efecto Agua</lib-button>
-      <lib-button glass>Efecto Papel</lib-button>
+      <lib-button ?glass=${true}>Paper Glass</lib-button>
+      <lib-button ?glass=${true} variant="primary">Water Glass</lib-button>
+      <lib-button ?glass=${true} variant="accent">Kaki Glass</lib-button>
+    </div>
+  `,
+};
+
+/* ── Con iconos en slots ── */
+export const WithIcons: Story = {
+  name: 'With Icon Slots',
+  render: (): TemplateResult => html`
+    <div style="display: flex; flex-wrap: wrap; gap: var(--lib-space-md); align-items: center; padding: var(--lib-space-lg);">
+      <lib-button variant="primary">
+        <span slot="prefix">→</span>
+        Siguiente
+      </lib-button>
+      <lib-button variant="secondary">
+        Exportar
+        <span slot="suffix">↗</span>
+      </lib-button>
+      <lib-button variant="danger">
+        <span slot="prefix">✕</span>
+        Eliminar
+      </lib-button>
     </div>
   `,
 };

@@ -1,42 +1,307 @@
 :host {
-  /* --- 1. ESCALA DE AIRE (Armonía de 4px) --- */
-  --lib-spacing-unit: 0.25rem;
+  /* --- 1. ESCALA DE AIRE (Sistema de 4px) --- */
+  --lib-spacing-unit: 0.25rem; /* 4px */
   --lib-space-xs: var(--lib-spacing-unit); /* 4px */
   --lib-space-sm: calc(var(--lib-spacing-unit) * 2); /* 8px */
-  --lib-space-md: calc(
-    var(--lib-spacing-unit) * 4
-  ); /* 16px - El Estándar de Oro */
+  --lib-space-md: calc(var(--lib-spacing-unit) * 4); /* 16px */
   --lib-space-lg: calc(var(--lib-spacing-unit) * 6); /* 24px */
   --lib-space-xl: calc(var(--lib-spacing-unit) * 8); /* 32px */
 
-  /* --- 2. PALETA ZEN (OKLCH) --- */
-  --lib-shibui-kaki: oklch(45% 0.05 45deg); /* Acento orgánico */
-  --lib-shibui-water: oklch(55% 0.06 210deg); /* Primario sereno */
-  --lib-shibui-paper: oklch(98% 0.01 60deg); /* Superficie cálida */
-  --lib-shibui-ink: oklch(25% 0.02 45deg); /* Texto principal */
+  	
+  /* --- 2. FONT SIZES (Escala Editorial) --- */
+  --text-xs:   0.6875rem;  /* 11px */
+  --text-sm:   0.8125rem;  /* 13px */
+  --text-base: 0.9375rem;  /* 15px */
+  --text-md:   1.0625rem;  /* 17px */
+  --text-lg:   1.25rem;    /* 20px */
+  --text-xl:   1.5rem;     /* 24px */
+  --text-2xl:  2rem;       /* 32px */
+  --text-3xl:  2.75rem;    /* 44px */
+  --text-4xl:  3.75rem;    /* 60px */
+  --text-5xl:  5rem;       /* 80px */
 
-  /* --- 3. MAPEADO SEMÁNTICO BASE --- */
-  --lib-color-primary: var(--lib-shibui-water);
-  --lib-color-bg: var(--lib-shibui-paper);
-  --lib-color-text: var(--lib-shibui-ink);
+  /* --- 2. RADIOS (Geometría) --- */
+  --radius-none: 0;
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
 
-  /* Borde "Enso": sutil al 18% */
-  --lib-color-border: oklch(25% 0.02 45deg / 0.18);
+  /* --- 3. SOMBRAS (Elevación) --- */
+  --shadow-sm: 0 1px 2px var(--color-ink-10);
+  --shadow-md: 0 2px 8px var(--color-ink-10), 0 1px 2px var(--color-ink-10);
+  --shadow-lg: 0 8px 24px var(--color-ink-10), 0 2px 4px var(--color-ink-10);
+  --shadow-xl: 0 20px 48px var(--color-ink-20);
 
-  /* --- 4. TIPOGRAFÍA ELEGANTE --- */
-  --lib-font-family-base: "Plus Jakarta Sans", sans-serif;
-  --lib-font-family-display: "Georgia", serif;
-  --lib-letter-spacing-elegant: 0.15em;
+  /* --- 3. FONT WEIGHTS (Jerarquía) --- */
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
 
-  /* --- 5. EXTENSIÓN: GLASSMORPHISM SHIBUI ("Efecto Agua") --- */
-  --lib-glass-bg: oklch(98% 0.01 60deg / 0.4); /* Base Paper al 40% */
-  --lib-glass-blur: blur(12px) saturate(120%);
-  --lib-glass-border: 0.8px solid oklch(100% 0 0deg / 0.15); /* Borde casi imperceptible */
+    /* --- 3. LINE HEIGHTS (Legibilidad) --- */
+    --leading-tight:   1.2;
+    --leading-snug:    1.4;
+    --leading-normal:  1.6;
+    --leading-relaxed: 1.8;
+    --leading-loose:   2.2;
 
-  /* --- 6. EXTENSIÓN: SPOTLIGHT METÁLICO ("Kintsugi Digital") --- */
-  --lib-spotlight-color: var(--lib-shibui-kaki);
+    /* --- 4. ANIMACIONES (Movimiento) --- */
+  --duration-fast:   100ms;
+  --duration-base:   200ms;
+  --duration-slow:   350ms;
+  --duration-slower: 600ms;
+
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in:      cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+  --ease-bounce:  cubic-bezier(0.34, 1.56, 0.64, 1);
+
+      /* --- 4. LETTER SPACING (Tracking Editorial) --- */
+  --tracking-tight:   -0.02em;
+  --tracking-normal:   0em;
+  --tracking-wide:     0.08em;
+  --tracking-wider:    0.15em;
+  --tracking-widest:   0.25em;
+
+  /* --- 5. Z-INDEX (Profundidad) --- */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-overlay: 100;
+  --z-modal:   200;
+  --z-toast:   300;
+  --z-tooltip: 400;
+
+  /* --- 2. WASHI: Tonos de papel neutros --- */
+  --color-washi-50:  oklch(97.77% 0.003 68.35deg); /* #FAF7F4 */
+  --color-washi-100: oklch(94.29% 0.007 72.91deg); /* #F2EDE6 */
+  --color-washi-200: oklch(88.59% 0.008 72.93deg); /* #E5DDD3 */
+  --color-washi-300: oklch(81.39% 0.01 74.43deg);  /* #D3C8BC */
+  --color-washi-400: oklch(71.05% 0.013 74.74deg); /* #B8A99A */
+  --color-washi-500: oklch(59.45% 0.015 75.31deg); /* #9A8878 */
+  --color-washi-600: oklch(48.51% 0.014 76.22deg); /* #7A6A5C */
+  --color-washi-700: oklch(37.66% 0.013 77.58deg); /* #5C4E42 */
+  --color-washi-800: oklch(26.83% 0.012 79.82deg); /* #3D332A */
+  --color-washi-900: oklch(17.39% 0.01  83.02deg); /* #221C16 */
+  --color-washi-950: oklch(11.39% 0.009 84.7deg);  /* #120E0A */
+
+  /* --- 3. INK: Transparencias de Sumi --- */
+  --color-ink-0:   oklch(11.39% 0.009 84.7deg / 0);    /* #1A140E at 0% */
+  --color-ink-10:  oklch(11.39% 0.009 84.7deg / 0.06); /* #1A140E at 6% */
+  --color-ink-20:  oklch(11.39% 0.009 84.7deg / 0.12); /* #1A140E at 12% */
+  --color-ink-40:  oklch(11.39% 0.009 84.7deg / 0.25); /* #1A140E at 25% */
+  --color-ink-60:  oklch(11.39% 0.009 84.7deg / 0.5);  /* #1A140E at 50% */
+  --color-ink-80:  oklch(11.39% 0.009 84.7deg / 0.75); /* #1A140E at 75% */
+  --color-ink-100: oklch(11.39% 0.009 84.7deg / 1);    /* #1A140E at 100% */
+
+  /* --- 4. KAKI: Acento caqui/persimón --- */
+  --color-kaki-50:  oklch(96.88% 0.012 55.48deg); /* #FDF3EC */
+  --color-kaki-100: oklch(91.31% 0.038 65.52deg); /* #FAE2CC */
+  --color-kaki-200: oklch(81.87% 0.076 60.59deg); /* #F4C099 */
+  --color-kaki-300: oklch(70.92% 0.125 52.88deg); /* #EB9660 */
+  --color-kaki-400: oklch(61.85% 0.149 48.72deg); /* #D97234 */
+  --color-kaki-500: oklch(51.65% 0.134 46.13deg); /* #B85A1E */
+  --color-kaki-600: oklch(40.5%  0.108 44.59deg); /* #8C4115 */
+  --color-kaki-700: oklch(29.17% 0.08  44.25deg); /* #602C0E */
+
+  /* --- 5. CELADÓN: Acento jade --- */
+  --color-celadon-50:  oklch(96.39% 0.007 172.9deg); /* #EFF5F3 */
+  --color-celadon-100: oklch(90.69% 0.021 169.15deg); /* #D3E8E1 */
+  --color-celadon-200: oklch(81.25% 0.039 171.18deg); /* #A8D0C4 */
+  --color-celadon-300: oklch(70.21% 0.057 167.31deg); /* #79B5A3 */
+  --color-celadon-400: oklch(58.33% 0.068 171.21deg); /* #4E9482 */
+  --color-celadon-500: oklch(45.54% 0.059 173.23deg); /* #357164 */
+  --color-celadon-600: oklch(33.72% 0.046 173.86deg); /* #245249 */
+
+  /* --- 6. STATE (Semántica de estados) --- */
+  --color-error:   oklch(36.16% 0.106 28.52deg);  /* #8C2A1A */
+  --color-warning: oklch(47.53% 0.088 77.58deg);  /* #8C6A1A */
+  --color-success: oklch(38.41% 0.063 147.16deg); /* #2A5C3A */
+  --color-info:    oklch(58.33% 0.068 171.21deg); /* #4E9482 (Coincide con Celadon-400) */
+  --color-white:   oklch(100% 0 0deg);             /* #FFFFFF -> Blanco puro */
+
+  /* --- 7. BACKGROUNDS SEMÁNTICOS --- */
+  --bg-base:     var(--color-washi-50);
+  --bg-surface:  var(--color-washi-100);
+  --bg-elevated: var(--color-white);
+  --bg-inverse:  var(--color-washi-900);
+
+  /* --- 8. TEXTOS SEMÁNTICOS --- */
+  --text-primary:   var(--color-washi-900);
+  --text-secondary: var(--color-washi-600);
+  --text-muted:     var(--color-washi-400);
+  --text-inverse:   var(--color-washi-50);
+  --text-accent:    var(--color-kaki-500);
+
+  	
+  /* --- 9. BORDES SEMÁNTICOS --- */
+  --border-subtle:  var(--color-washi-200);
+  --border-default: var(--color-washi-300);
+  --border-strong:  var(--color-washi-500);
+
+  /* --- 9. RADIOS BRUTALISTAS --- */
+  --lib-radius-xs: 0px;
+  --lib-radius-sm: 0px;
+  --lib-radius-md: 1px;
+  --lib-radius-lg: 2px;
+
+  /* --- 10. TIPOGRAFÍA EDITORIAL --- */
+  --lib-font-display: "Cormorant Garamond", serif;
+  --lib-font-body:    "Shippori Mincho", serif;
+  --lib-font-mono:    "DM Mono", monospace;
+  
+  --lib-tracking-elegant: 0.15em;
+  --lib-text-transform: uppercase;
+  --lib-font-size-base: 14px;
+
+  /* --- 11. GLASS SYSTEM (Efecto Enso) --- */
+  --lib-glass-blur-amount:     12px;
+  --lib-glass-saturate-amount: 120%;
+  --lib-glass-bg-opacity:      0.15;
+  --lib-glass-border-opacity:  0.20;
+  --lib-glass-shadow-opacity:  0.37;
+  --lib-glass-shine-start:     0.35;
+  --lib-glass-shine-end:       0.05;
+
+    /* -- Tokens compuestos Glass -- */
+/* Fondo base del cristal — usa paper al % configurado */
+--lib-glass-bg:
+oklch(98% 0.01 60deg / var(--lib-glass-bg-opacity));
+
+/* Fondo variante water (botón primary glass) */
+--lib-glass-bg-water:
+oklch(55% 0.06 210deg / var(--lib-glass-bg-opacity));
+
+/* Fondo variante kaki (botón accent glass) */
+--lib-glass-bg-kaki:
+oklch(45% 0.05 45deg / var(--lib-glass-bg-opacity));
+
+/* backdrop-filter completo listo para usar */
+--lib-glass-filter:
+blur(var(--lib-glass-blur-amount))
+saturate(var(--lib-glass-saturate-amount));
+
+/* Borde "casi imperceptible" */
+--lib-glass-border:
+1px solid oklch(100% 0 0deg / var(--lib-glass-border-opacity));
+
+/* Sombra de profundidad */
+--lib-glass-shadow:
+0 8px 32px oklch(0% 0 0deg / var(--lib-glass-shadow-opacity));
+
+/* Sombra hover (más pronunciada) */
+--lib-glass-shadow-hover:
+0 20px 45px oklch(0% 0 0deg / 0.5);
+
+/* Gradiente de reflexión de luz — el ::before que da aspecto cristal */
+--lib-glass-shine:
+linear-gradient(
+  135deg,
+  oklch(100% 0 0deg / var(--lib-glass-shine-start)) 0%,
+  oklch(100% 0 0deg / var(--lib-glass-shine-end))   50%,
+  oklch(100% 0 0deg / 0)                            100%
+);
+
+/* Texto sobre glass: siempre claro */
+--lib-glass-text:        var(--lib-shibui-paper);
+--lib-glass-text-shadow: 0 1px 3px oklch(0% 0 0deg / 0.3);
+
+/* -- Intensidades Glass -- */
+/* Uso: sobreescribe --lib-glass-blur-amount y --lib-glass-bg-opacity
+ en el componente según la intensidad deseada */
+--lib-glass-blur-low:  4px;
+--lib-glass-blur-md:   12px;  /* default */
+--lib-glass-blur-high: 25px;
+
+--lib-glass-opacity-low:  0.10;
+--lib-glass-opacity-md:   0.15; /* default */
+--lib-glass-opacity-high: 0.25;
+
+
+
+
+ /* -- Primitivos Spotlight -- */
+
+  /* -- Primitivos Spotlight -- */
   --lib-spotlight-opacity: 0.12;
+  --lib-spotlight-feather: 60%;
 
-  /* Ruido sutil para textura de metal/seda */
+    /* Coordenadas — posición inicial centrada */
+    --lib-spotlight-x: 50%;
+    --lib-spotlight-y: 50%;
+
+      /* Transición al mover cursor */
+  --lib-spotlight-transition: background 0.15s ease-out;
+
+
+    /* -- Tokens compuestos Spotlight -- */
+  /* Variante kaki (acento orgánico, cálido) */
+  --lib-spotlight-gradient:
+    radial-gradient(
+      circle at var(--lib-spotlight-x) var(--lib-spotlight-y),
+      oklch(45% 0.05 45deg / var(--lib-spotlight-opacity)) 0%,
+      oklch(45% 0.05 45deg / 0)                           
+      var(--lib-spotlight-feather)
+    );
+
+      /* Variante water (azul sereno) */
+  --lib-spotlight-gradient-water:
+  radial-gradient(
+    circle at var(--lib-spotlight-x) var(--lib-spotlight-y),
+    oklch(55% 0.06 210deg / var(--lib-spotlight-opacity)) 0%,
+    oklch(55% 0.06 210deg / 0)                           
+    var(--lib-spotlight-feather)
+  );
+
+    /* Variante blanca (neutro, sobre fondos oscuros) */
+    --lib-spotlight-gradient-white:
+    radial-gradient(
+      circle at var(--lib-spotlight-x) var(--lib-spotlight-y),
+      oklch(100% 0 0deg / 0.10) 0%,
+      oklch(100% 0 0deg / 0)    var(--lib-spotlight-feather)
+    );
+
+
+      /* -- Textura de ruido (metal/seda) -- */
+  /* Aplica como background-image adicional encima del spotlight */
   --lib-metal-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  --lib-metal-texture-opacity: 0.03;
+
+  /* Brillo de borde kintsugi — hilo de oro en las grietas */
+  --lib-kintsugi-border:
+    linear-gradient(
+      135deg,
+      oklch(45% 0.05 45deg / 0.6) 0%,
+      oklch(45% 0.05 45deg / 0)   40%,
+      oklch(45% 0.05 45deg / 0)   60%,
+      oklch(45% 0.05 45deg / 0.3) 100%
+    );
+
+  /* --- 11. EFECTOS Y BORDES --- */
+  --lib-border-width: 1.5px;
+  --lib-shadow-brutal: 4px 4px 0px 0px var(--color-ink-100);
+}
+
+/* --- DARK MODE OVERRIDES --- */
+:host([data-theme="dark"]) {
+  --bg-base:     var(--color-washi-950);
+  --bg-surface:  var(--color-washi-900);
+  --bg-elevated: var(--color-washi-800);
+  --bg-inverse:  var(--color-washi-50);
+
+  --text-primary:   var(--color-washi-50);
+  --text-secondary: var(--color-washi-400);
+  --text-muted:     var(--color-washi-600);
+  --text-inverse:   var(--color-washi-900);
+  --text-accent:    var(--color-kaki-300);
+
+  --border-subtle:  var(--color-washi-800);
+  --border-default: var(--color-washi-700);
+  --border-strong:  var(--color-washi-500);
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 2px 8px rgb(0 0 0 / 0.3), 0 1px 2px rgb(0 0 0 / 0.2);
+  --shadow-lg: 0 8px 24px rgb(0 0 0 / 0.4), 0 2px 4px rgb(0 0 0 / 0.2);
+  --shadow-xl: 0 20px 48px rgb(0 0 0 / 0.5);
 }

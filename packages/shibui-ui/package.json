@@ -23,7 +23,7 @@
     "preview": "vite preview",
     "postbuild": "npm run type-check",
     "type-check": "tsc --noEmit",
-    "lint": "eslint . --config .config/.eslintrc.json --ignore-path .config/.eslintignore",
+"lint": "eslint . --config .config/.eslintrc.cjs --ignore-path .config/.eslintignore",
     "format": "prettier --write \"src/**/*.ts\" --config .config/.prettierrc.json",
     "start": "npm run dev",
     "s": "npm run dev",
@@ -81,7 +81,7 @@
   },
   "lint-staged": {
     "src/**/*.{ts,html.ts}": [
-      "eslint --config .config/.eslintrc.json --fix --max-warnings=0"
+      "eslint --config .config/.eslintrc.cjs --fix --max-warnings=0"
     ],
     "src/**/*.css": [
       "stylelint --config .config/.stylelintrc.json --fix",

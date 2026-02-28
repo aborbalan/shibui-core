@@ -1,73 +1,64 @@
-# 📕 Lib-UI | Arquitectura, Calidad y Reglas de Oro
+# 📕 Lib-UI | Arquitectura, Calidad y Ecosistema Monorepo
 
 ## 🏗️ Visión Técnica & Stack
-Sistema de componentes agnóstico basado en **Web Components** (Lit + TypeScript).
-- **Node Management**: NVM (v22.12.0 LTS).
+Sistema de componentes agnóstico basado en **Web Components** (Lit + TypeScript) gestionado mediante **NPM Workspaces**.
+- **Arquitectura**: Monorepo orquestado (Librería + Apps de consumo).
+- **Node Management**: NVM (v22.13.0 LTS).
 - **Runtime**: Vite (HMR ultra-rápido).
 - **Documentación**: Storybook (Escenario de pruebas y catálogo).
 - **Estilos**: OKLCH + CSS Layers (`@layer tokens, reset, components`).
-- **Iconografía**: Phosphor Icons (abstraídos en `lib-icon`).
+- **Iconografía**: Phosphor Icons (abstraídos en `lib-icon` con soporte `?raw`).
 
-## 📁 Estructura de Proyecto (Clean Root)
-La configuración se centraliza para evitar ruido en el desarrollo:
-- `.config/`: Cerebro de las herramientas (`playwright.config.ts`, `.eslintrc.json`, `.prettierrc.json`, `commitlint.config.cjs`).
-- `.storybook/`: Configuración visual de la librería.
-- `.husky/`: Git hooks (Pre-commit y Commit-msg).
-- `src/`: Código fuente por niveles (Atoms, Molecules, Organisms).
-- **Root**: Solo archivos críticos de entrada y orquestación (`package.json`, `tsconfig.json`, `vite.config.ts`, `index.html`, `.gitignore`).
+## 📁 Estructura del Ecosistema (Monorepo)
+La configuración se centraliza para evitar ruido y garantizar consistencia:
+- `/packages/ui`: Core de la librería (Lit + TS). Fuente de verdad.
+- `/apps/`: Aplicaciones de validación y consumo real:
+  - `react-app`: React + Vite (Usa `custom-elements.d.ts`).
+  - `angular-app`: Angular 18+ (Usa `main.ts` + `typings.d.ts`).
+  - `svelte-app`: SvelteKit (Usa `shibui-elements.d.ts`).
+- `.config/`: Cerebro de las herramientas (`playwright.config.ts`, `.eslintrc.json`, etc.).
+- **Root**: Orquestación de workspaces y scripts globales en `package.json`.
+
+## 🔌 Estrategia de Integración (Contrato de Consumo)
+Para garantizar un IntelliSense de nivel senior en los consumidores, seguimos este protocolo:
+1. **React**: Extensión del namespace `JSX` en `custom-elements.d.ts`. Es obligatorio importar `React` en el archivo para que el aumento de módulo sea efectivo.
+2. **Svelte**: Uso de `shibui-elements.d.ts` extendiendo `svelte/elements` para mapear atributos y eventos personalizados.
+3. **Angular**: Habilitación de `CUSTOM_ELEMENTS_SCHEMA`. Uso de `typings.d.ts` para soportar imports con sufijos `?raw` (iconos), `?inline` (CSS) y `.svg`.
 
 ## 🏗️ Arquitectura de Tipos y Modelos
-- **Directorio Centralizado**: Se utiliza `src/models/` como única fuente de verdad para interfaces y tipos compartidos (ej. `LibVariant`, `LibSize`).
+- **Directorio Centralizado**: `src/models/` como única fuente de verdad para interfaces compartidas (ej. `LibVariant`, `LibSize`).
 - **Segmentación**:
   - `ui/`: Define el diseño sistémico y tokens de interfaz.
-  - `storybook/`: Contiene interfaces auxiliares para los argumentos de las historias.
-- **Importación**: Se debe priorizar la importación de modelos externos sobre el tipado inline para garantizar la consistencia en toda la librería.
+  - `storybook/`: Interfaces auxiliares para los argumentos de las historias.
 
 ## 🧪 Estrategia de Testing & Calidad
-1. **E2E & Component Testing**: **Playwright** para garantizar funcionalidad en todos los navegadores.
-2. **Visual Regression**: Capturas automáticas para evitar cambios inesperados en el diseño.
+1. **E2E & Component Testing**: **Playwright** para garantizar funcionalidad cross-browser.
+2. **Visual Regression**: Capturas automáticas para evitar regresiones de diseño.
 3. **Guardianes (Husky)**:
    - **Pre-commit**: `npm run type-check` + `lint-staged`.
    - **Commit-msg**: `commitlint` (Ruta: `.config/commitlint.config.cjs`).
 
-## 🛠️ Estándares Innegociables
-1. **Estructura de Archivos**: Separación por componente: `index.ts`, `.component.ts`, `.html.ts`, `.css`, `.stories.ts`.
-2. **Tipado Estricto**: 
-   - Retornos explícitos obligatorios (`: TemplateResult`, `: void`).
-   - Uso de `override` en métodos de Lit.
-3. **Configuraciones Críticas (Solución de Conflictos)**: 
-   - `vite.config.ts`: Para evitar colisiones de tipos entre Vite, Vitest y Terser, definir la configuración en una constante externa con tipo `UserConfig & { test?: any }` y usar aserción `as any` en propiedades de terceros (`terserOptions.compress`) si es necesario para el pre-commit.
-   - `tsconfig.json`: Mantener `rootDir: "./"` para permitir la validación de archivos de configuración situados en la raíz y fuera de `src`.
-4. **Accesibilidad (A11y)**: IDs únicos para vinculación label/input y atributos ARIA dinámicos.
-5. **Composición**: Uso intensivo de `slots` (prefix, suffix) para componentes flexibles.
-6. **Lighthouse CI**: La configuración reside en `.config/lighthouserc.cjs`. El comando `npm run lighthouse` requiere un build previo de Storybook (`storybook-static`).
-7. **Integración Continua**: Ningún código entra en `main` sin pasar el control de Lighthouse y el linter en la nube. El estado del build es el único indicador de "salud" del proyecto.
-8. **Integración Continua**: No se inicia un nuevo componente sin haber integrado el anterior en `develop` y sincronizado el entorno local.
+## 🛠️ Estándares Innegociables (Seniority Rules)
+1. **Separación de Responsabilidades**: Cada componente debe tener:
+   - `index.ts`: Barrel export.
+   - `.component.ts`: Lógica y ciclo de vida (LitElement).
+   - `.html.ts`: Plantilla funcional pura (TemplateResult).
+   - `.css`: Estilos inyectados mediante `?inline`.
+2. **Tipado Estricto**: Retornos explícitos obligatorios. Uso de `override` y `exactOptionalPropertyTypes` (usando `| undefined`).
+3. **Accesibilidad (A11y)**: Gestión de foco, atributos ARIA dinámicos y generación de IDs únicos (para labels/inputs).
+4. **Composición**: Uso de `slots` (prefix, suffix) para máxima flexibilidad.
 
 ## 🌿 Flujo de Trabajo & Despliegue
 - **GitFlow**: `main` (Producción), `develop` (Integración), `feature/*` (Desarrollo).
-- **CI/CD (GitHub Actions)**: 
-  - Automatizado mediante el workflow `.github/workflows/deploy.yml`.
-  - El flujo incluye: `npm ci` -> `lint` -> `build-storybook` -> `lighthouse` -> `firebase deploy`.
-  - **Secretos**: Se utiliza `FIREBASE_TOKEN` gestionado en los secretos del repositorio de GitHub.
-  - **Firebase Hosting**: Preview de Storybook en cada PR.
-  - **Semantic Release**: Automatización de versiones en NPM.
-  - **Lighthouse**: Auditoría de rendimiento y accesibilidad en CI.
-  - **Ritual de Cierre**: Al finalizar cada tarea, feature o componente, es obligatorio realizar el push de la rama actual e integrar los cambios en `develop` mediante un merge (preferiblemente con `--no-ff`).
-  - **Recordatorio Automático**: El sistema recordará activamente al desarrollador estos pasos al concluir una iteración para evitar el desfase de ramas.
+- **CI/CD (GitHub Actions)**: `npm ci` -> `lint` -> `build-storybook` -> `lighthouse` -> `firebase deploy`.
+- **Semantic Release**: Automatización de versiones y tags en NPM.
+- **Ritual de Cierre**: Prohibido iniciar un componente sin integrar el anterior en `develop` y realizar push de la rama.
 
 ## 🎨 Sistema de Diseño & UI
-- **Fidelidad de Storybook**: 
-  - Se utiliza `.storybook/preview.ts` para inyectar tokens globales.
-  - Mapeo de componentes mediante **Args** para permitir pruebas de estado dinámicas (variant, size, disabled).
+- **Tokens**: Uso de `tokens.css` (OKLCH) inyectado globalmente.
+- **Storybook**: Mapeo de componentes mediante **Args** para pruebas dinámicas.
 
 
-## 📦 Inventario de Componentes
-### 🟢 Átomos
-- **lib-button**: Accionadores con variantes.
-- **lib-icon**: Wrapper dinámico para Phosphor Icons.
-- **lib-label**: Etiquetado semántico y accesible.
-### 🟡 Moléculas
-- **lib-input**: Campo con slots `prefix`/`suffix` y estados de validación.
-### 🔴 Organismos
-- **lib-sidebar**: Navegación colapsable.
+### 🚀 Pasos de Registro (Obligatorio)
+Para registrar un nuevo componente en el ecosistema:
+`Añadir a packages/ui/src/index.ts: export * from './components/[level]/[name]/[name].component';`
