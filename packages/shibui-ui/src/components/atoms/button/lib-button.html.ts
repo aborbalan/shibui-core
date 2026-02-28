@@ -12,7 +12,7 @@ export interface ButtonTemplateProps {
   glass: boolean;
   customPadding?: string | undefined;
 }
-
+    
 /**
  * Plantilla base para el componente lib-button.
  * Renderiza un único <button> estilizado vía :host() selectors.
