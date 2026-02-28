@@ -131,12 +131,7 @@
     color: var(--color-white);
   }
 
-      /* ── Danger — borde rojo ── */
-      :host([variant="danger"]) .btn {
-        background: transparent;
-        color: var(--color-error);
-        border-color: var(--color-error);
-      }
+
 
       :host([glass]) .btn {
         border-radius: var(--radius-md);
@@ -150,6 +145,13 @@
         text-shadow: var(--lib-glass-text-shadow);
       }
   
+
+      /* ── Danger — borde rojo ── */
+      :host([variant="danger"]) .btn {
+        background: transparent;
+        color: var(--color-error);
+        border-color: var(--color-error);
+      }
 
   :host([variant="primary"]) .btn:hover {
     box-shadow: var(--shadow-md);
