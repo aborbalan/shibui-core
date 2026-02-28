@@ -3,53 +3,6 @@
      COLORS — PRIMITIVE PALETTE
      ========================================================== */
 
-  /* --- WASHI: Tonos de papel neutros --- */
-  --color-washi-50: oklch(98.5% 0.005 70deg);
-  --color-washi-100: oklch(96.5% 0.01 70deg);
-  --color-washi-200: oklch(92.5% 0.015 75deg);
-  --color-washi-300: oklch(86.5% 0.02 80deg);
-  --color-washi-400: oklch(77.5% 0.03 85deg);
-  --color-washi-500: oklch(67.5% 0.04 85deg);
-  --color-washi-600: oklch(57.5% 0.04 90deg);
-  --color-washi-700: oklch(47.5% 0.04 90deg);
-  --color-washi-800: oklch(37.5% 0.04 95deg);
-  --color-washi-900: oklch(27.5% 0.03 95deg);
-  --color-washi-950: oklch(18.5% 0.02 95deg);
-
-  /* --- INK: Transparencias de Sumi --- */
-  --color-ink-0: oklch(22% 0.02 45deg / 0);
-  --color-ink-10: oklch(22% 0.02 45deg / 0.06);
-  --color-ink-20: oklch(22% 0.02 45deg / 0.12);
-  --color-ink-40: oklch(22% 0.02 45deg / 0.25);
-  --color-ink-60: oklch(22% 0.02 45deg / 0.5);
-  --color-ink-80: oklch(22% 0.02 45deg / 0.75);
-  --color-ink-100: oklch(22% 0.02 45deg / 1);
-
-  /* --- KAKI: Acento caqui/persimón --- */
-  --color-kaki-50: oklch(97% 0.02 55deg);
-  --color-kaki-100: oklch(93% 0.04 55deg);
-  --color-kaki-200: oklch(85% 0.09 55deg);
-  --color-kaki-300: oklch(75% 0.14 50deg);
-  --color-kaki-400: oklch(65% 0.16 45deg);
-  --color-kaki-500: oklch(55% 0.18 45deg);
-  --color-kaki-600: oklch(45% 0.16 45deg);
-  --color-kaki-700: oklch(35% 0.14 45deg);
-
-  /* --- CELADÓN: Acento jade --- */
-  --color-celadon-50: oklch(97% 0.01 170deg);
-  --color-celadon-100: oklch(93% 0.03 170deg);
-  --color-celadon-200: oklch(87% 0.06 170deg);
-  --color-celadon-300: oklch(77% 0.08 165deg);
-  --color-celadon-400: oklch(67% 0.09 165deg);
-  --color-celadon-500: oklch(55% 0.09 165deg);
-  --color-celadon-600: oklch(45% 0.08 165deg);
-
-  /* --- ESTADOS (Mantenidos) --- */
-  --color-error: oklch(40% 0.15 30deg);
-  --color-warning: oklch(65% 0.12 85deg);
-  --color-success: oklch(45% 0.1 150deg);
-  --color-info: var(--color-celadon-400);
-
   /* --- MAPEADO SEMÁNTICO (SHIBUI) --- */
   --lib-shibui-water: var(--color-celadon-500);
   --lib-shibui-kaki: var(--color-kaki-500);
@@ -85,8 +38,6 @@
 
   /* --- 4. TIPOGRAFÍA ELEGANTE --- */
   --lib-font-family-base: var(--lib-font-body);
-  --lib-text-transform: uppercase;
-  --lib-tracking-elegant: 0.15em;
 
     /* --- 3. LINE HEIGHTS (Legibilidad) --- */
     --leading-tight:   1.2;
@@ -188,19 +139,8 @@
   --border-default: var(--color-washi-300);
   --border-strong:  var(--color-washi-500);
 
-  /* --- 9. RADIOS BRUTALISTAS --- */
-  --lib-radius-xs: 0px;
-  --lib-radius-sm: 0px;
-  --lib-radius-md: 1px;
-  --lib-radius-lg: 2px;
-
-  /* --- 10. TIPOGRAFÍA EDITORIAL --- */
-  --lib-font-display: "Cormorant Garamond", serif;
-  --lib-font-body:    "Shippori Mincho", serif;
-  --lib-font-mono:    "DM Mono", monospace;
   
   --lib-tracking-elegant: 0.15em;
-  --lib-text-transform: uppercase;
   --lib-font-size-base: 14px;
 
   /* --- 11. GLASS SYSTEM (Efecto Enso) --- */
