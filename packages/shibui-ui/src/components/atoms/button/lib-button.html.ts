@@ -27,7 +27,7 @@ export function buttonTemplate(props: ButtonTemplateProps): TemplateResult {
       style="${props.customPadding ? `padding: ${props.customPadding}` : nothing}"
       @click="${props.handleClick}"
       class="btn"
-    >
+    >fsdfsdfds
       <slot name="prefix"></slot>
       <slot></slot>
       <slot name="suffix"></slot>
