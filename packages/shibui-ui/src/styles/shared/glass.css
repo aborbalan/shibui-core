@@ -8,7 +8,6 @@
   /* Forzamos el renderizado del filtro */
   background: var(--glass-bg) !important;
   backdrop-filter: blur(var(--glass-blur)) !important;
-  backdrop-filter: blur(var(--glass-blur)) !important;
   border: 1px solid var(--glass-border) !important;
   box-shadow: 0 4px 12px rgb(0, 0, 0, 0.1);
 

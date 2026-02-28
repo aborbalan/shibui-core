@@ -4,10 +4,20 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2022,
     sourceType: "module",
-    project: ["./tsconfig.json", "./.config/tsconfig.json"]
+    project: ["./tsconfig.json", "./.config/tsconfig.json"],
+    tsconfigRootDir: __dirname + "/.."
   },
   plugins: [
     "@typescript-eslint"
+  ],
+  overrides: [
+    {
+      files: ["**/*.html.ts"],
+      parserOptions: {
+        project: ["./tsconfig.json"],
+        extraFileExtensions: [".html.ts"]
+      }
+    }
   ],
   extends: [
     "eslint:recommended",
@@ -15,7 +25,7 @@ module.exports = {
     "plugin:storybook/recommended"
   ],
   rules: {
-    "@typescript-eslint/explicit-function-return-type": "warn",
+    "@typescript-eslint/explicit-function-return-type": "error",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

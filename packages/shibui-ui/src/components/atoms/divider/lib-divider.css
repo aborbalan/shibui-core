@@ -39,6 +39,7 @@
 :host([align="left"]) .line-before {
   flex-grow: 0;
 }
+
 :host([align="right"]) .line-after {
   flex-grow: 0;
 }

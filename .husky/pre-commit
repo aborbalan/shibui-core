@@ -1,7 +1,14 @@
+#!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# Type check en el workspace de la librería
-npm run type-check -w @shibui/ui
+FAILED=0
 
-# lint-staged ejecutado desde dentro del workspace para que los patrones src/** resuelvan correctamente
-cd packages/shibui-ui && npx lint-staged
+npm run type-check -w @shibui/ui || FAILED=1
+
+cd packages/shibui-ui
+
+npx lint-staged || FAILED=1
+
+npx stylelint --config .config/.stylelintrc.json --fix "src/**/*.css" || FAILED=1
+
+exit $FAILED

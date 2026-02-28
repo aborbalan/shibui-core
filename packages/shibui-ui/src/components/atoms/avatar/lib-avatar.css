@@ -7,6 +7,7 @@
 :host([size="sm"]) {
   --avatar-size: 32px;
 }
+
 :host([size="lg"]) {
   --avatar-size: 56px;
 }

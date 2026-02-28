@@ -59,9 +59,11 @@
 .modal.sm {
   width: 420px;
 }
+
 .modal.md {
   width: 640px;
 }
+
 .modal.lg {
   width: 960px;
 }
@@ -71,6 +73,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
