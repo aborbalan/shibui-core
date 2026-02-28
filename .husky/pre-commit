@@ -1,5 +1,7 @@
-#!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# Ejecutamos el chequeo de tipos a través de npm para evitar el paquete falso
-npm run type-check -w @shibui/ui && npx lint-staged --config packages/shibui-ui/package.json
+# Type check en el workspace de la librería
+npm run type-check -w @shibui/ui
+
+# lint-staged ejecutado desde dentro del workspace para que los patrones src/** resuelvan correctamente
+cd packages/shibui-ui && npx lint-staged
