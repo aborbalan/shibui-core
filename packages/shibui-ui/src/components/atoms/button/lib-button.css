@@ -1,3 +1,4 @@
+@layer tokens, reset, components;
 
 /* ============================================================
    LIB-BUTTON — Shibui UI
@@ -103,6 +104,10 @@
     z-index: 0;
   }
 
+  :host([variant="primary"]) .btn:hover {
+    box-shadow: var(--shadow-md);
+  }
+
   :host([variant="primary"]) .btn:hover::after {
     transform: scaleX(1);
   }
@@ -114,68 +119,40 @@
     border-color: var(--border-strong);
   }
 
-    /* ── Ghost — sin fondo ── */
-    :host([variant="ghost"]) .btn {
-      background: transparent;
-      color: var(--text-secondary);
-    }
-
-      /* ── Accent — kaki sólido ── */
-  :host([variant="accent"]) .btn {
-    background: var(--color-kaki-400);
-    color: var(--color-white);
-  }
-
-
-
-      :host([glass]) .btn {
-        border-radius: var(--radius-md);
-        padding: var(--lib-space-sm) var(--lib-space-md);
-        backdrop-filter: var(--lib-glass-filter);
-        background: var(--lib-glass-bg);
-        border: var(--lib-glass-border);
-        box-shadow: var(--lib-glass-shadow);
-        color: var(--lib-glass-text);
-        text-shadow: var(--lib-glass-text-shadow);
-      }
-
-            /* ── Danger — borde rojo ── */
-            :host([variant="danger"]) .btn {
-              background: transparent;
-              color: var(--color-error);
-              border-color: var(--color-error);
-            }
-      
-      
-  :host([variant="primary"]) .btn:hover {
-    box-shadow: var(--shadow-md);
-  }
-  
-
-
-
   :host([variant="secondary"]) .btn:hover {
     background: var(--color-washi-900);
     color: var(--color-washi-50);
     border-color: var(--color-washi-900);
   }
 
-
+  /* ── Ghost — sin fondo ── */
+  :host([variant="ghost"]) .btn {
+    background: transparent;
+    color: var(--text-secondary);
+  }
 
   :host([variant="ghost"]) .btn:hover {
     color: var(--text-primary);
     background: var(--color-ink-10);
   }
 
-
+  /* ── Accent — kaki sólido ── */
+  :host([variant="accent"]) .btn {
+    background: var(--color-kaki-400);
+    color: var(--color-white);
+  }
 
   :host([variant="accent"]) .btn:hover {
     background: var(--color-kaki-500);
     box-shadow: var(--shadow-md);
   }
 
-
-
+  /* ── Danger — borde rojo ── */
+  :host([variant="danger"]) .btn {
+    background: transparent;
+    color: var(--color-error);
+    border-color: var(--color-error);
+  }
 
   :host([variant="danger"]) .btn:hover {
     background: var(--color-error);
@@ -186,6 +163,15 @@
      GLASS — Efecto Agua
      ============================================================ */
 
+  :host([glass]) .btn {
+    border-radius: var(--radius-md);
+    backdrop-filter: var(--lib-glass-filter);
+    background: var(--lib-glass-bg);
+    border: var(--lib-glass-border);
+    box-shadow: var(--lib-glass-shadow);
+    color: var(--lib-glass-text);
+    text-shadow: var(--lib-glass-text-shadow);
+  }
 
   /* Reflexión de luz — ::before */
   :host([glass]) .btn::before {

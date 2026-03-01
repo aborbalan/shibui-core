@@ -2,6 +2,13 @@ import type { Preview } from '@storybook/web-components-vite';
 
 const preview: Preview = {
   parameters: {
+    backgrounds: {
+      values: [
+        { name: 'paper', value: '#FAF7F4' },  // washi-50
+        { name: 'dark',  value: '#0f1923' },
+      ],
+      default: 'paper',
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

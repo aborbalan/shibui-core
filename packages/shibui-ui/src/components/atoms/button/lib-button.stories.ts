@@ -8,16 +8,6 @@ type LibButtonStoryArgs = LibButton & { slotContent?: string | TemplateResult };
 const meta: Meta<LibButtonStoryArgs> = {
   title: 'Components/Atoms/Button',
   component: 'lib-button',
-  parameters: {
-    backgrounds: {
-      default: 'washi',
-      values: [
-        { name: 'washi',   value: '#FAF7F4' },
-        { name: 'dark',    value: '#221C16' },
-        { name: 'gradient', value: 'linear-gradient(135deg, #0f1923 0%, #1a2535 50%, #0d1f2d 100%)' },
-      ],
-    },
-  },
   argTypes: {
     variant: {
       control: 'select',

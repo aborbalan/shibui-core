@@ -3,8 +3,6 @@ import { customElement, property } from 'lit/decorators.js';
 import { generateUniqueId } from '../../../core/a11y';
 import type { LibSize, LibVariant, UiClickEventDetail } from '../../../types';
 import buttonCss from './lib-button.css?inline';
-import glassCss from '../../../styles/shared/glass.css?inline';
-
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import { buttonTemplate } from './lib-button.html';
 
@@ -21,9 +19,7 @@ export class LibButton extends LitElement {
     `,
     css`
       ${unsafeCSS(buttonCss)}
-    `, css`
-    ${unsafeCSS(glassCss)}
-  `,
+    `
     
   ];
 
