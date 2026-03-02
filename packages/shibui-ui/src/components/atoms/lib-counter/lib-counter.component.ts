@@ -1,4 +1,4 @@
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit-element/decorators.js';
 import styles from './lib-counter.css?inline';
 
@@ -12,7 +12,7 @@ export class LibCounter extends LitElement {
   @property({ type: String }) override prefix = '';
     @property({ type: String }) suffix = '';
 
-  override render() {
+  override render(): TemplateResult {
     return html`
     <span class="counter-container">
       ${this.prefix ? html`<span class="prefix">${this.prefix}</span>` : ''}
