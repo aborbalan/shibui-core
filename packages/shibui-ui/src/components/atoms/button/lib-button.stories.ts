@@ -8,6 +8,7 @@ type LibButtonStoryArgs = LibButton & { slotContent?: string | TemplateResult };
 const meta: Meta<LibButtonStoryArgs> = {
   title: 'Components/Atoms/Button',
   component: 'lib-button',
+
   argTypes: {
     variant: {
       control: 'select',
@@ -43,7 +44,6 @@ const meta: Meta<LibButtonStoryArgs> = {
 export default meta;
 type Story = StoryObj<LibButtonStoryArgs>;
 
-/* ── Playground ── */
 export const Playground: Story = {
   args: {
     variant: 'primary',

@@ -3,3 +3,5 @@ dist/
 build/
 *.d.ts
 commitlint.config.cjs
+!src/**/*.ts
+!src/**/*.stories.ts
