@@ -1,110 +1,76 @@
-import { LitElement, html, css, unsafeCSS, TemplateResult } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
-import glassStyles from '../../../styles/shared/glass.css?inline';
 import inputStyles from './lib-input.css?inline';
+import { inputTemplate } from './lib-input.html';
 
-// Importamos el átomo para que esté disponible
-import '../../atoms/label/lib-label.component';
+export interface LibInputEventDetail {
+  value: string;
+}
 
+/**
+ * @element lib-input
+ * @fires ui-lib-input - Evento disparado al cambiar el valor del input.
+ * @slot prefix - Icono o elemento antes del input.
+ * @slot suffix - Icono o elemento después del input.
+ */
 @customElement('lib-input')
 export class LibInput extends LitElement {
   static override styles = [
-    css`
-      ${unsafeCSS(sharedTokens)}
-    `,
-    css`
-      ${unsafeCSS(inputStyles)}
-    `,
-    css`${unsafeCSS(glassStyles)}`,
+    css`${unsafeCSS(sharedTokens)}`,
+    css`${unsafeCSS(inputStyles)}`,
   ];
 
   @property({ type: String }) label = '';
   @property({ type: String }) placeholder = '';
-  @property({ type: Boolean }) required = false;
-  @property({ type: Boolean }) error = false;
+  @property({ type: String }) type: 'text' | 'email' | 'password' = 'text';
+  @property({ type: Boolean, reflect: true }) required = false;
+  @property({ type: Boolean, reflect: true }) disabled = false;
+  @property({ type: Boolean, reflect: true }) error = false;
   @property({ type: String }) errorMessage = '';
   @property({ type: String }) value = '';
 
-  @property({ type: Boolean, reflect: true }) glass = false;
-  @property({ type: String, reflect: true }) glassIntensity: 'low' | 'high' = 'low';
+  @state() private _showPassword = false;
 
-  @query('input') _inputElement!: HTMLInputElement;
-  // ID único para conectar la label con el input (Accesibilidad)
-  private _uuid = `input-${Math.random().toString(36).slice(2, 9)}`;
+  private readonly _uuid = `lib-input-${Math.random().toString(36).slice(2, 9)}`;
 
+  override render(): TemplateResult {
+    return inputTemplate({
+      uuid: this._uuid,
+      type: this.type,
+      label: this.label,
+      placeholder: this.placeholder,
+      required: this.required,
+      disabled: this.disabled,
+      error: this.error,
+      errorMessage: this.errorMessage,
+      value: this.value,
+      showPassword: this._showPassword,
+      handleInput: this._handleInput.bind(this),
+      handleTogglePassword: this._handleTogglePassword.bind(this),
+    });
+  }
 
-  private _handleInput(e: InputEvent):void {
+  private _handleInput(e: InputEvent): void {
     const target = e.target as HTMLInputElement;
-    this.value = target.value; // Sincronizamos la propiedad del componente
-    
-    // Emitimos un evento personalizado para que el padre se entere
-    this.dispatchEvent(new CustomEvent('lib-input', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true
-    }));
+    this.value = target.value;
+
+    this.dispatchEvent(
+      new CustomEvent<LibInputEventDetail>('ui-lib-input', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
-  private _handleClear():void {
-    this.value = ''; // Limpiamos la propiedad de Lit
-    
-    // Forzamos el valor en el elemento nativo por si acaso
-    if (this._inputElement) {
-      this._inputElement.value = '';
-      this._inputElement.focus(); // Devolvemos el foco para que el usuario siga escribiendo
-    }
-  
-    // Avisamos al exterior de que el valor ha cambiado a vacío
-    this.dispatchEvent(new CustomEvent('lib-input', {
-      detail: { value: '' },
-      bubbles: true,
-      composed: true
-    }));
+  private _handleTogglePassword(): void {
+    this._showPassword = !this._showPassword;
   }
+}
 
-  protected override render(): TemplateResult {
-    return html`
-      <div class="input-group ${this.error ? 'has-error' : ''}"">
-        ${this.label
-          ? html`
-              <lib-label .htmlFor="${this._uuid}" ?required="${this.required}">
-                ${this.label}
-              </lib-label>
-            `
-          : ''}
-
-     <div class="input-wrapper ${this.glass ? 'glass-target' : ''}">
-          <slot name="prefix"></slot>
-          <input
-            id="${this._uuid}"
-            type="text"
-            placeholder="${this.placeholder}"
-            ?required="${this.required}"
-            aria-invalid="${this.error}"
-            aria-describedby="${this.error ? `${this._uuid}-error` : ''}"
-            .value="${this.value}"
-            @input="${this._handleInput}"
-          />
-          ${this.value ? html`
-            <button 
-              class="clear-button" 
-              @click=${this._handleClear}
-              aria-label="Limpiar campo"
-            >
-              ✕ 
-            </button>
-          ` : ''}
-          <slot name="suffix"></slot>
-        </div>
-        ${this.error && this.errorMessage
-          ? html`
-              <span class="error-message" id="${this._uuid}-error">
-                ${this.errorMessage}
-              </span>
-            `
-          : ''}
-      </div>
-    `;
+declare global {
+  interface HTMLElementTagNameMap {
+    'lib-input': LibInput;
   }
 }

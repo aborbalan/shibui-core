@@ -5,7 +5,7 @@ module.exports = {
     ecmaVersion: 2022,
     sourceType: "module",
     project: ["./tsconfig.json", "./.config/tsconfig.json"],
-    tsconfigRootDir: __dirname + "/.."
+    tsconfigRootDir: process.cwd(),
   },
   plugins: [
     "@typescript-eslint"
@@ -37,6 +37,7 @@ module.exports = {
   ignorePatterns: [
     "dist",
     "node_modules",
-    "*.d.ts"
+    "*.d.ts",
+    "!src/**/*"
   ]
 };
