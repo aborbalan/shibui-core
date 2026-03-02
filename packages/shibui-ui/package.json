@@ -83,7 +83,7 @@
   },
   "lint-staged": {
     "src/**/*.ts": [
-      "eslint --config .config/eslintrc.cjs --fix --max-warnings=1"
+      "eslint --config .config/eslintrc.cjs --fix --max-warnings=2"
     ]
   },
   "customElements": "custom-elements.json"

@@ -1,0 +1,41 @@
+@layer atoms {
+    @property --current-value {
+      syntax: '<integer>';
+      initial-value: 0;
+      inherits: false;
+    }
+  
+    :host {
+      display: inline-block;
+      font-family: var(--lib-font-family-mono, monospace);
+      font-variant-numeric: tabular-nums;
+      color: var(--color-kaki-500);
+      font-weight: 600;
+      /* Movemos la inicialización aquí para evitar duplicados en el bloque hijo */
+      --current-value: 0;
+    }
+  
+    .counter {
+      /* Eliminamos la línea duplicada que causaba el error */
+      transition: --current-value var(--duration) cubic-bezier(0.16, 1, 0.3, 1);
+      --current-value: var(--target-value);
+      
+      counter-reset: count var(--current-value);
+    }
+  
+    .counter::after {
+      content: counter(count);
+    }
+  
+    .counter-container {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.1em;
+    }
+  
+    .prefix, .suffix {
+      font-size: 0.8em;
+      opacity: 0.8;
+      user-select: none;
+    }
+  }
