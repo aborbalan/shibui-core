@@ -9,13 +9,13 @@ export interface ButtonTemplateProps {
   handleClick: (event: Event) => void;
   variant: LibVariant;
   size: LibSize;
+  glass: boolean;
   customPadding?: string | undefined;
 }
-
+    
 /**
  * Plantilla base para el componente lib-button.
- * @param props - Propiedades de configuración del botón.
- * @returns TemplateResult para ser renderizado por Lit.
+ * Renderiza un único <button> estilizado vía :host() selectors.
  */
 export function buttonTemplate(props: ButtonTemplateProps): TemplateResult {
   return html`
@@ -23,9 +23,10 @@ export function buttonTemplate(props: ButtonTemplateProps): TemplateResult {
       id="${props.buttonId}"
       type="${props.type}"
       ?disabled="${props.disabled}"
-      aria-label="${props.ariaLabel || nothing}"
+      aria-label="${props.ariaLabel ?? nothing}"
+      style="${props.customPadding ? `padding: ${props.customPadding}` : nothing}"
       @click="${props.handleClick}"
-      style="${props.customPadding ? `--custom-padding: ${props.customPadding}` : ''}"
+      class="btn"
     >
       <slot name="prefix"></slot>
       <slot></slot>

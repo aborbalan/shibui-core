@@ -10,7 +10,7 @@
  */
 
 /* Import shared styles (tokens, variables, etc.) */
-@import './shared/index.css';
+@import url('./shared/index.css');
 
 /* CSS Layers - Modern organization */
 @layer reset, base, components, utilities;
@@ -38,7 +38,6 @@
     padding: 0;
     margin: -1px;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
   }
@@ -60,7 +59,7 @@ body {
 
 .sidebar {
   grid-area: 1 / 1 / 2 / 2; /* Position in grid */
-  background-color: oklch(95% 0.01 270); /* Light background for sidebar */
+  background-color: oklch(95% 0.01 270deg); /* Light background for sidebar */
   padding: var(--lib-space-lg);
   color: var(--lib-color-text);
   border-right: 1px solid var(--lib-color-border);
@@ -93,7 +92,7 @@ body {
 }
 
 .sidebar a:hover {
-  background-color: oklch(90% 0.01 270);
+  background-color: oklch(90% 0.01 270deg);
 }
 
 .content-area {
@@ -132,5 +131,5 @@ body {
 }
 
 .font-figtree h3, .font-figtree p, .font-figtree lib-button {
-  font-family: 'Figtree', sans-serif;
+  font-family: Figtree, sans-serif;
 }

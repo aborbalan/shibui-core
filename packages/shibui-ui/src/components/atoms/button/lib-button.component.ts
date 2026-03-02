@@ -21,10 +21,10 @@ export class LibButton extends LitElement {
     `,
     css`
       ${unsafeCSS(buttonCss)}
-    `,
-    css`
-      ${unsafeCSS(glassCss)}
-    `
+    `, css`
+    ${unsafeCSS(glassCss)}
+  `,
+    
   ];
 
   private _buttonId: string;
@@ -42,6 +42,9 @@ export class LibButton extends LitElement {
 
   @property({ type: Boolean, reflect: true })
   disabled = false;
+
+  @property({ type: Boolean, reflect: true })
+  glass = false;
 
   @property({ type: String })
   type: 'button' | 'submit' | 'reset' = 'button';
@@ -65,6 +68,7 @@ export class LibButton extends LitElement {
       handleClick: this._handleClick.bind(this),
       variant: this.variant,
       size: this.size,
+      glass:this.glass,
       customPadding: this.customPadding ?? undefined,
     });
   }

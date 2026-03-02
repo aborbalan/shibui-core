@@ -1,4 +1,3 @@
-import type { HTMLAttributes } from 'svelte/elements';
 
 declare global {
   namespace svelteHTML {

@@ -10,7 +10,7 @@
  * For detailed documentation on spacing scales and other shared style concepts, refer to: `docs/styles/shared/index.md`
  */
 
-@import './tokens.css';
+@import url('./tokens.css');
 
 /* src/styles/index.css */
 
