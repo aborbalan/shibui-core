@@ -1,46 +1,135 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { html } from 'lit';
+import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { html, TemplateResult } from 'lit';
 import './lib-card.component';
-// Importamos otros componentes para vitaminar la historia
-import '../../atoms/button/lib-button.component'; 
+import '../../atoms/button/lib-button.component';
 
-const meta: Meta = {
-  title: 'Surfaces/Card',
+type LibCardArgs = {
+  variant: 'default' | 'inverse' | 'accent';
+  accentColor: string;
+};
+
+const meta: Meta<LibCardArgs> = {
+  title: 'Components/Molecules/Card',
   component: 'lib-card',
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['default', 'inverse', 'accent'],
+      description: 'Variante visual de la card',
+    },
+    accentColor: {
+      control: 'color',
+      description: 'Color del borde accent (solo variante accent)',
+    },
+  },
+  render: (args): TemplateResult => html`
+    <div style="width: 320px; padding: var(--lib-space-xl);">
+      <lib-card variant="${args.variant}" accentColor="${args.accentColor}">
+        <span slot="tag">Etiqueta</span>
+        <h2 slot="title">Título de la card</h2>
+        <p>Contenido de ejemplo para visualizar el componente con texto representativo.</p>
+        <div slot="footer">
+          <span>Metadata</span>
+          <lib-button variant="ghost" size="sm">Acción</lib-button>
+        </div>
+      </lib-card>
+    </div>
+  `,
 };
 
 export default meta;
+type Story = StoryObj<LibCardArgs>;
 
-export const Default: StoryObj = {
-  render: () => html`
-    <lib-card>
-      <h2 slot="header">Título de la Tarjeta</h2>
-      <p>Este es el contenido principal de la tarjeta. Puedes meter cualquier cosa aquí dentro gracias al slot por defecto.</p>
-    </lib-card>
-  `,
+/* ── Playground ── */
+export const Playground: Story = {
+  args: {
+    variant: 'default',
+    accentColor: '',
+  },
 };
 
-export const WithInteractiveContent: StoryObj = {
-  render: () => html`
-    <lib-card>
-      <h3 slot="header" style="margin: 0; font-family: var(--lib-font-family);">Configuración de Usuario</h3>
-      <div style="display: flex; flex-direction: column; gap: 12px;">
-        <p style="margin: 0; font-family: var(--lib-font-family); color: var(--lib-color-neutral-40);">
-          Gestiona los permisos y la visibilidad de tu perfil público.
-        </p>
-        <div style="display: flex; gap: 8px;">
-          <lib-button variant="primary">Guardar cambios</lib-button>
-          <lib-button variant="secondary">Cancelar</lib-button>
+/* ── Todas las variantes ── */
+export const AllVariants: Story = {
+  name: 'All Variants',
+  render: (): TemplateResult => html`
+    <div style="
+      display: grid;
+      grid-template-columns: repeat(3, 320px);
+      gap: var(--lib-space-xl);
+      padding: var(--lib-space-xl);
+    ">
+      <lib-card variant="default">
+        <span slot="tag">Component</span>
+        <h2 slot="title">Default Card</h2>
+        <p>A simple surface for grouping related content with subtle elevation on hover.</p>
+        <div slot="footer">
+          <span>v1.0</span>
+          <lib-button variant="ghost" size="sm">Learn more</lib-button>
         </div>
-      </div>
-    </lib-card>
+      </lib-card>
+
+      <lib-card variant="accent">
+        <span slot="tag">Accent variant</span>
+        <h2 slot="title">Kaki Accent</h2>
+        <p>Left border in persimmon kaki. Used for highlighted or featured items.</p>
+        <div slot="footer">
+          <span>Featured</span>
+          <lib-button variant="primary" size="sm">Explore</lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card variant="inverse">
+        <span slot="tag">Inverse variant</span>
+        <h2 slot="title">Dark Card</h2>
+        <p>Inverse surface using the deepest washi tone. For contrast sections.</p>
+        <div slot="footer">
+          <span>Inverse</span>
+          <lib-button variant="secondary" size="sm">View</lib-button>
+        </div>
+      </lib-card>
+    </div>
   `,
 };
 
-export const Empty: StoryObj = {
-  render: () => html`
-    <lib-card>
-      <p>Una tarjeta simple sin header, solo con contenido base.</p>
-    </lib-card>
+/* ── Accent con color custom ── */
+export const CustomAccent: Story = {
+  name: 'Custom Accent Color',
+  render: (): TemplateResult => html`
+    <div style="
+      display: grid;
+      grid-template-columns: repeat(3, 280px);
+      gap: var(--lib-space-xl);
+      padding: var(--lib-space-xl);
+    ">
+      <lib-card variant="accent" accentColor="var(--color-kaki-400)">
+        <span slot="tag">Kaki</span>
+        <h2 slot="title">Persimón</h2>
+        <p>El acento por defecto del sistema Shibui.</p>
+        <div slot="footer">
+          <span>Highlight</span>
+          <lib-button variant="ghost" size="sm">Ver más</lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card variant="accent" accentColor="var(--color-celadon-400)">
+        <span slot="tag">Celadón</span>
+        <h2 slot="title">Jade</h2>
+        <p>El segundo acento del sistema, más sereno.</p>
+        <div slot="footer">
+          <span>Sereno</span>
+          <lib-button variant="ghost" size="sm">Ver más</lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card variant="accent" accentColor="var(--color-washi-500)">
+        <span slot="tag">Washi</span>
+        <h2 slot="title">Neutro</h2>
+        <p>Acento sutil para contenido sin jerarquía especial.</p>
+        <div slot="footer">
+          <span>Neutro</span>
+          <lib-button variant="ghost" size="sm">Ver más</lib-button>
+        </div>
+      </lib-card>
+    </div>
   `,
 };
