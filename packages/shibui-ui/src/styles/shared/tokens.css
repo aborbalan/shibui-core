@@ -137,6 +137,12 @@
   --color-info:    oklch(58.33% 0.068 171.21deg); /* #4E9482 (Coincide con Celadon-400) */
   --color-white:   oklch(100% 0 0deg);             /* #FFFFFF -> Blanco puro */
 
+  /* Derivados de estado — fondos y bordes suaves */
+--color-error-subtle:   #FFF0EE;  /* fondo badge/alert error */
+--color-error-border:   #F5C4BC;  /* borde badge/alert error */
+--color-success-subtle: #EFF5F1;  /* fondo badge/alert success */
+--color-success-border: #BDD8C5;  /* borde badge/alert success */
+
   /* --- 7. BACKGROUNDS SEMÁNTICOS --- */
   --bg-base:     var(--color-washi-50);
   --bg-surface:  var(--color-washi-100);
