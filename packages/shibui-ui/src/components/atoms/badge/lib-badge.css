@@ -2,13 +2,14 @@
 
 /* ============================================================
    LIB-BADGE — Shibui UI
-   Variantes: default · kaki · celadon · dark · error · success
+   Variantes : default · accent · celadon · dark · error · success · warning
+   Modificadores: size (sm/md) · dot · pill
    ============================================================ */
 
 @layer reset {
   :host {
-    display: inline-flex;
-    align-items: center;
+    display: inline-block;
+    vertical-align: middle;
   }
 
   *,
@@ -21,70 +22,105 @@
 @layer components {
 
   /* ── Base ── */
-  :host {
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--lib-space-xs);
     font-family: var(--lib-font-mono);
     font-size: 10px;
+    font-weight: var(--weight-medium);
     letter-spacing: var(--tracking-wider);
     text-transform: uppercase;
     white-space: nowrap;
+    line-height: 1;
     padding: var(--lib-space-xs) var(--lib-space-sm);
-    border: 1px solid;
-    gap: var(--lib-space-xs);
+    border: var(--lib-border-width) solid transparent;
+    border-radius: var(--lib-radius-xs);
+    user-select: none;
   }
 
-  /* ── Variantes ── */
-  :host([variant="default"]) {
+  /* ── Size: md (default) ── */
+  :host([size="md"]) .badge,
+  .badge {
+    padding: var(--lib-space-xs) var(--lib-space-sm);
+    font-size: 10px;
+  }
+
+  /* ── Size: sm ── */
+  :host([size="sm"]) .badge {
+    padding: 2px var(--lib-space-xs);
+    font-size: 9px;
+    letter-spacing: var(--tracking-wide);
+  }
+
+  /* ── Pill modifier ── */
+  :host([pill]) .badge {
+    border-radius: var(--radius-full);
+    padding-inline: var(--lib-space-md);
+  }
+
+  /* ── Dot indicador ── */
+  .badge__dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: var(--radius-full);
+    background: currentcolor;
+    opacity: 0.75;
+    flex-shrink: 0;
+  }
+
+  /* ============================================================
+     VARIANTES
+     ============================================================ */
+
+  /* ── Default ── */
+  :host([variant="default"]) .badge,
+  .badge {
     background: var(--color-washi-100);
     color: var(--text-secondary);
     border-color: var(--border-default);
   }
 
-  :host([variant="kaki"]) {
+  /* ── Accent (kaki / persimón) ── */
+  :host([variant="accent"]) .badge {
     background: var(--color-kaki-50);
     color: var(--color-kaki-600);
     border-color: var(--color-kaki-200);
   }
 
-  :host([variant="celadon"]) {
+  /* ── Celadón (jade) ── */
+  :host([variant="celadon"]) .badge {
     background: var(--color-celadon-50);
     color: var(--color-celadon-600);
     border-color: var(--color-celadon-200);
   }
 
-  :host([variant="dark"]) {
+  /* ── Dark (inverso) ── */
+  :host([variant="dark"]) .badge {
     background: var(--color-washi-900);
     color: var(--color-washi-300);
     border-color: var(--color-washi-700);
   }
 
-  :host([variant="error"]) {
-    background: var(--color-error-subtle);
+  /* ── Error ── */
+  :host([variant="error"]) .badge {
+    background: oklch(97% 0.01 15deg);
     color: var(--color-error);
-    border-color: var(--color-error-border);
+    border-color: oklch(85% 0.04 15deg);
   }
-  
-  :host([variant="success"]) {
-    background: var(--color-success-subtle);
+
+  /* ── Success ── */
+  :host([variant="success"]) .badge {
+    background: oklch(97% 0.01 150deg);
     color: var(--color-success);
-    border-color: var(--color-success-border);
+    border-color: oklch(85% 0.04 150deg);
   }
 
-  /* ── Botón remove ── */
-  .badge-remove {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    color: inherit;
-    opacity: 0.6;
-    transition: opacity var(--duration-base) var(--ease-default);
-    margin-left: var(--lib-space-xs);
-  }
-
-  .badge-remove:hover {
-    opacity: 1;
+  /* ── Warning ── */
+  :host([variant="warning"]) .badge {
+    background: oklch(97% 0.02 80deg);
+    color: var(--color-warning);
+    border-color: oklch(87% 0.05 80deg);
   }
 }
