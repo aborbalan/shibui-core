@@ -25,24 +25,30 @@
     --avatar-initials-size: var(--text-xs);
     --avatar-icon-size:     18px;
   }
+
   :host([size="xs"])  { 
     --avatar-size: 24px;
      --avatar-initials-size: 8px;
                     --avatar-icon-size: 10px; }
+
   :host([size="sm"])  { 
     --avatar-size: 32px;
      --avatar-initials-size: 10px;
                    --avatar-icon-size: 14px; }
+
   :host([size="md"])  { 
     --avatar-size: 40px;
      --avatar-initials-size: var(--text-xs); 
         --avatar-icon-size: 18px; }
+
   :host([size="lg"])  { --avatar-size: 56px;
      --avatar-initials-size: var(--text-sm);
          --avatar-icon-size: 24px; }
+
   :host([size="xl"])  { --avatar-size: 72px;
      --avatar-initials-size: var(--text-base);
        --avatar-icon-size: 30px; }
+
   :host([size="2xl"]) { --avatar-size: 96px;
      --avatar-initials-size: var(--text-md);
          --avatar-icon-size: 40px; }
@@ -73,6 +79,7 @@
   /* Shapes */
   :host([shape="squircle"]) .avatar__face { 
     border-radius: 30%; }
+
   :host([shape="square"])   .avatar__face { 
     border-radius: var(--radius-md); }
 
