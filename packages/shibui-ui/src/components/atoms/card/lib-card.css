@@ -1,27 +1,139 @@
-:host {
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-CARD — Shibui UI
+   Variantes: default · inverse · accent
+   ============================================================ */
+
+@layer reset {
+  :host {
     display: block;
-    background: var(--lib-color-bg);
-    border-radius: var(--lib-radius-md);
-    box-shadow: var(--lib-shadow-sm);
-    padding: var(--lib-space-lg);
-    margin-bottom: var(--lib-space-xl);
-    border: 1px solid var(--lib-color-border);
+    container-type: inline-size;
   }
-  
-  .card-header {
-    margin-bottom: var(--lib-space-md);
-    border-bottom: 1px solid var(--lib-color-border);
-    padding-bottom: var(--lib-space-sm);
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
-  
-  ::slotted(h2) {
-    margin: 0;
-    font-size: var(--lib-font-size-lg);
-    color: var(--lib-color-primary);
-  }
-  
-  .card-content {
+}
+
+@layer components {
+
+  /* ── Base ── */
+  .card {
     display: flex;
     flex-direction: column;
-    gap: var(--lib-space-md);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    padding: var(--lib-space-lg);
+    height: 100%;
+    position: relative;
+    transition:
+      box-shadow   var(--duration-slow) var(--ease-out),
+      transform    var(--duration-slow) var(--ease-out),
+      border-color var(--duration-slow) var(--ease-out);
   }
+
+  @media (hover: hover) {
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border-default);
+    }
+  }
+
+  /* ── Header (tag slot) ── */
+  .card-header {
+    margin-bottom: var(--lib-space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-sm);
+    min-height: var(--lib-space-md);
+  }
+
+  ::slotted([slot="tag"]) {
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--text-muted);
+  }
+
+  /* ── Content (title + body) ── */
+  .card-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-sm);
+  }
+
+  ::slotted([slot="title"]) {
+    margin: 0;
+    font-family: var(--lib-font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-secondary);
+  }
+
+  .card-body {
+    font-family: var(--lib-font-body);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-washi-500);
+  }
+
+  /* ── Footer ── */
+  .card-footer {
+    margin-top: var(--lib-space-lg);
+    padding-top: var(--lib-space-md);
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wider);
+    color: var(--text-muted);
+    min-height: var(--lib-space-lg);
+  }
+
+  ::slotted([slot="footer"]) {
+    display: contents;
+  }
+
+  /* ============================================================
+     VARIANTES
+     ============================================================ */
+
+  /* ── Inverse ── */
+  :host([variant="inverse"]) .card {
+    background: var(--color-washi-900);
+    border-color: var(--color-washi-800);
+  }
+
+  :host([variant="inverse"]) ::slotted([slot="title"]) {
+    color: var(--color-washi-50);
+  }
+
+  :host([variant="inverse"]) .card-body {
+    color: var(--color-washi-400);
+  }
+
+  :host([variant="inverse"]) .card-footer {
+    border-top-color: var(--color-washi-800);
+    color: var(--color-washi-600);
+  }
+
+  :host([variant="inverse"]) ::slotted([slot="tag"]) {
+    color: var(--color-washi-500);
+  }
+
+  /* ── Accent ── */
+  :host([variant="accent"]) .card {
+    border-left: 3px solid var(--card-accent-color, var(--color-kaki-400));
+    padding-left: calc(var(--lib-space-lg) - 3px);
+  }
+}
