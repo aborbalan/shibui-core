@@ -22,7 +22,6 @@ export class LibAvatarGroup extends LitElement {
     if (!this._avatars) return;
     this._avatars.forEach((avatar, index) => {
       avatar.size = this.size;
-      avatar.rounded = true; 
       avatar.style.display = index < this.max ? 'inline-block' : 'none';
     });
   }
