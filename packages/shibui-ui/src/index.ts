@@ -24,9 +24,9 @@ export * from './components/atoms/icon/lib-icon.component';
 export * from './components/atoms/button/lib-button.component';
 export * from './components/atoms/magnetic/lib-magnetic.component';
 export * from './components/atoms/spotlight-card/lib-spotlight-card.component';
-export * from './components/atoms/lib-counter/lib-counter.component';
-export * from './components/atoms/radio/lib-radio.component';
-
+export * from './components/atoms/lib-counter/lib-counter.component'
+export * from './components/atoms/divider/lib-divider.component'
+export * from './components/atoms/spacer/lib-spacer.component';
 
 export * from './components/molecules/form-field/lib-form-field.component';
 export * from './components/molecules/breadcrumb/lib-breadcrumb.component';
