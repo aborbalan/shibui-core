@@ -1,5 +1,5 @@
 // lib-spacer.component.ts
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
@@ -19,7 +19,7 @@ export class LibSpacer extends LitElement {
     }
   `;
 
-  protected override render() {
+  protected override render():TemplateResult {
     // MAPEADO EXACTO A TUS TOKENS DE tokens.css
     const spaceValue = `var(--lib-space-${this.size}, 16px)`;
     

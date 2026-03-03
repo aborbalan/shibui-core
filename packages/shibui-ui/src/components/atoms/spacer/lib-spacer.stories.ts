@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { html } from 'lit';
+import { html, TemplateResult } from 'lit';
 import './lib-spacer.component';
 
 export default {
@@ -12,7 +12,7 @@ export default {
 } as Meta;
 
 // Caja de ayuda para visualizar el efecto
-const Box = (color: string) => html`
+const Box = (color: string):TemplateResult => html`
   <div style="background: ${color}; padding: 1rem; border-radius: 4px; color: white; font-family: sans-serif;">
     Elemento
   </div>
