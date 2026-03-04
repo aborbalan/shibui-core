@@ -1,53 +1,37 @@
-import { LitElement, html, css, unsafeCSS, TemplateResult } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { LitElement, TemplateResult, css, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import alertStyles from './lib-alert.css?inline';
+import { template } from './lib-alert.html'; 
+
+export type AlertType = 'info' | 'success' | 'warning' | 'error';
 
 @customElement('lib-alert')
 export class LibAlert extends LitElement {
-  static override styles = [css`${unsafeCSS(alertStyles)}` || []];
+  static override styles = [css`${unsafeCSS(alertStyles ?? '')}`];
 
-  @property({ type: String, reflect: true }) type: 'info' | 'success' | 'warning' | 'error' = 'info';
-  @property({ type: String, reflect: true }) position: 'inline' | 'top-right' = 'inline';
-  @property({ type: Boolean, reflect: true }) glass = false;
-  @property({ type: Number }) duration = 5000; // 5 segundos por defecto
-  @property({ type: String }) message = '';
+  @property({ type: String, reflect: true }) 
+  type: AlertType = 'info';
 
-  @state() private _isClosing = false;
+  @property({ type: Boolean, reflect: true }) 
+  glass = false;
 
-  // Iniciamos el temporizador si es un toast (top-right)
-  protected override firstUpdated():void {
-    if (this.position === 'top-right' && this.duration > 0) {
-      setTimeout(() => this.close(), this.duration);
-    }
+  @property({ type: Boolean }) 
+  closable = false;
+
+  /**
+   * Cambiamos 'close()' por 'handleClose()' para coincidir con el template
+   * y emitir el evento correcto que el ToastManager escucha.
+   */
+  public handleClose(): void {
+    const event = new CustomEvent('lib-alert-close', {
+      bubbles: true,
+      composed: true,
+      detail: { type: this.type }
+    });
+    this.dispatchEvent(event);
   }
 
-  public close():void {
-    this._isClosing = true;
-    // Esperamos a que termine la animación de salida (300ms) antes de eliminar del DOM
-    setTimeout(() => {
-      this.dispatchEvent(new CustomEvent('alert-closed', { bubbles: true, composed: true }));
-      this.remove();
-    }, 300);
-  }
-
-  private _getIconName(): string {
-    const map = { success: 'check', error: 'x', warning: 'warning', info: 'info' };
-    return map[this.type] || 'info';
-  }
-
-  override render():TemplateResult {
-    return html`
-      <div class="alert-container ${this._isClosing ? 'closing' : ''}">
-        <div class="alert-icon-wrapper">
-          <lib-icon name="${this._getIconName()}"></lib-icon>
-        </div>
-        <div class="alert-content">
-          <slot>${this.message}</slot>
-        </div>
-        <button class="close-button" @click=${this.close} aria-label="Cerrar alerta">
-          <lib-icon name="x"></lib-icon>
-        </button>
-      </div>
-    `;
+  protected override render(): TemplateResult {
+    return template(this);
   }
 }

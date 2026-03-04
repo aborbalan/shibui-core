@@ -1,121 +1,76 @@
+/* lib-alert.css */
 :host {
   display: block;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Posicionamiento flotante tipo Toast */
-:host([position="top-right"]) {
-  position: fixed;
-  top: 24px;
-  right: 24px;
-  z-index: 1000;
-  width: 320px;
-  animation: slide-in 0.3s ease-out forwards;
-}
-
 .alert-container {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center;
-  padding: 12px 16px;
-  gap: 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgb(0, 0, 0, 0.1);
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
+  display: flex;
+  align-items: flex-start;
+  padding: var(--lib-space-md);
+  gap: var(--lib-space-sm);
+  border-radius: var(--lib-radius-md, 8px);
+  border: 1px solid var(--alert-border-color);
+  background-color: var(--alert-bg-color);
+  color: var(--alert-text-color);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.alert-container.closing {
-  transform: translateX(100%);
-  opacity: 0;
+/* Variantes usando OKLCH dinámico según el tipo */
+:host([type="info"]) {
+  --alert-bg-color: oklch(97% 0.01 230deg);
+  --alert-border-color: oklch(90% 0.02 230deg);
+  --alert-text-color: oklch(30% 0.05 230deg);
+}
+
+:host([type="success"]) {
+  --alert-bg-color: oklch(97% 0.04 145deg);
+  --alert-border-color: oklch(90% 0.08 145deg);
+  --alert-text-color: oklch(25% 0.1 145deg);
+}
+
+:host([type="warning"]) {
+  --alert-bg-color: oklch(97% 0.05 80deg);
+  --alert-border-color: oklch(90% 0.1 80deg);
+  --alert-text-color: oklch(25% 0.1 80deg);
+}
+
+:host([type="error"]) {
+  --alert-bg-color: oklch(97% 0.06 25deg);
+  --alert-border-color: oklch(90% 0.12 25deg);
+  --alert-text-color: oklch(25% 0.12 25deg);
+}
+
+/* Soporte Glassmorphism */
+:host([glass]) .alert-container {
+  background: oklch(100% 0 0deg / 0.2);
+  backdrop-filter: blur(12px);
 }
 
 .alert-icon-wrapper {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  color: var(--alert-text-color);
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
 }
 
 .alert-content {
   flex: 1;
-  min-width: 0; /* Clave para que el flex no colapse el contenido */
-  color: #333;
-  font-family: var(--lib-font-family, sans-serif);
-  font-size: 14px;
-  line-height: 1.4;
-  text-align: left;
+  font-family: var(--lib-font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: var(--text-sm);
+  line-height: 1.5;
 }
 
 .close-button {
+  cursor: pointer;
   background: transparent;
   border: none;
-  cursor: pointer;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: inherit;
   opacity: 0.6;
+  padding: 2px;
   transition: opacity 0.2s;
-  margin-left: auto; /* Empuja el botón al final */
 }
 
 .close-button:hover {
   opacity: 1;
-}
-
-.close-button lib-icon {
-  width: 14px;
-  height: 14px;
-}
-
-/* Forzamos que el slot proyecte el texto con dimensiones reales */
-.slot-wrapper,
-slot {
-  display: block !important;
-  width: 100%;
-  height: auto;
-}
-
-/* Estilos Modo Glass */
-:host([glass]) .alert-container {
-  background: rgb(255, 255, 255, 0.2);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgb(255, 255, 255, 0.3);
-}
-
-:host([glass]) .alert-content {
-  color: #fff;
-}
-
-/* Variantes de borde para mayor claridad visual */
-:host([type="success"]) .alert-container {
-  border-left: 4px solid #48bb78;
-}
-
-:host([type="error"]) .alert-container {
-  border-left: 4px solid #f56565;
-}
-
-:host([type="warning"]) .alert-container {
-  border-left: 4px solid #ed8936;
-}
-
-@keyframes slide-in {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
 }

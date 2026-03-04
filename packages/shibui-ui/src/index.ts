@@ -59,5 +59,6 @@ export * from './components/organisms/drawer/lib-drawer.component';
 export * from './components/organisms/timeline/lib-timeline-item.component';
 export * from './components/organisms/data-table/lib-data-table.component';
 export * from './components/organisms/accordion/lib-accordion.component';
+export * from './components/organisms/toast-manager/lib-toast-manager.component';
 
 console.log('Library initialized');
