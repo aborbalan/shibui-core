@@ -74,8 +74,10 @@
   /* ── Sizes — icon-only (cuadrado) ──────────────────────────── */
   :host([icon-only][size="sm"]) .copy-btn { height: 28px;
      width: 28px; padding: 0; }
+
   :host([icon-only][size="md"]) .copy-btn { height: 34px;
      width: 34px; padding: 0; }
+
   :host([icon-only][size="lg"]) .copy-btn { height: 40px;
      width: 40px; padding: 0; }
 
