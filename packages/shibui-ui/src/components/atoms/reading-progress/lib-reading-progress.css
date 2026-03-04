@@ -6,7 +6,7 @@
     width: 100%;
     z-index: var(--z-index-sticky, 100);
     height: 4px;
-    background: var(--bg-surface, oklch(95% 0.01 45));
+    background: var(--bg-surface, oklch(95% 0.01 45deg));
   }
   
   .progress-container {
@@ -17,7 +17,7 @@
   
   .progress-bar {
     height: 100%;
-    background: var(--color-accent-primary, oklch(60% 0.15 250));
+    background: var(--color-accent-primary, oklch(60% 0.15 250deg));
     width: 0%; /* Se controlará via JS */
     transition: width 0.1s ease-out;
     /* El toque Shibui: un sutil resplandor */

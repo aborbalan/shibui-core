@@ -11,9 +11,9 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    background: var(--bg-surface, oklch(98% 0.01 45));
+    background: var(--bg-surface, oklch(98% 0.01 45deg));
     border-radius: var(--lib-radius-lg, 1rem);
-    border: 1px solid var(--border-subtle, oklch(90% 0.01 45));
+    border: 1px solid var(--border-subtle, oklch(90% 0.01 45deg));
     overflow: hidden;
     box-sizing: border-box;
   }
@@ -26,7 +26,7 @@
   
   :host([interactive]) .bento-item:hover {
     transform: translateY(-4px);
-    border-color: var(--color-accent-primary, oklch(60% 0.15 250));
+    border-color: var(--color-accent-primary, oklch(60% 0.15 250deg));
     box-shadow: var(--shadow-md, 0 10px 15px -3px rgb(0 0 0 / 0.1));
   }
   

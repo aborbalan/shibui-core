@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { Meta, StoryObj } from '@storybook/web-components';
+import { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-reading-progress.component';
 
 const meta: Meta = {
