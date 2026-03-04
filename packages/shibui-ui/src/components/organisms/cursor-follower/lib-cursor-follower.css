@@ -1,0 +1,28 @@
+:host {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Vital: para que no bloquee los clicks reales */
+    z-index: var(--z-index-cursor, 9999);
+    mix-blend-mode: difference; /* El toque Shibui: cambia de color según el fondo */
+  }
+  
+  .cursor-dot {
+    width: var(--lib-cursor-size, 20px);
+    height: var(--lib-cursor-size, 20px);
+    background: var(--color-washi-100, #fff);
+    border-radius: 50%;
+    will-change: transform, width, height, opacity;
+    transition: 
+      width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+      height 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 0.3s ease;
+    transform: translate3d(-50%, -50%, 0);
+  }
+  
+  /* Estado cuando pasamos sobre un botón (Hover State) */
+  :host([active]) .cursor-dot {
+    --lib-cursor-size: 60px;
+
+    opacity: 0.5;
+  }
