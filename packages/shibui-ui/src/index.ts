@@ -35,7 +35,7 @@ export * from './components/atoms/radio/lib-radio.component';
 export * from './components/atoms/kbd/lib-kbd.component';
 export * from './components/atoms/spinner/lib-spinner.component';
 export * from './components/atoms/bento-item/lib-bento-item.component';
-
+export * from './components/atoms/reading-progress/lib-reading-progress.component';
 
 export * from './components/molecules/form-field/lib-form-field.component';
 export * from './components/molecules/breadcrumb/lib-breadcrumb.component';
