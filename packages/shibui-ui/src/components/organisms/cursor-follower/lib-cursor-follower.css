@@ -23,5 +23,6 @@
   /* Estado cuando pasamos sobre un botón (Hover State) */
   :host([active]) .cursor-dot {
     --lib-cursor-size: 60px;
+
     opacity: 0.5;
   }
