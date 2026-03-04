@@ -1,18 +1,103 @@
-:host {
-  display: block;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: #fff;
-  box-shadow: 0 1px 3px 0 rgb(0, 0, 0, 0.1);
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-ACCORDION — Shibui UI
+   Variantes: default · flush · separated · accent
+   
+   Las variantes actuan sobre lib-accordion-item via su API
+   de CSS custom properties usando ::slotted().
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.accordion-group {
-  display: flex;
-  flex-direction: column;
-}
+@layer components {
 
-/* Eliminamos el borde inferior del último hijo para que no choque con el del padre */
-::slotted(lib-accordion-item:last-of-type) {
-  border-bottom: none;
+  /* ── Default ─────────────────────────────────────────────── */
+  /* Borde exterior unificado, fondo elevado */
+  :host {
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+    display: block;
+  }
+
+  .accordion__root {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Ultimo item no tiene borde inferior */
+  ::slotted(lib-accordion-item:last-of-type) {
+    border-bottom: none !important;
+  }
+
+  /* ── Flush ───────────────────────────────────────────────── */
+  /* Sin borde exterior ni padding lateral */
+  :host([variant="flush"]) {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  :host([variant="flush"]) ::slotted(lib-accordion-item) {
+    --accordion-item-trigger-px:       0px;
+    --accordion-item-content-px:       0px;
+    --accordion-item-trigger-hover-bg: transparent;
+    --accordion-item-trigger-bg:       transparent;
+    --accordion-item-body-bg:          transparent;
+  }
+
+  /* ── Separated ───────────────────────────────────────────── */
+  /* Cada item es una tarjeta independiente con gap entre ellas */
+  :host([variant="separated"]) {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  :host([variant="separated"]) .accordion__root {
+    gap: var(--lib-space-sm);
+  }
+
+  :host([variant="separated"]) ::slotted(lib-accordion-item) {
+    border: 1px solid var(--border-subtle) !important;
+    transition:
+      box-shadow    var(--duration-slow) var(--ease-out),
+      border-color  var(--duration-slow) var(--ease-out);
+  }
+
+  :host([variant="separated"]) ::slotted(lib-accordion-item[open]) {
+    box-shadow:   var(--shadow-md);
+    border-color: var(--border-default) !important;
+  }
+
+  /* ── Accent ──────────────────────────────────────────────── */
+  /* Borde izquierdo kaki + fondo kaki-50 al abrirse */
+  :host([variant="accent"]) {
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+  }
+
+  /* Item abierto recibe los tokens kaki via custom props */
+  :host([variant="accent"]) ::slotted(lib-accordion-item[open]) {
+    --accordion-item-accent-border:    2px solid var(--color-kaki-400);
+    --accordion-item-trigger-bg:       var(--color-kaki-50);
+    --accordion-item-trigger-hover-bg: var(--color-kaki-100);
+    --accordion-item-body-bg:          var(--color-kaki-50);
+    --accordion-item-label-color:      var(--color-kaki-600);
+    --accordion-item-icon-color:       var(--color-kaki-400);
+    --accordion-item-content-border:   var(--color-kaki-200);
+    --accordion-item-content-color:    var(--color-kaki-600);
+  }
+
+  /* Reduccion de movimiento */
+  @media (prefers-reduced-motion: reduce) {
+    ::slotted(lib-accordion-item) {
+      transition: none;
+    }
+  }
 }
