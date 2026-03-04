@@ -1,70 +1,180 @@
-/* Eliminamos el @layer temporalmente para descartar conflictos de prioridad */
-:host {
-    display: inline-block !important;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-RADIO — Shibui UI
+   States  : unselected · selected · disabled
+   Sizes   : sm · md (default) · lg
+   Variants: default (washi-900) · kaki · error
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-block;
     vertical-align: middle;
-    --radio-size: 20px;
-    --radio-dot-size: 10px;
-    --radio-transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
-  
-  .radio-wrapper {
+  *, *::before, *::after { box-sizing: border-box; }
+}
+
+@layer components {
+
+  /* ── Wrapper label ─────────────────────────────────────────── */
+  .radio {
     display: inline-flex;
-    align-items: center;
-    gap: 8px; /* Hardcoded para testear si fallan los tokens */
+    align-items: flex-start;
+    gap: var(--lib-space-sm);
     cursor: pointer;
     user-select: none;
-    position: relative;
   }
-  
-  .radio-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--radio-size);
-    height: var(--radio-size);
-    flex-shrink: 0;
+
+  :host([disabled]) .radio {
+    cursor: not-allowed;
+    opacity: 0.4;
+    pointer-events: none;
   }
-  
-  input[type="radio"] {
+
+  /* ── Input nativo — invisible, capa de interaccion ─────────── */
+  .radio__input {
+    appearance: none;
     position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
+    width: 0;
+    height: 0;
     margin: 0;
-    cursor: pointer;
-    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
   }
-  
-  .radio-control {
-    box-sizing: border-box;
-    width: 20px; /* Forzamos tamaño */
-    height: 20px;
-    border: 2px solid var(--color-washi-400, #ccc); /* Fallback gris */
-    border-radius: 50%;
-    background-color: var(--bg-surface, white);
+
+  /* ── Circle visual ─────────────────────────────────────────── */
+  .radio__circle {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 2px; /* alineacion optica con primera linea de texto */
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1;
-    transition: all var(--radio-transition);
+    transition:
+      background     var(--duration-fast) var(--ease-default),
+      border-color   var(--duration-base) var(--ease-default),
+      box-shadow     var(--duration-base) var(--ease-default);
   }
-  
-  .radio-control::after {
-    content: "";
-    width: var(--radio-dot-size);
-    height: var(--radio-dot-size);
-    background-color: var(--color-kaki-500, #ff4500); /* Fallback naranja */
-    border-radius: 50%;
+
+  .radio:hover .radio__circle {
+    border-color: var(--border-strong);
+  }
+
+  /* Focus ring */
+  .radio__input:focus-visible ~ .radio__circle,
+  .radio:focus-within .radio__circle {
+    box-shadow: 0 0 0 3px var(--color-ink-20);
+    border-color: var(--color-washi-700);
+  }
+
+  /* ── Dot interior ──────────────────────────────────────────── */
+  .radio__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: white;
     transform: scale(0);
-    transition: transform var(--radio-transition);
+    transition:
+      transform var(--duration-base) var(--ease-bounce);
   }
-  
-  /* ESTADOS */
-  input:checked + .radio-control {
-    border-color: var(--color-kaki-500, #ff4500);
+
+  /* ── Selected state ────────────────────────────────────────── */
+  :host([checked]) .radio__circle {
+    background: var(--color-washi-900);
+    border-color: var(--color-washi-900);
   }
-  
-  input:checked + .radio-control::after {
+
+  :host([checked]) .radio__dot {
     transform: scale(1);
   }
+
+  /* ── Label ─────────────────────────────────────────────────── */
+  .radio__label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-xs);
+  }
+
+  .radio__label-text {
+    font-family: var(--lib-font-body);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    line-height: var(--leading-snug);
+  }
+
+  .radio__label-sub {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    line-height: var(--leading-snug);
+  }
+
+  /* ============================================================
+     SIZES
+     ============================================================ */
+  :host([size="sm"]) .radio__circle {
+     width: 14px;
+      height: 14px; }
+  :host([size="sm"]) .radio__dot    {
+     width: 6px;
+       height: 6px; }
+  :host([size="sm"]) .radio__label-text {
+     font-size: var(--text-sm); }
+
+  :host([size="lg"]) .radio__circle {
+     width: 22px;
+      height: 22px; }
+  :host([size="lg"]) .radio__dot    {
+     width: 10px;
+      height: 10px; }
+  :host([size="lg"]) .radio__label-text {
+     font-size: var(--text-md); }
+
+  /* ============================================================
+     VARIANT: kaki
+     ============================================================ */
+  :host([variant="kaki"][checked]) .radio__circle {
+    background: var(--color-kaki-500);
+    border-color: var(--color-kaki-500);
+  }
+
+  :host([variant="kaki"]) .radio:hover .radio__circle {
+    border-color: var(--color-kaki-400);
+  }
+
+  :host([variant="kaki"]) .radio:focus-within .radio__circle {
+    box-shadow: 0 0 0 3px oklch(45% 0.05 45deg / 0.12);
+    border-color: var(--color-kaki-500);
+  }
+
+  /* ============================================================
+     VARIANT: error
+     ============================================================ */
+  :host([variant="error"]) .radio__circle {
+    border-color: var(--color-error);
+  }
+
+  :host([variant="error"]) .radio:hover .radio__circle {
+    border-color: var(--color-error);
+  }
+
+  :host([variant="error"]) .radio__label-text {
+    color: var(--color-error);
+  }
+
+  /* ============================================================
+     REDUCCION DE MOVIMIENTO
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    .radio__circle,
+    .radio__dot {
+      transition: none;
+    }
+  }
+}

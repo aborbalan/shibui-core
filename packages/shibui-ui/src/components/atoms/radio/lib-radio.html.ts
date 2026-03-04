@@ -1,26 +1,62 @@
-import { html, TemplateResult } from 'lit';
-import { LibRadio } from './lib-radio.component';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { html, nothing, TemplateResult } from 'lit';
 
-export const radioTemplate = (context: LibRadio): TemplateResult => {
+export type LibRadioSize    = 'sm' | 'md' | 'lg';
+export type LibRadioVariant = 'default' | 'kaki' | 'error';
+
+export interface RadioTemplateProps {
+  radioId: string;
+  name: string;
+  value: string;
+  checked: boolean;
+  disabled: boolean;
+  label: string;
+  sublabel: string;
+  size: LibRadioSize;
+  variant: LibRadioVariant;
+  onChange: (e: Event) => void;
+}
+
+/**
+ * Plantilla para lib-radio.
+ *
+ * Estructura:
+ *   label.radio
+ *     input[type=radio]   (invisible, capa de interaccion)
+ *     span.radio__circle  (visual: circulo + dot interior)
+ *     span.radio__label   (label-text + sublabel opcional)
+ */
+export function radioTemplate(props: RadioTemplateProps): TemplateResult {
   return html`
-    <label class="radio-wrapper" for="${context.id}">
-      <div class="radio-container">
-        <input
-          type="radio"
-          id="${context.id}"
-          name="${ifDefined(context.name)}"
-          value="${ifDefined(context.value)}"
-          ?checked="${context.checked}"
-          ?disabled="${context.disabled}"
-          @change="${context.handleChange}"
-          aria-checked="${context.checked}"
-        />
-        <span class="radio-control"></span>
-      </div>
-      <span class="radio-label">
-        <slot></slot>
+    <label class="radio">
+
+      <input
+        class="radio__input"
+        type="radio"
+        id="${props.radioId}"
+        name="${props.name}"
+        value="${props.value}"
+        .checked="${props.checked}"
+        ?disabled="${props.disabled}"
+        @change="${props.onChange}"
+      />
+
+      <span class="radio__circle">
+        <span class="radio__dot"></span>
       </span>
+
+      ${props.label || props.sublabel
+        ? html`
+            <span class="radio__label">
+              ${props.label
+                ? html`<span class="radio__label-text">${props.label}</span>`
+                : nothing}
+              ${props.sublabel
+                ? html`<span class="radio__label-sub">${props.sublabel}</span>`
+                : nothing}
+            </span>
+          `
+        : html`<slot></slot>`}
+
     </label>
   `;
-};
+}
