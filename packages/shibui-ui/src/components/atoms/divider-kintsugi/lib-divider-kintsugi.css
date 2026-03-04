@@ -1,0 +1,276 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-DIVIDER-KINTSUGI — Shibui UI
+   Extiende lib-divider con la estética kintsugi (金継ぎ).
+   La línea se convierte en una vena de oro animada.
+
+   Weight    : base (1px fade) · thick (2px glow) · full (sin fade)
+   Ornament  : dot · diamond · ring · kanji-label
+   Label     : mono · display  — ambos con gradiente dorado
+   Orientation: horizontal · vertical
+   ============================================================ */
+
+/* ── Gold tokens — propios de este componente ──────────────── */
+:host {
+  --gold-bright: oklch(80% 0.09 78deg);
+  --gold-mid:    oklch(72% 0.06 68deg);
+  --gold-deep:   oklch(62% 0.05 60deg);
+  --gold-dim:    oklch(48% 0.04 55deg);
+  --gold-glow:   rgb(190, 150, 50, 0.35);
+
+  --kin-line: linear-gradient(
+    90deg,
+    transparent         0%,
+    var(--gold-dim)     8%,
+    var(--gold-mid)     30%,
+    var(--gold-bright)  50%,
+    var(--gold-mid)     70%,
+    var(--gold-dim)     92%,
+    transparent         100%
+  );
+
+  --kin-line-full: linear-gradient(
+    90deg,
+    var(--gold-dim)    0%,
+    var(--gold-mid)    20%,
+    var(--gold-bright) 50%,
+    var(--gold-mid)    80%,
+    var(--gold-dim)    100%
+  );
+}
+
+/* ── Keyframes ─────────────────────────────────────────────── */
+@keyframes kin-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes kin-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+
+@keyframes kin-glow {
+  0%, 100% { box-shadow: 0 0 4px 0  var(--gold-glow); }
+  50%      { box-shadow: 0 0 12px 2px var(--gold-glow); }
+}
+
+@keyframes kin-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@layer reset {
+  :host {
+    display: block;
+    width: 100%;
+  }
+
+  :host([orientation="vertical"]) {
+    display: inline-flex;
+    width: auto;
+    height: 100%;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+}
+
+@layer components {
+
+  /* ── Contenedor ────────────────────────────────────────────── */
+  .dv-kin {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: var(--lib-space-md);
+  }
+
+  :host([orientation="vertical"]) .dv-kin {
+    flex-direction: column;
+    width: auto;
+    height: 100%;
+    gap: var(--lib-space-sm);
+  }
+
+  /* ── Línea base — shimmer + pulse ──────────────────────────── */
+  .dv-kin__line {
+    flex: 1;
+    height: 1px;
+    width: auto;
+    min-width: 0;
+    min-height: 0;
+    position: relative;
+    background: var(--kin-line);
+    background-size: 200% 100%;
+    animation:
+      kin-shimmer 5s  linear      infinite,
+      kin-pulse   4s  ease-in-out infinite;
+  }
+
+  /* Halo difuminado encima */
+  .dv-kin__line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    filter: blur(2px);
+    opacity: 0.5;
+  }
+
+  /* ── Weight: thick ─────────────────────────────────────────── */
+  :host([weight="thick"]) .dv-kin__line {
+    height: 2px;
+    animation:
+      kin-shimmer 4s  linear      infinite,
+      kin-glow    3s  ease-in-out infinite;
+  }
+
+  :host([weight="thick"]) .dv-kin__line::after {
+    filter: blur(4px);
+    opacity: 0.6;
+  }
+
+  /* ── Weight: full (sin fade en extremos) ───────────────────── */
+  :host([weight="full"]) .dv-kin__line {
+    background: var(--kin-line-full);
+    background-size: 200% 100%;
+  }
+
+  /* ── Alineación ────────────────────────────────────────────── */
+  :host([align="left"])  .dv-kin__line:first-child { 
+    max-width: 20px;
+     flex: 0 0 20px; }
+  :host([align="right"]) .dv-kin__line:last-child  { 
+    max-width: 20px;
+     flex: 0 0 20px; }
+
+  /* ── Vertical — shimmer de arriba a abajo ──────────────────── */
+  :host([orientation="vertical"]) .dv-kin__line {
+    width: 1px;
+    height: auto;
+    background: linear-gradient(
+      180deg,
+      transparent         0%,
+      var(--gold-dim)     10%,
+      var(--gold-bright)  50%,
+      var(--gold-dim)     90%,
+      transparent         100%
+    );
+    background-size: 100% 200%;
+  }
+
+  :host([orientation="vertical"]) .dv-kin__line::after {
+    filter: blur(2px);
+    opacity: 0.4;
+  }
+
+  /* ============================================================
+     ORNAMENTOS
+     ============================================================ */
+
+  /* Dot dorado con glow */
+  .dv-kin__dot {
+    flex-shrink: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: var(--radius-full);
+    background: var(--gold-bright);
+    box-shadow: 0 0 6px 1px var(--gold-glow);
+    animation: kin-glow 2.8s ease-in-out infinite;
+  }
+
+  /* Diamond con gradiente + glow */
+  .dv-kin__diamond {
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold-deep));
+    transform: rotate(45deg);
+    box-shadow: 0 0 8px 2px var(--gold-glow);
+    animation: kin-glow 2.8s ease-in-out infinite;
+  }
+
+  /* Ring giratorio con borde dorado */
+  .dv-kin__ring {
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-full);
+    border: 1px solid transparent;
+    /* Fondo transparente para el interior + borde dorado via gradient */
+    background:
+      oklch(10% 0.015 45deg / 1) padding-box,
+      var(--kin-line-full)     border-box;
+    background-size: 100%, 200% 100%;
+    animation:
+      kin-spin  6s linear      infinite,
+      kin-pulse 3s ease-in-out infinite;
+  }
+
+  /* Kanji con text gradient dorado */
+  .dv-kin__kanji {
+    flex-shrink: 0;
+    font-family: var(--lib-font-display);
+    font-size: 1.1rem;
+    line-height: 1;
+    background: var(--kin-line-full);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 6px var(--gold-glow));
+    animation: kin-pulse 3.5s ease-in-out infinite;
+  }
+
+  /* ============================================================
+     LABELS — gradiente dorado sobre el texto
+     ============================================================ */
+
+  /* Mono uppercase */
+  .dv-kin__label {
+    flex-shrink: 0;
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    white-space: nowrap;
+    line-height: 1;
+    background: var(--kin-line-full);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: kin-pulse 3.5s ease-in-out infinite;
+  }
+
+  /* Display italic */
+  .dv-kin__label--display {
+    font-family: var(--lib-font-display);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-light);
+    letter-spacing: var(--tracking-tight);
+    font-style: italic;
+    text-transform: none;
+  }
+
+  /* ============================================================
+     REDUCCION DE MOVIMIENTO
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    .dv-kin__line,
+    .dv-kin__dot,
+    .dv-kin__diamond,
+    .dv-kin__ring,
+    .dv-kin__kanji,
+    .dv-kin__label {
+      animation: none;
+    }
+
+    /* Sin animación: muestra el oro mid estático */
+    .dv-kin__line {
+      background: var(--gold-mid);
+      opacity: 0.6;
+    }
+
+    .dv-kin__line::after { display: none; }
+  }
+}
