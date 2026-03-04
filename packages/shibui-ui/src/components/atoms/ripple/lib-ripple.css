@@ -1,0 +1,31 @@
+@layer components {
+    :host {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+      pointer-events: none;
+      border-radius: inherit;
+      z-index: 10; /* Aseguramos que esté por encima del fondo del padre */
+    }
+    
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      /* Prioridad: variable inline > token kaki > color texto */
+      background-color: var(--lib-ripple-color, orange);      opacity: 0.2;
+      transform: scale(0);
+      animation: ripple-animation var(--duration-slower, 600ms) var(--ease-out) forwards;
+      pointer-events: none;
+    }
+    
+    @keyframes ripple-animation {
+      to {
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
+  } /* Asegúrate de que solo haya UNA llave aquí */
