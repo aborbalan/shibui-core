@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { Meta, StoryObj } from '@storybook/web-components';
+import { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-parallax.component';
 // Asegúrate de importar también el item o lo que metas dentro si son componentes
 import '../../atoms/card/lib-card.component'; 
