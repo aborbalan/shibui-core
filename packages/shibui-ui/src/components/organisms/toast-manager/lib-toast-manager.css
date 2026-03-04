@@ -1,0 +1,26 @@
+:host {
+    position: fixed;
+    top: var(--lib-space-lg, 24px);
+    right: var(--lib-space-lg, 24px);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column; /* Apilados de arriba a abajo */
+    gap: var(--lib-space-sm, 8px);
+    width: 320px;
+    pointer-events: none; /* Crucial: permite clickear lo que hay debajo */
+  }
+  
+  lib-alert {
+    pointer-events: auto; /* Las alertas sí capturan el click */
+    /* Animación de entrada por defecto */
+    animation: toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  @keyframes toast-in {
+    from { 
+        transform: translateX(32px);
+         opacity: 0; }
+    to { 
+        transform: translateX(0);
+         opacity: 1; }
+  }
