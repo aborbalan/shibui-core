@@ -141,6 +141,7 @@
   :host([align="left"])  .dv-kin__line:first-child { 
     max-width: 20px;
      flex: 0 0 20px; }
+
   :host([align="right"]) .dv-kin__line:last-child  { 
     max-width: 20px;
      flex: 0 0 20px; }
@@ -215,7 +216,6 @@
     font-size: 1.1rem;
     line-height: 1;
     background: var(--kin-line-full);
-    background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     filter: drop-shadow(0 0 6px var(--gold-glow));
@@ -236,7 +236,6 @@
     white-space: nowrap;
     line-height: 1;
     background: var(--kin-line-full);
-    background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: kin-pulse 3.5s ease-in-out infinite;

@@ -70,7 +70,7 @@ export class LibDivider extends LitElement {
       style:          this.styleVariant,
       color:          this.color,
       align:          this.align,
-      ornament:       this.ornament as any,
+      ornament:       this.ornament as unknown,
       labelStyle:     this.labelStyle,
       hasSlotContent: this._hasSlotContent,
       onSlotChange:   this._handleSlotChange.bind(this),

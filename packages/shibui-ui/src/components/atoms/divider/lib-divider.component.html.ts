@@ -3,7 +3,7 @@ import { html, nothing, TemplateResult } from 'lit';
 export type LibDividerStyle     = 'hairline' | 'default' | 'strong' | 'heavy' | 'dashed' | 'dotted' | 'gradient';
 export type LibDividerColor     = 'default' | 'kaki' | 'celadon';
 export type LibDividerAlign     = 'left' | 'center' | 'right';
-export type LibDividerOrnament  = 'none' | 'dot' | 'diamond';
+export type LibDividerOrnament  = 'none' | 'dot' | 'diamond' | unknown;
 export type LibDividerLabelStyle = 'mono' | 'display' | 'kanji';
 export type LibDividerOrientation = 'horizontal' | 'vertical';
 
