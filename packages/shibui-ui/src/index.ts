@@ -30,6 +30,11 @@ export * from './components/atoms/spacer/lib-spacer.component';
 export * from './components/atoms/ripple/lib-ripple.component';
 export * from './components/atoms/aspect-ratio/lib-aspect-ratio.component';
 export * from './components/atoms/visually-hidden/lib-visually-hidden.component';
+export * from './components/atoms/checkbox/lib-checkbox.component';
+export * from './components/atoms/radio/lib-radio.component';
+export * from './components/atoms/kbd/lib-kbd.component';
+export * from './components/atoms/spinner/lib-spinner.component';
+export * from './components/atoms/bento-item/lib-bento-item.component';
 
 
 export * from './components/molecules/form-field/lib-form-field.component';
@@ -49,6 +54,9 @@ export * from './components/molecules/tree-select/lib-tree-node.component';
 export * from './components/molecules/color-picker/lib-color-picker.component';
 export * from './components/molecules/pagination/lib-pagination.component';
 export * from './components/molecules/table-search/lib-table-search.component';
+export * from './components/molecules/tabs/lib-tabs.component';
+export * from './components/molecules/modal/lib-modal.component';
+
 
 export * from './components/organisms/dialog/lib-dialog.component';
 export * from './components/organisms/lib-list/lib-list.component';

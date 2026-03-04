@@ -1,0 +1,37 @@
+:host {
+    display: block;
+    /* El item se expande según las variables que inyectamos desde el TS */
+    grid-column: span var(--lib-bento-item-cols, 1);
+    grid-row: span var(--lib-bento-item-rows, 1);
+  }
+  
+  .bento-item {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: var(--bg-surface, oklch(98% 0.01 45));
+    border-radius: var(--lib-radius-lg, 1rem);
+    border: 1px solid var(--border-subtle, oklch(90% 0.01 45));
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  
+  /* ADN Shibui: Interactividad sutil */
+  :host([interactive]) .bento-item {
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  :host([interactive]) .bento-item:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent-primary, oklch(60% 0.15 250));
+    box-shadow: var(--shadow-md, 0 10px 15px -3px rgb(0 0 0 / 0.1));
+  }
+  
+  /* Slot container para padding interno opcional */
+  .content {
+    padding: var(--lib-space-md, 1rem);
+    height: 100%;
+  }
