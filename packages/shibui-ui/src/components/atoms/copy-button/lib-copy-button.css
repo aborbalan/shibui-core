@@ -1,32 +1,245 @@
-:host {
-  display: inline-block;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-COPY-BUTTON — Shibui UI
+   Variantes : ghost · outlined · filled · subtle · on-dark
+   Sizes     : sm (28px) · md (34px) · lg (40px)
+   Modos     : icon-only (cuadrado) · con label
+   Extras    : tooltip animado al copiar
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-flex;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.copy-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background: var(--lib-color-neutral-95, #f5f5f5);
-  border: 1px solid var(--lib-color-neutral-80, #ddd);
-  border-radius: var(--lib-radius-md, 4px);
-  padding: 6px;
-  transition: all 0.2s ease;
-  color: var(--lib-color-neutral-10, #333);
-}
+@layer components {
 
-.copy-button:hover {
-  background: var(--lib-color-neutral-90, #eee);
-  border-color: var(--lib-color-primary, #007aff);
-}
+  /* ── Wrapper tooltip ───────────────────────────────────────── */
+  .copy-btn__wrap {
+    position: relative;
+    display: inline-flex;
+  }
 
-.copy-button.success {
-  background: var(--lib-color-success-bg, #e6ffed);
-  border-color: var(--lib-color-success, #28a745);
-  color: var(--lib-color-success, #28a745);
-}
+  /* ── Base del botón ────────────────────────────────────────── */
+  .copy-btn {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lib-space-xs);
+    position: relative;
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    outline: none;
+    transition:
+      background     var(--duration-base) var(--ease-default),
+      border-color   var(--duration-base) var(--ease-default),
+      color          var(--duration-base) var(--ease-default),
+      transform      var(--duration-fast) var(--ease-default);
+  }
 
-.icon {
-  font-size: 16px;
-  font-family: monospace; /* Temp placeholder */
+  .copy-btn:disabled { opacity: 0.4;
+     pointer-events: none;
+      cursor: not-allowed; }
+  .copy-btn:active:not(:disabled) { transform: scale(0.94); }
+
+  .copy-btn:focus-visible {
+    box-shadow: 0 0 0 3px var(--color-ink-20);
+  }
+
+  /* ── Sizes — con label ─────────────────────────────────────── */
+  :host([size="sm"]) .copy-btn { height: 28px;
+     padding: 0 var(--lib-space-sm);
+      font-size: 10px; }
+
+  :host([size="md"]) .copy-btn { height: 34px;
+     padding: 0 var(--lib-space-md);
+      font-size: var(--text-xs); }
+
+  :host([size="lg"]) .copy-btn { height: 40px;
+     padding: 0 var(--lib-space-lg);
+      font-size: var(--text-sm); }
+
+  /* ── Sizes — icon-only (cuadrado) ──────────────────────────── */
+  :host([icon-only][size="sm"]) .copy-btn { height: 28px;
+     width: 28px; padding: 0; }
+  :host([icon-only][size="md"]) .copy-btn { height: 34px;
+     width: 34px; padding: 0; }
+  :host([icon-only][size="lg"]) .copy-btn { height: 40px;
+     width: 40px; padding: 0; }
+
+  /* ── Crossfade layers — idle / copied ──────────────────────── */
+  .copy-btn__idle,
+  .copy-btn__copied {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--lib-space-xs);
+    transition:
+      opacity   var(--duration-base) var(--ease-out),
+      transform var(--duration-slow) var(--ease-bounce);
+  }
+
+  /* Idle: visible por defecto */
+  .copy-btn__idle   { opacity: 1;
+     transform: translateY(0) scale(1); }
+  /* Copied: oculto, desplazado abajo */
+  .copy-btn__copied { opacity: 0;
+     transform: translateY(6px) scale(0.8);
+      position: absolute; }
+
+  /* Al copiar: swap de capas */
+  :host([copied]) .copy-btn__idle   { opacity: 0; 
+    transform: translateY(-6px) scale(0.8); }
+
+  :host([copied]) .copy-btn__copied { opacity: 1;
+     transform: translateY(0) scale(1);
+      position: relative; }
+
+  /* Estado copiado — color celadón en variantes que usan borde */
+  :host([copied]) .copy-btn {
+    color: var(--color-celadon-600) !important;
+    border-color: var(--color-celadon-500) !important;
+  }
+
+  /* ============================================================
+     VARIANTES
+     ============================================================ */
+
+  /* ── Ghost ── */
+  :host([variant="ghost"]) .copy-btn {
+    background: transparent;
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+  }
+
+  :host([variant="ghost"]) .copy-btn:hover {
+    background: var(--color-washi-200);
+    color: var(--text-primary);
+  }
+
+  /* ── Outlined ── */
+  :host([variant="outlined"]) .copy-btn {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-sm);
+  }
+
+  :host([variant="outlined"]) .copy-btn:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
+
+  /* ── Filled ── */
+  :host([variant="filled"]) .copy-btn {
+    background: var(--color-washi-900);
+    color: var(--color-washi-50);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+  }
+
+  :host([variant="filled"]) .copy-btn:hover {
+    background: var(--color-washi-800);
+  }
+
+  /* Filled copied → fondo celadón */
+  :host([variant="filled"][copied]) .copy-btn {
+    background: var(--color-celadon-500) !important;
+    border-color: transparent !important;
+    color: white !important;
+  }
+
+  /* ── Subtle ── */
+  :host([variant="subtle"]) .copy-btn {
+    background: var(--color-washi-100);
+    color: var(--text-secondary);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+  }
+
+  :host([variant="subtle"]) .copy-btn:hover {
+    background: var(--color-washi-200);
+    color: var(--text-primary);
+  }
+
+  /* Subtle copied → fondo celadón-100 */
+  :host([variant="subtle"][copied]) .copy-btn {
+    background: var(--color-celadon-100) !important;
+  }
+
+  /* ── On dark ── */
+  :host([variant="on-dark"]) .copy-btn {
+    background: oklch(100% 0 0deg / 0.07);
+    color: oklch(100% 0 0deg / 0.45);
+    border: 1px solid oklch(100% 0 0deg / 0.10);
+    border-radius: var(--radius-sm);
+  }
+
+  :host([variant="on-dark"]) .copy-btn:hover {
+    background: oklch(100% 0 0deg / 0.12);
+    color: oklch(100% 0 0deg / 0.85);
+    border-color: oklch(100% 0 0deg / 0.20);
+  }
+
+  :host([variant="on-dark"][copied]) .copy-btn {
+    color: oklch(70% 0.08 165deg) !important;
+    border-color: oklch(70% 0.08 165deg) !important;
+    background: oklch(100% 0 0deg / 0.07) !important;
+  }
+
+  :host([variant="on-dark"]) .copy-btn:focus-visible {
+    box-shadow: 0 0 0 3px oklch(100% 0 0deg / 0.20);
+  }
+
+  /* ============================================================
+     TOOLTIP
+     ============================================================ */
+  .copy-btn__tooltip {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--color-washi-900);
+    color: var(--color-washi-50);
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wider);
+    white-space: nowrap;
+    padding: 3px var(--lib-space-sm);
+    pointer-events: none;
+    opacity: 0;
+    z-index: var(--z-tooltip);
+    transition:
+      opacity   var(--duration-base) var(--ease-out),
+      transform var(--duration-base) var(--ease-bounce);
+  }
+
+  :host([copied]) .copy-btn__tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ============================================================
+     REDUCCION DE MOVIMIENTO
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    .copy-btn,
+    .copy-btn__idle,
+    .copy-btn__copied,
+    .copy-btn__tooltip {
+      transition: none;
+    }
+  }
 }
