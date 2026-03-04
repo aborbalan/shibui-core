@@ -151,24 +151,30 @@
   :host([size="sm"]) .checkbox__box   {
      width: 14px;
       height: 14px; }
+
   :host([size="sm"]) .checkbox__check {
      width: 8px;
       height: 8px; stroke-width: 2.5; }
+
   :host([size="sm"]) .checkbox__dash  {
      width: 6px;
       height: 1.5px; }
+
   :host([size="sm"]) .checkbox__label-text {
      font-size: var(--text-sm); }
 
   :host([size="lg"]) .checkbox__box   {
      width: 22px;
      height: 22px; }
+
   :host([size="lg"]) .checkbox__check {
      width: 13px;
      height: 13px; }
+
   :host([size="lg"]) .checkbox__dash  {
      width: 10px;
      height: 2.5px; }
+
   :host([size="lg"]) .checkbox__label-text {
      font-size: var(--text-md); }
 
