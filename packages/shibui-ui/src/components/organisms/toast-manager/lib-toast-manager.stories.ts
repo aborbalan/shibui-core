@@ -1,5 +1,5 @@
 import { html, TemplateResult } from 'lit';
-import type { Meta, StoryObj } from '@storybook/web-components'; // Cambiado a la base estable
+import type { Meta, StoryObj } from '@storybook/web-components-vite'; // Cambiado a la base estable
 import './lib-toast-manager.component';
 import { LibToastManager } from './lib-toast-manager.component';
 
