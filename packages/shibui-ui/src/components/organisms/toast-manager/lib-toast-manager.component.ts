@@ -2,7 +2,6 @@ import { LitElement, TemplateResult, html, css, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import toastStyles from './lib-toast-manager.css?inline';
-// CORRECCIÓN: Ruta ajustada a la realidad de tu carpeta
 import { AlertType } from '../../molecules/lib-alert/lib-alert.component'; 
 
 export interface Toast {
@@ -18,31 +17,40 @@ export class LibToastManager extends LitElement {
 
   @state() protected _toasts: Toast[] = [];
 
+  /**
+   * Añade una notificación. 
+   * Retornamos void explícitamente para la pipe.
+   */
   public add(config: Omit<Toast, 'id'>): void {
-    const id = crypto.randomUUID();
+    const id: string = crypto.randomUUID();
     const newToast: Toast = { ...config, id };
     
     this._toasts = [...this._toasts, newToast];
 
     if (config.duration !== 0) {
-      setTimeout(() => this.dismiss(id), config.duration ?? 5000);
+      // Tipamos el retorno del timer
+      setTimeout((): void => this.dismiss(id), config.duration ?? 5000);
     }
   }
 
+  /**
+   * Elimina una notificación.
+   * Tipamos el parámetro y el retorno.
+   */
   public dismiss(id: string): void {
-    this._toasts = this._toasts.filter((t) => t.id !== id);
+    this._toasts = this._toasts.filter((t: Toast): boolean => t.id !== id);
   }
 
   protected override render(): TemplateResult {
     return html`
       ${repeat(
         this._toasts,
-        (toast) => toast.id,
-        (toast) => html`
+        (toast: Toast): string => toast.id,
+        (toast: Toast): TemplateResult => html`
           <lib-alert 
             .type="${toast.type}" 
             closable 
-            @lib-alert-close="${() => this.dismiss(toast.id)}"
+            @lib-alert-close="${(): void => this.dismiss(toast.id)}"
           >
             ${toast.message}
           </lib-alert>
