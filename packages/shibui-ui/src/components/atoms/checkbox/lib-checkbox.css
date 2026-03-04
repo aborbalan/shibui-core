@@ -1,90 +1,218 @@
-/* 1. Base del Componente */
-:host {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  user-select: none;
-  font-family: var(--lib-font-family, inherit);
-  font-size: 14px;
-  line-height: 1;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-CHECKBOX — Shibui UI
+   States  : unchecked · checked · indeterminate · disabled · error
+   Sizes   : sm · md (default) · lg
+   Variants: default (washi-900) · kaki · error
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-block;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-/* 2. Estructura y Contenedores */
-.checkbox-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-}
+@layer components {
 
-.checkbox-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 1 / 1;
-  background-color: #fff;
-  border: 2px solid #d1d5db;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  z-index: 1;
-}
+  /* ── Wrapper label ─────────────────────────────────────────── */
+  .checkbox {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--lib-space-sm);
+    cursor: pointer;
+    user-select: none;
+  }
 
-.label-text {
-  margin-top: 1px;
-}
+  :host([disabled]) .checkbox {
+    cursor: not-allowed;
+    opacity: 0.4;
+    pointer-events: none;
+  }
 
-/* 3. Elementos Internos (Icono) */
-.checkbox-visual lib-icon {
-  --icon-size: 14px;
+  /* ── Input nativo — invisible, capa de interaccion ─────────── */
+  .checkbox__input {
+    appearance: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  fill: currentcolor;
-  transform: scale(0);
-  transition: transform 0.15s cubic-bezier(0.12, 0.4, 0.29, 1.46);
-}
+  /* ── Box visual ────────────────────────────────────────────── */
+  .checkbox__box {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 2px; /* alineacion optica con primera linea de texto */
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background     var(--duration-fast) var(--ease-default),
+      border-color   var(--duration-fast) var(--ease-default),
+      box-shadow     var(--duration-base) var(--ease-default);
+  }
 
-/* 4. Input Nativo (Capa de interacción) */
-input {
-  appearance: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  cursor: pointer;
-  z-index: 2;
-  border: none;
-  background: transparent;
-}
+  .checkbox:hover .checkbox__box {
+    border-color: var(--border-strong);
+  }
 
-/* 5. Estados de Interacción (Checked) */
-input:checked ~ .checkbox-visual {
-  background-color: #007aff;
-  border-color: #007aff;
-}
+  /* Focus ring */
+  .checkbox__input:focus-visible ~ .checkbox__box,
+  .checkbox:focus-within .checkbox__box {
+    box-shadow: 0 0 0 3px var(--color-ink-20);
+    border-color: var(--color-washi-700);
+  }
 
-input:checked ~ .checkbox-visual lib-icon {
-  transform: scale(1);
-}
+  /* ── Checked ───────────────────────────────────────────────── */
+  :host([checked]) .checkbox__box {
+    background: var(--color-washi-900);
+    border-color: var(--color-washi-900);
+  }
 
-/* 6. Estados de Componente (Disabled)
-        Siempre al final para asegurar la mayor especificidad */
-:host([disabled]) {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
+  /* ── Indeterminate ─────────────────────────────────────────── */
+  :host([indeterminate]) .checkbox__box {
+    background: var(--color-washi-900);
+    border-color: var(--color-washi-900);
+  }
 
-:host([disabled]) input:checked ~ .checkbox-visual {
-  background-color: #d1d5db;
-  border-color: #d1d5db;
+  /* ── SVG check ─────────────────────────────────────────────── */
+  .checkbox__check {
+    width: 10px;
+    height: 10px;
+    stroke: white;
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity   var(--duration-fast) var(--ease-out),
+      transform var(--duration-base) var(--ease-bounce);
+  }
+
+  :host([checked]) .checkbox__check {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* ── Dash indeterminate ────────────────────────────────────── */
+  .checkbox__dash {
+    width: 8px;
+    height: 2px;
+    background: white;
+    border-radius: 1px;
+    opacity: 0;
+    transform: scaleX(0.4);
+    transition:
+      opacity   var(--duration-fast) var(--ease-out),
+      transform var(--duration-base) var(--ease-bounce);
+  }
+
+  :host([indeterminate]) .checkbox__dash {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  /* ── Label ─────────────────────────────────────────────────── */
+  .checkbox__label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-xs);
+  }
+
+  .checkbox__label-text {
+    font-family: var(--lib-font-body);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    line-height: var(--leading-snug);
+    transition: color var(--duration-fast);
+  }
+
+  .checkbox__label-sub {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    line-height: var(--leading-snug);
+  }
+
+  /* ============================================================
+     SIZES
+     ============================================================ */
+  :host([size="sm"]) .checkbox__box   {
+     width: 14px;
+      height: 14px; }
+  :host([size="sm"]) .checkbox__check {
+     width: 8px;
+      height: 8px; stroke-width: 2.5; }
+  :host([size="sm"]) .checkbox__dash  {
+     width: 6px;
+      height: 1.5px; }
+  :host([size="sm"]) .checkbox__label-text {
+     font-size: var(--text-sm); }
+
+  :host([size="lg"]) .checkbox__box   {
+     width: 22px;
+     height: 22px; }
+  :host([size="lg"]) .checkbox__check {
+     width: 13px;
+     height: 13px; }
+  :host([size="lg"]) .checkbox__dash  {
+     width: 10px;
+     height: 2.5px; }
+  :host([size="lg"]) .checkbox__label-text {
+     font-size: var(--text-md); }
+
+  /* ============================================================
+     VARIANT: kaki
+     ============================================================ */
+  :host([variant="kaki"][checked]) .checkbox__box,
+  :host([variant="kaki"][indeterminate]) .checkbox__box {
+    background: var(--color-kaki-500);
+    border-color: var(--color-kaki-500);
+  }
+
+  :host([variant="kaki"]) .checkbox:hover .checkbox__box {
+    border-color: var(--color-kaki-400);
+  }
+
+  :host([variant="kaki"]) .checkbox:focus-within .checkbox__box {
+    box-shadow: 0 0 0 3px oklch(45% 0.05 45deg / 0.12);
+    border-color: var(--color-kaki-500);
+  }
+
+  /* ============================================================
+     VARIANT: error
+     ============================================================ */
+  :host([variant="error"]) .checkbox__box {
+    border-color: var(--color-error);
+  }
+
+  :host([variant="error"]) .checkbox:hover .checkbox__box {
+    border-color: var(--color-error);
+  }
+
+  :host([variant="error"]) .checkbox__label-text {
+    color: var(--color-error);
+  }
+
+  /* ============================================================
+     REDUCCION DE MOVIMIENTO
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    .checkbox__box,
+    .checkbox__check,
+    .checkbox__dash {
+      transition: none;
+    }
+  }
 }

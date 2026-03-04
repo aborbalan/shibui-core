@@ -1,69 +1,169 @@
+import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-checkbox.component';
+import type { LibCheckbox } from './lib-checkbox.component';
 
-const meta: Meta = {
-  title: 'Forms/Checkbox',
+type LibCheckboxStoryArgs = Pick<
+  LibCheckbox,
+  'checked' | 'disabled' | 'indeterminate' | 'label' | 'sublabel' | 'size' | 'variant' | 'value'
+>;
+
+const meta: Meta<LibCheckboxStoryArgs> = {
+  title: 'Components/Atoms/Checkbox',
   component: 'lib-checkbox',
-  tags: ['autodocs'],
+
   argTypes: {
-    icon: { 
-      control: 'text',
-      description: 'Nombre del icono de Phosphor para el estado checked' 
+    checked:       { control: 'boolean' },
+    disabled:      { control: 'boolean' },
+    indeterminate: { control: 'boolean' },
+    label:         { control: 'text' },
+    sublabel:      { control: 'text', description: 'Texto secundario bajo el label' },
+    value:         { control: 'text' },
+    size: {
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
     },
-  }
+    variant: {
+      control: 'select',
+      options: ['default', 'kaki', 'error'],
+    },
+  },
+
+  render: (args): TemplateResult => html`
+    <div style="padding:24px;">
+      <lib-checkbox
+        label=${args.label}
+        sublabel=${args.sublabel}
+        value=${args.value}
+        size=${args.size}
+        variant=${args.variant}
+        ?checked=${args.checked}
+        ?disabled=${args.disabled}
+        ?indeterminate=${args.indeterminate}
+      ></lib-checkbox>
+    </div>
+  `,
 };
 
 export default meta;
+type Story = StoryObj<LibCheckboxStoryArgs>;
 
-type Story = StoryObj;
-
-export const Default: Story = {
-  render: (args): TemplateResult => html`
-    <lib-checkbox 
-      label="${args.label}" 
-      ?checked="${args.checked}" 
-      ?disabled="${args.disabled}"
-    ></lib-checkbox>
-  `,
+/* ── Playground ── */
+export const Playground: Story = {
   args: {
-    label: 'Aceptar términos',
+    label: 'Aceptar terminos y condiciones',
+    sublabel: '',
+    value: 'terms',
+    size: 'md',
+    variant: 'default',
     checked: false,
     disabled: false,
+    indeterminate: false,
   },
 };
 
-// Nueva historia con ejemplos de diferentes iconos
-export const CustomIcons: Story = {
-    render: (): TemplateResult => html`
-     <div style="display: flex; flex-direction: column; gap: 20px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
-      <p style="margin: 0; font-family: sans-serif; font-size: 12px; color: #666;">
-        Comparativa: Icono en Checkbox vs Icono independiente
+/* ── States ── */
+export const States: Story = {
+  name: 'States',
+  render: (): TemplateResult => html`
+    <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
+      <lib-checkbox
+        label="Unchecked"
+        sublabel="Estado por defecto"
+      ></lib-checkbox>
+      <lib-checkbox
+        label="Checked"
+        sublabel="Seleccionado — fondo washi-900"
+        checked
+      ></lib-checkbox>
+      <lib-checkbox
+        label="Indeterminate"
+        sublabel="Seleccion parcial de grupo"
+        indeterminate
+      ></lib-checkbox>
+      <lib-checkbox
+        label="Disabled"
+        sublabel="No interactivo"
+        disabled
+      ></lib-checkbox>
+      <lib-checkbox
+        label="Disabled checked"
+        sublabel="No interactivo"
+        disabled
+        checked
+      ></lib-checkbox>
+      <lib-checkbox
+        label="Error"
+        sublabel="Campo requerido"
+        variant="error"
+      ></lib-checkbox>
+    </div>
+  `,
+};
+
+/* ── Sizes ── */
+export const Sizes: Story = {
+  render: (): TemplateResult => html`
+    <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
+      <lib-checkbox size="sm" label="Small" sublabel="14px box" checked></lib-checkbox>
+      <lib-checkbox size="md" label="Medium (default)" sublabel="18px box" checked></lib-checkbox>
+      <lib-checkbox size="lg" label="Large" sublabel="22px box" checked></lib-checkbox>
+    </div>
+  `,
+};
+
+/* ── Variants ── */
+export const Variants: Story = {
+  render: (): TemplateResult => html`
+    <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
+      <lib-checkbox variant="default" label="Default" sublabel="Fondo washi-900" checked></lib-checkbox>
+      <lib-checkbox variant="kaki"    label="Kaki" sublabel="Fondo kaki-500" checked></lib-checkbox>
+      <lib-checkbox variant="error"   label="Error" sublabel="Borde y label en color-error"></lib-checkbox>
+    </div>
+  `,
+};
+
+/* ── With sublabel ── */
+export const WithSublabel: Story = {
+  name: 'With Sublabel',
+  render: (): TemplateResult => html`
+    <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3; max-width:400px;">
+      <lib-checkbox
+        label="Notificaciones por email"
+        sublabel="Recibe actualizaciones en tu bandeja de entrada"
+        checked
+      ></lib-checkbox>
+      <lib-checkbox
+        label="Notificaciones push"
+        sublabel="Requiere permiso del navegador"
+      ></lib-checkbox>
+      <lib-checkbox
+        label="Webhook"
+        sublabel="Disponible en plan Pro"
+        disabled
+      ></lib-checkbox>
+    </div>
+  `,
+};
+
+/* ── Indeterminate group ── */
+export const IndeterminateGroup: Story = {
+  name: 'Indeterminate Group',
+  render: (): TemplateResult => html`
+    <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3; max-width:400px;">
+      <p style="font-family:monospace; font-size:11px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:4px;">
+        Seleccion parcial de grupo
       </p>
-      
-      <div style="display: flex; align-items: center; gap: 20px;">
-        <lib-checkbox checked icon="check" label="Checkbox Check"></lib-checkbox>
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <lib-icon name="check" style="color: #007aff;"></lib-icon>
-          <span style="font-family: sans-serif; font-size: 14px;">Icono Suelto</span>
-        </div>
-      </div>
-
-      <div style="display: flex; align-items: center; gap: 20px;">
-        <lib-checkbox checked icon="heart-fill" label="Checkbox Heart"></lib-checkbox>
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <lib-icon name="heart-fill" style="color: #007aff;"></lib-icon>
-          <span style="font-family: sans-serif; font-size: 14px;">Icono Suelto</span>
-        </div>
-      </div>
-
-      <div style="display: flex; align-items: center; gap: 20px;">
-        <lib-checkbox checked icon="x" label="Checkbox X"></lib-checkbox>
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <lib-icon name="x" style="color: #007aff;"></lib-icon>
-          <span style="font-family: sans-serif; font-size: 14px;">Icono Suelto</span>
-        </div>
+      <lib-checkbox
+        label="Canales de notificacion"
+        sublabel="2 de 3 activos"
+        indeterminate
+      ></lib-checkbox>
+      <div style="padding-left:24px; display:flex; flex-direction:column; gap:16px;">
+        <lib-checkbox label="Correo electronico" checked></lib-checkbox>
+        <lib-checkbox label="SMS"></lib-checkbox>
+        <lib-checkbox label="Push en app" checked></lib-checkbox>
       </div>
     </div>
-    `,
-  };
+  `,
+};
