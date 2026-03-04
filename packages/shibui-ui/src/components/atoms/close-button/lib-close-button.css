@@ -54,10 +54,13 @@
   /* ── Sizes ─────────────────────────────────────────────────── */
   :host([size="sm"]) .close-btn { width: 24px;
      height: 24px; }
+
   :host([size="md"]) .close-btn { width: 32px;
      height: 32px; }
+
   :host([size="lg"]) .close-btn { width: 40px;
      height: 40px; }
+
   :host([size="xl"]) .close-btn { width: 48px;
      height: 48px; }
 
