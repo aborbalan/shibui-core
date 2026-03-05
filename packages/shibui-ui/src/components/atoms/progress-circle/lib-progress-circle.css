@@ -1,36 +1,165 @@
-:host {
-  display: inline-block;
-  vertical-align: middle;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-PROGRESS-CIRCLE — Shibui UI · 円形
+   Size    : xs · sm · md · lg · xl
+   Variant : default · kaki · celadon · error
+   States  : indeterminate · bare · sub · icon (check)
+
+   Fórmula del arco (calculada en JS):
+     r             = (size - strokeWidth) / 2
+     circumference = 2π × r
+     offset        = circumference × (1 − value/max)
+
+   El SVG se rota -90deg en CSS → arco comienza en la parte superior.
+   Transición: stroke-dashoffset 700ms cubic-bezier(0,0,0.2,1)
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.progress-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+@layer components {
 
-svg {
-  transform: rotate(-90deg); /* Inicio en la parte superior */
-}
+  /* ── Contenedor ─────────────────────────────────────────── */
+  .pc {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
 
-circle {
-  fill: none;
-}
+  /* ── SVG — rotado para que el arco empiece arriba ──────── */
+  .pc__svg {
+    display: block;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    overflow: visible;
+  }
 
-.track {
-  stroke: #edf2f7; /* Gris suave */
-}
+  /* ── Arcos ──────────────────────────────────────────────── */
+  .pc__track,
+  .pc__arc {
+    fill: none;
+    stroke-linecap: round;
+  }
 
-.indicator {
-  stroke: #3182ce; /* Azul principal */
-  transition: stroke-dashoffset 0.35s ease;
-}
+  /* Track — tono suave de cada variante */
+  .pc__track {
+    stroke: var(--color-washi-200);
+  }
 
-.label {
-  position: absolute;
-  font-family: sans-serif;
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: #2d3748;
+  /* Arc — washi-900 por defecto */
+  .pc__arc {
+    stroke: var(--color-washi-900);
+    transition:
+      stroke-dashoffset 700ms cubic-bezier(0, 0, 0.2, 1),
+      stroke            300ms;
+  }
+
+  /* ── VARIANTES DE COLOR ─────────────────────────────────── */
+  :host([variant="kaki"]) .pc__arc   { stroke: var(--color-kaki-500); }
+  :host([variant="kaki"]) .pc__track { stroke: var(--color-kaki-100); }
+
+  :host([variant="celadon"]) .pc__arc   { stroke: var(--color-celadon-500); }
+  :host([variant="celadon"]) .pc__track { stroke: var(--color-celadon-100); }
+
+  :host([variant="error"]) .pc__arc   { stroke: var(--color-error); }
+  :host([variant="error"]) .pc__track { stroke: #F5DDD9; }
+
+  /* ── LABEL CENTRAL ──────────────────────────────────────── */
+  .pc__label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    pointer-events: none;
+  }
+
+  .pc__value {
+    font-family: var(--lib-font-mono);
+    font-weight: var(--weight-regular);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-primary);
+    line-height: 1;
+  }
+
+  .pc__sub {
+    font-family: var(--lib-font-mono);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+
+  /* ── TAMAÑOS — tipografía del label ─────────────────────── */
+  /* xs — 40px: sin label */
+  :host([size="xs"]) .pc__label { display: none; }
+
+  /* sm — 64px */
+  :host([size="sm"]) .pc__value { font-size: var(--text-xs); }
+  :host([size="sm"]) .pc__sub   { font-size: 8px; }
+
+  /* md — 96px */
+  :host([size="md"]) .pc__value { font-size: var(--text-md); }
+  :host([size="md"]) .pc__sub   { font-size: 9px; }
+
+  /* lg — 128px */
+  :host([size="lg"]) .pc__value { font-size: var(--text-xl); }
+  :host([size="lg"]) .pc__sub   { font-size: var(--text-xs); }
+
+  /* xl — 176px */
+  :host([size="xl"]) .pc__value { font-size: 2rem; }
+  :host([size="xl"]) .pc__sub   { font-size: var(--text-xs); }
+
+  /* ── Color del valor según variante ─────────────────────── */
+  :host([variant="kaki"])    .pc__value { color: var(--color-kaki-600); }
+  :host([variant="celadon"]) .pc__value { color: var(--color-celadon-600); }
+  :host([variant="error"])   .pc__value { color: var(--color-error); }
+
+  /* ── Icono check ─────────────────────────────────────────── */
+  .pc__check polyline {
+    stroke: var(--color-celadon-500);
+  }
+
+  :host([variant="kaki"]) .pc__check polyline {
+    stroke: var(--color-kaki-500);
+  }
+
+  /* ── INDETERMINATE ──────────────────────────────────────── */
+  @keyframes pc-spin {
+    to { transform: rotate(270deg); }
+  }
+
+  .pc__svg--spin {
+    animation: pc-spin 1.2s linear infinite;
+    transform-origin: center;
+  }
+
+  /* Anula la transición en el arco indeterminado */
+  .pc__arc--indet {
+    transition: none;
+  }
+
+  /* ── ACCESIBILIDAD ──────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .pc__arc {
+      transition: none;
+    }
+
+    .pc__svg--spin {
+      animation: none;
+    }
+  }
 }
