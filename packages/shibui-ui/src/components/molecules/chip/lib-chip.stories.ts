@@ -1,5 +1,5 @@
-import { html } from 'lit';
-import { Meta, StoryObj } from '@storybook/web-components';
+import { html, TemplateResult } from 'lit';
+import { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-chip.component';
 
 const meta: Meta = {
@@ -16,7 +16,7 @@ const meta: Meta = {
 export default meta;
 
 export const Showcase: StoryObj = {
-  render: () => html`
+  render: ():TemplateResult => html`
     <div style="background: var(--bg-base); padding: 3rem; min-height: 100vh; font-family: var(--lib-font-body);">
       
       <section style="margin-bottom: 4rem;">
@@ -36,7 +36,7 @@ export const Showcase: StoryObj = {
           02. Input Chips (Removables)
         </h3>
         <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <lib-chip label="shibui.css" removable @chip-remove=${(e: any) => console.log('Removido:', e.detail)}></lib-chip>
+          <lib-chip label="shibui.css" removable @chip-remove=${(e: any):void => console.log('Removido:', e.detail)}></lib-chip>
           <lib-chip label="tokens.json" removable></lib-chip>
           <lib-chip label="index.ts" removable></lib-chip>
         </div>
@@ -63,7 +63,7 @@ export const Showcase: StoryObj = {
 };
 
 export const InteractiveField: StoryObj = {
-  render: () => {
+  render: ():TemplateResult => {
     const addChip = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
         const input = e.target as HTMLInputElement;
