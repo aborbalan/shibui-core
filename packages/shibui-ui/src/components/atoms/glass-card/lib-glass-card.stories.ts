@@ -1,115 +1,202 @@
 import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { html } from 'lit';
+import { html, TemplateResult } from 'lit';
 import './lib-glass-card.component';
+import type { LibGlassCard } from './lib-glass-card.component';
 
-const meta: Meta = {
-  title: 'Surfaces/Glass Card',
+type LibGlassCardStoryArgs = Pick<LibGlassCard, 'variant' | 'intensity'>;
+
+/* Stage oscuro con orbes de fondo — imprescindible para que blur sea visible */
+const stage = (content: TemplateResult): TemplateResult => html`
+  <div style="
+    background: linear-gradient(135deg, #0f1923 0%, #1a2535 50%, #0d1f2d 100%);
+    padding: 48px;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    position: relative;
+    overflow: hidden;
+  ">
+    <!-- Orbe water -->
+    <div style="position:absolute; width:300px; height:300px; border-radius:50%; background:oklch(55% 0.06 210 / 0.25); top:-80px; left:-60px; filter:blur(60px); pointer-events:none;"></div>
+    <!-- Orbe kaki -->
+    <div style="position:absolute; width:250px; height:250px; border-radius:50%; background:oklch(45% 0.05 45 / 0.2); bottom:-60px; right:-40px; filter:blur(50px); pointer-events:none;"></div>
+    ${content}
+  </div>
+`;
+
+const cardContent = (label: string, title: string, body: string, tag: string): TemplateResult => html`
+  <div style="padding:24px;">
+    <p style="font-family:monospace; font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:oklch(90% 0 0 / 0.5); margin-bottom:12px;">${label}</p>
+    <h3 style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:300; color:oklch(98% 0.01 60); text-shadow:0 1px 3px oklch(0% 0 0 / 0.3); margin-bottom:8px;">${title}</h3>
+    <p style="font-size:13px; color:oklch(90% 0 0 / 0.6); line-height:1.8;">${body}</p>
+    <div style="margin-top:16px; padding-top:12px; border-top:1px solid oklch(100% 0 0 / 0.1); display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-family:monospace; font-size:9px; letter-spacing:0.15em; color:oklch(80% 0 0 / 0.5); text-transform:uppercase;">${tag}</span>
+      <button style="display:inline-flex; align-items:center; position:relative; overflow:hidden; border-radius:6px; padding:6px 16px; backdrop-filter:blur(8px); background:oklch(100% 0 0 / 0.1); border:1px solid oklch(100% 0 0 / 0.2); color:oklch(98% 0.01 60); font-family:monospace; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; cursor:pointer;">
+        Ver más
+      </button>
+    </div>
+  </div>
+`;
+
+const meta: Meta<LibGlassCardStoryArgs> = {
+  title: 'Components/Atoms/GlassCard',
   component: 'lib-glass-card',
+
+  parameters: {
+    backgrounds: { default: 'dark' },
+  },
+
   argTypes: {
+    variant: {
+      control: 'select',
+      options: ['paper', 'water', 'kaki'],
+      description: 'Tinte de color del cristal',
+    },
     intensity: {
       control: 'select',
       options: ['low', 'md', 'high'],
-      description: 'Define el nivel de desenfoque y opacidad del cristal'
-    }
+      description: 'Intensidad del blur y la opacidad',
+    },
   },
-  parameters: {
-    layout: 'fullscreen',
-  }
+
+  render: (args): TemplateResult => stage(html`
+    <lib-glass-card variant=${args.variant} intensity=${args.intensity} style="grid-column:1/-1; max-width:360px;">
+      ${cardContent('--lib-glass-bg', `${args.variant} · ${args.intensity}`, 'Glassmorphism shibui construido sobre tokens primitivos.', `opacity · ${args.intensity}`)}
+    </lib-glass-card>
+  `),
 };
 
 export default meta;
+type Story = StoryObj<LibGlassCardStoryArgs>;
 
-export const Showcase: StoryObj = {
+/* ── Playground ── */
+export const Playground: Story = {
   args: {
-    intensity: 'md'
+    variant: 'paper',
+    intensity: 'md',
   },
-  render: (args) => html`
+};
+
+/* ── Las tres variantes de color ── */
+export const Variants: Story = {
+  name: 'Color Variants',
+  render: (): TemplateResult => stage(html`
+    <lib-glass-card variant="paper">
+      ${cardContent('--lib-glass-bg', 'Paper Glass', 'Variante neutra. Surface paper al 15% sobre cualquier fondo oscuro.', 'opacity · 0.15')}
+    </lib-glass-card>
+
+    <lib-glass-card variant="water">
+      ${cardContent('--lib-glass-bg-water', 'Water Glass', 'Tinte azul sereno. Para componentes primary o acciones de confirmación.', 'oklch 55% 0.06 210')}
+    </lib-glass-card>
+
+    <lib-glass-card variant="kaki">
+      ${cardContent('--lib-glass-bg-kaki', 'Kaki Glass', 'Tinte orgánico cálido. Para acciones de acento o estados destacados.', 'oklch 45% 0.05 45')}
+    </lib-glass-card>
+  `),
+};
+
+/* ── Intensidades ── */
+export const Intensities: Story = {
+  render: (): TemplateResult => stage(html`
+    <lib-glass-card intensity="low">
+      ${cardContent('blur-low · opacity-low', 'Low', 'blur(4px) · opacity 0.10. Sutil, casi imperceptible. Para overlays livianos.', 'blur · 4px')}
+    </lib-glass-card>
+
+    <lib-glass-card intensity="md">
+      ${cardContent('blur-md · opacity-md', 'Medium (default)', 'blur(12px) · opacity 0.15. El equilibrio entre visibilidad y elegancia.', 'blur · 12px')}
+    </lib-glass-card>
+
+    <lib-glass-card intensity="high">
+      ${cardContent('blur-high · opacity-high', 'High', 'blur(25px) · opacity 0.25. Máximo esmerilado. Para modales o drawers.', 'blur · 25px')}
+    </lib-glass-card>
+  `),
+};
+
+/* ── Combinaciones variant × intensity ── */
+export const Matrix: Story = {
+  render: (): TemplateResult => stage(html`
+    ${(['paper', 'water', 'kaki'] as const).flatMap(v =>
+      (['low', 'md', 'high'] as const).map(i => html`
+        <lib-glass-card variant=${v} intensity=${i}>
+          <div style="padding:16px;">
+            <p style="font-family:monospace; font-size:9px; color:oklch(90% 0 0 / 0.4); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.25em;">${v} · ${i}</p>
+            <p style="font-size:11px; color:oklch(90% 0 0 / 0.55); line-height:1.6;">Glass card combinando tinte y blur.</p>
+          </div>
+        </lib-glass-card>
+      `)
+    )}
+  `),
+};
+
+/* ── Context: modal / overlay ── */
+export const ContextModal: Story = {
+  name: 'Context — Modal overlay',
+  render: (): TemplateResult => html`
     <div style="
-      position: relative;
-      min-height: 100vh;
-      width: 100%;
+      background: linear-gradient(135deg, #0f1923 0%, #1a2535 100%);
+      padding: 64px 48px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #0f172a;
+      min-height: 320px;
+      position: relative;
       overflow: hidden;
-      font-family: sans-serif;
     ">
-      <div style="position: absolute; top: 20%; left: 30%; width: 300px; height: 300px; background: #3b82f6; filter: blur(80px); border-radius: 50%; opacity: 0.6;"></div>
-      <div style="position: absolute; bottom: 20%; right: 30%; width: 250px; height: 250px; background: #db2777; filter: blur(80px); border-radius: 50%; opacity: 0.5;"></div>
-      <div style="position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; background: #fbbf24; filter: blur(80px); border-radius: 50%; opacity: 0.4;"></div>
+      <div style="position:absolute; width:400px; height:400px; border-radius:50%; background:oklch(55% 0.06 210 / 0.2); top:-100px; right:-100px; filter:blur(80px);"></div>
 
-      <lib-glass-card .intensity=${args.intensity} style="width: 400px;">
-        <div style="color: white;">
-          <h2 style="margin: 0 0 16px 0; font-size: 1.5rem; font-weight: 700;">Glassmorphism v1.0</h2>
-          <p style="line-height: 1.6; color: rgba(255, 255, 255, 0.8); margin-bottom: 24px;">
-            Este componente utiliza <strong>backdrop-filter</strong> para refractar la luz del fondo. 
-            Es ideal para paneles de control modernos y overlays que no quieren perder el contexto visual del fondo.
-          </p>
-          
-          <div style="display: flex; gap: 12px; align-items: center; padding: 12px; background: rgba(255,255,255,0.1); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
-            <div style="width: 40px; height: 40px; background: #6366f1; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-              ✨
-            </div>
-            <div>
-              <div style="font-size: 0.875rem; font-weight: 600;">Efecto Activo</div>
-              <div style="font-size: 0.75rem; opacity: 0.7;">Intensidad: ${args.intensity}</div>
-            </div>
+      <lib-glass-card variant="water" intensity="high" style="max-width:400px; width:100%;">
+        <div style="padding:32px;">
+          <p style="font-family:monospace; font-size:10px; color:oklch(90% 0 0 / 0.4); text-transform:uppercase; letter-spacing:0.25em; margin-bottom:16px;">Confirmar acción</p>
+          <h3 style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:oklch(98% 0.01 60); text-shadow:0 1px 3px oklch(0% 0 0 / 0.3); margin-bottom:12px;">¿Estás seguro?</h3>
+          <p style="font-size:13px; color:oklch(90% 0 0 / 0.6); line-height:1.8; margin-bottom:24px;">Esta acción no se puede deshacer. Se eliminará permanentemente el componente seleccionado del sistema.</p>
+          <div style="display:flex; gap:12px;">
+            <button style="flex:1; padding:10px; background:oklch(100% 0 0 / 0.08); border:1px solid oklch(100% 0 0 / 0.15); color:oklch(90% 0 0 / 0.7); font-family:monospace; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; cursor:pointer; border-radius:4px;">Cancelar</button>
+            <button style="flex:1; padding:10px; background:oklch(100% 0 0 / 0.18); border:1px solid oklch(100% 0 0 / 0.3); color:oklch(98% 0.01 60); font-family:monospace; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; cursor:pointer; border-radius:4px;">Confirmar</button>
           </div>
-
-          <button style="
-            margin-top: 24px;
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            background: white;
-            color: #0f172a;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-          " 
-           @mousedown=${(e: MouseEvent):void => {
-                const target = e.currentTarget as HTMLElement;
-                      target.style.transform = 'scale(0.98)';
-                }}
-  @mouseup=${(e: MouseEvent):void => {
-    const target = e.currentTarget as HTMLElement;
-    target.style.transform = 'scale(1)';
-  }}>
-            Explorar Componente
-          </button>
         </div>
       </lib-glass-card>
     </div>
-  `
+  `,
 };
 
-export const IntensityComparison: StoryObj = {
-  render: () => html`
+/* ── Context: dashboard de métricas ── */
+export const ContextDashboard: Story = {
+  name: 'Context — Dashboard',
+  render: (): TemplateResult => html`
     <div style="
-      background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1000') center/cover;
-      padding: 60px;
-      display: flex;
-      gap: 30px;
-      justify-content: center;
-      flex-wrap: wrap;
-      min-height: 100vh;
+      background: linear-gradient(160deg, #0f1923 0%, #1a2535 60%, #0d1520 100%);
+      padding: 48px;
+      border-radius: 8px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
     ">
-      <lib-glass-card intensity="low" style="width: 250px;">
-        <h4 style="color: white; margin-top: 0;">Low Intensity</h4>
-        <p style="color: white; font-size: 0.9rem;">Sutil y muy transparente.</p>
+      <div style="position:absolute; width:350px; height:350px; border-radius:50%; background:oklch(55% 0.06 210 / 0.15); top:-80px; left:20%; filter:blur(70px);"></div>
+
+      <lib-glass-card variant="paper" intensity="low">
+        <div style="padding:20px;">
+          <p style="font-family:monospace; font-size:9px; color:oklch(70% 0 0 / 0.5); text-transform:uppercase; letter-spacing:0.25em; margin-bottom:8px;">Componentes</p>
+          <p style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300; color:oklch(95% 0.01 60); line-height:1;">16</p>
+        </div>
       </lib-glass-card>
 
-      <lib-glass-card intensity="md" style="width: 250px;">
-        <h4 style="color: white; margin-top: 0;">Medium Intensity</h4>
-        <p style="color: white; font-size: 0.9rem;">El equilibrio perfecto.</p>
+      <lib-glass-card variant="water" intensity="md">
+        <div style="padding:20px;">
+          <p style="font-family:monospace; font-size:9px; color:oklch(70% 0 0 / 0.5); text-transform:uppercase; letter-spacing:0.25em; margin-bottom:8px;">Completados</p>
+          <p style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300; color:oklch(95% 0.01 60); line-height:1;">12</p>
+        </div>
       </lib-glass-card>
 
-      <lib-glass-card intensity="high" style="width: 250px;">
-        <h4 style="color: white; margin-top: 0;">High Intensity</h4>
-        <p style="color: white; font-size: 0.9rem;">Máximo desenfoque (estilo esmerilado).</p>
+      <lib-glass-card variant="kaki" intensity="md">
+        <div style="padding:20px;">
+          <p style="font-family:monospace; font-size:9px; color:oklch(70% 0 0 / 0.5); text-transform:uppercase; letter-spacing:0.25em; margin-bottom:8px;">En progreso</p>
+          <p style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300; color:oklch(95% 0.01 60); line-height:1;">4</p>
+        </div>
       </lib-glass-card>
     </div>
-  `
+  `,
 };
