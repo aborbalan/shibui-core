@@ -1,89 +1,116 @@
-:host {
-  display: inline-block;
-  position: relative;
-  font-family: sans-serif;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-DROPDOWN — Shibui UI · Kintsugi Digital
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-block;
+    position: relative;
+    --_dd-bg: var(--color-washi-50);
+    --_dd-border: var(--lib-shibui-ink);
+    --_dd-shadow: var(--lib-shadow-glass);
+  }
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
+@layer components {
+  .dropdown {
+    position: relative;
+    user-select: none;
+  }
 
-.trigger {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: white;
-  border: 1px solid #cbd5e0;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #2d3748;
-  transition: all 0.2s;
-}
+  /* ── Trigger (El botón que abre) ────────────────────────── */
+  .trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: var(--_dd-bg);
+    border: 1px solid var(--_dd-border);
+    border-radius: var(--lib-radius-md, 1px);
+    
+    color: var(--lib-shibui-ink);
+    font-family: var(--lib-font-display, serif);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: all var(--duration-base) ease;
+  }
 
-.trigger:hover {
-  background-color: #f7fafc;
-  border-color: #a0aec0;
-}
+  .trigger:hover {
+    background: var(--color-washi-100);
+  }
 
-.arrow {
-  font-size: 0.6rem;
-  transition: transform 0.2s;
-  color: #718096;
-}
+  .arrow {
+    width: 12px;
+    height: 12px;
+    transition: transform var(--duration-base) var(--ease-default);
+    opacity: 0.6;
+  }
 
-.arrow.up {
-  transform: rotate(180deg);
-}
+  :host([open]) .arrow {
+    transform: rotate(180deg);
+  }
 
-.menu {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  margin-top: 4px;
-  min-width: 160px;
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  box-shadow:
-    0 4px 6px -1px rgb(0, 0, 0, 0.1),
-    0 2px 4px -1px rgb(0, 0, 0, 0.06);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.2s ease-out;
-  z-index: 100;
-  padding: 4px;
-}
+  /* ── Menu (El panel desplegable) ─────────────────────────── */
+  .menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 220px;
+    z-index: 100;
+    
+    background: var(--color-washi-50);
+    backdrop-filter: blur(10px); /* Efecto Glassmorphism */
+    border: 1px solid var(--_dd-border);
+    border-radius: var(--lib-radius-md, 1px);
+    box-shadow: var(--_dd-shadow);
+    
+    /* Animación de entrada */
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: 
+      opacity var(--duration-base) ease,
+      transform var(--duration-base) var(--ease-default);
+    
+    padding: 8px 0;
+  }
 
-.menu[data-open] {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
+  :host([open]) .menu {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 
-/* Estilos para los elementos dentro del slot por defecto */
-::slotted(button),
-::slotted(a) {
-  display: block;
-  width: 100%;
-  padding: 8px 12px;
-  text-align: left;
-  background: none;
-  border: none;
-  border-radius: 4px;
-  color: #4a5568;
-  font-size: 0.85rem;
-  text-decoration: none;
-  cursor: pointer;
-  box-sizing: border-box;
-}
+  /* ── Items del Menú (Slot) ──────────────────────────────── */
+  ::slotted(button), 
+  ::slotted(a) {
+    display: flex !important;
+    align-items: center;
+    width: 100%;
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    
+    color: var(--lib-shibui-ink);
+    font-family: var(--lib-font-body, sans-serif);
+    font-size: var(--text-sm);
+    text-align: left;
+    text-decoration: none;
+    
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
 
-::slotted(button:hover),
-::slotted(a:hover) {
-  background-color: #edf2f7;
-  color: #2d3748;
+  ::slotted(button:hover),
+  ::slotted(a:hover) {
+    background: var(--color-washi-100);
+  }
+
+  ::slotted(hr) {
+    border: 0;
+    border-top: 1px solid var(--color-washi-200);
+    margin: 6px 0;
+  }
 }

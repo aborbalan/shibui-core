@@ -1,41 +1,39 @@
 import { LitElement, html, css, TemplateResult, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import dropdownStyles from './lib-dropdown.css?inline';
+import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
 @customElement('lib-dropdown')
 export class LibDropdown extends LitElement {
-  static override styles = [css`${unsafeCSS(dropdownStyles)}` || []];
+  static override styles = [
+    css`${unsafeCSS(sharedTokens)}`,
+    css`${unsafeCSS(dropdownStyles)}`,
+  ];
+  @property({ type: String }) label: string = 'Opciones';
+  @property({ type: Boolean, reflect: true }) open: boolean = false;
 
-  @property({ type: String }) label = 'Opciones';
-  @property({ type: Boolean, reflect: true }) open = false;
-
-  constructor() {
-    super();
-    // Cerrar al hacer clic fuera
-    this._handleOutsideClick = this._handleOutsideClick.bind(this);
-  }
-
-  private _toggle():void {
-    this.open = !this.open;
-  }
-
-  private _handleOutsideClick(e: Event):void {
-    if (this.open && !e.composedPath().includes(this)) {
-      this.open = false;
-    }
-  }
-
-  override connectedCallback():void {
+  override connectedCallback(): void {
     super.connectedCallback();
     window.addEventListener('click', this._handleOutsideClick);
   }
 
-  override disconnectedCallback():void {
+  override disconnectedCallback(): void {
     window.removeEventListener('click', this._handleOutsideClick);
     super.disconnectedCallback();
   }
 
-  override render(): TemplateResult {
+  private _toggle(): void {
+    this.open = !this.open;
+    this.dispatchEvent(new CustomEvent('dd-toggle', { detail: { open: this.open } }));
+  }
+
+  private _handleOutsideClick = (e: Event): void => {
+    if (this.open && !e.composedPath().includes(this)) {
+      this.open = false;
+    }
+  };
+
+  protected override render(): TemplateResult {
     return html`
       <div class="dropdown">
         <button 
@@ -45,10 +43,12 @@ export class LibDropdown extends LitElement {
           aria-expanded="${this.open}"
         >
           <slot name="trigger">${this.label}</slot>
-          <span class="arrow ${this.open ? 'up' : ''}">▼</span>
+          <svg class="arrow" viewBox="0 0 256 256" fill="currentColor">
+            <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80a8,8,0,0,1,11.32-11.32L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+          </svg>
         </button>
 
-        <div class="menu" ?data-open=${this.open} role="menu">
+        <div class="menu">
           <slot></slot>
         </div>
       </div>
