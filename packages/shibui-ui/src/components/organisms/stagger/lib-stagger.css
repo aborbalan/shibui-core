@@ -1,0 +1,19 @@
+:host {
+    display: block;
+    width: 100%;
+  }
+  
+  /* Seleccionamos los hijos directos que entran por el slot */
+  ::slotted(*) {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9); /* Más exagerado para que se note */
+    transition: 
+      opacity 0.8s ease-out, 
+      transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); /* Efecto rebote */
+    transition-delay: var(--stagger-delay, 0ms);
+  }
+  
+  :host([visible]) ::slotted(*) {
+    opacity: 1;
+    transform: translateY(0);
+  }
