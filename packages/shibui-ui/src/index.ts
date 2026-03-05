@@ -70,5 +70,7 @@ export * from './components/organisms/accordion/lib-accordion.component';
 export * from './components/organisms/toast-manager/lib-toast-manager.component';
 export * from './components/organisms/parallax-container/lib-parallax.component';
 export * from './components/organisms/cursor-follower/lib-cursor-follower.component';
+export * from './components/organisms/stagger/lib-stagger-container.component';
+
 
 console.log('Library initialized');
