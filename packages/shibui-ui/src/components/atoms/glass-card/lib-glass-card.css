@@ -33,11 +33,9 @@
 
     /* Glass base — paper por defecto */
     background:        var(--lib-glass-bg);
-    backdrop-filter:   var(--lib-glass-filter);
-    -webkit-backdrop-filter: var(--lib-glass-filter);
+    backdrop-filter: var(--lib-glass-filter);
     border:            var(--lib-glass-border);
     box-shadow:        var(--lib-glass-shadow);
-
     transition:
       box-shadow  var(--duration-slow) var(--ease-default),
       transform   var(--duration-slow) var(--ease-default);
@@ -85,32 +83,32 @@
 
   /* low: blur 4px · opacity 0.10 */
   :host([intensity="low"]) .glass-card {
-    background: oklch(98% 0.01 60 / var(--lib-glass-opacity-low));
-    backdrop-filter:          blur(var(--lib-glass-blur-low)) saturate(var(--lib-glass-saturate-amount));
-    -webkit-backdrop-filter:  blur(var(--lib-glass-blur-low)) saturate(var(--lib-glass-saturate-amount));
+    background: oklch(98% 0.01 60deg / var(--lib-glass-opacity-low));
+    backdrop-filter:  blur(var(--lib-glass-blur-low)) saturate(var(--lib-glass-saturate-amount));
   }
 
   /* md — valor por defecto, no necesita override */
 
   /* high: blur 25px · opacity 0.25 */
   :host([intensity="high"]) .glass-card {
-    background: oklch(98% 0.01 60 / var(--lib-glass-opacity-high));
-    backdrop-filter:          blur(var(--lib-glass-blur-high)) saturate(var(--lib-glass-saturate-amount));
-    -webkit-backdrop-filter:  blur(var(--lib-glass-blur-high)) saturate(var(--lib-glass-saturate-amount));
+    background: oklch(98% 0.01 60deg / var(--lib-glass-opacity-high));
+    backdrop-filter:  blur(var(--lib-glass-blur-high)) saturate(var(--lib-glass-saturate-amount));
   }
 
   /* Combinaciones variant + intensity — mantienen el tinte correcto */
   :host([variant="water"][intensity="low"]) .glass-card {
-    background: oklch(55% 0.06 210 / var(--lib-glass-opacity-low));
+    background: oklch(55% 0.06 210deg / var(--lib-glass-opacity-low));
   }
+
   :host([variant="water"][intensity="high"]) .glass-card {
-    background: oklch(55% 0.06 210 / var(--lib-glass-opacity-high));
+    background: oklch(55% 0.06 210deg / var(--lib-glass-opacity-high));
   }
 
   :host([variant="kaki"][intensity="low"]) .glass-card {
-    background: oklch(45% 0.05 45 / var(--lib-glass-opacity-low));
+    background: oklch(45% 0.05 45deg / var(--lib-glass-opacity-low));
   }
+
   :host([variant="kaki"][intensity="high"]) .glass-card {
-    background: oklch(45% 0.05 45 / var(--lib-glass-opacity-high));
+    background: oklch(45% 0.05 45deg / var(--lib-glass-opacity-high));
   }
 }

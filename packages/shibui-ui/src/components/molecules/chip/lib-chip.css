@@ -1,72 +1,102 @@
-:host {
-  display: inline-block;
-  outline: none;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-CHIP — Shibui UI · Kintsugi Digital
+   Variantes: selectable · removable · active
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-block;
+    outline: none;
+    /* Variables locales para facilitar personalización */
+    --_chip-bg: var(--color-washi-100);
+    --_chip-text: var(--lib-shibui-ink);
+    --_chip-border: var(--lib-shibui-ink);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.chip {
-  display: inline-flex;
-  align-items: center;
-  height: 32px;
-  padding: 0 12px;
-  background-color: #e2e8f0;
-  border-radius: 16px;
-  color: #2d3748;
-  font-family: sans-serif;
-  font-size: 0.875rem;
-  cursor: default;
-  transition: all 0.2s ease;
-  user-select: none;
-  border: 1px solid transparent;
-}
+@layer components {
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 28px;
+    padding: 0 10px;
+    background-color: var(--_chip-bg);
+    color: var(--_chip-text);
+    
+    /* Aplicamos los tokens de radio brutalista que vimos en tu tokens.css */
+    border: 1px solid var(--_chip-border);
+    border-radius: var(--lib-radius-md, 1px); 
+    
+    /* Tipografía de la guía */
+    font-family: var(--lib-font-display, serif);
+    font-size: var(--text-sm);
+    line-height: 1;
+    cursor: default;
+    transition: 
+      background-color var(--duration-base, 0.2s) ease,
+      color var(--duration-base, 0.2s) ease,
+      transform var(--duration-base, 0.2s) var(--ease-default, ease);
+    user-select: none;
+  }
 
-.chip:focus-visible {
-  box-shadow: 0 0 0 2px #3182ce;
-}
+  /* ── Interacciones ────────────────────────────────────────── */
+  
+  .chip:hover {
+    background-color: var(--color-washi-200);
+  }
 
-:host([selectable]) .chip {
-  cursor: pointer;
-}
+  /* Estado Seleccionado / Activo */
+  :host([active]) .chip {
+    background-color: var(--lib-shibui-ink);
+    color: var(--color-washi-50);
+  }
 
-:host([active]) .chip {
-  background-color: #3182ce;
-  color: white;
-}
+  :host([selectable]) .chip {
+    cursor: pointer;
+  }
 
-.avatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  margin-left: -8px;
-  margin-right: 8px;
-  object-fit: cover;
-}
+  /* ── Botón de Eliminar ────────────────────────────────────── */
+  
+  .remove-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-right: -4px;
+    cursor: pointer;
+    color: currentcolor;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
 
-.label {
-  line-height: 1;
-}
+  .remove-btn:hover {
+    opacity: 1;
+  }
 
-.remove-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgb(0, 0, 0, 0.1);
-  border: none;
-  border-radius: 50%;
-  width: 16px;
-  height: 16px;
-  margin-left: 8px;
-  margin-right: -4px;
-  cursor: pointer;
-  padding: 0;
-  color: inherit;
-  transition: background 0.2s;
-}
+  .remove-btn svg {
+    width: 14px;
+    height: 14px;
+  }
 
-.remove-btn:hover {
-  background: rgb(0, 0, 0, 0.2);
-}
+  /* ── Animaciones de entrada (Opcional) ────────────────────── */
+  @keyframes chip-reveal {
+    from { 
+      opacity: 0;
+       transform: translateY(4px); }
 
-.remove-btn svg {
-  width: 10px;
-  height: 10px;
+    to { 
+      opacity: 1;
+       transform: translateY(0); }
+  }
+
+  :host([entering]) .chip {
+    animation: chip-reveal 0.4s ease forwards;
+  }
 }
