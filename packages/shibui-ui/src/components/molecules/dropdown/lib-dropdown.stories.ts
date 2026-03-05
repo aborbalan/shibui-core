@@ -67,19 +67,19 @@ export const ShibuiStyle: Story = {
     <div style="height: 400px; background: #111; padding: 100px; display: flex; justify-content: center;">
       
       <lib-dropdown .label=${args.label} ?open=${args.open}>
-        <button @click=${() => console.log('User: Kenshiro')}>
+        <button @click=${():void => console.log('User: Kenshiro')}>
           <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--color-kaki-500); margin-right: 12px; flex-shrink: 0;"></div>
           <span>Kenshiro Kasumi</span>
         </button>
 
-        <button @click=${() => console.log('User: Hanako')}>
+        <button @click=${():void => console.log('User: Hanako')}>
           <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--color-celadon-500); margin-right: 12px; flex-shrink: 0;"></div>
           <span>Muraoka Hanako</span>
         </button>
 
         <hr>
 
-        <button style="color: var(--color-washi-400); font-style: italic;" @click=${() => console.log('Logout')}>
+        <button style="color: var(--color-washi-400); font-style: italic;" @click=${():void => console.log('Logout')}>
           Cerrar Sesión
         </button>
       </lib-dropdown>
