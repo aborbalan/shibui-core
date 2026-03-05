@@ -1,0 +1,59 @@
+@layer tokens, reset, components;
+
+@layer components {
+  :host {
+    display: inline-block;
+    position: relative;
+    --_btn-bg: var(--lib-shibui-ink);
+    --_btn-text: var(--color-washi-50);
+    --_liquid-color: var(--color-kaki-500);
+  }
+
+  .liquid-button {
+    position: relative;
+    padding: 14px 36px;
+    background-color: var(--_btn-bg);
+    color: var(--_btn-text);
+    border: none;
+    border-radius: var(--lib-radius-md, 1px);
+    font-family: var(--lib-font-display, serif);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.4s ease;
+    z-index: 1;
+    outline: none;
+  }
+
+  /* Capa del líquido */
+  .liquid-button::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: -25%; /* Más ancho para permitir la deformación lateral */
+    width: 150%;
+    height: 120%;
+    background-color: var(--_liquid-color);
+    transition: transform 0.8s cubic-bezier(0.7, 0, 0.2, 1);
+    z-index: -1;
+    /* Invocamos el filtro SVG */
+    filter: url(#shibui-liquid-filter);
+    transform: translateY(0) scaleY(1.2);
+    pointer-events: none;
+  }
+
+  .liquid-button:hover {
+    color: var(--lib-shibui-ink);
+  }
+
+  .liquid-button:hover::before {
+    transform: translateY(-110%) scaleY(1);
+  }
+
+  .label {
+    position: relative;
+    z-index: 2;
+  }
+}
