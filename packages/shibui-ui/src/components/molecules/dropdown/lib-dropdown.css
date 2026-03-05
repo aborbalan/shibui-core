@@ -29,7 +29,6 @@
     background: var(--_dd-bg);
     border: 1px solid var(--_dd-border);
     border-radius: var(--lib-radius-md, 1px);
-    
     color: var(--lib-shibui-ink);
     font-family: var(--lib-font-display, serif);
     font-size: var(--text-sm);
@@ -59,7 +58,6 @@
     left: 0;
     min-width: 220px;
     z-index: 100;
-    
     background: var(--color-washi-50);
     backdrop-filter: blur(10px); /* Efecto Glassmorphism */
     border: 1px solid var(--_dd-border);
@@ -73,7 +71,6 @@
     transition: 
       opacity var(--duration-base) ease,
       transform var(--duration-base) var(--ease-default);
-    
     padding: 8px 0;
   }
 
@@ -92,13 +89,11 @@
     padding: 10px 16px;
     background: transparent;
     border: none;
-    
     color: var(--lib-shibui-ink);
     font-family: var(--lib-font-body, sans-serif);
     font-size: var(--text-sm);
     text-align: left;
     text-decoration: none;
-    
     cursor: pointer;
     transition: background 0.2s ease;
   }

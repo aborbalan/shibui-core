@@ -32,8 +32,8 @@
     position: relative;
     overflow: hidden;
     border-radius: var(--radius-lg);            /* 8px */
-    background: oklch(20% 0.02 220 / 1);
-    border: 1px solid oklch(100% 0 0 / 0.08);
+    background: oklch(20% 0.02 220deg / 1);
+    border: 1px solid oklch(100% 0 0deg / 0.08);
     cursor: crosshair;
     transition:
       border-color var(--duration-base) var(--ease-default),
@@ -41,13 +41,13 @@
   }
 
   .spotlight:hover {
-    border-color: oklch(100% 0 0 / 0.15);
-    box-shadow: 0 8px 32px oklch(0% 0 0 / 0.4);
+    border-color: oklch(100% 0 0deg / 0.15);
+    box-shadow: 0 8px 32px oklch(0% 0 0deg / 0.4);
   }
 
   /* ── Kintsugi background — fondo cálido cuando activo ──────── */
   :host([kintsugi]) .spotlight {
-    background: oklch(18% 0.02 45 / 1);
+    background: oklch(18% 0.02 45deg / 1);
   }
 
   /* ── Kintsugi border — hilo de oro en las grietas ──────────── */
@@ -60,10 +60,9 @@
     padding: 1px;
     background: var(--lib-kintsugi-border);
     /* Recorta solo el área del borde (1px) */
-    -webkit-mask:
+    mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
     z-index: 2;

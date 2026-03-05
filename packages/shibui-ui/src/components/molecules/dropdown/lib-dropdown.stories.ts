@@ -1,5 +1,5 @@
 import { html, TemplateResult } from 'lit';
-import { Meta, StoryObj } from '@storybook/web-components';
+import { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-dropdown.component';
 
 /**
@@ -36,10 +36,10 @@ type Story = StoryObj<DropdownArgs>;
 const renderTemplate = (args: DropdownArgs): TemplateResult => html`
   <div style="height: 300px; display: flex; justify-content: center; padding-top: 50px; background: var(--bg-base, #fff);">
     <lib-dropdown .label=${args.label} ?open=${args.open}>
-      <button @click=${() => console.log('Edit clicked')}>Editar perfil</button>
-      <button @click=${() => console.log('Settings clicked')}>Configuración</button>
+      <button @click=${():void => console.log('Edit clicked')}>Editar perfil</button>
+      <button @click=${():void => console.log('Settings clicked')}>Configuración</button>
       <hr>
-      <button style="color: var(--color-kaki-600, #e53e3e);" @click=${() => console.log('Delete clicked')}>
+      <button style="color: var(--color-kaki-600, #e53e3e);" @click=${():void => console.log('Delete clicked')}>
         Eliminar cuenta
       </button>
     </lib-dropdown>
