@@ -1,36 +1,110 @@
-:host {
-  display: block;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-SPOTLIGHT-CARD — Shibui UI · Kintsugi Digital
+   Spotlight : kaki (default) · water · white
+   Kintsugi  : boolean — activa el hilo de oro en el borde
+
+   Arquitectura de capas:
+     1. .spotlight__layer  → gradiente radial reactivo al cursor   z-index: 1
+     2. ::after            → borde kintsugi (mask-composite)       z-index: 2
+     3. .spotlight__slot   → contenido slotado                     z-index: 3
+
+   El gradiente usa --lib-spotlight-x / --lib-spotlight-y
+   actualizadas en JS vía mousemove sobre :host.
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    /* Posición inicial del spotlight centrada */
+    --lib-spotlight-x: 50%;
+    --lib-spotlight-y: 50%;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.spotlight-card {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #121212; /* Un gris muy oscuro */
-  border: 1px solid rgb(255, 255, 255, 0.1);
+@layer components {
 
-  --mouse-x: 0px;
-  --mouse-y: 0px;
-}
+  /* ── Contenedor base ────────────────────────────────────────── */
+  .spotlight {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);            /* 8px */
+    background: oklch(20% 0.02 220 / 1);
+    border: 1px solid oklch(100% 0 0 / 0.08);
+    cursor: crosshair;
+    transition:
+      border-color var(--duration-base) var(--ease-default),
+      box-shadow   var(--duration-base) var(--ease-default);
+  }
 
-/* El brillo lo ponemos en el AFTER y encima de todo */
-.spotlight-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
+  .spotlight:hover {
+    border-color: oklch(100% 0 0 / 0.15);
+    box-shadow: 0 8px 32px oklch(0% 0 0 / 0.4);
+  }
 
-  /* El haz de luz: un poco más intenso para que lo veas bien ahora */
-  background: radial-gradient(
-    500px circle at var(--mouse-x) var(--mouse-y),
-    rgb(255, 255, 255, 0.1),
-    transparent 80%
-  );
-  z-index: 10;
-  pointer-events: none; /* Crucial para que puedas clicar lo de dentro */
-}
+  /* ── Kintsugi background — fondo cálido cuando activo ──────── */
+  :host([kintsugi]) .spotlight {
+    background: oklch(18% 0.02 45 / 1);
+  }
 
-.content {
-  position: relative;
-  z-index: 1;
-  padding: 1.5rem;
+  /* ── Kintsugi border — hilo de oro en las grietas ──────────── */
+  /* Técnica: padding: 1px + mask-composite para aislar el borde  */
+  :host([kintsugi]) .spotlight::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: var(--lib-kintsugi-border);
+    /* Recorta solo el área del borde (1px) */
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* ============================================================
+     SPOTLIGHT LAYER — gradiente radial reactivo
+     ============================================================ */
+  .spotlight__layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    /* Kaki por defecto */
+    background: var(--lib-spotlight-gradient);
+    opacity: 0;
+    transition: opacity var(--duration-base) var(--ease-default);
+    z-index: 1;
+  }
+
+  /* Aparece al hover del contenedor */
+  .spotlight:hover .spotlight__layer {
+    opacity: 1;
+  }
+
+  /* ── Variantes de spotlight ─────────────────────────────────── */
+  :host([spotlight="water"]) .spotlight__layer {
+    background: var(--lib-spotlight-gradient-water);
+  }
+
+  :host([spotlight="white"]) .spotlight__layer {
+    background: var(--lib-spotlight-gradient-white);
+  }
+
+  /* kintsugi siempre usa kaki — no se sobreescribe */
+
+  /* ============================================================
+     SLOT — encima de ambas capas
+     ============================================================ */
+  .spotlight__slot {
+    position: relative;
+    z-index: 3;
+  }
 }
