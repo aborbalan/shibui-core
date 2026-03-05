@@ -36,7 +36,7 @@ export const Showcase: StoryObj = {
           02. Input Chips (Removables)
         </h3>
         <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <lib-chip label="shibui.css" removable @chip-remove=${(e: any):void => console.log('Removido:', e.detail)}></lib-chip>
+          <lib-chip label="shibui.css" removable @chip-remove=${(e: CustomEvent):void => console.log('Removido:', e.detail)}></lib-chip>
           <lib-chip label="tokens.json" removable></lib-chip>
           <lib-chip label="index.ts" removable></lib-chip>
         </div>
@@ -64,7 +64,7 @@ export const Showcase: StoryObj = {
 
 export const InteractiveField: StoryObj = {
   render: ():TemplateResult => {
-    const addChip = (e: KeyboardEvent) => {
+    const addChip = (e: KeyboardEvent):void => {
       if (e.key === 'Enter') {
         const input = e.target as HTMLInputElement;
         console.log('Añadir chip:', input.value);
