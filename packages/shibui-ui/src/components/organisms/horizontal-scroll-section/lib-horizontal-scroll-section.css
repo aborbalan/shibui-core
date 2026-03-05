@@ -1,0 +1,60 @@
+@layer tokens, reset, components;
+
+@layer components {
+  :host {
+    display: block;
+    /* La altura define la "duración" del scroll. 300vh = 3 pantallas de scroll */
+    height: var(--_scroll-height, 300vh);
+    position: relative;
+  }
+
+  .sticky-wrapper {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-base);
+  }
+
+  .horizontal-content {
+    display: flex;
+    gap: var(--lib-spacing-xl, 4rem);
+    padding: 0 10vw;
+    will-change: transform;
+    transition: transform 0.1s linear;
+  }
+
+  /* Estética de los ítems internos (pueden ser imágenes o texto) */
+  ::slotted(*) {
+    flex-shrink: 0;
+  }
+
+  /* ── Indicador de Progreso Shibui ────────────────────────── */
+  .progress-bar {
+    position: absolute;
+    bottom: 40px;
+    left: 10vw;
+    width: 80vw;
+    height: 1px;
+    background: var(--color-washi-200);
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--lib-shibui-ink);
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  .counter {
+    position: absolute;
+    bottom: 50px;
+    right: 10vw;
+    font-family: var(--lib-font-mono, 'DM Mono', monospace);
+    font-size: var(--text-xs);
+    color: var(--lib-shibui-ink);
+  }
+}
