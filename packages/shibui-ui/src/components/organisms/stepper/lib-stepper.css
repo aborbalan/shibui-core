@@ -1,23 +1,34 @@
-:host {
-  display: block;
-  width: 100%;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-STEPPER — Shibui UI · 段階
+   Contenedor que coordina lib-step hijos.
+   Orientation : horizontal (default) · vertical
+   Variant     : default · minimal · kintsugi
+   Size        : sm · md (default) · lg
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    width: 100%;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.stepper-container {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  gap: 1rem;
-}
+@layer components {
 
-/* Línea de fondo que conecta los pasos */
-.stepper-container::before {
-  content: "";
-  position: absolute;
-  top: 18px; /* Mitad del círculo del paso */
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: #e2e8f0;
-  z-index: 0;
+  /* ── Track — layout del flujo ───────────────────────────── */
+  .stepper-track {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    position: relative;
+  }
+
+  /* ── Vertical ───────────────────────────────────────────── */
+  :host([orientation="vertical"]) .stepper-track {
+    flex-direction: column;
+  }
 }
