@@ -11,6 +11,18 @@
       "import": "./dist/index.js",
       "types": "./dist/index.ts"
     },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js"
+    },
+    "./angular": {
+      "types": "./dist/angular/index.d.ts",
+      "import": "./dist/angular/index.js"
+    },
+    "./svelte": {
+      "types": "./dist/svelte/shibui-elements.d.ts",
+      "import": "./dist/index.js"
+    },
     "./styles": "./dist/styles.css"
   },
   "files": [
@@ -18,9 +30,10 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && tsc && vite build",
+    "clean": "rimraf dist",
     "pack:local": "npm run build && npm pack",
     "preview": "vite preview",
+    "prebuild": "npm run clean",
     "postbuild": "npm run type-check",
     "type-check": "tsc --noEmit",
     "lint": "eslint . --config .config/eslintrc.cjs --ignore-path .config/.eslintignore",
@@ -33,7 +46,9 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lighthouse": "lhci autorun --config=./.config/lighthouserc.cjs",
-    "analyze": "cem analyze --litelement --exclude dist"
+    "analyze": "cem analyze --litelement --exclude dist",
+    "generate:wrappers": "tsx scripts/generate-wrappers.ts",
+    "build": "npm run clean && vite build && tsc &&  npm run analyze && npm run generate:wrappers"
   },
   "keywords": [
     "web-components",
@@ -66,9 +81,10 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "lit": "^3.0.0",
-  "@playwright/test": "^1.49.0",
-  "@axe-core/playwright": "^4.10.0",
-  "playwright": "^1.49.0",    "prettier": "^3.1.1",
+    "@playwright/test": "^1.49.0",
+    "@axe-core/playwright": "^4.10.0",
+    "playwright": "^1.49.0",
+    "prettier": "^3.1.1",
     "sass": "^1.97.3",
     "storybook": "^10.2.6",
     "stylelint": "^17.1.1",
@@ -83,7 +99,8 @@
   },
   "lint-staged": {
     "src/**/*.ts": [
-"eslint --config .config/eslintrc.cjs --fix --max-warnings=2"    ]
+      "eslint --config .config/eslintrc.cjs --fix --max-warnings=2"
+    ]
   },
-  "customElements": "custom-elements.json"
+  "customElements": "dist/custom-elements.json"
 }
