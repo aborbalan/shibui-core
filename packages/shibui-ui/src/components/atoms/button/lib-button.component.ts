@@ -7,8 +7,10 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import { buttonTemplate } from './lib-button.html';
 
 /**
+ * @tag lib-button
  * @element lib-button
  * @fires ui-lib-click - Evento personalizado disparado al hacer clic.
+ * @event lib-click
  * @csspart button - El elemento <button> nativo.
  */
 @customElement('lib-button')
@@ -30,24 +32,45 @@ export class LibButton extends LitElement {
     this._buttonId = generateUniqueId('lib-button-');
   }
 
+  /**
+ * @type {"default" | "primary" | "secondary" | "success" | "warning" | "danger" | "accent"}
+ */
   @property({ type: String, reflect: true })
   variant: LibVariant = 'primary';
 
+  /**
+ * @type {"sm" | "md" | "lg" | "xl"}
+ */
   @property({ type: String, reflect: true })
   size: LibSize = 'md';
 
+  /**
+ * @type {boolean}
+ */
   @property({ type: Boolean, reflect: true })
   disabled = false;
 
+/**
+ * @type {boolean}
+ */
   @property({ type: Boolean, reflect: true })
   glass = false;
 
+  /**
+ * @type {'button' | 'submit' | 'reset'}
+ */
   @property({ type: String })
   type: 'button' | 'submit' | 'reset' = 'button';
 
+  /**
+ * @type {string | null}
+ */
   @property({ type: String, attribute: 'custom-padding' })
   customPadding: string | null = null;
 
+  /**
+ * @type {string | null}
+ */
   @property({ type: String, attribute: 'aria-label' })
   override ariaLabel: string | null = null;
 

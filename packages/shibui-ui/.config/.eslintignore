@@ -5,3 +5,4 @@ build/
 commitlint.config.cjs
 !src/**/*.ts
 !src/**/*.stories.ts
+scripts/
