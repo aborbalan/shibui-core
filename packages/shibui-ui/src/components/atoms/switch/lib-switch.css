@@ -1,69 +1,265 @@
-:host {
-  font-family: inherit;
-  display: inline-block;
+@layer tokens, reset, components;
 
-  --switch-width: 44px;
-  --switch-height: 24px;
-  --switch-bg-off: var(--lib-color-neutral-300, #ccc);
-  --switch-bg-on: var(--lib-color-primary, #3b82f6);
-  --thumb-size: 18px;
-  --thumb-color: white;
+/* ============================================================
+   LIB-SWITCH — Shibui UI
+   Variant : default · kintsugi
+   Size    : sm · md (default) · lg
+   Props   : checked · disabled · label · sub
+
+   El estado checked se controla vía :host([checked]) — se refleja
+   como atributo en el componente Lit, sin clases JS adicionales.
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.switch {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  gap: 8px;
-  user-select: none;
-  font-family: sans-serif;
-}
+@layer components {
 
-/* Escondemos el checkbox nativo pero mantenemos su funcionalidad */
-input {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+  /* ── Label wrapper ──────────────────────────────────────── */
+  .sw {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--lib-space-sm); /* 8px */
+    cursor: pointer;
+    user-select: none;
+  }
 
-.slider {
-  position: relative;
-  width: var(--switch-width);
-  height: var(--switch-height);
-  background-color: var(--switch-bg-off);
-  border-radius: var(--switch-height);
-  transition: background-color 0.2s ease;
-}
+  /* Oculto visualmente pero accesible */
+  .sw-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
 
-.slider::before {
-  content: "";
-  position: absolute;
-  height: var(--thumb-size);
-  width: var(--thumb-size);
-  left: 3px;
-  bottom: 3px;
-  background-color: var(--thumb-color);
-  border-radius: 50%;
-  transition: transform 0.2s ease;
-  box-shadow: 0 1px 3px rgb(0, 0, 0, 0.2);
-}
+  /* ── Track ──────────────────────────────────────────────── */
+  .sw-track {
+    position: relative;
+    flex-shrink: 0;
+    width: 40px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    background: var(--color-washi-300);
+    transition:
+      background var(--duration-base) var(--ease-default),
+      box-shadow var(--duration-slow) var(--ease-out);
+  }
 
-input:checked + .slider {
-  background-color: var(--switch-bg-on);
-}
+  /* ── Thumb ──────────────────────────────────────────────── */
+  .sw-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: var(--radius-full);
+    background: var(--color-white);
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform  var(--duration-base) var(--ease-bounce),
+      width      var(--duration-base) var(--ease-default),
+      background var(--duration-slow) var(--ease-default);
+  }
 
-input:checked + .slider::before {
-  transform: translateX(calc(var(--switch-width) - var(--thumb-size) - 6px));
-}
+  /* ── Label text ─────────────────────────────────────────── */
+  .sw-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
 
-input:focus-visible + .slider {
-  outline: 2px solid var(--lib-color-primary);
-  outline-offset: 2px;
-}
+  .sw-label-text {
+    font-family: var(--lib-font-body);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    line-height: var(--leading-snug);
+    transition: color var(--duration-base) var(--ease-default);
+  }
 
-input:disabled + .slider {
-  opacity: 0.5;
-  cursor: not-allowed;
+  .sw-label-sub {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    line-height: var(--leading-snug);
+  }
+
+  /* ============================================================
+     CHECKED — DEFAULT
+     ============================================================ */
+
+  :host([checked]) .sw-track {
+    background: var(--color-washi-900);
+  }
+
+  /* Thumb slide: offset = track(40) - thumb(18) - padding(3+3) = 16px */
+  :host([checked]) .sw-thumb {
+    transform: translateX(16px);
+  }
+
+  /* ── Hover elastic: thumb grows, translate compensates ────── */
+  .sw:hover .sw-thumb {
+    width: 22px; /* +4px */
+  }
+
+  /* checked + hover: grow se come 4px del offset → 16-4=12 */
+  :host([checked]) .sw:hover .sw-thumb {
+    transform: translateX(12px);
+  }
+
+  /* ============================================================
+     DISABLED
+     ============================================================ */
+
+  :host([disabled]) {
+    pointer-events: none;
+  }
+
+  :host([disabled]) .sw {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  /* ============================================================
+     FOCUS VISIBLE
+     ============================================================ */
+  .sw-input:focus-visible ~ .sw-track {
+    outline: 2px solid var(--color-washi-700);
+    outline-offset: 2px;
+  }
+
+  /* ============================================================
+     SIZES
+     ============================================================ */
+
+  /* SM — 30×18, thumb 12px */
+  :host([size="sm"]) .sw-track { width: 30px;
+     height: 18px; }
+  :host([size="sm"]) .sw-thumb { width: 12px;
+     height: 12px;
+     top: 2px;
+      left: 2px; }
+
+  :host([size="sm"][checked]) .sw-thumb { transform: translateX(12px); }
+  :host([size="sm"]) .sw:hover .sw-thumb { width: 15px; }
+  :host([size="sm"][checked]) .sw:hover .sw-thumb { transform: translateX(9px); }
+
+  /* LG — 52×30, thumb 22px */
+  :host([size="lg"]) .sw-track { width: 52px;
+     height: 30px; }
+  :host([size="lg"]) .sw-thumb { width: 22px;
+     height: 22px;
+      top: 3px;
+       left: 3px; }
+
+  :host([size="lg"][checked]) .sw-thumb { transform: translateX(22px); }
+  :host([size="lg"]) .sw:hover .sw-thumb { width: 27px; }
+  :host([size="lg"][checked]) .sw:hover .sw-thumb { transform: translateX(17px); }
+
+  /* ============================================================
+     VARIANT — KINTSUGI
+     金継ぎ : cerámica oscura + venas doradas + thumb de oro al activar
+     ============================================================ */
+
+  /* Keyframes */
+  @keyframes kin-pulse {
+    0%, 100% { opacity: 0.45; }
+    50%       { opacity: 1; }
+  }
+
+  @keyframes kin-pulse-on {
+    0%, 100% { opacity: 0.7; }
+    50%       { opacity: 1; }
+  }
+
+  @keyframes kin-thumb-glow {
+    0%, 100% { box-shadow: 0 0 6px 1px rgb(190,150,50,0.3); }
+    50%       { box-shadow: 0 0 14px 3px rgb(190,150,50,0.55); }
+  }
+
+  /* Gold palette local (mirrors styleguide tokens) */
+  :host([variant="kintsugi"]) {
+    --gold-bright: oklch(80% 0.09 78deg);
+    --gold-mid:    oklch(72% 0.06 68deg);
+    --gold-deep:   oklch(62% 0.05 60deg);
+  }
+
+  /* Track — dark ceramic */
+  :host([variant="kintsugi"]) .sw-track {
+    background: oklch(12% 0.02 45deg);
+    overflow: visible;
+  }
+
+  /* Kintsugi border via mask */
+  :host([variant="kintsugi"]) .sw-track::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-full);
+    padding: 1px;
+    background: var(--lib-kintsugi-border);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    animation: kin-pulse 3.5s ease-in-out infinite;
+  }
+
+  /* Thumb OFF — dark matte */
+  :host([variant="kintsugi"]) .sw-thumb {
+    background: oklch(22% 0.02 50deg);
+    box-shadow: none;
+  }
+
+  /* Track ON — deep gold wash */
+  :host([variant="kintsugi"][checked]) .sw-track {
+    background: oklch(18% 0.04 60deg);
+  }
+
+  :host([variant="kintsugi"][checked]) .sw-track::before {
+    animation: kin-pulse-on 2.4s ease-in-out infinite;
+  }
+
+  /* Thumb ON — bright gold + glow */
+  :host([variant="kintsugi"][checked]) .sw-thumb {
+    background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold-mid) 60%, var(--gold-deep) 100%);
+    animation: kin-thumb-glow 2.4s ease-in-out infinite;
+  }
+
+  /* Focus kintsugi */
+  :host([variant="kintsugi"]) .sw-input:focus-visible ~ .sw-track::before {
+    opacity: 1;
+    animation: none;
+  }
+
+  /* Label kintsugi */
+  :host([variant="kintsugi"]) .sw-label-text {
+    color: oklch(72% 0.02 55deg);
+  }
+
+  :host([variant="kintsugi"]) .sw-label-sub {
+    color: oklch(40% 0.02 50deg);
+  }
+
+  :host([variant="kintsugi"][checked]) .sw-label-text {
+    color: oklch(85% 0.04 70deg);
+  }
+
+  /* ── Accessibility ──────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .sw-thumb,
+    .sw-track { transition: none; }
+
+    :host([variant="kintsugi"]) .sw-track::before,
+    :host([variant="kintsugi"][checked]) .sw-track::before,
+    :host([variant="kintsugi"][checked]) .sw-thumb { animation: none; }
+  }
 }
