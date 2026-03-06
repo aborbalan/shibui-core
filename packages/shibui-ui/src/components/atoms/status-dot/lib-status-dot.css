@@ -1,67 +1,200 @@
-:host {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 10px;
-  height: 10px;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-STATUS-DOT — Shibui UI · 状態
+   Status : online · away · busy · offline
+   Size   : sm (6px) · md (10px, default) · lg (14px)
+   Props  : bordered · label
+
+   Animaciones (conceptos japoneses):
+     水 mizu   — online  : doble onda concéntrica desde el punto (2.6s)
+     息 iki    — away    : respiración, scale + opacity (3s)
+     速い hayai — busy    : parpadeo asimétrico (1.1s)
+     間 ma     — offline : quietud total, sin movimiento
+
+   Los anillos de mizu se generan en ::before / ::after del .sd-wrap.
+   El punto .sd usa z-index:1 para quedar sobre los anillos.
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.status-dot-container {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 100%;
-}
+@layer components {
 
-.dot {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: var(--dot-color, #ccc);
-  z-index: 2;
-}
-
-.pulse {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: var(--dot-color, #ccc);
-  animation: pulse-animation 2s infinite;
-  z-index: 1;
-  opacity: 0.6;
-}
-
-/* Variantes */
-:host([variant="success"]) {
-  --dot-color: var(--lib-color-success, #28a745);
-}
-
-:host([variant="danger"]) {
-  --dot-color: var(--lib-color-danger, #dc3545);
-}
-
-:host([variant="warning"]) {
-  --dot-color: var(--lib-color-warning, #ffc107);
-}
-
-:host([variant="info"]) {
-  --dot-color: var(--lib-color-primary, #007aff);
-}
-
-:host([variant="neutral"]) {
-  --dot-color: var(--lib-color-neutral-60, #999);
-}
-
-@keyframes pulse-animation {
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
+  /* ── Root — controla el gap entre dot y label ───────────── */
+  .sd-root {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--lib-space-sm); /* 8px */
   }
 
-  100% {
-    transform: scale(3);
+  /* ── Wrapper — reserva espacio para los anillos ─────────── */
+  .sd-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Anillos: pseudo-elementos del wrapper (solo activos en online) */
+  .sd-wrap::before,
+  .sd-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-full);
     opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ── El punto central ────────────────────────────────────── */
+  .sd {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background: var(--color-washi-400);
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+
+  /* ── SIZES ──────────────────────────────────────────────── */
+  :host([size="sm"]) .sd { 
+    width: 6px;
+      height: 6px; }
+  :host([size="md"]) .sd { 
+    width: 10px;
+     height: 10px; }
+  :host([size="lg"]) .sd { 
+    width: 14px;
+     height: 14px; }
+
+  /* ── BORDERED — halo blanco para uso sobre avatares ─────── */
+  .sd--bordered {
+    box-shadow: 0 0 0 2px var(--bg-elevated);
+  }
+
+  /* ── LABEL ──────────────────────────────────────────────── */
+  .sd-label {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    line-height: 1;
+  }
+
+  /* ============================================================
+     KEYFRAMES
+     ============================================================ */
+
+  /* 水 mizu — doble onda: ring-a y ring-b desfasados */
+  @keyframes mizu-ring-a {
+    0%   { 
+      transform: scale(1);
+         opacity: 0.5; }
+    100% { 
+      transform: scale(2.8);
+       opacity: 0; }
+  }
+
+  @keyframes mizu-ring-b {
+    0%   { 
+      transform: scale(1);
+         opacity: 0.35; }
+    100% { 
+      transform: scale(2.2);
+       opacity: 0; }
+  }
+
+  /* 息 iki — respiración suave */
+  @keyframes iki {
+    0%, 100% { 
+      transform: scale(1);
+          opacity: 1; }
+    50%       { 
+      transform: scale(1.18);
+       opacity: 0.75; }
+  }
+
+  /* 速い hayai — parpadeo asimétrico urgente */
+  @keyframes hayai {
+    0%, 100% { 
+      opacity: 1; }
+    40%       { 
+      opacity: 0.3; }
+    60%       { 
+      opacity: 0.3; }
+  }
+
+  /* ============================================================
+     STATES
+     ============================================================ */
+
+  /* ── ONLINE — celadón · 水 mizu ──────────────────────────── */
+  :host([status="online"]) .sd {
+    background: var(--color-celadon-500);
+  }
+
+  :host([status="online"]) .sd-wrap::before {
+    background: var(--color-celadon-400);
+    animation: mizu-ring-a 2.6s cubic-bezier(0, 0.55, 0.45, 1) infinite;
+  }
+
+  :host([status="online"]) .sd-wrap::after {
+    background: var(--color-celadon-400);
+    animation: mizu-ring-b 2.6s cubic-bezier(0, 0.55, 0.45, 1) 0.9s infinite;
+  }
+
+  :host([status="online"]) .sd-label {
+    color: var(--color-celadon-600);
+  }
+
+  /* ── AWAY — kaki · 息 iki ────────────────────────────────── */
+  :host([status="away"]) .sd {
+    background: var(--color-kaki-500);
+    animation: iki 3s ease-in-out infinite;
+  }
+
+  :host([status="away"]) .sd-label {
+    color: var(--color-kaki-500);
+  }
+
+  /* ── BUSY — error · 速い hayai ───────────────────────────── */
+  :host([status="busy"]) .sd {
+    background: var(--color-error);
+    animation: hayai 1.1s ease-in-out infinite;
+  }
+
+  :host([status="busy"]) .sd-label {
+    color: var(--color-error);
+  }
+
+  /* ── OFFLINE — washi-400 · 間 ma ─────────────────────────── */
+  :host([status="offline"]) .sd {
+    background: var(--color-washi-400);
+    /* sin animación — quietud total */
+  }
+
+  :host([status="offline"]) .sd-label {
+    color: var(--text-muted);
+  }
+
+  /* ── ACCESIBILIDAD ──────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .sd-wrap::before,
+    .sd-wrap::after { 
+      animation: none;
+       opacity: 0; }
+    .sd             { 
+      animation: none; }
   }
 }
