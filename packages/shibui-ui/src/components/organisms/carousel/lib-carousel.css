@@ -70,9 +70,9 @@
     width: 40px;
     height: 40px;
     border: 1px solid var(--border-default);
-    background: rgba(250, 247, 244, 0.88);
+    background: rgb(250, 247, 244, 0.88);
     backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -202,7 +202,7 @@
   }
 
   /* ── RESPONSIVE ───────────────────────────────────────── */
-  @media (max-width: 640px) {
+  @media (width <= 640px) {
     :host([peek="2"]) ::slotted(*),
     :host([peek="3"]) ::slotted(*),
     :host([peek="4"]) ::slotted(*) {

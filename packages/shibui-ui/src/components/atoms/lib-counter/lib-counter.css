@@ -1,41 +1,156 @@
-@layer atoms {
-    @property --current-value {
-      syntax: '<integer>';
-      initial-value: 0;
-      inherits: false;
-    }
-  
-    :host {
-      display: inline-block;
-      font-family: var(--lib-font-family-mono, monospace);
-      font-variant-numeric: tabular-nums;
-      color: var(--color-kaki-500);
-      font-weight: 600;
-      /* Movemos la inicialización aquí para evitar duplicados en el bloque hijo */
-      --current-value: 0;
-    }
-  
-    .counter {
-      /* Eliminamos la línea duplicada que causaba el error */
-      transition: --current-value var(--duration) cubic-bezier(0.16, 1, 0.3, 1);
-      --current-value: var(--target-value);
-      
-      counter-reset: count var(--current-value);
-    }
-  
-    .counter::after {
-      content: counter(count);
-    }
-  
-    .counter-container {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 0.1em;
-    }
-  
-    .prefix, .suffix {
-      font-size: 0.8em;
-      opacity: 0.8;
-      user-select: none;
-    }
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-COUNTER — Shibui UI
+   Mecanismo : digit flip (columna 0-9, translateY)
+   Sizes     : sm (2rem) · md (3.5rem) · lg (5rem) · xl (7rem)
+   Tones     : default · kaki · celadon · error · muted · on-dark
+   Slots     : ninguno — todo se construye internamente
+   Props     : value · prefix · suffix · thousands · decimals
+               size · tone · label · delta · delta-dir · animate
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-block;
   }
+  *, *::before, *::after { box-sizing: border-box; }
+}
+
+@layer components {
+
+  /* ── Wrapper ───────────────────────────────────────────── */
+  .cnt {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ── Value row ─────────────────────────────────────────── */
+  .cnt-row {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0;
+    font-family: var(--lib-font-display);
+    font-weight: var(--weight-light);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1;
+    color: var(--text-primary);
+  }
+
+  /* ── Prefix / Suffix ───────────────────────────────────── */
+  .cnt-prefix,
+  .cnt-suffix {
+    font-family: var(--lib-font-mono);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    line-height: 1;
+    align-self: flex-end;
+    padding-bottom: 0.05em;
+  }
+
+  /* ── Separator (. o ,) — estático ─────────────────────── */
+  .cnt-sep {
+    line-height: 1;
+    color: var(--text-muted);
+    padding: 0 1px;
+  }
+
+  /* ── Digit slot ────────────────────────────────────────── */
+  .cnt-digit {
+    position: relative;
+    overflow: hidden;
+    height: 1em;
+    display: inline-block;
+    vertical-align: bottom;
+  }
+
+  /* Columna interior: 10 spans apilados (0-9) */
+  .cnt-digit-inner {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+    /* Transición por defecto — sobreescrita vía JS en cada animación */
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cnt-digit-inner span {
+    display: block;
+    height: 1em;
+    line-height: 1em;
+    text-align: center;
+  }
+
+  /* ── SIZES ─────────────────────────────────────────────── */
+  :host([size="sm"])  .cnt-row { font-size: 2rem; }
+  :host([size="md"])  .cnt-row { font-size: 3.5rem; }
+  :host([size="lg"])  .cnt-row { font-size: 5rem; }
+  :host([size="xl"])  .cnt-row { font-size: 7rem; }
+
+  :host([size="sm"])  .cnt-prefix,
+  :host([size="sm"])  .cnt-suffix { font-size: 0.85rem; }
+
+  :host([size="md"])  .cnt-prefix,
+  :host([size="md"])  .cnt-suffix { font-size: 1.1rem; }
+
+  :host([size="lg"])  .cnt-prefix,
+  :host([size="lg"])  .cnt-suffix { font-size: 1.4rem; }
+
+  :host([size="xl"])  .cnt-prefix,
+  :host([size="xl"])  .cnt-suffix { font-size: 1.8rem; }
+
+  /* ── TONES ─────────────────────────────────────────────── */
+  :host([tone="kaki"])     .cnt-row { color: var(--color-kaki-500); }
+  :host([tone="celadon"])  .cnt-row { color: var(--color-celadon-500); }
+  :host([tone="error"])    .cnt-row { color: var(--color-error); }
+  :host([tone="muted"])    .cnt-row { color: var(--text-muted); }
+
+  /* On dark — colores OKLCH para superficies oscuras */
+  :host([tone="on-dark"]) .cnt-row    { color: oklch(82% 0.03 62deg); }
+
+  :host([tone="on-dark"]) .cnt-prefix,
+  :host([tone="on-dark"]) .cnt-suffix,
+  :host([tone="on-dark"]) .cnt-sep    { color: oklch(35% 0.02 50deg); }
+  :host([tone="on-dark"]) .cnt-label  { color: oklch(30% 0.02 50deg); }
+
+  /* ── Meta row: label + delta ───────────────────────────── */
+  .cnt-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-sm);
+    margin-top: var(--lib-space-xs);
+  }
+
+  .cnt-label {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── Delta badge ───────────────────────────────────────── */
+  .cnt-delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    padding: 1px 6px;
+    border-radius: var(--radius-full);
+    line-height: 1.6;
+  }
+
+  .cnt-delta-up   { background: var(--color-celadon-100);
+     color: var(--color-celadon-600); }
+  .cnt-delta-down { background: var(--color-error-light,  #F5DDD9);
+     color: var(--color-error); }
+  .cnt-delta-flat { background: var(--color-washi-100);
+       color: var(--text-muted); }
+
+  /* ── Reduced motion ────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .cnt-digit-inner { transition: none; }
+  }
+}
