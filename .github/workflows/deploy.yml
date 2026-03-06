@@ -33,9 +33,11 @@ jobs:
       # --- SECCIÓN PLAYWRIGHT (Integrada) ---
       - name: 🎭 Install Playwright Browsers
         run: npx playwright install --with-deps
+        working-directory: .
 
       - name: 🧪 Run Playwright Tests
         run: npx playwright test
+        working-directory: .
         # Si Playwright genera el reporte fuera de la carpeta de la lib, 
         # asegúrate de que el path en el artifact sea correcto.
 
