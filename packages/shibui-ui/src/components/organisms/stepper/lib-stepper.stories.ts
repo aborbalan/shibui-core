@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-stepper.component';
-import '../step/lib-step.component';
+import '../../atoms/step/lib-step.component';
 import type { LibStepper } from './lib-stepper.component';
 
 type StepperArgs = Pick<LibStepper, 'current' | 'orientation' | 'variant' | 'size'>;
