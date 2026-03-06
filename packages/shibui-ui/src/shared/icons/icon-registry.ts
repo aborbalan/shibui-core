@@ -88,7 +88,7 @@ import graduationCap from '@phosphor-icons/core/assets/regular/graduation-cap.sv
 import chalkboard from '@phosphor-icons/core/assets/regular/chalkboard.svg?raw';
 import student from '@phosphor-icons/core/assets/regular/student.svg?raw';
 import certificate from '@phosphor-icons/core/assets/regular/certificate.svg?raw';
-import quill from '@phosphor-icons/core/assets/regular/quill.svg?raw';
+import quill from '@phosphor-icons/core/assets/regular/quill-pen.svg?raw';
 import notepad from '@phosphor-icons/core/assets/regular/notepad.svg?raw';
 import coffee from '@phosphor-icons/core/assets/regular/coffee.svg?raw';
 import beerBottle from '@phosphor-icons/core/assets/regular/beer-bottle.svg?raw';
