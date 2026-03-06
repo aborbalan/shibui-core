@@ -60,15 +60,15 @@
     "@types/node": "^20.10.0",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
-    "@vitest/browser-playwright": "^4.0.18",
     "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^8.56.0",
     "eslint-plugin-storybook": "^10.2.6",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "lit": "^3.0.0",
-    "playwright": "^1.58.1",
-    "prettier": "^3.1.1",
+  "@playwright/test": "^1.49.0",
+  "@axe-core/playwright": "^4.10.0",
+  "playwright": "^1.49.0",    "prettier": "^3.1.1",
     "sass": "^1.97.3",
     "storybook": "^10.2.6",
     "stylelint": "^17.1.1",
@@ -83,7 +83,7 @@
   },
   "lint-staged": {
     "src/**/*.ts": [
-"eslint --config .config/eslintrc.cjs --fix --max-warnings=2 --no-warn-ignored"    ]
+"eslint --config .config/eslintrc.cjs --fix --max-warnings=2"    ]
   },
   "customElements": "custom-elements.json"
 }

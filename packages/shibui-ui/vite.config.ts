@@ -14,7 +14,6 @@ import dts from 'vite-plugin-dts';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
-import { playwright } from '@vitest/browser-playwright';
 import { InlineConfig } from 'vitest/node';
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
@@ -76,7 +75,6 @@ const config: UserConfig & { test?: InlineConfig } = {
         browser: {
           enabled: true,
           headless: true,
-          provider: playwright({}),
           instances: [{
             browser: 'chromium'
           }]
