@@ -39,7 +39,7 @@
     transition: transform 0.8s cubic-bezier(0.7, 0, 0.2, 1);
     z-index: -1;
     /* Invocamos el filtro SVG */
-    filter: url(#shibui-liquid-filter);
+    filter: url("#shibui-liquid-filter");
     transform: translateY(0) scaleY(1.2);
     pointer-events: none;
   }
