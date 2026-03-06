@@ -70,9 +70,11 @@
   :host([size="sm"]) .sd { 
     width: 6px;
       height: 6px; }
+
   :host([size="md"]) .sd { 
     width: 10px;
      height: 10px; }
+
   :host([size="lg"]) .sd { 
     width: 14px;
      height: 14px; }
@@ -101,6 +103,7 @@
     0%   { 
       transform: scale(1);
          opacity: 0.5; }
+
     100% { 
       transform: scale(2.8);
        opacity: 0; }
@@ -110,6 +113,7 @@
     0%   { 
       transform: scale(1);
          opacity: 0.35; }
+
     100% { 
       transform: scale(2.2);
        opacity: 0; }
@@ -120,6 +124,7 @@
     0%, 100% { 
       transform: scale(1);
           opacity: 1; }
+
     50%       { 
       transform: scale(1.18);
        opacity: 0.75; }
@@ -129,8 +134,10 @@
   @keyframes hayai {
     0%, 100% { 
       opacity: 1; }
+
     40%       { 
       opacity: 0.3; }
+
     60%       { 
       opacity: 0.3; }
   }
@@ -194,6 +201,7 @@
     .sd-wrap::after { 
       animation: none;
        opacity: 0; }
+
     .sd             { 
       animation: none; }
   }

@@ -1,59 +1,329 @@
-:host {
-  display: block;
-  flex: 1;
-  position: relative;
-  z-index: 1;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-STEP — Shibui UI · 段階 (paso individual)
+   Status      : pending · active · completed · error
+   Orientation : horizontal (default) · vertical
+   Variant     : default · minimal · kintsugi
+   Size        : sm · md (default) · lg
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    position: relative;
+    flex: 1;
+    flex-shrink: 0;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.step-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
+@layer components {
 
-.icon-container {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 0.875rem;
-  background-color: white;
-  border: 2px solid #e2e8f0;
-  color: #a0aec0;
-  transition: all 0.3s ease;
-}
+  /* ── Inner wrapper ──────────────────────────────────────── */
+  .step-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
 
-.label {
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: #718096;
-  text-align: center;
-  transition: color 0.3s ease;
-}
+  /* ── Node ───────────────────────────────────────────────── */
+  .step-node {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    transition:
+      background   var(--duration-slow) var(--ease-out),
+      border-color var(--duration-slow) var(--ease-out),
+      color        var(--duration-slow) var(--ease-out),
+      box-shadow   var(--duration-slow) var(--ease-out);
+  }
 
-/* Estado: Activo */
-:host([status="active"]) .icon-container {
-  border-color: #3182ce;
-  color: #3182ce;
-  box-shadow: 0 0 0 3px rgb(66, 153, 225, 0.2);
-}
+  /* ── Check / Error icons ────────────────────────────────── */
+  .step-icon {
+    width: 12px;
+    height: 12px;
+    stroke: currentcolor;
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: block;
+  }
 
-:host([status="active"]) .label {
-  color: #2d3748;
-  font-weight: 600;
-}
+  /* ── Text block (horizontal) ────────────────────────────── */
+  .step-text {
+    margin-top: var(--lib-space-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--lib-space-xs);
+  }
 
-/* Estado: Completado */
-:host([status="completed"]) .icon-container {
-  background-color: #38a169;
-  border-color: #38a169;
-  color: white;
-}
+  .step-label {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    transition: color var(--duration-base) var(--ease-default);
+  }
 
-:host([status="completed"]) .label {
-  color: #2d3748;
+  .step-sub {
+    font-family: var(--lib-font-body);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    line-height: var(--leading-snug);
+  }
+
+  /* ── Horizontal connector ───────────────────────────────── */
+  .step-connector {
+    position: absolute;
+    top: 15px; /* (32px - 2px border) / 2 */
+    left: calc(50% + 16px);
+    width: calc(100% - 32px);
+    height: 1px;
+    background: var(--border-default);
+    transition: background var(--duration-slow) var(--ease-out);
+    pointer-events: none;
+  }
+
+  /* ============================================================
+     STATUS — HORIZONTAL
+     ============================================================ */
+
+  /* Active */
+  :host([status="active"]) .step-node {
+    background: var(--color-washi-900);
+    border-color: var(--color-washi-900);
+    color: var(--color-washi-50);
+    box-shadow: 0 0 0 4px var(--color-washi-100);
+  }
+  :host([status="active"]) .step-label { color: var(--text-primary); }
+
+  /* Completed */
+  :host([status="completed"]) .step-node {
+    background: var(--color-washi-700);
+    border-color: var(--color-washi-700);
+    color: var(--color-washi-50);
+  }
+  :host([status="completed"]) .step-label  { color: var(--text-secondary); }
+  :host([status="completed"]) .step-connector { background: var(--color-washi-700); }
+
+  /* Error */
+  :host([status="error"]) .step-node {
+    background: #FFF8F7;
+    border-color: var(--color-error);
+    color: var(--color-error);
+  }
+  :host([status="error"]) .step-label { color: var(--color-error); }
+
+  /* ============================================================
+     SIZES
+     ============================================================ */
+
+  :host([size="sm"]) .step-node {
+    width: 24px;
+    height: 24px;
+    font-size: 9px;
+  }
+
+  :host([size="sm"]) .step-connector { top: 11px;
+     left: calc(50% + 12px); 
+     width: calc(100% - 24px); }
+  :host([size="sm"]) .step-label     { font-size: 9px; }
+
+  :host([size="lg"]) .step-node {
+    width: 40px;
+    height: 40px;
+    font-size: var(--text-sm);
+  }
+
+  :host([size="lg"]) .step-connector { top: 19px;
+     left: calc(50% + 20px);
+      width: calc(100% - 40px); }
+
+  /* ============================================================
+     VARIANT — MINIMAL (acento kaki, nodo cuadrado)
+     ============================================================ */
+
+  :host([variant="minimal"]) .step-node {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-none);
+    background: transparent;
+    font-size: 9px;
+  }
+
+  :host([variant="minimal"]) .step-connector { top: 11px;
+     left: calc(50% + 12px);
+      width: calc(100% - 24px); }
+
+  :host([variant="minimal"][status="active"]) .step-node {
+    background: var(--color-kaki-500);
+    border-color: var(--color-kaki-500);
+    color: var(--color-white);
+    box-shadow: none;
+  }
+  :host([variant="minimal"][status="active"]) .step-label { color: var(--color-kaki-500); }
+
+  :host([variant="minimal"][status="completed"]) .step-node {
+    background: transparent;
+    border-color: var(--color-washi-700);
+    color: var(--color-washi-700);
+  }
+
+  /* ============================================================
+     VARIANT — KINTSUGI (venas doradas, superficie oscura)
+     ============================================================ */
+
+  :host([variant="kintsugi"][status="completed"]) .step-node {
+    background: oklch(18% 0.02 45deg);
+    border: none;
+    color: oklch(85% 0.04 75deg);
+  }
+
+  :host([variant="kintsugi"][status="completed"]) .step-node::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: var(--lib-kintsugi-border);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  :host([variant="kintsugi"][status="active"]) .step-node {
+    background: oklch(14% 0.02 45deg);
+    border: none;
+    color: oklch(88% 0.03 75deg);
+    box-shadow: 0 0 0 4px oklch(45% 0.05 45deg / 0.1);
+  }
+
+  :host([variant="kintsugi"][status="active"]) .step-node::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: var(--lib-kintsugi-border);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    animation: kintsugi-pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes kintsugi-pulse {
+    0%, 100% { opacity: 0.7; }
+    50%       { opacity: 1; }
+  }
+
+  :host([variant="kintsugi"][status="completed"]) .step-connector {
+    background: linear-gradient(90deg, oklch(45% 0.04 60deg / 0.5), oklch(55% 0.05 65deg / 0.3));
+  }
+
+  :host([variant="kintsugi"]) .step-label { color: oklch(40% 0 0deg); }
+  :host([variant="kintsugi"][status="active"]) .step-label    { color: oklch(90% 0 0deg); }
+  :host([variant="kintsugi"][status="completed"]) .step-label { color: oklch(60% 0 0deg); }
+
+  :host([variant="kintsugi"]) .step-node {
+    background: oklch(12% 0.01 45deg);
+    border-color: oklch(25% 0.01 45deg);
+    color: oklch(40% 0 0deg);
+  }
+  :host([variant="kintsugi"]) .step-connector { background: oklch(22% 0.01 45deg); }
+
+  /* ============================================================
+     ORIENTATION — VERTICAL
+     ============================================================ */
+
+  :host([orientation="vertical"]) {
+    flex: none;
+  }
+
+  :host([orientation="vertical"]) .step-inner {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--lib-space-lg);
+  }
+
+  /* Vertical connector: absolute from below the node down to bottom of item */
+  :host([orientation="vertical"]) .step-connector {
+    position: absolute;
+    left: 15px;
+    top: 32px;
+    bottom: 0;
+    width: 1px;
+    height: auto;
+  }
+
+  :host([orientation="vertical"][size="sm"]) .step-connector { 
+    left: 11px;
+     top: 24px; }
+
+  :host([orientation="vertical"][size="lg"]) .step-connector { 
+    left: 19px;
+     top: 40px; }
+
+  /* Body (vertical only) */
+  .step-body {
+    padding-bottom: var(--lib-space-xl);
+    flex: 1;
+  }
+
+  .step-title {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    line-height: 32px; /* aligns with node height */
+    transition: color var(--duration-base) var(--ease-default);
+  }
+
+  :host([orientation="vertical"][status="active"]) .step-title    {
+     color: var(--text-primary); }
+
+  :host([orientation="vertical"][status="completed"]) .step-title  {
+     color: var(--text-secondary); }
+
+  :host([orientation="vertical"][status="error"]) .step-title     {
+     color: var(--color-error); }
+
+  .step-content {
+    margin-top: var(--lib-space-sm);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 420px;
+  }
+
+  /* ── Accessibility ──────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .step-node,
+    .step-connector,
+    .step-label { transition: none; }
+
+    :host([variant="kintsugi"][status="active"]) .step-node::after { 
+      animation: none; }
+  }
 }
