@@ -5,4 +5,4 @@ build/
 commitlint.config.cjs
 !src/**/*.ts
 !src/**/*.stories.ts
-packages/shibui-ui/scripts/
+scripts/
