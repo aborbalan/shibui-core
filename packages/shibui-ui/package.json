@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "clean": "rimraf dist",
+    "clean": "rimraf dist storybook-static node_modules/.cache",    
     "pack:local": "npm run build && npm pack",
     "preview": "vite preview",
     "prebuild": "npm run clean",
@@ -45,7 +45,7 @@
     "s": "npm run dev",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "storybook build --no-manager-cache",
     "lighthouse": "lhci autorun --config=./.config/lighthouserc.cjs",
     "analyze": "cem analyze --litelement --exclude dist",
     "generate:wrappers": "tsx scripts/generate-wrappers.ts",
