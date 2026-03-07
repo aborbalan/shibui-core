@@ -1,6 +1,5 @@
 import { html, nothing, TemplateResult } from 'lit';
-import type { SidebarLink, SidebarSocial } from './lib-sidebar.types';
-
+import type { SidebarSocial, SidebarLink } from '../../../types';
 export interface SidebarTemplateProps {
   /* Profile */
   name: string;

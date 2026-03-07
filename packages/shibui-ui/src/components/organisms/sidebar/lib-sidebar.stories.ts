@@ -2,7 +2,8 @@ import { Meta, StoryObj }      from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-sidebar.component';
 import type { LibSidebar }      from './lib-sidebar.component';
-import type { ActiveElement, SidebarLink, SidebarSocial } from './lib-sidebar.types';
+
+import type { SidebarSocial, SidebarLink, ActiveElement } from '../../../types';
 
 type StoryArgs = Pick<LibSidebar,
   'name' | 'initials' | 'avatarSrc' | 'role' | 'status' | 'showStatus' |

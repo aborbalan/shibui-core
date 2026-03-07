@@ -1,5 +1,6 @@
 import React from 'react';
 import meData from '../../data/me.json';
+import { SidebarLink, SidebarSocial } from '@shibui/ui';
 
 interface SidebarProps {
   activeTab: string;
@@ -11,6 +12,22 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
     { id: 'perfil', label: '👤 Perfil' },
     { id: 'experiencia', label: '💼 Experiencia' },
     { id: 'proyectos', label: '🚀 Proyectos' }
+  ];
+
+  const DEFAULT_LINKS: SidebarLink[] = [
+    { id: 'inicio',      label: 'Inicio',      icon: 'house',        number: '01' },
+    { id: 'sobre',       label: 'Sobre mí',    icon: 'user',         number: '02' },
+    { id: 'proyectos',   label: 'Proyectos',   icon: 'squares-four', number: '03' },
+    { id: 'stack',       label: 'Stack',       icon: 'stack',        number: '04' },
+    { id: 'experiencia', label: 'Experiencia', icon: 'timeline',     number: '05' },
+    { id: 'contacto',    label: 'Contacto',    icon: 'envelope',     number: '06' },
+  ];
+
+  const DEFAULT_SOCIALS: SidebarSocial[] = [
+    { href: '#', icon: 'github-logo',   label: 'GitHub' },
+    { href: '#', icon: 'linkedin-logo', label: 'LinkedIn' },
+    { href: '#', icon: 'dribbble-logo', label: 'Dribbble' },
+    { href: '#', icon: 'x-logo',        label: 'X / Twitter' },
   ];
 
   return (
@@ -25,6 +42,17 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       flexShrink: 0,
       height: '100vh'
     }}>
+      <lib-sidebar name="Alejandro Borbalán Dueñas" 
+                   initials="AB"
+                   role="Frontend Developer"
+                   status="Disponible para proyectos"
+                   active="inicio"
+                   cv-label="Descargar CV"
+                   links={DEFAULT_LINKS}
+                    socials={DEFAULT_SOCIALS}>
+
+      </lib-sidebar>
+
       <div style={{ marginBottom: '2rem' }}>
         <div style={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'oklch(70% 0.15 250)' }}>
           {meData.name.split(' ')[0]} Portfolio
