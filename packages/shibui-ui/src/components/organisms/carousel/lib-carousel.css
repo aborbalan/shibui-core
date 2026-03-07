@@ -72,7 +72,6 @@
     border: 1px solid var(--border-default);
     background: rgb(250, 247, 244, 0.88);
     backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;

@@ -144,8 +144,10 @@
 
   .cnt-delta-up   { background: var(--color-celadon-100);
      color: var(--color-celadon-600); }
+
   .cnt-delta-down { background: var(--color-error-light,  #F5DDD9);
      color: var(--color-error); }
+
   .cnt-delta-flat { background: var(--color-washi-100);
        color: var(--text-muted); }
 
