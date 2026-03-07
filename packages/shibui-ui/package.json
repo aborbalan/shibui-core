@@ -23,7 +23,8 @@
       "types": "./dist/svelte/shibui-elements.d.ts",
       "import": "./dist/index.js"
     },
-    "./styles": "./dist/styles.css"
+    "./tokens": "./dist/tokens.css",
+  "./styles": "./dist/style.css"
   },
   "files": [
     "dist"
