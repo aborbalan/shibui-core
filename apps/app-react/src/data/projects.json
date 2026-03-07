@@ -1,0 +1,62 @@
+[
+    {
+      "id": "lib-ui-core",
+      "title": "Lib-UI: Design System Engine",
+      "description": "Desarrollo de una librería de Web Components agnóstica de alto rendimiento. Diseñada para ser consumida de forma transparente en Angular, Svelte y React mediante el uso de Lit y TypeScript.",
+      "stack": ["Lit", "TypeScript", "Agnostic UI", "Web Components"],
+      "highlights": [
+        "Interoperabilidad total entre frameworks sin capas de abstracción pesadas.",
+        "Gestión de color avanzada con OKLCH para uniformidad perceptual.",
+        "Optimización de bundle size y cumplimiento de accesibilidad WCAG 2.1."
+      ],
+      "category": "Arquitectura de Sistemas"
+    },
+    {
+      "id": "green-tech-hexagonal",
+      "title": "Platform for Sustainability & Data Management",
+      "description": "Ecosistema web orientado a la sostenibilidad, construido bajo un monorepo y arquitectura hexagonal.",
+      "stack": ["Angular 15+", "Hexagonal Architecture", "Monorepo", "Custom Components"],
+      "highlights": [
+        "Implementación de arquitectura hexagonal para desacoplar la lógica de negocio de la UI.",
+        "Creación de una librería de acceso a datos agnóstica para facilitar el mantenimiento.",
+        "Escalabilidad garantizada mediante gestión de estado y componentes modulares."
+      ],
+      "category": "Sistemas Escalables"
+    },
+    {
+      "id": "real-time-antenna-visualizer",
+      "title": "UDB Mobile Object Antenna Tracker",
+      "description": "Cliente visualizador de alto rendimiento para la alineación de antenas en objetos móviles, procesando datos a través de protocolo UDB.",
+      "stack": ["Angular", "UDB Protocol", "Data Visualization", "Real-time"],
+      "highlights": [
+        "Visualización en tiempo real de métricas críticas de alineación.",
+        "Optimización del renderizado para dispositivos móviles en movimiento.",
+        "Integración de protocolos de red específicos para baja latencia."
+      ],
+      "category": "Visualización de Datos"
+    },
+    {
+      "id": "legacy-banking-modernization",
+      "title": "Financial Core Systems Modernization",
+      "description": "Mantenimiento y evolución de sistemas bancarios críticos, trabajando tanto en lógica de bajo nivel como en interfaces modernas.",
+      "stack": ["PL1", "Java", "Angular", "Cucumber"],
+      "highlights": [
+        "Migración de flujos de negocio desde PL1/Java hacia interfaces web reactivas.",
+        "Automatización de pruebas de integración con Cucumber para asegurar la fiabilidad bancaria.",
+        "Generación de informes dinámicos y auditoría mediante JasperReports."
+      ],
+      "category": "Sistemas Críticos"
+    },
+    {
+      "id": "vanilla-web-apps",
+      "title": "Custom MVC Framework-less Applications",
+      "description": "Desarrollo de aplicaciones web siguiendo el patrón MVC sin dependencia de frameworks pesados.",
+      "stack": ["Thymeleaf", "Vanilla JS", "MVC Pattern"],
+      "highlights": [
+        "Control total sobre el ciclo de vida de la aplicación y el DOM.",
+        "Implementación de lógica de servidor y cliente con un acoplamiento mínimo.",
+        "Optimización extrema de la carga inicial (FCP)."
+      ],
+      "category": "Desarrollo Nativo"
+    }
+  ]

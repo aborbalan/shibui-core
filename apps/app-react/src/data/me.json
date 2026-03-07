@@ -1,0 +1,36 @@
+{
+    "name": "Alejandro Borbalán Dueñas",
+    "label": "Programador Front-End | Especialista en Sistemas de Diseño",
+    "image": "/assets/profile.webp",
+    "openToWork": true,
+    "location": {
+      "city": "Zaragoza",
+      "country": "España",
+      "region": "Zaragoza y alrededores"
+    },
+    "education": {
+      "institution": "IES Santiago Hernández",
+      "logo": "/assets/ies-santiago-hernandez.png"
+    },
+    "social": {
+      "linkedin": "https://www.linkedin.com/in/alejandro-borbal%C3%A1n-due%C3%B1as-a20142167/",
+      "github": "https://github.com/tu-usuario",
+      "note": "Proyectos privados disponibles bajo petición"
+    },
+    "about": {
+      "professional": "Programador Front-End enfocado en la creación de interfaces de alto rendimiento y sistemas de diseño escalables. Creador de Lib-UI, mi propia librería de Web Components agnósticos construidos con Lit y TypeScript.",
+      "personal": "Más allá del código, encuentro el equilibrio en las artes marciales y el running. Soy un apasionado de los animales, el arte en todas sus formas, la lectura y, por supuesto, el proceso creativo del diseño."
+    },
+    "interests": [
+      "Artes Marciales",
+      "Running",
+      "Bienestar Animal",
+      "Arte & Diseño",
+      "Lectura Técnica y Ficción"
+    ],
+    "metrics": [
+      { "label": "Conexiones", "value": "311+", "icon": "users" },
+      { "label": "Performance", "value": "100", "icon": "bolt" },
+      { "label": "Arquitectura", "value": "Atómica", "icon": "layers" }
+    ]
+  }
