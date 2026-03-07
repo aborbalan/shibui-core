@@ -20,8 +20,8 @@ console.log('🚀 Generando wrappers para frameworks...');
 // 2. Ejecuta los traductores
 try {
   generateSvelte(manifest);
-   generateReact(manifest); 
-   generateAngular(manifest);
+  generateReact(manifest); 
+  generateAngular(manifest);
   
   console.log('✨ Proceso finalizado con éxito.');
 } catch (error) {
