@@ -14,6 +14,7 @@
   }
   *, *::before, *::after { box-sizing: border-box; }
   a { text-decoration: none; }
+
   button { font: inherit;
      cursor: pointer; }
 }
@@ -133,6 +134,7 @@
   @keyframes sb-pulse {
     0%, 100% { opacity: 1;
        transform: scale(1); }
+
     50%       { opacity: 0.5;
        transform: scale(0.7); }
   }
