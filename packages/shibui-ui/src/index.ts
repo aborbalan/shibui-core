@@ -87,4 +87,7 @@ export * from './components/organisms/cursor-follower/lib-cursor-follower.compon
 export * from './components/organisms/stagger/lib-stagger-container.component';
 
 
+
+export type { SidebarLink, SidebarSocial, ActiveElement } from './types/index';
+
 console.log('Library initialized');
