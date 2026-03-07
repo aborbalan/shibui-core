@@ -1,85 +1,368 @@
-:host {
-  display: block;
+@layer tokens, reset, components;
 
-  --slider-track-color: #e2e8f0;
-  --slider-progress-color: #3b82f6;
-  --slider-thumb-color: #fff;
-  --slider-thumb-border: #3b82f6;
+/* ============================================================
+   LIB-RANGE-SLIDER — Shibui UI
+   
+   Árbol Shadow DOM:
+   .rs                         → raíz
+     .rs-label-row             → label + valor actual
+     .rs-track-wrap            → zona track + thumbs
+       .rs-track               → barra fondo
+         .rs-fill              → relleno single (width %)
+         .rs-fill-dual         → relleno dual (left % + right %)
+       input[type=range]       → thumb nativo, track transparente
+       .rs-tooltip-wrap        → globito flotante (opcional)
+     .rs-marks                 → marcas de paso (opcional)
+     .rs-limits                → min/max labels (opcional)
+
+   Sizes   : sm / md (default) / lg
+   Tones   : default · kaki · celadon · error · washi · dark
+   Modes   : single / dual / vertical
+   Extras  : tooltip · marks · limits · disabled
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.range-container {
-  padding: 10px 0;
-}
+@layer components {
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  font-family: sans-serif;
-  font-size: 14px;
-}
+  /* ── CSS vars locales ─────────────────────────────────── */
+  .rs {
+    --rs-thumb-size:  20px;
+    --rs-track-h:     4px;
+    --rs-fill-color:  var(--color-washi-900);
+    --rs-track-bg:    var(--color-washi-200);
 
-.label {
-  font-weight: 600;
-  color: #4a5568;
-}
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-sm);
+    width: 100%;
+  }
 
-.values {
-  color: #3b82f6;
-  font-weight: bold;
-}
+  /* ── Label row ──────────────────────────────────────────── */
+  .rs-label-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--lib-space-md);
+  }
 
-.slider-wrapper {
-  position: relative;
-  height: 6px;
-  width: 100%;
-}
+  .rs-label {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
 
-.track {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: var(--slider-track-color);
-  border-radius: 5px;
-}
+  .rs-value {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-primary);
+    min-width: 2.5rem;
+    text-align: right;
+    transition: color var(--duration-fast);
+  }
 
-.progress {
-  position: absolute;
-  height: 100%;
-  background: var(--slider-progress-color);
-  border-radius: 5px;
-}
+  .rs-value-unit {
+    color: var(--text-muted);
+    font-size: 10px;
+    margin-left: 1px;
+  }
 
-.range-input {
-  position: absolute;
-  width: 100%;
-  top: -7px;
-  height: 20px;
-  background: none;
-  pointer-events: none;
-  appearance: none;
-  margin: 0;
-}
+  /* ── Track wrap ─────────────────────────────────────────── */
+  .rs-track-wrap {
+    position: relative;
+    height: var(--rs-thumb-size);
+    display: flex;
+    align-items: center;
+  }
 
-/* Estilo del manejador (Thumb) */
-.range-input::-webkit-slider-thumb {
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  border: 2px solid var(--slider-thumb-border);
-  background: var(--slider-thumb-color);
-  pointer-events: auto;
-  appearance: none;
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgb(0, 0, 0, 0.2);
-}
+  /* ── Track ──────────────────────────────────────────────── */
+  .rs-track {
+    position: absolute;
+    left: 0; right: 0;
+    height: var(--rs-track-h);
+    background: var(--rs-track-bg);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    pointer-events: none;
+  }
 
-.range-input::-moz-range-thumb {
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  border: 2px solid var(--slider-thumb-border);
-  background: var(--slider-thumb-color);
-  pointer-events: auto;
-  cursor: pointer;
+  /* ── Fill — single ──────────────────────────────────────── */
+  .rs-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--rs-fill-color);
+    border-radius: var(--radius-full);
+    transition: width var(--duration-fast), background var(--duration-base);
+    pointer-events: none;
+  }
+
+  /* ── Fill — dual ────────────────────────────────────────── */
+  .rs-fill-dual {
+    position: absolute;
+    top: 0; bottom: 0;
+    background: var(--rs-fill-color);
+    border-radius: var(--radius-full);
+    pointer-events: none;
+    transition: left var(--duration-fast), right var(--duration-fast);
+  }
+
+  /* ── Input native (track invisible) ────────────────────── */
+  .rs input[type=range] {
+    position: absolute;
+    left: 0; right: 0;
+    width: 100%;
+    height: var(--rs-thumb-size);
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  /* Hide native track */
+  .rs input[type=range]::-webkit-slider-runnable-track {
+    height: var(--rs-track-h);
+    background: transparent;
+    border-radius: var(--radius-full);
+  }
+  .rs input[type=range]::-moz-range-track {
+    height: var(--rs-track-h);
+    background: transparent;
+    border-radius: var(--radius-full);
+  }
+
+  /* ── Thumb ──────────────────────────────────────────────── */
+  .rs input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: var(--rs-thumb-size);
+    height: var(--rs-thumb-size);
+    border-radius: var(--radius-full);
+    background: var(--bg-elevated);
+    border: 2px solid var(--rs-fill-color);
+    box-shadow: var(--shadow-sm), 0 0 0 0 transparent;
+    cursor: grab;
+    transition:
+      border-color  var(--duration-base),
+      box-shadow    var(--duration-base),
+      transform     var(--duration-fast);
+    margin-top: calc((var(--rs-track-h) - var(--rs-thumb-size)) / 2);
+  }
+  .rs input[type=range]::-moz-range-thumb {
+    width: var(--rs-thumb-size);
+    height: var(--rs-thumb-size);
+    border-radius: var(--radius-full);
+    background: var(--bg-elevated);
+    border: 2px solid var(--rs-fill-color);
+    box-shadow: var(--shadow-sm);
+    cursor: grab;
+    transition: border-color var(--duration-base), box-shadow var(--duration-base);
+  }
+
+  .rs input[type=range]:focus-visible::-webkit-slider-thumb {
+    box-shadow: var(--shadow-sm), 0 0 0 3px var(--color-ink-10);
+  }
+  .rs input[type=range]:active::-webkit-slider-thumb {
+    cursor: grabbing;
+    transform: scale(1.15);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* ── Sizes ──────────────────────────────────────────────── */
+  :host([size="sm"]) .rs {
+    --rs-thumb-size: 14px;
+    --rs-track-h:    3px;
+    gap: var(--lib-space-xs);
+  }
+  :host([size="sm"]) .rs-label { font-size: 10px; }
+  :host([size="sm"]) .rs-value { font-size: 10px; }
+
+  :host([size="lg"]) .rs {
+    --rs-thumb-size: 26px;
+    --rs-track-h:    8px;
+    gap: var(--lib-space-md);
+  }
+  :host([size="lg"]) .rs-label { font-size: var(--text-sm); }
+  :host([size="lg"]) .rs-value { font-size: var(--text-sm); }
+
+  /* ── Tones ──────────────────────────────────────────────── */
+  :host([tone="kaki"])    .rs { --rs-fill-color: var(--color-kaki-500); }
+  :host([tone="celadon"]) .rs { --rs-fill-color: var(--color-celadon-500); }
+  :host([tone="error"])   .rs { --rs-fill-color: var(--color-error); }
+  :host([tone="washi"])   .rs { --rs-fill-color: var(--color-washi-700); }
+
+  /* ── Dark tone ──────────────────────────────────────────── */
+  :host([tone="dark"]) .rs {
+    --rs-track-bg:   oklch(20% 0.02 45);
+    --rs-fill-color: oklch(65% 0.02 55);
+  }
+  :host([tone="dark"]) .rs-label { color: oklch(42% 0.02 50); }
+  :host([tone="dark"]) .rs-value { color: oklch(65% 0.02 55); }
+  :host([tone="dark"]) .rs-limit { color: oklch(28% 0.02 50); }
+  :host([tone="dark"]) .rs-mark  { background: oklch(22% 0.02 45); }
+  :host([tone="dark"]) .rs-mark.is-filled { background: oklch(65% 0.02 55); }
+  :host([tone="dark"]) .rs-mark-label { color: oklch(28% 0.02 50); }
+  :host([tone="dark"]) .rs input[type=range]::-webkit-slider-thumb {
+    background:    oklch(13% 0.015 45);
+    border-color:  oklch(60% 0.02 55);
+  }
+  :host([tone="dark"]) .rs input[type=range]::-moz-range-thumb {
+    background:   oklch(13% 0.015 45);
+    border-color: oklch(60% 0.02 55);
+  }
+
+  /* ── Disabled ───────────────────────────────────────────── */
+  :host([disabled]) .rs {
+    opacity: 0.38;
+    pointer-events: none;
+  }
+  :host([disabled]) .rs input[type=range] { cursor: not-allowed; }
+
+  /* ── Limits ─────────────────────────────────────────────── */
+  .rs-limits {
+    display: flex;
+    justify-content: space-between;
+    margin-top: calc(-1 * var(--lib-space-xs));
+  }
+  .rs-limit {
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+  }
+
+  /* ── Marks / Steps ──────────────────────────────────────── */
+  .rs-marks {
+    position: relative;
+    height: 10px;
+    margin-top: calc(-1 * var(--lib-space-sm));
+    pointer-events: none;
+  }
+  .rs-mark {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 5px;
+    background: var(--border-default);
+  }
+  .rs-mark.is-filled { background: var(--rs-fill-color); }
+  .rs-mark-label {
+    position: absolute;
+    top: 7px;
+    transform: translateX(-50%);
+    font-family: var(--lib-font-mono);
+    font-size: 9px;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* ── Floating tooltip ───────────────────────────────────── */
+  .rs-tooltip-wrap {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+  .rs-tooltip-bubble {
+    position: absolute;
+    bottom: calc(100% + var(--lib-space-sm));
+    left: 0;
+    transform: translateX(-50%);
+    background: var(--color-washi-900);
+    color: var(--color-washi-50);
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wide);
+    padding: 2px var(--lib-space-sm);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--duration-base);
+  }
+  .rs-tooltip-bubble::after {
+    content: '';
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--color-washi-900);
+  }
+  .rs-track-wrap:hover .rs-tooltip-bubble { opacity: 1; }
+
+  /* ── Dual mode ──────────────────────────────────────────── */
+  :host([dual]) .rs-track { overflow: visible; }
+  :host([dual]) .rs-track-wrap { overflow: visible; }
+  :host([dual]) .rs input[type=range] { pointer-events: none; }
+  :host([dual]) .rs input[type=range]::-webkit-slider-thumb { pointer-events: auto; }
+  :host([dual]) .rs input[type=range]::-moz-range-thumb     { pointer-events: auto; }
+  /* High thumb stacks on top for coincident drag */
+  :host([dual]) .rs .rs-input-max { z-index: 1; }
+
+  /* ── Vertical mode ──────────────────────────────────────── */
+  /*
+    Estrategia: rotate(-90deg) sobre .rs-track-wrap.
+    El input permanece horizontal — mismo thumb, sin writing-mode.
+    El fill sigue usando width (idéntico al modo horizontal).
+    .rs-vert-wrap reserva el espacio visual correcto en el DOM.
+  */
+  :host([vertical]) .rs {
+    width: auto;
+    align-items: center;
+  }
+
+  /* Contenedor que reserva las dimensiones visuales del slider */
+  :host([vertical]) .rs-vert-wrap {
+    position: relative;
+    width: var(--rs-thumb-size);
+    height: 160px;
+    flex-shrink: 0;
+  }
+  :host([vertical][size="sm"]) .rs-vert-wrap { height: 120px; }
+  :host([vertical][size="lg"]) .rs-vert-wrap { height: 200px; }
+
+  /* Track-wrap centrado y girado: su width = altura visual */
+  :host([vertical]) .rs-track-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 160px;
+    height: var(--rs-thumb-size);
+    transform: translate(-50%, -50%) rotate(-90deg);
+  }
+  :host([vertical][size="sm"]) .rs-track-wrap { width: 120px; }
+  :host([vertical][size="lg"]) .rs-track-wrap { width: 200px; }
+
+  /* Label row: centrado bajo el slider */
+  :host([vertical]) .rs-label-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    width: auto;
+  }
+  :host([vertical]) .rs-label-row .rs-label { text-align: center; }
+  :host([vertical]) .rs-label-row .rs-value {
+    min-width: auto;
+    text-align: center;
+  }
+
+  /* ── Reduced motion ─────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .rs-fill, .rs-fill-dual { transition: none; }
+    .rs input[type=range]::-webkit-slider-thumb { transition: none; }
+  }
 }
