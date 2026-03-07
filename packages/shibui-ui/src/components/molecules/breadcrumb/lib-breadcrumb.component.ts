@@ -1,44 +1,104 @@
-import { LitElement, html, unsafeCSS, TemplateResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import '../../atoms/icon/lib-icon.component';
-import { BreadcrumbItem } from './lib-breadcrumb.types';
-import cssStyles from './lib-breadcrumb.css?inline';
+import type {
+  BreadcrumbItem,
+  BreadcrumbSeparator,
+  BreadcrumbSize,
+  BreadcrumbSurface,
+  BreadcrumbAccent,
+} from './lib-breadcrumb.types';
+import { breadcrumbTemplate } from './lib-breadcrumb.html';
+import componentCss from './lib-breadcrumb.css?inline';
+import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
+export interface UiNavigateEventDetail {
+  item: BreadcrumbItem;
+  index: number;
+}
+
+/**
+ * @element lib-breadcrumb
+ * @fires ui-lib-navigate - Disparado al hacer clic en un crumb con href.
+ *
+ * @attr {BreadcrumbSeparator} separator - Tipo de separador: slash · chevron · dot · line
+ * @attr {BreadcrumbSize}      size      - Tamaño: sm · md · lg
+ * @attr {BreadcrumbSurface}   surface   - Superficie: default · filled · pill
+ * @attr {BreadcrumbAccent}    accent    - Acento en ítem activo: none · kaki · celadon · bold
+ * @attr {boolean}             dark      - Modo superficie oscura
+ * @attr {number}              max-visible - Si > 0, colapsa ítems intermedios cuando items.length > N
+ */
 @customElement('lib-breadcrumb')
 export class LibBreadcrumb extends LitElement {
-  static override styles = unsafeCSS(cssStyles);
+  static override styles = [
+    css`${unsafeCSS(sharedTokens)}`,
+    css`${unsafeCSS(componentCss)}`,
+  ];
 
-  @property({ type: Array }) items: BreadcrumbItem[] = [];
-  @property({ type: String }) separator = 'caret-right'; // Icono por defecto
+  /* ── Props públicas ──────────────────────────────────── */
 
-  protected override render(): TemplateResult {
-    return html`
-      <nav aria-label="Breadcrumb">
-        <ol class="breadcrumb-list">
-          ${this.items.map((item, index) => this._renderItem(item, index))}
-        </ol>
-      </nav>
-    `;
+  @property({ type: Array })
+  items: BreadcrumbItem[] = [];
+
+  @property({ type: String, reflect: true })
+  separator: BreadcrumbSeparator = 'slash';
+
+  @property({ type: String, reflect: true })
+  size: BreadcrumbSize = 'md';
+
+  @property({ type: String, reflect: true })
+  surface: BreadcrumbSurface = 'default';
+
+  @property({ type: String, reflect: true })
+  accent: BreadcrumbAccent = 'none';
+
+  @property({ type: Boolean, reflect: true })
+  dark = false;
+
+  @property({ type: Number, attribute: 'max-visible' })
+  maxVisible = 0;
+
+  /* ── Estado interno ──────────────────────────────────── */
+
+  @state()
+  private _expanded = false;
+
+  /* ── Render ──────────────────────────────────────────── */
+
+  override render(): TemplateResult {
+    return breadcrumbTemplate({
+      items:      this.items,
+      separator:  this.separator,
+      size:       this.size,
+      surface:    this.surface,
+      accent:     this.accent,
+      dark:       this.dark,
+      maxVisible: this.maxVisible,
+      expanded:   this._expanded,
+      onExpand:   this._handleExpand.bind(this),
+      onNavigate: this._handleNavigate.bind(this),
+    });
   }
 
-  private _renderItem(item: BreadcrumbItem, index: number): TemplateResult {
-    const isLast = index === this.items.length - 1;
+  /* ── Handlers ────────────────────────────────────────── */
 
-    return html`
-      <li class="breadcrumb-item">
-        ${item.icon ? html`<lib-icon name="${item.icon}" size="sm"></lib-icon>` : ''}
-        
-        ${isLast || !item.href
-          ? html`<span class="breadcrumb-current">${item.label}</span>`
-          : html`<a href="${item.href}" class="breadcrumb-link">${item.label}</a>`
-        }
+  private _handleExpand(): void {
+    this._expanded = true;
+  }
 
-        ${!isLast ? html`
-          <span class="separator" aria-hidden="true">
-            <lib-icon name="${this.separator}" size="sm"></lib-icon>
-          </span>
-        ` : ''}
-      </li>
-    `;
+  private _handleNavigate(item: BreadcrumbItem, index: number): void {
+    this.dispatchEvent(
+      new CustomEvent<UiNavigateEventDetail>('ui-lib-navigate', {
+        detail: { item, index },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'lib-breadcrumb': LibBreadcrumb;
   }
 }
