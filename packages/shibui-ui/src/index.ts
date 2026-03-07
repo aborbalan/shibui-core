@@ -36,6 +36,9 @@ export * from './components/atoms/kbd/lib-kbd.component';
 export * from './components/atoms/spinner/lib-spinner.component';
 export * from './components/atoms/bento-item/lib-bento-item.component';
 export * from './components/atoms/reading-progress/lib-reading-progress.component';
+export * from './components/atoms/liquid-button/lib-liquid-button.component'
+export * from './components/atoms/text-glich/lib-text-glitch.component'
+
 
 export * from './components/molecules/form-field/lib-form-field.component';
 export * from './components/molecules/breadcrumb/lib-breadcrumb.component';
@@ -50,12 +53,15 @@ export * from './components/molecules/file-uploader/lib-file-uploader.component'
 export * from './components/molecules/segmented-control/lib-segmented-control.component';
 export * from './components/molecules/input/lib-input.component';
 export * from './components/molecules/range-slider/lib-range-slider.component';
-export * from './components/molecules/tree-select/lib-tree-node.component';
+export * from './components/molecules/tree-select/lib-tree-select.component';
 export * from './components/molecules/color-picker/lib-color-picker.component';
 export * from './components/molecules/pagination/lib-pagination.component';
 export * from './components/molecules/table-search/lib-table-search.component';
 export * from './components/molecules/tabs/lib-tabs.component';
 export * from './components/molecules/modal/lib-modal.component';
+export * from './components/molecules/tree-select/lib-tree-node.component';
+export * from './components/molecules/button-group/lib-button-group.component';
+export * from './components/molecules/avatar-group/lib-avatar-group.component';
 
 
 export * from './components/organisms/dialog/lib-dialog.component';
@@ -64,11 +70,19 @@ export * from './components/organisms/sidebar/lib-sidebar.component';
 export * from './components/organisms/lib-auth-form/lib-auth-form.component';
 export * from './components/organisms/stepper/lib-stepper.component';
 export * from './components/organisms/drawer/lib-drawer.component';
-export * from './components/organisms/timeline/lib-timeline-item.component';
 export * from './components/organisms/data-table/lib-data-table.component';
 export * from './components/organisms/accordion/lib-accordion.component';
 export * from './components/organisms/toast-manager/lib-toast-manager.component';
 export * from './components/organisms/parallax-container/lib-parallax.component';
+export * from './components/organisms/paralax-text/lib-parallax-text-stack.component';
+export * from './components/organisms/timeline/lib-timeline-item.component';
+export * from './components/organisms/timeline/lib-timeline.component';
+
+export * from './components/organisms/horizontal-scroll-section/lib-horizontal-scroll-section.component';
+export * from './components/organisms/carousel/lib-carousel.component';
+export * from './components/organisms/bento-grid/lib-bento-grid.component'
+
+
 export * from './components/organisms/cursor-follower/lib-cursor-follower.component';
 export * from './components/organisms/stagger/lib-stagger-container.component';
 

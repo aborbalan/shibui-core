@@ -7,8 +7,9 @@
     "strict": true,
     "skipLibCheck": true, /* Importante para evitar conflictos entre tipos de React y Lit */
     "paths": {
-      "@shibui/ui": ["../../packages/shibui-ui/src/index.ts"],
-      "@shibui/ui/*": ["../../packages/shibui-ui/src/*"]    }
+      "@shibui/ui/react": ["../../packages/shibui-ui/dist/react/index.ts"],
+      "@shibui/ui": ["../../packages/shibui-ui/dist/index.d.ts"]
+       }
   },
   "include": [
     "src", 

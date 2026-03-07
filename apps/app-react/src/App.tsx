@@ -6,7 +6,6 @@ import { LibButton } from '@shibui/ui/react';
 // import '@shibui/ui'; 
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <LibButton 

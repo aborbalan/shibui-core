@@ -19,7 +19,7 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 
 const config: UserConfig & { test?: InlineConfig } = {
   plugins:[
-    dts({ insertTypesEntry: true,tsconfigPath: './tsconfig.json',rollupTypes: false }),
+    dts({ insertTypesEntry: true,tsconfigPath: './tsconfig.json',rollupTypes: false,entryRoot: 'src' }),
   ],
   server: {
     // Suppress Vite banner/logo in terminal

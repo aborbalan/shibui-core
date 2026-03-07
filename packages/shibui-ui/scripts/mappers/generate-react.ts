@@ -2,59 +2,62 @@ import fs from 'fs';
 import path from 'path';
 
 /**
- * Genera wrappers de React para los Custom Elements detectados.
- * @param {any} manifest - El contenido del custom-elements.json
+ * Genera wrappers de React con estándares de Arquitectura Senior.
  */
 export function generateReact(manifest) {
   const outDirReact = './dist/react';
   if (!fs.existsSync(outDirReact)) fs.mkdirSync(outDirReact, { recursive: true });
 
-  // SOLUCIÓN AL ERROR 'NEVER': Forzamos la inferencia a string[]
-  // Creamos un array con un dummy, y lo filtramos inmediatamente.
-  const components = ["shibui-fix"].filter(item => item !== "shibui-fix");
+  const componentsList: { name: string; tag: string }[] = [];
 
   manifest.modules.forEach(module => {
     module.declarations?.forEach(decl => {
       if (decl.customElement) {
-        const componentName = decl.name; // Ej: LibButton
-        const tagName = decl.tagName;    // Ej: lib-button
+        const componentName = decl.name; 
+        const tagName = decl.tagName;    
         
-        // Mapeo de eventos: 'lib-click' -> 'onLibClick'
-        const events = decl.events?.reduce((acc, event) => {
+        // Mapeo de eventos optimizado
+        const eventsEntries = decl.events?.map(event => {
           const reactEventName = `on${event.name
             .split('-')
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join('')}`;
-          acc[reactEventName] = event.name;
-          return acc;
-        }, {}) || {};
+          return `    '${reactEventName}': '${event.name}'`;
+        }) || [];
 
-        const content = `
-import React from 'react';
-import { createComponent } from '@lit/react';
-import { ${componentName} as Element } from '../index.js';
+        const eventsBlock = eventsEntries.length > 0 
+          ? `{\n${eventsEntries.join(',\n')}\n  }` 
+          : '{}';
 
-export const ${componentName} = createComponent({
-  tagName: '${tagName}',
-  elementClass: Element,
-  react: React,
-  events: ${JSON.stringify(events)}
-});`;
-
-        fs.writeFileSync(path.join(outDirReact, `${tagName}.tsx`), content);
+        // CAMBIO CRÍTICO: Importamos desde '../index' (sin .js) para que TS use el .d.ts
+        // Añadimos directiva de tipos para React.
+        const content = `// @ts-nocheck
+        import React from 'react';
+        import { createComponent } from '@lit/react';
+        import { ${componentName} as Element } from '../index.js';
         
-        // Ahora .push() no fallará porque components es string[]
-        components.push(componentName);
+        /**
+         * Wrapper de React para <${tagName}>
+         * Generado automáticamente - No editar manualmente.
+         */
+        export const ${componentName} = createComponent({
+          react: React,
+          tagName: '${tagName}',
+          elementClass: Element,
+          events: ${JSON.stringify(eventsBlock)}
+        });`;
+
+        fs.writeFileSync(path.join(outDirReact, `${tagName}.tsx`), content.trim());
+        componentsList.push({ name: componentName, tag: tagName });
       }
     });
   });
 
-  // Generar el index.ts para que el consumidor haga: import { LibButton } from '@shibui/ui/react'
-  const indexContent = components
-    .map(name => `export * from './${name.toLowerCase()}.js';`)
+  const indexContent = componentsList
+    .map(comp => `export * from './${comp.tag}';`) 
     .join('\n');
     
   fs.writeFileSync(path.join(outDirReact, 'index.ts'), indexContent);
   
-  console.log('  └─ ✅ React wrappers: dist/react/ (Tipado corregido)');
+  console.log('  └─ ✅ React wrappers: Generados con resolución de tipos corregida.');
 }

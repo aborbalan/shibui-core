@@ -31,6 +31,8 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
+    "rootDir": "./",
+    "emitDeclarationOnly": true,
     
     // Decorators for Lit
     "experimentalDecorators": true,
@@ -50,7 +52,8 @@
     "src/**/*.test.ts", 
     "tests/**/*.ts",
     "**/*.test.ts",
-    "src/**/*.spec.ts","../../.config/lib-button.test.ts" ,   "src/**/*.stories.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.stories.ts",
     "models/**/*", "architecture/base-components/lib-list.model.ts", "../../apps/app-react/src/custom-elements.d.ts",
     "src/**/*.stories.ts", "src/**/*.component.ts"
   ],
