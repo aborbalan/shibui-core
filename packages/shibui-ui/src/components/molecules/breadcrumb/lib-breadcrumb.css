@@ -169,6 +169,7 @@
   .bc-kaki    .bc-link:hover       { color: var(--color-kaki-500); }
   .bc-celadon .bc-current          { color: var(--color-celadon-500); }
   .bc-celadon .bc-link:hover       { color: var(--color-celadon-500); }
+
   .bc-bold    .bc-current          { color: var(--text-primary);
      font-weight: 600; }
 
@@ -239,6 +240,7 @@
       background var(--duration-fast),
       color      var(--duration-fast);
   }
+
   .bc-dropdown-item:hover { background: var(--bg-surface);
      color: var(--text-primary); }
 
@@ -254,6 +256,7 @@
   .bc-dark .bc-link:hover   { color: oklch(65% 0.02 55deg); }
   .bc-dark .bc-current      { color: oklch(55% 0.02 55deg); }
   .bc-dark .bc-sep          { color: oklch(22% 0.02 45deg); }
+
   .bc-dark.bc-filled        { background: oklch(14% 0.02 45deg);
      border-color: oklch(20% 0.02 45deg); }
 
@@ -267,6 +270,7 @@
     background: oklch(18% 0.02 45deg);
     color: oklch(65% 0.02 55deg);
   }
+
   .bc-dark.bc-pill .bc-link       { background: oklch(14% 0.02 45deg);
      border-color: oklch(20% 0.02 45deg); }
   .bc-dark.bc-pill .bc-link:hover { background: oklch(20% 0.02 45deg); }
@@ -282,6 +286,7 @@
     border-color: oklch(22% 0.02 45deg);
   }
   .bc-dark .bc-dropdown-item      { color: oklch(42% 0.02 50deg); }
+
   .bc-dark .bc-dropdown-item:hover { background: oklch(20% 0.02 45deg);
      color: oklch(65% 0.02 55deg); }
 }
