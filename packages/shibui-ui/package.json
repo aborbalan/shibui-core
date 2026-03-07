@@ -45,7 +45,7 @@
     "s": "npm run dev",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build --no-manager-cache",
+    "build-storybook": "storybook build",
     "lighthouse": "lhci autorun --config=./.config/lighthouserc.cjs",
     "analyze": "cem analyze --litelement --exclude dist",
     "generate:wrappers": "tsx scripts/generate-wrappers.ts",
