@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "clean": "rimraf dist",
+    "clean": "rimraf dist storybook-static node_modules/.cache",    
     "pack:local": "npm run build && npm pack",
     "preview": "vite preview",
     "prebuild": "npm run clean",
