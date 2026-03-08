@@ -60,7 +60,6 @@ export * from './components/molecules/tabs/lib-tabs.component';
 export * from './components/molecules/modal/lib-modal.component';
 export * from './components/molecules/tree-select/lib-tree-node.component';
 export * from './components/molecules/button-group/lib-button-group.component';
-export * from './components/molecules/avatar-group/lib-avatar-group.component';
 
 
 export * from './components/organisms/dialog/lib-dialog.component';
