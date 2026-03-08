@@ -8,7 +8,6 @@ export * from './components/atoms/skeleton/lib-skeleton.component';
 export * from './components/atoms/text-list/lib-text-list.component';
 export * from './components/atoms/close-button/lib-close-button.component';
 export * from './components/atoms/glass-card/lib-glass-card.component';
-export * from './components/atoms/lib-panel/lib-panel.component';
 export * from './components/atoms/progress/lib-progress.component';
 export * from './components/atoms/accordion-item/lib-accordion-item.component';
 export * from './components/atoms/tooltip/lib-tooltip.component';

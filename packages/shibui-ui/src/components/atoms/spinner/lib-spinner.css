@@ -1,49 +1,432 @@
-:host {
-  display: inline-block;
+@layer tokens, reset, components;
+
+/* ============================================================
+LIB-SPINNER — Shibui UI
+
+Variantes
+──────────
+enso     (禅の円)  SVG doble capa con halo de tinta — 2.2s ease
+sumi     (墨)      conic-gradient tinta en agua — 1.6s linear
+kintsugi (金継ぎ)  anillo dorado con drop-shadow — 2s ease
+shizuku  (雫)      6 gotas en órbita decreciente — 1.8s linear
+
+Props
+──────────
+variant  enso | sumi | kintsugi | shizuku   (default: enso)
+size     sm | md | lg                        (default: md)
+tone     ink | kaki | celadon               (default: ink)
+→ afecta enso y sumi en modo claro
+→ en shizuku, tone=kaki activa las gotas doradas
+dark     boolean — optimiza colores para fondos oscuros
+============================================================ */
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 }
 
-.spinner {
-  border-radius: 50%;
-  border: 2px solid rgb(0, 0, 0, 0.1);
-  border-top-color: var(--spinner-color, var(--lib-color-primary, #007aff));
-  animation: spin 0.8s linear infinite;
-  box-sizing: border-box;
-}
+@layer components {
+  :host {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-/* Tamaños expandidos para que el linter sea feliz */
-.size-sm {
-  width: 16px;
-  height: 16px;
-  border-width: 2px;
-}
+  /* ════════════════════════════════════════
+  KEYFRAMES — compartidos entre variantes
+  ════════════════════════════════════════ */
+  @keyframes sp-rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 
-.size-md {
-  width: 32px;
-  height: 32px;
-  border-width: 3px;
-}
+  @keyframes sp-rotate-reverse {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
 
-.size-lg {
-  width: 48px;
-  height: 48px;
-  border-width: 4px;
-}
 
-/* Variantes expandidas */
-.variant-primary {
-  --spinner-color: var(--lib-color-primary);
-}
+  /* ════════════════════════════════════════════════════════════
+  ENSO — 禅の円 · el trazo de pincel zen
+  El SVG gira. Dos círculos: uno difuminado (halo de tinta)
+  y uno nítido encima — simula la sangría del pincel mojado.
+  ════════════════════════════════════════════════════════════ */
 
-.variant-secondary {
-  --spinner-color: var(--lib-color-secondary);
-}
+  :host([variant="enso"]) svg,
+  :host(:not([variant])) svg {
+    display: block;
+    animation: sp-rotate 2.2s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
+  }
 
-.variant-white {
-  --spinner-color: #fff;
-}
+  /* Tamaños — SVG hereda width/height vía style en el template */
+  :host([variant="enso"][size="sm"]) svg,
+  :host(:not([variant])[size="sm"]) svg {
+    width: 24px;
+    height: 24px;
+  }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+  :host([variant="enso"][size="md"]) svg,
+  :host(:not([variant])[size="md"]) svg,
+  :host([variant="enso"]:not([size])) svg,
+  :host(:not([variant], [size])) svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  :host([variant="enso"][size="lg"]) svg,
+  :host(:not([variant])[size="lg"]) svg {
+    width: 72px;
+    height: 72px;
+  }
+
+
+  /* ════════════════════════════════════════════════════════════
+  SUMI — 墨 · tinta disolviéndose en agua
+  conic-gradient con densidades de opacidad crecientes.
+  radial-gradient mask excava el centro dejando solo el anillo.
+  filter: blur(0.6px) añade la sangría del papel washi.
+  ════════════════════════════════════════════════════════════ */
+
+  /* Wrapper — centrado + halo exterior */
+  .sp-sumi-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  /* ── Tono ink (default) ── */
+  .sp-sumi {
+
+    border-radius: 50%;
+    filter: blur(0.6px);
+    animation: sp-rotate 1.6s linear infinite;
+
+    background: conic-gradient(from 0deg,
+        oklch(25% 0.02 45deg / 0) 0deg,
+        oklch(25% 0.02 45deg / 0.08) 30deg,
+        oklch(25% 0.02 45deg / 0.25) 90deg,
+        oklch(25% 0.02 45deg / 0.65) 180deg,
+        oklch(25% 0.02 45deg / 0.92) 270deg,
+        oklch(25% 0.02 45deg / 1) 310deg,
+        oklch(25% 0.02 45deg / 0.20) 345deg,
+        oklch(25% 0.02 45deg / 0) 360deg);
+    mask: radial-gradient(circle at center, transparent 56%, black 57%);
+    mask: radial-gradient(circle at center, transparent 56%, black 57%);
+  }
+
+  /* ── Tono celadón ── */
+  :host([variant="sumi"][tone="celadon"]) .sp-sumi {
+    background: conic-gradient(from 0deg,
+        oklch(55% 0.06 180deg / 0) 0deg,
+        oklch(55% 0.06 180deg / 0.08) 30deg,
+        oklch(55% 0.06 180deg / 0.30) 100deg,
+        oklch(55% 0.06 180deg / 0.70) 200deg,
+        oklch(55% 0.06 180deg / 1) 300deg,
+        oklch(55% 0.06 180deg / 0.15) 350deg,
+        oklch(55% 0.06 180deg / 0) 360deg);
+    mask: radial-gradient(circle at center, transparent 56%, black 57%);
+    mask: radial-gradient(circle at center, transparent 56%, black 57%);
+  }
+
+  /* ── Modo dark — papel claro ── */
+  :host([variant="sumi"][dark]) .sp-sumi {
+    background: conic-gradient(from 0deg,
+        oklch(98% 0.01 60deg / 0) 0deg,
+        oklch(98% 0.01 60deg / 0.08) 30deg,
+        oklch(98% 0.01 60deg / 0.25) 90deg,
+        oklch(98% 0.01 60deg / 0.65) 180deg,
+        oklch(98% 0.01 60deg / 0.92) 270deg,
+        oklch(98% 0.01 60deg / 1) 310deg,
+        oklch(98% 0.01 60deg / 0.20) 345deg,
+        oklch(98% 0.01 60deg / 0) 360deg);
+    mask: radial-gradient(circle at center, transparent 56%, black 57%);
+    mask: radial-gradient(circle at center, transparent 56%, black 57%);
+  }
+
+  /* ── Dark + kaki ── */
+  :host([variant="sumi"][dark][tone="kaki"]) .sp-sumi {
+    background: conic-gradient(from 0deg,
+        oklch(65% 0.12 60deg / 0) 0deg,
+        oklch(65% 0.12 60deg / 0.10) 30deg,
+        oklch(65% 0.12 60deg / 0.30) 100deg,
+        oklch(65% 0.12 60deg / 0.75) 200deg,
+        oklch(65% 0.12 60deg / 1) 300deg,
+        oklch(65% 0.12 60deg / 0.15) 350deg,
+        oklch(65% 0.12 60deg / 0) 360deg);
+    filter: blur(0.5px) drop-shadow(0 0 4px oklch(65% 0.12 60deg / 0.4));
+    mask: radial-gradient(circle at center, transparent 56%, black 57%);
+    mask: radial-gradient(circle at center, transparent 56%, black 57%);
+  }
+
+  /* ── Tamaños sumi ── */
+  :host([variant="sumi"][size="sm"]) .sp-sumi {
+    width: 24px;
+    height: 24px;
+    mask: radial-gradient(circle at center, transparent 52%, black 53%);
+    mask: radial-gradient(circle at center, transparent 52%, black 53%);
+  }
+
+  :host([variant="sumi"]:not([size])) .sp-sumi,
+  :host([variant="sumi"][size="md"]) .sp-sumi {
+    width: 48px;
+    height: 48px;
+  }
+
+  :host([variant="sumi"][size="lg"]) .sp-sumi {
+    width: 72px;
+    height: 72px;
+    mask: radial-gradient(circle at center, transparent 58%, black 59%);
+    mask: radial-gradient(circle at center, transparent 58%, black 59%);
+  }
+
+
+  /* ════════════════════════════════════════════════════════════
+  KINTSUGI — 金継ぎ · el anillo dorado
+  conic-gradient con la rampa de oro del sistema kintsugi.
+  drop-shadow simula el halo de polvo de oro sobre laca.
+  ════════════════════════════════════════════════════════════ */
+
+  .sp-kintsugi {
+    border-radius: 50%;
+    background: conic-gradient(from 0deg,
+        oklch(45% 0.05 45deg / 0) 0deg,
+        oklch(50% 0.06 50deg / 0.15) 40deg,
+        oklch(58% 0.09 55deg / 0.5) 130deg,
+        oklch(65% 0.12 60deg / 1) 220deg,
+        oklch(68% 0.14 65deg / 1) 270deg,
+        oklch(60% 0.10 58deg / 0.6) 320deg,
+        oklch(45% 0.05 45deg / 0) 360deg);
+    mask: radial-gradient(circle at center, transparent 56%, black 57%);
+    mask: radial-gradient(circle at center, transparent 56%, black 57%);
+    filter: blur(0.4px) drop-shadow(0 0 4px oklch(65% 0.12 60deg / 0.5));
+    animation: sp-rotate 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* ── Dark — oro más vivo ── */
+  :host([variant="kintsugi"][dark]) .sp-kintsugi {
+    background: conic-gradient(from 0deg,
+        oklch(45% 0.05 45deg / 0) 0deg,
+        oklch(55% 0.08 50deg / 0.20) 30deg,
+        oklch(65% 0.12 58deg / 0.7) 150deg,
+        oklch(72% 0.16 65deg / 1) 240deg,
+        oklch(75% 0.18 68deg / 1) 290deg,
+        oklch(60% 0.10 55deg / 0.4) 340deg,
+        oklch(45% 0.05 45deg / 0) 360deg);
+    filter: blur(0.3px) drop-shadow(0 0 6px oklch(70% 0.14 62deg / 0.6));
+  }
+
+  /* ── Tamaños kintsugi ── */
+  :host([variant="kintsugi"][size="sm"]) .sp-kintsugi {
+    width: 24px;
+    height: 24px;
+    mask: radial-gradient(circle at center, transparent 52%, black 53%);
+    mask: radial-gradient(circle at center, transparent 52%, black 53%);
+  }
+
+  :host([variant="kintsugi"]:not([size])) .sp-kintsugi,
+  :host([variant="kintsugi"][size="md"]) .sp-kintsugi {
+    width: 48px;
+    height: 48px;
+  }
+
+  :host([variant="kintsugi"][size="lg"]) .sp-kintsugi {
+    width: 72px;
+    height: 72px;
+    mask: radial-gradient(circle at center, transparent 58%, black 59%);
+    mask: radial-gradient(circle at center, transparent 58%, black 59%);
+  }
+
+
+  /* ════════════════════════════════════════════════════════════
+  SHIZUKU — 雫 · gotas de tinta en órbita
+  6 <span> posicionados con rotate() + translateX().
+  El contenedor gira; cada gota tiene un tamaño y opacidad
+  decrecientes — la gota líder, grande y opaca; el rastro,
+  pequeño y casi invisible.
+  ════════════════════════════════════════════════════════════ */
+
+  .sp-shizuku {
+    position: relative;
+    border-radius: 50%;
+    animation: sp-rotate 1.8s linear infinite;
+  }
+
+  .sp-shizuku span {
+    position: absolute;
+    border-radius: 50%;
+    background: oklch(25% 0.02 45deg);
+    /* ink — default */
+    top: 50%;
+    left: 50%;
+    transform-origin: 0 0;
+  }
+
+  /* ── Tono kaki (también activo en dark) ── */
+  :host([variant="shizuku"][tone="kaki"]) .sp-shizuku span,
+  :host([variant="shizuku"][dark]) .sp-shizuku span {
+    background: oklch(65% 0.12 60deg);
+  }
+
+  /* ── MD (default) ── */
+  .sp-shizuku.sp-shizuku--md {
+    width: 48px;
+    height: 48px;
+  }
+
+  .sp-shizuku.sp-shizuku--md span {
+    margin: -3px;
+  }
+
+  .sp-shizuku.sp-shizuku--md span:nth-child(1) {
+    width: 7px;
+    height: 7px;
+    transform: rotate(0deg) translateX(18px) translateY(-50%);
+    opacity: 1;
+  }
+
+  .sp-shizuku.sp-shizuku--md span:nth-child(2) {
+    width: 5.5px;
+    height: 5.5px;
+    transform: rotate(60deg) translateX(18px) translateY(-50%);
+    opacity: 0.72;
+  }
+
+  .sp-shizuku.sp-shizuku--md span:nth-child(3) {
+    width: 4px;
+    height: 4px;
+    transform: rotate(115deg) translateX(18px) translateY(-50%);
+    opacity: 0.48;
+  }
+
+  .sp-shizuku.sp-shizuku--md span:nth-child(4) {
+    width: 3px;
+    height: 3px;
+    transform: rotate(160deg) translateX(18px) translateY(-50%);
+    opacity: 0.28;
+  }
+
+  .sp-shizuku.sp-shizuku--md span:nth-child(5) {
+    width: 2px;
+    height: 2px;
+    transform: rotate(200deg) translateX(18px) translateY(-50%);
+    opacity: 0.13;
+  }
+
+  .sp-shizuku.sp-shizuku--md span:nth-child(6) {
+    width: 1.5px;
+    height: 1.5px;
+    transform: rotate(235deg) translateX(18px) translateY(-50%);
+    opacity: 0.06;
+  }
+
+  /* ── SM ── */
+  .sp-shizuku.sp-shizuku--sm {
+    width: 24px;
+    height: 24px;
+  }
+
+  .sp-shizuku.sp-shizuku--sm span {
+    margin: -1.5px;
+  }
+
+  .sp-shizuku.sp-shizuku--sm span:nth-child(1) {
+    width: 4px;
+    height: 4px;
+    transform: rotate(0deg) translateX(9px) translateY(-50%);
+    opacity: 1;
+  }
+
+  .sp-shizuku.sp-shizuku--sm span:nth-child(2) {
+    width: 3px;
+    height: 3px;
+    transform: rotate(60deg) translateX(9px) translateY(-50%);
+    opacity: 0.72;
+  }
+
+  .sp-shizuku.sp-shizuku--sm span:nth-child(3) {
+    width: 2px;
+    height: 2px;
+    transform: rotate(115deg) translateX(9px) translateY(-50%);
+    opacity: 0.45;
+  }
+
+  .sp-shizuku.sp-shizuku--sm span:nth-child(4) {
+    width: 1.5px;
+    height: 1.5px;
+    transform: rotate(160deg) translateX(9px) translateY(-50%);
+    opacity: 0.25;
+  }
+
+  .sp-shizuku.sp-shizuku--sm span:nth-child(5) {
+    width: 1px;
+    height: 1px;
+    transform: rotate(200deg) translateX(9px) translateY(-50%);
+    opacity: 0.10;
+  }
+
+  .sp-shizuku.sp-shizuku--sm span:nth-child(6) {
+    width: 1px;
+    height: 1px;
+    transform: rotate(235deg) translateX(9px) translateY(-50%);
+    opacity: 0.05;
+  }
+
+  /* ── LG ── */
+  .sp-shizuku.sp-shizuku--lg {
+    width: 72px;
+    height: 72px;
+  }
+
+  .sp-shizuku.sp-shizuku--lg span {
+    margin: -4.5px;
+  }
+
+  .sp-shizuku.sp-shizuku--lg span:nth-child(1) {
+    width: 10px;
+    height: 10px;
+    transform: rotate(0deg) translateX(27px) translateY(-50%);
+    opacity: 1;
+  }
+
+  .sp-shizuku.sp-shizuku--lg span:nth-child(2) {
+    width: 8px;
+    height: 8px;
+    transform: rotate(55deg) translateX(27px) translateY(-50%);
+    opacity: 0.72;
+  }
+
+  .sp-shizuku.sp-shizuku--lg span:nth-child(3) {
+    width: 6px;
+    height: 6px;
+    transform: rotate(105deg) translateX(27px) translateY(-50%);
+    opacity: 0.50;
+  }
+
+  .sp-shizuku.sp-shizuku--lg span:nth-child(4) {
+    width: 4.5px;
+    height: 4.5px;
+    transform: rotate(148deg) translateX(27px) translateY(-50%);
+    opacity: 0.30;
+  }
+
+  .sp-shizuku.sp-shizuku--lg span:nth-child(5) {
+    width: 3px;
+    height: 3px;
+    transform: rotate(185deg) translateX(27px) translateY(-50%);
+    opacity: 0.15;
+  }
+
+  .sp-shizuku.sp-shizuku--lg span:nth-child(6) {
+    width: 2px;
+    height: 2px;
+    transform: rotate(218deg) translateX(27px) translateY(-50%);
+    opacity: 0.06;
   }
 }
