@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 
 interface MainLayoutProps {
@@ -8,6 +8,9 @@ interface MainLayoutProps {
   }
 
   const MainLayout: React.FC<MainLayoutProps> = ({ children, activeTab, onTabChange }) => {
+
+    const [showCVOptions, setShowCVOptions] = useState(false);
+
     return (
       <div style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden' }}>
         
