@@ -1,25 +1,299 @@
-:host {
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-READING-PROGRESS — Shibui UI
+
+   Variantes
+   ─────────
+   bar      → 2px línea pegada al borde inferior del nav.
+              Requiere un padre con position:relative; overflow:hidden.
+   line     → 1px, más sutil. Mismo requisito de padre.
+   dots     → fila de puntos con is-done / is-current.
+              Display inline-flex — coloca dentro del nav.
+   ring     → anillo SVG que rodea el porcentaje numérico.
+              Display inline-flex — coloca junto al brand.
+   vertical → barra fija en el margen izquierdo de la ventana.
+
+   Tonos : kaki (default) · celadon · ink · kintsugi
+   ============================================================ */
+
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+}
+
+/* ── Tokens internos — sobrescribibles por el caller ─────── */
+@layer components {
+
+  /* ════════════════════════════════════
+     BAR — borde inferior de nav
+     ════════════════════════════════════ */
+  :host([variant="bar"]),
+  :host(:not([variant])) {
     display: block;
-    position: sticky;
-    top: 0;
+    position: absolute;
+    bottom: -1px;
     left: 0;
-    width: 100%;
-    z-index: var(--z-index-sticky, 100);
-    height: 4px;
-    background: var(--bg-surface, oklch(95% 0.01 45deg));
+    width: 0%;              /* actualizado por JS */
+    height: 2px;
+    pointer-events: none;
+    z-index: var(--z-raised);
+    transition: width 80ms linear;
+    background: var(--rp-color);
   }
-  
-  .progress-container {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+
+  /* Destello frontal */
+  :host([variant="bar"])::after,
+  :host(:not([variant]))::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 5px;
+    border-radius: var(--radius-full);
+    background: var(--rp-glow);
+    filter: blur(3px);
+    opacity: 0;
+    transition: opacity var(--duration-slow);
   }
-  
-  .progress-bar {
-    height: 100%;
-    background: var(--color-accent-primary, oklch(60% 0.15 250deg));
-    width: 0%; /* Se controlará via JS */
-    transition: width 0.1s ease-out;
-    /* El toque Shibui: un sutil resplandor */
-    box-shadow: 0 0 8px var(--color-accent-primary);
+
+  :host([variant="bar"][active])::after,
+  :host(:not([variant])[active])::after {
+    opacity: 1;
   }
+
+  /* ════════════════════════════════════
+     LINE — borde inferior modulado, 1px
+     ════════════════════════════════════ */
+  :host([variant="line"]) {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    pointer-events: none;
+    z-index: var(--z-raised);
+    transition: width 80ms linear;
+    background: var(--rp-color);
+    opacity: 0.6;
+  }
+
+  /* ════════════════════════════════════
+     DOTS — fila de puntos de capítulo
+     ════════════════════════════════════ */
+  :host([variant="dots"]) {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .rp-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: var(--radius-full);
+    background: var(--border-default);
+    transition:
+      background  var(--duration-slow) var(--ease-out),
+      transform   var(--duration-slow) var(--ease-out),
+      opacity     var(--duration-slow);
+    flex-shrink: 0;
+  }
+
+  .rp-dot.is-done {
+    background: var(--rp-color);
+    transform: scale(1.2);
+  }
+
+  .rp-dot.is-current {
+    background: var(--rp-color-light);
+    transform: scale(1.4);
+    box-shadow: 0 0 0 2px var(--rp-glow);
+  }
+
+  /* ════════════════════════════════════
+     RING — anillo SVG
+     ════════════════════════════════════ */
+  :host([variant="ring"]) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .rp-ring-svg {
+    display: block;
+    transform: rotate(-90deg);
+    overflow: visible;
+  }
+
+  .rp-ring-track {
+    fill: none;
+    stroke: var(--border-subtle);
+    stroke-width: 2;
+  }
+
+  .rp-ring-fill {
+    fill: none;
+    stroke: var(--rp-color);
+    stroke-width: 2;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 80ms linear;
+  }
+
+  /* ════════════════════════════════════
+     VERTICAL — margen izquierdo fijo
+     ════════════════════════════════════ */
+  :host([variant="vertical"]) {
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 0%;             /* actualizado por JS */
+    background: linear-gradient(to bottom, var(--rp-color), var(--rp-color-light));
+    z-index: var(--z-modal);
+    pointer-events: none;
+    transition: height 80ms linear;
+  }
+  /* Punto final luminoso */
+  :host([variant="vertical"])::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: -3px;
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--rp-color-light);
+    box-shadow: 0 0 6px var(--rp-glow);
+  }
+
+  /* ════════════════════════════════════
+     TONOS — mapeo de colores
+     ════════════════════════════════════ */
+
+  /* Kaki (default) */
+  :host,
+  :host([tone="kaki"]) {
+    --rp-color:       var(--color-kaki-500);
+    --rp-color-light: var(--color-kaki-400);
+    --rp-glow:        rgb(217, 114, 52, 0.25);
+  }
+
+  /* Celadón */
+  :host([tone="celadon"]) {
+    --rp-color:       var(--color-celadon-500);
+    --rp-color-light: var(--color-celadon-400);
+    --rp-glow:        rgb(53, 113, 100, 0.25);
+  }
+
+  /* Ink */
+  :host([tone="ink"]) {
+    --rp-color:       var(--color-washi-800);
+    --rp-color-light: var(--color-washi-700);
+    --rp-glow:        rgb(61, 51, 42, 0.2);
+  }
+
+  /* ════════════════════════════════════════════════════════
+     TONO KINTSUGI — oro en las grietas
+     ════════════════════════════════════════════════════════
+
+     En lugar de un color plano, la barra usa el gradiente
+     diagonal del sistema kintsugi: transición desigual de
+     kaki-600 a kaki-300 que evoca el hilo de oro irregular
+     que sella las grietas de la cerámica.
+
+     Shimmer: un reflejo de luz (::before) recorre la barra
+     en bucle lento — luz resbalando sobre la vena de oro.
+     ════════════════════════════════════════════════════════ */
+  :host([tone="kintsugi"]) {
+    --rp-color:       var(--color-kaki-500);
+    --rp-color-light: var(--color-kaki-300);
+    --rp-glow:        oklch(65% 0.1 50deg / 0.55);
+  }
+
+  /* ── Gradiente kintsugi en bar ────────────────────────── */
+  :host([tone="kintsugi"][variant="bar"]),
+  :host([tone="kintsugi"]:not([variant])) {
+    background: linear-gradient(
+      90deg,
+      var(--color-kaki-600)  0%,
+      var(--color-kaki-500) 30%,
+      var(--color-kaki-300) 65%,
+      var(--color-kaki-400) 100%
+    );
+    height: 3px; /* un pixel más — el oro merece presencia */
+  }
+
+  /* Shimmer — reflejo de luz recorriendo la vena de oro */
+  :host([tone="kintsugi"][variant="bar"])::before,
+  :host([tone="kintsugi"]:not([variant]))::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent                       0%,
+      oklch(92% 0.04 60deg / 0.75)        45%,
+      oklch(98% 0.01 60deg / 0.9)         50%,
+      oklch(92% 0.04 60deg / 0.75)        55%,
+      transparent                      100%
+    );
+    animation: rp-kintsugi-shimmer 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    pointer-events: none;
+  }
+
+  /* Glow tip más cálido y pronunciado */
+  :host([tone="kintsugi"][variant="bar"][active])::after,
+  :host([tone="kintsugi"]:not([variant])[active])::after {
+    width: 24px;
+    height: 8px;
+    background: oklch(65% 0.1 50deg / 0.65);
+    filter: blur(5px);
+  }
+
+  /* ── Gradiente kintsugi en line ───────────────────────── */
+  :host([tone="kintsugi"][variant="line"]) {
+    background: linear-gradient(
+      90deg,
+      var(--color-kaki-600) 0%,
+      var(--color-kaki-300) 60%,
+      var(--color-kaki-500) 100%
+    );
+    opacity: 0.85;
+    height: 1.5px;
+  }
+
+  /* ── Gradiente kintsugi en vertical ──────────────────── */
+  :host([tone="kintsugi"][variant="vertical"]) {
+    background: linear-gradient(
+      to bottom,
+      var(--color-kaki-600) 0%,
+      var(--color-kaki-400) 45%,
+      var(--color-kaki-300) 75%,
+      var(--color-kaki-500) 100%
+    );
+    width: 3px;
+  }
+
+  :host([tone="kintsugi"][variant="vertical"])::after {
+    width: 10px;
+    height: 10px;
+    background: var(--color-kaki-300);
+    box-shadow:
+      0 0 8px  oklch(65% 0.1 50deg / 0.7),
+      0 0 16px oklch(65% 0.1 50deg / 0.35);
+  }
+
+  /* ── Shimmer keyframe ─────────────────────────────────── */
+  @keyframes rp-kintsugi-shimmer {
+    0%   { transform: translateX(-120%);
+       opacity: 0;   }
+    15%  { opacity: 1;                                  }
+    85%  { opacity: 1;                                  }
+    100% { transform: translateX(120%);
+        opacity: 0;   }
+  }
+}
