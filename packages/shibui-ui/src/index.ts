@@ -66,7 +66,6 @@ export * from './components/molecules/avatar-group/lib-avatar-group.component';
 export * from './components/organisms/dialog/lib-dialog.component';
 export * from './components/organisms/lib-list/lib-list.component';
 export * from './components/organisms/sidebar/lib-sidebar.component';
-export * from './components/organisms/lib-auth-form/lib-auth-form.component';
 export * from './components/organisms/stepper/lib-stepper.component';
 export * from './components/organisms/drawer/lib-drawer.component';
 export * from './components/organisms/data-table/lib-data-table.component';
