@@ -130,6 +130,11 @@ export class LibSidebar extends LitElement {
   @query('.sb-nav')
   declare private _nav: HTMLElement;
 
+  static readonly events = {
+    onNavigate: 'ui-lib-navigate',
+    onCVClick: 'ui-lib-cv-click',
+  } as const;
+
   /* ── Lifecycle ───────────────────────────────────────── */
 
   override updated(changed: Map<string, unknown>): void {
@@ -190,7 +195,7 @@ export class LibSidebar extends LitElement {
   private _handleLinkClick(id: string): void {
     const previous = this.active;
     this.active = id;
-
+    console.log("click");
     this.dispatchEvent(
       new CustomEvent<UiSidebarNavigateDetail>('ui-lib-navigate', {
         detail: { id, previous },
