@@ -103,11 +103,9 @@ dark     boolean — optimiza colores para fondos oscuros
 
   /* ── Tono ink (default) ── */
   .sp-sumi {
-
     border-radius: 50%;
     filter: blur(0.6px);
     animation: sp-rotate 1.6s linear infinite;
-
     background: conic-gradient(from 0deg,
         oklch(25% 0.02 45deg / 0) 0deg,
         oklch(25% 0.02 45deg / 0.08) 30deg,
@@ -117,7 +115,6 @@ dark     boolean — optimiza colores para fondos oscuros
         oklch(25% 0.02 45deg / 1) 310deg,
         oklch(25% 0.02 45deg / 0.20) 345deg,
         oklch(25% 0.02 45deg / 0) 360deg);
-    mask: radial-gradient(circle at center, transparent 56%, black 57%);
     mask: radial-gradient(circle at center, transparent 56%, black 57%);
   }
 
@@ -131,7 +128,6 @@ dark     boolean — optimiza colores para fondos oscuros
         oklch(55% 0.06 180deg / 1) 300deg,
         oklch(55% 0.06 180deg / 0.15) 350deg,
         oklch(55% 0.06 180deg / 0) 360deg);
-    mask: radial-gradient(circle at center, transparent 56%, black 57%);
     mask: radial-gradient(circle at center, transparent 56%, black 57%);
   }
 
@@ -147,7 +143,6 @@ dark     boolean — optimiza colores para fondos oscuros
         oklch(98% 0.01 60deg / 0.20) 345deg,
         oklch(98% 0.01 60deg / 0) 360deg);
     mask: radial-gradient(circle at center, transparent 56%, black 57%);
-    mask: radial-gradient(circle at center, transparent 56%, black 57%);
   }
 
   /* ── Dark + kaki ── */
@@ -162,14 +157,12 @@ dark     boolean — optimiza colores para fondos oscuros
         oklch(65% 0.12 60deg / 0) 360deg);
     filter: blur(0.5px) drop-shadow(0 0 4px oklch(65% 0.12 60deg / 0.4));
     mask: radial-gradient(circle at center, transparent 56%, black 57%);
-    mask: radial-gradient(circle at center, transparent 56%, black 57%);
   }
 
   /* ── Tamaños sumi ── */
   :host([variant="sumi"][size="sm"]) .sp-sumi {
     width: 24px;
     height: 24px;
-    mask: radial-gradient(circle at center, transparent 52%, black 53%);
     mask: radial-gradient(circle at center, transparent 52%, black 53%);
   }
 
@@ -182,7 +175,6 @@ dark     boolean — optimiza colores para fondos oscuros
   :host([variant="sumi"][size="lg"]) .sp-sumi {
     width: 72px;
     height: 72px;
-    mask: radial-gradient(circle at center, transparent 58%, black 59%);
     mask: radial-gradient(circle at center, transparent 58%, black 59%);
   }
 
@@ -203,7 +195,6 @@ dark     boolean — optimiza colores para fondos oscuros
         oklch(68% 0.14 65deg / 1) 270deg,
         oklch(60% 0.10 58deg / 0.6) 320deg,
         oklch(45% 0.05 45deg / 0) 360deg);
-    mask: radial-gradient(circle at center, transparent 56%, black 57%);
     mask: radial-gradient(circle at center, transparent 56%, black 57%);
     filter: blur(0.4px) drop-shadow(0 0 4px oklch(65% 0.12 60deg / 0.5));
     animation: sp-rotate 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -227,7 +218,6 @@ dark     boolean — optimiza colores para fondos oscuros
     width: 24px;
     height: 24px;
     mask: radial-gradient(circle at center, transparent 52%, black 53%);
-    mask: radial-gradient(circle at center, transparent 52%, black 53%);
   }
 
   :host([variant="kintsugi"]:not([size])) .sp-kintsugi,
@@ -239,7 +229,6 @@ dark     boolean — optimiza colores para fondos oscuros
   :host([variant="kintsugi"][size="lg"]) .sp-kintsugi {
     width: 72px;
     height: 72px;
-    mask: radial-gradient(circle at center, transparent 58%, black 59%);
     mask: radial-gradient(circle at center, transparent 58%, black 59%);
   }
 
