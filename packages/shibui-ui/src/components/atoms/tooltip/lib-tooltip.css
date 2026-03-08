@@ -132,6 +132,7 @@
     left: 50%;
     transform: translateX(-50%) translateY(4px);
   }
+
   .tip-wrap[data-pos="top"]:hover .tip-bubble,
   .tip-wrap[data-pos="top"]:focus-within .tip-bubble,
   .tip-wrap[data-pos="top"].is-open .tip-bubble,
@@ -140,6 +141,7 @@
   .tip-wrap:not([data-pos]).is-open .tip-bubble {
     transform: translateX(-50%) translateY(0);
   }
+
   .tip-wrap[data-pos="top"] .tip-bubble::after,
   .tip-wrap:not([data-pos]) .tip-bubble::after {
     top: 100%; left: 50%;
@@ -153,11 +155,13 @@
     left: 50%;
     transform: translateX(-50%) translateY(-4px);
   }
+
   .tip-wrap[data-pos="bottom"]:hover .tip-bubble,
   .tip-wrap[data-pos="bottom"]:focus-within .tip-bubble,
   .tip-wrap[data-pos="bottom"].is-open .tip-bubble {
     transform: translateX(-50%) translateY(0);
   }
+
   .tip-wrap[data-pos="bottom"] .tip-bubble::after {
     bottom: 100%; left: 50%;
     transform: translateX(-50%);
@@ -170,11 +174,13 @@
     top: 50%;
     transform: translateY(-50%) translateX(4px);
   }
+
   .tip-wrap[data-pos="left"]:hover .tip-bubble,
   .tip-wrap[data-pos="left"]:focus-within .tip-bubble,
   .tip-wrap[data-pos="left"].is-open .tip-bubble {
     transform: translateY(-50%) translateX(0);
   }
+
   .tip-wrap[data-pos="left"] .tip-bubble::after {
     left: 100%; top: 50%;
     transform: translateY(-50%);
@@ -187,11 +193,13 @@
     top: 50%;
     transform: translateY(-50%) translateX(-4px);
   }
+
   .tip-wrap[data-pos="right"]:hover .tip-bubble,
   .tip-wrap[data-pos="right"]:focus-within .tip-bubble,
   .tip-wrap[data-pos="right"].is-open .tip-bubble {
     transform: translateY(-50%) translateX(0);
   }
+
   .tip-wrap[data-pos="right"] .tip-bubble::after {
     right: 100%; top: 50%;
     transform: translateY(-50%);
@@ -204,11 +212,13 @@
     left: 0;
     transform: translateY(4px);
   }
+
   .tip-wrap[data-pos="top-start"]:hover .tip-bubble,
   .tip-wrap[data-pos="top-start"]:focus-within .tip-bubble,
   .tip-wrap[data-pos="top-start"].is-open .tip-bubble {
     transform: translateY(0);
   }
+
   .tip-wrap[data-pos="top-start"] .tip-bubble::after {
     top: 100%; left: var(--lib-space-md);
     border-top-color: var(--color-washi-900);
@@ -220,11 +230,13 @@
     right: 0;
     transform: translateY(4px);
   }
+
   .tip-wrap[data-pos="top-end"]:hover .tip-bubble,
   .tip-wrap[data-pos="top-end"]:focus-within .tip-bubble,
   .tip-wrap[data-pos="top-end"].is-open .tip-bubble {
     transform: translateY(0);
   }
+
   .tip-wrap[data-pos="top-end"] .tip-bubble::after {
     top: 100%; right: var(--lib-space-md);
     border-top-color: var(--color-washi-900);
@@ -236,11 +248,13 @@
     left: 0;
     transform: translateY(-4px);
   }
+
   .tip-wrap[data-pos="bottom-start"]:hover .tip-bubble,
   .tip-wrap[data-pos="bottom-start"]:focus-within .tip-bubble,
   .tip-wrap[data-pos="bottom-start"].is-open .tip-bubble {
     transform: translateY(0);
   }
+
   .tip-wrap[data-pos="bottom-start"] .tip-bubble::after {
     bottom: 100%; left: var(--lib-space-md);
     border-bottom-color: var(--color-washi-900);
@@ -252,11 +266,13 @@
     right: 0;
     transform: translateY(-4px);
   }
+
   .tip-wrap[data-pos="bottom-end"]:hover .tip-bubble,
   .tip-wrap[data-pos="bottom-end"]:focus-within .tip-bubble,
   .tip-wrap[data-pos="bottom-end"].is-open .tip-bubble {
     transform: translateY(0);
   }
+
   .tip-wrap[data-pos="bottom-end"] .tip-bubble::after {
     bottom: 100%; right: var(--lib-space-md);
     border-bottom-color: var(--color-washi-900);
@@ -274,6 +290,7 @@
     border: 1px solid var(--border-default);
     box-shadow: var(--shadow-md);
   }
+
   .tip-light[data-pos="top"] .tip-bubble::after,
   .tip-light:not([data-pos]) .tip-bubble::after     { border-top-color:    var(--bg-elevated); }
   .tip-light[data-pos="bottom"] .tip-bubble::after  { border-bottom-color: var(--bg-elevated); }
@@ -289,6 +306,7 @@
     background: var(--color-kaki-500);
     color: var(--color-white);
   }
+
   .tip-kaki[data-pos="top"] .tip-bubble::after,
   .tip-kaki:not([data-pos]) .tip-bubble::after     { border-top-color:    var(--color-kaki-500); }
   .tip-kaki[data-pos="bottom"] .tip-bubble::after  { border-bottom-color: var(--color-kaki-500); }
@@ -304,6 +322,7 @@
     background: var(--color-error);
     color: var(--color-white);
   }
+
   .tip-error[data-pos="top"] .tip-bubble::after,
   .tip-error:not([data-pos]) .tip-bubble::after     { border-top-color:    var(--color-error); }
   .tip-error[data-pos="bottom"] .tip-bubble::after  { border-bottom-color: var(--color-error); }
@@ -319,6 +338,7 @@
     background: var(--color-celadon-500);
     color: var(--color-white);
   }
+
   .tip-celadon[data-pos="top"] .tip-bubble::after,
   .tip-celadon:not([data-pos]) .tip-bubble::after     { border-top-color:    var(--color-celadon-500); }
   .tip-celadon[data-pos="bottom"] .tip-bubble::after  { border-bottom-color: var(--color-celadon-500); }
@@ -372,8 +392,8 @@
     font-family: var(--lib-font-mono);
     font-size: 9px;
     letter-spacing: var(--tracking-wide);
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgb(255, 255, 255, 0.12);
+    border: 1px solid rgb(255, 255, 255, 0.18);
     padding: 1px var(--lib-space-sm);
     color: inherit;
     line-height: 1.6;
@@ -390,7 +410,7 @@
   ::slotted(.tip-sep),
   .tip-sep {
     height: 1px;
-    background: rgba(255, 255, 255, 0.12);
+    background: rgb(255, 255, 255, 0.12);
     margin: var(--lib-space-sm) 0;
     display: block;
   }
