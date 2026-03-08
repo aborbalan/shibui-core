@@ -49,10 +49,12 @@
     pointer-events: none;
     opacity: 0;
   }
+
   :host([variant="slice"]) .tg-inner::before {
     color: var(--color-kaki-500);
     mix-blend-mode: multiply;
   }
+
   :host([variant="slice"]) .tg-inner::after {
     color: var(--color-celadon-400);
     mix-blend-mode: multiply;
@@ -64,6 +66,7 @@
     opacity: 1;
     animation: tg-slice-before 420ms steps(1) infinite;
   }
+
   :host([variant="slice"]:hover) .tg-inner::after,
   :host([variant="slice"][active]) .tg-inner::after,
   :host([variant="slice"][trigger="always"]) .tg-inner::after {
@@ -75,48 +78,69 @@
   @keyframes tg-slice-before {
     0%   { clip-path: inset(14% 0 72% 0);
        transform: translateX(-3px); }
+
     10%  { clip-path: inset(52% 0 32% 0);
        transform: translateX( 2px); }
+
     20%  { clip-path: inset(8%  0 82% 0);
        transform: translateX(-4px); }
+
     30%  { clip-path: inset(66% 0 12% 0);
        transform: translateX( 3px); }
+
     40%  { clip-path: inset(33% 0 44% 0); 
       transform: translateX(-2px); }
+
     50%  { clip-path: inset(0%  0 90% 0);
        transform: translateX( 4px); }
+
     60%  { clip-path: inset(78% 0  8% 0);
        transform: translateX(-3px); }
+
     70%  { clip-path: inset(22% 0 60% 0); 
       transform: translateX( 2px); }
+
     80%  { clip-path: inset(44% 0 38% 0);
        transform: translateX(-4px); }
+
     90%  { clip-path: inset(60% 0 18% 0);
        transform: translateX( 3px); }
+
     100% { clip-path: inset(10% 0 75% 0);
        transform: translateX(-2px); }
   }
+
   @keyframes tg-slice-after {
     0%   { clip-path: inset(64% 0 20% 0);
        transform: translateX( 3px); }
+
     10%  { clip-path: inset(28% 0 56% 0);
        transform: translateX(-4px); }
+
     20%  { clip-path: inset(76% 0  6% 0);
        transform: translateX( 2px); }
+
     30%  { clip-path: inset(12% 0 70% 0);
        transform: translateX(-3px); }
+
     40%  { clip-path: inset(88% 0  4% 0);
        transform: translateX( 4px); }
+
     50%  { clip-path: inset(40% 0 48% 0);
        transform: translateX(-2px); }
+
     60%  { clip-path: inset(6%  0 84% 0);
        transform: translateX( 3px); }
+
     70%  { clip-path: inset(55% 0 30% 0);
        transform: translateX(-4px); }
+
     80%  { clip-path: inset(18% 0 66% 0);
        transform: translateX( 2px); }
+
     90%  { clip-path: inset(82% 0 10% 0);
        transform: translateX(-3px); }
+
     100% { clip-path: inset(36% 0 50% 0);
        transform: translateX( 4px); }
   }
@@ -153,15 +177,20 @@
   @keyframes tg-scan-sweep {
     0%   { clip-path: inset(0% 100% 0 0);
        transform: translateX(0);    }
+
     30%  { clip-path: inset(0% 0%   0 0);
        transform: translateX(4px);  }
+
     60%  { clip-path: inset(0% 0%   0 0);
        transform: translateX(-2px); }
+
     80%  { clip-path: inset(0% 0%   0 0);
        transform: translateX(0);    }
+
     90%  { clip-path: inset(0% 0%   0 0);
        transform: translateX(0); 
           opacity: 1; }
+
     100% { clip-path: inset(0% 0%   0 0);
        opacity: 0; }
   }
@@ -190,6 +219,7 @@
     color: var(--color-kaki-400);
     animation: tg-shift-a 380ms steps(1) infinite;
   }
+
   :host([variant="shift"]:hover) .tg-inner::after,
   :host([variant="shift"][active]) .tg-inner::after,
   :host([variant="shift"][trigger="always"]) .tg-inner::after {
@@ -202,28 +232,39 @@
   @keyframes tg-shift-a {
     0%   { transform: translate(-2px, 1px);
         clip-path: inset(20% 0 55% 0); }
+
     20%  { transform: translate( 2px, 0);
           clip-path: inset(60% 0 10% 0); }
+
     40%  { transform: translate(-1px,-1px); 
        clip-path: inset(5%  0 70% 0); }
+
     60%  { transform: translate( 3px, 1px); 
        clip-path: inset(40% 0 30% 0); }
+
     80%  { transform: translate(-2px, 0); 
          clip-path: inset(75% 0  5% 0); }
+
     100% { transform: translate( 1px,-1px);
         clip-path: inset(30% 0 45% 0); }
   }
+
   @keyframes tg-shift-b {
     0%   { transform: translate( 3px,-1px);
         clip-path: inset(50% 0 20% 0); }
+
     20%  { transform: translate(-2px, 1px);
         clip-path: inset(10% 0 65% 0); }
+
     40%  { transform: translate( 2px, 0);
           clip-path: inset(70% 0 10% 0); }
+
     60%  { transform: translate(-3px,-1px);
         clip-path: inset(25% 0 50% 0); }
+
     80%  { transform: translate( 1px, 1px);
         clip-path: inset(80% 0  5% 0); }
+
     100% { transform: translate(-2px, 0);
           clip-path: inset(35% 0 40% 0); }
   }
@@ -239,6 +280,7 @@
     display: inline-block;
     will-change: transform;
   }
+
   :host([variant="decode"]) .char.is-scrambling {
     color: var(--color-kaki-500);
     animation: tg-char-jitter 60ms steps(1) infinite;
@@ -260,8 +302,7 @@
   :host([variant="redact"]) .tg-inner::before {
     content: '';
     position: absolute;
-    left: -3px; right: -3px;
-    top: 0; bottom: 0;
+    inset: 0 -3px;
     background: var(--color-washi-900);
     transform: scaleX(0);
     transform-origin: left;
@@ -281,12 +322,16 @@
   @keyframes tg-redact {
     0%   { transform: scaleX(0);
        transform-origin: left;  }
+
     40%  { transform: scaleX(1);
        transform-origin: left;  }
+
     41%  { transform: scaleX(1);
        transform-origin: right; }
+
     80%  { transform: scaleX(0);
        transform-origin: right; }
+
     100% { transform: scaleX(0);
        transform-origin: right; }
   }
@@ -306,11 +351,13 @@
     pointer-events: none;
     opacity: 0;
   }
+
   :host([variant="noise"]) .tg-inner::before {
-    color: oklch(55% 0.08 40 / 0.8);   /* kaki cálido */
+    color: oklch(55% 0.08 40deg / 0.8);   /* kaki cálido */
   }
+
   :host([variant="noise"]) .tg-inner::after {
-    color: oklch(55% 0.06 180 / 0.7);  /* celadón frío */
+    color: oklch(55% 0.06 180deg / 0.7);  /* celadón frío */
   }
 
   :host([variant="noise"]:hover) .tg-inner::before,
@@ -319,6 +366,7 @@
     opacity: 1;
     animation: tg-noise-a 280ms steps(1) infinite;
   }
+
   :host([variant="noise"]:hover) .tg-inner::after,
   :host([variant="noise"][active]) .tg-inner::after,
   :host([variant="noise"][trigger="always"]) .tg-inner::after {
@@ -330,36 +378,51 @@
   @keyframes tg-noise-a {
     0%   { clip-path: inset(18% 0 60% 0);
        transform: translate(-4px,  1px) skewX(-1deg); }
+
     14%  { clip-path: inset(72% 0  8% 0);
        transform: translate( 3px, -2px) skewX( 2deg); }
+
     28%  { clip-path: inset(36% 0 40% 0);
        transform: translate(-2px,  2px) skewX(-2deg); }
+
     42%  { clip-path: inset(5%  0 80% 0);
-       transform: translate( 4px,  0px) skewX( 1deg); }
+       transform: translate( 4px,  0) skewX( 1deg); }
+
     57%  { clip-path: inset(55% 0 22% 0);
        transform: translate(-3px, -1px) skewX(-1deg); }
+
     71%  { clip-path: inset(85% 0  5% 0);
        transform: translate( 2px,  2px) skewX( 2deg); }
+
     85%  { clip-path: inset(28% 0 50% 0);
        transform: translate(-4px, -2px) skewX(-2deg); }
+
     100% { clip-path: inset(48% 0 30% 0);
        transform: translate( 3px,  1px) skewX( 1deg); }
   }
+
   @keyframes tg-noise-b {
     0%   { clip-path: inset(62% 0 18% 0);
        transform: translate( 4px, -1px) skewX( 2deg); }
+
     14%  { clip-path: inset(12% 0 68% 0);
        transform: translate(-3px,  2px) skewX(-1deg); }
+
     28%  { clip-path: inset(80% 0  8% 0);
        transform: translate( 2px, -2px) skewX( 1deg); }
+
     42%  { clip-path: inset(30% 0 42% 0);
        transform: translate(-4px,  1px) skewX(-2deg); }
+
     57%  { clip-path: inset(5%  0 75% 0);
        transform: translate( 3px, -1px) skewX( 2deg); }
+
     71%  { clip-path: inset(45% 0 35% 0);
        transform: translate(-2px,  2px) skewX(-1deg); }
+
     85%  { clip-path: inset(70% 0 12% 0);
        transform: translate( 4px, -2px) skewX( 1deg); }
+
     100% { clip-path: inset(22% 0 58% 0);
        transform: translate(-3px,  1px) skewX(-2deg); }
   }
