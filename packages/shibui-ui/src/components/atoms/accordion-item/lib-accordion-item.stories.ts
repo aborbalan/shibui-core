@@ -9,7 +9,7 @@ interface AccordionItemArgs {
 }
 
 const meta: Meta<AccordionItemArgs> = {
-  title: 'Components/Atoms/EmptyState', // Organización funcional para el menú
+  title: 'Components/Atoms/AccordionItem', // Organización funcional para el menú
   component: 'lib-accordion-item',
   argTypes: {
     label: { control: 'text' },
