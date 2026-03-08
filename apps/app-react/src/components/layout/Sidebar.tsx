@@ -1,6 +1,7 @@
 import React from 'react';
 import meData from '../../data/me.json';
 import { SidebarLink, SidebarSocial } from '@shibui/ui';
+import { LibSidebar } from '@shibui/ui/react';
 
 interface SidebarProps {
   activeTab: string;
@@ -42,23 +43,17 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       flexShrink: 0,
       height: '100vh'
     }}>
-      <lib-sidebar name="Alejandro Borbalán Dueñas" 
+      <LibSidebar name={meData.name}
                    initials="AB"
                    role="Frontend Developer"
                    status="Disponible para proyectos"
                    active="inicio"
                    cv-label="Descargar CV"
                    links={DEFAULT_LINKS}
-                    socials={DEFAULT_SOCIALS}>
+                    socials={DEFAULT_SOCIALS}
+                    onUiLibNavigate={(e:unknown) => console.log(e)}                    >
 
-      </lib-sidebar>
-
-      <div style={{ marginBottom: '2rem' }}>
-        <div style={{ fontWeight: 'bold', fontSize: '1.2rem', color: 'oklch(70% 0.15 250)' }}>
-          {meData.name.split(' ')[0]} Portfolio
-        </div>
-        <div style={{ fontSize: '0.8rem', opacity: 0.6 }}>{meData.label}</div>
-      </div>
+      </LibSidebar>
 
       <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         {menuItems.map((item) => (

@@ -26,26 +26,33 @@ export function generateReact(manifest) {
         }) || [];
 
         const eventsBlock = eventsEntries.length > 0 
-          ? `{\n${eventsEntries.join(',\n')}\n  }` 
-          : '{}';
+        ? `{
+          ${eventsEntries.map(entry => entry.trim()).join(',\n    ')}
+        }` 
+        : '{}';
 
         // CAMBIO CRÍTICO: Importamos desde '../index' (sin .js) para que TS use el .d.ts
         // Añadimos directiva de tipos para React.
         const content = `// @ts-nocheck
         import React from 'react';
-        import { createComponent } from '@lit/react';
-        import { ${componentName} as Element } from '../index.js';
-        
-        /**
-         * Wrapper de React para <${tagName}>
-         * Generado automáticamente - No editar manualmente.
-         */
-        export const ${componentName} = createComponent({
-          react: React,
-          tagName: '${tagName}',
-          elementClass: Element,
-          events: ${JSON.stringify(eventsBlock)}
-        });`;
+import { createComponent, type EventName } from '@lit/react';
+import { ${componentName} as Element } from '../index.js';
+
+/**
+ * Wrapper de React para <${tagName}>
+ * Generado automáticamente - No editar manualmente.
+ */
+export const _${componentName} = createComponent({
+  react: React,
+  tagName: '${tagName}',
+  elementClass: Element,
+  events: ${eventsBlock}
+});
+
+// Tipado para evitar el error "JSX element class does not support attributes"
+export const ${componentName} = _${componentName} as unknown as React.FC<any>;
+export type ${componentName}Props = React.ComponentProps<typeof ${componentName}>;
+`;
 
         fs.writeFileSync(path.join(outDirReact, `${tagName}.tsx`), content.trim());
         componentsList.push({ name: componentName, tag: tagName });
