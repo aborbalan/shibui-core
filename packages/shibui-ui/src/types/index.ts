@@ -9,12 +9,6 @@ export interface UiClickEventDetail {
   timestamp: number;
 }
 
-export interface TabItem {
-  id: string;
-  label: string;
-  icon?: string;
-  disabled?: boolean;
-}
 
 export interface SidebarLink {
   /** Identificador único de la sección a la que navega */

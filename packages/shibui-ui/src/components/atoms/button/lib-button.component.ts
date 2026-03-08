@@ -22,7 +22,6 @@ export class LibButton extends LitElement {
     css`
       ${unsafeCSS(buttonCss)}
     `
-    
   ];
 
   private _buttonId: string;
@@ -82,7 +81,6 @@ export class LibButton extends LitElement {
       buttonId: this._buttonId,
       type: this.type,
       disabled: this.disabled,
-      // Convertimos null a undefined para cumplir con exactOptionalPropertyTypes
       ariaLabel: this.ariaLabel ?? undefined,
       handleClick: this._handleClick.bind(this),
       variant: this.variant,
