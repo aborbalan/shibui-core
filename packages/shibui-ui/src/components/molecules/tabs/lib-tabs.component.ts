@@ -3,7 +3,14 @@ import { customElement, property } from 'lit/decorators.js';
 import { tabsTemplate } from './lib-tabs.html';
 import cssStyles from './lib-tabs.css?inline';
 import { LibListModel } from '../../../../architecture/base-components/lib-list.model';
-import { TabItem } from '../../../../models/ui/lib-tab/tab-item';
+
+export interface TabItem {
+  id: string;
+  label: string;
+  icon?: string;
+  disabled?: boolean;
+}
+
 
 @customElement('lib-tabs')
 export class LibTabs extends LibListModel<TabItem> {
