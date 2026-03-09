@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 function App() {
 
+
   const [currentSection, setCurrentSection] = useState(() => {
     const hash = window.location.hash.replace('#', '');
     return ['perfil', 'experiencia', 'proyectos'].includes(hash) ? hash : 'perfil';
@@ -29,7 +30,7 @@ function App() {
   };
 
   return (
-    <MainLayout activeTab={currentSection} onTabChange={navigateTo}>
+    <MainLayout onOpenCV={() => setShowCVOptions(true)} activeTab={currentSection} onTabChange={navigateTo}>
       {/* Bloque 1: Perfil profesional (LinkedIn Style) */}
       {currentSection === 'perfil' && <ProfileSection />}
     {currentSection === 'proyectos' && <ProjectGallery />}

@@ -105,7 +105,7 @@ import gameController from '@phosphor-icons/core/assets/regular/game-controller.
 import guitar from '@phosphor-icons/core/assets/regular/guitar.svg?raw';
 import ticket from '@phosphor-icons/core/assets/regular/ticket.svg?raw';
 import puzzlePiece from '@phosphor-icons/core/assets/regular/puzzle-piece.svg?raw';
-
+import dribbbleLogo from '@phosphor-icons/core/assets/regular/dribbble-logo.svg?raw';
 import bicycle from '@phosphor-icons/core/assets/regular/bicycle.svg?raw';
 
 
@@ -133,6 +133,7 @@ export const ICON_REGISTRY: Record<string, string> = {
 'upload': uploadSimple,
 'share': shareNetwork,
 'link': link,
+'dribbble-logo': dribbbleLogo,
 'export': exportIcon,
 'file': file,
 'folder': folder,

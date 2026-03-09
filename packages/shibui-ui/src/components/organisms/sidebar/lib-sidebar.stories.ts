@@ -24,10 +24,10 @@ const DEFAULT_LINKS: SidebarLink[] = [
 ];
 
 const DEFAULT_SOCIALS: SidebarSocial[] = [
-  { href: '#', icon: 'github-logo',   label: 'GitHub' },
-  { href: '#', icon: 'linkedin-logo', label: 'LinkedIn' },
+  { href: '#', icon: 'github',   label: 'GitHub' },
+  { href: '#', icon: 'linkedin', label: 'LinkedIn' },
   { href: '#', icon: 'dribbble-logo', label: 'Dribbble' },
-  { href: '#', icon: 'x-logo',        label: 'X / Twitter' },
+  { href: '#', icon: 'x',        label: 'X / Twitter' },
 ];
 
 /* ── Layout helper ─────────────────────────────────────── */

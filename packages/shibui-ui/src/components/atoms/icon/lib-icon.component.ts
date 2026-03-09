@@ -22,6 +22,7 @@ export class LibIcon extends LitElement {
 
   override willUpdate(changedProperties: Map<string, unknown>): void {
     if (changedProperties.has('name')) {
+      console.log("icono updated")
       this._loadIcon();
     }
   }
@@ -29,11 +30,13 @@ export class LibIcon extends LitElement {
   // 4. Buscamos el SVG en tu registro y lo guardamos en el estado
   private _loadIcon(): void {
     const icon = ICON_REGISTRY[this.name];
+    console.log(this.name);
+
     if (icon) {
       this._svgContent = icon;
     } else {
       this._svgContent = ''; // Si no existe, limpiamos
-      console.warn(`Icono "${this.name}" no encontrado.`);
+      //console.warn(`Icono "${this.name}" no encontrado.`);
     }
   }
 

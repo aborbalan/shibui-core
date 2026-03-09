@@ -79,7 +79,7 @@ function renderFooter(p: SidebarTemplateProps): TemplateResult {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <lib-icon name="${s.icon}" size="sm"></lib-icon>
+              <lib-icon name="${s.icon}" size="sm" style="color: #FFFFFF"></lib-icon>
             </a>
           `)}
         </div>
