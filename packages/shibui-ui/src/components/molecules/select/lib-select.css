@@ -114,7 +114,7 @@
       background var(--duration-base) var(--ease-default),
       box-shadow var(--duration-base) var(--ease-default);
     user-select: none;
-    -webkit-appearance: none;
+    appearance: none;
     appearance: none;
   }
 
@@ -125,14 +125,14 @@
 
   .sel-trigger:focus-visible {
     border-color: var(--color-washi-800);
-    box-shadow: 0 0 0 3px rgba(26, 20, 14, 0.08);
+    box-shadow: 0 0 0 3px rgb(26, 20, 14, 0.08);
     outline: none;
   }
 
   /* open */
   :host([open]) .sel-trigger {
     border-color: var(--color-washi-800);
-    box-shadow: 0 0 0 3px rgba(26, 20, 14, 0.08);
+    box-shadow: 0 0 0 3px rgb(26, 20, 14, 0.08);
   }
 
   /* disabled */
@@ -151,7 +151,7 @@
   }
 
   :host([error][open]) .sel-trigger {
-    box-shadow: 0 0 0 3px rgba(140, 42, 26, 0.12);
+    box-shadow: 0 0 0 3px rgb(140, 42, 26, 0.12);
   }
 
   /* ── Trigger value ── */
@@ -268,7 +268,7 @@
     z-index: var(--z-toast, 300);
     background: var(--bg-elevated);
     border: 1px solid var(--border-default);
-    box-shadow: 0 8px 24px rgba(26, 20, 14, 0.12), 0 2px 6px rgba(26, 20, 14, 0.07);
+    box-shadow: 0 8px 24px rgb(26, 20, 14, 0.12), 0 2px 6px rgb(26, 20, 14, 0.07);
 
     /* Animation: hidden by default */
     opacity: 0;
@@ -518,84 +518,84 @@
      DARK SURFACE
   ───────────────────────────────────────────────────────── */
   :host([dark]) .sel-label {
-    color: oklch(42% 0.02 50);
+    color: oklch(42% 0.02 50deg);
   }
 
   :host([dark]) .sel-hint {
-    color: oklch(32% 0.02 50);
+    color: oklch(32% 0.02 50deg);
   }
 
   :host([dark]) .sel-trigger {
-    background: oklch(14% 0.02 45);
-    border-color: oklch(22% 0.02 45);
-    color: oklch(65% 0.02 55);
+    background: oklch(14% 0.02 45deg);
+    border-color: oklch(22% 0.02 45deg);
+    color: oklch(65% 0.02 55deg);
   }
 
   :host([dark]) .sel-trigger:hover:not([disabled]) {
-    background: oklch(16% 0.02 45);
-    border-color: oklch(30% 0.02 45);
+    background: oklch(16% 0.02 45deg);
+    border-color: oklch(30% 0.02 45deg);
   }
 
   :host([dark][open]) .sel-trigger {
-    border-color: oklch(50% 0.02 50);
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+    border-color: oklch(50% 0.02 50deg);
+    box-shadow: 0 0 0 3px rgb(255, 255, 255, 0.05);
   }
 
   :host([dark]) .sel-trigger-chevron {
-    border-top-color: oklch(35% 0.02 50);
+    border-top-color: oklch(35% 0.02 50deg);
   }
 
   :host([dark][open]) .sel-trigger-chevron {
-    border-top-color: oklch(65% 0.02 55);
+    border-top-color: oklch(65% 0.02 55deg);
   }
 
   :host([dark]) .sel-trigger-value.is-placeholder {
-    color: oklch(32% 0.02 50);
+    color: oklch(32% 0.02 50deg);
   }
 
   :host([dark]) .sel-panel {
-    background: oklch(12% 0.02 45);
-    border-color: oklch(20% 0.02 45);
+    background: oklch(12% 0.02 45deg);
+    border-color: oklch(20% 0.02 45deg);
   }
 
   :host([dark]) .sel-panel-search {
-    border-color: oklch(18% 0.02 45);
+    border-color: oklch(18% 0.02 45deg);
   }
 
   :host([dark]) .sel-panel-search input {
-    color: oklch(70% 0.02 55);
+    color: oklch(70% 0.02 55deg);
   }
 
   :host([dark]) .sel-group-label {
-    color: oklch(28% 0.02 50);
+    color: oklch(28% 0.02 50deg);
   }
 
   :host([dark]) .sel-sep {
-    background: oklch(18% 0.02 45);
+    background: oklch(18% 0.02 45deg);
   }
 
   :host([dark]) .sel-option:hover {
-    background: oklch(16% 0.02 45);
+    background: oklch(16% 0.02 45deg);
   }
 
   :host([dark]) .sel-option.is-selected {
-    background: oklch(18% 0.02 45);
+    background: oklch(18% 0.02 45deg);
   }
 
   :host([dark]) .sel-option-label {
-    color: oklch(55% 0.02 55);
+    color: oklch(55% 0.02 55deg);
   }
 
   :host([dark]) .sel-option:hover .sel-option-label {
-    color: oklch(75% 0.02 55);
+    color: oklch(75% 0.02 55deg);
   }
 
   :host([dark]) .sel-option.is-selected .sel-option-label {
-    color: oklch(80% 0.02 55);
+    color: oklch(80% 0.02 55deg);
   }
 
   :host([dark]) .sel-option-desc {
-    color: oklch(30% 0.02 50);
+    color: oklch(30% 0.02 50deg);
   }
 
   :host([dark]) .sel-option-check {
@@ -603,10 +603,10 @@
   }
 
   :host([dark]) .sel-panel-footer {
-    border-color: oklch(18% 0.02 45);
+    border-color: oklch(18% 0.02 45deg);
   }
 
   :host([dark]) .sel-panel-footer-text {
-    color: oklch(30% 0.02 50);
+    color: oklch(30% 0.02 50deg);
   }
 }

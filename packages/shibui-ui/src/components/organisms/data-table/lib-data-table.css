@@ -121,7 +121,7 @@
     opacity: 0.3;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-top: 5px solid currentColor;
+    border-top: 5px solid currentcolor;
     transition: opacity var(--duration-fast), transform var(--duration-base);
   }
 
@@ -338,7 +338,7 @@
     bottom: 0;
     width: 1px;
     background: var(--border-subtle);
-    box-shadow: 2px 0 6px rgba(26, 20, 14, 0.05);
+    box-shadow: 2px 0 6px rgb(26, 20, 14, 0.05);
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -446,7 +446,7 @@
     width: 5px;
     height: 5px;
     border-radius: var(--radius-full);
-    background: currentColor;
+    background: currentcolor;
     flex-shrink: 0;
     opacity: 0.7;
   }
@@ -709,7 +709,7 @@
 
   .tbl-toolbar-search:focus {
     border-color: var(--color-washi-700);
-    box-shadow: 0 0 0 3px rgba(26, 20, 14, 0.08);
+    box-shadow: 0 0 0 3px rgb(26, 20, 14, 0.08);
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -778,139 +778,139 @@
      DARK MODE
   ───────────────────────────────────────────────────────── */
   :host([dark]) table {
-    background: oklch(12% 0.015 45);
-    color: oklch(55% 0.02 55);
+    background: oklch(12% 0.015 45deg);
+    color: oklch(55% 0.02 55deg);
   }
 
   :host([dark]) thead th {
-    background: oklch(10% 0.015 45);
-    color: oklch(28% 0.02 50);
-    border-bottom-color: oklch(18% 0.02 45);
+    background: oklch(10% 0.015 45deg);
+    color: oklch(28% 0.02 50deg);
+    border-bottom-color: oklch(18% 0.02 45deg);
   }
 
   :host([dark]) thead th.is-sortable:hover {
-    background: oklch(16% 0.02 45);
-    color: oklch(65% 0.02 55);
+    background: oklch(16% 0.02 45deg);
+    color: oklch(65% 0.02 55deg);
   }
 
   :host([dark]) thead th.sort-asc,
   :host([dark]) thead th.sort-desc {
-    background: oklch(16% 0.02 45);
-    color: oklch(70% 0.02 55);
+    background: oklch(16% 0.02 45deg);
+    color: oklch(70% 0.02 55deg);
   }
 
   :host([dark]) tbody tr {
-    border-bottom-color: oklch(16% 0.02 45);
+    border-bottom-color: oklch(16% 0.02 45deg);
   }
 
   :host([dark]) tbody td {
-    color: oklch(55% 0.02 55);
+    color: oklch(55% 0.02 55deg);
   }
 
   :host([dark]) tbody td.cell-num {
-    color: oklch(72% 0.02 55);
+    color: oklch(72% 0.02 55deg);
   }
 
   :host([dark]) tbody tr:hover {
-    background: oklch(16% 0.02 45);
+    background: oklch(16% 0.02 45deg);
   }
 
   :host([dark]) .tbl-wrap {
-    border-color: oklch(16% 0.02 45);
+    border-color: oklch(16% 0.02 45deg);
   }
 
   :host([dark]) tfoot td {
-    background: oklch(10% 0.015 45);
-    border-top-color: oklch(18% 0.02 45);
-    color: oklch(30% 0.02 50);
+    background: oklch(10% 0.015 45deg);
+    border-top-color: oklch(18% 0.02 45deg);
+    color: oklch(30% 0.02 50deg);
   }
 
   :host([dark]) caption {
-    background: oklch(10% 0.015 45);
-    color: oklch(28% 0.02 50);
-    border-color: oklch(16% 0.02 45);
+    background: oklch(10% 0.015 45deg);
+    color: oklch(28% 0.02 50deg);
+    border-color: oklch(16% 0.02 45deg);
   }
 
   :host([dark]) .tbl-toolbar {
-    background: oklch(10% 0.015 45);
-    border-color: oklch(16% 0.02 45);
+    background: oklch(10% 0.015 45deg);
+    border-color: oklch(16% 0.02 45deg);
   }
 
   :host([dark]) .tbl-toolbar-title {
-    color: oklch(40% 0.02 50);
+    color: oklch(40% 0.02 50deg);
   }
 
   :host([dark]) .tbl-toolbar-count {
-    color: oklch(25% 0.02 50);
+    color: oklch(25% 0.02 50deg);
   }
 
   :host([dark]) .tbl-toolbar-search {
-    background: oklch(10% 0.015 45);
-    border-color: oklch(22% 0.02 45);
-    color: oklch(65% 0.02 55);
+    background: oklch(10% 0.015 45deg);
+    border-color: oklch(22% 0.02 45deg);
+    color: oklch(65% 0.02 55deg);
   }
 
   :host([dark]) .tbl-toolbar-search::placeholder {
-    color: oklch(28% 0.02 50);
+    color: oklch(28% 0.02 50deg);
   }
 
   :host([dark]) .tbl-pagination {
-    background: oklch(10% 0.015 45);
-    border-color: oklch(16% 0.02 45);
+    background: oklch(10% 0.015 45deg);
+    border-color: oklch(16% 0.02 45deg);
   }
 
   :host([dark]) .pag-btn:hover {
-    background: oklch(16% 0.02 45);
-    border-color: oklch(22% 0.02 45);
-    color: oklch(65% 0.02 55);
+    background: oklch(16% 0.02 45deg);
+    border-color: oklch(22% 0.02 45deg);
+    color: oklch(65% 0.02 55deg);
   }
 
   :host([dark]) .avatar-circle {
-    background: oklch(20% 0.02 45);
-    color: oklch(45% 0.02 50);
+    background: oklch(20% 0.02 45deg);
+    color: oklch(45% 0.02 50deg);
   }
 
   :host([dark]) .avatar-name {
-    color: oklch(60% 0.02 55);
+    color: oklch(60% 0.02 55deg);
   }
 
   :host([dark]) .avatar-hint {
-    color: oklch(30% 0.02 50);
+    color: oklch(30% 0.02 50deg);
   }
 
   :host([dark]) .progress-bar {
-    background: oklch(20% 0.02 45);
+    background: oklch(20% 0.02 45deg);
   }
 
   :host([dark]) .col-sticky {
-    background: oklch(12% 0.015 45);
+    background: oklch(12% 0.015 45deg);
   }
 
   :host([dark]) thead .col-sticky {
-    background: oklch(10% 0.015 45);
+    background: oklch(10% 0.015 45deg);
   }
 
   :host([dark]) .cell-mono {
-    color: oklch(30% 0.02 50);
+    color: oklch(30% 0.02 50deg);
   }
 
   :host([dark]) .actions-btn:hover {
-    background: oklch(20% 0.02 45);
-    color: oklch(65% 0.02 55);
+    background: oklch(20% 0.02 45deg);
+    color: oklch(65% 0.02 55deg);
   }
 
   :host([dark]) tbody tr.is-selected,
   :host([dark]) tbody tr.is-selected:hover {
-    background: oklch(18% 0.02 45);
+    background: oklch(18% 0.02 45deg);
   }
 
   :host([dark]) .skel-line,
   :host([dark]) .skel-avatar,
   :host([dark]) .skel-badge {
     background: linear-gradient(90deg,
-        oklch(18% 0.015 45) 25%,
-        oklch(22% 0.015 45) 50%,
-        oklch(18% 0.015 45) 75%);
+        oklch(18% 0.015 45deg) 25%,
+        oklch(22% 0.015 45deg) 50%,
+        oklch(18% 0.015 45deg) 75%);
     background-size: 600px 100%;
   }
 

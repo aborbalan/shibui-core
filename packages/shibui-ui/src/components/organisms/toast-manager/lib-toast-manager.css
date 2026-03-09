@@ -7,7 +7,6 @@
    ============================================================ */
 
 @layer reset {
-
   *,
   *::before,
   *::after {
@@ -16,7 +15,6 @@
 }
 
 @layer components {
-
   :host {
     position: fixed;
     top: var(--lib-space-lg);
