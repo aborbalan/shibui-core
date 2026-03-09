@@ -5,13 +5,12 @@ import type {
   TreeNodeState,
   TreeSelectTemplateProps,
   RenderNodeCtx,
-} from './lib-tree-node.types'
+} from './lib-tree-node.types';
 
 /* ──────────────────────────────────────────────────────────────
    HELPERS
 ────────────────────────────────────────────────────────────── */
 
-/** ¿El nodo o algún descendiente coincide con el término? */
 function nodeMatchesSearch(node: TreeNode, term: string): boolean {
   if (!term) return true;
   const t = term.toLowerCase();
@@ -19,7 +18,6 @@ function nodeMatchesSearch(node: TreeNode, term: string): boolean {
   return node.children?.some(c => nodeMatchesSearch(c, term)) ?? false;
 }
 
-/** Resalta el término de búsqueda en el label con <mark> */
 function highlightLabel(label: string, term: string): TemplateResult {
   if (!term) return html`${label}`;
   const idx = label.toLowerCase().indexOf(term.toLowerCase());
@@ -31,13 +29,6 @@ function highlightLabel(label: string, term: string): TemplateResult {
    RENDERIZADO RECURSIVO DE NODO
 ────────────────────────────────────────────────────────────── */
 
-/**
- * @param node            — Nodo a renderizar
- * @param ctx             — Contexto compartido (estados, callbacks)
- * @param depth           — Profundidad actual (0 = raíz)
- * @param ancestorIsLast  — Para cada nivel ancestro, si era el último hijo
- * @param isLast          — Si este nodo es el último entre sus hermanos
- */
 function renderNode(
   node: TreeNode,
   ctx: RenderNodeCtx,
@@ -52,27 +43,26 @@ function renderNode(
     ?? { selected: false, indeterminate: false, expanded: false };
 
   const hasKids    = (node.children?.length ?? 0) > 0;
-  // Auto-expandir cuando hay búsqueda activa
   const isExpanded = ctx.searchValue ? hasKids : st.expanded;
 
   /* ── Líneas de indentación (estética bambú) ── */
   const indent: TemplateResult | typeof nothing = depth > 0
     ? html`<div class="ts-indent">${
         Array.from({ length: depth }, (_, i) => {
-          const isLastUnit    = i === depth - 1;
+          const isLastUnit      = i === depth - 1;
           const ancestorWasLast = ancestorIsLast[i] ?? false;
           const cls = [
             'ts-indent-unit',
-            ancestorWasLast   ? 'ts-indent-no-line'      : '',
-            isLastUnit        ? 'ts-indent-last'          : '',
-            isLastUnit && isLast ? 'ts-indent-last-child' : '',
+            ancestorWasLast              ? 'ts-indent-no-line'   : '',
+            isLastUnit                   ? 'ts-indent-last'       : '',
+            isLastUnit && isLast         ? 'ts-indent-last-child' : '',
           ].filter(Boolean).join(' ');
           return html`<div class="${cls}"></div>`;
         })
       }</div>`
     : nothing;
 
-  /* ── Botón expand/collapse ── */
+  /* ── Toggle expand/collapse ── */
   const toggle: TemplateResult = hasKids
     ? html`
       <div
@@ -116,13 +106,7 @@ function renderNode(
       <div class="ts-children">
         <div class="ts-children-inner">
           ${map(node.children!, (child, ci) =>
-            renderNode(
-              child,
-              ctx,
-              depth + 1,
-              childAncestors,
-              ci === node.children!.length - 1,
-            )
+            renderNode(child, ctx, depth + 1, childAncestors, ci === node.children!.length - 1)
           )}
         </div>
       </div>`
@@ -168,7 +152,7 @@ function renderTree(props: TreeSelectTemplateProps): TemplateResult {
 }
 
 /* ──────────────────────────────────────────────────────────────
-   BARRA DE BÚSQUEDA (reutilizada en dropdown e inline)
+   BÚSQUEDA
 ────────────────────────────────────────────────────────────── */
 function renderSearch(props: TreeSelectTemplateProps): TemplateResult | typeof nothing {
   if (!props.searchable) return nothing;
@@ -229,7 +213,7 @@ function renderTags(props: TreeSelectTemplateProps): TemplateResult | typeof not
 ────────────────────────────────────────────────────────────── */
 export function treeSelectTemplate(props: TreeSelectTemplateProps): TemplateResult {
 
-  /* ── Modo INLINE ─────────────────────────────────────────── */
+  /* ── Modo INLINE ── */
   if (props.inline) {
     return html`
       <div class="ts-inline">
@@ -240,11 +224,10 @@ export function treeSelectTemplate(props: TreeSelectTemplateProps): TemplateResu
     `;
   }
 
-  /* ── Modo DROPDOWN ───────────────────────────────────────── */
+  /* ── Modo DROPDOWN ── */
   return html`
     <div class="ts-wrap">
 
-      <!-- Trigger -->
       <div
         class="ts-trigger"
         @click="${props.onTriggerClick}"
@@ -264,7 +247,6 @@ export function treeSelectTemplate(props: TreeSelectTemplateProps): TemplateResu
         </svg>
       </div>
 
-      <!-- Dropdown panel -->
       <div class="ts-dropdown" role="listbox">
         ${renderSearch(props)}
         <div class="ts-tree">${renderTree(props)}</div>

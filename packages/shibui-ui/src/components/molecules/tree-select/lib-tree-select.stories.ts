@@ -1,8 +1,13 @@
 import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import './lib-tree-select.component.html';
-import { TreeNode } from './lib-tree-node.types';
-import { LibTreeSelect } from './lib-tree-node.component';
+
+// ✅ Side-effect import — ejecuta @customElement('lib-tree-select')
+//    DEBE ser un import de valor (sin 'type'), no puede elide
+import './lib-tree-node.component';
+
+// ✅ import type — solo para los cast de TypeScript
+import type { LibTreeSelect } from './lib-tree-node.component';
+import type { TreeNode } from './lib-tree-node.types';
 
 /* ── Datos de prueba ── */
 const DESIGN_TOKENS: TreeNode[] = [
@@ -19,8 +24,8 @@ const DESIGN_TOKENS: TreeNode[] = [
         { id: 'mono',    label: 'Mono' },
       ]},
       { id: 'spacing', label: 'Espaciado', children: [
-        { id: 'scale',      label: 'Escala 4pt' },
-        { id: 'breakpoints',label: 'Breakpoints' },
+        { id: 'scale',       label: 'Escala 4pt' },
+        { id: 'breakpoints', label: 'Breakpoints' },
       ]},
       { id: 'motion', label: 'Motion', children: [
         { id: 'duration', label: 'Duración' },
@@ -38,11 +43,11 @@ const DESIGN_TOKENS: TreeNode[] = [
         { id: 'spinner', label: 'Spinner' },
       ]},
       { id: 'molecules', label: 'Moléculas', children: [
-        { id: 'input',    label: 'Input' },
-        { id: 'select',   label: 'Select' },
-        { id: 'modal',    label: 'Modal' },
-        { id: 'tabs',     label: 'Tabs' },
-        { id: 'tree',     label: 'Tree Select' },
+        { id: 'input',  label: 'Input' },
+        { id: 'select', label: 'Select' },
+        { id: 'modal',  label: 'Modal' },
+        { id: 'tabs',   label: 'Tabs' },
+        { id: 'tree',   label: 'Tree Select' },
       ]},
     ],
   },
@@ -57,9 +62,9 @@ const DESIGN_TOKENS: TreeNode[] = [
 
 const FILE_TREE: TreeNode[] = [
   { id: 'foundations', label: 'Foundations', children: [
-    { id: 'f-tokens',  label: '00 · Tokens' },
-    { id: 'f-colors',  label: '01 · Colors' },
-    { id: 'f-type',    label: '02 · Typography' },
+    { id: 'f-tokens', label: '00 · Tokens' },
+    { id: 'f-colors', label: '01 · Colors' },
+    { id: 'f-type',   label: '02 · Typography' },
   ]},
   { id: 'atoms', label: 'Atoms', children: [
     { id: 'a-btn',    label: '10 · Button' },
@@ -109,11 +114,9 @@ const meta: Meta = {
 Selector jerárquico con propagación bidireccional de selección.
 
 **Modos:**
-- \`multi\` — checkboxes + selección en cascada. Al seleccionar un padre, todos sus descendientes se marcan. Al desmarcar un hijo, el padre pasa a estado indeterminado (raya).
-- \`single\` — selección única. Al elegir un nodo el dropdown se cierra.
+- \`multi\` — checkboxes + selección en cascada. Seleccionar un padre marca todos sus descendientes. Desmarcar un hijo pone al padre en indeterminado (raya).
+- \`single\` — selección única. Los nodos padre solo expanden/colapsan; solo las hojas son seleccionables.
 - \`inline\` — el árbol vive directamente en el layout, sin trigger.
-
-**Búsqueda:** filtra el árbol manteniendo visibles los ancestros del resultado. Los términos coincidentes se resaltan con \`<mark>\`.
 
 **Eventos:**
 - \`ui-lib-tree-change\` — cada cambio de selección → \`{ selected: TreeNode[], ids: string[] }\`
@@ -123,11 +126,11 @@ Selector jerárquico con propagación bidireccional de selección.
     },
   },
   argTypes: {
-    multi:      { control: 'boolean', description: 'Selección múltiple con checkboxes' },
-    inline:     { control: 'boolean', description: 'Árbol siempre visible, sin dropdown' },
-    searchable: { control: 'boolean', description: 'Mostrar barra de búsqueda' },
-    disabled:   { control: 'boolean', description: 'Estado deshabilitado' },
-    placeholder:{ control: 'text',    description: 'Texto cuando no hay selección' },
+    multi:       { control: 'boolean', description: 'Selección múltiple con checkboxes' },
+    inline:      { control: 'boolean', description: 'Árbol siempre visible, sin dropdown' },
+    searchable:  { control: 'boolean', description: 'Mostrar barra de búsqueda' },
+    disabled:    { control: 'boolean', description: 'Estado deshabilitado' },
+    placeholder: { control: 'text',    description: 'Texto cuando no hay selección' },
   },
 };
 
@@ -140,10 +143,10 @@ type Story = StoryObj;
 export const Playground: Story = {
   name: 'Playground',
   args: {
-    multi:      true,
-    inline:     false,
-    searchable: true,
-    disabled:   false,
+    multi:       true,
+    inline:      false,
+    searchable:  true,
+    disabled:    false,
     placeholder: 'Seleccionar categorías…',
   },
   render: (args): TemplateResult => html`
@@ -177,6 +180,7 @@ export const MultiSelect: Story = {
           multi
           placeholder="Seleccionar categorías…"
           style="width: 300px;"
+          @ui-lib-tree-change="${(e: CustomEvent): void => console.log('[change]', e.detail)}"
         ></lib-tree-select>
       </div>
     </div>
@@ -184,14 +188,14 @@ export const MultiSelect: Story = {
 };
 
 /* ─────────────────────────────────────────────────────────────
-   SINGLE — ficheros del SG
+   SINGLE
 ───────────────────────────────────────────────────────────── */
 export const SingleSelect: Story = {
   name: 'Single — ficheros SG',
   render: (): TemplateResult => html`
     <div style="padding: 40px; background: var(--bg-surface); min-height: 420px; display: flex; gap: 40px; align-items: flex-start;">
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase;">Single · selección única</span>
+        <span style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase;">Single · solo hojas seleccionables</span>
         <lib-tree-select
           .nodes="${FILE_TREE}"
           placeholder="Seleccionar fichero…"
@@ -204,7 +208,7 @@ export const SingleSelect: Story = {
 };
 
 /* ─────────────────────────────────────────────────────────────
-   INLINE — panel de filtros
+   INLINE
 ───────────────────────────────────────────────────────────── */
 export const Inline: Story = {
   name: 'Inline — panel de filtros',
@@ -299,42 +303,52 @@ export const Disabled: Story = {
 
 /* ─────────────────────────────────────────────────────────────
    API PÚBLICA — control programático
+   Nota: el querySelector busca dentro del iframe del canvas de Storybook.
+   El elemento #ts-demo debe estar en el mismo document.
 ───────────────────────────────────────────────────────────── */
 export const ProgrammaticControl: Story = {
   name: 'API pública — control programático',
-  render: (): TemplateResult => html`
-    <div style="padding: 40px; background: var(--bg-surface); min-height: 420px;">
-      <div style="display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;">
-        <button
-          style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 16px; background: var(--color-washi-900); color: var(--color-washi-50); border: none; cursor: pointer;"
-          @click="${(): void => (document.querySelector('#ts-demo') as LibTreeSelect | null)?.openPanel()}"
-        >openPanel()</button>
-        <button
-          style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 16px; background: transparent; color: var(--text-secondary); border: 1px solid var(--border-default); cursor: pointer;"
-          @click="${(): void => (document.querySelector('#ts-demo') as LibTreeSelect | null)?.closePanel()}"
-        >closePanel()</button>
-        <button
-          style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 16px; background: transparent; color: var(--color-error); border: 1px solid var(--color-error); cursor: pointer;"
-          @click="${(): void => (document.querySelector('#ts-demo') as LibTreeSelect | null)?.clear()}"
-        >clear()</button>
-        <button
-          style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 16px; background: var(--color-celadon-500); color: white; border: none; cursor: pointer;"
-          @click="${(): void => {
-            const sel = (document.querySelector('#ts-demo') as LibTreeSelect | null)?.getSelected();
-            console.log('[getSelected()]', sel);
-          }}"
-        >getSelected()</button>
-      </div>
+  render: (): TemplateResult => {
+    // Helper que localiza el componente en el documento del canvas
+    const getDemo = (): LibTreeSelect | null =>
+      document.querySelector<LibTreeSelect>('#ts-demo');
 
-      <lib-tree-select
-        id="ts-demo"
-        .nodes="${DESIGN_TOKENS}"
-        multi
-        placeholder="Seleccionar categorías…"
-        style="width: 300px;"
-        @ui-lib-tree-change="${(e: CustomEvent): void => console.log('[change]', e.detail)}"
-        @ui-lib-tree-confirm="${(e: CustomEvent): void => console.log('[confirm]', e.detail)}"
-      ></lib-tree-select>
-    </div>
-  `,
+    return html`
+      <div style="padding: 40px; background: var(--bg-surface); min-height: 420px;">
+        <div style="display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;">
+
+          <button
+            style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 16px; background: var(--color-washi-900); color: var(--color-washi-50); border: none; cursor: pointer;"
+            @click="${(): void => { getDemo()?.openPanel(); }}"
+          >openPanel()</button>
+
+          <button
+            style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 16px; background: transparent; color: var(--text-secondary); border: 1px solid var(--border-default); cursor: pointer;"
+            @click="${(): void => { getDemo()?.closePanel(); }}"
+          >closePanel()</button>
+
+          <button
+            style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 16px; background: transparent; color: var(--color-error); border: 1px solid var(--color-error); cursor: pointer;"
+            @click="${(): void => { getDemo()?.clear(); }}"
+          >clear()</button>
+
+          <button
+            style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 16px; background: var(--color-celadon-500); color: white; border: none; cursor: pointer;"
+            @click="${(): void => { console.log('[getSelected()]', getDemo()?.getSelected()); }}"
+          >getSelected() → console</button>
+
+        </div>
+
+        <lib-tree-select
+          id="ts-demo"
+          .nodes="${DESIGN_TOKENS}"
+          multi
+          placeholder="Seleccionar categorías…"
+          style="width: 300px;"
+          @ui-lib-tree-change="${(e: CustomEvent): void => console.log('[change]', e.detail)}"
+          @ui-lib-tree-confirm="${(e: CustomEvent): void => console.log('[confirm]', e.detail)}"
+        ></lib-tree-select>
+      </div>
+    `;
+  },
 };

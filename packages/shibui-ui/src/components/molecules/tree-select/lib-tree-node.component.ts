@@ -24,7 +24,6 @@ import { treeSelectTemplate } from './lib-tree-select.component.html';
  * @prop {boolean}   disabled       — Deshabilitado (reflected)
  * @prop {string}    placeholder    — Texto cuando no hay selección
  * @prop {string}    empty-text     — Texto sin resultados de búsqueda
- * @prop {string}    label          — Etiqueta opcional encima del trigger
  *
  * @fires ui-lib-tree-change   — Cada vez que cambia la selección
  *                               Detail: { selected: TreeNode[], ids: string[] }
@@ -38,34 +37,24 @@ export class LibTreeSelect extends LitElement {
     css`${unsafeCSS(treeSelectCss)}`,
   ];
 
-  /* ──────────────────────────────────────────────────────────
-     PROPIEDADES PÚBLICAS
-  ─────────────────────────────────────────────────────────── */
-
-  @property({ type: Array })  nodes:       TreeNode[] = [];
-  @property({ type: Boolean, reflect: true }) multi     = false;
-  @property({ type: Boolean, reflect: true }) inline    = false;
+  /* ── Propiedades públicas ── */
+  @property({ type: Array })  nodes: TreeNode[] = [];
+  @property({ type: Boolean, reflect: true }) multi      = false;
+  @property({ type: Boolean, reflect: true }) inline     = false;
   @property({ type: Boolean, reflect: true }) searchable = true;
-  @property({ type: Boolean, reflect: true }) open      = false;
-  @property({ type: Boolean, reflect: true }) disabled  = false;
+  @property({ type: Boolean, reflect: true }) open       = false;
+  @property({ type: Boolean, reflect: true }) disabled   = false;
   @property({ type: String }) placeholder = 'Seleccionar…';
   @property({ type: String, attribute: 'empty-text' }) emptyText = 'Sin resultados';
-  @property({ type: String }) label = '';
 
-  /* ──────────────────────────────────────────────────────────
-     ESTADO INTERNO
-  ─────────────────────────────────────────────────────────── */
-
+  /* ── Estado interno ── */
   @state() private _nodeStates: Map<string, TreeNodeState> = new Map();
   @state() private _search = '';
 
-  /* Mapea nodeId → parentId | null */
   private _parentMap: Map<string, string | null> = new Map();
   private _boundDocumentClick!: (e: Event) => void;
 
-  /* ──────────────────────────────────────────────────────────
-     CICLO DE VIDA
-  ─────────────────────────────────────────────────────────── */
+  /* ── Ciclo de vida ── */
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -84,9 +73,7 @@ export class LibTreeSelect extends LitElement {
     }
   }
 
-  /* ──────────────────────────────────────────────────────────
-     INICIALIZACIÓN DEL ESTADO
-  ─────────────────────────────────────────────────────────── */
+  /* ── Inicialización ── */
 
   private _initState(): void {
     this._nodeStates = new Map();
@@ -96,21 +83,13 @@ export class LibTreeSelect extends LitElement {
 
   private _walkNodes(nodes: TreeNode[], parentId: string | null): void {
     nodes.forEach(node => {
-      this._nodeStates.set(node.id, {
-        selected:      false,
-        indeterminate: false,
-        expanded:      false,
-      });
+      this._nodeStates.set(node.id, { selected: false, indeterminate: false, expanded: false });
       this._parentMap.set(node.id, parentId);
-      if (node.children?.length) {
-        this._walkNodes(node.children, node.id);
-      }
+      if (node.children?.length) this._walkNodes(node.children, node.id);
     });
   }
 
-  /* ──────────────────────────────────────────────────────────
-     TRAVERSAL
-  ─────────────────────────────────────────────────────────── */
+  /* ── Traversal ── */
 
   private _getAllNodes(nodes: TreeNode[], acc: TreeNode[] = []): TreeNode[] {
     nodes.forEach(n => {
@@ -134,18 +113,14 @@ export class LibTreeSelect extends LitElement {
     );
   }
 
-  /* ──────────────────────────────────────────────────────────
-     LÓGICA DE SELECCIÓN
-  ─────────────────────────────────────────────────────────── */
+  /* ── Selección ── */
 
-  /** Propaga selección hacia abajo en el subárbol */
   private _selectDown(node: TreeNode, selected: boolean): void {
     const st = this._nodeStates.get(node.id);
     if (st) { st.selected = selected; st.indeterminate = false; }
     node.children?.forEach(c => this._selectDown(c, selected));
   }
 
-  /** Recalcula indeterminate/selected en todos los padres (bottom-up) */
   private _recalcAll(nodes: TreeNode[]): void {
     nodes.forEach(n => {
       if (!n.children?.length) return;
@@ -165,9 +140,15 @@ export class LibTreeSelect extends LitElement {
 
   private _handleSelect(node: TreeNode): void {
     if (this.disabled) return;
+    const hasKids = (node.children?.length ?? 0) > 0;
 
     if (!this.multi) {
-      /* Single — limpia todo, selecciona este, cierra */
+      // Single — los nodos padre solo expanden/colapsan, NUNCA seleccionan
+      if (hasKids) {
+        this._handleToggle(node.id);
+        return;
+      }
+      // Hoja → limpiar todo, seleccionar, cerrar dropdown
       this._getAllNodes(this.nodes).forEach(n => {
         const st = this._nodeStates.get(n.id);
         if (st) { st.selected = false; st.indeterminate = false; }
@@ -180,7 +161,7 @@ export class LibTreeSelect extends LitElement {
       return;
     }
 
-    /* Multi — toggle + propagación bidireccional */
+    // Multi — toggle + propagación bidireccional (padres e hijos seleccionables)
     const newSelected = !this._nodeStates.get(node.id)?.selected;
     this._selectDown(node, newSelected);
     this._recalcAll(this.nodes);
@@ -203,7 +184,7 @@ export class LibTreeSelect extends LitElement {
 
   private _handleConfirm(): void {
     this.open = false;
-    const sel = this._getSelectedLeaves();
+    const sel    = this._getSelectedLeaves();
     const detail: TreeSelectConfirmDetail = { selected: sel, ids: sel.map(n => n.id) };
     this.dispatchEvent(new CustomEvent<TreeSelectConfirmDetail>('ui-lib-tree-confirm', {
       detail, bubbles: true, composed: true,
@@ -228,15 +209,12 @@ export class LibTreeSelect extends LitElement {
     }));
   }
 
-  /* ──────────────────────────────────────────────────────────
-     DROPDOWN
-  ─────────────────────────────────────────────────────────── */
+  /* ── Dropdown ── */
 
   private _toggleOpen(): void {
     if (this.disabled) return;
     this.open = !this.open;
     if (this.open) {
-      /* Foco en el input de búsqueda tras la apertura */
       setTimeout((): void => {
         (this.renderRoot.querySelector('.ts-search') as HTMLInputElement | null)?.focus();
       }, 60);
@@ -245,14 +223,10 @@ export class LibTreeSelect extends LitElement {
 
   private _onDocumentClick(e: Event): void {
     if (this.inline || !this.open) return;
-    if (!e.composedPath().includes(this)) {
-      this.open = false;
-    }
+    if (!e.composedPath().includes(this)) this.open = false;
   }
 
-  /* ──────────────────────────────────────────────────────────
-     VALORES DERIVADOS PARA EL TEMPLATE
-  ─────────────────────────────────────────────────────────── */
+  /* ── Valores derivados ── */
 
   private _getTriggerLabel(): string {
     if (!this.multi) {
@@ -261,10 +235,9 @@ export class LibTreeSelect extends LitElement {
       );
       return sel?.label ?? '';
     }
-    const sel   = this._getSelectedLeaves();
-    const count = sel.length;
+    const count = this._getSelectionCount();
     if (count === 0) return '';
-    if (count === 1) return sel[0]?.label ?? '';
+    if (count === 1) return this._getSelectedLeaves()[0]?.label ?? '';
     return `${count} seleccionados`;
   }
 
@@ -279,31 +252,17 @@ export class LibTreeSelect extends LitElement {
   }
 
   private _getTags(): Array<{ id: string; label: string }> {
-    const sel = this._getSelectedLeaves().slice(0, 8);
-    return sel.map(n => ({ id: n.id, label: n.label }));
+    return this._getSelectedLeaves().slice(0, 8).map(n => ({ id: n.id, label: n.label }));
   }
 
-  /* ──────────────────────────────────────────────────────────
-     API PÚBLICA
-  ─────────────────────────────────────────────────────────── */
+  /* ── API pública ── */
 
-  /** Abre el dropdown (solo en modo dropdown) */
-  public openPanel(): void {
-    if (!this.inline && !this.disabled) this.open = true;
-  }
-
-  /** Cierra el dropdown */
+  public openPanel():  void { if (!this.inline && !this.disabled) this.open = true; }
   public closePanel(): void { this.open = false; }
-
-  /** Limpia toda la selección */
-  public clear(): void { this._handleClear(); }
-
-  /** Devuelve los nodos hoja actualmente seleccionados */
+  public clear():      void { this._handleClear(); }
   public getSelected(): TreeNode[] { return this._getSelectedLeaves(); }
 
-  /* ──────────────────────────────────────────────────────────
-     RENDER
-  ─────────────────────────────────────────────────────────── */
+  /* ── Render ── */
 
   protected override render(): TemplateResult {
     const triggerLabel = this._getTriggerLabel();

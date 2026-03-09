@@ -164,7 +164,6 @@
   :host([glass]) .alert {
     background: var(--lib-glass-bg);
     backdrop-filter: var(--lib-glass-filter);
-    backdrop-filter: var(--lib-glass-filter);
     border: var(--lib-glass-border);
     border-left-width: 2px;
     box-shadow: var(--lib-glass-shadow);

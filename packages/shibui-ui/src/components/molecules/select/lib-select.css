@@ -115,7 +115,6 @@
       box-shadow var(--duration-base) var(--ease-default);
     user-select: none;
     appearance: none;
-    appearance: none;
   }
 
   .sel-trigger:hover:not([disabled]) {
