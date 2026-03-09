@@ -6,14 +6,10 @@ import { LibSidebar } from '@shibui/ui/react';
 interface SidebarProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
+  onOpenCV: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
-  const menuItems = [
-    { id: 'perfil', label: '👤 Perfil' },
-    { id: 'experiencia', label: '💼 Experiencia' },
-    { id: 'proyectos', label: '🚀 Proyectos' }
-  ];
+const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange,onOpenCV }) => {
 
   const DEFAULT_LINKS: SidebarLink[] = [
     { id: 'inicio',      label: 'Inicio',      icon: 'house',        number: '01' },
@@ -25,8 +21,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   ];
 
   const DEFAULT_SOCIALS: SidebarSocial[] = [
-    { href: '#', icon: 'github-logo',   label: 'GitHub' },
-    { href: '#', icon: 'linkedin-logo', label: 'LinkedIn' },
+    { href: '#', icon: 'github',   label: 'GitHub' },
+    { href: '#', icon: 'linkedin', label: 'LinkedIn' },
     { href: '#', icon: 'dribbble-logo', label: 'Dribbble' },
     { href: '#', icon: 'x-logo',        label: 'X / Twitter' },
   ];
@@ -41,7 +37,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                    cv-label="Descargar CV"
                    links={DEFAULT_LINKS}
                     socials={DEFAULT_SOCIALS}
-                    onUiLibNavigate={(event:CustomEvent) => onTabChange(event.detail.id)}                    
+                    onUiLibNavigate={(event:CustomEvent) => onTabChange(event.detail.id)}    
+                    onUiLibCvClick={onOpenCV}          
                     >
 
       </LibSidebar>
