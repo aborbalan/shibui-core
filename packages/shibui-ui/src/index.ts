@@ -83,6 +83,7 @@ export * from './components/organisms/bento-grid/lib-bento-grid.component'
 export * from './components/organisms/cursor-follower/lib-cursor-follower.component';
 export * from './components/organisms/stagger/lib-stagger-container.component';
 
+export * from './components/molecules/lib-alert/lib-alert.types';
 
 
 export type { SidebarLink, SidebarSocial, ActiveElement } from './types/index';

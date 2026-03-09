@@ -1,32 +1,42 @@
-import { html, TemplateResult } from 'lit';
-import type { LibAlert } from './lib-alert.component'; // <--- IMPORTANTE: 'import type'
-import '../../atoms/icon/lib-icon.component'; 
+import { html, nothing, TemplateResult } from 'lit';
+import type { AlertTemplateProps, AlertType } from './lib-alert.types';
 
-export const template = (context: LibAlert): TemplateResult => {
-  const iconMap: Record<string, string> = {
-    info: 'info',
-    success: 'check-circle',
-    warning: 'warning-circle',
-    error: 'x-circle'
-  };
+/** Auto-generated heading per type if none is provided. */
+const DEFAULT_HEADING: Record<AlertType, string> = {
+  default: 'Default',
+  info:    'Info',
+  warning: 'Warning',
+  error:   'Error',
+  success: 'Success',
+};
+
+/**
+ * Template para lib-alert.
+ * Estructura: borde izquierdo · [heading DM Mono] · slot (cuerpo) · [botón cerrar]
+ */
+export function alertTemplate(props: AlertTemplateProps): TemplateResult {
+  const displayHeading = props.heading || DEFAULT_HEADING[props.type];
 
   return html`
-    <div class="alert-container" role="alert" aria-live="polite">
-      <div class="alert-icon-wrapper">
-        <lib-icon name="${iconMap[context.type] || 'info'}"></lib-icon>
-      </div>
-      
+    <div class="alert" role="alert" aria-live="polite">
+
       <div class="alert-content">
-        <slot></slot>
+        <p class="alert-title">${displayHeading}</p>
+        <div class="alert-body">
+          <slot></slot>
+        </div>
       </div>
 
-      ${context.closable 
+      ${props.closable
         ? html`
-            <button class="close-button" @click="${context.handleClose}" aria-label="Cerrar alerta">
-              <lib-icon name="x"></lib-icon>
-            </button>
-          ` 
-        : ''}
+            <button
+              class="alert-close"
+              type="button"
+              aria-label="Cerrar alerta"
+              @click="${props.handleClose}"
+            >×</button>`
+        : nothing}
+
     </div>
   `;
-};
+}
