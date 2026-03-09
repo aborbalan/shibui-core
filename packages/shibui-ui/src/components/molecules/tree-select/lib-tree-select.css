@@ -6,7 +6,13 @@
    ============================================================ */
 
 @layer reset {
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 @layer components {
@@ -47,14 +53,15 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--lib-space-sm);
-    padding: calc(var(--lib-spacing-unit) * 3) var(--lib-space-md); /* 12px 16px */
+    padding: calc(var(--lib-spacing-unit) * 3) var(--lib-space-md);
+    /* 12px 16px */
     background: var(--bg-elevated);
     border: 1px solid var(--border-default);
     cursor: pointer;
     user-select: none;
     transition:
       border-color var(--duration-base) var(--ease-default),
-      box-shadow   var(--duration-base) var(--ease-default);
+      box-shadow var(--duration-base) var(--ease-default);
     border-radius: var(--lib-radius-md);
   }
 
@@ -129,7 +136,7 @@
     transform-origin: top;
     pointer-events: none;
     transition:
-      opacity   var(--duration-base) var(--ease-out),
+      opacity var(--duration-base) var(--ease-out),
       transform var(--duration-base) var(--ease-out);
   }
 
@@ -281,7 +288,7 @@
     cursor: pointer;
     transition:
       border-color var(--duration-fast),
-      background   var(--duration-fast);
+      background var(--duration-fast);
   }
 
   .ts-toggle:hover {
@@ -297,7 +304,7 @@
     flex-shrink: 0;
   }
 
-  .ts-node.is-expanded > .ts-node-row .ts-toggle-icon {
+  .ts-node.is-expanded>.ts-node-row .ts-toggle-icon {
     transform: rotate(90deg);
   }
 
@@ -324,7 +331,7 @@
     justify-content: center;
     transition:
       border-color var(--duration-base),
-      background   var(--duration-base);
+      background var(--duration-base);
     position: relative;
     border-radius: var(--lib-radius-sm);
   }
@@ -422,7 +429,7 @@
     transition: grid-template-rows var(--duration-slow) var(--ease-out);
   }
 
-  .ts-node.is-expanded > .ts-children {
+  .ts-node.is-expanded>.ts-children {
     grid-template-rows: 1fr;
   }
 
@@ -559,7 +566,15 @@
     border-radius: var(--lib-radius-md);
   }
 
-  .ts-inline .ts-tree        { flex: 1; }
-  .ts-inline .ts-search-wrap { flex-shrink: 0; }
-  .ts-inline .ts-footer      { flex-shrink: 0; }
+  .ts-inline .ts-tree {
+    flex: 1;
+  }
+
+  .ts-inline .ts-search-wrap {
+    flex-shrink: 0;
+  }
+
+  .ts-inline .ts-footer {
+    flex-shrink: 0;
+  }
 }
