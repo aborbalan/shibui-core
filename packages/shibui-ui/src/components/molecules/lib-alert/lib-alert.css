@@ -1,76 +1,197 @@
-/* lib-alert.css */
-:host {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-ALERT — Shibui UI
+   Tipos   : default · info · warning · error · success
+   Extras  : closable · glass
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    width: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 }
 
-.alert-container {
-  display: flex;
-  align-items: flex-start;
-  padding: var(--lib-space-md);
-  gap: var(--lib-space-sm);
-  border-radius: var(--lib-radius-md, 8px);
-  border: 1px solid var(--alert-border-color);
-  background-color: var(--alert-bg-color);
-  color: var(--alert-text-color);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
+@layer components {
 
-/* Variantes usando OKLCH dinámico según el tipo */
-:host([type="info"]) {
-  --alert-bg-color: oklch(97% 0.01 230deg);
-  --alert-border-color: oklch(90% 0.02 230deg);
-  --alert-text-color: oklch(30% 0.05 230deg);
-}
+  /* ─────────────────────────────────────────────────────────
+     BASE
+  ───────────────────────────────────────────────────────── */
+  .alert {
+    padding: var(--lib-space-md) var(--lib-space-lg);
+    border-left: 2px solid;
+    display: flex;
+    gap: var(--lib-space-md);
+    align-items: flex-start;
+    width: 100%;
+    transition:
+      opacity var(--duration-base) var(--ease-default),
+      transform var(--duration-base) var(--ease-default);
+  }
 
-:host([type="success"]) {
-  --alert-bg-color: oklch(97% 0.04 145deg);
-  --alert-border-color: oklch(90% 0.08 145deg);
-  --alert-text-color: oklch(25% 0.1 145deg);
-}
+  .alert-content {
+    flex: 1;
+    min-width: 0;
+  }
 
-:host([type="warning"]) {
-  --alert-bg-color: oklch(97% 0.05 80deg);
-  --alert-border-color: oklch(90% 0.1 80deg);
-  --alert-text-color: oklch(25% 0.1 80deg);
-}
+  /* ── Title ── */
+  .alert-title {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    margin-bottom: var(--lib-space-xs);
+    line-height: var(--leading-snug);
+  }
 
-:host([type="error"]) {
-  --alert-bg-color: oklch(97% 0.06 25deg);
-  --alert-border-color: oklch(90% 0.12 25deg);
-  --alert-text-color: oklch(25% 0.12 25deg);
-}
+  /* ── Body (slot wrapper) ── */
+  .alert-body {
+    font-family: var(--lib-font-body);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+  }
 
-/* Soporte Glassmorphism */
-:host([glass]) .alert-container {
-  background: oklch(100% 0 0deg / 0.2);
-  backdrop-filter: blur(12px);
-}
+  /* ── Close button ── */
+  .alert-close {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.5;
+    color: inherit;
+    transition: opacity var(--duration-fast) var(--ease-default);
+    /* × via CSS — no icon dependency */
+    font-size: 16px;
+    line-height: 1;
+    font-family: var(--lib-font-mono);
+  }
 
-.alert-icon-wrapper {
-  display: flex;
-  color: var(--alert-text-color);
-  flex-shrink: 0;
-}
+  .alert-close:hover {
+    opacity: 1;
+  }
 
-.alert-content {
-  flex: 1;
-  font-family: var(--lib-font-body, 'Plus Jakarta Sans', sans-serif);
-  font-size: var(--text-sm);
-  line-height: 1.5;
-}
+  /* ─────────────────────────────────────────────────────────
+     TYPE VARIANTS
+  ───────────────────────────────────────────────────────── */
 
-.close-button {
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  color: inherit;
-  opacity: 0.6;
-  padding: 2px;
-  transition: opacity 0.2s;
-}
+  /* Default */
+  :host([type="default"]) .alert,
+  .alert {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+  }
 
-.close-button:hover {
-  opacity: 1;
+  :host([type="default"]) .alert-title {
+    color: var(--text-secondary);
+  }
+
+  :host([type="default"]) .alert-body {
+    color: var(--text-secondary);
+  }
+
+  /* Info */
+  :host([type="info"]) .alert {
+    background: var(--color-celadon-50);
+    border-color: var(--color-celadon-400);
+  }
+
+  :host([type="info"]) .alert-title {
+    color: var(--color-celadon-600);
+  }
+
+  :host([type="info"]) .alert-body {
+    color: var(--color-celadon-500);
+  }
+
+  /* Warning */
+  :host([type="warning"]) .alert {
+    background: #FFFBF0;
+    border-color: var(--color-warning);
+  }
+
+  :host([type="warning"]) .alert-title {
+    color: var(--color-warning);
+  }
+
+  :host([type="warning"]) .alert-body {
+    color: #6B5010;
+  }
+
+  /* Error */
+  :host([type="error"]) .alert {
+    background: #FFF8F7;
+    border-color: var(--color-error);
+  }
+
+  :host([type="error"]) .alert-title {
+    color: var(--color-error);
+  }
+
+  :host([type="error"]) .alert-body {
+    color: #6B2015;
+  }
+
+  /* Success */
+  :host([type="success"]) .alert {
+    background: #F5FAF6;
+    border-color: var(--color-success);
+  }
+
+  :host([type="success"]) .alert-title {
+    color: var(--color-success);
+  }
+
+  :host([type="success"]) .alert-body {
+    color: #1E4A2A;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     GLASS — Efecto Agua
+  ───────────────────────────────────────────────────────── */
+  :host([glass]) .alert {
+    background: var(--lib-glass-bg);
+    backdrop-filter: var(--lib-glass-filter);
+    backdrop-filter: var(--lib-glass-filter);
+    border: var(--lib-glass-border);
+    border-left-width: 2px;
+    box-shadow: var(--lib-glass-shadow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Reflexión de luz */
+  :host([glass]) .alert::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--lib-glass-shine);
+    pointer-events: none;
+  }
+
+  :host([glass]) .alert-title,
+  :host([glass]) .alert-body {
+    color: var(--lib-glass-text);
+    text-shadow: var(--lib-glass-text-shadow);
+    position: relative;
+    z-index: 1;
+  }
+
+  :host([glass]) .alert-close {
+    color: var(--lib-glass-text);
+    position: relative;
+    z-index: 1;
+  }
 }

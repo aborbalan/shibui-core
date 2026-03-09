@@ -38,7 +38,7 @@
   }
 
   /* Hover */
-  :host(:not([disabled]):not([selected]):hover) .option {
+  :host(:not([disabled], [selected]):hover) .option {
     background: var(--bg-surface);
   }
 

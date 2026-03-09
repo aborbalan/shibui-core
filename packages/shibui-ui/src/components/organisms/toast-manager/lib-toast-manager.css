@@ -1,27 +1,76 @@
-:host {
-    position: fixed;
-    top: var(--lib-space-lg, 24px);
-    right: var(--lib-space-lg, 24px);
-    z-index: 9999;
-    display: flex;
-    flex-direction: column; /* Apilados de arriba a abajo */
-    gap: var(--lib-space-sm, 8px);
-    width: 320px;
-    pointer-events: none; /* Crucial: permite clickear lo que hay debajo */
-  }
-  
-  lib-alert {
-    pointer-events: auto; /* Las alertas sí capturan el click */
-    /* Animación de entrada por defecto */
-    animation: toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  
-  @keyframes toast-in {
-    from { 
-        transform: translateX(32px);
-         opacity: 0; }
+@layer tokens, reset, components;
 
-    to { 
-        transform: translateX(0);
-         opacity: 1; }
+/* ============================================================
+   LIB-TOAST-MANAGER — Shibui UI
+   Contenedor fijo de notificaciones efímeras.
+   Usa lib-alert internamente para cada toast.
+   ============================================================ */
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
+}
+
+@layer components {
+  :host {
+    position: fixed;
+    top: var(--lib-space-lg);
+    /* 24px */
+    right: var(--lib-space-lg);
+    /* 24px */
+    z-index: var(--z-toast);
+    /* 300 — por encima de overlays, bajo modales */
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-sm);
+    /* 8px */
+    width: 340px;
+    pointer-events: none;
+    /* No bloquea clicks en la página */
+  }
+
+  /* Cada lib-alert dentro del manager recupera los clicks */
+  ::slotted(lib-alert),
+  lib-alert {
+    pointer-events: auto;
+    animation: tm-in var(--duration-slow) var(--ease-out) forwards;
+  }
+
+  /* ── Animación de entrada — desliza desde la derecha ── */
+  @keyframes tm-in {
+    from {
+      transform: translateX(calc(100% + var(--lib-space-lg)));
+      opacity: 0;
+    }
+
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  /* ── Animación de salida — se aplica vía clase JS ── */
+  lib-alert.is-leaving {
+    animation: tm-out var(--duration-base) var(--ease-default) forwards;
+    pointer-events: none;
+  }
+
+  @keyframes tm-out {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+      max-height: 200px;
+      margin-bottom: 0;
+    }
+
+    to {
+      transform: translateX(calc(100% + var(--lib-space-lg)));
+      opacity: 0;
+      max-height: 0;
+      margin-bottom: calc(-1 * var(--lib-space-sm));
+    }
+  }
+}
