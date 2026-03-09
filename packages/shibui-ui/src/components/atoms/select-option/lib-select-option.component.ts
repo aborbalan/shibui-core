@@ -1,39 +1,58 @@
-import { LitElement, TemplateResult, unsafeCSS } from 'lit';
+import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { template } from './lib-select-option.html';
-import cssStyles from './lib-select-option.css?inline';
+import { selectOptionTemplate } from './lib-select-option.html';
+import optionCss from './lib-select-option.css?inline';
+import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
-
+/**
+ * @element lib-select-option
+ *
+ * Opción individual para usar dentro de lib-select.
+ * Emite `option-selected` con { value, label } al hacer clic,
+ * que lib-select captura desde el light DOM.
+ *
+ * @fires option-selected — { value: string, label: string }
+ * @slot — Texto visible de la opción
+ */
 @customElement('lib-select-option')
 export class LibSelectOption extends LitElement {
-    static override styles = unsafeCSS(cssStyles);
+  static override styles = [
+    css`${unsafeCSS(sharedTokens)}`,
+    css`${unsafeCSS(optionCss)}`,
+  ];
 
-  /** El valor interno que representará esta opción en el Select padre */
+  /** Valor interno que se comunica al select padre. */
   @property({ type: String, reflect: true }) value = '';
 
-  /** Estado de selección */
+  /** Estado de selección — controlado por lib-select. */
   @property({ type: Boolean, reflect: true }) selected = false;
 
-  /** Estado deshabilitado */
+  /** Deshabilita la opción. */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
-// lib-select-option.component.ts
-protected override render(): TemplateResult {
-    return template.call(this);
+  override render(): TemplateResult {
+    return selectOptionTemplate({
+      value:       this.value,
+      selected:    this.selected,
+      disabled:    this.disabled,
+      handleClick: this._handleClick.bind(this),
+    });
   }
 
-  protected _handleOptionClick(): void {
+  private _handleClick(e: Event): void {
+    e.stopPropagation();
     if (this.disabled) return;
-    console.log('📢 Hijo: Clic detectado. Enviando valor:', this.value);
-    // Lanzamos un evento personalizado que burbujea hasta el padre
-    this.dispatchEvent(new CustomEvent('option-selected', {
-      detail: { 
-        value: this.value,
-        label: this.innerText // O el contenido del slot
-      },
-      bubbles: true,    // Importante: permite que el evento suba por el DOM
-      composed: true    // Importante: permite que el evento atraviese el Shadow DOM
-    }));
+
+    this.dispatchEvent(
+      new CustomEvent<{ value: string; label: string }>('option-selected', {
+        detail: {
+          value: this.value,
+          label: this.textContent?.trim() ?? '',
+        },
+        bubbles:  true,
+        composed: true,
+      })
+    );
   }
 }
 
@@ -42,4 +61,3 @@ declare global {
     'lib-select-option': LibSelectOption;
   }
 }
-
