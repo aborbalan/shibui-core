@@ -1,0 +1,524 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-BACKGROUND — Shibui UI
+   34 variantes: 10 light · 10 dark · 5 gradient · 5 animated · 4 canvas
+   ============================================================ */
+
+@layer reset {
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    :host {
+        display: block;
+        position: relative;
+        overflow: hidden;
+    }
+}
+
+@layer components {
+
+    /* ── Capas internas ── */
+
+    /* Capa base: recibe el background principal */
+    .bg-base {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+    }
+
+    /* Capa de overlay: grain, shimmers, animated orbs... */
+    .bg-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* Canvas: fondo generativo */
+    .bg-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+
+    /* Contenido sloteado — siempre encima */
+    .bg-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* a11y — reduce motion */
+    :host([paused]) .bg-base,
+    :host([paused]) .bg-overlay {
+        animation-play-state: paused !important;
+    }
+
+    /* ================================================================
+     LIGHT — Washi
+     ================================================================ */
+
+    /* 01 · washi — base del sistema */
+    :host([variant="washi"]) .bg-base {
+        background: var(--color-washi-50);
+    }
+
+    /* 02 · washi-grain — noise texture */
+    :host([variant="washi-grain"]) .bg-base {
+        background: var(--color-washi-50);
+    }
+
+    :host([variant="washi-grain"]) .bg-overlay {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.045'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        mix-blend-mode: multiply;
+    }
+
+    /* 03 · washi-weave — trama de papel */
+    :host([variant="washi-weave"]) .bg-base {
+        background-color: var(--color-washi-100);
+        background-image:
+            repeating-linear-gradient(0deg,
+                transparent,
+                transparent 3px,
+                rgb(180, 160, 140, 0.06) 3px,
+                rgb(180, 160, 140, 0.06) 4px),
+            repeating-linear-gradient(90deg,
+                transparent,
+                transparent 3px,
+                rgb(180, 160, 140, 0.06) 3px,
+                rgb(180, 160, 140, 0.06) 4px);
+    }
+
+    /* 04 · seigaiha — escamas de ola */
+    :host([variant="seigaiha"]) .bg-base {
+        background-color: var(--color-washi-50);
+        background-image: radial-gradient(ellipse 100% 90% at 50% 0%,
+                transparent 60%,
+                rgb(180, 155, 130, 0.18) 60%,
+                rgb(180, 155, 130, 0.18) 64%,
+                transparent 64%);
+        background-size: 36px 18px;
+        background-position: 0 0, 18px 9px;
+    }
+
+    /* 05 · tatami — cuadrícula estructural */
+    :host([variant="tatami"]) .bg-base {
+        background-color: var(--color-washi-100);
+        background-image:
+            linear-gradient(rgb(160, 140, 118, 0.12) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(160, 140, 118, 0.12) 1px, transparent 1px),
+            linear-gradient(rgb(160, 140, 118, 0.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(160, 140, 118, 0.06) 1px, transparent 1px);
+        background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px;
+    }
+
+    /* 06 · asanoha — estrella de cáñamo */
+    :host([variant="asanoha"]) .bg-base {
+        background-color: var(--color-washi-50);
+        background-image:
+            repeating-linear-gradient(60deg, rgb(160, 140, 118, 0.10) 0, rgb(160, 140, 118, 0.10) 1px, transparent 1px, transparent 18px),
+            repeating-linear-gradient(-60deg, rgb(160, 140, 118, 0.10) 0, rgb(160, 140, 118, 0.10) 1px, transparent 1px, transparent 18px),
+            repeating-linear-gradient(0deg, rgb(160, 140, 118, 0.08) 0, rgb(160, 140, 118, 0.08) 1px, transparent 1px, transparent 18px);
+    }
+
+    /* 07 · sashiko — puntos de bordado */
+    :host([variant="sashiko"]) .bg-base {
+        background-color: #F0EAE0;
+        background-image: radial-gradient(circle, rgb(130, 100, 70, 0.18) 1.5px, transparent 1.5px);
+        background-size: 16px 16px;
+    }
+
+    /* 08 · komon — micro patrón */
+    :host([variant="komon"]) .bg-base {
+        background-color: var(--color-washi-50);
+        background-image:
+            radial-gradient(circle at 2px 2px, rgb(160, 130, 100, 0.15) 1px, transparent 0),
+            radial-gradient(circle at 10px 10px, rgb(160, 130, 100, 0.08) 1px, transparent 0);
+        background-size: 12px 12px;
+    }
+
+    /* 09 · kasuri — trama irregular */
+    :host([variant="kasuri"]) .bg-base {
+        background-color: #F5EFE6;
+        background-image:
+            repeating-linear-gradient(-45deg,
+                transparent 0,
+                transparent 8px,
+                rgb(150, 120, 90, 0.05) 8px,
+                rgb(150, 120, 90, 0.05) 10px),
+            repeating-linear-gradient(45deg,
+                transparent 0,
+                transparent 8px,
+                rgb(150, 120, 90, 0.04) 8px,
+                rgb(150, 120, 90, 0.04) 10px);
+    }
+
+    /* 10 · nishiki — degradado diagonal */
+    :host([variant="nishiki"]) .bg-base {
+        background: linear-gradient(135deg,
+                var(--color-washi-50) 0%,
+                #F5EEE4 35%,
+                #EDE3D5 65%,
+                var(--color-washi-100) 100%);
+    }
+
+    /* ================================================================
+     DARK — Sumi
+     ================================================================ */
+
+    /* 11 · sumi — negro de tinta */
+    :host([variant="sumi"]) .bg-base {
+        background: var(--color-washi-950);
+    }
+
+    /* 12 · sumi-grain */
+    :host([variant="sumi-grain"]) .bg-base {
+        background: var(--color-washi-950);
+    }
+
+    :host([variant="sumi-grain"]) .bg-overlay {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.055'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        mix-blend-mode: screen;
+    }
+
+    /* 13 · kintsugi — filamentos dorados */
+    :host([variant="kintsugi"]) .bg-base {
+        background: var(--color-washi-950);
+        background-image:
+            linear-gradient(125deg, transparent 30%, rgb(184, 90, 30, 0.07) 50%, transparent 70%),
+            linear-gradient(45deg, transparent 20%, rgb(184, 90, 30, 0.04) 60%, transparent 80%);
+    }
+
+    /* 14 · ash-grid — cuadrícula ceniza */
+    :host([variant="ash-grid"]) .bg-base {
+        background-color: var(--color-washi-950);
+        background-image:
+            linear-gradient(rgb(250, 247, 244, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(250, 247, 244, 0.04) 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+
+    /* 15 · ink-dot */
+    :host([variant="ink-dot"]) .bg-base {
+        background-color: var(--color-washi-950);
+        background-image: radial-gradient(circle, rgb(250, 247, 244, 0.07) 1px, transparent 1px);
+        background-size: 20px 20px;
+    }
+
+    /* 16 · mokume — veteado de madera */
+    :host([variant="mokume"]) .bg-base {
+        background: #1A120A;
+        background-image:
+            repeating-linear-gradient(2deg,
+                transparent 0,
+                transparent 14px,
+                rgb(255, 240, 220, 0.025) 14px,
+                rgb(255, 240, 220, 0.025) 16px),
+            repeating-linear-gradient(-1deg,
+                transparent 0,
+                transparent 22px,
+                rgb(255, 240, 220, 0.015) 22px,
+                rgb(255, 240, 220, 0.015) 24px);
+    }
+
+    /* 17 · kumo — nubes radiales */
+    :host([variant="kumo"]) .bg-base {
+        background: #0E0A07;
+        background-image:
+            radial-gradient(ellipse 60% 40% at 20% 30%, rgb(184, 90, 30, 0.08) 0%, transparent 70%),
+            radial-gradient(ellipse 50% 35% at 80% 70%, rgb(78, 148, 130, 0.06) 0%, transparent 70%),
+            radial-gradient(ellipse 40% 30% at 60% 20%, rgb(184, 90, 30, 0.04) 0%, transparent 70%);
+    }
+
+    /* 18 · temari — anillos concéntricos */
+    :host([variant="temari"]) .bg-base {
+        background: #110D09;
+        background-image:
+            radial-gradient(circle at 50% 50%, transparent 38px, rgb(250, 247, 244, 0.04) 39px, transparent 40px),
+            radial-gradient(circle at 50% 50%, transparent 58px, rgb(250, 247, 244, 0.03) 59px, transparent 60px),
+            radial-gradient(circle at 50% 50%, transparent 78px, rgb(250, 247, 244, 0.025) 79px, transparent 80px),
+            radial-gradient(circle at 50% 50%, transparent 98px, rgb(250, 247, 244, 0.02) 99px, transparent 100px),
+            radial-gradient(circle at 50% 50%, transparent 118px, rgb(250, 247, 244, 0.015) 119px, transparent 120px);
+    }
+
+    /* 19 · dusk — degradado oscuro */
+    :host([variant="dusk"]) .bg-base {
+        background: linear-gradient(160deg,
+                #1A1008 0%,
+                #2A1A0E 30%,
+                #1A1208 60%,
+                #0E0A06 100%);
+    }
+
+    /* 20 · embers — brasas */
+    :host([variant="embers"]) .bg-base {
+        background: #0C0804;
+        background-image:
+            radial-gradient(ellipse 50% 40% at 50% 100%, rgb(184, 90, 30, 0.22) 0%, transparent 65%),
+            radial-gradient(ellipse 30% 20% at 50% 90%, rgb(217, 114, 52, 0.30) 0%, transparent 50%),
+            radial-gradient(ellipse 80% 60% at 50% 50%, transparent 40%, rgb(10, 6, 2, 0.90) 100%);
+    }
+
+    /* ================================================================
+     GRADIENTS
+     ================================================================ */
+
+    /* 21 · aurora-light */
+    :host([variant="aurora-light"]) .bg-base {
+        background:
+            radial-gradient(ellipse 80% 60% at 10% 20%, rgb(217, 114, 52, 0.12) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 50% at 90% 80%, rgb(78, 148, 130, 0.10) 0%, transparent 60%),
+            radial-gradient(ellipse 70% 70% at 50% 50%, rgb(250, 247, 244, 0.50) 0%, transparent 100%),
+            var(--color-washi-50);
+    }
+
+    /* 22 · kaki-glow */
+    :host([variant="kaki-glow"]) .bg-base {
+        background:
+            radial-gradient(ellipse 70% 60% at 30% 40%, rgb(217, 114, 52, 0.18) 0%, transparent 65%),
+            radial-gradient(ellipse 50% 40% at 80% 20%, rgb(184, 90, 30, 0.10) 0%, transparent 60%),
+            var(--color-washi-100);
+    }
+
+    /* 23 · celadon-mist */
+    :host([variant="celadon-mist"]) .bg-base {
+        background:
+            radial-gradient(ellipse 80% 60% at 70% 30%, rgb(78, 148, 130, 0.14) 0%, transparent 65%),
+            radial-gradient(ellipse 60% 50% at 20% 80%, rgb(78, 148, 130, 0.08) 0%, transparent 60%),
+            var(--color-washi-50);
+    }
+
+    /* 24 · noctiluca — mesh oscuro */
+    :host([variant="noctiluca"]) .bg-base {
+        background: #0A0806;
+        background-image:
+            radial-gradient(ellipse 60% 50% at 20% 30%, rgb(217, 114, 52, 0.12) 0%, transparent 60%),
+            radial-gradient(ellipse 50% 40% at 80% 70%, rgb(78, 148, 130, 0.09) 0%, transparent 60%),
+            radial-gradient(ellipse 70% 60% at 50% 50%, rgb(26, 20, 14, 0.80) 0%, transparent 100%);
+    }
+
+    /* 25 · horizon — lineal */
+    :host([variant="horizon"]) .bg-base {
+        background: linear-gradient(180deg,
+                var(--color-washi-50) 0%,
+                #EDE3D5 40%,
+                #D8C8B4 70%,
+                var(--color-washi-200) 100%);
+    }
+
+    /* ================================================================
+     ANIMATED CSS
+     ================================================================ */
+
+    /* 26 · breathing */
+    :host([variant="breathing"]) .bg-base {
+        background: var(--color-washi-50);
+    }
+
+    :host([variant="breathing"]) .bg-overlay {
+        inset: -20%;
+        background: radial-gradient(ellipse 60% 50% at 50% 50%,
+                rgb(217, 114, 52, 0.10) 0%,
+                transparent 70%);
+        animation: bg-breathe 6s ease-in-out infinite;
+    }
+
+    /* 27 · aurora-drift */
+    :host([variant="aurora-drift"]) .bg-base {
+        background: #0C0906;
+    }
+
+    :host([variant="aurora-drift"]) .bg-overlay {
+        background: transparent;
+        animation: none;
+    }
+
+    :host([variant="aurora-drift"]) .bg-orb-a,
+    :host([variant="aurora-drift"]) .bg-orb-b {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    :host([variant="aurora-drift"]) .bg-orb-a {
+        width: 200px;
+        height: 160px;
+        background: rgb(184, 90, 30, 0.18);
+        top: 10%;
+        left: 15%;
+        animation: bg-aurora-float 12s ease-in-out infinite;
+    }
+
+    :host([variant="aurora-drift"]) .bg-orb-b {
+        width: 180px;
+        height: 140px;
+        background: rgb(78, 148, 130, 0.14);
+        bottom: 15%;
+        right: 20%;
+        animation: bg-aurora-float 12s ease-in-out infinite;
+        animation-delay: -5s;
+        animation-direction: reverse;
+    }
+
+    /* 28 · scan */
+    :host([variant="scan"]) .bg-base {
+        background: #0E0A07;
+        background-image: repeating-linear-gradient(0deg,
+                transparent 0,
+                transparent 3px,
+                rgb(255, 255, 255, 0.018) 3px,
+                rgb(255, 255, 255, 0.018) 4px);
+    }
+
+    :host([variant="scan"]) .bg-overlay {
+
+        height: 2px;
+        inset: 0 0 auto;
+                top: 0;
+                left: 0;
+                right: 0;
+        background: linear-gradient(90deg, transparent, rgb(184, 90, 30, 0.35), transparent);
+        animation: bg-scan-sweep 5s linear infinite;
+    }
+
+    /* 29 · ink-drop */
+    :host([variant="ink-drop"]) .bg-base {
+        background: var(--color-washi-50);
+    }
+
+    :host([variant="ink-drop"]) .bg-overlay {
+        width: 80px;
+        height: 80px;
+        inset: unset;
+        top: 50%;
+        left: 50%;
+        margin: -40px 0 0 -40px;
+        background: radial-gradient(circle,
+                rgb(26, 20, 14, 0.08) 0%,
+                rgb(26, 20, 14, 0.03) 50%,
+                transparent 100%);
+        border-radius: 50%;
+        animation: bg-ink-expand 4s ease-in-out infinite;
+    }
+
+    /* 30 · shimmer */
+    :host([variant="shimmer"]) .bg-base {
+        background: var(--color-washi-100);
+    }
+
+    :host([variant="shimmer"]) .bg-overlay {
+        background: linear-gradient(105deg,
+                transparent 30%,
+                rgb(250, 247, 244, 0.50) 50%,
+                transparent 70%);
+        transform: translateX(-100%);
+        animation: bg-shimmer-pass 4s ease-in-out infinite;
+        animation-delay: 1s;
+    }
+
+    /* ================================================================
+     CANVAS BACKGROUNDS — base color (canvas JS maneja el resto)
+     ================================================================ */
+
+    :host([variant="particles"]) {
+        background: var(--color-washi-950);
+    }
+
+    :host([variant="rain"]) {
+        background: #0E0A07;
+    }
+
+    :host([variant="wave-mesh"]) {
+        background: var(--color-washi-50);
+    }
+
+    :host([variant="constellation"]) {
+        background: #0A0806;
+    }
+
+    /* ================================================================
+     KEYFRAMES
+     ================================================================ */
+
+    @keyframes bg-breathe {
+        0%,
+        100% {
+            transform: scale(1);
+            opacity: 0.6;
+        }
+
+        50% {
+            transform: scale(1.15);
+            opacity: 1;
+        }
+    }
+
+    @keyframes bg-aurora-float {
+        0%,
+        100% {
+            transform: translate(0, 0) scale(1);
+        }
+
+        33% {
+            transform: translate(30px, -20px) scale(1.1);
+        }
+
+        66% {
+            transform: translate(-20px, 15px) scale(0.95);
+        }
+    }
+
+    @keyframes bg-scan-sweep {
+        0% {
+            top: 0%;
+            opacity: 0;
+        }
+
+        2% {
+            opacity: 1;
+        }
+
+        98% {
+            opacity: 0.4;
+        }
+
+        100% {
+            top: 100%;
+            opacity: 0;
+        }
+    }
+
+    @keyframes bg-ink-expand {
+        0%,
+        100% {
+            transform: scale(1);
+            opacity: 0.5;
+        }
+
+        50% {
+            transform: scale(4);
+            opacity: 1;
+        }
+    }
+
+    @keyframes bg-shimmer-pass {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        100% {
+            transform: translateX(200%);
+        }
+    }
+}
