@@ -1,50 +1,55 @@
 import { html, TemplateResult } from 'lit';
-// Cambiamos la importación según el error de Storybook
-import type { Meta, StoryObj } from '@storybook/web-components-vite'; 
+import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-select-option.component';
 
-// Definimos una interfaz para los argumentos de la historia para evitar el 'any'
 interface SelectOptionArgs {
-  value: string;
+  value:    string;
   selected: boolean;
   disabled: boolean;
-  content: string;
+  content:  string;
 }
 
 const meta: Meta<SelectOptionArgs> = {
-  title: 'Forms/Select Option',
+  title: 'Components/Atoms/SelectOption',
   component: 'lib-select-option',
   argTypes: {
-    value: { control: 'text' },
+    value:    { control: 'text' },
     selected: { control: 'boolean' },
     disabled: { control: 'boolean' },
-    content: { control: 'text', name: 'Slot Content' }
+    content:  { control: 'text', name: 'Slot Content' },
   },
+  render: (args): TemplateResult => html`
+    <div style="background: var(--bg-elevated); padding: 8px; width: 300px; border: 1px solid var(--border-subtle);">
+      <lib-select-option
+        value="${args.value}"
+        ?selected="${args.selected}"
+        ?disabled="${args.disabled}"
+      >
+        ${args.content}
+      </lib-select-option>
+    </div>
+  `,
 };
 
 export default meta;
-
 type Story = StoryObj<SelectOptionArgs>;
 
-// Añadimos el tipo de retorno : TemplateResult para callar el warning
-const render = ({ value, selected, disabled, content }: SelectOptionArgs): TemplateResult => html`
-  <div style="background: white; padding: 20px; width: 300px;">
-    <lib-select-option 
-      .value="${value}" 
-      ?selected="${selected}" 
-      ?disabled="${disabled}"
-    >
-      ${content}
-    </lib-select-option>
-  </div>
-`;
-
-export const Default: Story = {
-  render: render,
+export const Playground: Story = {
   args: {
-    value: 'opcion-1',
-    content: 'Opción por defecto',
+    value:    'opcion-1',
+    content:  'Opción de ejemplo',
     selected: false,
     disabled: false,
   },
+};
+
+export const AllStates: Story = {
+  name: 'All States',
+  render: (): TemplateResult => html`
+    <div style="background: var(--bg-elevated); width: 300px; border: 1px solid var(--border-subtle);">
+      <lib-select-option value="a">Default</lib-select-option>
+      <lib-select-option value="b" selected>Selected</lib-select-option>
+      <lib-select-option value="c" disabled>Disabled</lib-select-option>
+    </div>
+  `,
 };

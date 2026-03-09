@@ -1,25 +1,19 @@
 import { html, TemplateResult } from 'lit';
-import { LibSelectOption } from './lib-select-option.component';
+import type { SelectOptionTemplateProps } from './lib-select-option.types';
 
-export function template(this: LibSelectOption): TemplateResult {
+export function selectOptionTemplate(props: SelectOptionTemplateProps): TemplateResult {
   return html`
-    <div 
-      class="option-container"
+    <div
+      class="option"
       role="option"
-      aria-selected="${this.selected}"
-      aria-disabled="${this.disabled}"
-      tabindex="${this.disabled ? '-1' : '0'}"
-      @click="${this._handleOptionClick}"
+      aria-selected="${props.selected}"
+      aria-disabled="${props.disabled}"
+      @click="${props.handleClick}"
     >
-      <div class="content">
-        <slot></slot> 
-    </div>
-      
-      ${this.selected ? html`
-        <div class="check-icon">
-          <lib-icon name="check" size="sm"></lib-icon>
-        </div>
-      ` : ''}
+      <span class="option-label">
+        <slot></slot>
+      </span>
+      <span class="option-check" aria-hidden="true"></span>
     </div>
   `;
 }
