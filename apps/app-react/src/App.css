@@ -5,6 +5,17 @@
   text-align: center;
 }
 
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000; /* Ponlo muy alto solo para probar si se dibuja algo */
+  pointer-events: none;
+  background-color: #120E0A; /* Asegúrate de que el fondo sea el oscuro */
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
