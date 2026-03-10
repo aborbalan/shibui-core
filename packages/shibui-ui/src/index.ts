@@ -55,7 +55,6 @@ export * from './components/molecules/range-slider/lib-range-slider.component';
 export * from './components/molecules/tree-select/lib-tree-select.component.html';
 export * from './components/molecules/color-picker/lib-color-picker.component';
 export * from './components/molecules/pagination/lib-pagination.component';
-export * from './components/molecules/table-search/lib-table-search.component';
 export * from './components/molecules/tabs/lib-tabs.component';
 export * from './components/molecules/modal/lib-modal.component';
 export * from './components/molecules/tree-select/lib-tree-node.component';
