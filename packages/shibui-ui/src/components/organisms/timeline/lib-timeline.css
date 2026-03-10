@@ -9,7 +9,6 @@
    ============================================================ */
 
 @layer reset {
-
   *,
   *::before,
   *::after {
@@ -170,15 +169,15 @@
   /* Active — pulse kaki */
   @keyframes tl-pulse {
     0% {
-      box-shadow: 0 0 0 0 rgba(184, 90, 30, 0.35);
+      box-shadow: 0 0 0 0 rgb(184, 90, 30, 0.35);
     }
 
     70% {
-      box-shadow: 0 0 0 8px rgba(184, 90, 30, 0);
+      box-shadow: 0 0 0 8px rgb(184, 90, 30, 0);
     }
 
     100% {
-      box-shadow: 0 0 0 0 rgba(184, 90, 30, 0);
+      box-shadow: 0 0 0 0 rgb(184, 90, 30, 0);
     }
   }
 
@@ -270,7 +269,7 @@
 
   .tl-line.dashed {
     background: repeating-linear-gradient(to bottom,
-        var(--border-default) 0px,
+        var(--border-default) 0,
         var(--border-default) 4px,
         transparent 4px,
         transparent 8px);
@@ -425,7 +424,7 @@
     width: 4px;
     height: 4px;
     border-radius: var(--radius-full);
-    background: currentColor;
+    background: currentcolor;
     opacity: 0.65;
     flex-shrink: 0;
   }
