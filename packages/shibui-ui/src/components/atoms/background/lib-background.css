@@ -382,7 +382,6 @@
     }
 
     :host([variant="scan"]) .bg-overlay {
-
         height: 2px;
         inset: 0 0 auto;
                 top: 0;

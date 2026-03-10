@@ -1,68 +1,570 @@
-:host {
-  display: block;
-  font-family: var(--lib-font-family, sans-serif);
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-FILE-UPLOADER — Shibui UI
+   Tres zonas: default (grande) · compact · image (preview)
+   Lista: progreso por item · estados idle/uploading/done/error
+   ============================================================ */
+
+@layer reset {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  :host {
+    display: block;
+  }
 }
 
-.uploader-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+@layer components {
+  .fu-root {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 
-.main-label {
-  font-weight: 600;
-  color: #2d3748;
-}
+  /* ==============================================================
+     DROP ZONE — default (grande)
+     ============================================================== */
 
-.drop-zone {
-  border: 2px dashed #cbd5e0;
-  border-radius: 12px;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  transition: all 0.2s ease;
-  background: #f7fafc;
-  cursor: pointer;
-}
+  .fu-zone {
+    position: relative;
+    border: 1.5px dashed var(--border-default);
+    background: var(--bg-elevated);
+    padding: var(--lib-space-xl) var(--lib-space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lib-space-md);
+    text-align: center;
+    cursor: pointer;
+    transition:
+      border-color var(--duration-base) var(--ease-out),
+      background var(--duration-base) var(--ease-out),
+      transform var(--duration-fast);
+    width: 100%;
+  }
 
-.drop-zone.dragging {
-  border-color: #3b82f6;
-  background: #ebf8ff;
-}
+  /* Input invisible sobre toda la zona */
+  .fu-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
 
-.hint {
-  font-size: 14px;
-  color: #718096;
-  margin: 0;
-}
+  .fu-zone:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-surface);
+  }
 
-.file-list {
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+  .fu-zone.is-dragover {
+    border-color: var(--color-kaki-400);
+    background: var(--color-kaki-50);
+    transform: scale(1.005);
+  }
 
-.file-item {
-  background: white;
-  border: 1px solid #e2e8f0;
-  padding: 12px;
-  border-radius: 8px;
-}
+  .fu-zone.is-disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 
-.file-info {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
+  /* Icono */
+  .fu-zone-icon {
+    font-size: 40px;
+    color: var(--text-muted);
+    line-height: 1;
+    display: flex;
+    transition:
+      color var(--duration-base),
+      transform var(--duration-slow) var(--ease-bounce);
+  }
 
-.file-name {
-  flex-grow: 1;
-  font-size: 14px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  .fu-zone:hover .fu-zone-icon,
+  .fu-zone.is-dragover .fu-zone-icon {
+    color: var(--color-kaki-400);
+    transform: translateY(-3px) scale(1.08);
+  }
+
+  /* Título */
+  .fu-zone-title {
+    font-family: var(--lib-font-display);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-light);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-primary);
+  }
+
+  /* Subtítulo */
+  .fu-zone-sub {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .fu-zone-sub span {
+    color: var(--color-kaki-500);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* Hint de restricciones */
+  .fu-zone-hint {
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    margin-top: var(--lib-space-xs);
+  }
+
+  /* ==============================================================
+     DROP ZONE — compact (horizontal, formularios)
+     ============================================================== */
+
+  .fu-zone-sm {
+    position: relative;
+    border: 1px dashed var(--border-default);
+    background: var(--bg-elevated);
+    padding: var(--lib-space-md) var(--lib-space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-md);
+    cursor: pointer;
+    transition:
+      border-color var(--duration-base) var(--ease-out),
+      background var(--duration-base) var(--ease-out);
+    width: 100%;
+  }
+
+  .fu-zone-sm input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .fu-zone-sm:hover,
+  .fu-zone-sm.is-dragover {
+    border-color: var(--color-kaki-400);
+    background: var(--color-kaki-50);
+  }
+
+  .fu-zone-sm.is-disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .fu-zone-sm-icon {
+    font-size: 22px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    display: flex;
+    transition: color var(--duration-base);
+  }
+
+  .fu-zone-sm:hover .fu-zone-sm-icon,
+  .fu-zone-sm.is-dragover .fu-zone-sm-icon {
+    color: var(--color-kaki-400);
+  }
+
+  .fu-zone-sm-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .fu-zone-sm-title {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+  }
+
+  .fu-zone-sm-sub {
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  /* ==============================================================
+     DROP ZONE — image (preview inline, aspect 16/7)
+     ============================================================== */
+
+  .fu-zone-img {
+    position: relative;
+    border: 1.5px dashed var(--border-default);
+    background: var(--bg-surface);
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    overflow: hidden;
+    cursor: pointer;
+    transition:
+      border-color var(--duration-base) var(--ease-out),
+      background var(--duration-base) var(--ease-out);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: var(--lib-space-sm);
+  }
+
+  .fu-zone-img input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .fu-zone-img:hover {
+    border-color: var(--border-strong);
+  }
+
+  .fu-zone-img.is-dragover {
+    border-color: var(--color-kaki-400);
+    background: var(--color-kaki-50);
+  }
+
+  .fu-zone-img.is-disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .fu-zone-img-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--lib-space-sm);
+    pointer-events: none;
+  }
+
+  .fu-zone-img-preview {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+
+  .fu-zone-img.has-preview .fu-zone-img-preview {
+    display: block;
+  }
+
+  .fu-zone-img.has-preview .fu-zone-img-placeholder {
+    display: none;
+  }
+
+  .fu-zone-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgb(34, 28, 22, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lib-space-sm);
+    opacity: 0;
+    transition: opacity var(--duration-base);
+    pointer-events: none;
+  }
+
+  .fu-zone-img.has-preview:hover .fu-zone-img-overlay {
+    opacity: 1;
+  }
+
+  .fu-zone-img-overlay-text {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-white);
+  }
+
+  /* Barra de progreso bajo zona imagen */
+  .fu-progress-bar {
+    height: 2px;
+    background: var(--border-subtle);
+    width: 100%;
+    overflow: hidden;
+    margin-top: -1px;
+  }
+
+  .fu-progress-fill {
+    height: 100%;
+    background: var(--color-kaki-400);
+    transition: width 80ms linear;
+  }
+
+  /* ==============================================================
+     FILE LIST
+     ============================================================== */
+
+  .fu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    width: 100%;
+  }
+
+  /* ── ITEM ── */
+  .fu-file {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--lib-space-md);
+    padding: var(--lib-space-md) var(--lib-space-md);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    position: relative;
+    overflow: hidden;
+    transition: background var(--duration-base);
+    animation: fu-slide-in 250ms var(--ease-out);
+  }
+
+  .fu-file:hover {
+    background: var(--bg-surface);
+  }
+
+  /* Progreso de fondo */
+  .fu-file-prog-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: var(--color-kaki-50);
+    transition: width 80ms linear;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Todo el contenido por encima del fondo */
+  .fu-file>* {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Icono de tipo */
+  .fu-file-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--text-muted);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+    transition: color var(--duration-base), background var(--duration-base);
+  }
+
+  .fu-file.is-done .fu-file-icon {
+    color: var(--color-celadon-500);
+    background: var(--color-celadon-50);
+    border-color: var(--color-celadon-100);
+  }
+
+  .fu-file.is-error .fu-file-icon {
+    color: var(--color-error);
+    background: #FFF8F7;
+    border-color: #F5C4BC;
+  }
+
+  /* Badge de extensión */
+  .fu-ext {
+    font-family: var(--lib-font-mono);
+    font-size: 8px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* Thumbnail de imagen */
+  .fu-file-thumb {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid var(--border-subtle);
+    display: block;
+  }
+
+  /* Meta */
+  .fu-file-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .fu-file-name {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .fu-file-info {
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-sm);
+  }
+
+  .fu-file-info-sep {
+    width: 3px;
+    height: 3px;
+    border-radius: var(--radius-full);
+    background: var(--color-washi-300);
+    flex-shrink: 0;
+  }
+
+  /* Acciones */
+  .fu-file-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-sm);
+    flex-shrink: 0;
+  }
+
+  .fu-file-pct {
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-kaki-500);
+    min-width: 28px;
+    text-align: right;
+  }
+
+  .fu-status-done {
+    color: var(--color-celadon-500);
+    font-size: 18px;
+    display: flex;
+  }
+
+  .fu-status-error {
+    color: var(--color-error);
+    font-size: 18px;
+    display: flex;
+  }
+
+  .fu-file-remove {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-full);
+    transition:
+      background var(--duration-fast),
+      color var(--duration-fast);
+    flex-shrink: 0;
+  }
+
+  .fu-file-remove:hover {
+    background: var(--color-washi-200);
+    color: var(--text-primary);
+  }
+
+  .fu-file.is-error .fu-file-remove:hover {
+    background: #FFF8F7;
+    color: var(--color-error);
+  }
+
+  /* ── SUMMARY FOOTER ── */
+  .fu-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-top: none;
+  }
+
+  .fu-summary-text {
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+  }
+
+  .fu-summary-btn {
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    background: var(--color-washi-900);
+    color: var(--color-washi-50);
+    border: none;
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    cursor: pointer;
+    transition: background var(--duration-base);
+  }
+
+  .fu-summary-btn:hover {
+    background: var(--color-washi-800);
+  }
+
+  .fu-summary-btn:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+  }
+
+  /* ── SPINNER ── */
+  .fu-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-washi-200);
+    border-top-color: var(--color-kaki-400);
+    border-radius: var(--radius-full);
+    animation: fu-spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fu-slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fu-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }

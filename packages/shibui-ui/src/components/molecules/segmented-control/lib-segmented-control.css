@@ -9,7 +9,6 @@
    ============================================================ */
 
 @layer reset {
-
   *,
   *::before,
   *::after {
@@ -101,7 +100,7 @@
   }
 
   .seg-option.is-active .seg-badge-dot {
-    background: rgba(255, 255, 255, 0.30);
+    background: rgb(255, 255, 255, 0.30);
   }
 
   /* Disabled */
@@ -344,42 +343,42 @@
      ================================================================ */
 
   :host([variant="dark-outline"]) .seg {
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgb(255, 255, 255, 0.10);
+    background: rgb(255, 255, 255, 0.04);
     padding: 3px;
     gap: 0;
   }
 
   :host([variant="dark-outline"]) .seg-thumb {
-    background: rgba(250, 247, 244, 0.12);
+    background: rgb(250, 247, 244, 0.12);
     top: 3px;
     bottom: 3px;
   }
 
   :host([variant="dark-outline"]) .seg-option {
     padding: var(--lib-space-sm) var(--lib-space-md);
-    color: rgba(250, 247, 244, 0.28);
+    color: rgb(250, 247, 244, 0.28);
     min-width: 80px;
   }
 
   :host([variant="dark-outline"]) .seg-option:hover {
-    color: rgba(250, 247, 244, 0.65);
+    color: rgb(250, 247, 244, 0.65);
   }
 
   :host([variant="dark-outline"]) .seg-option.is-active {
-    color: rgba(250, 247, 244, 0.80);
+    color: rgb(250, 247, 244, 0.80);
   }
 
   :host([variant="dark-pill"]) .seg {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgb(255, 255, 255, 0.06);
+    border: 1px solid rgb(255, 255, 255, 0.07);
     border-radius: var(--radius-full);
     padding: 4px;
     gap: 0;
   }
 
   :host([variant="dark-pill"]) .seg-thumb {
-    background: rgba(250, 247, 244, 0.12);
+    background: rgb(250, 247, 244, 0.12);
     border-radius: var(--radius-full);
     top: 4px;
     bottom: 4px;
@@ -387,22 +386,22 @@
 
   :host([variant="dark-pill"]) .seg-option {
     padding: var(--lib-space-sm) calc(var(--lib-space-md) + var(--lib-space-sm));
-    color: rgba(250, 247, 244, 0.28);
+    color: rgb(250, 247, 244, 0.28);
     border-radius: var(--radius-full);
     min-width: 80px;
   }
 
   :host([variant="dark-pill"]) .seg-option:hover {
-    color: rgba(250, 247, 244, 0.65);
+    color: rgb(250, 247, 244, 0.65);
   }
 
   :host([variant="dark-pill"]) .seg-option.is-active {
-    color: rgba(250, 247, 244, 0.85);
+    color: rgb(250, 247, 244, 0.85);
   }
 
   :host([variant="dark-kaki"]) .seg {
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgb(255, 255, 255, 0.07);
+    background: rgb(255, 255, 255, 0.03);
     padding: 3px;
     gap: 0;
   }
@@ -415,12 +414,12 @@
 
   :host([variant="dark-kaki"]) .seg-option {
     padding: var(--lib-space-sm) var(--lib-space-md);
-    color: rgba(250, 247, 244, 0.30);
+    color: rgb(250, 247, 244, 0.30);
     min-width: 80px;
   }
 
   :host([variant="dark-kaki"]) .seg-option:hover {
-    color: rgba(250, 247, 244, 0.65);
+    color: rgb(250, 247, 244, 0.65);
   }
 
   :host([variant="dark-kaki"]) .seg-option.is-active {
@@ -429,7 +428,7 @@
 
   :host([variant="dark-underline"]) .seg {
     background: transparent;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgb(255, 255, 255, 0.07);
     gap: 0;
     padding: 0;
   }
@@ -444,15 +443,15 @@
 
   :host([variant="dark-underline"]) .seg-option {
     padding: var(--lib-space-sm) calc(var(--lib-space-md) + var(--lib-space-sm));
-    color: rgba(250, 247, 244, 0.28);
+    color: rgb(250, 247, 244, 0.28);
   }
 
   :host([variant="dark-underline"]) .seg-option:hover {
-    color: rgba(250, 247, 244, 0.65);
+    color: rgb(250, 247, 244, 0.65);
   }
 
   :host([variant="dark-underline"]) .seg-option.is-active {
-    color: rgba(250, 247, 244, 0.80);
+    color: rgb(250, 247, 244, 0.80);
   }
 
   /* ================================================================
@@ -610,7 +609,7 @@
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: currentColor;
+    background: currentcolor;
     transform: scale(0);
     opacity: 0.25;
     animation: seg-ripple 360ms ease-out forwards;
