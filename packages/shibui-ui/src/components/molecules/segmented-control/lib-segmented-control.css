@@ -1,65 +1,625 @@
-:host {
-  display: inline-block;
+@layer tokens, reset, components;
 
-  --segmented-bg: #edf2f7;
-  --segmented-thumb-bg: #fff;
-  --segmented-text: #4a5568;
-  --segmented-text-active: #2d3748;
-  --segmented-radius: 8px;
+/* ============================================================
+   LIB-SEGMENTED-CONTROL — Shibui UI
+   Variantes: outline · underline · pill · ghost · kaki · celadon
+              dark-outline · dark-pill · dark-kaki · dark-underline
+   Tamaños:   sm · md (default) · lg
+   Extras:    full · icon-only · glitch · badge
+   ============================================================ */
+
+@layer reset {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  :host {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  :host([full]) {
+    display: block;
+    width: 100%;
+  }
 }
 
-.segmented-control {
-  position: relative;
-  display: flex;
-  background-color: var(--segmented-bg);
-  padding: 2px;
-  border-radius: var(--segmented-radius);
-  user-select: none;
-  min-height: 40px;
-}
+@layer components {
 
-.thumb {
-  position: absolute;
-  top: 2px;
-  bottom: 2px;
-  left: 0;
-  background-color: var(--segmented-thumb-bg);
-  border-radius: calc(var(--segmented-radius) - 2px);
-  box-shadow: 0 1px 3px rgb(0, 0, 0, 0.1);
-  transition:
-    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-    width 0.2s ease;
-  z-index: 1;
-}
+  /* ================================================================
+     BASE — track + thumb + option
+     ================================================================ */
 
-.segment {
-  position: relative;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 0 16px;
-  border: none;
-  background: transparent;
-  color: var(--segmented-text);
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  z-index: 2;
-  transition: color 0.2s ease;
-  white-space: nowrap;
-}
+  .seg {
+    display: inline-flex;
+    align-items: stretch;
+    position: relative;
+    user-select: none;
+  }
 
-.segment.is-active {
-  color: var(--segmented-text-active);
-}
+  /* Thumb — indicador animado */
+  .seg-thumb {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+    transition:
+      transform var(--duration-slow) var(--ease-bounce),
+      width var(--duration-slow) var(--ease-out);
+  }
 
-.segment:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
+  /* Opción base */
+  .seg-option {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lib-space-sm);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      color var(--duration-base) var(--ease-out),
+      opacity var(--duration-base) var(--ease-out);
+  }
 
-:host([disabled]) .segmented-control {
-  opacity: 0.6;
+  /* Icon wrapper */
+  .seg-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
+  /* Badge numérico */
+  .seg-badge-dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    font-size: 9px;
+    font-family: var(--lib-font-mono);
+    letter-spacing: 0;
+    line-height: 1;
+    background: var(--color-kaki-500);
+    color: var(--color-white);
+    border-radius: var(--radius-full);
+  }
+
+  .seg-option.is-active .seg-badge-dot {
+    background: rgba(255, 255, 255, 0.30);
+  }
+
+  /* Disabled */
+  .seg-option.is-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  :host([disabled]) .seg {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  /* Full width */
+  :host([full]) .seg {
+    width: 100%;
+  }
+
+  :host([full]) .seg-option {
+    flex: 1;
+  }
+
+  /* Icon only */
+  :host([icon-only]) .seg-option {
+    min-width: 44px;
+    padding: var(--lib-space-sm);
+  }
+
+  /* ================================================================
+     VARIANT 01 — OUTLINE
+     Borde exterior, thumb negro, texto muted → washi-50 activo
+     ================================================================ */
+
+  :host([variant="outline"]) .seg {
+    border: 1.5px solid var(--border-default);
+    background: var(--bg-elevated);
+    padding: 3px;
+    gap: 0;
+  }
+
+  :host([variant="outline"]) .seg-thumb {
+    background: var(--color-washi-900);
+    top: 3px;
+    bottom: 3px;
+  }
+
+  :host([variant="outline"]) .seg-option {
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    color: var(--text-muted);
+    min-width: 80px;
+  }
+
+  :host([variant="outline"]) .seg-option:hover {
+    color: var(--text-primary);
+  }
+
+  :host([variant="outline"]) .seg-option.is-active {
+    color: var(--color-washi-50);
+  }
+
+  /* ================================================================
+     VARIANT 02 — UNDERLINE
+     Solo línea inferior, thumb kaki 2px
+     ================================================================ */
+
+  :host([variant="underline"]) .seg {
+    background: transparent;
+    border-bottom: 1px solid var(--border-subtle);
+    gap: 0;
+    padding: 0;
+  }
+
+  :host([variant="underline"]) .seg-thumb {
+    height: 2px;
+    top: auto;
+    bottom: -1px;
+    background: var(--color-kaki-500);
+    transition: transform var(--duration-slow) var(--ease-bounce);
+  }
+
+  :host([variant="underline"]) .seg-option {
+    padding: var(--lib-space-sm) calc(var(--lib-space-md) + var(--lib-space-sm));
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+  }
+
+  :host([variant="underline"]) .seg-option:hover {
+    color: var(--text-primary);
+  }
+
+  :host([variant="underline"]) .seg-option.is-active {
+    color: var(--text-primary);
+  }
+
+  /* ================================================================
+     VARIANT 03 — PILL
+     Track pill, thumb elevado con shadow
+     ================================================================ */
+
+  :host([variant="pill"]) .seg {
+    background: var(--color-washi-100);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    padding: 4px;
+    gap: 0;
+  }
+
+  :host([variant="pill"]) .seg-thumb {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-full);
+    top: 4px;
+    bottom: 4px;
+    box-shadow: 0 1px 4px var(--color-ink-20);
+  }
+
+  :host([variant="pill"]) .seg-option {
+    padding: var(--lib-space-sm) calc(var(--lib-space-md) + var(--lib-space-sm));
+    color: var(--text-muted);
+    border-radius: var(--radius-full);
+    min-width: 80px;
+  }
+
+  :host([variant="pill"]) .seg-option:hover {
+    color: var(--text-primary);
+  }
+
+  :host([variant="pill"]) .seg-option.is-active {
+    color: var(--text-primary);
+  }
+
+  /* ================================================================
+     VARIANT 04 — GHOST
+     Sin track, separadores verticales, thumb oculto, active = línea kaki
+     ================================================================ */
+
+  :host([variant="ghost"]) .seg {
+    background: transparent;
+    gap: 0;
+  }
+
+  :host([variant="ghost"]) .seg-thumb {
+    display: none;
+  }
+
+  :host([variant="ghost"]) .seg-option {
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    color: var(--text-muted);
+    border-right: 1px solid var(--border-subtle);
+  }
+
+  :host([variant="ghost"]) .seg-option:last-child {
+    border-right: none;
+  }
+
+  :host([variant="ghost"]) .seg-option:hover {
+    color: var(--text-primary);
+  }
+
+  :host([variant="ghost"]) .seg-option.is-active {
+    color: var(--text-primary);
+  }
+
+  :host([variant="ghost"]) .seg-option.is-active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: var(--lib-space-md);
+    right: var(--lib-space-md);
+    height: 1px;
+    background: var(--color-kaki-500);
+  }
+
+  /* ================================================================
+     VARIANT 05 — KAKI
+     Thumb en color acento kaki
+     ================================================================ */
+
+  :host([variant="kaki"]) .seg {
+    border: 1.5px solid var(--border-default);
+    background: var(--bg-elevated);
+    padding: 3px;
+    gap: 0;
+  }
+
+  :host([variant="kaki"]) .seg-thumb {
+    background: var(--color-kaki-500);
+    top: 3px;
+    bottom: 3px;
+  }
+
+  :host([variant="kaki"]) .seg-option {
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    color: var(--text-muted);
+    min-width: 80px;
+  }
+
+  :host([variant="kaki"]) .seg-option:hover {
+    color: var(--text-primary);
+  }
+
+  :host([variant="kaki"]) .seg-option.is-active {
+    color: var(--color-white);
+  }
+
+  /* ================================================================
+     VARIANT 06 — CELADON
+     Thumb en color celadón
+     ================================================================ */
+
+  :host([variant="celadon"]) .seg {
+    border: 1.5px solid var(--border-default);
+    background: var(--bg-elevated);
+    padding: 3px;
+    gap: 0;
+  }
+
+  :host([variant="celadon"]) .seg-thumb {
+    background: var(--color-celadon-500);
+    top: 3px;
+    bottom: 3px;
+  }
+
+  :host([variant="celadon"]) .seg-option {
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    color: var(--text-muted);
+    min-width: 80px;
+  }
+
+  :host([variant="celadon"]) .seg-option:hover {
+    color: var(--text-primary);
+  }
+
+  :host([variant="celadon"]) .seg-option.is-active {
+    color: var(--color-white);
+  }
+
+  /* ================================================================
+     DARK VARIANTS
+     ================================================================ */
+
+  :host([variant="dark-outline"]) .seg {
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 3px;
+    gap: 0;
+  }
+
+  :host([variant="dark-outline"]) .seg-thumb {
+    background: rgba(250, 247, 244, 0.12);
+    top: 3px;
+    bottom: 3px;
+  }
+
+  :host([variant="dark-outline"]) .seg-option {
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    color: rgba(250, 247, 244, 0.28);
+    min-width: 80px;
+  }
+
+  :host([variant="dark-outline"]) .seg-option:hover {
+    color: rgba(250, 247, 244, 0.65);
+  }
+
+  :host([variant="dark-outline"]) .seg-option.is-active {
+    color: rgba(250, 247, 244, 0.80);
+  }
+
+  :host([variant="dark-pill"]) .seg {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: var(--radius-full);
+    padding: 4px;
+    gap: 0;
+  }
+
+  :host([variant="dark-pill"]) .seg-thumb {
+    background: rgba(250, 247, 244, 0.12);
+    border-radius: var(--radius-full);
+    top: 4px;
+    bottom: 4px;
+  }
+
+  :host([variant="dark-pill"]) .seg-option {
+    padding: var(--lib-space-sm) calc(var(--lib-space-md) + var(--lib-space-sm));
+    color: rgba(250, 247, 244, 0.28);
+    border-radius: var(--radius-full);
+    min-width: 80px;
+  }
+
+  :host([variant="dark-pill"]) .seg-option:hover {
+    color: rgba(250, 247, 244, 0.65);
+  }
+
+  :host([variant="dark-pill"]) .seg-option.is-active {
+    color: rgba(250, 247, 244, 0.85);
+  }
+
+  :host([variant="dark-kaki"]) .seg {
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 3px;
+    gap: 0;
+  }
+
+  :host([variant="dark-kaki"]) .seg-thumb {
+    background: var(--color-kaki-500);
+    top: 3px;
+    bottom: 3px;
+  }
+
+  :host([variant="dark-kaki"]) .seg-option {
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    color: rgba(250, 247, 244, 0.30);
+    min-width: 80px;
+  }
+
+  :host([variant="dark-kaki"]) .seg-option:hover {
+    color: rgba(250, 247, 244, 0.65);
+  }
+
+  :host([variant="dark-kaki"]) .seg-option.is-active {
+    color: var(--color-white);
+  }
+
+  :host([variant="dark-underline"]) .seg {
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    gap: 0;
+    padding: 0;
+  }
+
+  :host([variant="dark-underline"]) .seg-thumb {
+    height: 2px;
+    top: auto;
+    bottom: -1px;
+    background: var(--color-kaki-400);
+    transition: transform var(--duration-slow) var(--ease-bounce);
+  }
+
+  :host([variant="dark-underline"]) .seg-option {
+    padding: var(--lib-space-sm) calc(var(--lib-space-md) + var(--lib-space-sm));
+    color: rgba(250, 247, 244, 0.28);
+  }
+
+  :host([variant="dark-underline"]) .seg-option:hover {
+    color: rgba(250, 247, 244, 0.65);
+  }
+
+  :host([variant="dark-underline"]) .seg-option.is-active {
+    color: rgba(250, 247, 244, 0.80);
+  }
+
+  /* ================================================================
+     SIZES
+     ================================================================ */
+
+  /* sm */
+  :host([size="sm"]) .seg-option {
+    padding: var(--lib-space-xs) var(--lib-space-md);
+    font-size: 10px;
+    min-width: 60px;
+  }
+
+  :host([size="sm"][variant="pill"]) .seg {
+    padding: 3px;
+    border-radius: var(--radius-full);
+  }
+
+  :host([size="sm"][variant="pill"]) .seg-thumb {
+    top: 3px;
+    bottom: 3px;
+  }
+
+  :host([size="sm"][variant="dark-pill"]) .seg {
+    padding: 3px;
+    border-radius: var(--radius-full);
+  }
+
+  :host([size="sm"][variant="dark-pill"]) .seg-thumb {
+    top: 3px;
+    bottom: 3px;
+  }
+
+  :host([size="sm"][variant="outline"]) .seg {
+    padding: 2px;
+  }
+
+  :host([size="sm"][variant="outline"]) .seg-thumb {
+    top: 2px;
+    bottom: 2px;
+  }
+
+  :host([size="sm"][variant="kaki"]) .seg {
+    padding: 2px;
+  }
+
+  :host([size="sm"][variant="kaki"]) .seg-thumb {
+    top: 2px;
+    bottom: 2px;
+  }
+
+  /* lg */
+  :host([size="lg"]) .seg-option {
+    padding: var(--lib-space-sm) var(--lib-space-lg);
+    font-size: 0.75rem;
+    min-width: 100px;
+  }
+
+  :host([size="lg"][variant="pill"]) .seg {
+    padding: 5px;
+  }
+
+  :host([size="lg"][variant="pill"]) .seg-thumb {
+    top: 5px;
+    bottom: 5px;
+  }
+
+  :host([size="lg"][variant="dark-pill"]) .seg {
+    padding: 5px;
+  }
+
+  :host([size="lg"][variant="dark-pill"]) .seg-thumb {
+    top: 5px;
+    bottom: 5px;
+  }
+
+  /* ================================================================
+     GLITCH — efecto de corrupción al cambiar opción activa
+     ================================================================ */
+
+  :host([glitch]) .seg-option.is-active::before,
+  :host([glitch]) .seg-option.is-active::after {
+    content: attr(data-label);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  :host([glitch]) .seg-option.is-active::before {
+    color: var(--color-kaki-400);
+    mix-blend-mode: screen;
+  }
+
+  :host([glitch]) .seg-option.is-active::after {
+    color: var(--color-celadon-400);
+    mix-blend-mode: screen;
+  }
+
+  :host([glitch]) .seg-option.glitch-on::before {
+    opacity: 0.7;
+    animation: seg-glitch-a 240ms steps(1) infinite;
+  }
+
+  :host([glitch]) .seg-option.glitch-on::after {
+    opacity: 0.5;
+    animation: seg-glitch-b 240ms steps(1) infinite;
+    animation-delay: 30ms;
+  }
+
+  @keyframes seg-glitch-a {
+    0% {
+      clip-path: inset(30% 0 50% 0);
+      transform: translateX(-2px);
+    }
+
+    50% {
+      clip-path: inset(60% 0 10% 0);
+      transform: translateX(2px);
+    }
+  }
+
+  @keyframes seg-glitch-b {
+    0% {
+      clip-path: inset(50% 0 20% 0);
+      transform: translateX(2px);
+    }
+
+    50% {
+      clip-path: inset(10% 0 60% 0);
+      transform: translateX(-2px);
+    }
+  }
+
+  /* ================================================================
+     RIPPLE — efecto táctil al pulsar
+     ================================================================ */
+
+  .seg-ripple {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .seg-ripple-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+    transform: scale(0);
+    opacity: 0.25;
+    animation: seg-ripple 360ms ease-out forwards;
+  }
+
+  @keyframes seg-ripple {
+    to {
+      transform: scale(40);
+      opacity: 0;
+    }
+  }
 }
