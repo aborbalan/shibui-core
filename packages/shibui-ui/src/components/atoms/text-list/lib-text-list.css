@@ -1,50 +1,680 @@
-:host {
-  display: block;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-TEXT-LIST — Shibui UI
+   Tres familias: content · ui · description
+   ============================================================ */
+
+@layer reset {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  :host {
+    display: block;
+  }
 }
 
-.text-list {
-  margin: 0;
-  padding: 0;
-  list-style-position: inside;
-  font-family: var(--lib-font-family, sans-serif);
-}
+@layer components {
 
-.list-item {
-  padding: var(--lib-space-xs, 4px) 0;
-  color: var(--lib-color-neutral-10, #1a1a1a);
-  font-size: var(--lib-font-size-md, 1rem);
-  line-height: 1.5;
-}
+  /* ==============================================================
+     1. CONTENT LIST — listas tipográficas para prosa
+     ============================================================== */
 
-/* Estilos del Skeleton */
-.skeleton-line {
-  display: inline-block;
-  vertical-align: middle;
-  width: 70%;
-  height: 0.8rem;
-  background-color: var(--lib-color-neutral-90, #e0e0e0);
-  border-radius: var(--lib-radius-sm, 4px);
-  position: relative;
-  overflow: hidden;
-}
+  .lst {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-sm);
+  }
 
-/* Animación de brillo (shimmer) */
-.skeleton-line::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  transform: translateX(-100%);
-  background: linear-gradient(
-    90deg,
-    rgb(255, 255, 255, 0) 0,
-    rgb(255, 255, 255, 0.5) 50%,
-    rgb(255, 255, 255, 0) 100%
-  );
-  animation: shimmer 2s infinite;
-}
+  .lst-item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--lib-space-sm);
+    font-family: var(--lib-font-body);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    padding: var(--lib-space-xs) 0;
+  }
 
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
+  .lst-item-text {
+    flex: 1;
+  }
+
+  /* ── Bullet default (ul) ── */
+  ul.lst .lst-item::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: var(--radius-full);
+    background: var(--color-washi-400);
+    flex-shrink: 0;
+    margin-top: 0.55em;
+  }
+
+  /* ── Numbered (ol) ── */
+  ol.lst {
+    counter-reset: lst-counter;
+  }
+
+  ol.lst .lst-item {
+    counter-increment: lst-counter;
+  }
+
+  ol.lst .lst-item::before {
+    content: counter(lst-counter, decimal) '.';
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    flex-shrink: 0;
+    min-width: 18px;
+    margin-top: 0;
+  }
+
+  /* ── Roman ── */
+  ol.lst.lst-ordered-roman .lst-item::before {
+    content: counter(lst-counter, upper-roman) '.';
+  }
+
+  /* ── Alpha ── */
+  ol.lst.lst-ordered-alpha .lst-item::before {
+    content: counter(lst-counter, lower-alpha) '.';
+  }
+
+  /* ── Kaki bullet ── */
+  ul.lst.lst-kaki .lst-item::before {
+    background: var(--color-kaki-400);
+  }
+
+  /* ── Dash bullet ── */
+  ul.lst.lst-dash .lst-item::before {
+    content: '—';
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: none;
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 0;
+  }
+
+  /* ── Check ── */
+  ul.lst.lst-checked .lst-item::before {
+    content: none;
+  }
+
+  .lst-check-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    color: var(--color-celadon-500);
+    margin-top: 2px;
+  }
+
+  /* ── Nested ── */
+  .lst .lst {
+    margin-left: var(--lib-space-md);
+    margin-top: var(--lib-space-xs);
+  }
+
+  .lst .lst .lst-item::before {
+    background: var(--color-washi-300);
+    width: 3px;
+    height: 3px;
+  }
+
+  /* ── Sizes ── */
+  .lst.lst-sm .lst-item {
+    font-size: var(--text-xs);
+    gap: var(--lib-space-sm);
+  }
+
+  .lst.lst-lg .lst-item {
+    font-size: var(--text-base);
+    gap: var(--lib-space-md);
+  }
+
+  /* ==============================================================
+     2. UI LIST — componente de interfaz
+     ============================================================== */
+
+  .lst-ui {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-elevated);
+  }
+
+  /* Bordered container */
+  .lst-ui.lst-bordered {
+    border: 1px solid var(--border-subtle);
+  }
+
+  /* Inset background */
+  .lst-ui.lst-inset {
+    background: var(--bg-surface);
+  }
+
+  /* ── ROW ── */
+  .lst-row {
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-md);
+    padding: var(--lib-space-md) var(--lib-space-md);
+    position: relative;
+    transition: background var(--duration-fast);
+  }
+
+  /* Dividers */
+  .lst-ui.lst-divided .lst-row {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .lst-ui.lst-divided .lst-row:last-child {
+    border-bottom: none;
+  }
+
+  /* Interactive */
+  .lst-ui.lst-interactive .lst-row {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .lst-ui.lst-interactive .lst-row:hover {
+    background: var(--bg-surface);
+  }
+
+  .lst-ui.lst-interactive .lst-row:active {
+    background: var(--color-washi-200);
+  }
+
+  /* Selected */
+  .lst-row.is-selected {
+    background: var(--color-kaki-50) !important;
+  }
+
+  .lst-row.is-selected .lst-row-label {
+    color: var(--text-primary);
+  }
+
+  /* Disabled */
+  .lst-row.is-disabled {
+    opacity: 0.38;
+    cursor: not-allowed !important;
+    pointer-events: none;
+  }
+
+  /* Danger */
+  .lst-row.is-danger .lst-row-label {
+    color: var(--color-error);
+  }
+
+  .lst-row.is-danger .lst-row-icon {
+    color: var(--color-error);
+  }
+
+  .lst-ui.lst-interactive .lst-row.is-danger:hover {
+    background: #FFF8F7;
+  }
+
+  /* Sizes */
+  .lst-ui.lst-sm .lst-row {
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    gap: var(--lib-space-sm);
+  }
+
+  .lst-ui.lst-lg .lst-row {
+    padding: calc(var(--lib-space-md) + var(--lib-space-xs)) var(--lib-space-md);
+    gap: var(--lib-space-md);
+  }
+
+  /* ── ROW PARTS ── */
+
+  /* Icon */
+  .lst-row-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--text-muted);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    transition: color var(--duration-fast), background var(--duration-fast);
+  }
+
+  .lst-ui.lst-sm .lst-row-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .lst-ui.lst-lg .lst-row-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  /* Icon variants */
+  .lst-row-icon.icon-kaki {
+    background: var(--color-kaki-50);
+    border-color: var(--color-kaki-100);
+    color: var(--color-kaki-500);
+  }
+
+  .lst-row-icon.icon-celadon {
+    background: var(--color-celadon-50);
+    border-color: var(--color-celadon-100);
+    color: var(--color-celadon-500);
+  }
+
+  .lst-row-icon.icon-error {
+    background: #FFF8F7;
+    border-color: #F5C4BC;
+    color: var(--color-error);
+  }
+
+  .lst-row-icon.icon-info {
+    background: #D6E8F5;
+    border-color: #D6E8F5;
+    color: #1A4A6E;
+  }
+
+  .lst-row-icon.icon-plain {
+    background: transparent;
+    border: none;
+  }
+
+  .lst-row-icon.icon-round {
+    border-radius: var(--radius-full);
+  }
+
+  /* Avatar */
+  .lst-row-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    background: var(--color-washi-200);
+    color: var(--text-secondary);
+  }
+
+  .lst-ui.lst-sm .lst-row-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 8px;
+  }
+
+  .lst-ui.lst-lg .lst-row-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 12px;
+  }
+
+  /* Body */
+  .lst-row-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .lst-row-label {
+    font-family: var(--lib-font-body);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-snug);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .lst-row-desc {
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .lst-ui.lst-lg .lst-row-label {
+    font-size: var(--text-base);
+  }
+
+  .lst-ui.lst-sm .lst-row-label {
+    font-size: var(--text-xs);
+  }
+
+  .lst-ui.lst-sm .lst-row-desc {
+    font-size: 9px;
+  }
+
+  /* Meta */
+  .lst-row-meta {
+    flex-shrink: 0;
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-sm);
+  }
+
+  /* Chevron / action */
+  .lst-row-action {
+    flex-shrink: 0;
+    font-size: 16px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    transition: color var(--duration-fast), transform var(--duration-base);
+  }
+
+  .lst-ui.lst-interactive .lst-row:hover .lst-row-action {
+    color: var(--text-secondary);
+    transform: translateX(2px);
+  }
+
+  /* Badges */
+  .lst-badge {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--lib-font-mono);
+    font-size: 9px;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    padding: 1px var(--lib-space-sm);
+  }
+
+  .lst-badge-default {
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .lst-badge-kaki {
+    background: var(--color-kaki-50);
+    color: var(--color-kaki-500);
+    border: 1px solid var(--color-kaki-100);
+  }
+
+  .lst-badge-celadon {
+    background: var(--color-celadon-50);
+    color: var(--color-celadon-500);
+    border: 1px solid var(--color-celadon-100);
+  }
+
+  .lst-badge-error {
+    background: #FFF8F7;
+    color: var(--color-error);
+    border: 1px solid #F5C4BC;
+  }
+
+  /* Toggle */
+  .lst-row-toggle {
+    appearance: none;
+    width: 32px;
+    height: 18px;
+    border-radius: var(--radius-full);
+    background: var(--color-washi-300);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: background var(--duration-base);
+  }
+
+  .lst-row-toggle::after {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radius-full);
+    background: var(--color-white);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  .lst-row-toggle:checked {
+    background: var(--color-washi-900);
+  }
+
+  .lst-row-toggle:checked::after {
+    transform: translateX(14px);
+  }
+
+  /* Section header */
+  .lst-section-header {
+    padding: var(--lib-space-sm) var(--lib-space-md) var(--lib-space-xs);
+    font-family: var(--lib-font-mono);
+    font-size: 9px;
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .lst-section-header:not(:first-child) {
+    border-top: 1px solid var(--border-subtle);
+    margin-top: var(--lib-space-xs);
+  }
+
+  /* Separator */
+  .lst-sep {
+    height: 1px;
+    background: var(--border-subtle);
+    margin: var(--lib-space-xs) 0;
+    list-style: none;
+  }
+
+  /* ==============================================================
+     3. DESCRIPTION LIST — pares clave/valor
+     ============================================================== */
+
+  .lst-dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--lib-space-sm) var(--lib-space-lg);
+    align-items: baseline;
+  }
+
+  .lst-dl.lst-dl-wide {
+    grid-template-columns: 180px 1fr;
+  }
+
+  .lst-dl.lst-dl-stack {
+    grid-template-columns: 1fr;
+    gap: var(--lib-space-md);
+  }
+
+  .lst-dl.lst-dl-divided .lst-dt,
+  .lst-dl.lst-dl-divided .lst-dd {
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: var(--lib-space-sm);
+    padding-top: var(--lib-space-sm);
+  }
+
+  .lst-dl.lst-dl-divided .lst-dt:first-of-type,
+  .lst-dl.lst-dl-divided .lst-dd:first-of-type {
+    padding-top: 0;
+  }
+
+  .lst-dl.lst-dl-stack .lst-dt {
+    margin-bottom: calc(-1 * var(--lib-space-xs));
+  }
+
+  .lst-dt {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .lst-dd {
+    font-family: var(--lib-font-body);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-snug);
+    margin: 0;
+  }
+
+  .lst-dd.lst-dd-mono {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  /* ==============================================================
+     DARK SURFACE — envuelve el componente con :host([dark])
+     ============================================================== */
+
+  :host([dark]) ul.lst .lst-item::before {
+    background: oklch(28% 0.02 50);
+  }
+
+  :host([dark]) ol.lst .lst-item::before {
+    color: oklch(25% 0.02 50);
+  }
+
+  :host([dark]) .lst-item {
+    color: oklch(50% 0.02 55);
+  }
+
+  :host([dark]) .lst-ui {
+    background: oklch(12% 0.015 45);
+  }
+
+  :host([dark]) .lst-ui.lst-bordered {
+    border-color: oklch(18% 0.02 45);
+  }
+
+  :host([dark]) .lst-ui.lst-inset {
+    background: oklch(10% 0.015 45);
+  }
+
+  :host([dark]) .lst-ui.lst-divided .lst-row {
+    border-color: oklch(16% 0.02 45);
+  }
+
+  :host([dark]) .lst-ui.lst-interactive .lst-row:hover {
+    background: oklch(16% 0.02 45);
+  }
+
+  :host([dark]) .lst-section-header {
+    background: oklch(10% 0.015 45);
+    border-color: oklch(16% 0.02 45);
+    color: oklch(25% 0.02 50);
+  }
+
+  :host([dark]) .lst-sep {
+    background: oklch(16% 0.02 45);
+  }
+
+  :host([dark]) .lst-row-icon {
+    background: oklch(16% 0.02 45);
+    border-color: oklch(20% 0.02 45);
+    color: oklch(30% 0.02 50);
+  }
+
+  :host([dark]) .lst-row-avatar {
+    background: oklch(20% 0.02 45);
+    color: oklch(40% 0.02 50);
+  }
+
+  :host([dark]) .lst-row-label {
+    color: oklch(55% 0.02 55);
+  }
+
+  :host([dark]) .lst-row-desc {
+    color: oklch(30% 0.02 50);
+  }
+
+  :host([dark]) .lst-row-meta {
+    color: oklch(28% 0.02 50);
+  }
+
+  :host([dark]) .lst-row-action {
+    color: oklch(25% 0.02 50);
+  }
+
+  :host([dark]) .lst-row.is-selected {
+    background: oklch(18% 0.02 45) !important;
+  }
+
+  :host([dark]) .lst-row-toggle {
+    background: oklch(25% 0.02 45);
+  }
+
+  :host([dark]) .lst-dt {
+    color: oklch(28% 0.02 50);
+  }
+
+  :host([dark]) .lst-dd {
+    color: oklch(50% 0.02 55);
+  }
+
+  :host([dark]) .lst-dd-mono {
+    color: oklch(42% 0.02 50);
+  }
+
+  :host([dark]) .lst-dl.lst-dl-divided .lst-dt,
+  :host([dark]) .lst-dl.lst-dl-divided .lst-dd {
+    border-color: oklch(16% 0.02 45);
+  }
+
+  /* ==============================================================
+     SKELETON — loading state
+     ============================================================== */
+
+  .lst-item.skeleton .lst-skeleton-line {
+    display: inline-block;
+    width: 65%;
+    height: 0.75rem;
+    background: var(--color-washi-200);
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lst-item.skeleton .lst-skeleton-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%);
+    animation: lst-shimmer 1.8s infinite;
+  }
+
+  @keyframes lst-shimmer {
+    100% {
+      transform: translateX(100%);
+    }
   }
 }
