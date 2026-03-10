@@ -63,7 +63,6 @@ export * from './components/molecules/button-group/lib-button-group.component';
 
 
 export * from './components/organisms/dialog/lib-dialog.component';
-export * from './components/organisms/lib-list/lib-list.component';
 export * from './components/organisms/sidebar/lib-sidebar.component';
 export * from './components/organisms/stepper/lib-stepper.component';
 export * from './components/organisms/drawer/lib-drawer.component';
