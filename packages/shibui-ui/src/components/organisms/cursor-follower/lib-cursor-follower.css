@@ -1,28 +1,150 @@
-:host {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none; /* Vital: para que no bloquee los clicks reales */
-    z-index: var(--z-index-cursor, 9999);
-    mix-blend-mode: difference; /* El toque Shibui: cambia de color según el fondo */
-  }
-  
-  .cursor-dot {
-    width: var(--lib-cursor-size, 20px);
-    height: var(--lib-cursor-size, 20px);
-    background: var(--color-washi-100, #fff);
-    border-radius: 50%;
-    will-change: transform, width, height, opacity;
-    transition: 
-      width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
-      height 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
-      opacity 0.3s ease;
-    transform: translate3d(-50%, -50%, 0);
-  }
-  
-  /* Estado cuando pasamos sobre un botón (Hover State) */
-  :host([active]) .cursor-dot {
-    --lib-cursor-size: 60px;
+@layer tokens, reset, components;
 
-    opacity: 0.5;
+/* ============================================================
+   LIB-CURSOR-FOLLOWER — Shibui UI
+   Tres capas: dot (instantáneo) · ring (lerp) · label
+   Cuatro modos: ink · minimal · kaki · ghost
+   Cinco estados: default · hover · text · press · hidden
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: contents;
+    pointer-events: none;
   }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+
+  /* ── Dot — sigue exactamente al cursor ── */
+  .cur-dot {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    transition:
+      width 200ms var(--ease-out),
+      height 200ms var(--ease-out),
+      background 250ms,
+      border-radius 200ms,
+      opacity 300ms;
+  }
+
+  /* ── Ring — sigue con lag (lerp en JS) ── */
+  .cur-ring {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    transition:
+      width 300ms var(--ease-out),
+      height 300ms var(--ease-out),
+      border-color 300ms,
+      border-width 200ms,
+      background 300ms,
+      opacity 300ms;
+  }
+
+  /* ── Label — aparece sobre [data-cursor-label] ── */
+  .cur-label {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-washi-50);
+    background: var(--color-washi-900);
+    padding: 4px 8px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(14px, -50%);
+    transition: opacity 200ms;
+    will-change: transform;
+  }
+
+  .cur-label.is-visible {
+    opacity: 1;
+  }
+
+  /* ── Trail particles — inyectadas en document.body ── */
+
+
+  /* ============================================================
+     MODOS — aplicados por JS al cambiar :host([mode])
+     Los valores base se sobreescriben inline desde JS
+     ============================================================ */
+
+  /* ── Estado: hover sobre interactivos ── */
+  :host([curstate="hover"]) .cur-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--color-kaki-500);
+  }
+
+  :host([curstate="hover"]) .cur-ring {
+    width: 52px;
+    height: 52px;
+    border-color: var(--color-kaki-400) !important;
+    border-width: 1.5px !important;
+  }
+
+  /* ── Estado: hover sobre texto — cursor línea vertical ── */
+  :host([curstate="text"]) .cur-dot {
+    width: 2px;
+    height: 22px;
+    border-radius: 1px;
+    background: var(--color-washi-700);
+  }
+
+  :host([curstate="text"]) .cur-ring {
+    opacity: 0;
+  }
+
+  /* ── Estado: press ── */
+  :host([curstate="press"]) .cur-dot {
+    width: 4px;
+    height: 4px;
+    background: var(--color-kaki-600);
+  }
+
+  :host([curstate="press"]) .cur-ring {
+    width: 22px;
+    height: 22px;
+    border-color: var(--color-kaki-500) !important;
+    background: rgba(184, 90, 30, 0.06) !important;
+  }
+
+  /* ── Estado: oculto (fuera del viewport) ── */
+  :host([curstate="hidden"]) .cur-dot,
+  :host([curstate="hidden"]) .cur-ring {
+    opacity: 0;
+  }
+
+  /* ── Zona oscura — el ring ajusta su color automáticamente ── */
+  :host([dark-zone]) .cur-ring {
+    border-color: rgba(250, 247, 244, 0.25) !important;
+  }
+
+  /* ── Responsive — desactivar en touch ── */
+  @media (pointer: coarse),
+  (max-width: 768px) {
+
+    .cur-dot,
+    .cur-ring,
+    .cur-label {
+      display: none;
+    }
+  }
+}
