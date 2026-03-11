@@ -1,46 +1,182 @@
-:host {
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-BUTTON-GROUP — Shibui UI
+   Agrupa lib-button: colapso de bordes, toggle, split.
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-flex;
+    align-items: stretch;
+    vertical-align: middle;
+    position: relative;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+
+  /* ── Slot wrapper ── */
+  .bg-wrap {
+    display: inline-flex;
+    align-items: stretch;
+    position: relative;
+  }
+
+  /* — block */
+  :host([block]) {
+    display: flex;
+    width: 100%;
+  }
+
+  :host([block]) .bg-wrap {
+    display: flex;
+    width: 100%;
+  }
+
+  /* lib-button flex:1 cuando block — via ::slotted */
+  :host([block]) ::slotted(lib-button) {
+    flex: 1;
+  }
+
+  /* — vertical */
+  :host([orientation="vertical"]) .bg-wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  :host([orientation="vertical"][block]) .bg-wrap {
+    width: 100%;
+  }
+
+}
+
+
+/* ============================================================
+   LIB-BUTTON-SEP — separador explícito entre botones del grupo
+   ============================================================ */
+
+/* Estilos aplicados al :host directamente */
+:host(lib-button-sep) {
   display: inline-flex;
-  border-radius: var(--lib-radius-md);
+  flex-shrink: 0;
+  align-self: stretch;
+  width: 1px;
+  background: var(--border-default);
+  position: relative;
+  z-index: 1;
 }
 
-/* Alineación vertical opcional */
-:host([vertical]) {
-  flex-direction: column;
+:host(lib-button-sep[dark]) {
+  background: rgba(255, 255, 255, 0.1);
 }
 
-/* Estilos comunes para todos los botones del grupo */
-::slotted(lib-button) {
-  --lib-radius-md: 0; /* Anulamos el radio por defecto del botón */
+
+/* ============================================================
+   LIB-BUTTON-SPLIT — acción principal + flecha + menú
+   ============================================================ */
+
+@layer reset {
+  :host(lib-button-split) {
+    display: inline-flex;
+    align-items: stretch;
+    position: relative;
+    vertical-align: middle;
+  }
 }
 
-/* Primer botón: Mantiene redondeado izquierdo (o superior en vertical) */
-:host(:not([vertical])) ::slotted(lib-button:first-of-type) {
-  --lib-radius-md: var(--lib-radius-md-base, 8px) 0 0
-    var(--lib-radius-md-base, 8px);
-}
+@layer components {
 
-/* Último botón: Mantiene redondeado derecho (o inferior en vertical) */
-:host(:not([vertical])) ::slotted(lib-button:last-of-type) {
-  --lib-radius-md: 0 var(--lib-radius-md-base, 8px)
-    var(--lib-radius-md-base, 8px) 0;
-}
+  /* ── Wrapper ── */
+  .split-wrap {
+    display: inline-flex;
+    align-items: stretch;
+    position: relative;
+  }
 
-/* Solapamiento de bordes para evitar grosor doble */
-:host(:not([vertical])) ::slotted(lib-button:not(:first-of-type)) {
-  margin-left: -1px;
-}
+  /* ── Menú desplegable ── */
+  .split-menu {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    min-width: 190px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 8px 24px rgba(26, 20, 14, 0.1);
+    z-index: 50;
+    display: none;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      opacity var(--duration-base) var(--ease-out),
+      transform var(--duration-base) var(--ease-out);
+  }
 
-/* --- MODO VERTICAL --- */
-:host([vertical]) ::slotted(lib-button:first-of-type) {
-  --lib-radius-md: var(--lib-radius-md-base, 8px) var(--lib-radius-md-base, 8px)
-    0 0;
-}
+  .split-menu.is-open {
+    opacity: 1;
+    transform: none;
+  }
 
-:host([vertical]) ::slotted(lib-button:last-of-type) {
-  --lib-radius-md: 0 0 var(--lib-radius-md-base, 8px)
-    var(--lib-radius-md-base, 8px);
-}
+  .split-menu-item,
+  .split-menu ::slotted(button) {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: var(--lib-space-sm);
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--color-washi-100);
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--duration-fast), color var(--duration-fast);
+  }
 
-:host([vertical]) ::slotted(lib-button:not(:first-of-type)) {
-  margin-top: -1px;
+  .split-menu-item:last-child,
+  .split-menu ::slotted(button:last-child) {
+    border-bottom: none;
+  }
+
+  .split-menu-item:hover,
+  .split-menu ::slotted(button:hover) {
+    background: var(--bg-base);
+    color: var(--text-primary);
+  }
+
+  .split-menu-item:disabled,
+  .split-menu ::slotted(button:disabled) {
+    opacity: 0.38;
+    cursor: not-allowed;
+  }
+
+  /* Dark menú */
+  :host([dark]) .split-menu {
+    background: var(--color-washi-800);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  :host([dark]) .split-menu-item,
+  :host([dark]) .split-menu ::slotted(button) {
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+    color: rgba(250, 247, 244, 0.45);
+  }
+
+  :host([dark]) .split-menu-item:hover,
+  :host([dark]) .split-menu ::slotted(button:hover) {
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(250, 247, 244, 0.85);
+  }
+
 }
