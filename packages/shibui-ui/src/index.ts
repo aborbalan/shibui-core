@@ -46,7 +46,6 @@ export * from './components/molecules/select/lib-select.component';
 export * from './components/molecules/lib-alert/lib-alert.component';
 export * from './components/molecules/dropdown/lib-dropdown.component';
 export * from './components/molecules/empty-state/lib-empty-state.component';
-export * from './components/molecules/multiselect/lib-multiselect.component';
 export * from './components/molecules/chip/lib-chip.component';
 export * from './components/molecules/file-uploader/lib-file-uploader.component';
 export * from './components/molecules/segmented-control/lib-segmented-control.component';

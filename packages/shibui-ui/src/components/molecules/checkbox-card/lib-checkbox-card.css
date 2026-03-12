@@ -1,0 +1,604 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-CHECKBOX-CARD — Shibui UI · SG-57
+   Colores  : kaki (default) · celadon
+   Layouts  : vertical · horizontal · compact
+   Input    : checkbox · radio
+   Estados  : checked · disabled · error · dark
+   ============================================================ */
+
+@layer reset {
+    :host {
+        display: block;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+}
+
+@layer components {
+
+    /* ── Reset del input nativo ── */
+    .cc-input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+    }
+
+    /* ────────────────────────────────────────
+     WRAPPER — <label> raíz
+     ──────────────────────────────────────── */
+    .cc {
+        display: block;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        outline: none;
+    }
+
+    .cc:focus-within .cc-body {
+        outline: 2px solid var(--color-kaki-400);
+        outline-offset: 2px;
+    }
+
+    /* ────────────────────────────────────────
+     CUERPO DE LA CARD
+     ──────────────────────────────────────── */
+    .cc-body {
+        position: relative;
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-elevated);
+        padding: var(--lib-space-lg);
+        overflow: hidden;
+        transition:
+            border-color var(--duration-base) var(--ease-out),
+            background var(--duration-base) var(--ease-out),
+            box-shadow var(--duration-base) var(--ease-out),
+            transform var(--duration-fast) var(--ease-out);
+    }
+
+    /* Hover */
+    .cc:hover .cc-body {
+        border-color: var(--border-default);
+        background: var(--bg-surface);
+    }
+
+    /* Press */
+    .cc:active .cc-body {
+        transform: scale(.985);
+    }
+
+    /* Shine diagonal al checked */
+    .cc-body::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, .4) 0%, transparent 50%);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--duration-slow);
+    }
+
+    .cc-input:checked~.cc-body::before {
+        opacity: 1;
+    }
+
+    /* ── Kintsugi — línea kaki en el borde inferior al checked ── */
+    .cc-body::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--color-kaki-400), transparent);
+        opacity: 0;
+        transition: opacity var(--duration-slow);
+    }
+
+    .cc-input:checked~.cc-body::after {
+        opacity: 1;
+    }
+
+    /* ── Checked — kaki (default) ── */
+    .cc-input:checked~.cc-body {
+        border-color: var(--color-kaki-500);
+        background: var(--color-kaki-50);
+    }
+
+    /* ────────────────────────────────────────
+     CHECKMARK INDICATOR
+     ──────────────────────────────────────── */
+    .cc-check {
+        position: absolute;
+        top: var(--lib-space-md);
+        right: var(--lib-space-md);
+        width: 18px;
+        height: 18px;
+        border: 1px solid var(--border-default);
+        background: var(--bg-elevated);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        z-index: 2;
+        pointer-events: none;
+        transition:
+            border-color var(--duration-base) var(--ease-out),
+            background var(--duration-base) var(--ease-out);
+    }
+
+    .cc-check svg {
+        width: 10px;
+        height: 10px;
+        stroke: #fff;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+        opacity: 0;
+        transform: scale(.5);
+        transition:
+            opacity var(--duration-base) var(--ease-bounce),
+            transform var(--duration-base) var(--ease-bounce);
+    }
+
+    .cc-input:checked~.cc-body .cc-check {
+        border-color: var(--color-kaki-500);
+        background: var(--color-kaki-500);
+    }
+
+    .cc-input:checked~.cc-body .cc-check svg {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* Pill checkmark */
+    .cc-check-pill {
+        border-radius: 999px;
+    }
+
+    /* ────────────────────────────────────────
+     ÁREAS DE CONTENIDO
+     ──────────────────────────────────────── */
+
+    /* Icono */
+    .cc-icon {
+        margin-bottom: var(--lib-space-md);
+        display: flex;
+        align-items: center;
+    }
+
+    .cc-icon svg,
+    .cc-icon img {
+        width: 28px;
+        height: 28px;
+        color: var(--text-muted);
+        transition: color var(--duration-base);
+    }
+
+    .cc-input:checked~.cc-body .cc-icon svg {
+        color: var(--color-kaki-500);
+    }
+
+    /* Título */
+    .cc-title {
+        font-family: var(--lib-font-display);
+        font-size: 1.2rem;
+        font-weight: 300;
+        letter-spacing: var(--tracking-tight);
+        color: var(--text-primary);
+        line-height: 1.2;
+        margin-bottom: var(--lib-space-xs);
+        padding-right: var(--lib-space-xl);
+        /* espacio para el checkmark */
+    }
+
+    .cc-input:checked~.cc-body .cc-title {
+        color: var(--color-kaki-600);
+    }
+
+    /* Descripción */
+    .cc-desc {
+        font-size: var(--text-xs);
+        letter-spacing: .06em;
+        color: var(--text-secondary);
+        line-height: 1.7;
+    }
+
+    .cc-input:checked~.cc-body .cc-desc {
+        color: var(--text-secondary);
+    }
+
+    /* Badge */
+    .cc-badge {
+        display: inline-block;
+        font-family: var(--lib-font-mono);
+        font-size: 9px;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+        padding: 1px 6px;
+        border: 1px solid var(--border-subtle);
+        color: var(--text-muted);
+        margin-bottom: var(--lib-space-sm);
+        transition:
+            border-color var(--duration-base),
+            color var(--duration-base);
+    }
+
+    .cc-input:checked~.cc-body .cc-badge {
+        border-color: rgba(184, 90, 30, .3);
+        color: var(--color-kaki-500);
+    }
+
+    /* Precio */
+    .cc-price {
+        font-family: var(--lib-font-display);
+        font-size: 2rem;
+        font-weight: 300;
+        letter-spacing: var(--tracking-tight);
+        line-height: 1;
+        color: var(--text-primary);
+        margin-top: var(--lib-space-md);
+    }
+
+    .cc-price sup {
+        font-size: .9rem;
+        vertical-align: super;
+        color: var(--text-muted);
+        font-family: var(--lib-font-mono);
+        letter-spacing: .06em;
+    }
+
+    .cc-price sub {
+        font-size: .65rem;
+        vertical-align: baseline;
+        color: var(--text-muted);
+        font-family: var(--lib-font-mono);
+        letter-spacing: .08em;
+    }
+
+    .cc-input:checked~.cc-body .cc-price {
+        color: var(--color-kaki-600);
+    }
+
+    /* Divider */
+    .cc-divider {
+        height: 1px;
+        background: var(--border-subtle);
+        margin: var(--lib-space-md) 0;
+        transition: background var(--duration-base);
+    }
+
+    .cc-input:checked~.cc-body .cc-divider {
+        background: rgba(184, 90, 30, .2);
+    }
+
+    /* Feature list */
+    .cc-features {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--lib-space-sm);
+    }
+
+    .cc-features li {
+        font-size: var(--text-xs);
+        letter-spacing: .06em;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        gap: var(--lib-space-sm);
+    }
+
+    .cc-features li::before {
+        content: '';
+        width: 12px;
+        height: 1px;
+        background: var(--border-default);
+        flex-shrink: 0;
+        transition:
+            background var(--duration-base),
+            width var(--duration-base);
+    }
+
+    .cc-input:checked~.cc-body .cc-features li::before {
+        background: var(--color-kaki-400);
+        width: 14px;
+    }
+
+    .cc-input:checked~.cc-body .cc-features li {
+        color: var(--text-primary);
+    }
+
+    /* ────────────────────────────────────────
+     RIPPLE
+     ──────────────────────────────────────── */
+    .cc-ripple {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .cc-ripple-dot {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: var(--color-kaki-400);
+        border-radius: 50%;
+        transform: scale(0);
+        opacity: .18;
+        animation: cc-ripple 500ms ease-out forwards;
+    }
+
+    @keyframes cc-ripple {
+        to {
+            transform: scale(80);
+            opacity: 0;
+        }
+    }
+
+    /* ════════════════════════════════════════
+     LAYOUT · HORIZONTAL
+     ════════════════════════════════════════ */
+    :host([layout="horizontal"]) .cc-body {
+        display: flex;
+        align-items: center;
+        gap: var(--lib-space-lg);
+        padding: var(--lib-space-md) var(--lib-space-lg);
+    }
+
+    :host([layout="horizontal"]) .cc-icon {
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+
+    :host([layout="horizontal"]) .cc-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    :host([layout="horizontal"]) .cc-title {
+        margin-bottom: 2px;
+        font-size: 1rem;
+        padding-right: var(--lib-space-lg);
+    }
+
+    :host([layout="horizontal"]) .cc-check {
+        top: 50%;
+        right: var(--lib-space-md);
+        transform: translateY(-50%);
+    }
+
+    /* ════════════════════════════════════════
+     LAYOUT · COMPACT
+     ════════════════════════════════════════ */
+    :host([layout="compact"]) .cc-body {
+        padding: var(--lib-space-md) var(--lib-space-lg);
+    }
+
+    :host([layout="compact"]) .cc-title {
+        font-size: 1rem;
+    }
+
+    /* ════════════════════════════════════════
+     COLOR · CELADON
+     ════════════════════════════════════════ */
+    :host([color="celadon"]) .cc-input:checked~.cc-body {
+        border-color: var(--color-celadon-500);
+        background: var(--color-celadon-50);
+    }
+
+    :host([color="celadon"]) .cc-input:checked~.cc-body::after {
+        background: linear-gradient(90deg, transparent, var(--color-celadon-400), transparent);
+    }
+
+    :host([color="celadon"]) .cc-input:checked~.cc-body .cc-check {
+        border-color: var(--color-celadon-500);
+        background: var(--color-celadon-500);
+    }
+
+    :host([color="celadon"]) .cc-input:checked~.cc-body .cc-title {
+        color: var(--color-celadon-500);
+    }
+
+    :host([color="celadon"]) .cc-input:checked~.cc-body .cc-icon svg {
+        color: var(--color-celadon-500);
+    }
+
+    :host([color="celadon"]) .cc-input:checked~.cc-body .cc-badge {
+        border-color: rgba(53, 113, 100, .3);
+        color: var(--color-celadon-500);
+    }
+
+    :host([color="celadon"]) .cc-input:checked~.cc-body .cc-features li::before {
+        background: var(--color-celadon-400);
+    }
+
+    :host([color="celadon"]) .cc-input:checked~.cc-body .cc-divider {
+        background: rgba(53, 113, 100, .2);
+    }
+
+    :host([color="celadon"]) .cc-ripple-dot {
+        background: var(--color-celadon-400);
+    }
+
+    :host([color="celadon"]) .cc:focus-within .cc-body {
+        outline-color: var(--color-celadon-400);
+    }
+
+    /* ════════════════════════════════════════
+     MODO RADIO — indicador circular
+     ════════════════════════════════════════ */
+    :host([input-type="radio"]) .cc-check {
+        border-radius: 50%;
+    }
+
+    :host([input-type="radio"]) .cc-input:checked~.cc-body .cc-check {
+        background: var(--color-kaki-500);
+        border-color: var(--color-kaki-500);
+    }
+
+    /* ════════════════════════════════════════
+     DARK
+     ════════════════════════════════════════ */
+    :host([dark]) .cc-body {
+        background: rgba(255, 255, 255, .04);
+        border-color: rgba(255, 255, 255, .08);
+    }
+
+    :host([dark]) .cc:hover .cc-body {
+        border-color: rgba(255, 255, 255, .15);
+        background: rgba(255, 255, 255, .06);
+    }
+
+    :host([dark]) .cc-check {
+        background: rgba(255, 255, 255, .06);
+        border-color: rgba(255, 255, 255, .14);
+    }
+
+    :host([dark]) .cc-title {
+        color: rgba(250, 247, 244, .75);
+    }
+
+    :host([dark]) .cc-desc {
+        color: rgba(250, 247, 244, .28);
+    }
+
+    :host([dark]) .cc-badge {
+        border-color: rgba(255, 255, 255, .1);
+        color: rgba(250, 247, 244, .3);
+    }
+
+    :host([dark]) .cc-divider {
+        background: rgba(255, 255, 255, .08);
+    }
+
+    :host([dark]) .cc-features li {
+        color: rgba(250, 247, 244, .3);
+    }
+
+    :host([dark]) .cc-features li::before {
+        background: rgba(255, 255, 255, .15);
+    }
+
+    :host([dark]) .cc-price {
+        color: rgba(250, 247, 244, .75);
+    }
+
+    :host([dark]) .cc-price sup,
+    :host([dark]) .cc-price sub {
+        color: rgba(250, 247, 244, .3);
+    }
+
+    :host([dark]) .cc-input:checked~.cc-body {
+        border-color: var(--color-kaki-500);
+        background: rgba(184, 90, 30, .08);
+    }
+
+    :host([dark]) .cc-input:checked~.cc-body .cc-check {
+        border-color: var(--color-kaki-500);
+        background: var(--color-kaki-500);
+    }
+
+    :host([dark]) .cc-input:checked~.cc-body .cc-title {
+        color: var(--color-kaki-400);
+    }
+
+    :host([dark]) .cc-input:checked~.cc-body .cc-desc {
+        color: rgba(250, 247, 244, .4);
+    }
+
+    :host([dark]) .cc-input:checked~.cc-body .cc-badge {
+        border-color: rgba(184, 90, 30, .35);
+        color: var(--color-kaki-400);
+    }
+
+    :host([dark]) .cc-input:checked~.cc-body .cc-divider {
+        background: rgba(184, 90, 30, .2);
+    }
+
+    :host([dark]) .cc-input:checked~.cc-body .cc-features li {
+        color: rgba(250, 247, 244, .55);
+    }
+
+    :host([dark]) .cc-input:checked~.cc-body .cc-features li::before {
+        background: var(--color-kaki-400);
+    }
+
+    :host([dark]) .cc-input:checked~.cc-body .cc-price {
+        color: var(--color-kaki-400);
+    }
+
+    :host([dark]) .cc-input:checked~.cc-body .cc-icon svg {
+        color: var(--color-kaki-400);
+    }
+
+    /* ════════════════════════════════════════
+     ESTADO · DISABLED
+     ════════════════════════════════════════ */
+    :host([disabled]) .cc {
+        pointer-events: none;
+        opacity: .4;
+    }
+
+    :host([disabled]) .cc-body {
+        cursor: not-allowed;
+    }
+
+    /* ════════════════════════════════════════
+     ESTADO · ERROR
+     ════════════════════════════════════════ */
+    :host([error]) .cc-body {
+        border-color: rgba(192, 57, 43, .4);
+        background: rgba(192, 57, 43, .03);
+    }
+
+    :host([error]) .cc:hover .cc-body {
+        border-color: var(--color-error);
+    }
+
+    /* ════════════════════════════════════════
+     VARIANTE · IMAGE CARD
+     ════════════════════════════════════════ */
+    .cc-img-thumb {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(.4);
+        transition: filter var(--duration-slow);
+    }
+
+    .cc-input:checked~.cc-body .cc-img-thumb {
+        filter: grayscale(0);
+    }
+
+    .cc-img-content {
+        padding: var(--lib-space-md) var(--lib-space-lg) var(--lib-space-lg);
+    }
+
+    :host([image]) .cc-body {
+        padding: 0;
+    }
+
+    :host([image]) .cc-check {
+        top: var(--lib-space-sm);
+        right: var(--lib-space-sm);
+        background: rgba(255, 255, 255, .85);
+    }
+
+    :host([image]) .cc-input:checked~.cc-body .cc-check {
+        background: var(--color-kaki-500);
+        border-color: var(--color-kaki-500);
+    }
+
+}
