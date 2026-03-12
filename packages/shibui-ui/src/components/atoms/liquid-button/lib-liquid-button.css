@@ -50,7 +50,7 @@
     outline-offset: 2px;
   }
 
-  .btn:active:not(:disabled):not(.is-loading) {
+  .btn:active:not(:disabled, .is-loading) {
     transform: translateY(1px);
   }
 

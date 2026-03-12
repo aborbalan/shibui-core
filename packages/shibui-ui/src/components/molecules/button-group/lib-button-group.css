@@ -74,7 +74,7 @@
 }
 
 :host(lib-button-sep[dark]) {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgb(255, 255, 255, 0.1);
 }
 
 
@@ -108,7 +108,7 @@
     min-width: 190px;
     background: var(--bg-elevated);
     border: 1px solid var(--border-subtle);
-    box-shadow: 0 8px 24px rgba(26, 20, 14, 0.1);
+    box-shadow: 0 8px 24px rgb(26, 20, 14, 0.1);
     z-index: 50;
     display: none;
     opacity: 0;
@@ -163,20 +163,20 @@
   /* Dark menú */
   :host([dark]) .split-menu {
     background: var(--color-washi-800);
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-color: rgb(255, 255, 255, 0.08);
+    box-shadow: 0 8px 24px rgb(0, 0, 0, 0.3);
   }
 
   :host([dark]) .split-menu-item,
   :host([dark]) .split-menu ::slotted(button) {
-    border-bottom-color: rgba(255, 255, 255, 0.05);
-    color: rgba(250, 247, 244, 0.45);
+    border-bottom-color: rgb(255, 255, 255, 0.05);
+    color: rgb(250, 247, 244, 0.45);
   }
 
   :host([dark]) .split-menu-item:hover,
   :host([dark]) .split-menu ::slotted(button:hover) {
-    background: rgba(255, 255, 255, 0.07);
-    color: rgba(250, 247, 244, 0.85);
+    background: rgb(255, 255, 255, 0.07);
+    color: rgb(250, 247, 244, 0.85);
   }
 
 }

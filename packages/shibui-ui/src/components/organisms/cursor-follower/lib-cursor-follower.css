@@ -123,7 +123,7 @@
     width: 22px;
     height: 22px;
     border-color: var(--color-kaki-500) !important;
-    background: rgba(184, 90, 30, 0.06) !important;
+    background: rgb(184, 90, 30, 0.06) !important;
   }
 
   /* ── Estado: oculto (fuera del viewport) ── */
@@ -134,13 +134,12 @@
 
   /* ── Zona oscura — el ring ajusta su color automáticamente ── */
   :host([dark-zone]) .cur-ring {
-    border-color: rgba(250, 247, 244, 0.25) !important;
+    border-color: rgb(250, 247, 244, 0.25) !important;
   }
 
   /* ── Responsive — desactivar en touch ── */
   @media (pointer: coarse),
-  (max-width: 768px) {
-
+  (width <= 768px) {
     .cur-dot,
     .cur-ring,
     .cur-label {

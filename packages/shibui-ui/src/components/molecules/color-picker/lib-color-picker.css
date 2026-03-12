@@ -67,7 +67,7 @@
     height: 14px;
     border-radius: var(--radius-full);
     border: 2px solid #fff;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 0 1px rgb(0, 0, 0, 0.3), 0 2px 4px rgb(0, 0, 0, 0.2);
     transform: translate(-50%, -50%);
     z-index: 2;
     pointer-events: none;
@@ -93,7 +93,7 @@
     height: 28px;
     border-radius: var(--radius-full);
     flex-shrink: 0;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgb(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
   }
@@ -109,7 +109,7 @@
       linear-gradient(45deg, transparent 75%, #ccc 75%),
       linear-gradient(-45deg, transparent 75%, #ccc 75%);
     background-size: 6px 6px;
-    background-position: 0 0, 0 3px, 3px -3px, -3px 0px;
+    background-position: 0 0, 0 3px, 3px -3px, -3px 0;
   }
 
   .cp-preview-color {
@@ -127,24 +127,23 @@
 
   /* Range base */
   .cp-range {
-    -webkit-appearance: none;
     appearance: none;
     width: 100%;
     height: 10px;
     border-radius: var(--radius-full);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid rgb(0, 0, 0, 0.08);
     outline: none;
     cursor: pointer;
   }
 
   .cp-range::-webkit-slider-thumb {
-    -webkit-appearance: none;
+    appearance: none;
     width: 14px;
     height: 14px;
     border-radius: var(--radius-full);
     background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgb(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px rgb(0, 0, 0, 0.2);
     cursor: grab;
     transition: transform var(--duration-fast), box-shadow var(--duration-fast);
   }
@@ -152,7 +151,7 @@
   .cp-range::-webkit-slider-thumb:active {
     cursor: grabbing;
     transform: scale(1.15);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 6px rgb(0, 0, 0, 0.25);
   }
 
   .cp-range::-moz-range-thumb {
@@ -160,18 +159,18 @@
     height: 14px;
     border-radius: var(--radius-full);
     background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgb(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px rgb(0, 0, 0, 0.2);
     cursor: grab;
   }
 
   .cp-range-hue {
     background: linear-gradient(to right,
-        hsl(0, 100%, 50%), hsl(30, 100%, 50%), hsl(60, 100%, 50%),
-        hsl(90, 100%, 50%), hsl(120, 100%, 50%), hsl(150, 100%, 50%),
-        hsl(180, 100%, 50%), hsl(210, 100%, 50%), hsl(240, 100%, 50%),
-        hsl(270, 100%, 50%), hsl(300, 100%, 50%), hsl(330, 100%, 50%),
-        hsl(360, 100%, 50%));
+        hsl(0deg, 100%, 50%), hsl(30deg, 100%, 50%), hsl(60deg, 100%, 50%),
+        hsl(90deg, 100%, 50%), hsl(120deg, 100%, 50%), hsl(150deg, 100%, 50%),
+        hsl(180deg, 100%, 50%), hsl(210deg, 100%, 50%), hsl(240deg, 100%, 50%),
+        hsl(270deg, 100%, 50%), hsl(300deg, 100%, 50%), hsl(330deg, 100%, 50%),
+        hsl(360deg, 100%, 50%));
   }
 
   .cp-alpha-wrap {
@@ -189,10 +188,10 @@
       linear-gradient(45deg, transparent 75%, #aaa 75%),
       linear-gradient(-45deg, transparent 75%, #aaa 75%);
     background-size: 8px 8px;
-    background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+    background-position: 0 0, 0 4px, 4px -4px, -4px 0;
     background-color: #eee;
     border-radius: var(--radius-full);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid rgb(0, 0, 0, 0.08);
   }
 
   .cp-alpha-checker .cp-range-alpha {
@@ -257,7 +256,7 @@
 
   .cp-input:focus {
     border-color: var(--color-washi-700);
-    box-shadow: 0 0 0 3px rgba(26, 20, 14, 0.09);
+    box-shadow: 0 0 0 3px rgb(26, 20, 14, 0.09);
   }
 
   .cp-input[type="number"] {
@@ -388,13 +387,13 @@
   .cp-trigger:focus,
   .cp-trigger.is-open {
     border-color: var(--color-washi-700);
-    box-shadow: 0 0 0 3px rgba(26, 20, 14, 0.09);
+    box-shadow: 0 0 0 3px rgb(26, 20, 14, 0.09);
   }
 
   .cp-trigger-dot {
     width: 18px;
     height: 18px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgb(0, 0, 0, 0.1);
     flex-shrink: 0;
     position: relative;
     overflow: hidden;
@@ -410,7 +409,7 @@
       linear-gradient(45deg, transparent 75%, #ccc 75%),
       linear-gradient(-45deg, transparent 75%, #ccc 75%);
     background-size: 6px 6px;
-    background-position: 0 0, 0 3px, 3px -3px, -3px 0px;
+    background-position: 0 0, 0 3px, 3px -3px, -3px 0;
   }
 
   .cp-trigger-color {
@@ -466,7 +465,7 @@
   .cp-swatch {
     width: 24px;
     height: 24px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid rgb(0, 0, 0, 0.08);
     cursor: pointer;
     position: relative;
     flex-shrink: 0;
@@ -475,7 +474,7 @@
 
   .cp-swatch:hover {
     transform: scale(1.18);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 2px 8px rgb(0, 0, 0, 0.18);
     z-index: 1;
   }
 
@@ -530,88 +529,88 @@
      DARK MODE
      ══════════════════════════════════════ */
   :host([dark]) .cp {
-    background: oklch(12% 0.015 45);
-    border-color: oklch(20% 0.02 45);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    background: oklch(12% 0.015 45deg);
+    border-color: oklch(20% 0.02 45deg);
+    box-shadow: 0 8px 32px rgb(0, 0, 0, 0.5);
   }
 
   :host([dark]) .cp-input {
-    background: oklch(10% 0.015 45);
-    border-color: oklch(22% 0.02 45);
-    color: oklch(65% 0.02 55);
+    background: oklch(10% 0.015 45deg);
+    border-color: oklch(22% 0.02 45deg);
+    color: oklch(65% 0.02 55deg);
   }
 
   :host([dark]) .cp-input:focus {
-    border-color: oklch(50% 0.02 50);
+    border-color: oklch(50% 0.02 50deg);
   }
 
   :host([dark]) .cp-input-label {
-    color: oklch(25% 0.02 50);
+    color: oklch(25% 0.02 50deg);
   }
 
   :host([dark]) .cp-saved {
-    border-color: oklch(18% 0.02 45);
+    border-color: oklch(18% 0.02 45deg);
   }
 
   :host([dark]) .cp-saved-label {
-    color: oklch(25% 0.02 50);
+    color: oklch(25% 0.02 50deg);
   }
 
   :host([dark]) .cp-saved-add {
-    border-color: oklch(22% 0.02 45);
-    color: oklch(30% 0.02 50);
+    border-color: oklch(22% 0.02 45deg);
+    color: oklch(30% 0.02 50deg);
   }
 
   :host([dark]) .cp-saved-add:hover {
-    background: oklch(16% 0.02 45);
-    border-color: oklch(40% 0.02 50);
-    color: oklch(65% 0.02 55);
+    background: oklch(16% 0.02 45deg);
+    border-color: oklch(40% 0.02 50deg);
+    color: oklch(65% 0.02 55deg);
   }
 
   :host([dark]) .cp-actions {
-    background: oklch(10% 0.015 45);
-    border-color: oklch(18% 0.02 45);
+    background: oklch(10% 0.015 45deg);
+    border-color: oklch(18% 0.02 45deg);
   }
 
   :host([dark]) .cp-btn-cancel {
-    border-color: oklch(22% 0.02 45);
-    color: oklch(35% 0.02 50);
+    border-color: oklch(22% 0.02 45deg);
+    color: oklch(35% 0.02 50deg);
   }
 
   :host([dark]) .cp-btn-cancel:hover {
-    background: oklch(18% 0.02 45);
-    color: oklch(65% 0.02 55);
+    background: oklch(18% 0.02 45deg);
+    color: oklch(65% 0.02 55deg);
   }
 
   :host([dark]) .cp-mode-btn {
-    color: oklch(30% 0.02 50);
+    color: oklch(30% 0.02 50deg);
   }
 
   :host([dark]) .cp-mode-btn:hover {
-    color: oklch(65% 0.02 55);
+    color: oklch(65% 0.02 55deg);
   }
 
   :host([dark]) .cp-inputs-wrap {
-    border-color: oklch(18% 0.02 45);
+    border-color: oklch(18% 0.02 45deg);
   }
 
   :host([dark]) .cp-trigger {
-    background: oklch(14% 0.02 45);
-    border-color: oklch(20% 0.02 45);
-    color: oklch(45% 0.02 50);
+    background: oklch(14% 0.02 45deg);
+    border-color: oklch(20% 0.02 45deg);
+    color: oklch(45% 0.02 50deg);
   }
 
   :host([dark]) .cp-trigger:focus,
   :host([dark]) .cp-trigger.is-open {
-    border-color: oklch(50% 0.02 50);
+    border-color: oklch(50% 0.02 50deg);
   }
 
   :host([dark]) .cp-swatch.is-selected::after {
-    border-color: oklch(65% 0.02 55);
+    border-color: oklch(65% 0.02 55deg);
   }
 
   :host([dark]) .cp-swatches-label {
-    color: oklch(28% 0.02 50);
+    color: oklch(28% 0.02 50deg);
   }
 
   /* ── Disabled ── */

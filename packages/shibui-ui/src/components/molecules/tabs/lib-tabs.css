@@ -99,7 +99,7 @@
   .tb-tab svg {
     width: 13px;
     height: 13px;
-    stroke: currentColor;
+    stroke: currentcolor;
     fill: none;
     stroke-width: 1.5;
     stroke-linecap: round;
@@ -250,7 +250,7 @@
   :host([variant="pill"]) .tb-tab.is-active {
     background: #fff;
     color: var(--color-washi-900);
-    box-shadow: 0 1px 4px rgba(26, 20, 14, .1);
+    box-shadow: 0 1px 4px rgb(26, 20, 14, .1);
   }
 
   :host([variant="pill"]) .tb-panels {
@@ -268,7 +268,7 @@
   }
 
   :host([variant="pill"][color="kaki"]) .tb-tab.is-active .tb-badge {
-    background: rgba(255, 255, 255, .3);
+    background: rgb(255, 255, 255, .3);
     color: #fff;
   }
 
@@ -442,11 +442,11 @@
   }
 
   :host([dark]) .tb-tab {
-    color: rgba(250, 247, 244, .25);
+    color: rgb(250, 247, 244, .25);
   }
 
   :host([dark]) .tb-tab:hover {
-    color: rgba(250, 247, 244, .6);
+    color: rgb(250, 247, 244, .6);
   }
 
   :host([dark]) .tb-tab:focus-visible {
@@ -454,8 +454,8 @@
   }
 
   :host([dark]) .tb-badge {
-    background: rgba(255, 255, 255, .1);
-    color: rgba(250, 247, 244, .4);
+    background: rgb(255, 255, 255, .1);
+    color: rgb(250, 247, 244, .4);
   }
 
   :host([dark]) .tb-tab.is-active .tb-badge {
@@ -464,16 +464,16 @@
   }
 
   :host([dark]) .tb-panels {
-    color: rgba(250, 247, 244, .6);
+    color: rgb(250, 247, 244, .6);
   }
 
   :host([dark]) .tb-label {
-    color: rgba(250, 247, 244, .18);
+    color: rgb(250, 247, 244, .18);
   }
 
   /* dark underline */
   :host([dark][variant="underline"]) .tb-list {
-    border-bottom-color: rgba(255, 255, 255, .08);
+    border-bottom-color: rgb(255, 255, 255, .08);
   }
 
   :host([dark][variant="underline"]) .tb-tab.is-active {
@@ -486,14 +486,14 @@
 
   /* dark pill */
   :host([dark][variant="pill"]) .tb-list {
-    background: rgba(255, 255, 255, .04);
-    border-color: rgba(255, 255, 255, .07);
+    background: rgb(255, 255, 255, .04);
+    border-color: rgb(255, 255, 255, .07);
   }
 
   :host([dark][variant="pill"]) .tb-tab.is-active {
-    background: rgba(255, 255, 255, .09);
-    color: rgba(250, 247, 244, .8);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+    background: rgb(255, 255, 255, .09);
+    color: rgb(250, 247, 244, .8);
+    box-shadow: 0 1px 4px rgb(0, 0, 0, .3);
   }
 
   :host([dark][variant="pill"][color="kaki"]) .tb-tab.is-active {
@@ -503,31 +503,31 @@
 
   /* dark card */
   :host([dark][variant="card"]) .tb-tab {
-    background: rgba(255, 255, 255, .03);
+    background: rgb(255, 255, 255, .03);
     border-color: transparent;
   }
 
   :host([dark][variant="card"]) .tb-tab.is-active {
-    background: rgba(255, 255, 255, .07);
-    border-color: rgba(255, 255, 255, .08);
+    background: rgb(255, 255, 255, .07);
+    border-color: rgb(255, 255, 255, .08);
     border-bottom-color: var(--color-washi-950);
-    color: rgba(250, 247, 244, .75);
+    color: rgb(250, 247, 244, .75);
   }
 
   :host([dark][variant="card"]) .tb-panels {
-    background: rgba(255, 255, 255, .04);
-    border-color: rgba(255, 255, 255, .08);
+    background: rgb(255, 255, 255, .04);
+    border-color: rgb(255, 255, 255, .08);
   }
 
   /* dark vertical */
   :host([dark][variant="vertical"]) .tb-list {
-    border-right-color: rgba(255, 255, 255, .08);
+    border-right-color: rgb(255, 255, 255, .08);
   }
 
   :host([dark][variant="vertical"]) .tb-tab.is-active {
     border-left-color: var(--color-kaki-500);
     color: var(--color-kaki-400);
-    background: rgba(184, 90, 30, .1);
+    background: rgb(184, 90, 30, .1);
   }
 
 
@@ -577,11 +577,11 @@
   /* Kintsugi dark */
   :host([kintsugi][dark][variant="underline"]) .tb-ink {
     background: linear-gradient(90deg,
-        rgba(184, 90, 30, .4) 0%,
-        rgba(217, 114, 52, .7) 25%,
-        rgba(245, 208, 138, .9) 50%,
-        rgba(217, 114, 52, .7) 75%,
-        rgba(184, 90, 30, .4) 100%);
+        rgb(184, 90, 30, .4) 0%,
+        rgb(217, 114, 52, .7) 25%,
+        rgb(245, 208, 138, .9) 50%,
+        rgb(217, 114, 52, .7) 75%,
+        rgb(184, 90, 30, .4) 100%);
     background-size: 200% 100%;
     animation: kintsugi-ink 3.5s linear infinite;
   }
@@ -595,7 +595,6 @@
      GLITCH
      ════════════════════════════════ */
   @keyframes tb-glitch-x {
-
     0%,
     88%,
     100% {
@@ -616,7 +615,6 @@
   }
 
   @keyframes tb-glitch-r {
-
     0%,
     88%,
     100% {
@@ -641,7 +639,6 @@
   }
 
   @keyframes tb-glitch-b {
-
     0%,
     88%,
     100% {
@@ -666,7 +663,6 @@
   }
 
   @keyframes tb-glitch-flicker {
-
     0%,
     85%,
     100% {
@@ -714,12 +710,12 @@
   }
 
   :host([glitch]) .tb-tab.is-active::before {
-    color: rgba(217, 114, 52, .7);
+    color: rgb(217, 114, 52, .7);
     animation: tb-glitch-r 6s steps(1) infinite;
   }
 
   :host([glitch]) .tb-tab.is-active::after {
-    color: rgba(78, 148, 130, .6);
+    color: rgb(78, 148, 130, .6);
     animation: tb-glitch-b 6s steps(1) infinite;
     animation-delay: 60ms;
   }
@@ -732,15 +728,15 @@
 
   /* Glitch dark */
   :host([glitch][dark]) .tb-tab.is-active::before {
-    color: rgba(217, 114, 52, .8);
+    color: rgb(217, 114, 52, .8);
   }
 
   :host([glitch][dark]) .tb-tab.is-active::after {
-    color: rgba(78, 148, 130, .7);
+    color: rgb(78, 148, 130, .7);
   }
 
   :host([glitch][dark][variant="underline"]) .tb-ink {
-    background: rgba(250, 247, 244, .6);
+    background: rgb(250, 247, 244, .6);
   }
 
 
@@ -750,8 +746,7 @@
 
   /* Scroll horizontal */
   :host([scroll]) .tb-list {
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
     flex-wrap: nowrap;
