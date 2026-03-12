@@ -1,111 +1,336 @@
 @layer tokens, reset, components;
 
 /* ============================================================
-   LIB-DROPDOWN — Shibui UI · Kintsugi Digital
+   LIB-DROPDOWN — Shibui UI · SG-25
+   Trigger   : default · ghost · filled · kaki
+   Align     : left · right
+   Menu theme: light · dark
    ============================================================ */
 
 @layer reset {
   :host {
     display: inline-block;
     position: relative;
-    --_dd-bg: var(--color-washi-50);
-    --_dd-border: var(--lib-shibui-ink);
-    --_dd-shadow: var(--lib-shadow-glass);
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  button {
+    font: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
   }
 }
 
 @layer components {
-  .dropdown {
+
+  /* ────────────────────────────────────────
+     WRAPPER
+     ──────────────────────────────────────── */
+  .dd {
     position: relative;
+    display: inline-block;
     user-select: none;
   }
 
-  /* ── Trigger (El botón que abre) ────────────────────────── */
-  .trigger {
+  /* ────────────────────────────────────────
+     TRIGGER — base
+     ──────────────────────────────────────── */
+  .dd-trigger {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    padding: 8px 16px;
-    background: var(--_dd-bg);
-    border: 1px solid var(--_dd-border);
-    border-radius: var(--lib-radius-md, 1px);
-    color: var(--lib-shibui-ink);
-    font-family: var(--lib-font-display, serif);
-    font-size: var(--text-sm);
+    gap: var(--lib-space-sm);
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
     cursor: pointer;
-    transition: all var(--duration-base) ease;
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    padding: calc(var(--lib-space-sm) + var(--lib-space-xs)) var(--lib-space-md);
+    white-space: nowrap;
+    transition:
+      background var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out),
+      color var(--duration-base) var(--ease-out);
   }
 
-  .trigger:hover {
-    background: var(--color-washi-100);
+  .dd-trigger:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
   }
 
-  .arrow {
+  :host([open]) .dd-trigger {
+    background: var(--bg-surface);
+    border-color: var(--color-washi-700);
+  }
+
+  .dd-trigger:focus-visible {
+    outline: 2px solid var(--color-kaki-400);
+    outline-offset: 2px;
+  }
+
+  /* Chevron */
+  .dd-chevron {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: var(--text-muted);
+    transition: transform var(--duration-slow) var(--ease-out);
+    line-height: 1;
+  }
+
+  .dd-chevron svg {
     width: 12px;
     height: 12px;
-    transition: transform var(--duration-base) var(--ease-default);
-    opacity: 0.6;
   }
 
-  :host([open]) .arrow {
+  :host([open]) .dd-chevron {
     transform: rotate(180deg);
   }
 
-  /* ── Menu (El panel desplegable) ─────────────────────────── */
-  .menu {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    min-width: 220px;
-    z-index: 100;
-    background: var(--color-washi-50);
-    backdrop-filter: blur(10px); /* Efecto Glassmorphism */
-    border: 1px solid var(--_dd-border);
-    border-radius: var(--lib-radius-md, 1px);
-    box-shadow: var(--_dd-shadow);
-    
-    /* Animación de entrada */
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: 
-      opacity var(--duration-base) ease,
-      transform var(--duration-base) var(--ease-default);
-    padding: 8px 0;
+  /* ── Variantes de trigger ── */
+
+  /* Ghost */
+  :host([variant="ghost"]) .dd-trigger {
+    background: transparent;
+    border-color: transparent;
+    color: var(--text-secondary);
   }
 
-  :host([open]) .menu {
+  :host([variant="ghost"]) .dd-trigger:hover {
+    background: var(--bg-surface);
+    border-color: transparent;
+  }
+
+  :host([variant="ghost"][open]) .dd-trigger {
+    background: var(--bg-surface);
+    border-color: transparent;
+  }
+
+  /* Filled */
+  :host([variant="filled"]) .dd-trigger {
+    background: var(--color-washi-900);
+    border-color: var(--color-washi-900);
+    color: var(--color-washi-50);
+  }
+
+  :host([variant="filled"]) .dd-trigger:hover {
+    background: var(--color-washi-800);
+    border-color: var(--color-washi-800);
+  }
+
+  :host([variant="filled"]) .dd-chevron {
+    color: var(--color-washi-400);
+  }
+
+  /* Kaki */
+  :host([variant="kaki"]) .dd-trigger {
+    background: var(--color-kaki-500);
+    border-color: var(--color-kaki-500);
+    color: #fff;
+  }
+
+  :host([variant="kaki"]) .dd-trigger:hover {
+    background: var(--color-kaki-600);
+    border-color: var(--color-kaki-600);
+  }
+
+  :host([variant="kaki"]) .dd-chevron {
+    color: rgba(255, 255, 255, .6);
+  }
+
+  /* ────────────────────────────────────────
+     MENU PANEL
+     ──────────────────────────────────────── */
+  .dd-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 300;
+    min-width: var(--dd-min-width, 200px);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    box-shadow: var(--shadow-lg);
+    /* Entry animation */
+    opacity: 0;
+    transform: translateY(-6px) scaleY(.97);
+    transform-origin: top center;
+    pointer-events: none;
+    transition:
+      opacity 160ms var(--ease-out),
+      transform 200ms var(--ease-out);
+  }
+
+  :host([open]) .dd-menu {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scaleY(1);
     pointer-events: auto;
   }
 
-  /* ── Items del Menú (Slot) ──────────────────────────────── */
-  ::slotted(button), 
-  ::slotted(a) {
-    display: flex !important;
-    align-items: center;
-    width: 100%;
-    padding: 10px 16px;
-    background: transparent;
-    border: none;
-    color: var(--lib-shibui-ink);
-    font-family: var(--lib-font-body, sans-serif);
-    font-size: var(--text-sm);
-    text-align: left;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background 0.2s ease;
+  /* Right-aligned */
+  :host([align="right"]) .dd-menu {
+    left: auto;
+    right: 0;
   }
 
-  ::slotted(button:hover),
-  ::slotted(a:hover) {
+  /* ────────────────────────────────────────
+     SLOTTED ITEMS — direct children
+     ──────────────────────────────────────── */
+  ::slotted(.dd-item) {
+    display: flex !important;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem var(--lib-space-md);
+    font-family: var(--lib-font-body);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+  }
+
+  ::slotted(.dd-item:hover) {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+  }
+
+  ::slotted(.dd-item.is-active) {
+    color: var(--text-primary);
     background: var(--color-washi-100);
   }
 
-  ::slotted(hr) {
-    border: 0;
-    border-top: 1px solid var(--color-washi-200);
-    margin: 6px 0;
+  ::slotted(.dd-item.is-disabled) {
+    opacity: .38;
+    cursor: not-allowed;
+    pointer-events: none;
   }
+
+  ::slotted(.dd-item.is-danger) {
+    color: var(--color-error);
+  }
+
+  ::slotted(.dd-item.is-danger:hover) {
+    background: var(--color-error-light);
+    color: var(--color-error);
+  }
+
+  /* Separator */
+  ::slotted(.dd-sep) {
+    display: block !important;
+    height: 1px;
+    background: var(--border-subtle);
+    margin: var(--lib-space-xs) 0;
+    border: none;
+  }
+
+  /* Group label */
+  ::slotted(.dd-group-label) {
+    display: block !important;
+    font-family: var(--lib-font-mono);
+    font-size: 9px;
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 0.75rem var(--lib-space-md) var(--lib-space-xs);
+  }
+
+  /* ────────────────────────────────────────
+     HEADER / FOOTER slots
+     ──────────────────────────────────────── */
+  .dd-header-wrap {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .dd-footer-wrap {
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--lib-space-sm);
+    padding: var(--lib-space-sm) var(--lib-space-md);
+  }
+
+  /* Scrollable list wrapper */
+  .dd-scroll-wrap {
+    max-height: 220px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .dd-scroll-wrap::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .dd-scroll-wrap::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .dd-scroll-wrap::-webkit-scrollbar-thumb {
+    background: var(--color-washi-300);
+    border-radius: 2px;
+  }
+
+  /* ────────────────────────────────────────
+     DARK MENU
+     ──────────────────────────────────────── */
+  :host([dark]) .dd-menu {
+    background: var(--color-washi-900);
+    border-color: var(--color-washi-800);
+  }
+
+  :host([dark]) .dd-header-wrap {
+    border-color: var(--color-washi-800);
+  }
+
+  :host([dark]) .dd-footer-wrap {
+    border-color: var(--color-washi-800);
+  }
+
+  :host([dark]) ::slotted(.dd-item) {
+    color: var(--color-washi-400);
+  }
+
+  :host([dark]) ::slotted(.dd-item:hover) {
+    background: var(--color-washi-800);
+    color: var(--color-washi-100);
+  }
+
+  :host([dark]) ::slotted(.dd-item.is-active) {
+    background: var(--color-washi-800);
+    color: var(--color-washi-100);
+  }
+
+  :host([dark]) ::slotted(.dd-item.is-danger) {
+    color: #E87A6A;
+  }
+
+  :host([dark]) ::slotted(.dd-item.is-danger:hover) {
+    background: rgba(140, 42, 26, .3);
+    color: #E87A6A;
+  }
+
+  :host([dark]) ::slotted(.dd-sep) {
+    background: var(--color-washi-800);
+  }
+
+  :host([dark]) ::slotted(.dd-group-label) {
+    color: var(--color-washi-600);
+  }
+
 }
