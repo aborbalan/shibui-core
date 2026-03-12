@@ -65,7 +65,7 @@
     .burger-line {
         display: block;
         border-radius: var(--lib-radius-sm);
-        background: currentColor;
+        background: currentcolor;
         transform-origin: center;
         will-change: transform, opacity, width;
     }
@@ -420,14 +420,14 @@
     :host([variant="kintsugi"]) .burger {
         width: 48px;
         height: 48px;
-        color: rgba(250, 247, 244, .5);
+        color: rgb(250, 247, 244, .5);
         position: relative;
         overflow: hidden;
         transition: color var(--duration-base);
     }
 
     :host([variant="kintsugi"]) .burger:hover {
-        color: rgba(250, 247, 244, .8);
+        color: rgb(250, 247, 244, .8);
     }
 
     /* Destello radial al abrirse */
@@ -435,7 +435,7 @@
         content: '';
         position: absolute;
         inset: 0;
-        background: radial-gradient(circle at center, rgba(217, 114, 52, .18) 0%, transparent 70%);
+        background: radial-gradient(circle at center, rgb(217, 114, 52, .18) 0%, transparent 70%);
         opacity: 0;
         transition: opacity var(--duration-slow);
     }
