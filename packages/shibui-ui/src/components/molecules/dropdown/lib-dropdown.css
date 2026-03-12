@@ -145,7 +145,7 @@
   }
 
   :host([variant="kaki"]) .dd-chevron {
-    color: rgba(255, 255, 255, .6);
+    color: rgb(255, 255, 255, .6);
   }
 
   /* ────────────────────────────────────────
@@ -321,7 +321,7 @@
   }
 
   :host([dark]) ::slotted(.dd-item.is-danger:hover) {
-    background: rgba(140, 42, 26, .3);
+    background: rgb(140, 42, 26, .3);
     color: #E87A6A;
   }
 

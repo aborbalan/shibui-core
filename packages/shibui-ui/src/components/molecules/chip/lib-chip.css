@@ -1,102 +1,433 @@
 @layer tokens, reset, components;
 
 /* ============================================================
-   LIB-CHIP — Shibui UI · Kintsugi Digital
-   Variantes: selectable · removable · active
+   LIB-CHIP — Shibui UI · SG-26
+   Familias : static · toggle · input
+   Tamaños  : xs · sm · md · lg
+   Colores  : default · kaki · celadon · error · info · dark
    ============================================================ */
 
 @layer reset {
   :host {
-    display: inline-block;
-    outline: none;
-    /* Variables locales para facilitar personalización */
-    --_chip-bg: var(--color-washi-100);
-    --_chip-text: var(--lib-shibui-ink);
-    --_chip-border: var(--lib-shibui-ink);
+    display: inline-flex;
+    vertical-align: middle;
   }
 
-  *, *::before, *::after { box-sizing: border-box; }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  button {
+    font: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
 }
 
 @layer components {
-  .chip {
+
+  /* ────────────────────────────────────────
+     BASE COMPARTIDA — las tres familias
+     ──────────────────────────────────────── */
+  .chip,
+  .chip-toggle,
+  .chip-input {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    height: 28px;
-    padding: 0 10px;
-    background-color: var(--_chip-bg);
-    color: var(--_chip-text);
-    
-    /* Aplicamos los tokens de radio brutalista que vimos en tu tokens.css */
-    border: 1px solid var(--_chip-border);
-    border-radius: var(--lib-radius-md, 1px); 
-    
-    /* Tipografía de la guía */
-    font-family: var(--lib-font-display, serif);
-    font-size: var(--text-sm);
+    gap: var(--lib-space-xs);
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
     line-height: 1;
-    cursor: default;
-    transition: 
-      background-color var(--duration-base, 0.2s) ease,
-      color var(--duration-base, 0.2s) ease,
-      transform var(--duration-base, 0.2s) var(--ease-default, ease);
+    white-space: nowrap;
     user-select: none;
+    border-radius: 9999px;
+    transition:
+      background var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out),
+      color var(--duration-base) var(--ease-out),
+      box-shadow var(--duration-base) var(--ease-out),
+      transform var(--duration-fast);
   }
 
-  /* ── Interacciones ────────────────────────────────────────── */
-  
-  .chip:hover {
-    background-color: var(--color-washi-200);
+  /* ────────────────────────────────────────
+     FAMILIA 1 · STATIC
+     Taxonomía, categoría, etiqueta read-only
+     ──────────────────────────────────────── */
+  .chip {
+    padding: 4px var(--lib-space-sm);
+    background: var(--color-washi-100);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    cursor: default;
   }
 
-  /* Estado Seleccionado / Activo */
-  :host([active]) .chip {
-    background-color: var(--lib-shibui-ink);
-    color: var(--color-washi-50);
-  }
-
-  :host([selectable]) .chip {
+  /* ────────────────────────────────────────
+     FAMILIA 2 · TOGGLE
+     Filtro / multi-select seleccionable
+     ──────────────────────────────────────── */
+  .chip-toggle {
+    padding: 5px var(--lib-space-md);
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-default);
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
   }
 
-  /* ── Botón de Eliminar ────────────────────────────────────── */
-  
-  .remove-btn {
-    display: flex;
+  .chip-toggle:hover {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+    background: var(--bg-surface);
+  }
+
+  .chip-toggle:active {
+    transform: scale(.96);
+  }
+
+  .chip-toggle:focus-visible {
+    outline: 2px solid var(--color-kaki-400);
+    outline-offset: 2px;
+  }
+
+  /* Selected */
+  :host([selected]) .chip-toggle {
+    background: var(--color-washi-900);
+    border-color: var(--color-washi-900);
+    color: var(--color-washi-50);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ────────────────────────────────────────
+     FAMILIA 3 · INPUT
+     Tag removible en campo de texto
+     ──────────────────────────────────────── */
+  .chip-input {
+    padding: 4px 4px 4px var(--lib-space-sm);
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-default);
+    gap: var(--lib-space-sm);
+  }
+
+  /* Botón × */
+  .chip-remove {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
+    width: 18px;
+    height: 18px;
+    border-radius: 9999px;
     border: none;
-    padding: 0;
-    margin-right: -4px;
+    background: transparent;
+    color: var(--text-muted);
     cursor: pointer;
-    color: currentcolor;
-    opacity: 0.7;
-    transition: opacity 0.2s ease;
+    font-size: 12px;
+    padding: 0;
+    flex-shrink: 0;
+    transition:
+      background var(--duration-fast),
+      color var(--duration-fast);
   }
 
-  .remove-btn:hover {
-    opacity: 1;
+  .chip-remove:hover {
+    background: var(--color-washi-200);
+    color: var(--text-primary);
   }
 
-  .remove-btn svg {
+  .chip-remove svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Animación de entrada */
+  .chip-input.is-entering {
+    animation: chip-enter 250ms var(--ease-bounce);
+  }
+
+  @keyframes chip-enter {
+    from {
+      opacity: 0;
+      transform: scale(.7);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Animación de salida */
+  .chip-input.is-removing {
+    animation: chip-remove-anim 200ms var(--ease-out) forwards;
+  }
+
+  @keyframes chip-remove-anim {
+    to {
+      opacity: 0;
+      transform: scale(.8);
+      max-width: 0;
+      padding: 0;
+      margin: 0;
+      border-width: 0;
+    }
+  }
+
+  /* ────────────────────────────────────────
+     TAMAÑOS
+     ──────────────────────────────────────── */
+
+  /* XS */
+  :host([size="xs"]) .chip {
+    font-size: 9px;
+    padding: 2px var(--lib-space-sm);
+    letter-spacing: .04em;
+  }
+
+  :host([size="xs"]) .chip-toggle {
+    font-size: 9px;
+    padding: 3px var(--lib-space-sm);
+    letter-spacing: .04em;
+  }
+
+  :host([size="xs"]) .chip-input {
+    font-size: 9px;
+    padding: 2px 2px 2px var(--lib-space-sm);
+  }
+
+  :host([size="xs"]) .chip-remove {
     width: 14px;
     height: 14px;
+    font-size: 10px;
   }
 
-  /* ── Animaciones de entrada (Opcional) ────────────────────── */
-  @keyframes chip-reveal {
-    from { 
-      opacity: 0;
-       transform: translateY(4px); }
-
-    to { 
-      opacity: 1;
-       transform: translateY(0); }
+  :host([size="xs"]) .chip-avatar {
+    width: 14px;
+    height: 14px;
+    font-size: 7px;
   }
 
-  :host([entering]) .chip {
-    animation: chip-reveal 0.4s ease forwards;
+  /* SM */
+  :host([size="sm"]) .chip {
+    font-size: 10px;
+    padding: 3px var(--lib-space-sm);
   }
+
+  :host([size="sm"]) .chip-toggle {
+    font-size: 10px;
+    padding: 4px var(--lib-space-sm);
+  }
+
+  :host([size="sm"]) .chip-input {
+    font-size: 10px;
+    padding: 3px 3px 3px var(--lib-space-sm);
+  }
+
+  /* MD — default, ya definido arriba */
+
+  /* LG */
+  :host([size="lg"]) .chip {
+    font-size: var(--text-sm);
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    letter-spacing: var(--tracking-wider);
+  }
+
+  :host([size="lg"]) .chip-toggle {
+    font-size: var(--text-sm);
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    letter-spacing: var(--tracking-wider);
+  }
+
+  :host([size="lg"]) .chip-input {
+    font-size: var(--text-sm);
+    padding: var(--lib-space-sm) var(--lib-space-sm) var(--lib-space-sm) var(--lib-space-md);
+  }
+
+  :host([size="lg"]) .chip-remove {
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+  }
+
+  :host([size="lg"]) .chip-avatar {
+    width: 22px;
+    height: 22px;
+    font-size: 9px;
+  }
+
+  /* ────────────────────────────────────────
+     COLORES — kaki
+     ──────────────────────────────────────── */
+  :host([color="kaki"]) .chip {
+    background: var(--color-kaki-50);
+    color: var(--color-kaki-600);
+    border-color: var(--color-kaki-100);
+  }
+
+  :host([color="kaki"]) .chip-toggle:not(.chip-toggle-selected) {
+    background: var(--color-kaki-50);
+    color: var(--color-kaki-600);
+    border-color: var(--color-kaki-100);
+  }
+
+  :host([color="kaki"]) .chip-toggle:hover:not([selected]) {
+    border-color: var(--color-kaki-400);
+  }
+
+  :host([color="kaki"][selected]) .chip-toggle {
+    background: var(--color-kaki-500);
+    border-color: var(--color-kaki-500);
+    color: #fff;
+  }
+
+  :host([color="kaki"]) .chip-input {
+    background: var(--color-kaki-50);
+    color: var(--color-kaki-600);
+    border-color: var(--color-kaki-100);
+  }
+
+  :host([color="kaki"]) .chip-remove:hover {
+    background: var(--color-kaki-100);
+    color: var(--color-kaki-600);
+  }
+
+  /* ── celadon ── */
+  :host([color="celadon"]) .chip {
+    background: var(--color-celadon-100);
+    color: var(--color-celadon-600);
+    border-color: var(--color-celadon-100);
+  }
+
+  :host([color="celadon"]) .chip-toggle {
+    background: var(--color-celadon-50);
+    color: var(--color-celadon-600);
+    border-color: var(--color-celadon-100);
+  }
+
+  :host([color="celadon"][selected]) .chip-toggle {
+    background: var(--color-celadon-500);
+    border-color: var(--color-celadon-500);
+    color: #fff;
+  }
+
+  :host([color="celadon"]) .chip-input {
+    background: var(--color-celadon-50);
+    color: var(--color-celadon-600);
+    border-color: var(--color-celadon-100);
+  }
+
+  :host([color="celadon"]) .chip-remove:hover {
+    background: var(--color-celadon-100);
+    color: var(--color-celadon-600);
+  }
+
+  /* ── error ── */
+  :host([color="error"]) .chip,
+  :host([color="error"]) .chip-input {
+    background: var(--color-error-light);
+    color: var(--color-error);
+    border-color: var(--color-error-light);
+  }
+
+  :host([color="error"]) .chip-remove:hover {
+    background: #EBC5BF;
+    color: var(--color-error);
+  }
+
+  /* ── info ── */
+  :host([color="info"]) .chip {
+    background: var(--color-info-light, #D6E8F5);
+    color: var(--color-info, #1A4A6E);
+    border-color: var(--color-info-light, #D6E8F5);
+  }
+
+  /* ── dark ── */
+  :host([color="dark"]) .chip {
+    background: var(--color-washi-900);
+    color: var(--color-washi-300);
+    border-color: var(--color-washi-800);
+  }
+
+  :host([color="dark"]) .chip-toggle {
+    background: var(--color-washi-800);
+    color: var(--color-washi-300);
+    border-color: var(--color-washi-700);
+  }
+
+  :host([color="dark"]) .chip-toggle:hover {
+    border-color: var(--color-washi-500);
+    color: var(--color-washi-100);
+  }
+
+  :host([color="dark"][selected]) .chip-toggle {
+    background: var(--color-washi-50);
+    border-color: var(--color-washi-50);
+    color: var(--color-washi-950);
+  }
+
+  :host([color="dark"]) .chip-input {
+    background: var(--color-washi-800);
+    color: var(--color-washi-300);
+    border-color: var(--color-washi-700);
+  }
+
+  :host([color="dark"]) .chip-remove:hover {
+    background: var(--color-washi-700);
+    color: var(--color-washi-100);
+  }
+
+  /* ────────────────────────────────────────
+     ENRIQUECIDOS
+     ──────────────────────────────────────── */
+
+  /* Dot — punto de color antes del label */
+  :host([dot]) .chip::before,
+  :host([dot]) .chip-toggle::before,
+  :host([dot]) .chip-input::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: currentColor;
+    flex-shrink: 0;
+    opacity: .7;
+  }
+
+  /* Avatar */
+  .chip-avatar {
+    width: 18px;
+    height: 18px;
+    border-radius: 9999px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--color-washi-200);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-family: var(--lib-font-mono);
+    color: var(--text-secondary);
+    overflow: hidden;
+  }
+
+  /* Icon */
+  .chip-icon {
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    opacity: .7;
+  }
+
+  .chip-icon svg {
+    width: 1em;
+    height: 1em;
+  }
+
 }
