@@ -25,13 +25,13 @@
 
   /* ── Backdrop ── */
   dialog::backdrop {
-    background: rgba(18, 14, 10, 0);
-    backdrop-filter: blur(0px);
+    background: rgb(18, 14, 10, 0);
+    backdrop-filter: blur(0);
     transition: background 300ms, backdrop-filter 300ms;
   }
 
   dialog.is-open::backdrop {
-    background: rgba(18, 14, 10, 0.55);
+    background: rgb(18, 14, 10, 0.55);
     backdrop-filter: blur(3px);
   }
 
@@ -262,47 +262,47 @@
   /* dark / kintsugi */
   :host([variant="dark"]) dialog.dlg {
     background: var(--color-washi-950);
-    border-color: oklch(18% 0.02 45);
+    border-color: oklch(18% 0.02 45deg);
   }
 
   :host([variant="dark"]) .dlg-header {
-    border-bottom-color: oklch(16% 0.02 45);
+    border-bottom-color: oklch(16% 0.02 45deg);
   }
 
   :host([variant="dark"]) .dlg-title {
-    color: rgba(250, 247, 244, 0.85);
+    color: rgb(250, 247, 244, 0.85);
   }
 
   :host([variant="dark"]) .dlg-eyebrow {
-    color: oklch(32% 0.02 50);
+    color: oklch(32% 0.02 50deg);
   }
 
   :host([variant="dark"]) .dlg-close {
-    border-color: oklch(20% 0.02 45);
-    color: oklch(35% 0.02 50);
+    border-color: oklch(20% 0.02 45deg);
+    color: oklch(35% 0.02 50deg);
   }
 
   :host([variant="dark"]) .dlg-close:hover {
-    border-color: oklch(30% 0.02 45);
-    color: rgba(250, 247, 244, 0.6);
-    background: oklch(14% 0.02 45);
+    border-color: oklch(30% 0.02 45deg);
+    color: rgb(250, 247, 244, 0.6);
+    background: oklch(14% 0.02 45deg);
   }
 
   :host([variant="dark"]) .dlg-body {
-    color: oklch(50% 0.02 50);
+    color: oklch(50% 0.02 50deg);
   }
 
   :host([variant="dark"]) .dlg-footer {
-    background: oklch(10% 0.02 45);
-    border-top-color: oklch(16% 0.02 45);
+    background: oklch(10% 0.02 45deg);
+    border-top-color: oklch(16% 0.02 45deg);
   }
 
   :host([variant="dark"]) .dlg-footer-meta {
-    color: oklch(28% 0.02 50);
+    color: oklch(28% 0.02 50deg);
   }
 
   :host([variant="dark"]) .dlg-divider {
-    border-top-color: oklch(16% 0.02 45);
+    border-top-color: oklch(16% 0.02 45deg);
   }
 
   /* ============================================================
@@ -338,7 +338,7 @@
 
   /* drawer-bottom */
   :host([layout="drawer-bottom"]) dialog.dlg {
-    inset: auto 0 0 0;
+    inset: auto 0 0;
     margin: 0;
     width: 100%;
     max-width: 100%;
@@ -381,8 +381,7 @@
   }
 
   /* ── Responsive ── */
-  @media (max-width: 768px) {
-
+  @media (width <= 768px) {
     .dlg-sm,
     .dlg-md,
     .dlg-lg,

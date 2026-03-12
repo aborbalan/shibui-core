@@ -1,0 +1,664 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-BURGER — Shibui UI · SG-48
+   Variantes : ink · kanji · washi · framed · kintsugi · glitch
+   Tamaños   : sm · md · lg
+   ============================================================ */
+
+@layer reset {
+    :host {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    button {
+        font: inherit;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+    }
+}
+
+@layer components {
+
+    /* ────────────────────────────────────────
+     BASE COMPARTIDA
+     ──────────────────────────────────────── */
+    .burger {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: none;
+        cursor: pointer;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+        outline: none;
+    }
+
+    .burger:focus-visible {
+        box-shadow:
+            0 0 0 2px var(--color-washi-50),
+            0 0 0 4px var(--color-washi-600);
+    }
+
+    /* Lines container */
+    .burger-lines {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    /* Individual line */
+    .burger-line {
+        display: block;
+        border-radius: var(--lib-radius-sm);
+        background: currentColor;
+        transform-origin: center;
+        will-change: transform, opacity, width;
+    }
+
+    /* ────────────────────────────────────────
+     LABEL JUNTO AL BURGER
+     ──────────────────────────────────────── */
+    .burger-wrap {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--lib-space-sm);
+        cursor: pointer;
+    }
+
+    .burger-label {
+        font-family: var(--lib-font-mono);
+        font-size: var(--text-xs);
+        letter-spacing: var(--tracking-widest);
+        text-transform: uppercase;
+        color: var(--text-muted);
+        transition:
+            color var(--duration-base),
+            opacity var(--duration-base);
+        user-select: none;
+    }
+
+    .burger-wrap:hover .burger-label {
+        color: var(--text-primary);
+    }
+
+    /* ────────────────────────────────────────
+     SIZES — modificadores globales
+     ──────────────────────────────────────── */
+    :host([size="sm"]) .burger-lines {
+        width: 18px;
+        height: 12px;
+    }
+
+    :host([size="sm"]) .burger-line {
+        height: 1px;
+    }
+
+    :host([size="sm"]) .burger-line:nth-child(1) {
+        margin-bottom: 5px;
+    }
+
+    :host([size="sm"]) .burger-line:nth-child(2) {
+        margin-bottom: 5px;
+    }
+
+    :host([size="lg"]) .burger-lines {
+        width: 36px;
+        height: 24px;
+    }
+
+    :host([size="lg"]) .burger-line {
+        height: 2px;
+    }
+
+    :host([size="lg"]) .burger-line:nth-child(1) {
+        margin-bottom: 10px;
+    }
+
+    :host([size="lg"]) .burger-line:nth-child(2) {
+        margin-bottom: 10px;
+    }
+
+
+    /* ════════════════════════════════════════
+     1 · INK STROKE
+     Trazos asimétricos — pincelada washi.
+     Central más ancha, exteriores más cortas.
+     ════════════════════════════════════════ */
+    :host([variant="ink"]) .burger {
+        width: 44px;
+        height: 44px;
+        color: var(--text-primary);
+        transition: color var(--duration-base);
+    }
+
+    :host([variant="ink"]) .burger:hover {
+        color: var(--color-kaki-500);
+    }
+
+    :host([variant="ink"]) .burger:active {
+        transform: scale(0.94);
+    }
+
+    :host([variant="ink"]) .burger-lines {
+        width: 28px;
+        height: 18px;
+    }
+
+    :host([variant="ink"]) .burger-line {
+        height: 1.5px;
+        transition:
+            transform var(--duration-slow) var(--ease-bounce),
+            opacity var(--duration-base) var(--ease-out),
+            width var(--duration-slow) var(--ease-bounce);
+    }
+
+    :host([variant="ink"]) .burger-line:nth-child(1) {
+        width: 20px;
+        margin-bottom: 7px;
+    }
+
+    :host([variant="ink"]) .burger-line:nth-child(2) {
+        width: 28px;
+        margin-bottom: 7px;
+    }
+
+    :host([variant="ink"]) .burger-line:nth-child(3) {
+        width: 14px;
+    }
+
+    /* Open */
+    :host([variant="ink"][open]) .burger-line:nth-child(1) {
+        transform: translateY(8.5px) rotate(45deg);
+        width: 26px;
+        transition-delay: 0ms, 0ms, 80ms;
+    }
+
+    :host([variant="ink"][open]) .burger-line:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+        transition-delay: 0ms;
+    }
+
+    :host([variant="ink"][open]) .burger-line:nth-child(3) {
+        transform: translateY(-8.5px) rotate(-45deg);
+        width: 26px;
+        transition-delay: 0ms, 0ms, 80ms;
+    }
+
+
+    /* ════════════════════════════════════════
+     2 · KANJI MORPH
+     三 cerrado → × abierto.
+     Label 三/× bajo el botón via ::after.
+     ════════════════════════════════════════ */
+    :host([variant="kanji"]) .burger {
+        width: 48px;
+        height: 48px;
+        color: var(--text-primary);
+        position: relative;
+        transition: color var(--duration-base);
+    }
+
+    :host([variant="kanji"]) .burger:hover {
+        color: var(--color-kaki-500);
+    }
+
+    :host([variant="kanji"]) .burger:active {
+        transform: scale(0.93);
+    }
+
+    :host([variant="kanji"]) .burger::after {
+        content: '三';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: var(--lib-font-mono);
+        font-size: 8px;
+        letter-spacing: 0;
+        color: var(--text-muted);
+        transition: opacity var(--duration-base);
+    }
+
+    :host([variant="kanji"][open]) .burger::after {
+        content: '×';
+    }
+
+    :host([variant="kanji"]) .burger-lines {
+        width: 26px;
+        height: 16px;
+        margin-bottom: 6px;
+    }
+
+    :host([variant="kanji"]) .burger-line {
+        height: 1px;
+        transition:
+            transform var(--duration-slow) var(--ease-bounce),
+            opacity var(--duration-base) var(--ease-out),
+            width var(--duration-slow) var(--ease-bounce);
+    }
+
+    :host([variant="kanji"]) .burger-line:nth-child(1) {
+        width: 26px;
+        margin-bottom: 7px;
+    }
+
+    :host([variant="kanji"]) .burger-line:nth-child(2) {
+        width: 18px;
+        margin-bottom: 7px;
+    }
+
+    :host([variant="kanji"]) .burger-line:nth-child(3) {
+        width: 26px;
+    }
+
+    /* Open */
+    :host([variant="kanji"][open]) .burger-line:nth-child(1) {
+        transform: translateY(7.5px) rotate(45deg);
+        width: 24px;
+    }
+
+    :host([variant="kanji"][open]) .burger-line:nth-child(2) {
+        opacity: 0;
+        width: 0;
+    }
+
+    :host([variant="kanji"][open]) .burger-line:nth-child(3) {
+        transform: translateY(-7.5px) rotate(-45deg);
+        width: 24px;
+    }
+
+
+    /* ════════════════════════════════════════
+     3 · WASHI UNFOLD
+     Líneas se pliegan simétricamente — papel.
+     ════════════════════════════════════════ */
+    :host([variant="washi"]) .burger {
+        width: 48px;
+        height: 48px;
+        color: var(--text-primary);
+        transition: color var(--duration-base);
+    }
+
+    :host([variant="washi"]) .burger:hover {
+        color: var(--color-kaki-500);
+    }
+
+    :host([variant="washi"]) .burger:active {
+        transform: scale(0.93);
+    }
+
+    :host([variant="washi"]) .burger-lines {
+        width: 28px;
+        height: 18px;
+    }
+
+    :host([variant="washi"]) .burger-line {
+        width: 28px;
+        height: 1px;
+        transition:
+            transform var(--duration-slow) var(--ease-bounce),
+            width var(--duration-slow) var(--ease-bounce),
+            opacity var(--duration-base) var(--ease-out);
+    }
+
+    :host([variant="washi"]) .burger-line:nth-child(1) {
+        margin-bottom: 8px;
+    }
+
+    :host([variant="washi"]) .burger-line:nth-child(2) {
+        margin-bottom: 8px;
+    }
+
+    /* Open */
+    :host([variant="washi"][open]) .burger-line:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+        transition-delay: 60ms, 0ms, 0ms;
+    }
+
+    :host([variant="washi"][open]) .burger-line:nth-child(2) {
+        opacity: 0;
+        width: 0;
+    }
+
+    :host([variant="washi"][open]) .burger-line:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+        transition-delay: 60ms, 0ms, 0ms;
+    }
+
+
+    /* ════════════════════════════════════════
+     4 · FRAMED (hanko)
+     Borde cuadrado que rota 45° → rombo.
+     Interior contra-rota para que líneas
+     queden horizontales.
+     ════════════════════════════════════════ */
+    :host([variant="framed"]) .burger {
+        width: 44px;
+        height: 44px;
+        color: var(--text-primary);
+        border: 1px solid var(--border-default);
+        transition:
+            border-color var(--duration-base),
+            color var(--duration-base),
+            transform var(--duration-slow) var(--ease-bounce);
+    }
+
+    :host([variant="framed"]) .burger:hover {
+        border-color: var(--border-strong);
+        color: var(--color-kaki-500);
+    }
+
+    :host([variant="framed"][open]) .burger {
+        transform: rotate(45deg);
+        border-color: var(--color-kaki-500);
+        color: var(--color-kaki-500);
+    }
+
+    :host([variant="framed"]) .burger-lines {
+        width: 20px;
+        height: 13px;
+        transition: transform var(--duration-slow) var(--ease-bounce);
+    }
+
+    :host([variant="framed"][open]) .burger-lines {
+        transform: rotate(-45deg);
+    }
+
+    :host([variant="framed"]) .burger-line {
+        width: 20px;
+        height: 1.5px;
+        transition:
+            transform var(--duration-slow) var(--ease-bounce),
+            opacity var(--duration-base) var(--ease-out),
+            width var(--duration-base) var(--ease-out);
+    }
+
+    :host([variant="framed"]) .burger-line:nth-child(1) {
+        margin-bottom: 5px;
+    }
+
+    :host([variant="framed"]) .burger-line:nth-child(2) {
+        margin-bottom: 5px;
+    }
+
+    /* Open */
+    :host([variant="framed"][open]) .burger-line:nth-child(1) {
+        transform: translateY(6.75px) rotate(90deg);
+        width: 14px;
+    }
+
+    :host([variant="framed"][open]) .burger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    :host([variant="framed"][open]) .burger-line:nth-child(3) {
+        transform: translateY(-6.75px);
+        width: 14px;
+    }
+
+
+    /* ════════════════════════════════════════
+     5 · KINTSUGI  (surface oscura)
+     Grietas de oro. Destello kaki al abrirse.
+     ════════════════════════════════════════ */
+    :host([variant="kintsugi"]) .burger {
+        width: 48px;
+        height: 48px;
+        color: rgba(250, 247, 244, .5);
+        position: relative;
+        overflow: hidden;
+        transition: color var(--duration-base);
+    }
+
+    :host([variant="kintsugi"]) .burger:hover {
+        color: rgba(250, 247, 244, .8);
+    }
+
+    /* Destello radial al abrirse */
+    :host([variant="kintsugi"]) .burger::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at center, rgba(217, 114, 52, .18) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity var(--duration-slow);
+    }
+
+    :host([variant="kintsugi"][open]) .burger::before {
+        opacity: 1;
+    }
+
+    :host([variant="kintsugi"][open]) .burger {
+        color: var(--color-kaki-400);
+    }
+
+    :host([variant="kintsugi"]) .burger-lines {
+        width: 24px;
+        height: 16px;
+    }
+
+    :host([variant="kintsugi"]) .burger-line {
+        height: 1px;
+        transition:
+            transform var(--duration-slow) var(--ease-bounce),
+            opacity var(--duration-base) var(--ease-out),
+            width var(--duration-slow) var(--ease-bounce),
+            background var(--duration-base);
+    }
+
+    :host([variant="kintsugi"]) .burger-line:nth-child(1) {
+        width: 24px;
+        margin-bottom: 7px;
+    }
+
+    :host([variant="kintsugi"]) .burger-line:nth-child(2) {
+        width: 16px;
+        margin-bottom: 7px;
+    }
+
+    :host([variant="kintsugi"]) .burger-line:nth-child(3) {
+        width: 24px;
+    }
+
+    /* Open */
+    :host([variant="kintsugi"][open]) .burger-line:nth-child(1) {
+        transform: translateY(7.5px) rotate(45deg);
+        width: 22px;
+    }
+
+    :host([variant="kintsugi"][open]) .burger-line:nth-child(2) {
+        opacity: 0;
+        width: 0;
+    }
+
+    :host([variant="kintsugi"][open]) .burger-line:nth-child(3) {
+        transform: translateY(-7.5px) rotate(-45deg);
+        width: 22px;
+    }
+
+
+    /* ════════════════════════════════════════
+     6 · GLITCH
+     RGB split en hover. Scramble antes del
+     toggle — líneas corruptas 320ms.
+     ════════════════════════════════════════ */
+    :host([variant="glitch"]) .burger {
+        width: 52px;
+        height: 52px;
+        color: var(--text-primary);
+        position: relative;
+        transition: color var(--duration-base);
+    }
+
+    :host([variant="glitch"]) .burger:hover {
+        color: var(--color-kaki-500);
+    }
+
+    /* Ghost layers */
+    .burger-ghost {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 0;
+    }
+
+    .burger-ghost svg {
+        position: absolute;
+        opacity: 0;
+    }
+
+    /* Hover: animar ghosts */
+    :host([variant="glitch"]) .burger:hover .ghost-a {
+        opacity: 1;
+        animation: burger-glitch-a 320ms steps(1) infinite;
+    }
+
+    :host([variant="glitch"]) .burger:hover .ghost-b {
+        opacity: 1;
+        animation: burger-glitch-b 320ms steps(1) infinite;
+        animation-delay: 50ms;
+    }
+
+    @keyframes burger-glitch-a {
+        0% {
+            clip-path: inset(0 0 70% 0);
+            transform: translateX(-3px);
+        }
+
+        25% {
+            clip-path: inset(40% 0 40% 0);
+            transform: translateX(2px);
+        }
+
+        50% {
+            clip-path: inset(70% 0 0 0);
+            transform: translateX(-2px);
+        }
+
+        75% {
+            clip-path: inset(20% 0 60% 0);
+            transform: translateX(3px);
+        }
+
+        100% {
+            clip-path: inset(55% 0 20% 0);
+            transform: translateX(-3px);
+        }
+    }
+
+    @keyframes burger-glitch-b {
+        0% {
+            clip-path: inset(60% 0 0 0);
+            transform: translateX(3px);
+        }
+
+        25% {
+            clip-path: inset(0 0 60% 0);
+            transform: translateX(-2px);
+        }
+
+        50% {
+            clip-path: inset(30% 0 50% 0);
+            transform: translateX(3px);
+        }
+
+        75% {
+            clip-path: inset(70% 0 10% 0);
+            transform: translateX(-3px);
+        }
+
+        100% {
+            clip-path: inset(10% 0 70% 0);
+            transform: translateX(2px);
+        }
+    }
+
+    :host([variant="glitch"]) .burger-lines {
+        width: 28px;
+        height: 18px;
+        position: relative;
+        z-index: 1;
+    }
+
+    :host([variant="glitch"]) .burger-line {
+        width: 28px;
+        height: 1.5px;
+        position: relative;
+        transition:
+            transform var(--duration-slow) var(--ease-bounce),
+            opacity var(--duration-base) var(--ease-out);
+    }
+
+    :host([variant="glitch"]) .burger-line:nth-child(1) {
+        margin-bottom: 7px;
+    }
+
+    :host([variant="glitch"]) .burger-line:nth-child(2) {
+        margin-bottom: 7px;
+    }
+
+    /* Open */
+    :host([variant="glitch"][open]) .burger-line:nth-child(1) {
+        transform: translateY(8.5px) rotate(45deg);
+    }
+
+    :host([variant="glitch"][open]) .burger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    :host([variant="glitch"][open]) .burger-line:nth-child(3) {
+        transform: translateY(-8.5px) rotate(-45deg);
+    }
+
+    /* Scramble durante click — clase inyectada por TS */
+    :host([variant="glitch"]) .burger.is-scrambling .burger-line {
+        animation: burger-scramble 80ms steps(1) 4;
+    }
+
+    @keyframes burger-scramble {
+        0% {
+            transform: translate(-2px, 1px);
+            opacity: .7;
+        }
+
+        25% {
+            transform: translate(3px, -1px);
+            opacity: .5;
+        }
+
+        50% {
+            transform: translate(-1px, 2px);
+            opacity: .8;
+        }
+
+        75% {
+            transform: translate(2px, -2px);
+            opacity: .6;
+        }
+
+        100% {
+            transform: translate(0, 0);
+            opacity: 1;
+        }
+    }
+
+}
