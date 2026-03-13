@@ -1,8 +1,11 @@
 import { html, TemplateResult } from 'lit';
-import { LibParallax } from './lib-parallax.component';
+import type { LibParallaxContainer } from './lib-parallax.component';
 
-export const parallaxTemplate = (_context: LibParallax): TemplateResult => html`
-  <div class="parallax-wrapper">
-    <slot></slot>
-  </div>
-`;
+// _ctx disponible para futuras extensiones del template (slot named, etc.)
+export function parallaxTemplate(_ctx: LibParallaxContainer): TemplateResult {
+  return html`
+    <div class="parallax-wrapper" part="wrapper">
+      <slot></slot>
+    </div>
+  `;
+}

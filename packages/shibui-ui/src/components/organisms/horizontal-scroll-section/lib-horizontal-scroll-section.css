@@ -20,7 +20,6 @@
 }
 
 @layer components {
-
   :host {
     /* Altura del bloque = "duración" del scroll.
        Sobreescribible con --_scroll-height o la prop scroll-duration. */
