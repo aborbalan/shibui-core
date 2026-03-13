@@ -41,7 +41,6 @@ export * from './components/atoms/text-glich/lib-text-glitch.component'
 
 export * from './components/molecules/form-field/lib-form-field.component';
 export * from './components/molecules/breadcrumb/lib-breadcrumb.component';
-export * from './components/molecules/profile-card/lib-profile-card.component';
 export * from './components/molecules/select/lib-select.component';
 export * from './components/molecules/lib-alert/lib-alert.component';
 export * from './components/molecules/dropdown/lib-dropdown.component';
