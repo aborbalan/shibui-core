@@ -1,34 +1,242 @@
-:host {
-  display: inline-block;
-  user-select: none;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-RATING — Shibui UI · SG-19
+   Sizes   : xs · sm · md · lg · xl
+   Colors  : gold · kaki · washi · celadon
+   Icons   : star · heart · diamond (SVG inline)
+   Extras  : half-star (readonly) · numeric display · disabled
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--lib-space-sm);
+    user-select: none;
+    /* Variables locales — gold no existe en tokens globales */
+    --_gold: #C4922A;
+    --_gold-light: #F0D080;
+    --_gold-pale: #FAF0D0;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 }
 
-.rating-container {
-  display: flex;
-  gap: 4px;
-  cursor: pointer;
-}
+@layer components {
 
-:host([readonly]) .rating-container {
-  cursor: default;
-}
+  /* ── Keyframe pop ── */
+  @keyframes rt-pop {
+    0% {
+      transform: scale(1);
+    }
 
-.star {
-  font-size: 1.5rem;
-  color: #e2e8f0; /* Color estrella vacía */
-  transition:
-    transform 0.1s ease,
-    color 0.1s ease;
-}
+    40% {
+      transform: scale(1.35);
+    }
 
-.star.active {
-  color: #f6ad55; /* Color estrella rellena (Naranja) */
-}
+    100% {
+      transform: scale(1);
+    }
+  }
 
-.star:not(.readonly):hover {
-  transform: scale(1.2);
-}
+  /* ── Wrapper de estrellas ── */
+  .rt {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    position: relative;
+  }
 
-:host([readonly]) .star {
-  transform: none;
+  /* ── Cada item ── */
+  .rt-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    color: var(--color-washi-300);
+    transition:
+      color var(--duration-fast) var(--ease-default),
+      transform var(--duration-base) var(--ease-bounce);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .rt-item svg {
+    display: block;
+    width: 1em;
+    height: 1em;
+  }
+
+  .rt-item:hover {
+    transform: scale(1.15);
+  }
+
+  /* Filled */
+  .rt-item.is-filled {
+    color: var(--_gold);
+  }
+
+  /* Hover preview */
+  .rt-item.is-preview {
+    color: var(--_gold-light);
+  }
+
+  /* Pop on commit */
+  .rt-item.is-pop {
+    animation: rt-pop 300ms var(--ease-bounce) forwards;
+  }
+
+  /* ── Readonly ── */
+  :host([readonly]) .rt-item,
+  :host([readonly]) .rt-item:hover {
+    cursor: default;
+    pointer-events: none;
+    transform: none;
+  }
+
+  /* ── Disabled ── */
+  :host([disabled]) .rt {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* ────────────────────────────────────────
+     TAMAÑOS
+     font-size controla el tamaño del SVG (width/height = 1em)
+     ──────────────────────────────────────── */
+  :host([size="xs"]) .rt {
+    gap: 1px;
+    font-size: 12px;
+  }
+
+  :host([size="sm"]) .rt {
+    gap: 2px;
+    font-size: 16px;
+  }
+
+  :host([size="md"]) .rt,
+  :host(:not([size])) .rt {
+    gap: 3px;
+    font-size: 22px;
+  }
+
+  :host([size="lg"]) .rt {
+    gap: 4px;
+    font-size: 30px;
+  }
+
+  :host([size="xl"]) .rt {
+    gap: 5px;
+    font-size: 40px;
+  }
+
+  /* ────────────────────────────────────────
+     VARIANTES DE COLOR
+     ──────────────────────────────────────── */
+
+  /* Kaki */
+  :host([color="kaki"]) .rt-item.is-filled {
+    color: var(--color-kaki-500);
+  }
+
+  :host([color="kaki"]) .rt-item.is-preview {
+    color: var(--color-kaki-400);
+    opacity: 0.6;
+  }
+
+  /* Washi — monocromático */
+  :host([color="washi"]) .rt-item.is-filled {
+    color: var(--color-washi-900);
+  }
+
+  :host([color="washi"]) .rt-item.is-preview {
+    color: var(--color-washi-600);
+    opacity: 0.5;
+  }
+
+  /* Celadon */
+  :host([color="celadon"]) .rt-item.is-filled {
+    color: var(--color-celadon-500);
+  }
+
+  :host([color="celadon"]) .rt-item.is-preview {
+    color: var(--color-celadon-400);
+    opacity: 0.45;
+  }
+
+  /* ────────────────────────────────────────
+     HALF-STAR — solo read-only
+     Clip trick: solapamos el icono relleno al 50%
+     ──────────────────────────────────────── */
+  .rt-item-half {
+    position: relative;
+  }
+
+  /* Icono relleno clipeado al 50% izquierdo */
+  .rt-half-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    overflow: hidden;
+    color: var(--_gold);
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+  }
+
+  .rt-half-fill svg {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  :host([color="kaki"]) .rt-half-fill {
+    color: var(--color-kaki-500);
+  }
+
+  :host([color="washi"]) .rt-half-fill {
+    color: var(--color-washi-900);
+  }
+
+  :host([color="celadon"]) .rt-half-fill {
+    color: var(--color-celadon-500);
+  }
+
+  /* ────────────────────────────────────────
+     NUMERIC DISPLAY  (slot / parte separada)
+     ──────────────────────────────────────── */
+  .rt-num {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .rt-num strong {
+    font-family: var(--lib-font-display);
+    font-weight: 300;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-primary);
+  }
+
+  /* ── prefers-reduced-motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .rt-item {
+      transition: none;
+    }
+
+    .rt-item.is-pop {
+      animation: none;
+    }
+  }
+
 }
