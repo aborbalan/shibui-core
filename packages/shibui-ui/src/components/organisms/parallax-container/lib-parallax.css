@@ -1,18 +1,55 @@
-:host {
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-PARALLAX-CONTAINER — Shibui UI
+   El host es el viewport del efecto (overflow:hidden).
+   Los hijos reciben transform vía JS — SIN transition aquí,
+   el rAF ya garantiza suavidad a 60fps sin lag artificial.
+   ============================================================ */
+
+@layer reset {
+  :host {
     display: block;
     position: relative;
-    overflow: hidden; /* Evita que los hijos que flotan salgan del contenedor */
+    overflow: hidden;
     width: 100%;
   }
-  
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
   .parallax-wrapper {
     position: relative;
     width: 100%;
     height: 100%;
   }
-  
-  ::slotted(*) {
-    /* Forzamos que los hijos tengan voluntad de cambio para optimizar GPU */
+
+  /*
+   * will-change solo cuando el elemento está visible en pantalla.
+   * Se activa/desactiva por JS añadiendo/quitando el atributo [visible].
+   * Evita reservar capas GPU para elementos fuera del viewport.
+   */
+  :host([visible]) ::slotted(*) {
     will-change: transform;
-    transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
+
+  /*
+   * SIN transition en ::slotted(*).
+   * Una transition de transform encima del parallax añade lag perceptible:
+   * el frame llega "tarde" y el ojo lo percibe como movimiento pegajoso.
+   */
+
+  /* prefers-reduced-motion: paralizar todo el efecto */
+  @media (prefers-reduced-motion: reduce) {
+    ::slotted(*) {
+      will-change: auto !important;
+      transform: none !important;
+    }
+  }
+
+}
