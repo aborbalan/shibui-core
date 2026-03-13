@@ -1,37 +1,74 @@
-:host {
+@layer tokens, reset, components;
+
+@layer reset {
+  :host {
     display: block;
-    /* El item se expande según las variables que inyectamos desde el TS */
-    grid-column: span var(--lib-bento-item-cols, 1);
-    grid-row: span var(--lib-bento-item-rows, 1);
+    /* grid-column/row se setean via this.style en updated() — no aquí */
   }
-  
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+
   .bento-item {
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
-    background: var(--bg-surface, oklch(98% 0.01 45deg));
-    border-radius: var(--lib-radius-lg, 1rem);
-    border: 1px solid var(--border-subtle, oklch(90% 0.01 45deg));
+    background: var(--bg-elevated);
+    /* Brutalista: radius mínimo, no redondeado */
+    border-radius: var(--lib-radius-lg);
+    border: 1px solid var(--border-subtle);
     overflow: hidden;
-    box-sizing: border-box;
   }
-  
-  /* ADN Shibui: Interactividad sutil */
+
+  /* ── Interactividad ── */
   :host([interactive]) .bento-item {
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      transform var(--duration-slow) var(--ease-default),
+      border-color var(--duration-base) var(--ease-default),
+      box-shadow var(--duration-slow) var(--ease-default);
   }
-  
+
   :host([interactive]) .bento-item:hover {
-    transform: translateY(-4px);
-    border-color: var(--color-accent-primary, oklch(60% 0.15 250deg));
-    box-shadow: var(--shadow-md, 0 10px 15px -3px rgb(0 0 0 / 0.1));
+    transform: translateY(-3px);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
   }
-  
-  /* Slot container para padding interno opcional */
+
+  :host([interactive]) .bento-item:active {
+    transform: translateY(-1px);
+  }
+
+  /* ── Contenido con padding ── */
   .content {
-    padding: var(--lib-space-md, 1rem);
+    padding: var(--lib-space-md);
     height: 100%;
+    display: flex;
+    flex-direction: column;
   }
+
+  /* ── Variante sin padding (para imágenes o fondos a sangre) ── */
+  :host([flush]) .content {
+    padding: 0;
+  }
+
+  /* ── prefers-reduced-motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    :host([interactive]) .bento-item {
+      transition: border-color var(--duration-base);
+    }
+
+    :host([interactive]) .bento-item:hover {
+      transform: none;
+    }
+  }
+
+}
