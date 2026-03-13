@@ -27,7 +27,7 @@
     padding: 0;
     margin: 0;
     cursor: pointer;
-    -webkit-appearance: none;
+    appearance: none;
   }
 }
 
@@ -38,13 +38,13 @@
     position: fixed;
     inset: 0;
     z-index: 400;
-    background: rgba(26, 20, 14, 0);
+    background: rgb(26, 20, 14, 0);
     pointer-events: none;
     transition: background var(--duration-slow) var(--ease-out);
   }
 
   :host([open]) .dr-backdrop {
-    background: rgba(26, 20, 14, .45);
+    background: rgb(26, 20, 14, .45);
     pointer-events: auto;
   }
 
@@ -78,7 +78,7 @@
     width: 420px;
     transform: translateX(100%);
     border-left: 1px solid var(--border-subtle);
-    box-shadow: -8px 0 48px rgba(26, 20, 14, .16);
+    box-shadow: -8px 0 48px rgb(26, 20, 14, .16);
   }
 
   .dr-left {
@@ -88,7 +88,7 @@
     width: 420px;
     transform: translateX(-100%);
     border-right: 1px solid var(--border-subtle);
-    box-shadow: 8px 0 48px rgba(26, 20, 14, .16);
+    box-shadow: 8px 0 48px rgb(26, 20, 14, .16);
   }
 
   .dr-top {
@@ -98,7 +98,7 @@
     height: 360px;
     transform: translateY(-100%);
     border-bottom: 1px solid var(--border-subtle);
-    box-shadow: 0 8px 48px rgba(26, 20, 14, .16);
+    box-shadow: 0 8px 48px rgb(26, 20, 14, .16);
   }
 
   .dr-bottom {
@@ -108,7 +108,7 @@
     height: 360px;
     transform: translateY(100%);
     border-top: 1px solid var(--border-subtle);
-    box-shadow: 0 -8px 48px rgba(26, 20, 14, .16);
+    box-shadow: 0 -8px 48px rgb(26, 20, 14, .16);
   }
 
   /* ── Sizes (right / left) ── */
@@ -257,7 +257,7 @@
     width: 12px;
     height: 12px;
     stroke-width: 1.6;
-    stroke: currentColor;
+    stroke: currentcolor;
     fill: none;
     stroke-linecap: round;
   }
@@ -265,8 +265,7 @@
   /* ── Body ── */
   .dr-body {
     flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden auto;
     padding: var(--lib-space-lg);
   }
 
@@ -342,67 +341,67 @@
      ════════════════════════════════ */
   :host([variant="dark"]) .dr {
     background: var(--color-washi-950);
-    border-color: rgba(255, 255, 255, .07) !important;
+    border-color: rgb(255, 255, 255, .07) !important;
   }
 
   :host([variant="dark"]) .dr-header {
-    border-bottom-color: rgba(255, 255, 255, .07);
+    border-bottom-color: rgb(255, 255, 255, .07);
   }
 
   :host([variant="dark"]) .dr-eyebrow {
-    color: rgba(250, 247, 244, .22);
+    color: rgb(250, 247, 244, .22);
   }
 
   :host([variant="dark"]) .dr-title {
-    color: rgba(250, 247, 244, .75);
+    color: rgb(250, 247, 244, .75);
   }
 
   :host([variant="dark"]) .dr-subtitle {
-    color: rgba(250, 247, 244, .28);
+    color: rgb(250, 247, 244, .28);
   }
 
   :host([variant="dark"]) .dr-close {
-    border-color: rgba(255, 255, 255, .1);
-    color: rgba(250, 247, 244, .3);
+    border-color: rgb(255, 255, 255, .1);
+    color: rgb(250, 247, 244, .3);
   }
 
   :host([variant="dark"]) .dr-close:hover {
-    border-color: rgba(255, 255, 255, .2);
-    background: rgba(255, 255, 255, .05);
-    color: rgba(250, 247, 244, .7);
+    border-color: rgb(255, 255, 255, .2);
+    background: rgb(255, 255, 255, .05);
+    color: rgb(250, 247, 244, .7);
   }
 
   :host([variant="dark"]) .dr-right::before,
   :host([variant="dark"]) .dr-left::before {
-    background: rgba(255, 255, 255, .08);
+    background: rgb(255, 255, 255, .08);
   }
 
   :host([variant="dark"]) .dr-footer {
-    border-top-color: rgba(255, 255, 255, .07);
-    background: rgba(255, 255, 255, .02);
+    border-top-color: rgb(255, 255, 255, .07);
+    background: rgb(255, 255, 255, .02);
   }
 
   :host([variant="dark"]) .dr-handle-bar {
-    background: rgba(255, 255, 255, .12);
+    background: rgb(255, 255, 255, .12);
   }
 
   :host([variant="dark"]) .dr-body::-webkit-scrollbar-thumb {
-    background: rgba(250, 247, 244, .15);
+    background: rgb(250, 247, 244, .15);
   }
 
   :host([variant="dark"]) .dr-body::-webkit-scrollbar-thumb:hover {
-    background: rgba(250, 247, 244, .3);
+    background: rgb(250, 247, 244, .3);
   }
 
   /* ════════════════════════════════
      KINTSUGI
      ════════════════════════════════ */
   :host([variant="kintsugi"]) .dr {
-    border-color: rgba(184, 90, 30, .3) !important;
+    border-color: rgb(184, 90, 30, .3) !important;
   }
 
   :host([variant="kintsugi"]) .dr-header {
-    border-bottom-color: rgba(184, 90, 30, .15);
+    border-bottom-color: rgb(184, 90, 30, .15);
   }
 
   :host([variant="kintsugi"]) .dr-eyebrow {
@@ -414,7 +413,7 @@
   }
 
   :host([variant="kintsugi"]) .dr-close {
-    border-color: rgba(184, 90, 30, .25);
+    border-color: rgb(184, 90, 30, .25);
     color: var(--color-kaki-500);
   }
 
@@ -425,7 +424,7 @@
 
   :host([variant="kintsugi"]) .dr-footer {
     background: var(--color-kaki-50);
-    border-top-color: rgba(184, 90, 30, .12);
+    border-top-color: rgb(184, 90, 30, .12);
   }
 
   :host([variant="kintsugi"]) .dr-body::-webkit-scrollbar-thumb {
@@ -516,15 +515,15 @@
      ════════════════════════════════ */
   :host([variant="kintsugi-dark"]) .dr {
     background: var(--color-washi-950);
-    border-color: rgba(184, 90, 30, .2) !important;
+    border-color: rgb(184, 90, 30, .2) !important;
   }
 
   :host([variant="kintsugi-dark"]) .dr-header {
-    border-bottom-color: rgba(184, 90, 30, .15);
+    border-bottom-color: rgb(184, 90, 30, .15);
   }
 
   :host([variant="kintsugi-dark"]) .dr-eyebrow {
-    color: rgba(217, 114, 52, .5);
+    color: rgb(217, 114, 52, .5);
   }
 
   :host([variant="kintsugi-dark"]) .dr-title {
@@ -532,32 +531,32 @@
   }
 
   :host([variant="kintsugi-dark"]) .dr-subtitle {
-    color: rgba(250, 247, 244, .25);
+    color: rgb(250, 247, 244, .25);
   }
 
   :host([variant="kintsugi-dark"]) .dr-close {
-    border-color: rgba(184, 90, 30, .2);
-    color: rgba(217, 114, 52, .5);
+    border-color: rgb(184, 90, 30, .2);
+    color: rgb(217, 114, 52, .5);
   }
 
   :host([variant="kintsugi-dark"]) .dr-close:hover {
-    background: rgba(184, 90, 30, .08);
+    background: rgb(184, 90, 30, .08);
     border-color: var(--color-kaki-500);
     color: var(--color-kaki-400);
   }
 
   :host([variant="kintsugi-dark"]) .dr-footer {
-    background: rgba(184, 90, 30, .04);
-    border-top-color: rgba(184, 90, 30, .12);
+    background: rgb(184, 90, 30, .04);
+    border-top-color: rgb(184, 90, 30, .12);
   }
 
   :host([variant="kintsugi-dark"]) .dr-right::before,
   :host([variant="kintsugi-dark"]) .dr-left::before {
-    background: rgba(184, 90, 30, .15);
+    background: rgb(184, 90, 30, .15);
   }
 
   :host([variant="kintsugi-dark"]) .dr-body::-webkit-scrollbar-thumb {
-    background: rgba(184, 90, 30, .4);
+    background: rgb(184, 90, 30, .4);
   }
 
   :host([variant="kintsugi-dark"][placement="right"]) .dr::after {
@@ -567,7 +566,7 @@
     bottom: 0;
     left: 0;
     width: 2px;
-    background: linear-gradient(180deg, transparent 0%, rgba(184, 90, 30, .5) 20%, rgba(245, 208, 138, .7) 50%, rgba(184, 90, 30, .5) 80%, transparent 100%);
+    background: linear-gradient(180deg, transparent 0%, rgb(184, 90, 30, .5) 20%, rgb(245, 208, 138, .7) 50%, rgb(184, 90, 30, .5) 80%, transparent 100%);
     background-size: 100% 200%;
     animation: kintsugi-seam 4s ease-in-out infinite alternate;
     pointer-events: none;
@@ -580,7 +579,7 @@
     bottom: 0;
     right: 0;
     width: 2px;
-    background: linear-gradient(180deg, transparent 0%, rgba(184, 90, 30, .5) 20%, rgba(245, 208, 138, .7) 50%, rgba(184, 90, 30, .5) 80%, transparent 100%);
+    background: linear-gradient(180deg, transparent 0%, rgb(184, 90, 30, .5) 20%, rgb(245, 208, 138, .7) 50%, rgb(184, 90, 30, .5) 80%, transparent 100%);
     background-size: 100% 200%;
     animation: kintsugi-seam 4s ease-in-out infinite alternate;
     pointer-events: none;
@@ -640,7 +639,7 @@
     content: '' !important;
     position: absolute !important;
     inset: 0 !important;
-    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0, 0, 0, .03) 3px, rgba(0, 0, 0, .03) 4px) !important;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgb(0, 0, 0, .03) 3px, rgb(0, 0, 0, .03) 4px) !important;
     animation: dr-scanline 7s steps(1) infinite !important;
     pointer-events: none !important;
     z-index: 10 !important;
@@ -659,13 +658,13 @@
   }
 
   :host([variant="glitch"]) .dr-rgb-r {
-    background: rgba(217, 114, 52, .08);
+    background: rgb(217, 114, 52, .08);
     animation: dr-rgb-r 7s steps(1) infinite;
     mix-blend-mode: screen;
   }
 
   :host([variant="glitch"]) .dr-rgb-b {
-    background: rgba(78, 148, 130, .06);
+    background: rgb(78, 148, 130, .06);
     animation: dr-rgb-b 7s steps(1) infinite 60ms;
     mix-blend-mode: screen;
   }
@@ -675,7 +674,7 @@
      ════════════════════════════════ */
   :host([variant="glitch-dark"]) .dr {
     background: var(--color-washi-950);
-    border-color: rgba(255, 255, 255, .06) !important;
+    border-color: rgb(255, 255, 255, .06) !important;
     animation: dr-glitch-slide 6s steps(1) infinite, dr-flicker 6s steps(1) infinite;
   }
 
@@ -690,7 +689,7 @@
     bottom: 0;
     left: 0;
     width: 1px;
-    background: rgba(250, 247, 244, .3);
+    background: rgb(250, 247, 244, .3);
     animation: dr-seam-glitch 6s steps(1) infinite;
     pointer-events: none;
   }
@@ -699,7 +698,7 @@
     content: '' !important;
     position: absolute !important;
     inset: 0 !important;
-    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255, 255, 255, .02) 3px, rgba(255, 255, 255, .02) 4px) !important;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgb(255, 255, 255, .02) 3px, rgb(255, 255, 255, .02) 4px) !important;
     animation: dr-scanline 6s steps(1) infinite !important;
     pointer-events: none !important;
     z-index: 10 !important;
@@ -708,27 +707,27 @@
   }
 
   :host([variant="glitch-dark"]) .dr-rgb-r {
-    background: rgba(217, 114, 52, .12);
+    background: rgb(217, 114, 52, .12);
     animation: dr-rgb-r 6s steps(1) infinite;
     mix-blend-mode: screen;
   }
 
   :host([variant="glitch-dark"]) .dr-rgb-b {
-    background: rgba(78, 148, 130, .1);
+    background: rgb(78, 148, 130, .1);
     animation: dr-rgb-b 6s steps(1) infinite 80ms;
     mix-blend-mode: screen;
   }
 
   :host([variant="glitch-dark"]) .dr-header {
-    border-bottom-color: rgba(255, 255, 255, .07);
+    border-bottom-color: rgb(255, 255, 255, .07);
   }
 
   :host([variant="glitch-dark"]) .dr-eyebrow {
-    color: rgba(250, 247, 244, .2);
+    color: rgb(250, 247, 244, .2);
   }
 
   :host([variant="glitch-dark"]) .dr-title {
-    color: rgba(250, 247, 244, .75);
+    color: rgb(250, 247, 244, .75);
     font-family: var(--lib-font-mono);
     font-size: 1rem;
     letter-spacing: .14em;
@@ -736,34 +735,33 @@
   }
 
   :host([variant="glitch-dark"]) .dr-subtitle {
-    color: rgba(250, 247, 244, .25);
+    color: rgb(250, 247, 244, .25);
   }
 
   :host([variant="glitch-dark"]) .dr-close {
-    border-color: rgba(255, 255, 255, .1);
-    color: rgba(250, 247, 244, .3);
+    border-color: rgb(255, 255, 255, .1);
+    color: rgb(250, 247, 244, .3);
   }
 
   :host([variant="glitch-dark"]) .dr-close:hover {
-    background: rgba(255, 255, 255, .05);
-    border-color: rgba(255, 255, 255, .2);
-    color: rgba(250, 247, 244, .7);
+    background: rgb(255, 255, 255, .05);
+    border-color: rgb(255, 255, 255, .2);
+    color: rgb(250, 247, 244, .7);
   }
 
   :host([variant="glitch-dark"]) .dr-footer {
-    background: rgba(255, 255, 255, .02);
-    border-top-color: rgba(255, 255, 255, .06);
+    background: rgb(255, 255, 255, .02);
+    border-top-color: rgb(255, 255, 255, .06);
   }
 
   :host([variant="glitch-dark"]) .dr-body::-webkit-scrollbar-thumb {
-    background: rgba(250, 247, 244, .15);
+    background: rgb(250, 247, 244, .15);
   }
 
   /* ════════════════════════════════
      ANIMACIONES GLITCH
      ════════════════════════════════ */
   @keyframes dr-glitch-slide {
-
     0%,
     88%,
     100% {
@@ -810,7 +808,6 @@
   }
 
   @keyframes dr-seam-glitch {
-
     0%,
     85%,
     100% {
@@ -876,7 +873,6 @@
   }
 
   @keyframes dr-rgb-r {
-
     0%,
     88%,
     100% {
@@ -901,7 +897,6 @@
   }
 
   @keyframes dr-rgb-b {
-
     0%,
     88%,
     100% {
@@ -926,7 +921,6 @@
   }
 
   @keyframes dr-flicker {
-
     0%,
     85%,
     100% {
