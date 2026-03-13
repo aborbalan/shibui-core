@@ -1,13 +1,33 @@
 @layer tokens, reset, components;
 
-@layer components {
+/* ============================================================
+   LIB-HORIZONTAL-SCROLL-SECTION — Shibui UI
+   Scroll vertical → traducción horizontal sticky.
+   La prop `scroll-duration` controla cuántas vh dura el efecto.
+   ============================================================ */
+
+@layer reset {
   :host {
     display: block;
-    /* La altura define la "duración" del scroll. 300vh = 3 pantallas de scroll */
-    height: var(--_scroll-height, 300vh);
     position: relative;
   }
 
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+
+  :host {
+    /* Altura del bloque = "duración" del scroll.
+       Sobreescribible con --_scroll-height o la prop scroll-duration. */
+    height: var(--_scroll-height, 300vh);
+  }
+
+  /* ── Viewport sticky ── */
   .sticky-wrapper {
     position: sticky;
     top: 0;
@@ -16,45 +36,52 @@
     overflow: hidden;
     display: flex;
     align-items: center;
-    background-color: var(--bg-base);
+    background: var(--bg-base);
   }
 
+  /* ── Track horizontal ── */
   .horizontal-content {
     display: flex;
-    gap: var(--lib-spacing-xl, 4rem);
-    padding: 0 10vw;
+    gap: var(--_gap, calc(var(--lib-space-xl) * 2));
+    padding: 0 calc(var(--_padding-inline, 10) * 1vw);
     will-change: transform;
-    transition: transform 0.1s linear;
+    /* SIN transition aquí — el rAF + JS ya dan suavidad.
+       Una transition añade lag perceptible durante el scroll. */
   }
 
-  /* Estética de los ítems internos (pueden ser imágenes o texto) */
   ::slotted(*) {
     flex-shrink: 0;
   }
 
-  /* ── Indicador de Progreso Shibui ────────────────────────── */
+  /* ── Barra de progreso ── */
   .progress-bar {
     position: absolute;
-    bottom: 40px;
-    left: 10vw;
-    width: 80vw;
+    bottom: var(--lib-space-xl);
+    left: calc(var(--_padding-inline, 10) * 1vw);
+    width: calc(100% - (var(--_padding-inline, 10) * 2vw));
     height: 1px;
-    background: var(--color-washi-200);
+    background: var(--border-subtle);
   }
 
   .progress-fill {
     height: 100%;
-    background: var(--lib-shibui-ink);
     width: 0%;
-    transition: width 0.1s linear;
+    background: var(--color-washi-900);
+    /* Aquí sí puede haber una micro-transición para suavizar
+       la barra (no afecta al contenido principal). */
+    transition: width 80ms linear;
   }
 
+  /* ── Contador ── */
   .counter {
     position: absolute;
-    bottom: 50px;
-    right: 10vw;
-    font-family: var(--lib-font-mono, 'DM Mono', monospace);
+    bottom: calc(var(--lib-space-xl) + 16px);
+    right: calc(var(--_padding-inline, 10) * 1vw);
+    font-family: var(--lib-font-mono);
     font-size: var(--text-xs);
-    color: var(--lib-shibui-ink);
+    letter-spacing: var(--tracking-widest);
+    color: var(--text-muted);
+    user-select: none;
   }
+
 }
