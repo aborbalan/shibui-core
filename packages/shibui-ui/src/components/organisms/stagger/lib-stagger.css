@@ -1,20 +1,53 @@
-:host {
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-STAGGER-CONTAINER — Shibui UI
+   Anima los hijos slotados en cascada al entrar en el viewport.
+   Los delays se aplican por JS sobre --_stagger-delay individual.
+   La dirección y duración se controlan con props → CSS vars en :host.
+   ============================================================ */
+
+@layer reset {
+  :host {
     display: block;
     width: 100%;
   }
-  
-  /* Seleccionamos los hijos directos que entran por el slot */
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+
+  /* ── Estado oculto — antes de la intersección ── */
   ::slotted(*) {
     opacity: 0;
-    transform: translateY(50px) scale(0.9); /* Más exagerado para que se note */
-    transition: 
-      opacity 0.8s ease-out, 
-      transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); /* Efecto rebote */
-
-    transition-delay: var(--stagger-delay, 0ms);
+    transform: var(--_stagger-from, translateY(var(--lib-space-lg)));
+    transition:
+      opacity var(--_stagger-duration, var(--duration-slow)) var(--_stagger-ease, var(--ease-out)),
+      transform var(--_stagger-duration, var(--duration-slow)) var(--_stagger-ease, var(--ease-out));
+    transition-delay: var(--_stagger-delay, 0ms);
+    /* Asegura que el valor aplicado por JS no sea sobreescrito por Lit */
+    will-change: opacity, transform;
   }
-  
+
+  /* ── Estado visible — tras la intersección ── */
   :host([visible]) ::slotted(*) {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
+
+  /* ── prefers-reduced-motion — anima instantáneamente ── */
+  @media (prefers-reduced-motion: reduce) {
+    ::slotted(*) {
+      transition: none;
+      /* Visible directamente, sin animación */
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+}
