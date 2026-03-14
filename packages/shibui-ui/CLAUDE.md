@@ -98,7 +98,7 @@ Cada componente sigue obligatoriamente esta estructura de 5 ficheros:
 
 ```
 lib-[nombre]/
-  index.ts                   → Re-exportaciones
+  index.ts                   → Re-exportaciones (barrel export)
   lib-[nombre].component.ts  → LitElement, @customElement, @property, render()
   lib-[nombre].html.ts       → Template function separada (TemplateResult)
   lib-[nombre].css           → Estilos scoped con @layer
@@ -116,6 +116,15 @@ static override styles = [
   css`${unsafeCSS(sharedTokens)}`,
   css`${unsafeCSS(componentCss)}`,
 ];
+```
+
+### Registro del componente (obligatorio)
+
+Al crear un componente nuevo, añadirlo al barrel principal del paquete:
+
+```typescript
+// packages/shibui-ui/src/index.ts
+export * from './components/[atoms|molecules|organisms]/lib-[nombre]/index';
 ```
 
 ---
@@ -170,6 +179,16 @@ Paleta washi, kaki, celadón. Escala tipográfica, espaciado 4pt, sombras, radio
 
 ---
 
+## Integración por framework (contrato de consumo)
+
+Para garantizar IntelliSense correcto en las apps consumidoras:
+
+- **React** — Extensión del namespace `JSX` en `custom-elements.d.ts`. Es obligatorio importar `React` en el archivo para que el aumento de módulo sea efectivo.
+- **Svelte** — `shibui-elements.d.ts` extendiendo `svelte/elements` para mapear atributos y eventos personalizados.
+- **Angular** — Habilitación de `CUSTOM_ELEMENTS_SCHEMA` en el módulo. `typings.d.ts` para soportar imports con sufijos `?raw` (iconos), `?inline` (CSS) y `.svg`.
+
+---
+
 ## Testing y calidad
 
 - **Playwright** — E2E, component testing y visual regression
@@ -212,9 +231,10 @@ Paleta washi, kaki, celadón. Escala tipográfica, espaciado 4pt, sombras, radio
 
 - Cuando se pida un componente nuevo, seguir siempre la estructura de 5 ficheros
 - Pedir el fichero del componente antes de proponer cambios sobre uno existente
-- Usar los tokens `--lib-*` para todos los valores visuales
+- Usar los tokens `--lib-*` para todos los valores visuales, nunca hardcodear colores ni espaciados
 - Proponer siempre la Storybook story junto al componente
 - Los efectos glass y spotlight son opcionales — no añadirlos salvo que se pida explícitamente
 - Los tipos siempre desde `src/models/`, nunca inline
 - Si hay duda sobre convenciones, preguntar antes de asumir
 - Recordar el ritual de cierre (push + merge a develop) al finalizar cada componente
+- Ofrecer comandos de git con mensaje de commit al finalizar una feature o componente
