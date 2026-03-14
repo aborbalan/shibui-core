@@ -1,0 +1,1 @@
+export type BentoGapSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';

@@ -1,16 +1,19 @@
 import { html, TemplateResult } from 'lit';
-import { LibBentoGrid } from './lib-bento-grid.component';
+import type { LibBentoGrid } from './lib-bento-grid.component';
 
-export const bentoGridTemplate = (context: LibBentoGrid): TemplateResult => html`
-  <div 
-    class="bento-grid"
-    style="
-      --lib-bento-columns: ${context.columns};
-      --lib-bento-gap: var(--lib-space-${context.gap});
-      --lib-bento-row-height: ${context.rowHeight};
-    "
-    role="presentation"
-  >
-    <slot></slot>
-  </div>
-`;
+export function bentoGridTemplate(ctx: LibBentoGrid): TemplateResult {
+  return html`
+    <div
+      class="bento-grid"
+      part="grid"
+      role="presentation"
+      style="
+        --_columns: ${ctx.columns};
+        --_gap: var(--lib-space-${ctx.gap});
+        --_row-height: ${ctx.rowHeight};
+      "
+    >
+      <slot></slot>
+    </div>
+  `;
+}
