@@ -1,30 +1,74 @@
-:host {
+@layer tokens, reset, components;
+
+@layer reset {
+  :host {
     display: block;
+    /* grid-column/row se setean via this.style en updated() — no aquí */
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+
+  .bento-item {
+    height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: var(--bg-elevated);
+    /* Brutalista: radius mínimo, no redondeado */
+    border-radius: var(--lib-radius-lg);
+    border: 1px solid var(--border-subtle);
+    overflow: hidden;
   }
-  
-  .bento-grid {
-    display: grid;
-    /* Columnas dinámicas basadas en la prop */
-    grid-template-columns: repeat(var(--lib-bento-columns, 4), minmax(0, 1fr));
-    /* Espaciado usando nuestros tokens de aire */
-    gap: var(--lib-bento-gap, var(--lib-space-md));
-    /* Altura base de las filas */
-    grid-auto-rows: var(--lib-bento-row-height, 150px);
-    /* El algoritmo 'dense' intenta rellenar huecos si hay items pequeños */
-    grid-auto-flow: dense; 
+
+  /* ── Interactividad ── */
+  :host([interactive]) .bento-item {
+    cursor: pointer;
+    transition:
+      transform var(--duration-slow) var(--ease-default),
+      border-color var(--duration-base) var(--ease-default),
+      box-shadow var(--duration-slow) var(--ease-default);
   }
-  
-  /* Responsive: Adaptación automática para mantener la usabilidad */
-  @media (width <= 1024px) {
-    .bento-grid {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  :host([interactive]) .bento-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
+  }
+
+  :host([interactive]) .bento-item:active {
+    transform: translateY(-1px);
+  }
+
+  /* ── Contenido con padding ── */
+  .content {
+    padding: var(--lib-space-md);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Variante sin padding (para imágenes o fondos a sangre) ── */
+  :host([flush]) .content {
+    padding: 0;
+  }
+
+  /* ── prefers-reduced-motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    :host([interactive]) .bento-item {
+      transition: border-color var(--duration-base);
+    }
+
+    :host([interactive]) .bento-item:hover {
+      transform: none;
     }
   }
-  
-  @media (width <= 480px) {
-    .bento-grid {
-      grid-template-columns: 1fr;
-      grid-auto-rows: auto; /* En móvil dejamos que el contenido mande */
-    }
-  }
+
+}
