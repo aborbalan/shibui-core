@@ -1,39 +1,82 @@
-# UI Library 🚀
+# @shibui/ui 🎌
 
-Librería de componentes UI agnóstica construida con **Web Components** y **Lit**.
+Librería de componentes UI agnóstica construida con **Web Components** y **Lit**.  
+Inspirada en el concepto japonés *shibui* (渋い) — belleza simple, sutil y duradera.
 
 ## 🎯 Visión
+
 Arquitectura Senior ejecutada en etapas Junior-friendly.
 
 ## 🏗️ Pilares Técnicos
-1. **TypeScript Estricto**: Código tipado para evitar errores en desarrollo.
-2. **CSS Nativo Moderno**: Uso de CSS Variables y Layers sin dependencias pesadas.
-3. **Arquitectura Modular**: Enfocada en **Tree-shaking real** (Zero-Bloat) mediante `preserveModules`.
-4. **Patrón Híbrido**: Lógica sólida con diseño base elegante y fácil de personalizar.
-5. **Accesibilidad (a11y)**: WAI-ARIA desde el inicio.
+
+1. **TypeScript Estricto** — `exactOptionalPropertyTypes`, tipado explícito en todos los métodos.
+2. **CSS Nativo Moderno** — CSS custom properties con `@layer` sin dependencias pesadas.
+3. **Arquitectura Modular** — Tree-shaking real mediante `preserveModules`.
+4. **Agnóstica** — Sin dependencias de framework. Funciona en React, Angular, Svelte y Vanilla JS.
+5. **Accesibilidad (a11y)** — WAI-ARIA desde el inicio.
 
 ## ✨ Características
-- **Agnóstica**: Funciona en React, Vue, Angular, Svelte y Vanilla JS.
-- **Ligera**: Solo ~5-6 KB (Lit como peer dependency).
-- **Modular**: Importa solo lo que uses gracias a la estructura de módulos preservados.
+
+- **Ligera** — Solo ~5-6 KB (Lit como peer dependency).
+- **Modular** — Importa solo lo que uses.
+- **Tokens** — Sistema de design tokens `--lib-*` con paleta OKLCH y efectos glass/spotlight.
 
 ## 📦 Instalación
 
-Puedes usar tu gestor de paquetes favorito. Recuerda que `lit` es una **peer dependency**.
+`lit` es una **peer dependency** obligatoria.
 
 ```bash
 # npm
-npm install ui-library lit
+npm install @shibui/ui lit
 
 # yarn
-yarn add ui-library lit
+yarn add @shibui/ui lit
 
 # pnpm
-pnpm add ui-library lit
+pnpm add @shibui/ui lit
+```
 
+## 🎨 Configuración de estilos
 
+Importa los tokens globales en tu punto de entrada:
 
-🎨 Configuración de Estilos
-Para que los componentes luzcan correctamente, importa los estilos globales en tu punto de entrada (ej. main.ts o app.js):
+```ts
+import '@shibui/ui/styles';
+// o solo los tokens CSS
+import '@shibui/ui/tokens';
+```
 
-import 'ui-library/styles';
+## 🚀 Uso básico
+
+```ts
+// Web Components estándar
+import '@shibui/ui';
+
+// Wrappers por framework
+import { LibButton } from '@shibui/ui/react';
+import { LibButton } from '@shibui/ui/angular';
+// Svelte — los tipos se cargan automáticamente desde @shibui/ui/svelte
+```
+
+```html
+<lib-button variant="primary">Hola Shibui</lib-button>
+```
+
+## 📤 Exports disponibles
+
+| Import | Descripción |
+|---|---|
+| `@shibui/ui` | Web Components estándar |
+| `@shibui/ui/react` | Wrappers tipados para React |
+| `@shibui/ui/angular` | Wrappers para Angular |
+| `@shibui/ui/svelte` | Definiciones de tipos para Svelte |
+| `@shibui/ui/tokens` | Solo tokens CSS (`--lib-*`) |
+| `@shibui/ui/styles` | Estilos globales completos |
+
+## 📖 Documentación
+
+Storybook desplegado en Firebase Hosting — disponible en cada PR vía CI/CD.
+
+## 📄 Licencia
+
+MIT
