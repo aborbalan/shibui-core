@@ -8,8 +8,18 @@ Core: Basado en Lit, que proporciona una capa ligera sobre el estándar de Web C
 
 Agnosticismo: El código base no depende de ningún framework externo.
 
-2. Estructura de un Componente (Separación de Preocupaciones)
-Para mantener el código limpio y mantenible (estilo Senior), cada componente se divide en tres archivos:
+2. Para mantener el código limpio y mantenible, cada componente sigue 
+obligatoriamente una estructura de 5 ficheros:
+
+lib-[nombre]/
+  index.ts                   → Barrel export (re-exportaciones)
+  lib-[nombre].component.ts  → LitElement, @customElement, @property, render()
+  lib-[nombre].html.ts       → Template function separada (TemplateResult)
+  lib-[nombre].css           → Estilos scoped con @layer tokens, reset, components
+  lib-[nombre].stories.ts    → Historia de Storybook
+
+Los estilos son ficheros .css planos (no .css.ts) importados con el sufijo 
+?inline de Vite y aplicados vía unsafeCSS() en el componente.
 
 *.component.ts: Lógica, propiedades (@property) y estados.
 
