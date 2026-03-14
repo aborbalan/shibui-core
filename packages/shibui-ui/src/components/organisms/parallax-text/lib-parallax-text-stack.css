@@ -1,0 +1,120 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-PARALLAX-TEXT-STACK — Shibui UI
+   Apila líneas tipográficas con efecto parallax horizontal.
+   Capas pares: outline (stroke, sin relleno).
+   Capas impares: italic serif.
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    /* SIN overflow:hidden — el translateX se clipa si está aquí.
+       El padre (página o story wrapper) es quien debe controlar el overflow. */
+    padding: 10vh 0;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+
+  .pts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lib-space-md);
+  }
+
+  /* ── Capa base ── */
+  .pts-layer {
+    display: block;
+    will-change: transform;
+    /* Transición suave — idéntica a lib-parallax-container */
+    transition: transform var(--duration-fast) var(--ease-out);
+    white-space: nowrap;
+    line-height: 0.9;
+    text-transform: uppercase;
+    user-select: none;
+  }
+
+  /* ── Tamaños — font-size via :host attr ── */
+  :host([size="sm"]) .pts-layer {
+    font-size: clamp(2rem, 6vw, 4rem);
+  }
+
+  :host([size="md"]) .pts-layer {
+    font-size: clamp(3rem, 8vw, 6rem);
+  }
+
+  :host([size="lg"]) .pts-layer,
+  :host(:not([size])) .pts-layer {
+    font-size: clamp(4rem, 10vw, 8rem);
+  }
+
+  :host([size="xl"]) .pts-layer {
+    font-size: clamp(5rem, 13vw, 10rem);
+  }
+
+  :host([size="2xl"]) .pts-layer {
+    font-size: clamp(6rem, 16vw, 14rem);
+  }
+
+  /* ── Outline — tipografía en trazo, sin relleno ── */
+  .pts-layer--outline {
+    font-family: var(--lib-font-display);
+    font-weight: 300;
+    letter-spacing: var(--tracking-tight);
+    -webkit-text-stroke: 1px var(--text-primary);
+    color: transparent;
+  }
+
+  /* ── Italic serif — contraste con outline ── */
+  .pts-layer--italic {
+    font-family: var(--lib-font-body);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-primary);
+  }
+
+  /* ── Variantes de color ── */
+  :host([color="muted"]) .pts-layer--outline {
+    -webkit-text-stroke-color: var(--text-muted);
+  }
+
+  :host([color="muted"]) .pts-layer--italic {
+    color: var(--text-muted);
+  }
+
+  :host([color="kaki"]) .pts-layer--outline {
+    -webkit-text-stroke-color: var(--color-kaki-500);
+  }
+
+  :host([color="kaki"]) .pts-layer--italic {
+    color: var(--color-kaki-500);
+  }
+
+  :host([color="celadon"]) .pts-layer--outline {
+    -webkit-text-stroke-color: var(--color-celadon-500);
+  }
+
+  :host([color="celadon"]) .pts-layer--italic {
+    color: var(--color-celadon-500);
+  }
+
+  /* ── prefers-reduced-motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .pts-layer {
+      transition: none;
+      transform: none !important;
+    }
+  }
+
+}
