@@ -23,7 +23,6 @@
 }
 
 @layer components {
-
   .pts-container {
     display: flex;
     flex-direction: column;
