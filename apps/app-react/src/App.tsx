@@ -2,6 +2,8 @@ import MainLayout from './components/layout/MainLayout';
 import ProfileSection from './components/organisms/ProfileSection';
 import ProjectGallery from './components/layout/ProjectGallery';
 import { useEffect, useRef, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { KitchenSink } from './components/shared/KitchenSink';
 
 function App() {
 
@@ -156,12 +158,19 @@ function App() {
   return (
 
     <div id="wrap-const-full" ref={wrapperRef} style={{
-      position: 'relative',
+      width:'100%',
       minHeight: '100vh',
-      backgroundColor: '#120E0A' // El color base 'washi-950' del CSS
     }}>
 
-      <canvas
+<BrowserRouter>
+      {/* No ponemos <nav> aquí para que nadie vea el link. 
+         Solo tú podrás entrar escribiendo /dev-kitchen-sink en la URL 
+      */}
+      
+      <Routes>
+        <Route path="/" element={
+          <div>
+                 <canvas
         ref={canvasRef}
         style={{
           position: 'fixed',
@@ -179,6 +188,16 @@ function App() {
           {currentSection === 'experiencia' && <div style={{ padding: '2rem' }}>Sección Experiencia</div>}
         </MainLayout>
       </div>
+          </div>
+        } />
+
+        {/* Ruta "Escondida" */}
+        <Route path="/dev-kitchen-sink" element={<KitchenSink />} />
+      </Routes>
+    </BrowserRouter>
+
+
+
 
     </div>
 
