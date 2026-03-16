@@ -37,6 +37,8 @@ export * from './components/atoms/bento-item/lib-bento-item.component';
 export * from './components/atoms/reading-progress/lib-reading-progress.component';
 export * from './components/atoms/liquid-button/lib-liquid-button.component'
 export * from './components/atoms/text-glich/lib-text-glitch.component'
+export * from './components/atoms/background/lib-background.component'
+export * from './components/atoms/burger-button/lib-burger-button.component'
 
 
 export * from './components/molecules/breadcrumb/lib-breadcrumb.component';
@@ -56,6 +58,8 @@ export * from './components/molecules/tabs/lib-tabs.component';
 export * from './components/molecules/modal/lib-modal.component';
 export * from './components/molecules/tree-select/lib-tree-node.component';
 export * from './components/molecules/button-group/lib-button-group.component';
+export * from './components/molecules/checkbox-card/lib-checkbox-card.component';
+
 
 
 export * from './components/organisms/dialog/lib-dialog.component';

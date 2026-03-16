@@ -29,6 +29,7 @@ function renderTab(item: TabItem, context: LibTabs): TemplateResult {
       data-id="${item.id}"
       data-label="${item.label}"
       ?disabled="${isDisabled}"
+      @click="${(e:Event):void=> context._handleClick(e as CustomEvent)}"
     >
       ${item.icon ? html`${unsafeHTML(item.icon)}` : nothing}
       ${item.label}
@@ -68,6 +69,7 @@ export function tabsTemplate(context: LibTabs): TemplateResult {
         part="list"
         role="tablist"
         aria-label="${context.ariaLabel || nothing}"
+        
         @keydown="${(e: KeyboardEvent): void => context._handleKey(e)}"
       >
         ${tabs.map(item => renderTab(item, context))}

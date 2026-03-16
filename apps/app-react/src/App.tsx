@@ -4,6 +4,8 @@ import ProjectGallery from './components/layout/ProjectGallery';
 import { useEffect, useRef, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { KitchenSink } from './components/shared/KitchenSink';
+import { HomePage } from './components/home';
+import { ComponentsPage } from './components/components';
 
 function App() {
 
@@ -14,7 +16,7 @@ function App() {
    * @param wrap 
    * @returns 
    */
-   const initConstellation = (canvas: HTMLCanvasElement, wrap: HTMLElement) => {
+  const initConstellation = (canvas: HTMLCanvasElement, wrap: HTMLElement) => {
 
     interface StarPoint {
       x: number;
@@ -27,20 +29,20 @@ function App() {
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-  
+
     let w: number, h: number;
     let pts: StarPoint[] = [];
     let animationFrameId: number;
-  
+
     const resize = () => {
       // Usamos window para asegurar que pillamos el viewport real
       w = canvas.width = window.innerWidth;
       h = canvas.height = window.innerHeight;
-      
+
       pts = [];
       // Densidad: 1 punto cada 15000px cuadrados 
-      const count = Math.floor((w * h) / 15000); 
-      
+      const count = Math.floor((w * h) / 15000);
+
       for (let i = 0; i < count; i++) {
         pts.push({
           x: Math.random() * w,
@@ -53,10 +55,10 @@ function App() {
       }
       console.log(`Canvas inicializado: ${w}x${h}, Estrellas creadas: ${pts.length}`);
     };
-  
+
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
-  
+
       // 1. Dibujar Líneas (Conexiones) 
       ctx.lineWidth = 0.5;
       for (let i = 0; i < pts.length; i++) {
@@ -64,7 +66,7 @@ function App() {
           const dx = pts[i].x - pts[j].x;
           const dy = pts[i].y - pts[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-  
+
           if (dist < 150) {
             const alpha = (1 - dist / 150) * 0.15;
             // Forzamos el color 'washi-300' (D3C8BC) 
@@ -76,18 +78,18 @@ function App() {
           }
         }
       }
-  
+
       // 2. Dibujar Estrellas 
       pts.forEach(s => {
         s.pa += s.ps;
         const pulse = Math.sin(s.pa) * 0.3 + 0.7; // Efecto de latido 
-        
+
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r * pulse, 0, Math.PI * 2);
         // Aplicamos el color washi-300 con el pulso 
         ctx.fillStyle = `rgba(211, 200, 188, ${s.a * pulse})`;
         ctx.fill();
-  
+
         // Brillo extra para estrellas potentes 
         if (s.a > 0.4) {
           ctx.beginPath();
@@ -96,16 +98,16 @@ function App() {
           ctx.fill();
         }
       });
-  
+
       animationFrameId = requestAnimationFrame(draw);
     };
-  
+
     resize();
     draw();
-  
+
     const ro = new ResizeObserver(() => resize());
     ro.observe(wrap);
-  
+
     return () => {
       cancelAnimationFrame(animationFrameId);
       ro.disconnect();
@@ -158,43 +160,50 @@ function App() {
   return (
 
     <div id="wrap-const-full" ref={wrapperRef} style={{
-      width:'100%',
+      width: '100%',
       minHeight: '100vh',
     }}>
 
-<BrowserRouter>
-      {/* No ponemos <nav> aquí para que nadie vea el link. 
+      <BrowserRouter>
+        {/* No ponemos <nav> aquí para que nadie vea el link. 
          Solo tú podrás entrar escribiendo /dev-kitchen-sink en la URL 
       */}
-      
-      <Routes>
-        <Route path="/" element={
-          <div>
-                 <canvas
-        ref={canvasRef}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          zIndex: 0,
-          pointerEvents: 'none'
-        }}
-      />
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <MainLayout onOpenCV={() => setShowCVOptions(true)} activeTab={currentSection} onTabChange={navigateTo}>
-          {/* Bloque 1: Perfil profesional (LinkedIn Style) */}
-          {currentSection === 'perfil' && <ProfileSection />}
-          {currentSection === 'proyectos' && <ProjectGallery />}
-          {currentSection === 'experiencia' && <div style={{ padding: '2rem' }}>Sección Experiencia</div>}
-        </MainLayout>
-      </div>
-          </div>
-        } />
 
-        {/* Ruta "Escondida" */}
-        <Route path="/dev-kitchen-sink" element={<KitchenSink />} />
-      </Routes>
-    </BrowserRouter>
+        <Routes>
+          <Route path="/" element={
+            <div>
+
+
+              <canvas
+                ref={canvasRef}
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  zIndex: 0,
+                  pointerEvents: 'none'
+                }}
+              />
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <MainLayout activeTab={currentSection} onTabChange={navigateTo} />
+              </div>
+
+
+            </div>
+          } >
+          <Route path="/dev-kitchen-sink" element={<KitchenSink />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/about-me" element={<HomePage />} />
+          <Route path="/components" element={<ComponentsPage />} />
+
+          </Route>
+
+          {/* Ruta "Escondida" */}
+
+
+
+        </Routes>
+      </BrowserRouter>
 
 
 

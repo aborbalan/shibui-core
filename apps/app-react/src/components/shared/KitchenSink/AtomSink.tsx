@@ -1,3 +1,4 @@
+import { LibAccordionItem, LibAvatar, LibBackground, LibBadge } from '@shibui/ui/react';
 import { LibButton } from '@shibui/ui/react';
 import React from 'react';
 
@@ -8,18 +9,53 @@ export const AtomsSink: React.FC = () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
       <h4>Buttons</h4>
       <div style={{ display: 'flex', gap: 'var(--lib-space-sm)' }}>
-        <LibButton variant="solid">Solid</LibButton>
-        <LibButton variant="ghost">Ghost</LibButton>
+        <LibButton variant="default">default</LibButton>
+        <LibButton variant="primary">primary</LibButton>
+        <LibButton variant="secondary">secondary</LibButton>
+        <LibButton variant="ghost">ghost</LibButton>
+        <LibButton variant="accent">accent</LibButton>
+        <LibButton variant="danger">danger</LibButton>
+
       </div>
     </div>
 
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
-      <h4>Icons & Labels</h4>
-      <div style={{ display: 'flex', gap: 'var(--lib-space-sm)', alignItems: 'center' }}>
-        <lib-icon name="command" size="24"></lib-icon>
-        <lib-label variant="success">Pro</lib-label>
-        <lib-label>Default</lib-label>
-      </div>
+      <h4>Accordion Item</h4>
+        <LibAccordionItem label={'prueba'}>
+        <p>{'Contenido a mostrar'}</p>
+        </LibAccordionItem>
     </div>
+
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
+    <h4>Aspect Ratio (define Tests)</h4>
+
+    </div>
+
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
+    <h4>Avatar (define Tests)</h4>
+        <LibAvatar></LibAvatar>
+        <LibAvatar name="Alejandro Borbalan"></LibAvatar>
+        <LibAvatar shape="squircle" name="Alejandro Borbalan"></LibAvatar>
+        <LibAvatar shape="square" name="Alejandro Borbalan"></LibAvatar>
+
+
+    </div>
+
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
+    <h4>Badge (define Tests)</h4>
+        <LibBadge variant="default">Badge</LibBadge>
+        <LibBadge variant="accent">Badge</LibBadge>
+        <LibBadge variant="celadon">Badge</LibBadge>
+        <LibBadge variant="dark">Badge</LibBadge>
+        <LibBadge variant="error">Badge</LibBadge>
+        <LibBadge variant="success">Badge</LibBadge>
+        <LibBadge variant="warning">Badge</LibBadge>
+
+    <h5>Dot</h5>
+    <LibBadge variant="default" dot>Badge</LibBadge>
+
+    </div>
+
+
   </section>
 );
