@@ -12,7 +12,9 @@ export const KitchenSink: React.FC = () => {
       backgroundColor: 'var(--bg-base)',
       color: 'var(--color-washi-50)',
       padding: 'var(--lib-space-xl)',
-      boxSizing: 'border-box'
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
     }}>
       <header style={{ marginBottom: 'var(--lib-space-2xl)' }}>
         <h1 style={{ fontSize: 'var(--text-3xl)', marginBottom: '0.5rem' }}>Kitchen Sink</h1>
