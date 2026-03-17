@@ -29,6 +29,9 @@ import paperPlaneRight from '@phosphor-icons/core/assets/regular/paper-plane-rig
 import phone from '@phosphor-icons/core/assets/regular/phone.svg?raw';
 import megaphone from '@phosphor-icons/core/assets/regular/megaphone.svg?raw';
 import rsa from '@phosphor-icons/core/assets/regular/rss.svg?raw';
+import x from '@phosphor-icons/core/assets/regular/x.svg?raw';
+import xSquare from '@phosphor-icons/core/assets/regular/x-square.svg?raw';
+import xCircle from '@phosphor-icons/core/assets/regular/x-circle.svg?raw';
 
 import camera from '@phosphor-icons/core/assets/regular/camera.svg?raw';
 import image from '@phosphor-icons/core/assets/regular/image.svg?raw';
@@ -112,6 +115,9 @@ import bicycle from '@phosphor-icons/core/assets/regular/bicycle.svg?raw';
 
 export const ICON_REGISTRY: Record<string, string> = {
   // --- Iconos con Alias (Soportan ambos nombres) ---
+'x': x,
+'x-circle': xCircle,
+'x-square': xSquare,
 'arrow-down': arrowDown,
 'arrow-left': arrowLeft,
 'arrow-right': arrowRight,

@@ -1,4 +1,4 @@
-import { LibAccordionItem, LibAvatar, LibBackground, LibBadge } from '@shibui/ui/react';
+import { LibAccordionItem, LibAvatar, LibBadge, LibBurger, LibCheckbox, LibCloseButton } from '@shibui/ui/react';
 import { LibButton } from '@shibui/ui/react';
 import React from 'react';
 
@@ -53,6 +53,36 @@ export const AtomsSink: React.FC = () => (
 
     <h5>Dot</h5>
     <LibBadge variant="default" dot>Badge</LibBadge>
+    <h5>Pill</h5>
+    <LibBadge variant="default" pill>Badge</LibBadge>
+    </div>
+
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
+    <h4>Burger (define Tests)</h4>
+        <LibBurger variant="ink"></LibBurger>
+        <LibBurger variant="kanji"> </LibBurger>
+        <LibBurger variant="washi"></LibBurger>
+        <LibBurger variant="framed"></LibBurger>
+        <LibBurger variant="kintsugi"></LibBurger>
+        <LibBurger variant="glitch"></LibBurger>
+
+    </div>
+    
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
+    <h4>Checkbox (define Tests)</h4>
+        <LibCheckbox variant="default"></LibCheckbox>
+        <LibCheckbox variant="kaki"></LibCheckbox>
+        <LibCheckbox variant="error"></LibCheckbox>
+        <hr />
+        <LibCheckbox variant="default" indeterminate="true"></LibCheckbox>
+        <LibCheckbox variant="default" disabled="true"></LibCheckbox>
+        <LibCheckbox variant="default" label="labeltry" sublabel="sublabeltry"></LibCheckbox>
+
+    </div>
+
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
+    <h4>Close Button (define Tests)</h4>
+        <LibCloseButton></LibCloseButton>
 
     </div>
 
