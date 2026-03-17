@@ -29,6 +29,9 @@ import paperPlaneRight from '@phosphor-icons/core/assets/regular/paper-plane-rig
 import phone from '@phosphor-icons/core/assets/regular/phone.svg?raw';
 import megaphone from '@phosphor-icons/core/assets/regular/megaphone.svg?raw';
 import rsa from '@phosphor-icons/core/assets/regular/rss.svg?raw';
+import x from '@phosphor-icons/core/assets/regular/x.svg?raw';
+import xSquare from '@phosphor-icons/core/assets/regular/x-square.svg?raw';
+import xCircle from '@phosphor-icons/core/assets/regular/x-circle.svg?raw';
 
 import camera from '@phosphor-icons/core/assets/regular/camera.svg?raw';
 import image from '@phosphor-icons/core/assets/regular/image.svg?raw';
@@ -112,6 +115,9 @@ import bicycle from '@phosphor-icons/core/assets/regular/bicycle.svg?raw';
 
 export const ICON_REGISTRY: Record<string, string> = {
   // --- Iconos con Alias (Soportan ambos nombres) ---
+'x': x,
+'x-circle': xCircle,
+'x-square': xSquare,
 'arrow-down': arrowDown,
 'arrow-left': arrowLeft,
 'arrow-right': arrowRight,
@@ -225,4 +231,175 @@ export const ICON_REGISTRY: Record<string, string> = {
 'music': guitar,
 'event': ticket,
 'plugin': puzzlePiece,
+};
+
+//exportaciones nominales
+export {
+  x,
+  xCircle as xCircle,
+  xSquare as xSquare,
+  arrowDown as arrowDown,
+  arrowLeft as arrowLeft,
+  arrowRight as arrowRight,
+  arrowUp as arrowUp,
+  caretCircleDown as caretCircleDown,
+  caretCircleLeft as caretCircleLeft,
+  caretCircleRight as caretCircleRight,
+  caretCircleUp as caretCircleUp,
+  dotsThree as dots,
+  dotsThreeVertical as more,
+  list as menu,
+  house as home,
+  copy,
+  floppyDisk as save,
+  pencilSimple as edit,
+  downloadSimple as download,
+  uploadSimple as upload,
+  shareNetwork as share,
+  link,
+  dribbbleLogo as dribbbleLogo,
+  exportIcon as export,
+  file,
+  folder,
+  paperclip as attachment,
+  bell,
+  chatCircleText as chat,
+  envelope as mail,
+  paperPlaneRight as send,
+  phone,
+  megaphone as announcement,
+  rsa as rss,
+  camera,
+  image,
+  play,
+  pause,
+  monitor as desktop,
+  deviceMobile as mobile,
+  speakerHigh as volume,
+  shoppingCart as cart,
+  creditCard as card,
+  bank,
+  wallet,
+  tag as priceTag,
+  coins,
+  chartLineUp as chartLine,
+  chartPieSlice as chartPie,
+  briefcase as business,
+  storeFront as shop,
+  mapPin as location,
+  mapTrifold as map,
+  compass,
+  globe as world,
+  navigationArrow as navigation,
+  airplane as plane,
+  car,
+  bicycle as bike,
+  lock,
+  lockKeyOpen as unlock,
+  shieldCheck as shield,
+  key,
+  fingerprint,
+  clock as time,
+  hourglass as wait,
+  timer,
+  firstAid as health,
+  stethoscope as medical,
+  flask as science,
+  atom,
+  sun,
+  moon,
+  cloudRain as rain,
+  thermometer as temp,
+  leaf as nature,
+  githubLogo as github,
+  linkedinLogo as linkedin,
+  twitterLogo as twitter,
+  instagramLogo as instagram,
+  facebookLogo as facebook,
+  youtubeLogo as youtube,
+  whatsappLogo as whatsapp,
+  googleLogo as google,
+  slackLogo as slack,
+  discordLogo as discord,
+  book,
+  bookOpen as read,
+  graduationCap as education,
+  chalkboard as class,
+  student,
+  certificate as verify,
+  pen as write,
+  notepad as notes,
+  coffee,
+  beerBottle as drink,
+  pizza as food,
+  gift,
+  balloon as celebrate,
+  umbrella as weatherSafe,
+  lightbulb as idea,
+  trash as delete,
+  basketball as sports,
+  soccerBall as soccer,
+  trophy as award,
+  gameController as game,
+  guitar as music,
+  ticket as event,
+  puzzlePiece as plugin
+};
+
+declare global {
+  interface Window {
+    __SHIBUI_ICONS__: Record<string, string>;
+  }
+}
+
+export const registerIcons = (icons: Record<string, string>):void => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const global = (window as any).__SHIBUI_ICONS__ || {};
+
+  const sanitizedIcons = Object.entries(icons).reduce((acc, [key, value]) => {
+    // 1. Limpieza básica: quitar espacios extra
+    let svg = value.trim();
+
+    // Bloqueamos cualquier string que contenga etiquetas <script> o atributos 'on...' (onclick, etc)
+    const hasScript = /<script/i.test(svg);
+    const hasEventHandlers = /\son\w+=/i.test(svg);
+
+    if (hasScript || hasEventHandlers) {
+      console.error(`[Shibui-UI] Seguridad: El icono "${key}" contiene código potencialmente peligroso y ha sido bloqueado.`);
+      return acc; 
+    }
+
+    // 3. ASEGURAR ESTRUCTURA:
+    // Si no empieza por <svg, no es un icono válido para nosotros
+    if (!svg.startsWith('<svg')) {
+      console.warn(`[Shibui-UI] El icono "${key}" no tiene un formato SVG válido.`);
+      return acc;
+    }
+
+    // 4. NAMESPACE (Lo que arregló el renderizado)
+    if (!svg.includes('xmlns=')) {
+      svg = svg.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+
+    acc[key] = svg;
+    return acc;
+  }, {} as Record<string, string>);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (window as any).__SHIBUI_ICONS__ = { ...global, ...sanitizedIcons };
+};
+
+export const getIcon = (name: string): string | undefined => {
+  // 1. Intentamos buscarlo en el Global (por si alguien registró uno custom)
+  if (window.__SHIBUI_ICONS__?.[name]) {
+    return window.__SHIBUI_ICONS__[name];
+  }
+
+  // 2. Si no está en el global, lo buscamos en nuestro mapa maestro
+  if (ICON_REGISTRY[name]) {
+    // Lo registramos en el global para la próxima vez (auto-parametrización)
+    registerIcons({ [name]: ICON_REGISTRY[name] });
+    return ICON_REGISTRY[name];
+  }
+
+  return undefined;
 };
