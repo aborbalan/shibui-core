@@ -1,4 +1,4 @@
-import { LibAccordionItem, LibAvatar, LibBadge, LibBurger, LibCheckbox, LibCloseButton } from '@shibui/ui/react';
+import { LibAccordionItem, LibAvatar, LibBadge, LibBurger, LibCheckbox, LibCloseButton, LibIcon } from '@shibui/ui/react';
 import { LibButton } from '@shibui/ui/react';
 import React from 'react';
 
@@ -82,8 +82,8 @@ export const AtomsSink: React.FC = () => (
 
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
     <h4>Close Button (define Tests)</h4>
-        <LibCloseButton></LibCloseButton>
-
+        <LibCloseButton libClose={(event:CustomEvent) => console.log(event.detail.id)} ></LibCloseButton>
+        <LibIcon name="x"></LibIcon>
     </div>
 
 

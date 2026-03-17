@@ -1,11 +1,13 @@
 import MainLayout from './components/layout/MainLayout';
-import ProfileSection from './components/organisms/ProfileSection';
-import ProjectGallery from './components/layout/ProjectGallery';
+
 import { useEffect, useRef, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { KitchenSink } from './components/shared/KitchenSink';
 import { HomePage } from './components/home';
 import { ComponentsPage } from './components/components';
+import { ICON_REGISTRY } from '@shibui/ui';
+
+console.log(ICON_REGISTRY);
 
 function App() {
 

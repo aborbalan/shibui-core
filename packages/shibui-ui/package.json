@@ -24,14 +24,15 @@
       "import": "./dist/index.js"
     },
     "./tokens": "./dist/tokens.css",
-  "./styles": "./dist/style.css"
+    "./styles": "./dist/style.css"
+    
   },
   "files": [
     "dist"
   ],
   "scripts": {
     "dev": "vite",
-    "clean": "rimraf dist storybook-static node_modules/.cache",    
+    "clean": "rimraf dist storybook-static node_modules/.cache",
     "pack:local": "npm run build && npm pack",
     "preview": "vite preview",
     "prebuild": "npm run clean",
