@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import { DownloadCVModal } from './modals/DownloadCVModal';
 import { Outlet, useLocation } from 'react-router-dom';
+import { LibTabs } from '@shibui/ui/react';
 
 interface MainLayoutProps {
   activeTab: string;
@@ -22,14 +23,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ activeTab, onTabChange }) => {
       )}
 
       <main style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
-        {/* Header ahora más limpio, solo informativo */}
-        <header style={{ padding: '0 3rem', height: '70px', backgroundColor: '#fff', borderBottom: '1px solid #eee', display: 'flex', alignItems: 'center' }}>
-          <span style={{ textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '1px', fontWeight: 'bold', color: '#888' }}>
-            {activeTab}
-          </span>
-        </header>
 
-        <section style={{ flexGrow: 1, overflowY: 'auto', padding: '2rem 3rem' }}>
+
+        <section style={{ flexGrow: 1, overflowY: 'auto' }}>
           <Outlet />
         </section>
       </main>

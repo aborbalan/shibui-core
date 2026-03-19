@@ -2,223 +2,313 @@ import { Meta, StoryObj }      from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-sidebar.component';
 import type { LibSidebar }      from './lib-sidebar.component';
+import type { SidebarLink }     from '../../../types';
 
-import type { SidebarSocial, SidebarLink, ActiveElement } from '../../../types';
+type StoryArgs = Partial<Pick<LibSidebar,
+  'logoMark' | 'brandName' | 'showSearch' | 'active' |
+  'userName' | 'userRole' | 'userAvatar' | 'showUserAction' |
+  'variant' | 'collapsed'
+>>;
 
-type StoryArgs = Pick<LibSidebar,
-  'name' | 'initials' | 'avatarSrc' | 'role' | 'status' | 'showStatus' |
-  'active' | 'cvLabel' | 'cvHref'
-> & {
-  links?:   SidebarLink[];
-  socials?: SidebarSocial[];
-};
-
-/* ── Fixtures ──────────────────────────────────────────── */
-const DEFAULT_LINKS: SidebarLink[] = [
-  { id: 'inicio',      label: 'Inicio',      icon: 'house',        number: '01' },
-  { id: 'sobre',       label: 'Sobre mí',    icon: 'user',         number: '02' },
-  { id: 'proyectos',   label: 'Proyectos',   icon: 'squares-four', number: '03' },
-  { id: 'stack',       label: 'Stack',       icon: 'stack',        number: '04' },
-  { id: 'experiencia', label: 'Experiencia', icon: 'timeline',     number: '05' },
-  { id: 'contacto',    label: 'Contacto',    icon: 'envelope',     number: '06' },
+/* ── Fixtures ── */
+const LINKS: SidebarLink[] = [
+  { id: 'dashboard',   label: 'Dashboard',      icon: 'home',         group: 'Principal' },
+  { id: 'analytics',   label: 'Analíticas',     icon: 'chart-line',   badge: 12 },
+  { id: 'projects',    label: 'Proyectos',      icon: 'folder' },
+  { id: 'team',        label: 'Equipo',         icon: 'student',      badge: 4 },
+  { id: 'components',  label: 'Componentes',    icon: 'stack',        group: 'Sistema' },
+  { id: 'settings',    label: 'Configuración',  icon: 'compass' },
+  { id: 'updates',     label: 'Actualizaciones', icon: 'download',    disabled: true },
 ];
 
-const DEFAULT_SOCIALS: SidebarSocial[] = [
-  { href: '#', icon: 'github',   label: 'GitHub' },
-  { href: '#', icon: 'linkedin', label: 'LinkedIn' },
-  { href: '#', icon: 'dribbble-logo', label: 'Dribbble' },
-  { href: '#', icon: 'x',        label: 'X / Twitter' },
+const LINKS_KINTSUGI: SidebarLink[] = [
+  { id: 'gallery',    label: 'Galería',        icon: 'image',   group: '金継ぎ · Sistema' },
+  { id: 'collection', label: 'Colección',      icon: 'folder',  badge: 24 },
+  { id: 'history',    label: 'Historia',       icon: 'book' },
+  { id: 'wabi',       label: 'Wabi-sabi',      icon: 'leaf',    group: '侘び · Filosofía' },
+  { id: 'ma',         label: 'Ma · El espacio', icon: 'compass' },
 ];
 
-/* ── Layout helper ─────────────────────────────────────── */
-const layout = (sidebar: TemplateResult, section: TemplateResult): TemplateResult => html`
-  <div style="display:flex; height:100vh; overflow:hidden; background:var(--color-washi-50);">
-    ${sidebar}
-    <main style="
-      flex:1; padding:4rem 3.5rem; overflow-y:auto;
-      font-family:var(--lib-font-body); color:var(--text-primary);
-    ">
-      ${section}
-    </main>
-  </div>
-`;
+const LINKS_GLITCH: SidebarLink[] = [
+  { id: 'processes',  label: 'processes',   icon: 'atom',       group: 'modules' },
+  { id: 'metrics',    label: 'metrics',     icon: 'chart-line' },
+  { id: 'errorlog',   label: 'error.log',   icon: 'bell',       badge: 'dot' },
+  { id: 'network',    label: 'network',     icon: 'globe',      group: 'runtime' },
+  { id: 'config',     label: 'config.yaml', icon: 'compass' },
+  { id: 'deploy',     label: 'deploy.sh',   icon: 'upload' },
+];
 
-/* ── Meta ──────────────────────────────────────────────── */
+
+/* ── Meta ── */
 const meta: Meta<StoryArgs> = {
   title: 'Components/Organisms/Sidebar',
   component: 'lib-sidebar',
-  parameters: {
-    layout: 'fullscreen',
-  },
+  parameters: { layout: 'fullscreen' },
   argTypes: {
-    showStatus: { control: 'boolean' },
+    variant: { control: 'select', options: ['dark','light','kintsugi','glitch'] },
+    showSearch: { control: 'boolean' },
+    showUserAction: { control: 'boolean' },
+    collapsed: { control: 'boolean' },
   },
 };
-
 export default meta;
 type Story = StoryObj<StoryArgs>;
 
-
-/* ── Playground ────────────────────────────────────────── */
+/* ════════════════════════════════════════
+   PLAYGROUND
+   ════════════════════════════════════════ */
 export const Playground: Story = {
   args: {
-    name:       'Isabel Reyes',
-    initials:   'IR',
-    role:       'Frontend Developer',
-    status:     'Disponible para proyectos',
-    showStatus: true,
-    active:     'inicio',
-    cvLabel:    'Descargar CV',
-    cvHref:     '#',
+    logoMark: '渋', brandName: 'shibui',
+    showSearch: false, active: 'dashboard',
+    userName: 'Shibui User', userRole: 'v0.1.0 · Pro',
+    showUserAction: true, variant: 'dark', collapsed: false,
   },
-  render: (args): TemplateResult => layout(
-    html`
+  render: (args): TemplateResult => html`
+    <div style="display:flex;height:100vh;overflow:hidden;">
       <lib-sidebar
-        name="${args.name}"
-        initials="${args.initials}"
-        role="${args.role}"
-        status="${args.status}"
-        ?show-status="${args.showStatus}"
+        logo-mark="${args.logoMark}"
+        brand-name="${args.brandName}"
+        ?show-search="${args.showSearch}"
         active="${args.active}"
-        cv-label="${args.cvLabel}"
-        cv-href="${args.cvHref}"
-        .links="${DEFAULT_LINKS}"
-        .socials="${DEFAULT_SOCIALS}"
-        @ui-lib-navigate="${(e: CustomEvent):void => console.log('navigate', e.detail)}"
+        user-name="${args.userName}"
+        user-role="${args.userRole}"
+        ?show-user-action="${args.showUserAction}"
+        variant="${args.variant}"
+        ?collapsed="${args.collapsed}"
+        .links="${LINKS}"
+        @ui-lib-navigate="${(e: CustomEvent): void => console.log('navigate', e.detail)}"
+        @ui-lib-user-action="${(): void => console.log('user action')}"
       ></lib-sidebar>
-    `,
-    html`
-      <p style="font-family:var(--lib-font-mono);font-size:0.625rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--color-kaki-500);margin-bottom:0.5rem;">01 · Inicio</p>
-      <h1 style="font-family:var(--lib-font-display);font-size:clamp(2.5rem,5vw,4rem);font-weight:300;line-height:1.05;letter-spacing:-0.03em;margin-bottom:1.5rem;">
-        Construyo<br><em style="font-style:italic;color:var(--color-kaki-500);">interfaces</em><br>que importan.
-      </h1>
-      <p style="color:var(--text-secondary);max-width:520px;line-height:1.8;">
-        Haz clic en los enlaces del sidebar para navegar. El indicador naranja sigue al enlace activo.
-        En móvil el botón flotante abre/cierra el panel.
-      </p>
-    `,
-  ),
-};
 
-
-/* ── Sin status ────────────────────────────────────────── */
-export const WithoutStatus: Story = {
-  name: 'Sin status — solo nombre y rol',
-  render: (): TemplateResult => layout(
-    html`
-      <lib-sidebar
-        name="Akira Tanaka"
-        initials="AT"
-        role="UI Engineer"
-        active="proyectos"
-        cv-label="Download CV"
-        cv-href="#"
-        ?show-status="${false}"
-        .links="${DEFAULT_LINKS}"
-        .socials="${DEFAULT_SOCIALS}"
-      ></lib-sidebar>
-    `,
-    html`<p style="color:var(--text-secondary);">Sidebar sin indicador de disponibilidad.</p>`,
-  ),
-};
-
-
-/* ── Sin socials ni CV ─────────────────────────────────── */
-export const MinimalFooter: Story = {
-  name: 'Footer mínimo — sin socials ni CV',
-  render: (): TemplateResult => layout(
-    html`
-      <lib-sidebar
-        name="Pau Miró"
-        initials="PM"
-        role="Product Designer"
-        status="Disponible"
-        active="sobre"
-        cv-label=""
-        .links="${[
-          { id: 'sobre',     label: 'Sobre mí',  icon: 'user',      number: '01' },
-          { id: 'trabajo',   label: 'Trabajo',   icon: 'briefcase', number: '02' },
-          { id: 'contacto',  label: 'Contacto',  icon: 'envelope',  number: '03' },
-        ]}"
-        .socials="${[]}"
-      ></lib-sidebar>
-    `,
-    html`<p style="color:var(--text-secondary);">Footer vacío cuando no se pasan socials ni cvLabel.</p>`,
-  ),
-};
-
-
-/* ── Con avatar imagen ─────────────────────────────────── */
-export const WithAvatarImage: Story = {
-  name: 'Con imagen de avatar',
-  render: (): TemplateResult => layout(
-    html`
-      <lib-sidebar
-        name="Elena Voss"
-        avatar-src="https://i.pravatar.cc/150?img=47"
-        role="Creative Developer"
-        status="Open to work"
-        active="inicio"
-        cv-label="Download CV"
-        cv-href="#"
-        .links="${DEFAULT_LINKS}"
-        .socials="${DEFAULT_SOCIALS.slice(0, 2)}"
-      ></lib-sidebar>
-    `,
-    html`<p style="color:var(--text-secondary);">Avatar con imagen externa. Si falla la URL se puede usar initials como fallback.</p>`,
-  ),
-};
-
-
-/* ── Navegación reactiva ───────────────────────────────── */
-export const ReactiveNavigation: Story = {
-  name: 'Navegación reactiva — sections',
-  render: (): TemplateResult => {
-    const sections = [
-      { id: 'inicio',      label: '01 · Inicio',      content: 'Bienvenido a mi portfolio.' },
-      { id: 'sobre',       label: '02 · Sobre mí',     content: 'Desarrollador con 6 años de experiencia.' },
-      { id: 'proyectos',   label: '03 · Proyectos',    content: 'Aquí van mis proyectos destacados.' },
-      { id: 'stack',       label: '04 · Stack',        content: 'React, TypeScript, Lit, CSS.' },
-      { id: 'experiencia', label: '05 · Experiencia',  content: 'Senior Developer · 2023 – Presente.' },
-      { id: 'contacto',    label: '06 · Contacto',     content: 'hello@example.com' },
-    ];
-
-    return html`
-      <div style="display:flex; height:100vh; overflow:hidden; background:var(--color-washi-50);">
-        <lib-sidebar
-          name="Isabel Reyes"
-          initials="IR"
-          role="Frontend Developer"
-          status="Disponible para proyectos"
-          active="inicio"
-          cv-label="Descargar CV"
-          cv-href="#"
-          .links="${DEFAULT_LINKS}"
-          .socials="${DEFAULT_SOCIALS}"
-          @ui-lib-navigate="${(e: CustomEvent):void => {
-            // Update active section visibility
-            document.querySelectorAll<HTMLElement>('.sb-section-demo').forEach(s => {
-              s.style.display = s.dataset['id'] === e.detail.id ? 'block' : 'none';
-            });
-            // Update sidebar active prop
-            const sb = e.currentTarget as ActiveElement;
-            (sb).active = e.detail.id;
-          }}"
-        ></lib-sidebar>
-        <main style="flex:1;overflow-y:auto;padding:4rem 3.5rem;">
-          ${sections.map((s, i) => html`
-            <div
-              class="sb-section-demo"
-              data-id="${s.id}"
-              style="display:${i === 0 ? 'block' : 'none'};"
-            >
-              <p style="font-family:var(--lib-font-mono);font-size:0.625rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--color-kaki-500);margin-bottom:0.5rem;">${s.label}</p>
-              <h2 style="font-family:var(--lib-font-display);font-size:3rem;font-weight:300;letter-spacing:-0.03em;margin-bottom:1.5rem;">${s.label.split('·')[1]?.trim()}</h2>
-              <p style="color:var(--text-secondary);max-width:520px;line-height:1.8;">${s.content}</p>
-            </div>
-          `)}
-        </main>
+      <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;
+        background:${args.variant === 'dark' ? 'var(--color-washi-950)' : 'var(--bg-base)'};">
+        <div style="height:48px;border-bottom:1px solid var(--border-subtle);
+          display:flex;align-items:center;padding:0 var(--lib-space-lg);gap:var(--lib-space-md);">
+          <button style="width:32px;height:32px;background:none;border:1px solid var(--border-subtle);
+            cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);"
+            @click="${(e: Event): void => {
+              const wrap = (e.currentTarget as HTMLElement).closest('div');
+              const sb = wrap?.parentElement?.parentElement?.querySelector<LibSidebar>('lib-sidebar');
+              sb?.toggle();
+            }}">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"
+              stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <line x1="2" y1="4" x2="14" y2="4"/>
+              <line x1="2" y1="8" x2="14" y2="8"/>
+              <line x1="2" y1="12" x2="14" y2="12"/>
+            </svg>
+          </button>
+          <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.16em;
+            text-transform:uppercase;color:var(--text-muted);">Dashboard</span>
+        </div>
+        <div style="flex:1;padding:var(--lib-space-xl) 3rem;overflow-y:auto;">
+          <p style="font-family:var(--lib-font-mono);font-size:var(--text-xs);
+            color:var(--text-muted);letter-spacing:var(--tracking-wide);">
+            Usa el botón hamburger de la topbar para colapsar/expandir.
+          </p>
+        </div>
       </div>
-    `;
-  },
+    </div>
+  `,
+};
+
+/* ════════════════════════════════════════
+   LIGHT — Classic washi
+   ════════════════════════════════════════ */
+export const Light: Story = {
+  name: 'Variant · Light — Classic washi',
+  render: (): TemplateResult => html`
+    <div style="display:flex;height:100vh;overflow:hidden;">
+      <lib-sidebar
+        variant="light"
+        active="dashboard"
+        user-name="Shibui User" user-role="v0.1.0 · Pro"
+        show-user-action
+        .links="${LINKS}"
+      ></lib-sidebar>
+      <div style="flex:1;display:flex;flex-direction:column;background:var(--bg-base);">
+        <div style="height:48px;border-bottom:1px solid var(--border-subtle);
+          display:flex;align-items:center;padding:0 var(--lib-space-lg);gap:var(--lib-space-md);">
+          <button style="width:32px;height:32px;background:none;border:1px solid var(--border-subtle);
+            cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);"
+            @click="${(_e: Event): void => {
+              const sb = document.querySelector<LibSidebar>('lib-sidebar');
+              sb?.toggle();
+            }}">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"
+              stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <line x1="2" y1="4" x2="14" y2="4"/><line x1="2" y1="8" x2="14" y2="8"/>
+              <line x1="2" y1="12" x2="14" y2="12"/>
+            </svg>
+          </button>
+          <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.16em;
+            text-transform:uppercase;color:var(--text-muted);">Dashboard</span>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:var(--lib-space-sm);">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--color-celadon-400);"></div>
+            <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">Online</span>
+          </div>
+        </div>
+        <div style="flex:1;padding:var(--lib-space-xl) 3rem;overflow-y:auto;">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--lib-space-md);margin-bottom:var(--lib-space-lg);">
+            ${[
+              { v:'62', l:'Componentes', c:'var(--color-kaki-500)' },
+              { v:'0',  l:'Deps',        c:'var(--color-washi-700)' },
+              { v:'v0.1',l:'Versión',    c:'var(--color-celadon-500)' },
+            ].map(k => html`
+              <div style="border:1px solid var(--border-subtle);padding:var(--lib-space-lg);background:var(--bg-elevated);">
+                <div style="font-family:var(--lib-font-display);font-size:1.8rem;font-weight:300;color:${k.c};">${k.v}</div>
+                <div style="font-family:var(--lib-font-mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);margin-top:2px;">${k.l}</div>
+              </div>
+            `)}
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+};
+
+/* ════════════════════════════════════════
+   DARK — con search bar
+   ════════════════════════════════════════ */
+export const Dark: Story = {
+  name: 'Variant · Dark — washi-950 + search',
+  render: (): TemplateResult => html`
+    <div style="display:flex;height:100vh;overflow:hidden;">
+      <lib-sidebar
+        variant="dark"
+        active="dashboard"
+        show-search
+        user-name="Shibui User" user-role="Admin"
+        .links="${LINKS}"
+      ></lib-sidebar>
+      <div style="flex:1;display:flex;flex-direction:column;background:var(--color-washi-950);">
+        <div style="height:48px;border-bottom:1px solid rgba(255,255,255,.07);
+          display:flex;align-items:center;padding:0 var(--lib-space-lg);gap:var(--lib-space-md);">
+          <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(250,247,244,.2);">Dashboard</span>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:var(--lib-space-sm);">
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--color-celadon-400);"></div>
+            <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,247,244,.2);">42ms</span>
+          </div>
+        </div>
+        <div style="flex:1;padding:var(--lib-space-xl) 3rem;overflow-y:auto;color:rgba(250,247,244,.2);font-family:var(--lib-font-mono);font-size:9px;line-height:2;">
+          Dark variant con search bar integrada.
+        </div>
+      </div>
+    </div>
+  `,
+};
+
+/* ════════════════════════════════════════
+   KINTSUGI — ✦ seam
+   ════════════════════════════════════════ */
+export const Kintsugi: Story = {
+  name: 'Variant · Kintsugi — ✦ gold seam',
+  render: (): TemplateResult => html`
+    <div style="display:flex;height:100vh;overflow:hidden;">
+      <lib-sidebar
+        variant="kintsugi"
+        logo-mark="渋"
+        brand-name="shibui ✦"
+        active="gallery"
+        user-name="Artesano" user-role="✦ Maestro"
+        .links="${LINKS_KINTSUGI}"
+      ></lib-sidebar>
+      <div style="flex:1;background:var(--color-washi-950);display:flex;align-items:center;justify-content:center;">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--lib-space-xl);max-width:400px;padding:var(--lib-space-xl);">
+          ${['侘','渋','間'].map(k => html`
+            <div style="aspect-ratio:1;border:1px solid rgba(184,90,30,.2);
+              background:linear-gradient(135deg,rgba(184,90,30,.08),transparent);
+              display:flex;align-items:center;justify-content:center;
+              font-family:var(--lib-font-display);font-size:2.5rem;font-weight:300;
+              color:var(--color-kaki-400);">${k}</div>
+          `)}
+        </div>
+      </div>
+    </div>
+  `,
+};
+
+/* ════════════════════════════════════════
+   GLITCH — ⌗ scanlines
+   ════════════════════════════════════════ */
+export const Glitch: Story = {
+  name: 'Variant · Glitch — ⌗ scanlines',
+  render: (): TemplateResult => html`
+    <div style="display:flex;height:100vh;overflow:hidden;">
+      <lib-sidebar
+        variant="glitch"
+        logo-mark="⌗" brand-name="SHIBUI"
+        active="processes"
+        user-name="PID 4821" user-role="node@22"
+        .links="${LINKS_GLITCH}"
+      ></lib-sidebar>
+      <div style="flex:1;background:var(--color-washi-950);display:flex;flex-direction:column;">
+        <div style="height:48px;border-bottom:1px solid rgba(255,255,255,.06);
+          display:flex;align-items:center;padding:0 var(--lib-space-lg);">
+          <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-kaki-400);">⌗ processes</span>
+          <span style="margin-left:auto;font-family:var(--lib-font-mono);font-size:8px;letter-spacing:.12em;color:rgba(250,247,244,.2);">2026-03-19 · 14:32:07</span>
+        </div>
+        <div style="flex:1;padding:var(--lib-space-xl) 3rem;overflow-y:auto;
+          font-family:var(--lib-font-mono);font-size:9px;line-height:2.4;color:rgba(250,247,244,.25);">
+          <div><span style="color:var(--color-celadon-400);">✔</span>&nbsp;node server.js &nbsp;PID 4821 &nbsp;↑ 2d 14h</div>
+          <div><span style="color:var(--color-celadon-400);">✔</span>&nbsp;vite dev &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PID 4830 &nbsp;↑ 2d 14h</div>
+          <div><span style="color:var(--color-kaki-400);">⚠</span>&nbsp;watcher &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PID 4842 &nbsp;↑ 1h 07m</div>
+          <div style="margin-top:1rem;"><span style="color:var(--color-celadon-400);">●</span>&nbsp;online · 99.2% uptime</div>
+        </div>
+      </div>
+    </div>
+  `,
+};
+
+/* ════════════════════════════════════════
+   COLLAPSIBLE — 240px → 64px icon rail
+   ════════════════════════════════════════ */
+export const Collapsible: Story = {
+  name: 'Collapsible — 240px → 64px icon rail',
+  render: (): TemplateResult => html`
+    <div style="display:flex;height:100vh;overflow:hidden;">
+      <lib-sidebar
+        id="sb-collapsible"
+        variant="light"
+        active="analytics"
+        user-name="Shibui User" user-role="Pro"
+        show-user-action
+        .links="${LINKS}"
+      ></lib-sidebar>
+      <div style="flex:1;display:flex;flex-direction:column;background:var(--bg-base);">
+        <div style="height:48px;border-bottom:1px solid var(--border-subtle);
+          display:flex;align-items:center;padding:0 var(--lib-space-lg);gap:var(--lib-space-md);">
+          <button
+            style="width:32px;height:32px;background:none;border:1px solid var(--border-subtle);
+              cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);
+              transition:all var(--duration-base);"
+            aria-label="Toggle sidebar"
+            @click="${(): void => {
+              (document.getElementById('sb-collapsible') as LibSidebar)?.toggle();
+            }}"
+          >
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"
+              stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <line x1="2" y1="4" x2="14" y2="4"/><line x1="2" y1="8" x2="14" y2="8"/>
+              <line x1="2" y1="12" x2="14" y2="12"/>
+            </svg>
+          </button>
+          <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Expandida · 240px</span>
+        </div>
+        <div style="flex:1;padding:var(--lib-space-xl) 3rem;overflow-y:auto;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--lib-space-md);max-width:400px;">
+            <div style="border:1px solid var(--border-subtle);padding:var(--lib-space-lg);">
+              <div style="font-family:var(--lib-font-display);font-size:1.4rem;font-weight:300;color:var(--color-kaki-500);">240px</div>
+              <div style="font-family:var(--lib-font-mono);font-size:8px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.14em;margin-top:2px;">Expandida</div>
+            </div>
+            <div style="border:1px solid var(--border-subtle);padding:var(--lib-space-lg);">
+              <div style="font-family:var(--lib-font-display);font-size:1.4rem;font-weight:300;color:var(--color-washi-500);">64px</div>
+              <div style="font-family:var(--lib-font-mono);font-size:8px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.14em;margin-top:2px;">Colapsada</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
 };
