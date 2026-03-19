@@ -59,6 +59,7 @@ export * from './components/molecules/modal/lib-modal.component';
 export * from './components/molecules/tree-select/lib-tree-node.component';
 export * from './components/molecules/button-group/lib-button-group.component';
 export * from './components/molecules/checkbox-card/lib-checkbox-card.component';
+export * from './components/molecules/header/lib-header.component';
 
 
 

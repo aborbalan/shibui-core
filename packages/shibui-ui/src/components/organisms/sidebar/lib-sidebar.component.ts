@@ -1,34 +1,43 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import '../../atoms/icon/lib-icon.component';
-import type { SidebarSocial, SidebarLink } from '../../../types';
-import { sidebarTemplate }                  from './lib-sidebar.html';
-import componentCss                          from './lib-sidebar.css?inline';
-import sharedTokens                          from '../../../styles/shared/tokens.css?inline';
+import type { SidebarLink }     from '../../../types';
+import { sidebarTemplate }      from './lib-sidebar.html';
+import componentCss              from './lib-sidebar.css?inline';
+import sharedTokens              from '../../../styles/shared/tokens.css?inline';
+
+export type SidebarVariant = 'dark' | 'light' | 'kintsugi' | 'glitch';
 
 export interface UiSidebarNavigateDetail {
   id: string;
   previous: string;
 }
 
-export interface UiSidebarCvDetail {
-  href: string;
-}
-
 /**
-* Componente de Sidebar profesional para navegación.
- * * @element lib-sidebar
- * * @fires {CustomEvent<{id: string, previous: string}>} ui-lib-navigate - Se dispara al cambiar de sección.
- * @fires {CustomEvent<{href: string}>} ui-lib-cv-click - Se dispara al pulsar el botón de CV.
- * * @prop {string} name - Nombre completo mostrado en el perfil.
- * @prop {string} initials - Iniciales del avatar (si no hay avatar-src).
- * @prop {string} avatarSrc - URL de imagen de avatar (mapeado de avatar-src).
- * @prop {string} role - Rol / cargo profesional.
- * @prop {string} status - Texto de disponibilidad.
- * @prop {boolean} showStatus - Muestra el indicador de estado.
- * @prop {string} active - ID del enlace actualmente activo.
- * @prop {string} cvLabel - Texto del botón de CV.
- * @prop {string} cvHref - URL del archivo CV.
+ * lib-sidebar — Shibui UI · SG-65
+ *
+ * Estructura: Header(56px logo) · [Search] · Nav · User footer
+ *
+ * @prop logo-mark         — Carácter del logo mark (default '渋')
+ * @prop brand-name        — Nombre de marca (default 'shibui')
+ * @prop show-search       — Muestra la barra de búsqueda
+ * @prop search-placeholder — Placeholder del input de búsqueda
+ * @prop links             — Array de SidebarLink[]
+ * @prop active            — ID del link activo
+ * @prop user-name         — Nombre del usuario en el footer
+ * @prop user-role         — Rol/plan del usuario
+ * @prop user-avatar       — URL de imagen del avatar
+ * @prop user-initials     — Iniciales de fallback
+ * @prop show-user-action  — Muestra el botón de acción (logout icon)
+ * @prop variant           — 'dark'(default) | 'light' | 'kintsugi' | 'glitch'
+ * @prop collapsed         — Estado inicial colapsado
+ *
+ * @method toggle()     — Alterna collapsed/expanded (llamar desde topbar)
+ * @method navigateTo() — Navega programáticamente a un id
+ *
+ * @fires ui-lib-navigate    — { id, previous }
+ * @fires ui-lib-user-action — void (clic en botón de acción)
+ * @fires ui-lib-search      — { query: string }
  */
 @customElement('lib-sidebar')
 export class LibSidebar extends LitElement {
@@ -37,213 +46,145 @@ export class LibSidebar extends LitElement {
     css`${unsafeCSS(componentCss)}`,
   ];
 
-  /* ── Props públicas ──────────────────────────────────── */
+  /* ── Header ── */
+  @property({ type: String, attribute: 'logo-mark' })
+  logoMark = '渋';
 
-   /**
- * @type {string}
- */
-  @property({ type: String })
-  name = '';
+  @property({ type: String, attribute: 'brand-name' })
+  brandName = 'shibui';
 
-     /**
- * @type {string}
- */
-  @property({ type: String })
-  initials = '';
+  /* ── Search ── */
+  @property({ type: Boolean, attribute: 'show-search', reflect: true })
+  showSearch = false;
 
-     /**
- * @type {string}
- */
-  @property({ type: String, attribute: 'avatar-src' })
-  avatarSrc = '';
+  @property({ type: String, attribute: 'search-placeholder' })
+  searchPlaceholder = 'Buscar…';
 
-     /**
- * @type {string}
- */
-  @property({ type: String })
-  override role = '';
-
-     /**
- * @type {string}
- */
-  @property({ type: String })
-  status = '';
-
-     /**
- * @type {boolean}
- */
-  @property({ type: Boolean, attribute: 'show-status', reflect: true })
-  showStatus = true;
-
-     /**
- * @type {[]}
- */
+  /* ── Nav ── */
   @property({ type: Array })
   links: SidebarLink[] = [];
 
-       /**
- * @type {[]}
- */
-  @property({ type: Array })
-  socials: SidebarSocial[] = [];
-
-       /**
- * @type {string}
- */
   @property({ type: String, reflect: true })
   active = '';
 
-         /**
- * @type {string}
- */
-  @property({ type: String, attribute: 'cv-label' })
-  cvLabel = 'Descargar CV';
+  /* ── User footer ── */
+  @property({ type: String, attribute: 'user-name' })
+  userName = '';
 
-         /**
- * @type {string}
- */
-  @property({ type: String, attribute: 'cv-href' })
-  cvHref = '';
+  @property({ type: String, attribute: 'user-role' })
+  userRole = '';
 
-  /* ── Estado interno ──────────────────────────────────── */
-/**
-   * Estado de apertura del sidebar en dispositivos móviles.
-   * @type {boolean}
-   * @private
-   */
-  @state()
-  private _mobileOpen = false;
+  @property({ type: String, attribute: 'user-avatar' })
+  userAvatar = '';
 
-  /* ── Queries ─────────────────────────────────────────── */
-/**
-   * Estado de apertura del sidebar en dispositivos móviles.
-   * @type {HTMLElement}
-   * @private
-   */
-  @query('.sb-indicator')
-  declare private _indicator: HTMLElement;
-/**
-   * Estado de apertura del sidebar en dispositivos móviles.
-   * @type {HTMLElement}
-   * @private
-   */
-  @query('.sb-nav')
-  declare private _nav: HTMLElement;
+  @property({ type: String, attribute: 'user-initials' })
+  userInitials = '';
 
-  static readonly events = {
-    onNavigate: 'ui-lib-navigate',
-    onCVClick: 'ui-lib-cv-click',
-  } as const;
+  @property({ type: Boolean, attribute: 'show-user-action' })
+  showUserAction = false;
 
-  /* ── Lifecycle ───────────────────────────────────────── */
+  /* ── Variant & behavior ── */
+  @property({ type: String, reflect: true })
+  variant: SidebarVariant = 'dark';
 
+  @property({ type: Boolean, reflect: true })
+  collapsed = false;
+
+  /* ── Internal state ── */
+  @state() private _mobileOpen = false;
+
+  /* ── Queries ── */
+  @query('.sb-indicator') declare private _indicator: HTMLElement;
+  @query('.sb-nav')       declare private _nav: HTMLElement;
+
+  /* ── Lifecycle ── */
   override updated(changed: Map<string, unknown>): void {
     if (changed.has('active') || changed.has('links')) {
       this._moveIndicator();
     }
   }
 
-  /* ── Render ──────────────────────────────────────────── */
-
+  /* ── Render ── */
   override render(): TemplateResult {
     return sidebarTemplate({
-      name:        this.name,
-      initials:    this.initials,
-      avatarSrc:   this.avatarSrc,
-      role:        this.role,
-      status:      this.status,
-      showStatus:  this.showStatus,
-      links:       this.links,
-      active:      this.active,
-      socials:     this.socials,
-      cvLabel:     this.cvLabel,
-      cvHref:      this.cvHref,
-      mobileOpen:  this._mobileOpen,
-      onLinkClick: this._handleLinkClick.bind(this),
-      onCvClick:   this._handleCvClick.bind(this),
-      onOverlayClick: this._handleClose.bind(this),
-      onToggleClick:  this._handleToggle.bind(this),
+      logoMark:          this.logoMark,
+      brandName:         this.brandName,
+      showSearch:        this.showSearch,
+      searchPlaceholder: this.searchPlaceholder,
+      links:             this.links,
+      active:            this.active,
+      userName:          this.userName,
+      userRole:          this.userRole,
+      userAvatar:        this.userAvatar,
+      userInitials:      this.userInitials,
+      showUserAction:    this.showUserAction,
+      variant:           this.variant,
+      collapsed:         this.collapsed,
+      mobileOpen:        this._mobileOpen,
+      onLinkClick:       this._handleLink.bind(this),
+      onUserAction:      this._handleUserAction.bind(this),
+      onSearchInput:     this._handleSearch.bind(this),
+      onOverlayClick:    () => { this._mobileOpen = false; },
+      onToggleClick:     () => { this._mobileOpen = !this._mobileOpen; },
     });
   }
 
-  /* ── Indicator ───────────────────────────────────────── */
-
+  /* ── Sliding indicator ── */
   private _moveIndicator(): void {
-    // Use requestAnimationFrame to ensure DOM is painted
     requestAnimationFrame(() => {
       const nav = this._nav;
-      const indicator = this._indicator;
-      if (!nav || !indicator) return;
+      const ind = this._indicator;
+      if (!nav || !ind) return;
 
-      const activeBtn = nav.querySelector<HTMLElement>('.sb-link.is-active');
-      if (!activeBtn) {
-        indicator.classList.remove('visible');
-        return;
-      }
+      const btn = nav.querySelector<HTMLElement>('.sb-link.is-active');
+      if (!btn) { ind.classList.remove('visible'); return; }
 
       const navTop  = nav.getBoundingClientRect().top;
-      const btnRect = activeBtn.getBoundingClientRect();
+      const btnRect = btn.getBoundingClientRect();
 
-      indicator.style.top    = `${btnRect.top - navTop + nav.scrollTop}px`;
-      indicator.style.height = `${btnRect.height}px`;
-      indicator.classList.add('visible');
+      ind.style.top    = `${btnRect.top - navTop + nav.scrollTop}px`;
+      ind.style.height = `${btnRect.height}px`;
+      ind.classList.add('visible');
     });
   }
 
-  /* ── Handlers ────────────────────────────────────────── */
-
-  private _handleLinkClick(id: string): void {
+  /* ── Handlers ── */
+  private _handleLink(id: string): void {
     const previous = this.active;
     this.active = id;
-    console.log("click");
-    this.dispatchEvent(
-      new CustomEvent<UiSidebarNavigateDetail>('ui-lib-navigate', {
-        detail: { id, previous },
-        bubbles: true,
-        composed: true,
-      }),
-    );
-
-    // Auto-close on mobile after navigation
-    if (this._mobileOpen) {
-      this._mobileOpen = false;
-    }
+    this.dispatchEvent(new CustomEvent<UiSidebarNavigateDetail>('ui-lib-navigate', {
+      detail: { id, previous },
+      bubbles: true, composed: true,
+    }));
+    if (this._mobileOpen) this._mobileOpen = false;
   }
 
-  private _handleCvClick(): void {
-    this.dispatchEvent(
-      new CustomEvent<UiSidebarCvDetail>('ui-lib-cv-click', {
-        detail: { href: this.cvHref },
-        bubbles: true,
-        composed: true,
-      }),
-    );
+  private _handleUserAction(): void {
+    this.dispatchEvent(new CustomEvent('ui-lib-user-action', {
+      bubbles: true, composed: true,
+    }));
   }
 
-  private _handleClose(): void {
-    this._mobileOpen = false;
+  private _handleSearch(query: string): void {
+    this.dispatchEvent(new CustomEvent('ui-lib-search', {
+      detail: { query },
+      bubbles: true, composed: true,
+    }));
   }
 
-  private _handleToggle(): void {
-    this._mobileOpen = !this._mobileOpen;
-  }
+  /* ── Public API ── */
 
-  /* ── Public API ──────────────────────────────────────── */
+  /** Alterna collapsed ↔ expanded. Llamar desde el botón hamburger de la topbar. */
+  toggle(): void { this.collapsed = !this.collapsed; }
 
-  /** Abre el sidebar en mobile */
-  open(): void {
-    this._mobileOpen = true;
-  }
+  /** Expande el sidebar */
+  expand(): void { this.collapsed = false; }
 
-  /** Cierra el sidebar en mobile */
-  close(): void {
-    this._mobileOpen = false;
-  }
+  /** Colapsa el sidebar a icon rail */
+  collapse(): void { this.collapsed = true; }
 
-  /** Navega programáticamente a una sección */
-  navigateTo(id: string): void {
-    this._handleLinkClick(id);
-  }
+  /** Navega programáticamente */
+  navigateTo(id: string): void { this._handleLink(id); }
 }
 
 declare global {

@@ -12,8 +12,6 @@ export const Hero: React.FC = () => {
       flexDirection: 'column',
       alignItems: 'center',
       textAlign: 'center',
-      padding: 'var(--lib-space-3xl) var(--lib-space-xl)',
-      gap: 'var(--lib-space-lg)',
       // Añadimos un min-height para que el contenido respire
       minHeight: '60vh',
       justifyContent: 'center',

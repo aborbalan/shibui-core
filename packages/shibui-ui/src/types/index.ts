@@ -11,15 +11,21 @@ export interface UiClickEventDetail {
 
 
 export interface SidebarLink {
-  /** Identificador único de la sección a la que navega */
   id: string;
-  /** Texto visible del enlace */
   label: string;
-  /** Nombre de icono Phosphor (ej: 'house', 'user', 'envelope') */
   icon: string;
-  /** Número decorativo opcional (ej: '01', '02') */
   number?: string;
+  // ── Nuevos campos SG-65 ──
+  /** Renderiza una cabecera de grupo antes de este item */
+  group?: string;
+  /** Badge contador (ej: 12, "new") */
+  badge?: string | number;
+  /** Desactiva el item visualmente */
+  disabled?: boolean;
 }
+ 
+export type SidebarVariant = 'dark' | 'light' | 'kintsugi' | 'glitch';
+ 
 
 export interface SidebarSocial {
   /** URL de destino */

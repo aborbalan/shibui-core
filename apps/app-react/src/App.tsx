@@ -3,8 +3,8 @@ import MainLayout from './components/layout/MainLayout';
 import { useEffect, useRef, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { KitchenSink } from './components/shared/KitchenSink';
-import { HomePage } from './components/home';
-import { ComponentsPage } from './components/components';
+import { HomePage } from './components/main/home';
+import { ComponentsPage } from './components/main/components';
 import { ICON_REGISTRY } from '@shibui/ui';
 
 console.log(ICON_REGISTRY);
@@ -175,7 +175,6 @@ function App() {
           <Route path="/" element={
             <div>
 
-
               <canvas
                 ref={canvasRef}
                 style={{
@@ -197,6 +196,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/about-me" element={<HomePage />} />
           <Route path="/components" element={<ComponentsPage />} />
+          <Route path="/" element={<MainLayout activeTab={currentSection} onTabChange={navigateTo}/>} />
 
           </Route>
 
