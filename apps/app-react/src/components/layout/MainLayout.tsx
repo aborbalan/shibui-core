@@ -18,6 +18,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ activeTab, onTabChange }) => {
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden' }}>
 
+
+
       {showSidebar && (
         <Sidebar onOpenCV={() => setActiveModal('CV')} activeTab={activeTab} onTabChange={onTabChange} />
       )}

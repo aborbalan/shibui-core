@@ -172,33 +172,12 @@ function App() {
       */}
 
         <Routes>
-          <Route path="/" element={
-            <div>
-
-              <canvas
-                ref={canvasRef}
-                style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  zIndex: 0,
-                  pointerEvents: 'none'
-                }}
-              />
-              <div style={{ position: 'relative', zIndex: 1 }}>
-                <MainLayout activeTab={currentSection} onTabChange={navigateTo} />
-              </div>
-
-
-            </div>
-          } >
           <Route path="/dev-kitchen-sink" element={<KitchenSink />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/about-me" element={<HomePage />} />
           <Route path="/components" element={<ComponentsPage />} />
           <Route path="/" element={<MainLayout activeTab={currentSection} onTabChange={navigateTo}/>} />
 
-          </Route>
 
           {/* Ruta "Escondida" */}
 
