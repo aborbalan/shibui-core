@@ -1,0 +1,171 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-CODE-BLOCK — Shibui UI
+   Variantes : default · ghost
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@layer components {
+
+  /* ── Wrapper ── */
+  .code-block {
+    display: flex;
+    flex-direction: column;
+    border: var(--lib-border-width) solid var(--color-ink-100);
+    border-radius: var(--lib-radius-md);
+    background: var(--color-washi-950);
+    box-shadow: var(--lib-shadow-brutal);
+    overflow: hidden;
+    width: 100%;
+  }
+
+  /* ── Header ── */
+  .code-block__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--lib-space-xs) var(--lib-space-md);
+    background: var(--color-washi-900);
+    border-bottom: var(--lib-border-width) solid var(--color-ink-40);
+    min-height: 36px;
+    gap: var(--lib-space-md);
+  }
+
+  .code-block__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-sm);
+  }
+
+  .code-block__filename {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-washi-200);
+    letter-spacing: var(--tracking-normal);
+  }
+
+  .code-block__lang {
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--color-washi-500);
+    background: var(--color-washi-800);
+    border: var(--lib-border-width) solid var(--color-washi-700);
+    border-radius: var(--lib-radius-xs);
+    padding: 1px var(--lib-space-xs);
+  }
+
+  /* ── Copy button ── */
+  .code-block__copy {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--lib-space-xs);
+    font-family: var(--lib-font-mono);
+    font-size: 11px;
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-washi-400);
+    background: transparent;
+    border: var(--lib-border-width) solid var(--color-washi-700);
+    border-radius: var(--lib-radius-xs);
+    padding: 3px var(--lib-space-sm);
+    cursor: pointer;
+    transition:
+      color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      background var(--duration-fast) var(--ease-out);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .code-block__copy:hover {
+    color: var(--color-washi-100);
+    border-color: var(--color-washi-400);
+    background: var(--color-washi-800);
+  }
+
+  .code-block__copy:active {
+    transform: scale(0.97);
+  }
+
+  .code-block__copy--copied {
+    color: var(--color-celadon-300);
+    border-color: var(--color-celadon-600);
+  }
+
+  .code-block__copy--copied:hover {
+    color: var(--color-celadon-300);
+    border-color: var(--color-celadon-500);
+    background: transparent;
+  }
+
+  /* ── Body / Pre ── */
+  .code-block__body {
+    overflow-x: auto;
+    padding: var(--lib-space-md) var(--lib-space-lg);
+  }
+
+  .code-block__pre {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-washi-100);
+    white-space: pre;
+    tab-size: 2;
+  }
+
+  .code-block__code {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  /* ── Variante ghost (sin fondo oscuro, integra en surfaces claras) ── */
+  :host([variant="ghost"]) .code-block {
+    background: var(--color-washi-100);
+    box-shadow: none;
+  }
+
+  :host([variant="ghost"]) .code-block__header {
+    background: var(--color-washi-200);
+    border-bottom-color: var(--color-washi-300);
+  }
+
+  :host([variant="ghost"]) .code-block__lang {
+    background: var(--color-washi-100);
+    border-color: var(--color-washi-300);
+    color: var(--color-washi-600);
+  }
+
+  :host([variant="ghost"]) .code-block__copy {
+    color: var(--color-washi-600);
+    border-color: var(--color-washi-300);
+  }
+
+  :host([variant="ghost"]) .code-block__copy:hover {
+    color: var(--color-washi-800);
+    border-color: var(--color-washi-500);
+    background: var(--color-washi-200);
+  }
+
+  :host([variant="ghost"]) .code-block__pre {
+    color: var(--color-washi-800);
+  }
+}
