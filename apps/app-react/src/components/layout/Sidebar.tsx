@@ -21,13 +21,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange,onOpenCV }) =>
     { id: 'updates',     label: 'Actualizaciones', icon: 'download',    disabled: true },
   ];
   
-  const DEFAULT_SOCIALS: SidebarSocial[] = [
-    { href: '#', icon: 'github',   label: 'GitHub' },
-    { href: '#', icon: 'linkedin', label: 'LinkedIn' },
-    { href: '#', icon: 'dribbble-logo', label: 'Dribbble' },
-    { href: '#', icon: 'x-logo',        label: 'X / Twitter' },
-  ];
-
   return (
 
 

@@ -31,6 +31,7 @@ const config: UserConfig & { test?: InlineConfig } = {
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
+
       name: 'ShibuiUI',
       fileName: 'index',
       formats: ['es']
