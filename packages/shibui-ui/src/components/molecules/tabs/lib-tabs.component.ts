@@ -1,9 +1,8 @@
-import { html, css, unsafeCSS, TemplateResult } from "lit";
+import { html, css, unsafeCSS, TemplateResult, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { tabsTemplate } from "./lib-tabs.html";
 import tabsCss from "./lib-tabs.css?inline";
 import sharedTokens from "../../../styles/shared/tokens.css?inline";
-import { LibListModel } from "../../../../architecture/base-components/lib-list.model";
 import type {
   TabItem,
   TabsVariant,
@@ -31,7 +30,7 @@ import type {
  * @fires ui-lib-tab-change — {detail: { id: string; prev: string }}
  */
 @customElement("lib-tabs")
-export class LibTabs extends LibListModel<TabItem> {
+export class LibTabs extends LitElement {
   static override styles = [
     css`
       ${unsafeCSS(sharedTokens)}
@@ -71,6 +70,9 @@ export class LibTabs extends LibListModel<TabItem> {
   /** aria-label para el tablist */
   @property({ type: String, attribute: "aria-label" })
   override ariaLabel = "";
+
+  @property({ type: Array, hasChanged: () => true })
+  items: TabItem[] = [];
 
   /* ── Internal state para la ink bar ── */
   @state() _inkLeft = 0;
@@ -161,8 +163,9 @@ export class LibTabs extends LibListModel<TabItem> {
     );
   }
 
-  _handleClick(e: CustomEvent):void {
+  _handleClick(e: CustomEvent): void {
     const targetId = (e.target as HTMLElement).id;
+    console.log("target:", (e.target as HTMLElement).id);
 
     const tabs = Array.from(
       this.shadowRoot?.querySelectorAll<HTMLButtonElement>(
@@ -228,6 +231,13 @@ export class LibTabs extends LibListModel<TabItem> {
 
   /* ── Render principal ── */
   protected override render(): TemplateResult {
+    console.log(
+      "lib-tabs render, items:",
+      this.items?.length,
+      "active:",
+      this.active,
+    );
+
     return tabsTemplate(this);
   }
 }
