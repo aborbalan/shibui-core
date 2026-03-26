@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "required": ["id", "email", "role"],
+  "properties": {
+    "id": { "type": "string" },
+    "email": { "type": "string", "format": "email" },
+    "displayName": { "type": "string" },
+    "role": { "type": "string", "enum": ["admin", "editor", "viewer"] }
+  },
+  "x-readme-ref-name": "User"
+}
