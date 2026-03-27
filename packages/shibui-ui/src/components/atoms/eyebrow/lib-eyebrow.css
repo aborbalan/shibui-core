@@ -1,0 +1,319 @@
+/* ══════════════════════════════════════════════════════════════
+   lib-eyebrow.css
+   Shibui UI · Átomo — Eyebrow / 前置き
+   ══════════════════════════════════════════════════════════════ */
+
+@layer tokens, reset, components;
+
+@layer tokens {
+    :host {
+        /* Tipografía */
+        --eb-font: var(--lib-font-mono, 'DM Mono', 'Courier New', monospace);
+        --eb-size: 0.65rem;
+        --eb-tracking: 0.24em;
+
+        /* Color base (kaki tenue) */
+        --eb-color: rgb(184, 90, 30, 0.55);
+
+        /* Línea */
+        --eb-line-w: 28px;
+        --eb-line-w-hover: 40px;
+        --eb-line-grad: linear-gradient(90deg, var(--color-kaki-400, #D97234), transparent);
+        --eb-line-grad-r: linear-gradient(270deg, var(--color-kaki-400, #D97234), transparent);
+
+        /* Dot */
+        --eb-dot-size: 5px;
+        --eb-dot-color: var(--color-kaki-400, #D97234);
+
+        /* Número badge */
+        --eb-num-color: rgb(184, 90, 30, 0.3);
+        --eb-num-border: rgb(184, 90, 30, 0.18);
+
+        /* Animaciones */
+        --eb-dur-slow: 380ms;
+        --eb-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    }
+}
+
+@layer reset {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@layer components {
+
+    /* ── Host: display inline ── */
+    :host {
+        display: inline-flex;
+    }
+
+    /* ── Base ── */
+    .eb {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-family: var(--eb-font);
+        font-size: var(--eb-size);
+        letter-spacing: var(--eb-tracking);
+        text-transform: uppercase;
+        line-height: 1;
+        white-space: nowrap;
+        color: var(--eb-color);
+    }
+
+    /* ── Línea izquierda (default) ── */
+    .eb::before {
+        content: '';
+        display: block;
+        width: var(--eb-line-w);
+        height: 1px;
+        flex-shrink: 0;
+        background: var(--eb-line-grad);
+        transition: width var(--eb-dur-slow) var(--eb-ease-out);
+    }
+
+    .eb:hover::before {
+        width: var(--eb-line-w-hover);
+    }
+
+    /* ── Línea derecha ── */
+    :host([line='right']) .eb {
+        flex-direction: row-reverse;
+    }
+
+    :host([line='right']) .eb::before {
+        background: var(--eb-line-grad-r);
+    }
+
+    /* ── Línea en ambos lados ── */
+    :host([line='both']) .eb::after {
+        content: '';
+        display: block;
+        width: var(--eb-line-w);
+        height: 1px;
+        flex-shrink: 0;
+        background: var(--eb-line-grad-r);
+        transition: width var(--eb-dur-slow) var(--eb-ease-out);
+    }
+
+    :host([line='both']) .eb:hover::after {
+        width: var(--eb-line-w-hover);
+    }
+
+    /* ── Sin línea ── */
+    :host([line='none']) .eb::before,
+    :host([line='none']) .eb::after {
+        display: none;
+    }
+
+    /* ══════════════════════════════════════
+        COLORES
+        ══════════════════════════════════════ */
+
+    :host([color='washi']) .eb {
+        --eb-color: var(--color-washi-400, #B8A99A);
+        --eb-line-grad: linear-gradient(90deg, var(--color-washi-400, #B8A99A), transparent);
+        --eb-line-grad-r: linear-gradient(270deg, var(--color-washi-400, #B8A99A), transparent);
+    }
+
+    :host([color='celadon']) .eb {
+        --eb-color: rgb(78, 148, 130, 0.6);
+        --eb-line-grad: linear-gradient(90deg, var(--color-celadon-400, #4E9482), transparent);
+        --eb-line-grad-r: linear-gradient(270deg, var(--color-celadon-400, #4E9482), transparent);
+    }
+
+    :host([color='white']) .eb {
+        --eb-color: rgb(250, 247, 244, 0.35);
+        --eb-line-grad: linear-gradient(90deg, rgb(250, 247, 244, 0.4), transparent);
+        --eb-line-grad-r: linear-gradient(270deg, rgb(250, 247, 244, 0.4), transparent);
+    }
+
+    :host([color='muted']) .eb {
+        --eb-color: rgb(250, 247, 244, 0.15);
+        --eb-line-grad: linear-gradient(90deg, rgb(250, 247, 244, 0.15), transparent);
+        --eb-line-grad-r: linear-gradient(270deg, rgb(250, 247, 244, 0.15), transparent);
+    }
+
+    /* dark surface — kaki atenuado */
+    :host([color='dark']) .eb {
+        --eb-color: rgb(184, 90, 30, 0.45);
+        --eb-line-grad: linear-gradient(90deg, rgb(184, 90, 30, 0.5), transparent);
+        --eb-line-grad-r: linear-gradient(270deg, rgb(184, 90, 30, 0.5), transparent);
+    }
+
+    /* ══════════════════════════════════════
+        TAMAÑOS
+        ══════════════════════════════════════ */
+
+    :host([size='sm']) .eb {
+        --eb-size: 0.58rem;
+        --eb-tracking: 0.18em;
+        --eb-line-w: 20px;
+    }
+
+    :host([size='lg']) .eb {
+        --eb-size: 0.75rem;
+        --eb-tracking: 0.2em;
+        --eb-line-w: 36px;
+    }
+
+    /* ══════════════════════════════════════
+        DOT — reemplaza la línea por un punto
+        ══════════════════════════════════════ */
+
+    :host([dot]) .eb::before {
+        width: var(--eb-dot-size) !important;
+        height: var(--eb-dot-size);
+        border-radius: 50%;
+        background: var(--eb-dot-color) !important;
+        animation: none !important;
+    }
+
+    /* Colores del dot por variante de color */
+    :host([dot][color='celadon']) .eb::before {
+        --eb-dot-color: var(--color-celadon-400, #4E9482);
+    }
+
+    :host([dot][color='washi']) .eb::before {
+        --eb-dot-color: var(--color-washi-400, #B8A99A);
+    }
+
+    :host([dot][color='white']) .eb::before {
+        --eb-dot-color: rgb(250, 247, 244, 0.4);
+    }
+
+    /* Cancelar expansión en hover para dot */
+    :host([dot]) .eb:hover::before {
+        width: var(--eb-dot-size) !important;
+    }
+
+    /* ══════════════════════════════════════
+        NUMBERED — badge numérico como sufijo
+        ══════════════════════════════════════ */
+
+    .eb-num-badge {
+        display: inline-block;
+        font-family: var(--eb-font);
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        color: var(--eb-num-color);
+        border: 1px solid var(--eb-num-border);
+        padding: 0 5px;
+        line-height: 1.6;
+        flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════
+        KINTSUGI — gold shimmer
+        ══════════════════════════════════════ */
+
+    @keyframes eb-gold {
+        0% {
+            background-position: -200% 0;
+        }
+
+        100% {
+            background-position: 200% 0;
+        }
+    }
+
+    :host([effect='kintsugi']) .eb {
+        background: linear-gradient(90deg,
+                var(--color-kaki-600, #8C4115),
+                #F5D08A,
+                var(--color-kaki-400, #D97234),
+                #F5D08A,
+                var(--color-kaki-600, #8C4115));
+        background-size: 200% 100%;
+        animation: eb-gold 4s linear infinite;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+        /* fallback */
+    }
+
+    :host([effect='kintsugi']) .eb::before {
+        background: linear-gradient(90deg, var(--color-kaki-400, #D97234), #F5D08A, transparent);
+        background-size: 200% 100%;
+        animation: eb-gold 4s linear infinite;
+    }
+
+    :host([effect='kintsugi'][line='right']) .eb::before,
+    :host([effect='kintsugi'][line='both']) .eb::after {
+        background: linear-gradient(270deg, var(--color-kaki-400, #D97234), #F5D08A, transparent);
+        background-size: 200% 100%;
+        animation: eb-gold 4s linear infinite;
+    }
+
+    /* ══════════════════════════════════════
+        GLITCH — drift + flicker periódico
+        ══════════════════════════════════════ */
+
+    @keyframes eb-glitch {
+
+        0%,
+        88%,
+        100% {
+            transform: none;
+            opacity: 1;
+        }
+
+        89% {
+            transform: translateX(-2px);
+            opacity: 0.7;
+        }
+
+        90% {
+            transform: translateX(2px);
+            opacity: 0.9;
+        }
+
+        91% {
+            transform: none;
+            opacity: 1;
+        }
+    }
+
+    @keyframes eb-flicker {
+
+        0%,
+        87%,
+        100% {
+            opacity: 1;
+        }
+
+        88% {
+            opacity: 0.4;
+        }
+
+        89% {
+            opacity: 1;
+        }
+
+        90% {
+            opacity: 0.2;
+        }
+
+        90.5% {
+            opacity: 1;
+        }
+    }
+
+    :host([effect='glitch']) .eb {
+        color: rgb(250, 247, 244, 0.25);
+        animation:
+            eb-glitch 6s steps(1) infinite,
+            eb-flicker 6s steps(1) infinite;
+    }
+
+    :host([effect='glitch']) .eb::before {
+        background: linear-gradient(90deg, rgb(250, 247, 244, 0.25), transparent);
+    }
+}

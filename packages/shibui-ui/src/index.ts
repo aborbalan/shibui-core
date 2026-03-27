@@ -39,6 +39,8 @@ export * from './components/atoms/liquid-button/lib-liquid-button.component'
 export * from './components/atoms/text-glich/lib-text-glitch.component'
 export * from './components/atoms/background/lib-background.component'
 export * from './components/atoms/burger-button/lib-burger-button.component'
+export * from './components/atoms/eyebrow/lib-eyebrow.component';
+export * from './components/atoms/display-heading/lib-display-heading.component';
 
 
 export * from './components/molecules/breadcrumb/lib-breadcrumb.component';

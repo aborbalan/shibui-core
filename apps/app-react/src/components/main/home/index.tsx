@@ -5,6 +5,7 @@ import HeroIntro from '../../layout/templates/HeroIntro';
 import ShibuiHeader from '../../layout/Header';
 import { LibBackground, LibDivider } from '@shibui/ui/react';
 import HeroStats from '../components/hero-stats/HeroStats';
+import ContentSection from '../components/hero-stats/ContentSection';
 
 export const HomePage: React.FC = () => {
   return (
@@ -23,6 +24,14 @@ export const HomePage: React.FC = () => {
           onPrimary={() => document.querySelector('#componentes')?.scrollIntoView({ behavior: 'smooth' })}
           onGhost={() => document.querySelector('#filosofia')?.scrollIntoView({ behavior: 'smooth' })}
         />
+        <ContentSection
+  eyebrow="03 · Proyectos"
+  headingLine1="Arquitectura que"
+  headingLine2Prefix="perdura,"
+  headingAccent="zero deps"
+  description="Cada decisión técnica tiene un porqué."
+  surface="dark"
+/>
         </div>
 
       <LibDivider>sobre...</LibDivider>

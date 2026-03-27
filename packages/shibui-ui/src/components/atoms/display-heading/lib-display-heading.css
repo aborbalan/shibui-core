@@ -1,0 +1,163 @@
+/* ══════════════════════════════════════════════════════════════
+   lib-display-heading.css
+   Shibui UI · Átomo — Display Heading
+   ══════════════════════════════════════════════════════════════ */
+
+@layer tokens, reset, components;
+
+@layer tokens {
+    :host {
+        display: block;
+
+        /* Tipografía */
+        --dh-font-display: var(--lib-font-display, 'Cormorant Garamond', Georgia, serif);
+        --dh-font-body: var(--lib-font-body, 'Shippori Mincho', serif);
+
+        /* Tamaño base (md) */
+        --dh-size: clamp(2.2rem, 5vw, 3.5rem);
+
+        /* Colores — light (default) */
+        --dh-color-heading: var(--color-washi-800, #3D332A);
+        --dh-color-accent: var(--color-kaki-400, #D97234);
+        --dh-color-desc: var(--color-washi-500, #9A8878);
+
+        /* Spacing */
+        --dh-gap-eyebrow: var(--lib-space-md, 1rem);
+        --dh-gap-desc: var(--lib-space-lg, 1.5rem);
+        --dh-max-width: 640px;
+
+        /* Animación de entrada */
+        --dh-dur: 560ms;
+        --dh-ease: cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    /* ── Superficies ── */
+    :host([surface='dark']) {
+        --dh-color-heading: rgb(250, 247, 244, 0.65);
+        --dh-color-desc: rgb(250, 247, 244, 0.28);
+    }
+
+    :host([surface='washi']) {
+        --dh-color-heading: var(--color-washi-800, #3D332A);
+        --dh-color-desc: var(--color-washi-600, #7A6A5C);
+    }
+
+    /* ── Tamaños ── */
+    :host([size='sm']) {
+        --dh-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    }
+
+    :host([size='md']) {
+        --dh-size: clamp(2.2rem, 5vw, 3.5rem);
+    }
+
+    :host([size='lg']) {
+        --dh-size: clamp(2.75rem, 6vw, 5rem);
+    }
+}
+
+@layer reset {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@layer components {
+
+    /* ── Wrapper ── */
+    .dh-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: var(--dh-max-width);
+    }
+
+    /* ── Slot eyebrow ── */
+    .dh-eyebrow-slot {
+        display: contents;
+    }
+
+    ::slotted([slot='eyebrow']) {
+        margin-bottom: var(--dh-gap-eyebrow);
+    }
+
+    /* ── Heading ── */
+    .dh-heading {
+        font-family: var(--dh-font-display);
+        font-size: var(--dh-size);
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        color: var(--dh-color-heading);
+        margin: 0;
+    }
+
+    /* ── Acento itálico ── */
+    .dh-accent {
+        font-style: italic;
+        color: var(--dh-color-accent);
+        /* Hereda font y tamaño del heading */
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+    }
+
+    /* ── Descripción ── */
+    .dh-desc {
+        font-family: var(--dh-font-body);
+        font-size: var(--text-sm, 0.8125rem);
+        color: var(--dh-color-desc);
+        line-height: 1.9;
+        margin-top: var(--dh-gap-desc);
+        max-width: var(--dh-max-width);
+    }
+
+    /* ── Slot description ── */
+    ::slotted([slot='description']) {
+        font-family: var(--dh-font-body);
+        font-size: var(--text-sm, 0.8125rem);
+        color: var(--dh-color-desc);
+        line-height: 1.9;
+        margin-top: var(--dh-gap-desc);
+        display: block;
+    }
+
+    /* ── Animación de entrada ── */
+    @keyframes dh-fade-up {
+        from {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    :host([animate]) .dh-heading {
+        animation: dh-fade-up var(--dh-dur) var(--dh-ease) both;
+    }
+
+    :host([animate]) .dh-desc {
+        animation: dh-fade-up var(--dh-dur) var(--dh-ease) 120ms both;
+    }
+
+    /* ── Centrado ── */
+    :host([centered]) .dh-wrapper {
+        align-items: center;
+        text-align: center;
+        max-width: none;
+    }
+
+    :host([centered]) .dh-heading,
+    :host([centered]) .dh-desc {
+        max-width: var(--dh-max-width);
+        text-align: center;
+    }
+}
