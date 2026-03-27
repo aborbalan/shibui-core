@@ -58,7 +58,6 @@
 
 /* ── Reset ── */
 @layer reset {
-
     *,
     *::before,
     *::after {
@@ -621,7 +620,6 @@
     }
 
     @keyframes glitch-border {
-
         0%,
         88%,
         100% {
@@ -648,7 +646,6 @@
     }
 
     @keyframes scan-shift {
-
         0%,
         88%,
         100% {
@@ -673,7 +670,6 @@
     }
 
     @keyframes status-pulse {
-
         0%,
         100% {
             opacity: 1;
@@ -685,7 +681,6 @@
     }
 
     @keyframes cursor-blink {
-
         0%,
         100% {
             opacity: 0.8;
@@ -712,7 +707,6 @@
     }
 
     @media (width <=480px) {
-
         .ft-kintsugi-grid,
         .ft-social-grid {
             grid-template-columns: 1fr;

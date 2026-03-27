@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
 
 export const ComponentsPage: React.FC = () => {
-  const [selectedComponent, setSelectedComponent] = useState('lib-button');
 
   return (
     <div style={{ 
