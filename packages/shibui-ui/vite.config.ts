@@ -2,6 +2,8 @@
 /// <reference types="vitest" />
 import { defineConfig, TerserOptions, type UserConfig } from 'vite';
 import { resolve } from 'path';
+import fs from 'node:fs';
+
 import dts from 'vite-plugin-dts';
 /**
  * Vite configuration for UI library
@@ -43,7 +45,22 @@ const config: UserConfig & { test?: InlineConfig } = {
         // Preserve export names for tree-shaking
         preserveModules: true,
         preserveModulesRoot: 'src'
-      }
+      },
+      plugins:[
+        {
+          name: 'emit-tokens-css',
+          generateBundle(): void {
+            this.emitFile({
+              type: 'asset',
+              fileName: 'tokens.css',
+              source: fs.readFileSync(
+                resolve(__dirname, 'src/styles/shared/tokens.css'),
+                'utf-8'
+              ),
+            });
+          },
+        },
+      ]
     },
     // Size optimizations
     minify: 'terser',
@@ -70,7 +87,8 @@ const config: UserConfig & { test?: InlineConfig } = {
       // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
       storybookTest({
         configDir: path.join(dirname, '.storybook')
-      })],
+      }),
+    ],
       test: {
         name: 'storybook',
         browser: {

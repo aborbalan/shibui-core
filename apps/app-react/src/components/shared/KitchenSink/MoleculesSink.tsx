@@ -1,4 +1,3 @@
-import { LibTabs } from '@shibui/ui/react';
 import React from 'react';
 
 export const MoleculesSink: React.FC = () => (
@@ -17,20 +16,7 @@ export const MoleculesSink: React.FC = () => (
 
     <div style={{ maxWidth: '400px' }}>
       <h4>Tabs</h4>
-        <LibTabs color="kaki" active="overview" variant="underline" items={[{ id: 'overview', label: 'Overview' },
-          { id: 'code',     label: 'Código' },
-          { id: 'docs',     label: 'Docs' },
-          { id: 'issues',   label: 'Issues', disabled: true },]}>
-        <div>
-          <strong>Overview</strong> — Contenido del primer panel.
-        </div>
-        <div slot="code">
-          &lt;lib-tabs variant="underline" active="code"&gt;&lt;/lib-tabs&gt;
-        </div>
-        <div slot="docs">
-          Documentación — Navegación por teclado: ← → mueve entre tabs.
-        </div>
-        </LibTabs>
+
     </div>
 
     <div style={{ maxWidth: '400px' }}>

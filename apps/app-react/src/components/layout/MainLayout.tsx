@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import { DownloadCVModal } from './modals/DownloadCVModal';
 import { Outlet, useLocation } from 'react-router-dom';
-import { LibTabs } from '@shibui/ui/react';
 
 interface MainLayoutProps {
   activeTab: string;

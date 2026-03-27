@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "required": ["id", "name", "slug", "category_id"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "slug": { "type": "string" },
+    "category_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["stable", "beta", "deprecated"] },
+    "description": { "type": "string" },
+    "version": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "api": {
+      "type": "object",
+      "properties": {
+        "props": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "type": "string" },
+              "default": { "type": "string" },
+              "desc": { "type": "string" }
+            },
+            "x-readme-ref-name": "PropDefinition"
+          }
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "payload": { "type": "string" },
+              "desc": { "type": "string" }
+            },
+            "x-readme-ref-name": "EventDefinition"
+          }
+        }
+      },
+      "x-readme-ref-name": "ComponentAPI"
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "usage_md": { "type": "string" },
+        "codes": {
+          "type": "object",
+          "properties": {
+            "react": { "type": "string" },
+            "angular": { "type": "string" },
+            "svelte": { "type": "string" }
+          }
+        }
+      },
+      "x-readme-ref-name": "ComponentContent"
+    }
+  },
+  "x-readme-ref-name": "Component"
+}

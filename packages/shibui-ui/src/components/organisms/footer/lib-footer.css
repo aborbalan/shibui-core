@@ -1,0 +1,721 @@
+/* ══════════════════════════════════════════════════════════════
+   lib-footer.css
+   Shibui UI · Web Component Footer
+   Variantes: social · accordion · kintsugi · glitch
+   ══════════════════════════════════════════════════════════════ */
+
+@layer tokens, reset, components;
+
+/* ── Tokens propios del host ── */
+@layer tokens {
+    :host {
+        display: block;
+
+        /* Spacing interno */
+        --ft-pad-x: var(--lib-space-xl, 2rem);
+        --ft-pad-y: var(--lib-space-xl, 2rem);
+        --ft-max-width: 1200px;
+
+        /* Colores base (light) */
+        --ft-bg: var(--color-washi-50, #FAF7F4);
+        --ft-border: var(--color-washi-200, #E5DDD3);
+        --ft-text: var(--color-washi-900, #221C16);
+        --ft-text-muted: var(--color-washi-400, #B8A99A);
+        --ft-text-faint: var(--color-washi-300, #D3C8BC);
+        --ft-accent: var(--color-kaki-500, #B85A1E);
+        --ft-accent-hover: var(--color-kaki-600, #8C4115);
+        --ft-link: var(--color-washi-400, #B8A99A);
+        --ft-link-hover: var(--color-washi-900, #221C16);
+
+        /* Kintsugi gold seam */
+        --ft-gold-start: rgb(184, 90, 30, 0.4);
+        --ft-gold-mid: #F5D08A;
+        --ft-gold-end: rgb(184, 90, 30, 0.4);
+
+        /* Typography */
+        --ft-font-display: var(--lib-font-display, 'Cormorant Garamond', Georgia, serif);
+        --ft-font-mono: var(--lib-font-mono, 'DM Mono', 'Courier New', monospace);
+
+        /* Animation */
+        --ft-dur-base: 220ms;
+        --ft-dur-slow: 380ms;
+        --ft-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    /* Dark surface override */
+    :host([variant='accordion']),
+    :host([variant='kintsugi']),
+    :host([variant='glitch']) {
+        --ft-bg: var(--color-washi-950, #120E0A);
+        --ft-border: rgb(255, 255, 255, 0.07);
+        --ft-text: rgb(250, 247, 244, 0.85);
+        --ft-text-muted: rgb(250, 247, 244, 0.35);
+        --ft-text-faint: rgb(250, 247, 244, 0.12);
+        --ft-link: rgb(250, 247, 244, 0.22);
+        --ft-link-hover: rgb(250, 247, 244, 0.85);
+    }
+}
+
+/* ── Reset ── */
+@layer reset {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    ul,
+    ol {
+        list-style: none;
+    }
+
+    button {
+        cursor: pointer;
+        background: none;
+        border: none;
+        font-family: inherit;
+    }
+}
+
+/* ── Components ── */
+@layer components {
+
+    /* ── Shell ── */
+    footer {
+        background: var(--ft-bg);
+        border-top: 1px solid var(--ft-border);
+    }
+
+    .ft-inner {
+        max-width: var(--ft-max-width);
+        margin: 0 auto;
+        padding: var(--ft-pad-y) var(--ft-pad-x);
+    }
+
+    /* ── Shared typography helpers ── */
+    .ft-label-mono {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ft-text-muted);
+    }
+
+    .ft-link-mono {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5625rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ft-link);
+        text-decoration: none;
+        transition: color var(--ft-dur-base) var(--ft-ease-out);
+        display: inline-block;
+    }
+
+    .ft-link-mono:hover {
+        color: var(--ft-link-hover);
+    }
+
+    /* ── Logo / brand ── */
+    .ft-brand {
+        font-family: var(--ft-font-display);
+        font-weight: 300;
+        letter-spacing: 0.15em;
+        color: var(--color-washi-800, #3D332A);
+        line-height: 1;
+    }
+
+    .ft-brand em {
+        font-style: italic;
+        color: var(--ft-accent);
+    }
+
+    .ft-brand-sub {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ft-text-muted);
+        margin-top: 0.375rem;
+        display: block;
+    }
+
+    /* ── Copyright bar ── */
+    .ft-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: var(--lib-space-md, 1rem);
+        border-top: 1px solid var(--ft-border);
+        padding-top: var(--lib-space-lg, 1.5rem);
+        margin-top: var(--lib-space-lg, 1.5rem);
+    }
+
+    .ft-copyright {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5625rem;
+        letter-spacing: 0.12em;
+        color: var(--ft-text-faint);
+    }
+
+    /* ══════════════════════════════════════════
+        VARIANTE 01 — SOCIAL PROMINENT
+        ══════════════════════════════════════════ */
+    :host([variant='social']) footer {
+        background: #fff;
+    }
+
+    .ft-social-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--color-washi-200, #E5DDD3);
+        max-width: 640px;
+        margin: 0 auto var(--lib-space-xl, 2rem);
+    }
+
+    .ft-social-cell {
+        background: #fff;
+        padding: var(--lib-space-xl, 2rem) var(--lib-space-lg, 1.5rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--lib-space-md, 1rem);
+        transition: background var(--ft-dur-base);
+        text-decoration: none;
+    }
+
+    .ft-social-cell:hover {
+        background: var(--color-washi-50, #FAF7F4);
+    }
+
+    .ft-social-cell.accent:hover {
+        background: var(--color-kaki-50, #FDF3EC);
+    }
+
+    .ft-social-cell svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .ft-social-cell-label {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ft-text-muted);
+    }
+
+    .ft-social-cell.accent .ft-social-cell-label {
+        color: var(--ft-accent);
+    }
+
+    .ft-nav-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: var(--lib-space-md, 1rem);
+        border-top: 1px solid var(--color-washi-100, #F2EDE6);
+        padding-top: var(--lib-space-lg, 1.5rem);
+    }
+
+    .ft-nav-links {
+        display: flex;
+        gap: var(--lib-space-lg, 1.5rem);
+    }
+
+    /* ══════════════════════════════════════════
+        VARIANTE 02 — ACCORDION
+        ══════════════════════════════════════════ */
+    .ft-acc-brand-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: var(--lib-space-lg, 1.5rem);
+        border-bottom: 1px solid var(--ft-border);
+        margin-bottom: var(--lib-space-md, 1rem);
+    }
+
+    .ft-brand-dark {
+        font-family: var(--ft-font-display);
+        font-weight: 300;
+        font-size: 1.25rem;
+        letter-spacing: 0.15em;
+        color: rgb(250, 247, 244, 0.55);
+    }
+
+    .ft-brand-dark em {
+        font-style: italic;
+        color: var(--ft-accent);
+    }
+
+    .ft-social-mini {
+        display: flex;
+        gap: var(--lib-space-sm, 0.5rem);
+    }
+
+    .ft-social-mini-btn {
+        width: 32px;
+        height: 32px;
+        border: 1px solid rgb(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: border-color var(--ft-dur-base);
+        color: rgb(250, 247, 244, 0.3);
+    }
+
+    .ft-social-mini-btn:hover {
+        border-color: rgb(255, 255, 255, 0.3);
+        color: rgb(250, 247, 244, 0.8);
+    }
+
+    .ft-social-mini-btn svg {
+        width: 13px;
+        height: 13px;
+        stroke: currentcolor;
+        fill: none;
+        stroke-width: 1.6;
+        stroke-linecap: round;
+    }
+
+    /* Accordion items */
+    .ft-acc-item {
+        border-bottom: 1px solid rgb(255, 255, 255, 0.06);
+    }
+
+    .ft-acc-trigger {
+        width: 100%;
+        background: none;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--lib-space-md, 1rem) 0;
+        cursor: pointer;
+        font-family: var(--ft-font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgb(250, 247, 244, 0.35);
+        transition: color var(--ft-dur-base);
+    }
+
+    .ft-acc-trigger:hover {
+        color: rgb(250, 247, 244, 0.7);
+    }
+
+    .ft-acc-arrow {
+        width: 14px;
+        height: 14px;
+        transition: transform var(--ft-dur-base) var(--ft-ease-out);
+        flex-shrink: 0;
+    }
+
+    .ft-acc-arrow svg {
+        width: 14px;
+        height: 14px;
+        stroke: currentcolor;
+        fill: none;
+        stroke-width: 1.4;
+        stroke-linecap: round;
+    }
+
+    .ft-acc-body {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height var(--ft-dur-slow) var(--ft-ease-out);
+    }
+
+    .ft-acc-body-inner {
+        display: flex;
+        flex-direction: column;
+        gap: var(--lib-space-sm, 0.5rem);
+        padding-bottom: var(--lib-space-md, 1rem);
+    }
+
+    .ft-acc-body-inner a {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5625rem;
+        letter-spacing: 0.1em;
+        color: rgb(250, 247, 244, 0.22);
+        text-decoration: none;
+        transition: color var(--ft-dur-base);
+    }
+
+    .ft-acc-body-inner a:hover {
+        color: var(--ft-accent);
+    }
+
+    /* ══════════════════════════════════════════
+        VARIANTE 03 — KINTSUGI
+        ══════════════════════════════════════════ */
+    .ft-kintsugi-seam {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg,
+                transparent,
+                var(--ft-gold-start) 15%,
+                var(--ft-accent) 35%,
+                var(--ft-gold-mid) 50%,
+                var(--ft-accent) 65%,
+                var(--ft-gold-end) 85%,
+                transparent);
+        background-size: 200% 100%;
+        animation: kintsugi-seam 5s linear infinite;
+    }
+
+    .ft-kintsugi-ring {
+        position: absolute;
+        top: -28px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 56px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ft-kintsugi-ring-track {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 1px solid transparent;
+        border-top-color: rgb(245, 208, 138, 0.6);
+        border-right-color: rgb(184, 90, 30, 0.3);
+        animation: kintsugi-ring 8s linear infinite;
+    }
+
+    .ft-kintsugi-symbol {
+        font-family: var(--ft-font-display);
+        font-size: 1.25rem;
+        color: rgb(250, 247, 244, 0.15);
+    }
+
+    .ft-kintsugi-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: var(--lib-space-xl, 2rem);
+        padding-top: var(--lib-space-xl, 2rem);
+    }
+
+    .ft-kintsugi-col-head {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgb(250, 247, 244, 0.15);
+        margin-bottom: var(--lib-space-md, 1rem);
+    }
+
+    .ft-kintsugi-col-links {
+        display: flex;
+        flex-direction: column;
+        gap: var(--lib-space-sm, 0.5rem);
+    }
+
+    .ft-kintsugi-col-links a {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5625rem;
+        letter-spacing: 0.1em;
+        color: rgb(250, 247, 244, 0.22);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: var(--lib-space-xs, 0.25rem);
+        transition: color var(--ft-dur-base);
+    }
+
+    .ft-kintsugi-col-links a:hover {
+        color: var(--color-kaki-400, #D97234);
+    }
+
+    .ft-kintsugi-arrow {
+        color: var(--ft-accent);
+        opacity: 0.6;
+        flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════
+        VARIANTE 04 — GLITCH
+        ══════════════════════════════════════════ */
+    :host([variant='glitch']) footer {
+        position: relative;
+        overflow: hidden;
+        animation: glitch-border 7s ease-in-out infinite;
+    }
+
+    .ft-glitch-scanlines {
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(0deg,
+                transparent,
+                transparent 3px,
+                rgb(250, 247, 244, 0.015) 3px,
+                rgb(250, 247, 244, 0.015) 4px);
+        pointer-events: none;
+        animation: scanshift 7s ease-in-out infinite;
+    }
+
+    .ft-glitch-noise {
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        opacity: 0.02;
+        pointer-events: none;
+    }
+
+    .ft-glitch-cursor {
+        display: inline-block;
+        width: 1px;
+        height: 0.85em;
+        background: var(--ft-accent);
+        vertical-align: middle;
+        margin-left: 2px;
+        animation: cursor-blink 1s step-end infinite;
+        opacity: 0.8;
+    }
+
+    .ft-glitch-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: var(--lib-space-xl, 2rem);
+        padding-top: var(--lib-space-lg, 1.5rem);
+    }
+
+    .ft-glitch-head {
+        font-family: var(--ft-font-display);
+        font-size: 1.5rem;
+        font-weight: 300;
+        color: rgb(250, 247, 244, 0.4);
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        margin-bottom: var(--lib-space-md, 1rem);
+    }
+
+    .ft-glitch-head em {
+        font-style: italic;
+        color: var(--ft-accent);
+    }
+
+    .ft-glitch-sub {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.12em;
+        color: rgb(250, 247, 244, 0.18);
+        line-height: 2;
+    }
+
+    .ft-glitch-modules-head {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgb(250, 247, 244, 0.15);
+        margin-bottom: var(--lib-space-md, 1rem);
+    }
+
+    .ft-glitch-modules-links {
+        display: flex;
+        flex-direction: column;
+        gap: var(--lib-space-sm, 0.5rem);
+    }
+
+    .ft-glitch-modules-links a {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5625rem;
+        letter-spacing: 0.1em;
+        color: rgb(250, 247, 244, 0.22);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: var(--lib-space-xs, 0.25rem);
+        transition: color var(--ft-dur-base);
+    }
+
+    .ft-glitch-modules-links a:hover {
+        color: var(--color-kaki-400, #D97234);
+    }
+
+    .ft-glitch-runtime {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.08em;
+        color: rgb(250, 247, 244, 0.18);
+        line-height: 2.2;
+    }
+
+    .ft-glitch-runtime span.key {
+        color: rgb(250, 247, 244, 0.1);
+    }
+
+    .ft-glitch-runtime span.celadon {
+        color: var(--color-celadon-400, #4E9482);
+    }
+
+    .ft-status-row {
+        display: flex;
+        align-items: center;
+        gap: var(--lib-space-sm, 0.5rem);
+        margin-bottom: var(--lib-space-sm, 0.5rem);
+    }
+
+    .ft-status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .ft-status-dot.online {
+        background: var(--color-celadon-400, #4E9482);
+        animation: status-pulse 1.4s ease-in-out infinite;
+    }
+
+    .ft-status-dot.pending {
+        background: var(--color-kaki-400, #D97234);
+        animation: status-pulse 1.4s ease-in-out infinite 1s;
+    }
+
+    .ft-status-text {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.12em;
+        color: rgb(250, 247, 244, 0.2);
+    }
+
+    /* ── Animations ── */
+    @keyframes kintsugi-seam {
+        0% {
+            background-position: -200% 0;
+        }
+
+        100% {
+            background-position: 200% 0;
+        }
+    }
+
+    @keyframes kintsugi-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes glitch-border {
+
+        0%,
+        88%,
+        100% {
+            box-shadow: none;
+            opacity: 1;
+        }
+
+        89% {
+            box-shadow: -2px 0 0 rgb(217, 114, 52, 0.4),
+                2px 0 0 rgb(78, 148, 130, 0.3);
+            transform: translateX(-2px);
+        }
+
+        90% {
+            box-shadow: 2px 0 0 rgb(217, 114, 52, 0.3),
+                -2px 0 0 rgb(78, 148, 130, 0.2);
+            transform: translateX(2px);
+        }
+
+        91% {
+            box-shadow: none;
+            transform: none;
+        }
+    }
+
+    @keyframes scan-shift {
+
+        0%,
+        88%,
+        100% {
+            opacity: 1;
+            transform: none;
+        }
+
+        89% {
+            transform: translateY(-3px);
+            opacity: 0.7;
+        }
+
+        90% {
+            transform: translateY(2px);
+            opacity: 0.9;
+        }
+
+        91% {
+            transform: none;
+            opacity: 1;
+        }
+    }
+
+    @keyframes status-pulse {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.3;
+        }
+    }
+
+    @keyframes cursor-blink {
+
+        0%,
+        100% {
+            opacity: 0.8;
+        }
+
+        50% {
+            opacity: 0;
+        }
+    }
+
+    /* ── Responsive ── */
+    @media (width <=768px) {
+        .ft-kintsugi-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .ft-glitch-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .ft-social-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (width <=480px) {
+
+        .ft-kintsugi-grid,
+        .ft-social-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+}

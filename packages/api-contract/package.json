@@ -1,0 +1,27 @@
+{
+  
+  "devDependencies": {
+    "@kubb/cli": "^4.36.5",
+    "@kubb/core": "^4.36.5",
+    "@kubb/plugin-oas": "^4.36.5",
+    "@kubb/plugin-tanstack-query": "^3.0.0-alpha.17",
+    "@kubb/plugin-ts": "^4.36.5",
+    "@kubb/plugin-zod": "^4.36.5"
+  },
+  "name": "api-contract",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "exports": {
+  "./models": "./src/gen/models/index.ts",
+  "./react": "./src/gen/react/index.ts",
+  "./svelte": "./src/gen/svelte/index.ts",
+  "./angular": "./src/gen/angular/index.ts"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

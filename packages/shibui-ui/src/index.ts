@@ -79,6 +79,7 @@ export * from './components/organisms/timeline/lib-timeline.component';
 export * from './components/organisms/horizontal-scroll-section/lib-horizontal-scroll-section.component';
 export * from './components/organisms/carousel/lib-carousel.component';
 export * from './components/organisms/bento-grid/lib-bento-grid.component'
+export * from './components/organisms/footer/lib-footer.component';
 
 
 export * from './components/organisms/cursor-follower/lib-cursor-follower.component';
