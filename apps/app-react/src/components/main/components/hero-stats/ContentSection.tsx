@@ -46,7 +46,7 @@ export const ContentSection: React.FC<ContentSectionProps> = ({
   const descColor    = DESC_COLOR[surface];
 
   return (
-    <section style={{ ...SURFACES[surface], padding: 'var(--lib-space-xl, 2rem) var(--lib-space-xl, 2rem)' }}>
+    <section style={{ ...SURFACES[surface]}}>
 
       {/* Eyebrow */}
       <LibEyebrow
