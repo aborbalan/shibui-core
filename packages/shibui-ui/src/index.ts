@@ -41,6 +41,8 @@ export * from './components/atoms/background/lib-background.component'
 export * from './components/atoms/burger-button/lib-burger-button.component'
 export * from './components/atoms/eyebrow/lib-eyebrow.component';
 export * from './components/atoms/display-heading/lib-display-heading.component';
+export * from './components/atoms/card/card-grid/lib-card-grid.component';
+export * from './components/atoms/content-pillar/content-pillar.component';
 
 
 export * from './components/molecules/breadcrumb/lib-breadcrumb.component';
@@ -89,7 +91,6 @@ export * from './components/organisms/stagger/lib-stagger-container.component';
 
 export * from './components/molecules/lib-alert/lib-alert.types';
 
-
-export type { SidebarLink, SidebarSocial, ActiveElement } from './types/index';
+export * from './types/public';
 
 console.log('Library initialized');

@@ -1,0 +1,111 @@
+/* ══════════════════════════════════════════════════════════════
+   lib-quote.css
+   Shibui UI · Átomo — Quote
+   ══════════════════════════════════════════════════════════════ */
+
+@layer tokens, reset, components;
+
+@layer tokens {
+    :host {
+        display: block;
+
+        --q-font-display: var(--lib-font-display, 'Cormorant Garamond', Georgia, serif);
+        --q-font-mono: var(--lib-font-mono, 'DM Mono', 'Courier New', monospace);
+
+        /* Colores dark (default) */
+        --q-text-color: rgb(250, 247, 244, 0.55);
+        --q-accent-color: var(--color-kaki-400, #D97234);
+        --q-cite-color: rgb(250, 247, 244, 0.18);
+
+        /* Tamaño base */
+        --q-size: clamp(1.6rem, 3vw, 2.8rem);
+    }
+
+    /* Superficie light */
+    :host([surface='light']) {
+        --q-text-color: var(--color-washi-700, #5C4E42);
+        --q-accent-color: var(--color-kaki-500, #B85A1E);
+        --q-cite-color: var(--color-washi-400, #B8A99A);
+    }
+
+    /* Superficie washi */
+    :host([surface='washi']) {
+        --q-text-color: var(--color-washi-800, #3D332A);
+        --q-accent-color: var(--color-kaki-500, #B85A1E);
+        --q-cite-color: var(--color-washi-500, #9A8878);
+    }
+
+    /* Tamaños */
+    :host([size='sm']) {
+        --q-size: clamp(1.2rem, 2vw, 1.8rem);
+    }
+
+    :host([size='md']) {
+        --q-size: clamp(1.6rem, 3vw, 2.8rem);
+    }
+
+    :host([size='lg']) {
+        --q-size: clamp(2rem, 4vw, 3.5rem);
+    }
+}
+
+@layer reset {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@layer components {
+
+    /* ── Blockquote ── */
+    blockquote {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* ── Texto de la cita ── */
+    .quote-text {
+        font-family: var(--q-font-display);
+        font-size: var(--q-size);
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        line-height: 1.35;
+        color: var(--q-text-color);
+    }
+
+    /* ── Acento itálico (línea 2) ── */
+    .quote-accent {
+        display: block;
+        font-style: italic;
+        color: var(--q-accent-color);
+        margin-top: 0.25rem;
+    }
+
+    /* ── Slot texto (línea 1 por defecto) ── */
+    ::slotted(*) {
+        font-family: var(--q-font-display);
+        font-size: var(--q-size);
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        line-height: 1.35;
+        color: var(--q-text-color);
+        display: block;
+    }
+
+    /* ── Cite ── */
+    cite {
+        display: block;
+        font-style: normal;
+        font-family: var(--q-font-mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--q-cite-color);
+        margin-top: 1.5rem;
+    }
+}

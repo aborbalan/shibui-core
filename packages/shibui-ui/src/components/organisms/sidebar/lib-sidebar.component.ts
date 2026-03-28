@@ -5,8 +5,7 @@ import type { SidebarLink }     from '../../../types';
 import { sidebarTemplate }      from './lib-sidebar.html';
 import componentCss              from './lib-sidebar.css?inline';
 import sharedTokens              from '../../../styles/shared/tokens.css?inline';
-
-export type SidebarVariant = 'dark' | 'light' | 'kintsugi' | 'glitch';
+import { SidebarVariant } from './lib-sidebar.types';
 
 export interface UiSidebarNavigateDetail {
   id: string;

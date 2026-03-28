@@ -1,0 +1,94 @@
+/* ══════════════════════════════════════════════════════════════
+   lib-philosophy-pillar.css
+   Shibui UI · Átomo — Philosophy Pillar
+   ══════════════════════════════════════════════════════════════ */
+
+@layer tokens, reset, components;
+
+@layer tokens {
+    :host {
+        display: block;
+
+        --pp-kanji-color: rgb(184, 90, 30, 0.35);
+        --pp-label-color: rgb(184, 90, 30, 0.5);
+        --pp-desc-color: rgb(250, 247, 244, 0.25);
+        --pp-kanji-size: 2rem;
+        --pp-kanji-width: 2.5rem;
+        --pp-gap: 1.25rem;
+
+        --pp-font-display: var(--lib-font-display, 'Cormorant Garamond', Georgia, serif);
+        --pp-font-mono: var(--lib-font-mono, 'DM Mono', 'Courier New', monospace);
+        --pp-font-body: var(--lib-font-body, 'Shippori Mincho', serif);
+    }
+
+    /* Superficie light */
+    :host([surface='light']) {
+        --pp-kanji-color: rgb(184, 90, 30, 0.25);
+        --pp-label-color: var(--color-kaki-500, #B85A1E);
+        --pp-desc-color: var(--color-washi-600, #7A6A5C);
+    }
+}
+
+@layer reset {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@layer components {
+    .pillar {
+        display: flex;
+        gap: var(--pp-gap);
+        align-items: flex-start;
+    }
+
+    /* ── Kanji ── */
+    .pillar-kanji {
+        font-family: var(--pp-font-display);
+        font-size: var(--pp-kanji-size);
+        font-weight: 300;
+        color: var(--pp-kanji-color);
+        line-height: 1;
+        flex-shrink: 0;
+        width: var(--pp-kanji-width);
+        text-align: center;
+        user-select: none;
+    }
+
+    /* ── Body ── */
+    .pillar-body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .pillar-label {
+        font-family: var(--pp-font-mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--pp-label-color);
+        line-height: 1;
+    }
+
+    .pillar-desc {
+        font-family: var(--pp-font-body);
+        font-size: 0.82rem;
+        color: var(--pp-desc-color);
+        line-height: 1.8;
+    }
+
+    /* ── Slot description (rich content) ── */
+    ::slotted(*) {
+        font-family: var(--pp-font-body);
+        font-size: 0.82rem;
+        color: var(--pp-desc-color);
+        line-height: 1.8;
+        margin: 0;
+    }
+}

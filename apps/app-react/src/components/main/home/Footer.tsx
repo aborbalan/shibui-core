@@ -1,92 +1,119 @@
 import React from 'react';
+import { LibFooter } from '@shibui/ui/react';
+import { FooterColumn, FooterLink } from '@shibui/ui';
 
-export const Footer: React.FC = () => {
-  const currentYear = new Date().getFullYear();
+type FooterVariant = 'social' | 'accordion' | 'kintsugi' | 'glitch';
+
+interface FooterProps {
+  variant?: FooterVariant;
+  brandName?: string;
+  brandKanji?: string;
+  brandSub?: string;
+  location?: string;
+  version?: string;
+  nodeVersion?: string;
+  githubHref?: string;
+  linkedinHref?: string;
+  rssHref?: string;
+  email?: string;
+  columns?: FooterColumn[];
+  navLinks?: FooterLink[];
+  legalLinks?: FooterLink[];
+  runtimeLines?: { key: string; value: string }[];
+}
+
+const DEFAULT_COLUMNS: FooterColumn[] = [
+  {
+    heading: 'Librería',
+    links: [
+      { label: 'Componentes', href: '#' },
+      { label: 'Tokens',      href: '#' },
+      { label: 'Estilos',     href: '#' },
+    ],
+  },
+  {
+    heading: 'Ecosistema',
+    links: [
+      { label: 'GitHub',     href: '#' },
+      { label: 'NPM',        href: '#' },
+      { label: 'Storybook',  href: '#' },
+    ],
+  },
+  {
+    heading: 'Recursos',
+    links: [
+      { label: 'Docs',      href: '#' },
+      { label: 'Changelog', href: '#' },
+      { label: 'Roadmap',   href: '#' },
+    ],
+  },
+];
+
+const DEFAULT_NAV_LINKS: FooterLink[] = [
+  { label: 'Componentes', href: '#' },
+  { label: 'Tokens',      href: '#' },
+  { label: 'MIT License', href: '#' },
+];
+
+const DEFAULT_LEGAL_LINKS: FooterLink[] = [
+  { label: 'privacy.md', href: '#' },
+  { label: 'terms.md',   href: '#' },
+];
+
+const DEFAULT_RUNTIME_LINES = [
+  { key: 'node',  value: 'v22.0.0' },
+  { key: 'css',   value: 'pure · no-build' },
+  { key: 'fonts', value: 'google CDN' },
+  { key: 'deps',  value: '0' },
+  { key: 'size',  value: '~180kb total' },
+];
+
+const GLITCH_NAV_LINKS: FooterLink[] = [
+  { label: 'components.css', href: '#' },
+  { label: 'tokens.json',    href: '#' },
+  { label: 'changelog.md',   href: '#' },
+  { label: 'license.md',     href: '#' },
+];
+
+export const Footer: React.FC<FooterProps> = ({
+  variant      = 'dark',
+  brandName    = 'shibui',
+  brandKanji   = '渋い',
+  brandSub     = 'Design System · Zaragoza',
+  location     = 'Zaragoza',
+  version      = '1.0.0',
+  nodeVersion  = 'v22.0.0',
+  githubHref   = '#',
+  linkedinHref = '#',
+  rssHref      = '#',
+  email        = 'hola@shibui.dev',
+  columns      = DEFAULT_COLUMNS,
+  navLinks     = DEFAULT_NAV_LINKS,
+  legalLinks   = DEFAULT_LEGAL_LINKS,
+  runtimeLines = DEFAULT_RUNTIME_LINES,
+}) => {
+  /* La variante glitch usa nav-links distintos por convención */
+  const resolvedNavLinks = variant === 'glitch' ? GLITCH_NAV_LINKS : navLinks;
 
   return (
-    <footer style={{ 
-      width: '100%',
-      backgroundColor: 'var(--bg-base)',
-      borderTop: '1px solid var(--color-washi-800)',
-      padding: 'var(--lib-space-2xl) var(--lib-space-xl)',
-      marginTop: 'var(--lib-space-3xl)',
-      boxSizing: 'border-box'
-    }}>
-      <div style={{ 
-        maxWidth: '1200px', 
-        margin: '0 auto',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: 'var(--lib-space-xl)'
-      }}>
-        
-        {/* COLUMNA 1: BRANDING */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--lib-space-sm)' }}>
-            <lib-icon name="stack" size="24" style={{ color: 'var(--color-washi-400)' }}></lib-icon>
-            <span style={{ fontWeight: '700', fontSize: 'var(--text-lg)', letterSpacing: '-0.02em' }}>
-              Shibui <span style={{ color: 'var(--color-washi-500)' }}>UI</span>
-            </span>
-          </div>
-          <p style={{ color: 'var(--color-washi-400)', fontSize: 'var(--text-sm)', lineHeight: '1.6' }}>
-            Construyendo un futuro donde la web es ligera, accesible y estéticamente equilibrada.
-          </p>
-        </div>
-
-        {/* COLUMNA 2: LIBRERÍA */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
-          <h4 style={{ fontSize: 'var(--text-sm)', textTransform: 'uppercase', color: 'var(--color-washi-500)' }}>Librería</h4>
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-xs)' }}>
-            <lib-button variant="ghost" style={{ justifyContent: 'flex-start', padding: '0' }}>Componentes</lib-button>
-            <lib-button variant="ghost" style={{ justifyContent: 'flex-start', padding: '0' }}>Guía de Estilo</lib-button>
-            <lib-button variant="ghost" style={{ justifyContent: 'flex-start', padding: '0' }}>Tokens</lib-button>
-          </nav>
-        </div>
-
-        {/* COLUMNA 3: RECURSOS */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
-          <h4 style={{ fontSize: 'var(--text-sm)', textTransform: 'uppercase', color: 'var(--color-washi-500)' }}>Ecosistema</h4>
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-xs)' }}>
-            <lib-button variant="ghost" style={{ justifyContent: 'flex-start', padding: '0' }}>GitHub</lib-button>
-            <lib-button variant="ghost" style={{ justifyContent: 'flex-start', padding: '0' }}>NPM Package</lib-button>
-            <lib-button variant="ghost" style={{ justifyContent: 'flex-start', padding: '0' }}>Ejemplos</lib-button>
-          </nav>
-        </div>
-
-        {/* COLUMNA 4: SOCIAL / CONTACTO */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-md)' }}>
-          <h4 style={{ fontSize: 'var(--text-sm)', textTransform: 'uppercase', color: 'var(--color-washi-500)' }}>Comunidad</h4>
-          <div style={{ display: 'flex', gap: 'var(--lib-space-sm)' }}>
-            <lib-button variant="outline" style={{ padding: 'var(--lib-space-xs)' }}>
-              <lib-icon name="twitter-logo" size="20"></lib-icon>
-            </lib-button>
-            <lib-button variant="outline" style={{ padding: 'var(--lib-space-xs)' }}>
-              <lib-icon name="discord-logo" size="20"></lib-icon>
-            </lib-button>
-          </div>
-        </div>
-      </div>
-
-      {/* BOTTOM BAR */}
-      <div style={{ 
-        maxWidth: '1200px', 
-        margin: 'var(--lib-space-2xl) auto 0', 
-        paddingTop: 'var(--lib-space-lg)',
-        borderTop: '1px solid var(--color-washi-900)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: 'var(--lib-space-md)',
-        color: 'var(--color-washi-600)',
-        fontSize: 'var(--text-xs)'
-      }}>
-        <span>© {currentYear} Shibui Studio. Bajo licencia MIT.</span>
-        <div style={{ display: 'flex', gap: 'var(--lib-space-md)' }}>
-          <span>Privacidad</span>
-          <span>Términos</span>
-        </div>
-      </div>
-    </footer>
+    <LibFooter
+      variant={variant}
+      brand-name={brandName}
+      brand-kanji={brandKanji}
+      brand-sub={brandSub}
+      location={location}
+      version={version}
+      node-version={nodeVersion}
+      github-href={githubHref}
+      linkedin-href={linkedinHref}
+      rss-href={rssHref}
+      email={email}
+      columns={columns}
+      navLinks={resolvedNavLinks}
+      legalLinks={legalLinks}
+      runtimeLines={runtimeLines}
+    />
   );
 };
+
+export default Footer;
