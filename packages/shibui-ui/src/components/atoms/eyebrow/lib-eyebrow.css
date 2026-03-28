@@ -36,7 +36,6 @@
 }
 
 @layer reset {
-
     *,
     *::before,
     *::after {
@@ -232,7 +231,6 @@
                 var(--color-kaki-600, #8C4115));
         background-size: 200% 100%;
         animation: eb-gold 4s linear infinite;
-        background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         color: transparent;
@@ -257,7 +255,6 @@
         ══════════════════════════════════════ */
 
     @keyframes eb-glitch {
-
         0%,
         88%,
         100% {
@@ -282,7 +279,6 @@
     }
 
     @keyframes eb-flicker {
-
         0%,
         87%,
         100% {

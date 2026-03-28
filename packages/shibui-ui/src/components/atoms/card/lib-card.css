@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-CARD — Shibui UI
-   Variantes: default · inverse · accent
+   Variantes: default · inverse · accent · featured · kintsugi
    ============================================================ */
 
 @layer reset {
@@ -29,9 +29,10 @@
     padding: var(--lib-space-lg);
     height: 100%;
     position: relative;
+    overflow: hidden;
     transition:
-      box-shadow   var(--duration-slow) var(--ease-out),
-      transform    var(--duration-slow) var(--ease-out),
+      box-shadow var(--duration-slow) var(--ease-out),
+      transform var(--duration-slow) var(--ease-out),
       border-color var(--duration-slow) var(--ease-out);
   }
 
@@ -105,7 +106,7 @@
   }
 
   /* ============================================================
-     VARIANTES
+     VARIANTES EXISTENTES — no modificadas
      ============================================================ */
 
   /* ── Inverse ── */
@@ -135,5 +136,132 @@
   :host([variant="accent"]) .card {
     border-left: 3px solid var(--card-accent-color, var(--color-kaki-400));
     padding-left: calc(var(--lib-space-lg) - 3px);
+  }
+
+  /* ============================================================
+     VARIANTES NUEVAS
+     ============================================================ */
+
+  /* ── Featured ── */
+  /* Superficie oscura con borde kaki izquierdo y nombre en grande.
+     Pensada para ocupar 2 columnas en un grid (el padre gestiona el span). */
+  :host([variant="featured"]) .card {
+    background: linear-gradient(135deg,
+        rgb(184, 90, 30, 0.08),
+        rgb(184, 90, 30, 0.02));
+    border-color: transparent;
+    border-left: 2px solid var(--color-kaki-500, #B85A1E);
+  }
+
+  :host([variant="featured"]) .card::before {
+    /* Desactivar el overlay de hover heredado */
+    display: none;
+  }
+
+  :host([variant="featured"]) ::slotted([slot="tag"]) {
+    color: rgb(184, 90, 30, 0.3);
+  }
+
+  :host([variant="featured"]) ::slotted([slot="title"]) {
+    font-size: var(--text-3xl);
+    color: var(--color-kaki-400, #D97234);
+    line-height: 1.1;
+  }
+
+  :host([variant="featured"]) .card-body {
+    color: rgb(250, 247, 244, 0.3);
+    font-size: var(--text-base);
+  }
+
+  :host([variant="featured"]) .card-footer {
+    border-top-color: rgb(255, 255, 255, 0.06);
+    color: rgb(250, 247, 244, 0.2);
+    margin-top: var(--lib-space-xl);
+  }
+
+  /* ── Kintsugi ── */
+  /* Seam de oro animado en el borde superior + shimmer en el título. */
+  @keyframes kintsugi-seam {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes kintsugi-gold {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  :host([variant="kintsugi"]) .card {
+    background: var(--color-washi-950, #120E0A);
+    border-color: rgb(184, 90, 30, 0.15);
+  }
+
+  /* Seam superior animado */
+  :host([variant="kintsugi"]) .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgb(184, 90, 30, 0.4) 15%,
+        var(--color-kaki-400, #D97234) 35%,
+        #F5D08A 50%,
+        var(--color-kaki-400, #D97234) 65%,
+        rgb(184, 90, 30, 0.4) 85%,
+        transparent);
+    background-size: 200% 100%;
+    animation: kintsugi-seam 5s linear infinite;
+    opacity: 1;
+    pointer-events: none;
+  }
+
+  /* Título con shimmer gold */
+  :host([variant="kintsugi"]) ::slotted([slot="title"]) {
+    background: linear-gradient(90deg,
+        var(--color-kaki-600, #8C4115),
+        #F5D08A,
+        var(--color-kaki-400, #D97234),
+        #F5D08A,
+        var(--color-kaki-600, #8C4115));
+    background-size: 200% 100%;
+    animation: kintsugi-gold 4s linear infinite;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  :host([variant="kintsugi"]) ::slotted([slot="tag"]) {
+    color: rgb(184, 90, 30, 0.35);
+  }
+
+  :host([variant="kintsugi"]) .card-body {
+    color: rgb(250, 247, 244, 0.25);
+  }
+
+  :host([variant="kintsugi"]) .card-footer {
+    border-top-color: rgb(255, 255, 255, 0.06);
+    color: rgb(250, 247, 244, 0.18);
+  }
+
+  /* Hover cancelado en kintsugi — el seam ya da movimiento */
+  @media (hover: hover) {
+    :host([variant="kintsugi"]) .card:hover {
+      transform: none;
+      box-shadow: 0 0 32px rgb(184, 90, 30, 0.12);
+      border-color: rgb(184, 90, 30, 0.25);
+    }
   }
 }

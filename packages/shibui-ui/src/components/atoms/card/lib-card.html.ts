@@ -1,7 +1,8 @@
 import { html, nothing, TemplateResult } from 'lit';
+import type { LibCardVariant } from './lib-card.component';
 
 export interface CardTemplateProps {
-  variant: 'default' | 'inverse' | 'accent';
+  variant: LibCardVariant;
   accentColor: string | undefined;
 }
 

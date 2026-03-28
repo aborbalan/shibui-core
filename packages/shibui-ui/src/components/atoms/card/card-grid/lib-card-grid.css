@@ -1,0 +1,60 @@
+/* ══════════════════════════════════════════════════════════════
+   lib-component-grid.css
+   Shibui UI · Organismo — Component Grid
+   ══════════════════════════════════════════════════════════════ */
+
+@layer tokens, reset, components;
+
+@layer tokens {
+    :host {
+        display: block;
+
+        --cg-cols: repeat(auto-fill, minmax(280px, 1fr));
+        --cg-gap: 1.5px;
+        --cg-bg: rgb(255, 255, 255, 0.04);
+        --cg-border: rgb(255, 255, 255, 0.04);
+    }
+}
+
+@layer reset {
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@layer components {
+    .grid {
+        display: grid;
+        grid-template-columns: var(--cg-cols);
+        gap: var(--cg-gap);
+        background: var(--cg-bg);
+        border: 1px solid var(--cg-border);
+    }
+
+    /*
+       Las tarjetas featured necesitan span 2.
+       Como el slot no puede aplicar estilos al host de los slotted elements
+       directamente desde aquí, usamos ::slotted.
+       El truco: el host del card ya lleva display:block + height:100% —
+       el grid gestiona el span desde aquí.
+     */
+    ::slotted(lib-component-card[featured]) {
+        grid-column: span 2;
+    }
+
+    @media (width <=700px) {
+        ::slotted(lib-component-card[featured]) {
+            grid-column: span 1;
+        }
+    }
+
+    @media (width <=600px) {
+        .grid {
+            grid-template-columns: 1fr;
+        }
+    }
+}
