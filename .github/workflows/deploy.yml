@@ -59,7 +59,16 @@ jobs:
         run: npm run build
 
       - name: 📦 Build React App
-        run: npm run build-react --prefix .
+        run: |
+          echo "--- Directorio actual ---"
+          pwd
+          echo "--- Contenido de la raíz ---"
+          ls -F
+          echo "--- ¿Qué scripts ve npm en la raíz? ---"
+          npm run --json | grep "build-react" || echo "No se encuentra el script en el JSON"
+          
+          # Intento de build directo (saltándonos el alias si falla)
+          npm run build --workspace=app-react
 
       - name: 🎡 Build Storybook
         run: npm run build-storybook
