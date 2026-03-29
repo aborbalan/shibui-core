@@ -54,7 +54,7 @@
     font-size: 5rem;
     font-weight: 300;
     line-height: 1;
-    color: rgba(0, 0, 0, 0.04);
+    color: rgb(0, 0, 0, 0.04);
     user-select: none;
     pointer-events: none;
     z-index: 0;
@@ -67,12 +67,12 @@
   :host([variant="kintsugi"]) .card-kanji,
   :host([variant="glitch"]) .card-kanji,
   :host([variant="celadon"]) .card-kanji {
-    color: rgba(255, 255, 255, 0.04);
+    color: rgb(255, 255, 255, 0.04);
   }
 
   /* El kanji kintsugi tiene un toque dorado */
   :host([variant="kintsugi"]) .card-kanji {
-    color: rgba(184, 90, 30, 0.08);
+    color: rgb(184, 90, 30, 0.08);
   }
 
   /* Asegurar que header/content/footer estén encima del kanji */
@@ -180,8 +180,8 @@
   /* ── Featured ── */
   :host([variant="featured"]) .card {
     background: linear-gradient(135deg,
-        rgba(184, 90, 30, 0.08),
-        rgba(184, 90, 30, 0.02));
+        rgb(184, 90, 30, 0.08),
+        rgb(184, 90, 30, 0.02));
     border-color: transparent;
     border-left: 2px solid var(--color-kaki-500, #B85A1E);
   }
@@ -191,7 +191,7 @@
   }
 
   :host([variant="featured"]) ::slotted([slot="tag"]) {
-    color: rgba(184, 90, 30, 0.3);
+    color: rgb(184, 90, 30, 0.3);
   }
 
   :host([variant="featured"]) ::slotted([slot="title"]) {
@@ -201,13 +201,13 @@
   }
 
   :host([variant="featured"]) .card-body {
-    color: rgba(250, 247, 244, 0.3);
+    color: rgb(250, 247, 244, 0.3);
     font-size: var(--text-base);
   }
 
   :host([variant="featured"]) .card-footer {
-    border-top-color: rgba(255, 255, 255, 0.06);
-    color: rgba(250, 247, 244, 0.2);
+    border-top-color: rgb(255, 255, 255, 0.06);
+    color: rgb(250, 247, 244, 0.2);
     margin-top: var(--lib-space-xl);
   }
 
@@ -234,7 +234,7 @@
 
   :host([variant="kintsugi"]) .card {
     background: var(--color-washi-950, #120E0A);
-    border-color: rgba(184, 90, 30, 0.15);
+    border-color: rgb(184, 90, 30, 0.15);
   }
 
   :host([variant="kintsugi"]) .card::before {
@@ -246,11 +246,11 @@
     height: 2px;
     background: linear-gradient(90deg,
         transparent,
-        rgba(184, 90, 30, 0.4) 15%,
+        rgb(184, 90, 30, 0.4) 15%,
         var(--color-kaki-400, #D97234) 35%,
         #F5D08A 50%,
         var(--color-kaki-400, #D97234) 65%,
-        rgba(184, 90, 30, 0.4) 85%,
+        rgb(184, 90, 30, 0.4) 85%,
         transparent);
     background-size: 200% 100%;
     animation: kintsugi-seam 5s linear infinite;
@@ -266,30 +266,30 @@
         var(--color-kaki-600, #8C4115));
     background-size: 200% 100%;
     animation: kintsugi-gold 4s linear infinite;
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
   }
 
   :host([variant="kintsugi"]) ::slotted([slot="tag"]) {
-    color: rgba(184, 90, 30, 0.35);
+    color: rgb(184, 90, 30, 0.35);
   }
 
   :host([variant="kintsugi"]) .card-body {
-    color: rgba(250, 247, 244, 0.25);
+    color: rgb(250, 247, 244, 0.25);
   }
 
   :host([variant="kintsugi"]) .card-footer {
-    border-top-color: rgba(255, 255, 255, 0.06);
-    color: rgba(250, 247, 244, 0.18);
+    border-top-color: rgb(255, 255, 255, 0.06);
+    color: rgb(250, 247, 244, 0.18);
   }
 
   @media (hover: hover) {
     :host([variant="kintsugi"]) .card:hover {
       transform: none;
-      box-shadow: 0 0 32px rgba(184, 90, 30, 0.12);
-      border-color: rgba(184, 90, 30, 0.25);
+      box-shadow: 0 0 32px rgb(184, 90, 30, 0.12);
+      border-color: rgb(184, 90, 30, 0.25);
     }
   }
 
@@ -299,7 +299,6 @@
 
   /* ── Glitch ── */
   @keyframes glitch-drift {
-
     0%,
     88%,
     100% {
@@ -325,7 +324,7 @@
 
   :host([variant="glitch"]) .card {
     background: var(--color-washi-950, #120E0A);
-    border-color: rgba(255, 255, 255, 0.06);
+    border-color: rgb(255, 255, 255, 0.06);
     animation: glitch-drift 7s steps(1) infinite;
   }
 
@@ -349,8 +348,8 @@
     background: repeating-linear-gradient(0deg,
         transparent,
         transparent 3px,
-        rgba(250, 247, 244, 0.012) 3px,
-        rgba(250, 247, 244, 0.012) 4px);
+        rgb(250, 247, 244, 0.012) 3px,
+        rgb(250, 247, 244, 0.012) 4px);
     pointer-events: none;
     z-index: 0;
   }
@@ -373,30 +372,30 @@
     font-family: var(--lib-font-mono);
     font-size: 0.65rem;
     letter-spacing: 0.08em;
-    color: rgba(250, 247, 244, 0.2);
+    color: rgb(250, 247, 244, 0.2);
     line-height: 1.9;
   }
 
   :host([variant="glitch"]) .card-footer {
-    border-top-color: rgba(255, 255, 255, 0.06);
-    color: rgba(250, 247, 244, 0.15);
+    border-top-color: rgb(255, 255, 255, 0.06);
+    color: rgb(250, 247, 244, 0.15);
   }
 
   :host([variant="glitch"]) .card-kanji {
-    color: rgba(78, 148, 130, 0.06);
+    color: rgb(78, 148, 130, 0.06);
   }
 
   @media (hover: hover) {
     :host([variant="glitch"]) .card:hover {
       transform: none;
-      box-shadow: -2px 0 0 rgba(217, 114, 52, 0.2), 2px 0 0 rgba(78, 148, 130, 0.15);
+      box-shadow: -2px 0 0 rgb(217, 114, 52, 0.2), 2px 0 0 rgb(78, 148, 130, 0.15);
     }
   }
 
   /* ── Celadon ── */
   :host([variant="celadon"]) .card {
     background: var(--color-washi-950, #120E0A);
-    border-color: rgba(78, 148, 130, 0.15);
+    border-color: rgb(78, 148, 130, 0.15);
   }
 
   /* Barra superior celadón */
@@ -412,7 +411,7 @@
   }
 
   :host([variant="celadon"]) ::slotted([slot="tag"]) {
-    color: rgba(78, 148, 130, 0.5);
+    color: rgb(78, 148, 130, 0.5);
   }
 
   :host([variant="celadon"]) ::slotted([slot="title"]) {
@@ -420,23 +419,23 @@
   }
 
   :host([variant="celadon"]) .card-body {
-    color: rgba(250, 247, 244, 0.25);
+    color: rgb(250, 247, 244, 0.25);
   }
 
   :host([variant="celadon"]) .card-footer {
-    border-top-color: rgba(255, 255, 255, 0.06);
-    color: rgba(250, 247, 244, 0.18);
+    border-top-color: rgb(255, 255, 255, 0.06);
+    color: rgb(250, 247, 244, 0.18);
   }
 
   :host([variant="celadon"]) .card-kanji {
-    color: rgba(78, 148, 130, 0.06);
+    color: rgb(78, 148, 130, 0.06);
   }
 
   @media (hover: hover) {
     :host([variant="celadon"]) .card:hover {
       transform: none;
-      box-shadow: 0 0 28px rgba(78, 148, 130, 0.1);
-      border-color: rgba(78, 148, 130, 0.3);
+      box-shadow: 0 0 28px rgb(78, 148, 130, 0.1);
+      border-color: rgb(78, 148, 130, 0.3);
     }
   }
 
@@ -476,7 +475,7 @@
   }
 
   :host([variant="washi"]) .card-kanji {
-    color: rgba(0, 0, 0, 0.05);
+    color: rgb(0, 0, 0, 0.05);
   }
 
   @media (hover: hover) {
