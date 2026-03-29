@@ -58,6 +58,9 @@ jobs:
       - name: 📦 Build Library
         run: npm run build
 
+      - name: 📦 Build React App
+        run: npm run build:react
+
       - name: 🎡 Build Storybook
         run: npm run build-storybook
 
