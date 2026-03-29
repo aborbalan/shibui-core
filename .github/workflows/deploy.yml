@@ -64,9 +64,13 @@ jobs:
       - name: 🚀 Deploy to Firebase
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         run: |
-            npx firebase-tools deploy --only hosting --site shibui-showcase-storybook --token "${{ secrets.FIREBASE_TOKEN }}" --project lib-ui-b67c5
+          npx firebase-tools target:apply hosting showcase shibui-showcase-storybook --project lib-ui-b67c5 --token "${{ secrets.FIREBASE_TOKEN }}"
     
-            npx firebase-tools deploy --only hosting --site lib-ui-b67c5 --token "${{ secrets.FIREBASE_TOKEN }}" --project lib-ui-b67c5
+          npx firebase-tools deploy --only hosting:showcase --project lib-ui-b67c5 --token "${{ secrets.FIREBASE_TOKEN }}" --debug
+
+          npx firebase-tools target:apply hosting original lib-ui-b67c5 --project lib-ui-b67c5 --token "${{ secrets.FIREBASE_TOKEN }}"
+    
+          npx firebase-tools deploy --only hosting:original --project lib-ui-b67c5 --token "${{ secrets.FIREBASE_TOKEN }}" --debug
 
       - name: 📢 Notify Discord
         if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
