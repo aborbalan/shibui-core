@@ -3,6 +3,7 @@
 /* ============================================================
    LIB-CARD — Shibui UI
    Variantes: default · inverse · accent · featured · kintsugi
+              glitch · celadon · washi
    ============================================================ */
 
 @layer reset {
@@ -42,6 +43,44 @@
       box-shadow: var(--shadow-lg);
       border-color: var(--border-default);
     }
+  }
+
+  /* ── Kanji watermark ── */
+  .card-kanji {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
+    font-size: 5rem;
+    font-weight: 300;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.04);
+    user-select: none;
+    pointer-events: none;
+    z-index: 0;
+    /* El contenido de la card se pone por encima */
+  }
+
+  /* Kanji en superficies oscuras */
+  :host([variant="inverse"]) .card-kanji,
+  :host([variant="featured"]) .card-kanji,
+  :host([variant="kintsugi"]) .card-kanji,
+  :host([variant="glitch"]) .card-kanji,
+  :host([variant="celadon"]) .card-kanji {
+    color: rgba(255, 255, 255, 0.04);
+  }
+
+  /* El kanji kintsugi tiene un toque dorado */
+  :host([variant="kintsugi"]) .card-kanji {
+    color: rgba(184, 90, 30, 0.08);
+  }
+
+  /* Asegurar que header/content/footer estén encima del kanji */
+  .card-header,
+  .card-content,
+  .card-footer {
+    position: relative;
+    z-index: 1;
   }
 
   /* ── Header (tag slot) ── */
@@ -106,7 +145,7 @@
   }
 
   /* ============================================================
-     VARIANTES EXISTENTES — no modificadas
+     VARIANTES EXISTENTES — sin cambios
      ============================================================ */
 
   /* ── Inverse ── */
@@ -138,28 +177,21 @@
     padding-left: calc(var(--lib-space-lg) - 3px);
   }
 
-  /* ============================================================
-     VARIANTES NUEVAS
-     ============================================================ */
-
   /* ── Featured ── */
-  /* Superficie oscura con borde kaki izquierdo y nombre en grande.
-     Pensada para ocupar 2 columnas en un grid (el padre gestiona el span). */
   :host([variant="featured"]) .card {
     background: linear-gradient(135deg,
-        rgb(184, 90, 30, 0.08),
-        rgb(184, 90, 30, 0.02));
+        rgba(184, 90, 30, 0.08),
+        rgba(184, 90, 30, 0.02));
     border-color: transparent;
     border-left: 2px solid var(--color-kaki-500, #B85A1E);
   }
 
   :host([variant="featured"]) .card::before {
-    /* Desactivar el overlay de hover heredado */
     display: none;
   }
 
   :host([variant="featured"]) ::slotted([slot="tag"]) {
-    color: rgb(184, 90, 30, 0.3);
+    color: rgba(184, 90, 30, 0.3);
   }
 
   :host([variant="featured"]) ::slotted([slot="title"]) {
@@ -169,18 +201,17 @@
   }
 
   :host([variant="featured"]) .card-body {
-    color: rgb(250, 247, 244, 0.3);
+    color: rgba(250, 247, 244, 0.3);
     font-size: var(--text-base);
   }
 
   :host([variant="featured"]) .card-footer {
-    border-top-color: rgb(255, 255, 255, 0.06);
-    color: rgb(250, 247, 244, 0.2);
+    border-top-color: rgba(255, 255, 255, 0.06);
+    color: rgba(250, 247, 244, 0.2);
     margin-top: var(--lib-space-xl);
   }
 
   /* ── Kintsugi ── */
-  /* Seam de oro animado en el borde superior + shimmer en el título. */
   @keyframes kintsugi-seam {
     0% {
       background-position: -200% 0;
@@ -203,10 +234,9 @@
 
   :host([variant="kintsugi"]) .card {
     background: var(--color-washi-950, #120E0A);
-    border-color: rgb(184, 90, 30, 0.15);
+    border-color: rgba(184, 90, 30, 0.15);
   }
 
-  /* Seam superior animado */
   :host([variant="kintsugi"]) .card::before {
     content: '';
     position: absolute;
@@ -216,19 +246,17 @@
     height: 2px;
     background: linear-gradient(90deg,
         transparent,
-        rgb(184, 90, 30, 0.4) 15%,
+        rgba(184, 90, 30, 0.4) 15%,
         var(--color-kaki-400, #D97234) 35%,
         #F5D08A 50%,
         var(--color-kaki-400, #D97234) 65%,
-        rgb(184, 90, 30, 0.4) 85%,
+        rgba(184, 90, 30, 0.4) 85%,
         transparent);
     background-size: 200% 100%;
     animation: kintsugi-seam 5s linear infinite;
-    opacity: 1;
     pointer-events: none;
   }
 
-  /* Título con shimmer gold */
   :host([variant="kintsugi"]) ::slotted([slot="title"]) {
     background: linear-gradient(90deg,
         var(--color-kaki-600, #8C4115),
@@ -238,30 +266,223 @@
         var(--color-kaki-600, #8C4115));
     background-size: 200% 100%;
     animation: kintsugi-gold 4s linear infinite;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
   }
 
   :host([variant="kintsugi"]) ::slotted([slot="tag"]) {
-    color: rgb(184, 90, 30, 0.35);
+    color: rgba(184, 90, 30, 0.35);
   }
 
   :host([variant="kintsugi"]) .card-body {
-    color: rgb(250, 247, 244, 0.25);
+    color: rgba(250, 247, 244, 0.25);
   }
 
   :host([variant="kintsugi"]) .card-footer {
-    border-top-color: rgb(255, 255, 255, 0.06);
-    color: rgb(250, 247, 244, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.06);
+    color: rgba(250, 247, 244, 0.18);
   }
 
-  /* Hover cancelado en kintsugi — el seam ya da movimiento */
   @media (hover: hover) {
     :host([variant="kintsugi"]) .card:hover {
       transform: none;
-      box-shadow: 0 0 32px rgb(184, 90, 30, 0.12);
-      border-color: rgb(184, 90, 30, 0.25);
+      box-shadow: 0 0 32px rgba(184, 90, 30, 0.12);
+      border-color: rgba(184, 90, 30, 0.25);
+    }
+  }
+
+  /* ============================================================
+     VARIANTES NUEVAS
+     ============================================================ */
+
+  /* ── Glitch ── */
+  @keyframes glitch-drift {
+
+    0%,
+    88%,
+    100% {
+      transform: none;
+      opacity: 1;
+    }
+
+    89% {
+      transform: translateX(-2px);
+      opacity: 0.8;
+    }
+
+    90% {
+      transform: translateX(2px);
+      opacity: 0.9;
+    }
+
+    91% {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  :host([variant="glitch"]) .card {
+    background: var(--color-washi-950, #120E0A);
+    border-color: rgba(255, 255, 255, 0.06);
+    animation: glitch-drift 7s steps(1) infinite;
+  }
+
+  /* Barra superior celadón */
+  :host([variant="glitch"]) .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-celadon-400, #4E9482);
+    pointer-events: none;
+  }
+
+  /* Scanlines */
+  :host([variant="glitch"]) .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg,
+        transparent,
+        transparent 3px,
+        rgba(250, 247, 244, 0.012) 3px,
+        rgba(250, 247, 244, 0.012) 4px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  :host([variant="glitch"]) ::slotted([slot="tag"]) {
+    font-family: var(--lib-font-mono);
+    color: var(--color-celadon-400, #4E9482);
+    letter-spacing: 0.18em;
+  }
+
+  :host([variant="glitch"]) ::slotted([slot="title"]) {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-base);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-kaki-400, #D97234);
+  }
+
+  :host([variant="glitch"]) .card-body {
+    font-family: var(--lib-font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: rgba(250, 247, 244, 0.2);
+    line-height: 1.9;
+  }
+
+  :host([variant="glitch"]) .card-footer {
+    border-top-color: rgba(255, 255, 255, 0.06);
+    color: rgba(250, 247, 244, 0.15);
+  }
+
+  :host([variant="glitch"]) .card-kanji {
+    color: rgba(78, 148, 130, 0.06);
+  }
+
+  @media (hover: hover) {
+    :host([variant="glitch"]) .card:hover {
+      transform: none;
+      box-shadow: -2px 0 0 rgba(217, 114, 52, 0.2), 2px 0 0 rgba(78, 148, 130, 0.15);
+    }
+  }
+
+  /* ── Celadon ── */
+  :host([variant="celadon"]) .card {
+    background: var(--color-washi-950, #120E0A);
+    border-color: rgba(78, 148, 130, 0.15);
+  }
+
+  /* Barra superior celadón */
+  :host([variant="celadon"]) .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-celadon-400, #4E9482);
+    pointer-events: none;
+  }
+
+  :host([variant="celadon"]) ::slotted([slot="tag"]) {
+    color: rgba(78, 148, 130, 0.5);
+  }
+
+  :host([variant="celadon"]) ::slotted([slot="title"]) {
+    color: var(--color-celadon-400, #4E9482);
+  }
+
+  :host([variant="celadon"]) .card-body {
+    color: rgba(250, 247, 244, 0.25);
+  }
+
+  :host([variant="celadon"]) .card-footer {
+    border-top-color: rgba(255, 255, 255, 0.06);
+    color: rgba(250, 247, 244, 0.18);
+  }
+
+  :host([variant="celadon"]) .card-kanji {
+    color: rgba(78, 148, 130, 0.06);
+  }
+
+  @media (hover: hover) {
+    :host([variant="celadon"]) .card:hover {
+      transform: none;
+      box-shadow: 0 0 28px rgba(78, 148, 130, 0.1);
+      border-color: rgba(78, 148, 130, 0.3);
+    }
+  }
+
+  /* ── Washi ── */
+  :host([variant="washi"]) .card {
+    background: var(--color-washi-50, #FAF7F4);
+    border-color: var(--color-washi-200, #E5DDD3);
+  }
+
+  /* Barra superior washi */
+  :host([variant="washi"]) .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-washi-400, #B8A99A);
+    pointer-events: none;
+  }
+
+  :host([variant="washi"]) ::slotted([slot="tag"]) {
+    color: var(--color-washi-500, #9A8878);
+  }
+
+  :host([variant="washi"]) ::slotted([slot="title"]) {
+    color: var(--color-washi-800, #3D332A);
+  }
+
+  :host([variant="washi"]) .card-body {
+    color: var(--color-washi-600, #7A6A5C);
+  }
+
+  :host([variant="washi"]) .card-footer {
+    border-top-color: var(--color-washi-200, #E5DDD3);
+    color: var(--color-washi-400, #B8A99A);
+  }
+
+  :host([variant="washi"]) .card-kanji {
+    color: rgba(0, 0, 0, 0.05);
+  }
+
+  @media (hover: hover) {
+    :host([variant="washi"]) .card:hover {
+      border-color: var(--color-washi-300, #D3C8BC);
+      box-shadow: var(--shadow-md);
     }
   }
 }
