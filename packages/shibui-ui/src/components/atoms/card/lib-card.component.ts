@@ -1,51 +1,72 @@
-import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import sharedTokens from '../../../styles/shared/tokens.css?inline';
-import cardStyles from './lib-card.css?inline';
-import { cardTemplate } from './lib-card.html';
+import { LitElement, css, unsafeCSS, TemplateResult } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import sharedTokens from "../../../styles/shared/tokens.css?inline";
+import cardStyles from "./lib-card.css?inline";
+import { cardTemplate } from "./lib-card.html";
 
-export type LibCardVariant = 'default' | 'inverse' | 'accent' | 'featured' | 'kintsugi';
+export type LibCardVariant =
+  | "default"
+  | "inverse"
+  | "accent"
+  | "featured"
+  | "kintsugi"
+  | "glitch"
+  | "celadon"
+  | "washi";
 
 /**
  * @element lib-card
  *
- * @attr {'default'|'inverse'|'accent'|'featured'|'kintsugi'} variant
+ * @attr {'default'|'inverse'|'accent'|'featured'|'kintsugi'|'glitch'|'celadon'|'washi'} variant
  *   - default   → superficie elevada neutra
  *   - inverse   → fondo washi-900 oscuro
  *   - accent    → borde izquierdo de color (`accent-color`)
  *   - featured  → fondo kaki degradado, título grande — pensado para 2 columnas en grid
  *   - kintsugi  → seam de oro animado en borde superior + shimmer en título
+ *   - glitch    → estética terminal CRT, scanlines, fuente mono
+ *   - celadon   → acento verde-gris japonés para estados de éxito / énfasis secundario
+ *   - washi     → paleta neutra cálida, superficie washi-50/100
  *
- * @attr {string} accent-color - Color del borde (solo variante `accent`).
+ * @attr {string}  accent-color - Color del borde (solo variante `accent`).
+ * @attr {string}  kanji        - Carácter kanji decorativo de fondo (ej: "渋", "金", "間").
  *
  * @slot tag    - Etiqueta o metadata en el header.
  * @slot title  - Título principal de la card.
  * @slot        - Cuerpo de la card (default slot).
  * @slot footer - Acciones o información en el footer.
  */
-@customElement('lib-card')
+@customElement("lib-card")
 export class LibCard extends LitElement {
   static override styles = [
-    css`${unsafeCSS(sharedTokens)}`,
-    css`${unsafeCSS(cardStyles)}`,
+    css`
+      ${unsafeCSS(sharedTokens)}
+    `,
+    css`
+      ${unsafeCSS(cardStyles)}
+    `,
   ];
 
   @property({ type: String, reflect: true })
-  variant: LibCardVariant = 'default';
+  variant: LibCardVariant = "default";
 
-  @property({ type: String, attribute: 'accent-color' })
+  @property({ type: String, attribute: "accent-color" })
   accentColor: string | undefined = undefined;
+
+  /** Carácter kanji decorativo mostrado como marca de agua en la esquina superior derecha */
+  @property({ type: String })
+  kanji = "";
 
   override render(): TemplateResult {
     return cardTemplate({
       variant: this.variant,
       accentColor: this.accentColor,
+      kanji: this.kanji,
     });
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'lib-card': LibCard;
+    "lib-card": LibCard;
   }
 }

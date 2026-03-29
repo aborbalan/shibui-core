@@ -2,13 +2,15 @@ import { html, nothing, TemplateResult } from 'lit';
 import type { LibCardVariant } from './lib-card.component';
 
 export interface CardTemplateProps {
-  variant: LibCardVariant;
+  variant:     LibCardVariant;
   accentColor: string | undefined;
+  kanji:       string;
 }
 
 /**
  * Plantilla base para el componente lib-card.
  * Contenedor editorial con slots: tag, title, default (body), footer.
+ * Soporta marca de agua kanji opcional en la esquina superior derecha.
  */
 export function cardTemplate(props: CardTemplateProps): TemplateResult {
   return html`
@@ -18,6 +20,12 @@ export function cardTemplate(props: CardTemplateProps): TemplateResult {
         ? `--card-accent-color: ${props.accentColor}`
         : nothing}"
     >
+      <!-- Kanji watermark — aria-hidden, decorativo -->
+      ${props.kanji
+        ? html`<span class="card-kanji" aria-hidden="true">${props.kanji}</span>`
+        : nothing
+      }
+
       <header class="card-header">
         <slot name="tag"></slot>
       </header>

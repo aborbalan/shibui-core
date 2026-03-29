@@ -8,6 +8,7 @@ import HeroStats from '../components/hero-stats/HeroStats';
 import ContentSection from '../components/hero-stats/ContentSection';
 import CardsSection from '../components/hero-stats/CardsSection ';
 import PhilosophySection from '../components/hero-stats/PhilosophySection';
+import CardsShowcase from '../components/hero-stats/CardsShowcase';
 
 export const HomePage: React.FC = () => {
   return (
@@ -32,21 +33,44 @@ export const HomePage: React.FC = () => {
           <div style={{ flex: 1, paddingBottom: '30px' }}>
             <HeroStats></HeroStats>
           </div>
-          <div>
+          <div style={{ flex: 1, paddingBottom: '30px' }}>
             <ContentSection
               eyebrow="03 · Proyectos"
               headingLine1="Arquitectura que"
               headingLine2Prefix="perdura,"
               headingAccent="zero deps"
               description="Cada decisión técnica tiene un porqué."
-              surface="dark"
+              surface="transparent"
             />
           </div>
-          <div>
-          <CardsSection></CardsSection>
+          <div style={{ flex: 1, paddingBottom: '30px' }}>
+            <CardsSection></CardsSection>
+          </div>
+          <div style={{ flex: 1, paddingBottom: '30px' }}>
+            <PhilosophySection></PhilosophySection>
+          </div>
+          <div style={{ flex: 1, paddingBottom: '30px' }}>
+            <ContentSection
+              eyebrow=" VARIANTES ESTETICAS"
+              headingLine1="Un sistema"
+              headingLine2Prefix=""
+              headingAccent="seis pieles"
+              description="Cada componente existe en múltiples superficies. La misma lógica, la misma API, seis expresiones visuales coherentes."
+              surface="transparent"
+            />
+          </div>
+          <div style={{ flex: 1, paddingBottom: '30px' }}>
+            <CardsShowcase />
           </div>
           <div>
-          <PhilosophySection></PhilosophySection>
+          <ContentSection
+              eyebrow=" DESIGN TOKENS"
+              headingLine1="La gramática"
+              headingLine2Prefix="del "
+              headingAccent="sistema"
+              description="Colores, tipografías y espaciado como variables CSS. Cambia un token, transforma todo el sistema."
+              surface="transparent"
+            />
           </div>
         </main>
       </LibBackground>

@@ -13,25 +13,30 @@ interface ContentSectionProps {
   /** Párrafo de descripción */
   description?: string;
   /** Superficie: 'dark' | 'light' | 'washi' */
-  surface?: 'dark' | 'light' | 'washi';
+  surface?: 'dark' | 'light' | 'washi' | 'transparent';
 }
 
 const SURFACES: Record<NonNullable<ContentSectionProps['surface']>, React.CSSProperties> = {
   dark:  { background: 'var(--color-washi-950, #120E0A)' },
   light: { background: '#ffffff' },
   washi: { background: 'var(--color-washi-100, #F2EDE6)' },
+  transparent: {background: 'none'}
 };
 
 const HEADING_COLOR: Record<NonNullable<ContentSectionProps['surface']>, string> = {
   dark:  'rgba(250, 247, 244, 0.65)',
   light: 'var(--color-washi-800, #3D332A)',
   washi: 'var(--color-washi-800, #3D332A)',
+  transparent: 'var(--color-washi-800, #3D332A)',
+
 };
 
 const DESC_COLOR: Record<NonNullable<ContentSectionProps['surface']>, string> = {
   dark:  'rgba(250, 247, 244, 0.28)',
   light: 'var(--color-washi-500, #9A8878)',
   washi: 'var(--color-washi-600, #7A6A5C)',
+  transparent: 'var(--color-washi-800, #3D332A)',
+
 };
 
 export const ContentSection: React.FC<ContentSectionProps> = ({
