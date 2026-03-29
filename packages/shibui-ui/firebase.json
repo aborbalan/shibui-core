@@ -20,7 +20,7 @@
     },
     {
       "site": "shibui-showcase-react", 
-      "public": "apps/tu-app-react/dist",
+      "public": "apps/app-react/dist",
       "ignore": ["**/node_modules/**"],
       "rewrites": [
         {
