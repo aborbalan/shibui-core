@@ -16,7 +16,7 @@
     "type-check": "npx tsc --noEmit --project packages/shibui-ui/tsconfig.json",
     "storybook": "npm run storybook -w packages/shibui-ui",
     "build-storybook": "npm run build-storybook -w packages/shibui-ui",
-    "build-react": "npm run build -w apps/app-react"
+    "build-react": "npm run build --workspace=app-react"
   },
   "devDependencies": {
     "@types/node": "^25.3.5",
