@@ -2,7 +2,7 @@
   "hosting": [
     {
       "site": "shibui-showcase-storybook",
-      "public": "storybook-static",
+      "public": "packages/shibui-ui/storybook-static",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -11,11 +11,22 @@
     },
     {
       "site": "lib-ui-b67c5",
-      "public": "storybook-static",
+      "public": "packages/shibui-ui/storybook-static",
       "ignore": [
         "firebase.json",
         "**/.*",
         "**/node_modules/**"
+      ]
+    },
+    {
+      "site": "shibui-showcase-react", 
+      "public": "apps/tu-app-react/dist",
+      "ignore": ["**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
       ]
     }
   ]
