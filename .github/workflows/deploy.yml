@@ -59,7 +59,7 @@ jobs:
         run: npm run build
 
       - name: 📦 Build React App
-        run: npm run build-react
+        run: npm run build-react --prefix .
 
       - name: 🎡 Build Storybook
         run: npm run build-storybook
