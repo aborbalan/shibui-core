@@ -72,12 +72,14 @@ export class LibBackground extends LitElement {
   private _startCanvas(): void {
     const canvas = this._canvas;
     if (!canvas) return;
-
+ 
     switch (this.variant) {
-      case 'particles':    this._initParticles(canvas);    break;
-      case 'rain':         this._initRain(canvas);         break;
-      case 'wave-mesh':    this._initWaveMesh(canvas);     break;
-      case 'constellation':this._initConstellation(canvas); break;
+      case 'particles':     this._initParticles(canvas);     break;
+      case 'rain':          this._initRain(canvas);           break;
+      case 'wave-mesh':     this._initWaveMesh(canvas);       break;
+      case 'constellation': this._initConstellation(canvas);  break;
+      case 'fireflies':     this._initFireflies(canvas);      break;
+      case 'ink-wash':      this._initInkWash(canvas);        break;
       default: break;
     }
   }
@@ -144,6 +146,141 @@ export class LibBackground extends LitElement {
       this._raf = requestAnimationFrame(draw);
     };
 
+    this._ro = new ResizeObserver(resize);
+    this._ro.observe(host);
+    resize();
+    draw();
+  }
+
+  private _initFireflies(canvas: HTMLCanvasElement): void {
+    const ctx  = canvas.getContext('2d')!;
+    const host = (this.renderRoot as ShadowRoot).host as HTMLElement;
+    let W = 0, H = 0;
+ 
+    const COUNT = 32;
+    const COLORS: string[] = [
+      'rgba(250,247,244,',
+      'rgba(250,247,244,',
+      'rgba(217,114,52,',
+      'rgba(78,148,130,',
+    ];
+ 
+    type Fly = {
+      x: number; y: number; r: number;
+      a: number; da: number;
+      dx: number; dy: number;
+      phase: number; col: string;
+    };
+    let flies: Fly[] = [];
+ 
+    const resize = (): void => {
+      W = canvas.width  = host.clientWidth;
+      H = canvas.height = host.clientHeight;
+      flies = Array.from({ length: COUNT }, (): Fly => ({
+        x:     Math.random() * W,
+        y:     Math.random() * H,
+        r:     Math.random() * 2 + 0.8,
+        a:     Math.random(),
+        da:    (Math.random() * 0.008 + 0.003) * (Math.random() > 0.5 ? 1 : -1),
+        dx:    (Math.random() - 0.5) * 0.18,
+        dy:    -(Math.random() * 0.25 + 0.08),
+        phase: Math.random() * Math.PI * 2,
+        col:   COLORS[Math.floor(Math.random() * COLORS.length)] ?? 'rgba(250,247,244,',
+      }));
+    };
+ 
+    const draw = (): void => {
+      ctx.fillStyle = 'rgba(8,6,4,0.14)';
+      ctx.fillRect(0, 0, W, H);
+ 
+      flies.forEach(f => {
+        f.phase += 0.018;
+        f.a     += f.da;
+        if (f.a > 1 || f.a < 0) { f.da *= -1; f.a = Math.max(0, Math.min(1, f.a)); }
+ 
+        f.x += f.dx + Math.sin(f.phase) * 0.28;
+        f.y += f.dy;
+ 
+        if (f.y < -10)     { f.y = H + 10; f.x = Math.random() * W; }
+        if (f.x < -10)     f.x = W + 10;
+        if (f.x > W + 10)  f.x = -10;
+ 
+        /* Glow halo */
+        const grd = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r * 5);
+        grd.addColorStop(0, `${f.col}${f.a * 0.85})`);
+        grd.addColorStop(1, `${f.col}0)`);
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r * 5, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+ 
+        /* Core dot */
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+        ctx.fillStyle = `${f.col}${f.a})`;
+        ctx.fill();
+      });
+ 
+      this._raf = requestAnimationFrame(draw);
+    };
+ 
+    this._ro = new ResizeObserver(resize);
+    this._ro.observe(host);
+    resize();
+    draw();
+  }
+
+  private _initInkWash(canvas: HTMLCanvasElement): void {
+    const ctx  = canvas.getContext('2d')!;
+    const host = (this.renderRoot as ShadowRoot).host as HTMLElement;
+    let W = 0, H = 0, t = 0;
+ 
+    type Blob = { cx: number; cy: number; r: number; speed: number; offset: number; color: string };
+    let blobs: Blob[] = [];
+ 
+    const resize = (): void => {
+      W = canvas.width  = host.clientWidth;
+      H = canvas.height = host.clientHeight;
+      const base = Math.min(W, H);
+      blobs = [
+        { cx: 0.28, cy: 0.42, r: base * 0.24, speed: 1.0,  offset: 0,   color: 'rgba(175,150,120,0.07)' },
+        { cx: 0.68, cy: 0.58, r: base * 0.20, speed: 1.3,  offset: 1.2, color: 'rgba(155,135,108,0.06)' },
+        { cx: 0.50, cy: 0.28, r: base * 0.17, speed: 0.7,  offset: 2.5, color: 'rgba(184,90,30,0.04)'   },
+        { cx: 0.18, cy: 0.72, r: base * 0.15, speed: 1.1,  offset: 3.8, color: 'rgba(78,148,130,0.04)'  },
+        { cx: 0.82, cy: 0.32, r: base * 0.13, speed: 0.85, offset: 5.0, color: 'rgba(175,150,120,0.05)' },
+      ];
+    };
+ 
+    const drawBlob = (b: Blob): void => {
+      const pts = 44;
+      const phase = t * b.speed + b.offset;
+      ctx.beginPath();
+      for (let i = 0; i <= pts; i++) {
+        const angle = (i / pts) * Math.PI * 2;
+        const noise =
+          Math.sin(angle * 3 + phase) * b.r * 0.14
+          + Math.cos(angle * 2 - phase * 0.8) * b.r * 0.09
+          + Math.sin(angle * 5 + phase * 1.4) * b.r * 0.05;
+        const x = b.cx * W + (b.r + noise) * Math.cos(angle);
+        const y = b.cy * H + (b.r + noise) * Math.sin(angle);
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fillStyle = b.color;
+      ctx.fill();
+    };
+ 
+    const draw = (): void => {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#FAF7F4';
+      ctx.fillRect(0, 0, W, H);
+ 
+      blobs.forEach(drawBlob);
+ 
+      t += 0.0028;
+      this._raf = requestAnimationFrame(draw);
+    };
+ 
     this._ro = new ResizeObserver(resize);
     this._ro.observe(host);
     resize();

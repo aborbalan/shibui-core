@@ -6,6 +6,7 @@
    ============================================================ */
 
 @layer reset {
+
     *,
     *::before,
     *::after {
@@ -384,9 +385,9 @@
     :host([variant="scan"]) .bg-overlay {
         height: 2px;
         inset: 0 0 auto;
-                top: 0;
-                left: 0;
-                right: 0;
+        top: 0;
+        left: 0;
+        right: 0;
         background: linear-gradient(90deg, transparent, rgb(184, 90, 30, 0.35), transparent);
         animation: bg-scan-sweep 5s linear infinite;
     }
@@ -447,10 +448,316 @@
     }
 
     /* ================================================================
+   NUEVAS VARIANTES — añadir dentro de @layer components {}
+   justo antes del cierre de la llave del layer
+   ================================================================ */
+
+    /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
+       LIGHT — Nuevas (35–39)
+    ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
+
+    /* 35 · kagome — 籠目 hexagonal basket weave */
+    :host([variant="kagome"]) .bg-base {
+        background-color: var(--color-washi-50);
+        background-image:
+            linear-gradient(60deg, rgb(160, 140, 118, 0.11) 1px, transparent 1px),
+            linear-gradient(120deg, rgb(160, 140, 118, 0.11) 1px, transparent 1px),
+            linear-gradient(0deg, rgb(160, 140, 118, 0.07) 1px, transparent 1px);
+        background-size: 22px 38px;
+    }
+
+    /* 36 · shoji — 障子 paper screen */
+    :host([variant="shoji"]) .bg-base {
+        background-color: #FDFAF6;
+        background-image:
+            linear-gradient(rgb(160, 140, 118, 0.07) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(160, 140, 118, 0.07) 1px, transparent 1px),
+            linear-gradient(rgb(160, 140, 118, 0.13) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(160, 140, 118, 0.13) 1px, transparent 1px);
+        background-size: 10px 10px, 10px 10px, 40px 40px, 40px 40px;
+    }
+
+    /* 37 · shibori — 絞り tie-dye concentric circles */
+    :host([variant="shibori"]) .bg-base {
+        background-color: var(--color-washi-50);
+        background-image:
+            radial-gradient(circle at 0% 0%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
+            radial-gradient(circle at 100% 0%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
+            radial-gradient(circle at 0% 100%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
+            radial-gradient(circle at 100% 100%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
+            radial-gradient(circle at 50% 50%, transparent 28%, rgb(160, 140, 118, 0.07) 29%, transparent 30%),
+            radial-gradient(circle at 0% 0%, transparent 14%, rgb(160, 140, 118, 0.06) 15%, transparent 16%),
+            radial-gradient(circle at 100% 0%, transparent 14%, rgb(160, 140, 118, 0.06) 15%, transparent 16%),
+            radial-gradient(circle at 0% 100%, transparent 14%, rgb(160, 140, 118, 0.06) 15%, transparent 16%),
+            radial-gradient(circle at 100% 100%, transparent 14%, rgb(160, 140, 118, 0.06) 15%, transparent 16%);
+        background-size: 48px 48px;
+    }
+
+    /* 38 · ori — 織 diagonal woven textile */
+    :host([variant="ori"]) .bg-base {
+        background-color: var(--color-washi-100);
+        background-image:
+            repeating-linear-gradient(45deg,
+                transparent 0,
+                transparent 4px,
+                rgb(150, 130, 108, 0.09) 4px,
+                rgb(150, 130, 108, 0.09) 5px),
+            repeating-linear-gradient(-45deg,
+                transparent 0,
+                transparent 4px,
+                rgb(150, 130, 108, 0.07) 4px,
+                rgb(150, 130, 108, 0.07) 5px);
+    }
+
+    /* 39 · chirimen — 縮緬 crepe silk fine crinkle */
+    :host([variant="chirimen"]) .bg-base {
+        background-color: #FAF6F0;
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9 0.3' numOctaves='3' seed='5' stitchTiles='stitch'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='2' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23c)' fill='rgb(160,140,118)' opacity='0.04'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+    }
+
+    /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
+       DARK — Nuevas (40–44)
+    ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
+
+    /* 40 · obsidian — 黒曜石 mineral shimmer */
+    :host([variant="obsidian"]) .bg-base {
+        background: #0A0808;
+        background-image:
+            linear-gradient(135deg,
+                transparent 0%,
+                rgb(220, 215, 210, 0.025) 25%,
+                transparent 50%,
+                rgb(220, 215, 210, 0.015) 75%,
+                transparent 100%),
+            radial-gradient(ellipse 60% 40% at 70% 30%, rgb(184, 90, 30, 0.06), transparent 60%);
+    }
+
+    /* 41 · forge — 鍛冶 hot metal glow from below */
+    :host([variant="forge"]) .bg-base {
+        background: #080604;
+        background-image:
+            radial-gradient(ellipse 90% 40% at 50% 110%, rgb(217, 114, 52, 0.35) 0%, rgb(140, 65, 21, 0.20) 35%, transparent 65%),
+            radial-gradient(ellipse 60% 25% at 50% 100%, rgb(250, 180, 80, 0.12) 0%, transparent 50%);
+    }
+
+    /* 42 · void — 虚空 radial vignette */
+    :host([variant="void"]) .bg-base {
+        background: #06040302;
+        background-image:
+            radial-gradient(ellipse 70% 60% at 50% 50%,
+                transparent 20%,
+                rgb(0, 0, 0, 0.30) 55%,
+                rgb(0, 0, 0, 0.75) 100%),
+            radial-gradient(ellipse 30% 25% at 50% 50%, rgb(184, 90, 30, 0.04), transparent 70%);
+        background-color: #0C0A08;
+    }
+
+    /* 43 · yami — 闇 pure depth gradient */
+    :host([variant="yami"]) .bg-base {
+        background: linear-gradient(160deg,
+                #1A1208 0%,
+                #0E0B07 30%,
+                #080604 55%,
+                #04030200 100%);
+        background-color: #080604;
+    }
+
+    /* 44 · midnight — 深夜 fine dot matrix */
+    :host([variant="midnight"]) .bg-base {
+        background-color: #090806;
+        background-image: radial-gradient(circle, rgb(250, 247, 244, 0.04) 1px, transparent 1px);
+        background-size: 12px 12px;
+        background-position: 0 0, 6px 6px;
+    }
+
+    :host([variant="midnight"]) .bg-overlay {
+        background: linear-gradient(180deg,
+                transparent 60%,
+                rgb(184, 90, 30, 0.04) 100%);
+    }
+
+    /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
+       GRADIENTS — Nuevos (45–47)
+    ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
+
+    /* 45 · sakura — 桜 rosa-washi suave */
+    :host([variant="sakura"]) .bg-base {
+        background:
+            radial-gradient(ellipse 70% 60% at 30% 30%, rgb(230, 190, 180, 0.22) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 50% at 80% 70%, rgb(217, 114, 52, 0.08) 0%, transparent 60%),
+            radial-gradient(ellipse 80% 80% at 50% 50%, rgb(250, 247, 244, 0.60) 0%, transparent 100%),
+            #FAF4F2;
+    }
+
+    /* 46 · twilight — 黄昏 kaki cálido a oscuro */
+    :host([variant="twilight"]) .bg-base {
+        background: linear-gradient(160deg,
+                #2A1A0E 0%,
+                #1E1208 35%,
+                #120C06 65%,
+                #080604 100%);
+        background-image:
+            radial-gradient(ellipse 80% 50% at 30% 20%, rgb(217, 114, 52, 0.14) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 40% at 80% 80%, rgb(184, 90, 30, 0.08) 0%, transparent 60%);
+    }
+
+    /* 47 · jade-deep — 翡翠 celadón profundo con humo */
+    :host([variant="jade-deep"]) .bg-base {
+        background: #080E0C;
+        background-image:
+            radial-gradient(ellipse 70% 60% at 20% 40%, rgb(78, 148, 130, 0.16) 0%, transparent 65%),
+            radial-gradient(ellipse 50% 40% at 85% 65%, rgb(53, 113, 100, 0.10) 0%, transparent 60%),
+            radial-gradient(ellipse 40% 30% at 60% 20%, rgb(78, 148, 130, 0.07) 0%, transparent 60%);
+    }
+
+    /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
+       ANIMATED CSS — Nuevas (48–50)
+    ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
+
+    /* 48 · pulse — anillos kintsugi expandiéndose */
+    :host([variant="pulse"]) .bg-base {
+        background: var(--color-washi-950);
+    }
+
+    :host([variant="pulse"]) .bg-overlay {
+        background: transparent;
+    }
+
+    :host([variant="pulse"]) .bg-overlay::before,
+    :host([variant="pulse"]) .bg-overlay::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-radius: 50%;
+        border: 1px solid rgba(184, 90, 30, 0.35);
+        transform: translate(-50%, -50%) scale(0);
+        width: 160px;
+        height: 160px;
+        animation: bg-pulse-ring 4s ease-out infinite;
+    }
+
+    :host([variant="pulse"]) .bg-overlay::after {
+        border-color: rgba(245, 208, 138, 0.2);
+        animation-delay: 2s;
+    }
+
+    @keyframes bg-pulse-ring {
+        0% {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translate(-50%, -50%) scale(5.5);
+            opacity: 0;
+        }
+    }
+
+    /* 49 · fog — niebla lenta */
+    :host([variant="fog"]) .bg-base {
+        background: var(--color-washi-950);
+    }
+
+    :host([variant="fog"]) .bg-overlay {
+        background:
+            radial-gradient(ellipse 500px 220px at 0% 50%,
+                rgba(250, 247, 244, 0.045),
+                transparent 70%),
+            radial-gradient(ellipse 300px 140px at 0% 50%,
+                rgba(250, 247, 244, 0.03),
+                transparent 60%);
+        animation: bg-fog-drift 10s linear infinite;
+    }
+
+    :host([variant="fog"]) .bg-overlay::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse 400px 180px at 0% 65%,
+                rgba(184, 90, 30, 0.025),
+                transparent 70%);
+        animation: bg-fog-drift 14s linear infinite;
+        animation-delay: -5s;
+    }
+
+    @keyframes bg-fog-drift {
+        0% {
+            transform: translateX(-40%);
+        }
+
+        100% {
+            transform: translateX(140%);
+        }
+    }
+
+    /* 50 · static — ruido CRT */
+    :host([variant="static"]) .bg-base {
+        background: #0A0806;
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+    }
+
+    :host([variant="static"]) .bg-overlay {
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E"),
+            repeating-linear-gradient(0deg,
+                transparent,
+                transparent 3px,
+                rgba(255, 255, 255, 0.012) 3px,
+                rgba(255, 255, 255, 0.012) 4px);
+        animation: bg-static-noise 0.12s steps(1) infinite;
+    }
+
+    @keyframes bg-static-noise {
+        0% {
+            background-position: 0 0, 0 0;
+            opacity: 1;
+        }
+
+        20% {
+            background-position: -3% 2%, 0 0;
+            opacity: 0.9;
+        }
+
+        40% {
+            background-position: 4% -1%, 0 -2px;
+            opacity: 1;
+        }
+
+        60% {
+            background-position: -1% 3%, 0 0;
+            opacity: 0.8;
+        }
+
+        80% {
+            background-position: 2% -2%, 0 1px;
+            opacity: 1;
+        }
+    }
+
+    /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
+       CANVAS BASE COLORS — Nuevas (51–52)
+    ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
+
+    :host([variant="fireflies"]) {
+        background: #080604;
+    }
+
+    :host([variant="ink-wash"]) {
+        background: var(--color-washi-50);
+    }
+
+    /* ================================================================
      KEYFRAMES
      ================================================================ */
 
     @keyframes bg-breathe {
+
         0%,
         100% {
             transform: scale(1);
@@ -464,6 +771,7 @@
     }
 
     @keyframes bg-aurora-float {
+
         0%,
         100% {
             transform: translate(0, 0) scale(1);
@@ -499,6 +807,7 @@
     }
 
     @keyframes bg-ink-expand {
+
         0%,
         100% {
             transform: scale(1);
