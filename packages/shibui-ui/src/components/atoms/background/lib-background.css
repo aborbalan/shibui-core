@@ -6,7 +6,6 @@
    ============================================================ */
 
 @layer reset {
-
     *,
     *::before,
     *::after {
@@ -632,7 +631,7 @@
         top: 50%;
         left: 50%;
         border-radius: 50%;
-        border: 1px solid rgba(184, 90, 30, 0.35);
+        border: 1px solid rgb(184, 90, 30, 0.35);
         transform: translate(-50%, -50%) scale(0);
         width: 160px;
         height: 160px;
@@ -640,7 +639,7 @@
     }
 
     :host([variant="pulse"]) .bg-overlay::after {
-        border-color: rgba(245, 208, 138, 0.2);
+        border-color: rgb(245, 208, 138, 0.2);
         animation-delay: 2s;
     }
 
@@ -664,10 +663,10 @@
     :host([variant="fog"]) .bg-overlay {
         background:
             radial-gradient(ellipse 500px 220px at 0% 50%,
-                rgba(250, 247, 244, 0.045),
+                rgb(250, 247, 244, 0.045),
                 transparent 70%),
             radial-gradient(ellipse 300px 140px at 0% 50%,
-                rgba(250, 247, 244, 0.03),
+                rgb(250, 247, 244, 0.03),
                 transparent 60%);
         animation: bg-fog-drift 10s linear infinite;
     }
@@ -678,7 +677,7 @@
         inset: 0;
         background:
             radial-gradient(ellipse 400px 180px at 0% 65%,
-                rgba(184, 90, 30, 0.025),
+                rgb(184, 90, 30, 0.025),
                 transparent 70%);
         animation: bg-fog-drift 14s linear infinite;
         animation-delay: -5s;
@@ -708,8 +707,8 @@
             repeating-linear-gradient(0deg,
                 transparent,
                 transparent 3px,
-                rgba(255, 255, 255, 0.012) 3px,
-                rgba(255, 255, 255, 0.012) 4px);
+                rgb(255, 255, 255, 0.012) 3px,
+                rgb(255, 255, 255, 0.012) 4px);
         animation: bg-static-noise 0.12s steps(1) infinite;
     }
 
@@ -757,7 +756,6 @@
      ================================================================ */
 
     @keyframes bg-breathe {
-
         0%,
         100% {
             transform: scale(1);
@@ -771,7 +769,6 @@
     }
 
     @keyframes bg-aurora-float {
-
         0%,
         100% {
             transform: translate(0, 0) scale(1);
@@ -807,7 +804,6 @@
     }
 
     @keyframes bg-ink-expand {
-
         0%,
         100% {
             transform: scale(1);

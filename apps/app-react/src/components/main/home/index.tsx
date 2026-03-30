@@ -9,6 +9,7 @@ import ContentSection from '../components/hero-stats/ContentSection';
 import CardsSection from '../components/hero-stats/CardsSection ';
 import PhilosophySection from '../components/hero-stats/PhilosophySection';
 import CardsShowcase from '../components/hero-stats/CardsShowcase';
+import TokensSection from '../components/hero-stats/TokensSection';
 
 export const HomePage: React.FC = () => {
   return (
@@ -62,7 +63,7 @@ export const HomePage: React.FC = () => {
           <div style={{ flex: 1, paddingBottom: '30px' }}>
             <CardsShowcase />
           </div>
-          <div>
+          <div style={{ flex: 1, paddingBottom: '30px' }}>
           <ContentSection
               eyebrow=" DESIGN TOKENS"
               headingLine1="La gramática"
@@ -71,6 +72,9 @@ export const HomePage: React.FC = () => {
               description="Colores, tipografías y espaciado como variables CSS. Cambia un token, transforma todo el sistema."
               surface="transparent"
             />
+          </div>
+          <div style={{ flex: 1, paddingBottom: '30px' }}>
+          <TokensSection></TokensSection>
           </div>
         </main>
       </LibBackground>
