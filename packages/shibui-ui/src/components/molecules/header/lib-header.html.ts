@@ -22,6 +22,140 @@ const svgBell = html`
     <path d="M6 13a2 2 0 004 0"/>
   </svg>`;
 
+/* ── Hamburger button ── */
+function renderHamburger(ctx: LibHeader): TemplateResult {
+  const isLight = ['classic', 'centered', 'mega', 'minimal', 'shrink'].includes(ctx.variant);
+  const color   = isLight
+    ? 'var(--color-washi-600, #7A6A5C)'
+    : 'rgba(250,247,244,0.5)';
+
+  return html`
+    <button
+      class="hdr-burger"
+      aria-label="${ctx._mobileOpen ? 'Cerrar menú' : 'Abrir menú'}"
+      aria-expanded="${ctx._mobileOpen}"
+      aria-controls="hdr-mobile-drawer"
+      @click="${(): void => ctx._toggleMobile()}"
+    >
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="none"
+        stroke="${color}" stroke-width="1.6" stroke-linecap="round">
+        <!-- Top line — rota a X cuando está abierto -->
+        <line class="hdr-burger-top" x1="0" y1="1" x2="20" y2="1"/>
+        <line class="hdr-burger-mid" x1="0" y1="7" x2="20" y2="7"/>
+        <line class="hdr-burger-bot" x1="0" y1="13" x2="20" y2="13"/>
+      </svg>
+    </button>
+  `;
+}
+
+/* ── Mobile drawer — compartido por todas las variantes ── */
+function renderMobileDrawer(ctx: LibHeader): TemplateResult {
+  if (!ctx._mobileOpen) return html``;
+
+  return html`
+    <!-- Backdrop -->
+    <div
+      class="hdr-mobile-backdrop"
+      @click="${(): void => ctx._closeMobile()}"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Drawer panel -->
+    <nav
+      id="hdr-mobile-drawer"
+      class="hdr-mobile-drawer ${ctx._mobileOpen ? 'is-open' : ''}"
+      aria-label="Menú principal"
+    >
+      <!-- Links principales -->
+      <div class="hdr-mobile-links">
+        ${(ctx.links ?? []).map(link => html`
+          <a
+            href="${link.href ?? '#'}"
+            class="hdr-mobile-link"
+            @click="${(e: Event): void => {
+              e.preventDefault();
+              ctx._onLinkClick(link.id);
+            }}"
+          >
+            ${link.label}
+            ${link.dropdown?.length ? html`
+              <svg width="8" height="5" viewBox="0 0 10 6" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <polyline points="1,1 5,5 9,1"/>
+              </svg>` : nothing}
+          </a>
+
+          <!-- Dropdown items — siempre visibles en móvil -->
+          ${link.dropdown?.length ? html`
+            <div class="hdr-mobile-sub">
+              ${link.dropdown.map((item: DropdownItem) => html`
+                <a href="${item.href ?? '#'}" class="hdr-mobile-sub-link">
+                  › ${item.label}
+                </a>
+              `)}
+            </div>
+          ` : nothing}
+        `)}
+
+        <!-- Mega columns en móvil — accordion plano -->
+        ${ctx.megaColumns?.length ? html`
+          <div class="hdr-mobile-sub" style="margin-top:0;">
+            ${ctx.megaColumns.map(col => html`
+              <p class="hdr-mobile-col-title">${col.title}</p>
+              ${col.items.map(item => html`
+                <a href="${item.href ?? '#'}" class="hdr-mobile-sub-link">
+                  › ${item.label}
+                </a>
+              `)}
+            `)}
+          </div>
+        ` : nothing}
+      </div>
+
+      <!-- Divider -->
+      <div class="hdr-mobile-divider"></div>
+
+      <!-- Actions / CTA -->
+      <div class="hdr-mobile-actions">
+        ${ctx.loginLabel ? html`
+          <a href="${ctx.loginHref ?? '#'}" class="hdr-mobile-login">
+            ${ctx.loginLabel}
+          </a>
+        ` : nothing}
+
+        ${(ctx.actions ?? []).map((action: HeaderAction) => html`
+          <a
+            href="${action.href ?? '#'}"
+            class="hdr-mobile-cta"
+            @click="${(e: Event): void => {
+              e.preventDefault();
+              ctx._onActionClick(action);
+            }}"
+          >
+            ${action.label}
+          </a>
+        `)}
+
+        ${ctx.contactLabel ? html`
+          <a href="${ctx.contactHref ?? '#'}" class="hdr-mobile-login">
+            ${ctx.contactLabel} →
+          </a>
+        ` : nothing}
+      </div>
+
+      <!-- Footer del drawer -->
+      <div class="hdr-mobile-footer">
+        <span>${ctx.brandName}</span>
+        <button
+          class="hdr-mobile-close"
+          aria-label="Cerrar menú"
+          @click="${(): void => ctx._closeMobile()}"
+        >✕</button>
+      </div>
+    </nav>
+  `;
+}
+
 /* ── Logo mark ── */
 function renderLogoMark(ctx: LibHeader): TemplateResult {
   if (ctx.variant === 'kintsugi') {
@@ -33,7 +167,7 @@ function renderLogoMark(ctx: LibHeader): TemplateResult {
   return html`<div class="hdr-logo-mark">${ctx.logoMark}</div>`;
 }
 
-/* ── Logo (standard) ── */
+/* ── Logo ── */
 function renderLogo(ctx: LibHeader): TemplateResult {
   if (ctx.variant === 'glitch') {
     return html`
@@ -69,7 +203,7 @@ function renderLogo(ctx: LibHeader): TemplateResult {
     </a>`;
 }
 
-/* ── Dropdown ── */
+/* ── Dropdown (desktop only) ── */
 function renderDropdown(_ctx: LibHeader, link: NavLink): TemplateResult {
   return html`
     <div class="hdr-dd">
@@ -88,7 +222,7 @@ function renderDropdown(_ctx: LibHeader, link: NavLink): TemplateResult {
     </div>`;
 }
 
-/* ── Nav links ── */
+/* ── Nav links (desktop) ── */
 function renderLinks(ctx: LibHeader, links: NavLink[]): TemplateResult {
   return html`
     ${links.map(link =>
@@ -105,7 +239,7 @@ function renderLinks(ctx: LibHeader, links: NavLink[]): TemplateResult {
     )}`;
 }
 
-/* ── Action buttons ── */
+/* ── Actions (desktop) ── */
 function renderActions(ctx: LibHeader): TemplateResult {
   const variantMap: Record<string, string> = {
     classic: 'kaki', centered: 'outline', dark: 'kaki',
@@ -142,6 +276,7 @@ function renderActions(ctx: LibHeader): TemplateResult {
 
 /* ── Breadcrumbs (app-bar) ── */
 function renderBreadcrumbs(items: BreadcrumbItem[]): TemplateResult {
+  /* En móvil solo mostramos el último ítem — el CSS se encarga */
   return html`
     <nav class="hdr-breadcrumbs" aria-label="breadcrumb">
       ${items.map((item, i) => html`
@@ -163,7 +298,9 @@ function renderClassic(ctx: LibHeader): TemplateResult {
       ${renderLogo(ctx)}
       <nav class="hdr-nav">${renderLinks(ctx, ctx.links)}</nav>
       ${renderActions(ctx)}
-    </div>`;
+      ${renderHamburger(ctx)}
+    </div>
+    ${renderMobileDrawer(ctx)}`;
 }
 
 function renderCentered(ctx: LibHeader): TemplateResult {
@@ -181,12 +318,17 @@ function renderCentered(ctx: LibHeader): TemplateResult {
       </div>` : nothing}
 
     <div class="hdr">
-      <nav class="hdr-nav">${renderLinks(ctx, leftLinks)}</nav>
+      <!-- Desktop: 3 columnas centradas -->
+      <nav class="hdr-nav hdr-nav--centered-left">${renderLinks(ctx, leftLinks)}</nav>
       ${renderLogo(ctx)}
-      <nav class="hdr-nav hdr-nav--right">${renderLinks(ctx, rightLinks)}
+      <nav class="hdr-nav hdr-nav--right">
+        ${renderLinks(ctx, rightLinks)}
         ${renderActions(ctx)}
       </nav>
-    </div>`;
+      <!-- Móvil: logo + hamburger -->
+      ${renderHamburger(ctx)}
+    </div>
+    ${renderMobileDrawer(ctx)}`;
 }
 
 function renderMega(ctx: LibHeader): TemplateResult {
@@ -210,14 +352,13 @@ function renderMega(ctx: LibHeader): TemplateResult {
         )}
       </nav>
       ${renderActions(ctx)}
+      ${renderHamburger(ctx)}
     </div>
 
-    <!-- Overlay -->
     <div class="hdr-mega-overlay ${ctx._megaOpen ? 'is-open' : ''}"
       @mouseenter="${(): void => ctx._closeMega()}">
     </div>
 
-    <!-- Panel -->
     <div class="hdr-mega-panel ${ctx._megaOpen ? 'is-open' : ''}"
       @mouseenter="${(): void => ctx._openMega()}"
       @mouseleave="${(): void => ctx._closeMega()}">
@@ -240,22 +381,21 @@ function renderMega(ctx: LibHeader): TemplateResult {
           </div>
         ` : nothing}
       </div>
-    </div>`;
+    </div>
+    ${renderMobileDrawer(ctx)}`;
 }
 
 function renderAppBar(ctx: LibHeader): TemplateResult {
   return html`
     <div class="hdr">
-      <!-- Logo mark -->
       <div class="hdr-logo-mark" style="flex-shrink:0;"></div>
 
-      <!-- Breadcrumbs -->
+      <!-- Breadcrumbs — ocultos en móvil excepto el último -->
       ${ctx.breadcrumbs.length ? renderBreadcrumbs(ctx.breadcrumbs) : nothing}
 
-      <!-- Divider -->
-      <div class="hdr-divider"></div>
+      <div class="hdr-divider hdr-divider--desktop"></div>
 
-      <!-- Search -->
+      <!-- Search — icono en móvil, full en desktop -->
       ${ctx.showSearch ? html`
         <div class="hdr-search">
           ${svgSearch}
@@ -271,9 +411,8 @@ function renderAppBar(ctx: LibHeader): TemplateResult {
 
       <div class="hdr-spacer"></div>
 
-      <!-- Context actions -->
       ${ctx.actions.length ? html`
-        <div class="hdr-actions">
+        <div class="hdr-actions hdr-actions--desktop">
           ${ctx.actions.map(action => html`
             <a href="${action.href || '#'}"
               class="hdr-action ${action.variant === 'outline'
@@ -283,36 +422,31 @@ function renderAppBar(ctx: LibHeader): TemplateResult {
           `)}
         </div>` : nothing}
 
-      <!-- Compact: status -->
       ${ctx.compact ? html`
-        <div class="hdr-status">
+        <div class="hdr-status hdr-status--desktop">
           <div class="hdr-status-dot"></div>
           <span class="hdr-status-text">Online · 42ms</span>
         </div>
       ` : nothing}
 
-      <!-- Divider -->
       <div class="hdr-divider"></div>
 
-      <!-- Notifications -->
       <div class="hdr-notif">
         ${svgBell}
         ${ctx.notifications ? html`<span class="hdr-notif-dot"></span>` : nothing}
       </div>
 
-      <!-- Avatar -->
       <div class="hdr-avatar">${ctx.userInitials || ctx.userName.slice(0, 1)}</div>
     </div>`;
+  /* App-bar no usa el drawer — sus acciones son contextuales */
 }
 
-/* ── Template principal (dispatcher) ── */
+/* ── Template principal ── */
 export function headerTemplate(ctx: LibHeader): TemplateResult {
   switch (ctx.variant) {
-    case 'centered':    return renderCentered(ctx);
-    case 'mega':        return renderMega(ctx);
-    case 'app-bar':     return renderAppBar(ctx);
-    // classic, dark, transparent, kintsugi, glitch, minimal, shrink — misma estructura
-    default:
-      return renderClassic(ctx);
+    case 'centered': return renderCentered(ctx);
+    case 'mega':     return renderMega(ctx);
+    case 'app-bar':  return renderAppBar(ctx);
+    default:         return renderClassic(ctx);
   }
 }

@@ -1,5 +1,14 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "nxCloudId": "69c99b2462c3b48dd66ac7e6",
-  "analytics": false
+  "analytics": false,
+  "plugins": [
+    {
+      "plugin": "@nx/nx-cloud",
+      "options": {
+        "accessToken": ""
+      }
+    }
+  ]
 }
+

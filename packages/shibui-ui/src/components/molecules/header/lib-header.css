@@ -197,6 +197,7 @@
     }
 
     @keyframes hdr-glitch {
+
         0%,
         88%,
         100% {
@@ -217,6 +218,7 @@
     }
 
     @keyframes hdr-scanline-shift {
+
         0%,
         88%,
         100% {
@@ -1063,6 +1065,7 @@
     }
 
     @keyframes hdr-glitch-cta {
+
         0%,
         88%,
         100% {
@@ -1155,6 +1158,7 @@
 
     /* ── prefers-reduced-motion ── */
     @media (prefers-reduced-motion: reduce) {
+
         :host([variant="kintsugi"]) .hdr::after,
         :host([variant="kintsugi"]) .hdr-logo-mark::before,
         :host([variant="glitch"]) .hdr,
@@ -1168,4 +1172,312 @@
         }
     }
 
+}
+
+/* ── Hamburger button ── */
+.hdr-burger {
+    display: none;
+    /* oculto en desktop */
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    margin-left: auto;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    z-index: 6;
+    position: relative;
+}
+
+/* ── Mobile backdrop ── */
+.hdr-mobile-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgb(8, 6, 4, 0.55);
+    z-index: calc(var(--z-overlay) + 1);
+    backdrop-filter: blur(2px);
+    animation: hdr-backdrop-in 200ms var(--ease-out) both;
+}
+
+/* ── Mobile drawer ── */
+.hdr-mobile-drawer {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(320px, 85vw);
+    background: var(--color-washi-950, #120E0A);
+    border-left: 1px solid rgb(255, 255, 255, 0.07);
+    z-index: calc(var(--z-overlay) + 2);
+    flex-direction: column;
+    overflow-y: auto;
+    animation: hdr-drawer-in 240ms var(--ease-out) both;
+}
+
+.hdr-mobile-drawer.is-open {
+    display: flex;
+}
+
+/* Links section */
+.hdr-mobile-links {
+    flex: 1;
+    padding: var(--lib-space-xl, 2rem) var(--lib-space-lg, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.hdr-mobile-link {
+    font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
+    font-size: 1.35rem;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: rgb(250, 247, 244, 0.55);
+    text-decoration: none;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(255, 255, 255, 0.05);
+    transition: color 160ms;
+}
+
+.hdr-mobile-link:hover {
+    color: rgb(250, 247, 244, 0.85);
+}
+
+/* Sub-links (dropdown items abiertos) */
+.hdr-mobile-sub {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--lib-space-xs, 0.25rem) 0 var(--lib-space-sm, 0.5rem) var(--lib-space-md, 1rem);
+}
+
+.hdr-mobile-sub-link {
+    font-family: var(--lib-font-mono, 'DM Mono', monospace);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(250, 247, 244, 0.22);
+    text-decoration: none;
+    padding: 0.3rem 0;
+    transition: color 160ms;
+}
+
+.hdr-mobile-sub-link:hover {
+    color: var(--color-kaki-400, #D97234);
+}
+
+/* Columna title en mega */
+.hdr-mobile-col-title {
+    font-family: var(--lib-font-mono, 'DM Mono', monospace);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgb(250, 247, 244, 0.15);
+    margin: var(--lib-space-md, 1rem) 0 var(--lib-space-xs, 0.25rem);
+}
+
+/* Divider */
+.hdr-mobile-divider {
+    height: 1px;
+    background: rgb(255, 255, 255, 0.07);
+    margin: 0 var(--lib-space-lg, 1.5rem);
+}
+
+/* Actions */
+.hdr-mobile-actions {
+    padding: var(--lib-space-lg, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-sm, 0.5rem);
+}
+
+.hdr-mobile-cta {
+    font-family: var(--lib-font-mono, 'DM Mono', monospace);
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    background: var(--color-kaki-500, #B85A1E);
+    color: #fff;
+    border: 1px solid var(--color-kaki-500, #B85A1E);
+    padding: 0 var(--lib-space-md, 1rem);
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background 160ms;
+}
+
+.hdr-mobile-cta:hover {
+    background: var(--color-kaki-600, #8C4115);
+}
+
+.hdr-mobile-login {
+    font-family: var(--lib-font-mono, 'DM Mono', monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(250, 247, 244, 0.25);
+    text-decoration: none;
+    text-align: center;
+    padding: var(--lib-space-xs, 0.25rem) 0;
+    transition: color 160ms;
+}
+
+.hdr-mobile-login:hover {
+    color: rgb(250, 247, 244, 0.6);
+}
+
+/* Footer del drawer */
+.hdr-mobile-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--lib-space-md, 1rem) var(--lib-space-lg, 1.5rem);
+    border-top: 1px solid rgb(255, 255, 255, 0.07);
+    font-family: var(--lib-font-mono, 'DM Mono', monospace);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgb(250, 247, 244, 0.12);
+}
+
+.hdr-mobile-close {
+    background: none;
+    border: none;
+    color: rgb(250, 247, 244, 0.2);
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: var(--lib-space-xs, 0.25rem);
+    transition: color 160ms;
+}
+
+.hdr-mobile-close:hover {
+    color: rgb(250, 247, 244, 0.6);
+}
+
+/* ── Animaciones drawer ── */
+@keyframes hdr-drawer-in {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes hdr-backdrop-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ══════════════════════════════════════
+   MEDIA QUERY — 640px
+   ══════════════════════════════════════ */
+@media (width <=640px) {
+
+    /* Mostrar hamburger */
+    .hdr-burger {
+        display: flex;
+    }
+
+    /* Mostrar backdrop cuando el drawer está abierto */
+    .hdr-mobile-backdrop {
+        display: block;
+    }
+
+    /* ── Ocultar elementos desktop ── */
+    .hdr-nav,
+    .hdr-actions,
+    .hdr-login,
+    .hdr-contact,
+    .hdr-online,
+    .hdr-divider--desktop,
+    .hdr-status--desktop,
+    .hdr-actions--desktop {
+        display: none !important;
+    }
+
+    /* ── Centrado: colapsar a layout simple ── */
+    :host([variant="centered"]) .hdr {
+        display: flex;
+        grid-template-columns: unset;
+    }
+
+    :host([variant="centered"]) .hdr-nav--centered-left {
+        display: none !important;
+    }
+
+    /* ── App-bar: breadcrumbs compactos ── */
+    :host([variant="app-bar"]) .hdr-breadcrumbs {
+        max-width: 120px;
+        overflow: hidden;
+    }
+
+    /* Solo el último breadcrumb visible */
+    :host([variant="app-bar"]) .hdr-breadcrumb-link,
+    :host([variant="app-bar"]) .hdr-breadcrumb-sep {
+        display: none;
+    }
+
+    /* Search colapsado a icono */
+    :host([variant="app-bar"]) .hdr-search {
+        max-width: 36px;
+        overflow: hidden;
+        padding: 0 var(--lib-space-xs, 0.25rem);
+    }
+
+    :host([variant="app-bar"]) .hdr-search input,
+    :host([variant="app-bar"]) .hdr-search-kbd {
+        display: none;
+    }
+
+    /* Mega: ocultar el panel (el drawer lo cubre) */
+    .hdr-mega-panel,
+    .hdr-mega-overlay {
+        display: none !important;
+    }
+
+    /* Reducir altura en algunas variantes */
+    :host([variant="classic"]) .hdr,
+    :host([variant="dark"]) .hdr,
+    :host([variant="centered"]) .hdr,
+    :host([variant="mega"]) .hdr {
+        height: 56px;
+    }
+
+    :host([variant="shrink"]) .hdr {
+        height: 56px;
+    }
+
+    :host([variant="shrink"][shrunk]) .hdr {
+        height: 44px;
+    }
+}
+
+/* ── Reducir motion ── */
+@media (prefers-reduced-motion: reduce) {
+    .hdr-mobile-drawer {
+        animation: none;
+    }
+
+    .hdr-mobile-backdrop {
+        animation: none;
+    }
 }
