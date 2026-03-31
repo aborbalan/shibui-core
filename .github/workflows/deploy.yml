@@ -33,6 +33,8 @@ jobs:
 
       - name: Establecer SHAs para Nx
         uses: nrwl/nx-set-shas@v4 # Identifica qué cambió desde el último deploy exitoso
+        with:
+          main-branch-name: 'main'
 
       # --- SECCIÓN PLAYWRIGHT (Integrada) ---
       - name: 🎭 Install Playwright Browsers
