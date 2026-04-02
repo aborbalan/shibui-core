@@ -1,12 +1,12 @@
-import { html, nothing, TemplateResult } from 'lit';
-import type { LibCardVariant } from './lib-card.component';
+import { html, nothing, TemplateResult } from "lit";
+import type { LibCardVariant } from "./lib-card.component";
 
 export interface CardTemplateProps {
-  variant:     LibCardVariant;
+  variant: LibCardVariant;
   accentColor: string | undefined;
-  kanji:       string;
-  clickable:   boolean;
-  onClick:     (e: MouseEvent) => void;
+  kanji: string;
+  clickable: boolean;
+  onClick: (e: MouseEvent) => void;
 }
 
 /**
@@ -18,15 +18,19 @@ export function cardTemplate(props: CardTemplateProps): TemplateResult {
   return html`
     <article
       class="card"
-      style="${props.variant === 'accent' && props.accentColor
+      role="${props.clickable ? "button" : nothing}"
+      tabindex="${props.clickable ? "0" : nothing}"
+      @click="${props.clickable ? props.onClick : nothing}"
+      style="${props.variant === "accent" && props.accentColor
         ? `--card-accent-color: ${props.accentColor}`
         : nothing}"
     >
       <!-- Kanji watermark — aria-hidden, decorativo -->
       ${props.kanji
-        ? html`<span class="card-kanji" aria-hidden="true">${props.kanji}</span>`
-        : nothing
-      }
+        ? html`<span class="card-kanji" aria-hidden="true"
+            >${props.kanji}</span
+          >`
+        : nothing}
 
       <header class="card-header">
         <slot name="tag"></slot>
