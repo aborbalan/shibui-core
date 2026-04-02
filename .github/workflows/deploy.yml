@@ -65,7 +65,7 @@ jobs:
 
 
       - name: 📦 Build Afectados (Core + Apps)
-        # Este comando usa el script 'nx-build' de tu package.json raíz
+        # Este comando usa el script 'nx-build' de package.json raíz
         run: npm run nx-build
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
