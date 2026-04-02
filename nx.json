@@ -4,7 +4,7 @@
   "analytics": false,
   "plugins": [
     {
-      "plugin": "@nx/nx-cloud",
+      "plugin": "nx-cloud",
       "options": {
         "accessToken": ""
       }
