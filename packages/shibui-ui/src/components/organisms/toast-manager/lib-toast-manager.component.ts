@@ -4,8 +4,7 @@ import { repeat } from 'lit/directives/repeat.js';
 import toastManagerCss from './lib-toast-manager.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import '../../molecules/lib-alert/lib-alert.component';
-import type { AlertType } from 'src/components/molecules/lib-alert/lib-alert.types.ts';
-import { AlertCloseDetail } from 'src/components/molecules/lib-alert/lib-alert.types';
+import type { AlertCloseDetail, AlertType } from './../../molecules/lib-alert/lib-alert.types';
 
 /* AlertType importado desde types, no desde el componente */
 
