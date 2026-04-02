@@ -1,15 +1,13 @@
 // apps/app-react/src/pages/Home/index.tsx
 import React from 'react';
-import { Footer } from './Footer';
 import HeroIntro from '../../layout/templates/HeroIntro';
-import ShibuiHeader from '../../layout/Header';
 import { LibBackground, LibDivider } from '@shibui/ui/react';
-import HeroStats from '../components/hero-stats/HeroStats';
-import ContentSection from '../components/hero-stats/ContentSection';
-import CardsSection from '../components/hero-stats/CardsSection ';
-import PhilosophySection from '../components/hero-stats/PhilosophySection';
-import CardsShowcase from '../components/hero-stats/CardsShowcase';
-import TokensSection from '../components/hero-stats/TokensSection';
+import HeroStats from './templates/HeroStats';
+import ContentSection from './templates/ContentSection';
+import CardsSection from './templates/CardsSection ';
+import PhilosophySection from './templates/PhilosophySection';
+import CardsShowcase from './templates/CardsShowcase';
+import TokensSection from './templates/TokensSection';
 
 export const HomePage: React.FC = () => {
   return (
@@ -18,9 +16,7 @@ export const HomePage: React.FC = () => {
       flexDirection: 'column',
       minHeight: '100vh',
     }}>
-      <ShibuiHeader
-        onNavLink={(id) => document.querySelector(`#${id}`)?.scrollIntoView({ behavior: 'smooth' })}
-      />
+
       <LibBackground variant="ash-grid">
         <main style={{ flex: 1, padding: '90px 60px' }}>
           <div style={{ flex: 1, paddingBottom: '30px' }}>
@@ -79,7 +75,7 @@ export const HomePage: React.FC = () => {
         </main>
       </LibBackground>
 
-      <Footer />
+
     </div>
   );
 };

@@ -63,6 +63,10 @@ export interface ShibuiHeaderProps {
   className?:    string;
   /** style adicional para el host */
   style?:        React.CSSProperties;
+  /** Muestra la barra de búsqueda */
+  showSearch?:   boolean;
+  /** Placeholder de la barra de búsqueda */
+  searchPlaceholder?: string;
 }
 
 // ─── Links por defecto del design system ─────────────────────────────────────
@@ -92,6 +96,8 @@ export const ShibuiHeader: React.FC<ShibuiHeaderProps> = ({
   onAction,
   className,
   style,
+  showSearch = false,
+  searchPlaceholder = 'Buscar…',
 }) => {
   return (
     <LibHeader
@@ -106,6 +112,8 @@ export const ShibuiHeader: React.FC<ShibuiHeaderProps> = ({
       links={links}
       actions={actions}
       className={className}
+      showSearch={showSearch}
+      search-placeholder={searchPlaceholder}
       style={{
         position: 'fixed',
         top: 0,

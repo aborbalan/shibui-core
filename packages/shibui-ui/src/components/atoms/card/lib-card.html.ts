@@ -5,6 +5,8 @@ export interface CardTemplateProps {
   variant:     LibCardVariant;
   accentColor: string | undefined;
   kanji:       string;
+  clickable:   boolean;
+  onClick:     (e: MouseEvent) => void;
 }
 
 /**
