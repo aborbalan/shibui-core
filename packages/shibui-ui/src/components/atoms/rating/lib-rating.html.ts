@@ -34,7 +34,7 @@ const ICONS: Record<string, { regular: TemplateResult; fill: TemplateResult }> =
 
 /* ── Fallback al icono estrella si el icon prop no coincide ── */
 function getIcon(name: string): { regular: TemplateResult; fill: TemplateResult } | undefined {
-  return ICONS[name] ?? ICONS.star;
+  return ICONS[name] ?? ICONS['star'];
 }
 
 /* ══════════════════════════════════════════════════════════

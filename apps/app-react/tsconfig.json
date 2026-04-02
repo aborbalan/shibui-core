@@ -4,7 +4,9 @@
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "bundler", /* O 'node' si usas versiones antiguas */
+    "outDir": "./dist",
     "jsx": "react-jsx",
+    "emitDeclarationOnly": false,
     "strict": true,
     "skipLibCheck": true, /* Importante para evitar conflictos entre tipos de React y Lit */
     "paths": {
@@ -15,5 +17,6 @@
   "include": [
     "src", 
     "src/custom-elements.d.ts", "src/vite-env.d.ts" // <--- RUTA DIRECTA AL FICHERO
-  ]
+  ],
+  "exclude": ["node_modules", "dist"]
 }

@@ -1,6 +1,5 @@
 import React from 'react';
-import meData from '../../data/me.json';
-import { SidebarLink, SidebarSocial } from '@shibui/ui';
+import { SidebarLink } from '@shibui/ui';
 import { LibSidebar } from '@shibui/ui/react';
 
 interface SidebarProps {
@@ -9,7 +8,7 @@ interface SidebarProps {
   onOpenCV: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange,onOpenCV }) => {
+const Sidebar: React.FC<SidebarProps> = () => {
 
   const LINKS: SidebarLink[] = [
     { id: 'dashboard',   label: 'Dashboard',      icon: 'home',         group: 'Principal' },

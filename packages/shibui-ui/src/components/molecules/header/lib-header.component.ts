@@ -23,34 +23,7 @@ export interface MegaCta {
  * 10 variantes: classic · dark · centered · transparent · kintsugi ·
  *               glitch · mega · minimal · shrink · app-bar
  *
- * @prop variant          — HeaderVariant
- * @prop logo-mark        — Carácter del mark (default '渋')
- * @prop brand-name       — Texto de marca (default 'shibui')
- * @prop brand-tagline    — Subtítulo del logo (variante shrink)
- * @prop logo-href        — URL del logo
- * @prop version          — Badge de versión (variante dark)
- * @prop links            — NavLink[] — nav principal
- * @prop actions          — HeaderAction[] — botones CTA
- * @prop login-label      — Texto del link de login
- * @prop login-href       — URL del login
- * @prop contact-label    — Texto del contacto (variante minimal)
- * @prop contact-href     — URL del contacto
- * @prop announcement     — Texto del topbar anuncio (variante centered)
- * @prop announcement-href — URL del anuncio
- * @prop mega-columns     — MegaColumn[] (variante mega)
- * @prop mega-cta         — MegaCta (variante mega)
- * @prop breadcrumbs      — BreadcrumbItem[] (variante app-bar)
- * @prop show-search      — Muestra la barra de búsqueda (app-bar)
- * @prop search-placeholder — Placeholder del input
- * @prop notifications    — Muestra el dot de notificación
- * @prop user-name        — Nombre del usuario (app-bar avatar)
- * @prop user-initials    — Iniciales del avatar
- * @prop compact          — App-bar compacto 44px + dark
- * @prop shrunk           — Fuerza estado comprimido (shrink) — auto vía scroll
- *
- * @fires ui-lib-header-link   — { id }
- * @fires ui-lib-header-action — { label, href }
- * @fires ui-lib-header-search — { query }
+ * Mobile: breakpoint 640px — drawer vertical compartido por todas las variantes.
  */
 @customElement('lib-header')
 export class LibHeader extends LitElement {
@@ -134,7 +107,7 @@ export class LibHeader extends LitElement {
   @property({ type: Boolean, reflect: true })
   compact = false;
 
-  /* ── Scroll states (reflect for CSS targeting) ── */
+  /* ── Scroll states ── */
   @property({ type: Boolean, reflect: true })
   shrunk = false;
 
@@ -142,7 +115,8 @@ export class LibHeader extends LitElement {
   scrolled = false;
 
   /* ── Internal ── */
-  @state() _megaOpen = false;
+  @state() _megaOpen    = false;
+  @state() _mobileOpen  = false;
 
   /* ── Lifecycle ── */
   override connectedCallback(): void {
@@ -168,14 +142,25 @@ export class LibHeader extends LitElement {
   _openMega():  void { this._megaOpen = true; }
   _closeMega(): void { this._megaOpen = false; }
 
+  /* ── Mobile drawer ── */
+  _toggleMobile(): void {
+    this._mobileOpen = !this._mobileOpen;
+  }
+
+  _closeMobile(): void {
+    this._mobileOpen = false;
+  }
+
   /* ── Event dispatchers ── */
   _onLinkClick(id: string): void {
+    this._closeMobile();
     this.dispatchEvent(new CustomEvent('ui-lib-header-link', {
       detail: { id }, bubbles: true, composed: true,
     }));
   }
 
   _onActionClick(action: HeaderAction): void {
+    this._closeMobile();
     this.dispatchEvent(new CustomEvent('ui-lib-header-action', {
       detail: { label: action.label, href: action.href },
       bubbles: true, composed: true,
