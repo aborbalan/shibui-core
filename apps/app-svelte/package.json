@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
-    "deploy": "firebase deploy --only hosting:svelte"
+    "deploy": "firebase-tools deploy --only hosting:svelte"
 
   },
 "dependencies": {
