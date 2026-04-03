@@ -79,10 +79,10 @@ jobs:
       - name: 🚀 Deploy to Firebase
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         run: |
-          npx firebase target:apply hosting storybook shibui-showcase-storybook --config firebase.json --project lib-ui-b67c5
-          npx firebase target:apply hosting react     shibui-showcase-react     --config firebase.json --project lib-ui-b67c5
-          npx firebase target:apply hosting angular   shibui-showcase-angular   --config firebase.json --project lib-ui-b67c5
-          npx firebase target:apply hosting svelte    shibui-showcase-svelte    --config firebase.json --project lib-ui-b67c5
+          npx firebase-tools target:apply hosting storybook shibui-showcase-storybook --config firebase.json --project lib-ui-b67c5
+          npx firebase-tools target:apply hosting react     shibui-showcase-react     --config firebase.json --project lib-ui-b67c5
+          npx firebase-tools target:apply hosting angular   shibui-showcase-angular   --config firebase.json --project lib-ui-b67c5
+          npx firebase-tools target:apply hosting svelte    shibui-showcase-svelte    --config firebase.json --project lib-ui-b67c5
 
           npx nx affected -t deploy
         env:
