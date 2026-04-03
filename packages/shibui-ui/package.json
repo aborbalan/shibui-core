@@ -51,7 +51,7 @@
     "analyze": "cem analyze --litelement --exclude dist",
     "generate:wrappers": "tsx scripts/generate-wrappers.ts",
     "build": "npm run clean && vite build && tsc &&  npm run analyze && npm run generate:wrappers",
-    "deploy": "firebase-tools deploy --only hosting:storybook"
+    "deploy": "npx firebase-tools deploy --only hosting:storybook --project lib-ui-b67c5"
     
 
   },
