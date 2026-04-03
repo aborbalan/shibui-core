@@ -31,7 +31,7 @@ jobs:
       - name: 📦 Install Dependencies
         run: npm ci
 
-      - name: Establecer SHAs para Nx
+      - name: 📦 Establecer SHAs para Nx
         uses: nrwl/nx-set-shas@v4 # Identifica qué cambió desde el último deploy exitoso
         with:
           main-branch-name: 'main'
@@ -78,7 +78,13 @@ jobs:
 
       - name: 🚀 Deploy to Firebase
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-        run: npx nx affected -t deploy
+        run: |
+          npx firebase target:apply hosting storybook shibui-showcase-storybook --config ../../firebase.json
+          npx firebase target:apply hosting react shibui-showcase-react --config ../../firebase.json
+          npx firebase target:apply hosting angular shibui-showcase-angular --config ../../firebase.json
+          npx firebase target:apply hosting svelte shibui-showcase-svelte --config ../../firebase.json
+
+          npx nx affected -t deploy
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
           # Es vital incluir el token de Firebase para autorizar la subida [4]
