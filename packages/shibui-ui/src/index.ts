@@ -44,6 +44,7 @@ export * from './components/atoms/display-heading/lib-display-heading.component'
 export * from './components/atoms/card/card-grid/lib-card-grid.component';
 export * from './components/atoms/content-pillar/content-pillar.component';
 export * from './components/atoms/quote/lib-quote.component';
+export * from './components/atoms/color-scale/lib-color-scale.component';
 
 
 export * from './components/molecules/breadcrumb/lib-breadcrumb.component';

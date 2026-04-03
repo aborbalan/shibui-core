@@ -28,6 +28,28 @@
           "destination": "/index.html"
         }
       ]
+    },
+    {
+      "site": "shibui-showcase-angular", 
+      "public": "apps/app-angular/dist",
+      "ignore": ["**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "site": "shibui-showcase-svelte", 
+      "public": "apps/app-svelte/dist",
+      "ignore": ["**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
     }
   ]
 }
