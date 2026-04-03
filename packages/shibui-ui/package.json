@@ -51,7 +51,8 @@
     "analyze": "cem analyze --litelement --exclude dist",
     "generate:wrappers": "tsx scripts/generate-wrappers.ts",
     "build": "npm run clean && vite build && tsc &&  npm run analyze && npm run generate:wrappers",
-    "deploy": "firebase deploy --only shibui-showcase-storybook"
+    "deploy": "firebase deploy --only hosting:storybook"
+    
 
   },
   "keywords": [
