@@ -1,7 +1,6 @@
 {
   "hosting": [
     {
-      "site": "shibui-showcase-storybook",
       "target": "storybook",
       "public": "packages/shibui-ui/storybook-static",
       "ignore": [
@@ -11,17 +10,6 @@
       ]
     },
     {
-      "site": "lib-ui-b67c5",
-      "public": "packages/shibui-ui/storybook-static",
-      "target": "storybook",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ]
-    },
-    {
-      "site": "shibui-showcase-react", 
       "target": "react",
       "public": "apps/app-react/dist",
       "ignore": ["**/node_modules/**"],
@@ -33,7 +21,6 @@
       ]
     },
     {
-      "site": "shibui-showcase-angular", 
       "target": "angular",
       "public": "apps/app-angular/dist",
       "ignore": ["**/node_modules/**"],
@@ -45,7 +32,6 @@
       ]
     },
     {
-      "site": "shibui-showcase-svelte", 
       "target": "svelte",
       "public": "apps/app-svelte/dist",
       "ignore": ["**/node_modules/**"],
