@@ -8,8 +8,7 @@
     "dev": "ng serve",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "firebase-tools deploy --only hosting:angular"
-
+    "deploy": "npx firebase-tools deploy --only hosting:angular --project lib-ui-b67c5"
   },
   "prettier": {
     "printWidth": 100,
