@@ -1,0 +1,108 @@
+@layer tokens, reset, components;
+
+@layer reset {
+  :host {
+    display: block;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+
+  /* ── Wrapper ── */
+  .scale-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-sm, 0.5rem);
+    width: 100%;
+  }
+
+  /* ── Track de swatches ── */
+  .scale-track {
+    display: flex;
+    width: 100%;
+    height: var(--lib-color-scale-height, 56px);
+    overflow: hidden;
+  }
+
+  /* ── Swatch individual ── */
+  .scale-swatch {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: var(--lib-space-xs, 0.25rem);
+    cursor: default;
+    transition:
+      flex var(--duration-slow, 350ms) var(--ease-out, cubic-bezier(0,0,0.2,1)),
+      filter var(--duration-base, 200ms) var(--ease-out, cubic-bezier(0,0,0.2,1));
+  }
+
+  /* Expand el swatch activo */
+  .scale-track:has(.scale-swatch:hover) .scale-swatch {
+    flex: 0.7;
+  }
+
+  .scale-track .scale-swatch:hover {
+    flex: 1.8;
+    filter: brightness(1.06);
+  }
+
+  /* ── Label del paso (visible solo en hover) ── */
+  .scale-swatch-label {
+    font-family: var(--lib-font-mono, 'DM Mono', monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity var(--duration-base, 200ms) var(--ease-out, cubic-bezier(0,0,0.2,1)),
+      transform var(--duration-base, 200ms) var(--ease-out, cubic-bezier(0,0,0.2,1));
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .scale-swatch:hover .scale-swatch-label {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Labels extremos ── */
+  .scale-legends {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .scale-legend {
+    font-family: var(--lib-font-mono, 'DM Mono', monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: lowercase;
+    color: var(--text-muted, var(--color-washi-400, #B8A99A));
+    white-space: nowrap;
+  }
+
+  /* ── Fallback: navegadores sin :has() ── */
+  @supports not selector(:has(a)) {
+    .scale-swatch:hover {
+      flex: 1.8;
+    }
+  }
+
+  /* ── Accesibilidad: sin animación ── */
+  @media (prefers-reduced-motion: reduce) {
+    .scale-swatch,
+    .scale-swatch-label {
+      transition: none;
+    }
+  }
+
+}

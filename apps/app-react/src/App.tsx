@@ -8,6 +8,7 @@ import { ComponentsPage } from './components/main/components';
 import { ICON_REGISTRY } from '@shibui/ui';
 import ShibuiHeader from './components/shared/templates/Header';
 import Footer from './components/shared/templates/Footer';
+import { TokensPage } from './components/main/tokens';
 
 console.log(ICON_REGISTRY);
 
@@ -34,6 +35,7 @@ function App() {
   const ROUTES: Record<string, React.ReactNode> = {
     'dev-kitchen-sink': <KitchenSink />,
     'home': <HomePage />,
+    'tokens': <TokensPage />,
     'about-me': <HomePage />,
     'componentes': <ComponentsPage />,
     'admin-dashboard': <MainLayout activeTab={currentSection} onTabChange={navigateTo} />,
