@@ -8,7 +8,7 @@
     "dev": "ng serve",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "firebase deploy --only hosting:angular"
+    "deploy": "firebase-tools deploy --only hosting:angular"
 
   },
   "prettier": {
