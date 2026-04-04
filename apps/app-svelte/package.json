@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
-    "deploy": "npx firebase-tools deploy --only hosting:react --project lib-ui-b67c5"
+    "deploy": "npx firebase-tools deploy --only hosting:react --config ../../firebase.json --project lib-ui-b67c5"
   },
   "dependencies": {
     "@shibui/ui": "file:../../packages/shibui-ui"
