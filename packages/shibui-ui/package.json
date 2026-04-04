@@ -25,14 +25,13 @@
     },
     "./tokens": "./dist/tokens.css",
     "./styles": "./dist/style.css"
-    
   },
   "files": [
     "dist"
   ],
   "scripts": {
     "dev": "vite",
-    "clean": "rimraf dist storybook-static node_modules/.cache",
+    "clean": "rimraf dist node_modules/.cache",
     "pack:local": "npm run build && npm pack",
     "preview": "vite preview",
     "prebuild": "npm run clean",
@@ -52,8 +51,6 @@
     "generate:wrappers": "tsx scripts/generate-wrappers.ts",
     "build": "npm run clean && vite build && tsc &&  npm run analyze && npm run generate:wrappers",
     "deploy": "npx firebase-tools deploy --only hosting:storybook --project lib-ui-b67c5"
-    
-
   },
   "keywords": [
     "web-components",
@@ -99,7 +96,6 @@
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.18",
     "firebase-tools": "^13.0.0"
-
   },
   "dependencies": {
     "@lit/react": "^1.0.8",
@@ -111,16 +107,23 @@
     ]
   },
   "customElements": "dist/custom-elements.json",
-  "nx":{
-    "deploy": {
+  "nx": {
+    "targets": {
+      "deploy": {
         "dependsOn": [
           "build",
           "build-storybook"
         ],
-        "outputs": ["{projectRoot}/storybook-static"]
+        "outputs": [
+          "{projectRoot}/storybook-static"
+        ]
       },
       "build-storybook": {
-        "outputs": ["{projectRoot}/storybook-static"]
+        "command": "npm run build-storybook",
+        "outputs": [
+          "{projectRoot}/storybook-static"
+        ]
       }
+    }
   }
 }
