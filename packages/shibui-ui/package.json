@@ -106,24 +106,5 @@
       "eslint --config .config/eslintrc.cjs --fix --max-warnings=2"
     ]
   },
-  "customElements": "dist/custom-elements.json",
-  "nx": {
-    "targets": {
-      "deploy": {
-        "dependsOn": [
-          "build",
-          "build-storybook"
-        ],
-        "outputs": [
-          "{projectRoot}/storybook-static"
-        ]
-      },
-      "build-storybook": {
-        "command": "npm run build-storybook",
-        "outputs": [
-          "{projectRoot}/storybook-static"
-        ]
-      }
-    }
-  }
+  "customElements": "dist/custom-elements.json"
 }
