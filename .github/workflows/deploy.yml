@@ -109,3 +109,7 @@ jobs:
                    \"footer\": { \"text\": \"Shibui UI - CI/CD System\" }
                  }]
                }" "$DISCORD_URL"
+
+      - name: 🛠️ Check for Automatic Fixes
+        if: failure() 
+        run: npx nx-cloud fix-ci
