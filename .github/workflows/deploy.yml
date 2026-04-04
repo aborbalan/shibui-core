@@ -31,10 +31,6 @@ jobs:
       - name: 📦 Install Dependencies
         run: npm ci
 
-      - name: 🛠️ Install Firebase CLI
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-        run: npm install -g firebase-tools
-
       - name: 📦 Establecer SHAs para Nx
         uses: nrwl/nx-set-shas@v4 # Identifica qué cambió desde el último deploy exitoso
         with:
@@ -66,7 +62,19 @@ jobs:
           npm run nx-lint 
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+
+      - name: 📦 Build Afectados (Core + Apps)
+        # Este comando usa el script 'nx-build' de package.json raíz
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+        run: npm run nx-build
+        env:
+          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
         
+      - name: 🛠️ Install Firebase CLI
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+        run: npm install -g firebase-tools
 
       - name: 🚀 Deploy to Firebase
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
