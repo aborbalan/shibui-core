@@ -10,31 +10,36 @@ on:
 jobs:
   build_test_and_deploy:
     runs-on: ubuntu-latest
-    permissions:
-      actions: read      # Necesario para que nx-set-shas consulte ejecuciones previas
-      contents: read
     timeout-minutes: 60
 
+    
+    
+    defaults:
+      run:
+        working-directory: packages/shibui-ui
 
     steps:
       - name: ⬇️ Checkout Repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Necesario para que Nx compare cambios entre commits
 
       - name: 🏗️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.13.0
           cache: 'npm'
+          
+      - name: 💾 Cache node_modules
+        id: cache-nodemodules
+        uses: actions/cache@v4
+        with:
+            path: node_modules # 👈 Ruta de la carpeta instalada
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.os }}-node-
 
       - name: 📦 Install Dependencies
         run: npm ci
-
-      - name: 📦 Establecer SHAs para Nx
-        uses: nrwl/nx-set-shas@v4 # Identifica qué cambió desde el último deploy exitoso
-        with:
-          main-branch-name: 'main'
+        working-directory: .
 
       # --- SECCIÓN PLAYWRIGHT (Integrada) ---
       - name: 🎭 Install Playwright Browsers
@@ -59,36 +64,30 @@ jobs:
       - name: ✅ Type Check & Lint
         run: |
           npm run type-check
-          npm run nx-lint 
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+          npm run lint
 
+      - name: 📦 Build Library
+        run: npm run build:shibui
 
-      - name: 📦 Build Afectados (Core + Apps)
-        # Este comando usa el script 'nx-build' de package.json raíz
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-        run: npm run nx-build
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+      - name: 📦 Build React App
+        run: |
+          echo "--- Directorio actual ---"
+          pwd
+          echo "--- Contenido de la raíz ---"
+          ls -F
+          echo "--- ¿Qué scripts ve npm en la raíz? ---"
+          npm run --json | grep "build-react" || echo "No se encuentra el script en el JSON"
+          
+          # Intento de build directo (saltándonos el alias si falla)
+          npm run build --workspace=app-react
 
-        
-      - name: 🛠️ Install Firebase CLI
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-        run: npm install -g firebase-tools
+      - name: 🎡 Build Storybook
+        run: npm run build-storybook
 
       - name: 🚀 Deploy to Firebase
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-        run: |
-          npx firebase-tools target:apply hosting storybook shibui-showcase-storybook --config firebase.json --project lib-ui-b67c5
-          npx firebase-tools target:apply hosting react     shibui-showcase-react     --config firebase.json --project lib-ui-b67c5
-          npx firebase-tools target:apply hosting angular   shibui-showcase-angular   --config firebase.json --project lib-ui-b67c5
-          npx firebase-tools target:apply hosting svelte    shibui-showcase-svelte    --config firebase.json --project lib-ui-b67c5
-
-          npx nx affected -t deploy
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-          # Es vital incluir el token de Firebase para autorizar la subida [4]
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        working-directory: .
+        run: npx firebase-tools deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}" --project lib-ui-b67c5
 
       - name: 📢 Notify Discord
         if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
@@ -109,7 +108,3 @@ jobs:
                    \"footer\": { \"text\": \"Shibui UI - CI/CD System\" }
                  }]
                }" "$DISCORD_URL"
-
-      - name: 🛠️ Check for Automatic Fixes
-        if: failure() 
-        run: npx nx-cloud fix-ci
