@@ -11,31 +11,27 @@ jobs:
   build_test_and_deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-
     
-    
-    defaults:
-      run:
-        working-directory: packages/shibui-ui
 
     steps:
       - name: ⬇️ Checkout Repo
         uses: actions/checkout@v4
+
+            # 1. DETECCIÓN DE CAMBIOS (Ahorro de recursos) [2]
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+              filters: |
+                ui:
+                  - 'packages/shibui-ui/**'
+                react:
+                  - 'apps/app-react/**'
 
       - name: 🏗️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.13.0
           cache: 'npm'
-          
-      - name: 💾 Cache node_modules
-        id: cache-nodemodules
-        uses: actions/cache@v4
-        with:
-            path: node_modules # 👈 Ruta de la carpeta instalada
-            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-            restore-keys: |
-              ${{ runner.os }}-node-
 
       - name: 📦 Install Dependencies
         run: npm ci
@@ -61,33 +57,39 @@ jobs:
           retention-days: 30
       # ---------------------------------------
 
-      - name: ✅ Type Check & Lint
+      - name: ✅ Quality & Core Build
+        if: steps.changes.outputs.ui == 'true' || steps.changes.outputs.react == 'true'
         run: |
-          npm run type-check
-          npm run lint
-
-      - name: 📦 Build Library
-        run: npm run build:shibui
-
-      - name: 📦 Build React App
-        run: |
-          echo "--- Directorio actual ---"
-          pwd
-          echo "--- Contenido de la raíz ---"
-          ls -F
-          echo "--- ¿Qué scripts ve npm en la raíz? ---"
-          npm run --json | grep "build-react" || echo "No se encuentra el script en el JSON"
-          
-          # Intento de build directo (saltándonos el alias si falla)
-          npm run build --workspace=app-react
+          npm run type-check -w @shibui/ui
+          npm run lint -w @shibui/ui
+          npm run build -w @shibui/ui
 
       - name: 🎡 Build Storybook
-        run: npm run build-storybook
+        if: steps.changes.outputs.ui == 'true'
+        run: npm run build-storybook -w @shibui/ui
 
-      - name: 🚀 Deploy to Firebase
+      - name: 📦 Build Library
+        run: npm run build
+
+ # 3. SECCIÓN DE APPS (Solo si hay cambios en React)
+      - name: 📦 Build React App
+        if: steps.changes.outputs.react == 'true'
+        run: npm run build -w app-react
+
+    # 4. DESPLIEGUE POR TARGETS (Programático) 
+      - name: 🚀 Targeted Deploy to Firebase
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-        working-directory: .
-        run: npx firebase-tools deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}" --project lib-ui-b67c5
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          # Desplegar Storybook si cambió la lib
+          if [ "${{ steps.changes.outputs.ui }}" == "true" ]; then
+            npx firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5
+          fi
+          # Desplegar App React si cambió la app
+          if [ "${{ steps.changes.outputs.react }}" == "true" ]; then
+            npx firebase deploy --only hosting:react --non-interactive --project lib-ui-b67c5
+          fi
 
       - name: 📢 Notify Discord
         if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
