@@ -68,9 +68,6 @@ jobs:
         if: steps.changes.outputs.ui == 'true'
         run: npm run build-storybook -w @shibui/ui
 
-      - name: 📦 Build Library
-        run: npm run build
-
  # 3. SECCIÓN DE APPS (Solo si hay cambios en React)
       - name: 📦 Build React App
         if: steps.changes.outputs.react == 'true'
