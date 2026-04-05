@@ -10,17 +10,22 @@ on:
 jobs:
   build_test_and_deploy:
     runs-on: ubuntu-latest
-    permissions:
-      actions: read      # Necesario para que nx-set-shas consulte ejecuciones previas
-      contents: read
     timeout-minutes: 60
-
+    
 
     steps:
       - name: ⬇️ Checkout Repo
         uses: actions/checkout@v4
+
+            # 1. DETECCIÓN DE CAMBIOS (Ahorro de recursos) [2]
+      - uses: dorny/paths-filter@v3
+        id: changes
         with:
-          fetch-depth: 0 # Necesario para que Nx compare cambios entre commits
+              filters: |
+                ui:
+                  - 'packages/shibui-ui/**'
+                react:
+                  - 'apps/app-react/**'
 
       - name: 🏗️ Setup Node.js
         uses: actions/setup-node@v4
@@ -30,11 +35,7 @@ jobs:
 
       - name: 📦 Install Dependencies
         run: npm ci
-
-      - name: 📦 Establecer SHAs para Nx
-        uses: nrwl/nx-set-shas@v4 # Identifica qué cambió desde el último deploy exitoso
-        with:
-          main-branch-name: 'main'
+        working-directory: .
 
       # --- SECCIÓN PLAYWRIGHT (Integrada) ---
       - name: 🎭 Install Playwright Browsers
@@ -56,39 +57,36 @@ jobs:
           retention-days: 30
       # ---------------------------------------
 
-      - name: ✅ Type Check & Lint
+      - name: ✅ Quality & Core Build
+        if: steps.changes.outputs.ui == 'true' || steps.changes.outputs.react == 'true'
         run: |
-          npm run type-check
-          npm run nx-lint 
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+          npm run type-check -w @shibui/ui
+          npm run lint -w @shibui/ui
+          npm run build -w @shibui/ui
 
+      - name: 🎡 Build Storybook
+        if: steps.changes.outputs.ui == 'true'
+        run: npm run build-storybook -w @shibui/ui
 
-      - name: 📦 Build Afectados (Core + Apps)
-        # Este comando usa el script 'nx-build' de package.json raíz
+ # 3. SECCIÓN DE APPS (Solo si hay cambios en React)
+      - name: 📦 Build React App
+        if: steps.changes.outputs.react == 'true'
+        run: npm run build -w app-react
+
+    # 4. DESPLIEGUE POR TARGETS (Programático) 
+      - name: 🚀 Targeted Deploy to Firebase
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-        run: npm run nx-build
         env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-
-        
-      - name: 🛠️ Install Firebase CLI
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-        run: npm install -g firebase-tools
-
-      - name: 🚀 Deploy to Firebase
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-        run: |
-          npx firebase-tools target:apply hosting storybook shibui-showcase-storybook --config firebase.json --project lib-ui-b67c5
-          npx firebase-tools target:apply hosting react     shibui-showcase-react     --config firebase.json --project lib-ui-b67c5
-          npx firebase-tools target:apply hosting angular   shibui-showcase-angular   --config firebase.json --project lib-ui-b67c5
-          npx firebase-tools target:apply hosting svelte    shibui-showcase-svelte    --config firebase.json --project lib-ui-b67c5
-
-          npx nx affected -t deploy
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-          # Es vital incluir el token de Firebase para autorizar la subida [4]
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          # Desplegar Storybook si cambió la lib
+          if [ "${{ steps.changes.outputs.ui }}" == "true" ]; then
+            npx firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5
+          fi
+          # Desplegar App React si cambió la app
+          if [ "${{ steps.changes.outputs.react }}" == "true" ]; then
+            npx firebase deploy --only hosting:react --non-interactive --project lib-ui-b67c5
+          fi
 
       - name: 📢 Notify Discord
         if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
