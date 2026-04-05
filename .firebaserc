@@ -1,0 +1,22 @@
+{
+  "projects": {},
+  "targets": {
+    "lib-ui-b67c5": {
+      "hosting": {
+        "storybook": [
+          "shibui-showcase-storybook"
+        ],
+        "react": [
+          "shibui-showcase-react"
+        ],
+        "angular": [
+          "shibui-showcase-angular"
+        ],
+        "svelte": [
+          "shibui-showcase-svelte"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
