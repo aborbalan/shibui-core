@@ -1,0 +1,11 @@
+{
+    "branches": ["main"],
+    "plugins": [
+      ["@semantic-release/npm", {
+        "pkgRoot": "packages/shibui-ui",
+        "npmPublish": true,
+        "provenance": true 
+      }],
+      "@semantic-release/github"
+    ]
+  }

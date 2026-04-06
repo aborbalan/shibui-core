@@ -1,11 +1,21 @@
 {
   "name": "@shibui/ui",
   "version": "1.0.0",
-  "description": "Librería UI agnóstica construida con Web Components y Lit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aborbalan/shibui-core",
+    "directory": "packages/shibui-ui"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "description": "Librería UI agnóstica construida con Web Components y Lit | CDD",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
