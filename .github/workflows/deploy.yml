@@ -28,9 +28,11 @@ jobs:
               filters: |
                 ui:
                   - 'packages/shibui-ui/**'
-                react:
-                  - 'apps/app-react/**'
-
+                react: 'apps/app-react/**'
+                angular: 'apps/app-angular/**'
+                svelte: 'apps/app-svelte/**'
+                apps:
+                  
       - name: 🏗️ Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -60,7 +62,7 @@ jobs:
           name: playwright-report
           path: packages/shibui-ui/playwright-report/
           retention-days: 30
-      # ---------------------------------------
+
 
       - name: ✅ Quality & Core Build
         if: steps.changes.outputs.ui == 'true' || steps.changes.outputs.react == 'true'
