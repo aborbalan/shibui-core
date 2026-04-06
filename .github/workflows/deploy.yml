@@ -13,6 +13,7 @@ jobs:
     permissions:
       id-token: write # 👈 Crucial: Permite a GitHub generar el token OIDC [1]
       contents: write # Requerido para que Semantic Release cree etiquetas y notas [2]s tags de versión a Git
+      pull-requests: write
     timeout-minutes: 60
     
 
