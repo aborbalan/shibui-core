@@ -73,6 +73,9 @@ jobs:
         run: npm run build-storybook -w @shibui/ui
 
       - name: 🚀 Run Semantic Release
+        if: github.ref == 'refs/heads/main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
 
  # 3. SECCIÓN DE APPS (Solo si hay cambios en React)
