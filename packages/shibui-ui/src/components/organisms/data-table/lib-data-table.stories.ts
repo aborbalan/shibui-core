@@ -60,6 +60,7 @@ type LibDataTableArgs = Pick<
 
 const meta: Meta<LibDataTableArgs> = {
   title: 'Components/Organisms/Data Table',
+  tags:['autodocs'],
   component: 'lib-data-table',
   argTypes: {
     variant:      { control: 'select', options: ['lines','grid','striped','borderless'] satisfies TableVariant[] },

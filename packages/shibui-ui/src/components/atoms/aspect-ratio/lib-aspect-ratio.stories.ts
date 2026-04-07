@@ -4,6 +4,7 @@ import './lib-aspect-ratio.component';
 
 const meta: Meta = {
   title: 'Components/Atoms/AspectRatio',
+  tags:['autodocs'],
   component: 'lib-aspect-ratio',
 };
 

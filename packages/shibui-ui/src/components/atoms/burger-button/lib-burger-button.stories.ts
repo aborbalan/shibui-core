@@ -4,6 +4,7 @@ import './lib-burger-button.component';
 
 const meta: Meta = {
   title: 'Components/Atoms/Burger',
+  tags:['autodocs'],
   component: 'lib-burger',
   argTypes: {
     variant:   { control: 'select', options: ['ink', 'kanji', 'washi', 'framed', 'kintsugi', 'glitch'] },

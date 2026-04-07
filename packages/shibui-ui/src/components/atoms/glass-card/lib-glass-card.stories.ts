@@ -42,7 +42,7 @@ const cardContent = (label: string, title: string, body: string, tag: string): T
 const meta: Meta<LibGlassCardStoryArgs> = {
   title: 'Components/Atoms/GlassCard',
   component: 'lib-glass-card',
-
+  tags:['autodocs'],
   parameters: {
     backgrounds: { default: 'dark' },
   },

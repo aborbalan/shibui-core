@@ -9,7 +9,7 @@ type LibAccordionStoryArgs = Pick<LibAccordion, 'variant' | 'exclusive'>;
 const meta: Meta<LibAccordionStoryArgs> = {
   title: 'Components/Organisms/Accordion',
   component: 'lib-accordion',
-
+  tags:['autodocs'],
   argTypes: {
     variant: {
       control: 'select',
@@ -146,7 +146,7 @@ export const Exclusive: Story = {
 
 /* ── All variants ── */
 export const AllVariants: Story = {
-  name: 'All Variants',
+  name: 'All Variants .',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-direction:column; gap:32px; padding:24px; background:#F2EDE6;">
 

@@ -7,6 +7,7 @@ type LibButtonStoryArgs = LibButton & { slotContent?: string | TemplateResult };
 
 const meta: Meta<LibButtonStoryArgs> = {
   title: 'Components/Atoms/Button',
+  tags:['autodocs'],
   component: 'lib-button',
 
   argTypes: {
@@ -56,7 +57,7 @@ export const Playground: Story = {
 
 /* ── Variantes ── */
 export const AllVariants: Story = {
-  name: 'All Variants',
+  name: 'All Variants.',
   render: (): TemplateResult => html`
     <div style="display: flex; flex-wrap: wrap; gap: var(--lib-space-md); align-items: center; padding: var(--lib-space-lg);">
       <lib-button variant="primary">Primary</lib-button>

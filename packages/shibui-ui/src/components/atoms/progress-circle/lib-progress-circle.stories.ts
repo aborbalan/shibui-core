@@ -23,6 +23,7 @@ const withLabel = (label: string, content: TemplateResult): TemplateResult => ht
 
 const meta: Meta<LibProgressCircleStoryArgs> = {
   title: 'Components/Atoms/ProgressCircle',
+  tags:['autodocs'],
   component: 'lib-progress-circle',
 
   argTypes: {
@@ -100,7 +101,7 @@ export const Labels: Story = {
 
 /* ── Indeterminate ── */
 export const Indeterminate: Story = {
-  name: 'Indeterminate',
+  name: 'Indeterminate.',
   render: (): TemplateResult => preview('var(--bg-surface)', html`
     ${withLabel('MD · default',  html`<lib-progress-circle size="md" ?indeterminate=${true}></lib-progress-circle>`)}
     ${withLabel('MD · kaki',     html`<lib-progress-circle size="md" variant="kaki" ?indeterminate=${true}></lib-progress-circle>`)}

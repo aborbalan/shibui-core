@@ -20,6 +20,7 @@ interface ProgressArgs {
 
 const meta: Meta<ProgressArgs> = {
   title: 'Components/Atoms/Progress',
+  tags:['autodocs'],
   component: 'lib-progress',
   argTypes: {
     value: { control: { type: 'range', min: 0, max: 100 } },

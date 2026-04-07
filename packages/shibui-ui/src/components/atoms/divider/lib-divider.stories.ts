@@ -14,7 +14,7 @@ const PREVIEW_DARK = 'padding:24px; background:#120E0A; border:1px solid #221C16
 const meta: Meta<LibDividerStoryArgs> = {
   title: 'Components/Atoms/Divider',
   component: 'lib-divider',
-
+  tags:['autodocs'],
   argTypes: {
     orientation: {
       control: 'select',
@@ -80,7 +80,7 @@ export const Playground: Story = {
 
 /* ── Styles ── */
 export const LineStyles: Story = {
-  name: 'Line Styles',
+  name: 'Line Styles.',
   render: (): TemplateResult => html`
     <div style="${PREVIEW_H}">
       ${(['hairline', 'default', 'strong', 'heavy', 'dashed', 'dotted', 'gradient'] as const).map(s => html`

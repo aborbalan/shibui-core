@@ -5,6 +5,7 @@ import '../../atoms/button/lib-button.component';
 
 const meta: Meta = {
   title: 'Components/Molecules/ButtonGroup',
+  tags:['autodocs'],
   component: 'lib-button-group',
   argTypes: {
     shape:       { control: 'select', options: ['flat', 'rounded', 'pill'] },

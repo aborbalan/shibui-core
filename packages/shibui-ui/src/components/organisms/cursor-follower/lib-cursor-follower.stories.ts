@@ -19,6 +19,7 @@ const zoneBase = `
 
 const meta: Meta = {
   title: 'Components/Organisms/CursorFollower',
+  tags:['autodocs'],
   component: 'lib-cursor-follower',
   parameters: {
     /* El cursor nativo se oculta a nivel de página; desactivar en docs */

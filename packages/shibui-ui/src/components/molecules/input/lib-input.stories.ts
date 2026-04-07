@@ -15,6 +15,7 @@ type LibInputArgs = {
 
 const meta: Meta<LibInputArgs> = {
   title: 'Components/Molecules/Input',
+  tags:['autodocs'],
   component: 'lib-input',
   argTypes: {
     type: {
@@ -61,7 +62,7 @@ export const Playground: Story = {
 
 /* ── Variantes de tipo ── */
 export const AllTypes: Story = {
-  name: 'All Types',
+  name: 'Types',
   render: (): TemplateResult => html`
     <div style="max-width: 320px; padding: var(--lib-space-lg); display: flex; flex-direction: column; gap: var(--lib-space-md);">
       <lib-input label="Name" placeholder="Enter your name" type="text"></lib-input>
@@ -88,7 +89,7 @@ export const WithSlots: Story = {
 
 /* ── Estado error ── */
 export const ErrorState: Story = {
-  name: 'Error State',
+  name: 'Error',
   render: (): TemplateResult => html`
     <div style="max-width: 320px; padding: var(--lib-space-lg); display: flex; flex-direction: column; gap: var(--lib-space-md);">
       <lib-input

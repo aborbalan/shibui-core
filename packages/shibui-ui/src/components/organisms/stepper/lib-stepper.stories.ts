@@ -15,6 +15,7 @@ const wrap = (bg: string, content: TemplateResult, pad = '40px'): TemplateResult
 
 const meta: Meta<StepperArgs> = {
   title: 'Components/Organisms/Stepper',
+  tags:['autodocs'],
   component: 'lib-stepper',
   argTypes: {
     current:     { control: { type: 'number', min: 1, max: 4 } },

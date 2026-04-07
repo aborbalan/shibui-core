@@ -5,6 +5,7 @@ import type { LibToastManager } from './lib-toast-manager.component';
 
 const meta: Meta = {
   title: 'Components/Organisms/ToastManager',
+  tags:['autodocs'],
   component: 'lib-toast-manager',
   parameters: {
     layout: 'fullscreen',
@@ -37,7 +38,7 @@ function getManager(): LibToastManager | null {
    PLAYGROUND
 ───────────────────────────────────────────────────────── */
 export const Playground: Story = {
-  name: 'Playground',
+  name: 'Playground .',
   render: (): TemplateResult => html`
     <div style="
       padding: 48px 40px;

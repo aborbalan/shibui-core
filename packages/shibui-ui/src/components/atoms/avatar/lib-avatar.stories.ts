@@ -10,6 +10,7 @@ const DEMO_IMG = 'https://i.pravatar.cc/200?img=32';
 
 const meta: Meta<LibAvatarStoryArgs> = {
   title: 'Components/Atoms/Avatar',
+  tags:['autodocs'],
   component: 'lib-avatar',
 
   argTypes: {
@@ -169,7 +170,7 @@ export const Colors: Story = {
 
 /* ── With Status Dot ── */
 export const WithStatusDot: Story = {
-  name: 'With Status Dot',
+  name: 'With Status Dot.',
   render: (): TemplateResult => html`
     <div style="display:flex; align-items:center; gap:32px; padding:32px;">
       <lib-avatar size="lg" src=${DEMO_IMG} name="Ana Bel">
@@ -190,7 +191,7 @@ export const WithStatusDot: Story = {
 
 /* ── Icon fallback ── */
 export const IconFallback: Story = {
-  name: 'Icon Fallback',
+  name: 'Icon Fallback.',
   render: (): TemplateResult => html`
     <div style="display:flex; align-items:center; gap:24px; padding:24px; background:#F2EDE6;">
       <lib-avatar size="xl" color="washi"></lib-avatar>

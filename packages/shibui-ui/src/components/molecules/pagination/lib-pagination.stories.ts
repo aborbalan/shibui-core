@@ -4,6 +4,7 @@ import './lib-pagination.component';
 
 const meta: Meta = {
   title: 'Components/Navigation/Pagination',
+  tags:['autodocs'],
   component: 'lib-pagination',
   argTypes: {
     totalItems:   { control: { type: 'number' } },

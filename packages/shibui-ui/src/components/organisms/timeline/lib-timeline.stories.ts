@@ -10,6 +10,7 @@ type Args = Partial<LibTimeline>;
 
 const meta: Meta<Args> = {
   title: 'Components/Organisms/Timeline',
+  tags:['autodocs'],
   component: 'lib-timeline',
   argTypes: {
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
@@ -211,7 +212,7 @@ export const LineVariants: Story = {
    Collapsible
    ================================================================ */
 export const Collapsible: Story = {
-  name: 'Collapsible',
+  name: 'Collapsible .',
   render: (): TemplateResult => html`
     <div style="max-width:480px;padding:var(--lib-space-xl);">
       <lib-timeline>

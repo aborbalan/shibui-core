@@ -4,6 +4,7 @@ import './lib-rating.component';
 
 const meta: Meta = {
   title: 'Components/Forms/Rating',
+  tags:['autodocs'],
   component: 'lib-rating',
   argTypes: {
     value:     { control: { type: 'number', min: 0, max: 10, step: 0.5 } },

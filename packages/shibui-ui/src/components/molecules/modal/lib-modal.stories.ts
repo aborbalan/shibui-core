@@ -66,6 +66,7 @@ const footerBtns = (id: string, confirmLabel = 'Aceptar', danger = false): Templ
 /* ── Meta ───────────────────────────────────────────────────── */
 const meta: Meta<LibModalArgs> = {
   title: 'Components/Molecules/Modal',
+  tags:['autodocs'],
   component: 'lib-modal',
   argTypes: {
     size:    { control: 'select', options: ['xs','sm','md','lg','xl','full'] satisfies ModalSize[] },

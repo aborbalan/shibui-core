@@ -5,6 +5,7 @@ import type { NavLink, HeaderAction } from './lib-header.types';
 
 const meta: Meta = {
   title: 'Components/Layout/Header',
+  tags:['autodocs'],
   component: 'lib-header',
   parameters: { layout: 'fullscreen' },
   argTypes: {

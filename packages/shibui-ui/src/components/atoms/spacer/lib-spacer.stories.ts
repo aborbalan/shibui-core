@@ -4,6 +4,7 @@ import './lib-spacer.component';
 
 export default {
   title: 'Components/Atoms/Spacer',
+  tags:['autodocs'],
   component: 'lib-spacer',
   argTypes: {
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },

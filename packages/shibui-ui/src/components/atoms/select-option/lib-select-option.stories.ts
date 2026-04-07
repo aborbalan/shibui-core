@@ -11,6 +11,7 @@ interface SelectOptionArgs {
 
 const meta: Meta<SelectOptionArgs> = {
   title: 'Components/Atoms/SelectOption',
+  tags:['autodocs'],
   component: 'lib-select-option',
   argTypes: {
     value:    { control: 'text' },
@@ -44,7 +45,7 @@ export const Playground: Story = {
 };
 
 export const AllStates: Story = {
-  name: 'All States',
+  name: 'All States.',
   render: (): TemplateResult => html`
     <div style="background: var(--bg-elevated); width: 300px; border: 1px solid var(--border-subtle);">
       <lib-select-option value="a">Default</lib-select-option>

@@ -4,6 +4,7 @@ import './lib-chip.component';
 
 const meta: Meta = {
   title: 'Components/Atoms/Chip',
+  tags:['autodocs'],
   component: 'lib-chip',
   argTypes: {
     kind:     { control: 'select', options: ['static', 'toggle', 'input'] },

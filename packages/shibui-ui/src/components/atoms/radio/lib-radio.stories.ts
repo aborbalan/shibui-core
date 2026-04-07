@@ -10,6 +10,7 @@ type LibRadioStoryArgs = Pick<
 
 const meta: Meta<LibRadioStoryArgs> = {
   title: 'Components/Atoms/Radio',
+  tags:['autodocs'],
   component: 'lib-radio',
 
   argTypes: {

@@ -4,6 +4,7 @@ import './lib-horizontal-scroll-section.component';
 
 const meta: Meta = {
   title: 'Components/Organisms/HorizontalScrollSection',
+  tags:['autodocs'],
   component: 'lib-horizontal-scroll-section',
   parameters: {
     layout: 'fullscreen',

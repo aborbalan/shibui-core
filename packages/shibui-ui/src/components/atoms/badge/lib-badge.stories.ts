@@ -9,6 +9,7 @@ type LibBadgeStoryArgs = Pick<LibBadge, 'variant' | 'size' | 'dot' | 'pill'> & {
 
 const meta: Meta<LibBadgeStoryArgs> = {
   title: 'Components/Atoms/Badge',
+  tags:['autodocs'],
   component: 'lib-badge',
 
   argTypes: {
@@ -62,7 +63,7 @@ export const Playground: Story = {
 };
 
 export const AllVariants: Story = {
-  name: 'All Variants',
+  name: 'All Variants.',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; padding:24px;">
       <lib-badge variant="default">Default</lib-badge>
@@ -77,7 +78,7 @@ export const AllVariants: Story = {
 };
 
 export const WithDot: Story = {
-  name: 'With Dot',
+  name: 'With Dot.',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; padding:24px;">
       <lib-badge variant="default" dot>Pendiente</lib-badge>
@@ -110,7 +111,7 @@ export const Sizes: Story = {
 };
 
 export const InContext: Story = {
-  name: 'In Context',
+  name: 'In Context.',
   render: (): TemplateResult => html`
     <div style="
       display: flex;

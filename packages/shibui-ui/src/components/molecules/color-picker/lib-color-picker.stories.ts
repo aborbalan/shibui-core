@@ -4,6 +4,7 @@ import './lib-color-picker.component';
 
 const meta: Meta = {
   title: 'Components/Organisms/ColorPicker',
+  tags:['autodocs'],
   component: 'lib-color-picker',
   argTypes: {
     variant:   { control: 'select', options: ['inline', 'trigger'] },

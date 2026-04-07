@@ -106,6 +106,7 @@ const FILTER_NODES: TreeNode[] = [
 
 const meta: Meta = {
   title: 'Components/Molecules/TreeSelect',
+  tags:['autodocs'],
   component: 'lib-tree-select',
   parameters: {
     docs: {
@@ -141,7 +142,7 @@ type Story = StoryObj;
    PLAYGROUND
 ───────────────────────────────────────────────────────────── */
 export const Playground: Story = {
-  name: 'Playground',
+  name: 'Playground .',
   args: {
     multi:       true,
     inline:      false,
@@ -275,7 +276,7 @@ export const NoSearch: Story = {
    DISABLED
 ───────────────────────────────────────────────────────────── */
 export const Disabled: Story = {
-  name: 'Disabled',
+  name: 'Disabled Tree Node',
   render: (): TemplateResult => html`
     <div style="padding: 40px; background: var(--bg-surface); min-height: 200px; display: flex; gap: 40px; align-items: flex-start;">
       <div style="display: flex; flex-direction: column; gap: 4px;">

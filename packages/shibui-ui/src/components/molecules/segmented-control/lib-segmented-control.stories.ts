@@ -48,6 +48,7 @@ type Args = Partial<LibSegmentedControl> & {
 
 const meta: Meta<Args> = {
   title: 'Components/Molecules/Segmented Control',
+  tags:['autodocs'],
   component: 'lib-segmented-control',
 
   argTypes: {
@@ -330,7 +331,7 @@ export const GlitchVariant: Story = {
    Demo Panel — segmented como tab controller
    ================================================================ */
 export const DemoPanel: Story = {
-  name: 'Demo Panel',
+  name: 'Demo',
   render: (): TemplateResult => html`
     <div style="padding:var(--lib-space-xl);max-width:520px;">
       <demo-segmented-panel></demo-segmented-panel>

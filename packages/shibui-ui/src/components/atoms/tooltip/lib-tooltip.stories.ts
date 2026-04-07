@@ -41,6 +41,7 @@ const col = (inner: TemplateResult, sublabel: string, dark = false): TemplateRes
 
 const meta: Meta<LibTooltipArgs> = {
   title: 'Components/Atoms/Tooltip',
+  tags:['autodocs'],
   component: 'lib-tooltip',
   argTypes: {
     position: {

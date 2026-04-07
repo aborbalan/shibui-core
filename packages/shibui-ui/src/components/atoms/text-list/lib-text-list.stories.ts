@@ -85,7 +85,7 @@ type Args = Partial<LibTextList>;
 const meta: Meta<Args> = {
   title: 'Components/Atoms/Text List',
   component: 'lib-text-list',
-
+  tags:['autodocs'],
   argTypes: {
     family: {
       control: 'select',
@@ -304,7 +304,7 @@ export const UiListDark: Story = {
    Description List
    ================================================================ */
 export const DescriptionList: Story = {
-  name: 'Description List',
+  name: 'List',
   render: (): TemplateResult => html`
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xl);padding:var(--lib-space-xl);">
       <div style="min-width:280px;">

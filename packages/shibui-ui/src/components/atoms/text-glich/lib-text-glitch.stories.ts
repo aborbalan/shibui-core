@@ -7,6 +7,7 @@ type LibTextGlitchArgs = Pick<LibTextGlitch, 'text' | 'variant' | 'trigger' | 'a
 
 const meta: Meta<LibTextGlitchArgs> = {
   title: 'Components/Atoms/Text Glitch',
+  tags:['autodocs'],
   component: 'lib-text-glitch',
   argTypes: {
     variant: {

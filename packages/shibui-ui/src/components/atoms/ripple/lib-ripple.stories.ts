@@ -4,6 +4,7 @@ import './lib-ripple.component';
 
 const meta: Meta = {
   title: 'Components/Atoms/Ripple',
+  tags:['autodocs'],
   component: 'lib-ripple',
 };
 

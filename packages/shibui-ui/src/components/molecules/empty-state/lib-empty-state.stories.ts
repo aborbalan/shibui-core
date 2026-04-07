@@ -10,6 +10,7 @@ type EmptyStateArgs = Pick<
 
 const meta: Meta<EmptyStateArgs> = {
   title: 'Components/Molecules/EmptyState',
+  tags:['autodocs'],
   component: 'lib-empty-state',
   argTypes: {
     tone:    { control: 'select', options: ['neutral', 'kaki', 'celadon', 'error'] },

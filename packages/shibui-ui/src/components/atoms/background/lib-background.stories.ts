@@ -69,6 +69,7 @@ function bgGrid(
 /* ── Meta ── */
 const meta: Meta = {
   title: "Components/Atoms/Background",
+  tags:['autodocs'],
   component: "lib-background",
   parameters: {
     docs: {
@@ -167,7 +168,7 @@ type Story = StoryObj;
 
 /* ── Playground ── */
 export const Playground: Story = {
-  name: "Playground",
+  name: "Playground.",
   args: { variant: "ink-wash", paused: false },
   render: (args): TemplateResult => html`
     <lib-background

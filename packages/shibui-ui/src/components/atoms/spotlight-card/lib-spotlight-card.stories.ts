@@ -33,7 +33,7 @@ const cardInner = (label: string, title: string, body: string, code: string): Te
 const meta: Meta<LibSpotlightCardStoryArgs> = {
   title: 'Components/Atoms/SpotlightCard',
   component: 'lib-spotlight-card',
-
+  tags:['autodocs'],
   parameters: {
     backgrounds: { default: 'dark' },
   },
@@ -78,7 +78,7 @@ export const Playground: Story = {
 
 /* ── Las tres variantes de spotlight ── */
 export const SpotlightVariants: Story = {
-  name: 'Spotlight Variants',
+  name: 'Spotlight Variants .',
   render: (): TemplateResult => stage(3, html`
     <lib-spotlight-card spotlight="kaki">
       ${cardInner(
