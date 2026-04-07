@@ -1,5 +1,7 @@
 {
+  
     "branches": ["main"],
+    "repositoryUrl": "https://github.com/aborbalan/shibui-core",
     "plugins": [
       ["@semantic-release/npm", {
         "pkgRoot": "packages/shibui-ui",
