@@ -26,10 +26,10 @@ jobs:
         id: changes
         with:
               filters: |
-                ui:'packages/shibui-ui/**'
-                react:'apps/app-react/**'
-                angular:'apps/app-angular/**'
-                svelte:'apps/app-svelte/**'
+                ui: 'packages/shibui-ui/**'
+                react: 'apps/app-react/**'
+                angular: 'apps/app-angular/**'
+                svelte: 'apps/app-svelte/**'
                   
       - name: 🏗️ Setup Node.js
         uses: actions/setup-node@v4
