@@ -12,6 +12,7 @@ interface AlertArgs {
 
 const meta: Meta<AlertArgs> = {
   title: 'Components/Molecules/Alert',
+  tags:['autodocs'],
   component: 'lib-alert',
   argTypes: {
     type: {

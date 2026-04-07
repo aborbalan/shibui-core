@@ -4,6 +4,7 @@ import './lib-visually-hidden.component';
 
 const meta: Meta = {
   title: 'Components/Atoms/VisuallyHidden',
+  tags:['autodocs'],
   component: 'lib-visually-hidden',
 };
 

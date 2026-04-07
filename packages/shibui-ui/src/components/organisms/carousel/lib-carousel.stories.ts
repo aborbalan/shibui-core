@@ -7,6 +7,7 @@ type CarouselArgs = Pick<LibCarousel, 'mode' | 'peek' | 'arrows' | 'dots' | 'cou
 
 const meta: Meta<CarouselArgs> = {
   title: 'Components/Organisms/Carousel',
+  tags:['autodocs'],
   component: 'lib-carousel',
   argTypes: {
     mode:     { control: 'select', options: ['slide', 'fade'] },

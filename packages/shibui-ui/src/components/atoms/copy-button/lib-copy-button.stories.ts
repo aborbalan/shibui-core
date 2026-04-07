@@ -10,6 +10,7 @@ type LibCopyButtonStoryArgs = Pick<
 
 const meta: Meta<LibCopyButtonStoryArgs> = {
   title: 'Components/Atoms/CopyButton',
+  tags:['autodocs'],
   component: 'lib-copy-button',
 
   argTypes: {
@@ -116,7 +117,7 @@ export const Sizes: Story = {
 
 /* ── Tooltip ── */
 export const WithTooltip: Story = {
-  name: 'With Tooltip',
+  name: 'With Tooltip.',
   render: (): TemplateResult => html`
     <div style="display:flex; align-items:center; gap:16px; padding:40px 24px 24px; background:#FFFFFF; border:1px solid #E5DDD3;">
       <lib-copy-button variant="ghost"    value="ghost"    icon-only tooltip size="sm"></lib-copy-button>

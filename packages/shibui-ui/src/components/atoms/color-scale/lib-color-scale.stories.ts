@@ -41,6 +41,7 @@ const CELADON: ColorStep[] = [
 
 const meta: Meta = {
   title: 'Data Display/ColorScale',
+  tags:['autodocs'],
   component: 'lib-color-scale',
   parameters: { layout: 'padded' },
   argTypes: {

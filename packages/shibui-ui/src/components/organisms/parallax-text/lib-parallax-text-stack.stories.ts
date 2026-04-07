@@ -4,6 +4,7 @@ import './lib-parallax-text-stack.component';
 
 const meta: Meta = {
   title: 'Components/Motion/Parallax Text Stack',
+  tags:['autodocs'],
   component: 'lib-parallax-text-stack',
   argTypes: {
     speed: { control: { type: 'range', min: 0.05, max: 0.5, step: 0.05 } },

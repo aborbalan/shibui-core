@@ -13,6 +13,7 @@ type Args = Partial<LibFileUploader>;
 
 const meta: Meta<Args> = {
   title: 'Components/Molecules/File Uploader',
+  tags:['autodocs'],
   component: 'lib-file-uploader',
 
   argTypes: {

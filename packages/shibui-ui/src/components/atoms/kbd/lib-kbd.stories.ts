@@ -7,6 +7,7 @@ type KbdArgs = Pick<LibKbd, 'size' | 'variant' | 'pressed'>;
 
 const meta: Meta<KbdArgs> = {
   title: 'Components/Atoms/Kbd',
+  tags:['autodocs'],
   component: 'lib-kbd',
   argTypes: {
     size:    { control: 'select', options: ['xs', 'sm', 'md', 'lg'] },

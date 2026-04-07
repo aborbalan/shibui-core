@@ -12,8 +12,8 @@ const stageLight = (c: ReturnType<typeof html>): TemplateResult =>
 
 const meta: Meta<LibContentPillar> = {
   title: "Data Display/ContentPillar",
+  tags:['autodocs'],
   component: "lib-content-pillar",
-  tags: ["autodocs"],
   parameters: { layout: "fullscreen", backgrounds: { default: "dark" } },
   argTypes: {
     surface: { control: "select", options: ["dark", "light"] },

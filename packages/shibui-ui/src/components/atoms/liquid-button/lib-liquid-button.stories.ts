@@ -4,6 +4,7 @@ import './lib-liquid-button.component';
 
 const meta: Meta = {
   title: 'Components/Atoms/ButtonLiquid',
+  tags:['autodocs'],
   component: 'lib-button-liquid',
   argTypes: {
     variant:  { control: 'select', options: ['ink', 'washi', 'kaki', 'celadon', 'ghost', 'danger'] },

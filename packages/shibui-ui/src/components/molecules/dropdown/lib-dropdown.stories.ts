@@ -4,6 +4,7 @@ import './lib-dropdown.component';
 
 const meta: Meta = {
   title: 'Components/Navigation/Dropdown',
+  tags:['autodocs'],
   component: 'lib-dropdown',
   argTypes: {
     variant: { control: 'select', options: ['default', 'ghost', 'filled', 'kaki'] },

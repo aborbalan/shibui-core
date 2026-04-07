@@ -13,6 +13,7 @@ const preview = (bg: string, content: TemplateResult): TemplateResult => html`
 
 const meta: Meta<LibSkeletonStoryArgs> = {
   title: 'Components/Atoms/Skeleton',
+  tags:['autodocs'],
   component: 'lib-skeleton',
 
   argTypes: {

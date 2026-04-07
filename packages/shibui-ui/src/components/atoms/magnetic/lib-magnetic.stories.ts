@@ -5,6 +5,7 @@ import '../button/lib-button.component'; // Asegúrate de que esta ruta sea corr
 
 const meta: Meta = {
   title: 'Components/Atoms/Magnetic',
+  tags:['autodocs'],
   component: 'lib-magnetic',
   argTypes: {
     shift: { control: { type: 'range', min: 0.1, max: 1, step: 0.1 } },

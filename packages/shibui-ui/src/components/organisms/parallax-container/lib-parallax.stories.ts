@@ -4,6 +4,7 @@ import './lib-parallax.component';
 
 const meta: Meta = {
   title: 'Components/Organisms/ParallaxContainer',
+  tags:['autodocs'],
   component: 'lib-parallax-container',
   parameters: {
     layout: 'fullscreen',

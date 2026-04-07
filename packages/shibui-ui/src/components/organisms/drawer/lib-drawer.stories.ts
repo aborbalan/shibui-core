@@ -10,6 +10,7 @@ function getDrawer(selector: string): LibDrawer {
 
 const meta: Meta = {
   title: 'Components/Overlay/Drawer',
+  tags:['autodocs'],
   component: 'lib-drawer',
   argTypes: {
     open:      { control: 'boolean' },

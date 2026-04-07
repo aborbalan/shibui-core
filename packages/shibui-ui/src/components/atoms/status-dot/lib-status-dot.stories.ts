@@ -24,7 +24,7 @@ const withLabel = (label: string, content: TemplateResult): TemplateResult => ht
 const meta: Meta<LibStatusDotStoryArgs> = {
   title: 'Components/Atoms/StatusDot',
   component: 'lib-status-dot',
-
+  tags:['autodocs'],
   argTypes: {
     status:   { control: 'select', options: ['online', 'away', 'busy', 'offline'] },
     size:     { control: 'select', options: ['sm', 'md', 'lg'] },

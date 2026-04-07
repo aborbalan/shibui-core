@@ -10,6 +10,7 @@ type LibCloseButtonStoryArgs = Pick<
 
 const meta: Meta<LibCloseButtonStoryArgs> = {
   title: 'Components/Atoms/CloseButton',
+  tags:['autodocs'],
   component: 'lib-close-button',
 
   argTypes: {
@@ -56,7 +57,7 @@ export const Playground: Story = {
 
 /* ── All Variants ── */
 export const AllVariants: Story = {
-  name: 'All Variants',
+  name: 'All Variants.',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-wrap:wrap; align-items:center; gap:24px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
 

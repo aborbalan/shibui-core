@@ -4,6 +4,7 @@ import './lib-tabs.component';
 
 const meta: Meta = {
   title: 'Components/Molecules/Tabs',
+  tags:['autodocs'],
   component: 'lib-tabs',
   argTypes: {
     variant:  { control: 'select', options: ['underline', 'pill', 'card', 'outline', 'vertical'] },

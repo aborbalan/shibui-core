@@ -7,6 +7,7 @@ type SwitchArgs = Pick<LibSwitch, 'checked' | 'disabled' | 'variant' | 'size' | 
 
 const meta: Meta<SwitchArgs> = {
   title: 'Components/Atoms/Switch',
+  tags:['autodocs'],
   component: 'lib-switch',
   argTypes: {
     variant:  { control: 'select', options: ['default', 'kintsugi'] },

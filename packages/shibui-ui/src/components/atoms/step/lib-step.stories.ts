@@ -14,6 +14,7 @@ interface StepArgs {
 
 const meta: Meta<StepArgs> = {
   title: 'Components/Atoms/Step',
+  tags:['autodocs'],
   component: 'lib-step',
   argTypes: {
     status:      { control: 'select', options: ['pending', 'active', 'completed', 'error'] },

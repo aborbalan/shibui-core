@@ -10,6 +10,7 @@ type LibCheckboxStoryArgs = Pick<
 
 const meta: Meta<LibCheckboxStoryArgs> = {
   title: 'Components/Atoms/Checkbox',
+  tags:['autodocs'],
   component: 'lib-checkbox',
 
   argTypes: {
@@ -64,7 +65,7 @@ export const Playground: Story = {
 
 /* ── States ── */
 export const States: Story = {
-  name: 'States',
+  name: 'States.',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
       <lib-checkbox
@@ -125,7 +126,7 @@ export const Variants: Story = {
 
 /* ── With sublabel ── */
 export const WithSublabel: Story = {
-  name: 'With Sublabel',
+  name: 'With Sublabel.',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3; max-width:400px;">
       <lib-checkbox
@@ -148,7 +149,7 @@ export const WithSublabel: Story = {
 
 /* ── Indeterminate group ── */
 export const IndeterminateGroup: Story = {
-  name: 'Indeterminate Group',
+  name: 'Indeterminate Group.',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3; max-width:400px;">
       <p style="font-family:monospace; font-size:11px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:4px;">

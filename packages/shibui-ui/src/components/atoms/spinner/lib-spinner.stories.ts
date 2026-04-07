@@ -7,6 +7,7 @@ type LibSpinnerArgs = Pick<LibSpinner, 'variant' | 'size' | 'tone' | 'dark' | 'l
 
 const meta: Meta<LibSpinnerArgs> = {
   title: 'Components/Atoms/Spinner',
+  tags:['autodocs'],
   component: 'lib-spinner',
   argTypes: {
     variant: {

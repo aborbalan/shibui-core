@@ -4,6 +4,7 @@ import './lib-checkbox-card.component';
 
 const meta: Meta = {
   title: 'Components/Molecules/CheckboxCard',
+  tags:['autodocs'],
   component: 'lib-checkbox-card',
   argTypes: {
     color:       { control: 'select', options: ['kaki', 'celadon'] },

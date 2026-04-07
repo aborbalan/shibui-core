@@ -12,6 +12,7 @@ type LibCardArgs = {
 
 const meta: Meta<LibCardArgs> = {
   title: 'Layout & Surfaces/Card',
+  tags:['autodocs'],
   component: 'lib-card',
   argTypes: {
     variant: {
@@ -57,7 +58,7 @@ export const Playground: Story = {
 
 /* ── Todas las variantes — showcase de la imagen ── */
 export const AllVariants: Story = {
-  name: 'All Variants',
+  name: 'All Variants.',
   render: (): TemplateResult => html`
     <!-- Variantes light -->
     <div style="

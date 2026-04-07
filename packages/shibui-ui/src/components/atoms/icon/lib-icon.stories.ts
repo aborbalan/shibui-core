@@ -10,6 +10,7 @@ interface IconStoryArgs {
 
 const meta: Meta<IconStoryArgs> = {
   title: 'Components/Display/Icon',
+  tags:['autodocs'],
   component: 'lib-icon',
   argTypes: {
     size:  { control: 'select', options: ['sm', 'md', 'lg', 'xl'] },

@@ -6,6 +6,7 @@ import type { LibReadingProgress } from './lib-reading-progress.component';
 /* ── Meta ──────────────────────────────────────────────── */
 const meta: Meta<LibReadingProgress> = {
   title: 'Components/Atoms/ReadingProgress',
+  tags:['autodocs'],
   component: 'lib-reading-progress',
   parameters: { layout: 'fullscreen' },
   argTypes: {
