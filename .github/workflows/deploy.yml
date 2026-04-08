@@ -70,6 +70,13 @@ jobs:
           npm run lint -w @shibui/ui
           npm run build -w @shibui/ui
 
+      - name: Verify NPM Connection
+        run: |
+            echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+            npm whoami
+        env:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: 🎡 Build Storybook
         if: steps.changes.outputs.ui == 'true'
         run: npm run build-storybook -w @shibui/ui
