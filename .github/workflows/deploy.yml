@@ -72,10 +72,10 @@ jobs:
 
       - name: Verify NPM Connection
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_SECRET}" > .npmrc
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
           npm whoami
         env:
-          NPM_SECRET: ${{ secrets.NPM_SECRET }}
+          NPM_TOKEN: ${{ secrets.NPM_SECRET }}
 
       - name: 🎡 Build Storybook
         if: steps.changes.outputs.ui == 'true'
