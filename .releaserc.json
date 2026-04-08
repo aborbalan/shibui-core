@@ -4,6 +4,7 @@
     "repositoryUrl": "https://github.com/aborbalan/shibui-core.git",
     "plugins": [
       "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
       ["@semantic-release/npm", {
         "pkgRoot": "packages/shibui-ui",
         "npmPublish": true,
