@@ -66,9 +66,9 @@ jobs:
       - name: ✅ Quality & Core Build
         if: steps.changes.outputs.ui == 'true' || steps.changes.outputs.react == 'true'
         run: |
-          npm run type-check -w @shibui/ui
-          npm run lint -w @shibui/ui
-          npm run build -w @shibui/ui
+          npm run type-check -w @shibui-ui/ui
+          npm run lint -w @shibui-ui/ui
+          npm run build -w @shibui-ui/ui
 
       - name: Verify NPM Connection
         run: |
@@ -79,7 +79,7 @@ jobs:
 
       - name: 🎡 Build Storybook
         if: steps.changes.outputs.ui == 'true'
-        run: npm run build-storybook -w @shibui/ui
+        run: npm run build-storybook -w @shibui-ui/ui
 
       - name: 🚀 Run Semantic Release
         if: github.ref == 'refs/heads/main'
@@ -118,7 +118,7 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           CLEAN_MSG=$(echo "$COMMIT_MSG" | tr -d '"' | tr -d '\n' | tr -d '\r')
           curl -H "Content-Type: application/json" -X POST -d "{
-                 \"content\": \"🚀 **Nueva actualización de @shibui/ui**\",
+                 \"content\": \"🚀 **Nueva actualización de @shibui-ui/ui**\",
                  \"embeds\": [{
                    \"title\": \"Versión $VERSION desplegada con éxito\",
                    \"description\": \"**Cambios:** $CLEAN_MSG\n**Autor:** $COMMIT_AUTHOR\",
