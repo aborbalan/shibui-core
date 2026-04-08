@@ -1,5 +1,5 @@
 import React from 'react';
-import { LibCounter, LibDivider } from '@shibui/ui/react';
+import { LibCounter, LibDivider } from '@shibui-ui/ui/react';
 
 interface StatItem {
   value:   number;

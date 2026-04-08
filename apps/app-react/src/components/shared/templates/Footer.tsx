@@ -1,6 +1,6 @@
 import React from 'react';
-import { LibFooter } from '@shibui/ui/react';
-import { FooterColumn, FooterLink } from '@shibui/ui';
+import { LibFooter } from '@shibui-ui/ui/react';
+import { FooterColumn, FooterLink } from '@shibui-ui/ui';
 
 type FooterVariant = 'social' | 'accordion' | 'kintsugi' | 'glitch';
 

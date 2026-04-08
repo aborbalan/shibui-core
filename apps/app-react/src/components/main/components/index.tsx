@@ -1,4 +1,4 @@
-import { LibBackground, LibCard, LibComponentGrid } from "@shibui/ui/react";
+import { LibBackground, LibCard, LibComponentGrid } from "@shibui-ui/ui/react";
 import { COMPONENTS_DATA } from "./data/components.data";
 
 

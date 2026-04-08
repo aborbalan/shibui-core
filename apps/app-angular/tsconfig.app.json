@@ -4,8 +4,8 @@
     "outDir": "./out-tsc/app",
     "baseUrl": ".",
     "paths": {
-      "@shibui/ui": ["../../packages/shibui-ui/dist/index.d.ts"],
-      "@shibui/ui/*": ["../../packages/shibui-ui/dist/*"]
+      "@shibui-ui/ui": ["../../packages/shibui-ui/dist/index.d.ts"],
+      "@shibui-ui/ui/*": ["../../packages/shibui-ui/dist/*"]
     }
   },
   "include": ["src/**/*.ts","src/typings.d.ts"]

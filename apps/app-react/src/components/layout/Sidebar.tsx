@@ -1,6 +1,6 @@
 import React from 'react';
-import { SidebarLink } from '@shibui/ui';
-import { LibSidebar } from '@shibui/ui/react';
+import { SidebarLink } from '@shibui-ui/ui';
+import { LibSidebar } from '@shibui-ui/ui/react';
 
 interface SidebarProps {
   activeTab: string;

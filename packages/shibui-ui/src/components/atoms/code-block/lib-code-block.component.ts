@@ -15,11 +15,11 @@ export type LibCodeBlockVariant = 'default' | 'ghost';
  * @slot - Código a mostrar. Si se usa este slot, tiene prioridad sobre el atributo `code`.
  *
  * @example
- * <lib-code-block language="bash" code="npm install @shibui/ui lit"></lib-code-block>
+ * <lib-code-block language="bash" code="npm install @shibui-ui/ui lit"></lib-code-block>
  *
  * @example
  * <lib-code-block language="ts" filename="main.ts">
- *   import '@shibui/ui';
+ *   import '@shibui-ui/ui';
  * </lib-code-block>
  */
 @customElement('lib-code-block')

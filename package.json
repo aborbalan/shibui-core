@@ -15,13 +15,13 @@
     "start:svelte": "npm run dev -w apps/app-svelte",
     "start:angular": "npm run start -w apps/app-angular",
     "dev:all": "concurrently -n \"REACT,SVELTE,ANGULAR\" -c \"cyan,magenta,blue\" \"npm run start:react\" \"npm run start:svelte\" \"npm run start:angular\"",
-    "build:shibui": "npm run build -w @shibui/ui",
+    "build:shibui": "npm run build -w @shibui-ui/ui",
     "prepare": "husky",
     "type-check": "npx tsc --noEmit --project packages/shibui-ui/tsconfig.json",
     "storybook": "npm run storybook -w packages/shibui-ui",
     "build-storybook": "npm run build-storybook -w packages/shibui-ui",
     "build-react": "npm run build --workspace=app-react",
-    "lint": "npm run lint -w @shibui/ui"
+    "lint": "npm run lint -w @shibui-ui/ui"
   },
   "devDependencies": {
     "@types/node": "^25.3.5",

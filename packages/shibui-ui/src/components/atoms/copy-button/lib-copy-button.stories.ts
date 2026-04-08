@@ -52,7 +52,7 @@ type Story = StoryObj<LibCopyButtonStoryArgs>;
 /* ── Playground ── */
 export const Playground: Story = {
   args: {
-    value: 'npm install @shibui/ui',
+    value: 'npm install @shibui-ui/ui',
     variant: 'outlined',
     size: 'md',
     label: 'Copiar',
@@ -137,11 +137,11 @@ export const ContextInlineSnippet: Story = {
       </p>
       <div style="display:inline-flex; align-items:center; border:1px solid #D3C8BC; background:#FFFFFF; overflow:hidden; max-width:100%;">
         <span style="font-family:monospace; font-size:11px; letter-spacing:0.08em; color:#7A6A5C; padding:8px 16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1; min-width:0; border-right:1px solid #E5DDD3;">
-          npm install @shibui/ui
+          npm install @shibui-ui/ui
         </span>
         <lib-copy-button
           variant="ghost"
-          value="npm install @shibui/ui"
+          value="npm install @shibui-ui/ui"
           icon-only
           tooltip
           size="md"

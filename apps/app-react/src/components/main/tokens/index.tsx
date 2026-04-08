@@ -1,4 +1,4 @@
-import { LibBackground } from "@shibui/ui/react";
+import { LibBackground } from "@shibui-ui/ui/react";
 import TokensIntro from "./templates/ComponentsIntro";
 
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { LibButton, LibButtonGroup } from '@shibui/ui/react';
+import { LibButton, LibButtonGroup } from '@shibui-ui/ui/react';
 
 interface HeroIntroProps {
   eyebrow?:      string;

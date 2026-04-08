@@ -1,5 +1,5 @@
 import React from 'react';
-import { LibHeader } from '@shibui/ui/react';
+import { LibHeader } from '@shibui-ui/ui/react';
 
 // ─── Tipos re-exportados para que el consumidor no importe de Lit ─────────────
 export interface NavLink {
