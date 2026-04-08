@@ -14,7 +14,7 @@
       "skipDefaultLibCheck": true,
       "baseUrl": ".",
       "paths": {
-        "@shibui/ui": ["packages/shibui-ui/dist/index.d.ts"] 
+        "@shibui-ui/ui": ["packages/shibui-ui/dist/index.d.ts"] 
       }
     },
     "exclude": ["node_modules", "tmp"]

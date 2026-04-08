@@ -1,5 +1,5 @@
 // apps/app-react/src/components/modals/DownloadCVModal.tsx
-import { LibButton, LibCheckbox, LibModal } from '@shibui/ui/react';
+import { LibButton, LibCheckbox, LibModal } from '@shibui-ui/ui/react';
 import React, { useState } from 'react';
 
 interface DownloadCVModalProps {

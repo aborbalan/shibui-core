@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { KitchenSink } from './components/shared/KitchenSink';
 import { HomePage } from './components/main/hero';
 import { ComponentsPage } from './components/main/components';
-import { ICON_REGISTRY } from '@shibui/ui';
+import { ICON_REGISTRY } from '@shibui-ui/ui';
 import ShibuiHeader from './components/shared/templates/Header';
 import Footer from './components/shared/templates/Footer';
 import { TokensPage } from './components/main/tokens';

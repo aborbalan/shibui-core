@@ -18,7 +18,7 @@ const COPIED_DURATION = 1800;
  * @fires lib-copy - Emitido al copiar con exito. detail: { value: string }
  *
  * @example
- * <lib-copy-button value="npm install @shibui/ui"></lib-copy-button>
+ * <lib-copy-button value="npm install @shibui-ui/ui"></lib-copy-button>
  * <lib-copy-button value="sk-ant-api03-xyz" variant="outlined" tooltip></lib-copy-button>
  * <lib-copy-button value="copy me" variant="ghost" icon-only size="sm"></lib-copy-button>
  */

@@ -1,7 +1,7 @@
 // apps/app-react/src/pages/Home/index.tsx
 import React from 'react';
 import HeroIntro from '../../layout/templates/HeroIntro';
-import { LibBackground, LibDivider } from '@shibui/ui/react';
+import { LibBackground, LibDivider } from '@shibui-ui/ui/react';
 import HeroStats from './templates/HeroStats';
 import ContentSection from './templates/ContentSection';
 import CardsSection from './templates/CardsSection ';

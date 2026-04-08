@@ -1,5 +1,5 @@
-import { LibAccordionItem, LibAvatar, LibBadge, LibBurger, LibCheckbox, LibCloseButton, LibIcon } from '@shibui/ui/react';
-import { LibButton } from '@shibui/ui/react';
+import { LibAccordionItem, LibAvatar, LibBadge, LibBurger, LibCheckbox, LibCloseButton, LibIcon } from '@shibui-ui/ui/react';
+import { LibButton } from '@shibui-ui/ui/react';
 import React from 'react';
 
 export const AtomsSink: React.FC = () => (

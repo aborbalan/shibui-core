@@ -56,7 +56,7 @@ type Story = StoryObj<LibCodeBlockStoryArgs>;
 
 export const Playground: Story = {
   args: {
-    code: 'npm install @shibui/ui lit',
+    code: 'npm install @shibui-ui/ui lit',
     language: 'bash',
     filename: '',
     copyable: true,
@@ -70,17 +70,17 @@ export const Install: Story = {
     <div style="display:flex; flex-direction:column; gap:16px; padding:24px; max-width:640px;">
       <lib-code-block
         language="bash"
-        code="npm install @shibui/ui lit"
+        code="npm install @shibui-ui/ui lit"
       ></lib-code-block>
 
       <lib-code-block
         language="bash"
-        code="yarn add @shibui/ui lit"
+        code="yarn add @shibui-ui/ui lit"
       ></lib-code-block>
 
       <lib-code-block
         language="bash"
-        code="pnpm add @shibui/ui lit"
+        code="pnpm add @shibui-ui/ui lit"
       ></lib-code-block>
     </div>
   `,
@@ -93,7 +93,7 @@ export const WithFilename: Story = {
       <lib-code-block
         language="ts"
         filename="main.ts"
-        code="import '@shibui/ui';
+        code="import '@shibui-ui/ui';
 
 const button = document.querySelector('lib-button');
 button?.addEventListener('ui-lib-click', (e) => {
@@ -119,7 +119,7 @@ export const MultiLanguage: Story = {
       <lib-code-block
         language="ts"
         filename="sidebar.tsx"
-        code="import { LibSidebar } from '@shibui/ui/react';
+        code="import { LibSidebar } from '@shibui-ui/ui/react';
 
 export const Nav = () => (
   <LibSidebar name='Alejandro B.' role='Frontend Dev' />
@@ -131,7 +131,7 @@ export const Nav = () => (
         filename="package.json"
         code='{
   "dependencies": {
-    "@shibui/ui": "^1.0.0",
+    "@shibui-ui/ui": "^1.0.0",
     "lit": "^3.0.0"
   }
 }'
@@ -149,10 +149,10 @@ export const GhostVariant: Story = {
         language="ts"
         filename="tokens.ts"
         code="// Importa los tokens globales en tu punto de entrada
-import '@shibui/ui/styles';
+import '@shibui-ui/ui/styles';
 
 // O solo los tokens CSS
-import '@shibui/ui/tokens';"
+import '@shibui-ui/ui/tokens';"
       ></lib-code-block>
     </div>
   `,

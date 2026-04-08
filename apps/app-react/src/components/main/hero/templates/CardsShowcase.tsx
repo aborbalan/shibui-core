@@ -1,5 +1,5 @@
 import React from 'react';
-import { LibCard, LibComponentGrid } from '@shibui/ui/react';
+import { LibCard, LibComponentGrid } from '@shibui-ui/ui/react';
 
 interface VariantCard {
   variant:     'inverse' | 'default' | 'kintsugi' | 'glitch' | 'celadon' | 'washi';

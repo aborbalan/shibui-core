@@ -1,4 +1,4 @@
-import { LibEyebrow } from '@shibui/ui/react';
+import { LibEyebrow } from '@shibui-ui/ui/react';
 import React from 'react';
 
 interface TokensIntroProps {

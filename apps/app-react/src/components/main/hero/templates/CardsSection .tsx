@@ -1,4 +1,4 @@
-import { LibCard, LibComponentGrid } from '@shibui/ui/react';
+import { LibCard, LibComponentGrid } from '@shibui-ui/ui/react';
 import React from 'react';
 
 interface CardItem {
