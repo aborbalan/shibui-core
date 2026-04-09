@@ -1,6 +1,6 @@
 {
   "name": "shibui-ecosystem",
-  "private": true,
+  "private": false,
   "description": "Monorepo para testing de componentes Shibui UI",
   "repository": {
     "type": "git",
