@@ -17,6 +17,7 @@ export interface UiNavigateEventDetail {
   index: number;
 }
 
+
 /**
  * @element lib-breadcrumb
  * @fires ui-lib-navigate - Disparado al hacer clic en un crumb con href.
