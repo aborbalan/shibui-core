@@ -1,22 +1,21 @@
-import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
-import '../../atoms/icon/lib-icon.component';
+import { LitElement, css, unsafeCSS, TemplateResult } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
+import "../../atoms/icon/lib-icon.component";
 import type {
   BreadcrumbItem,
   BreadcrumbSeparator,
   BreadcrumbSize,
   BreadcrumbSurface,
   BreadcrumbAccent,
-} from './lib-breadcrumb.types';
-import { breadcrumbTemplate } from './lib-breadcrumb.html';
-import componentCss from './lib-breadcrumb.css?inline';
-import sharedTokens from '../../../styles/shared/tokens.css?inline';
+} from "./lib-breadcrumb.types";
+import { breadcrumbTemplate } from "./lib-breadcrumb.html";
+import componentCss from "./lib-breadcrumb.css?inline";
+import sharedTokens from "../../../styles/shared/tokens.css?inline";
 
 export interface UiNavigateEventDetail {
   item: BreadcrumbItem;
   index: number;
 }
-
 
 /**
  * @element lib-breadcrumb
@@ -29,11 +28,15 @@ export interface UiNavigateEventDetail {
  * @attr {boolean}             dark      - Modo superficie oscura
  * @attr {number}              max-visible - Si > 0, colapsa ítems intermedios cuando items.length > N
  */
-@customElement('lib-breadcrumb')
+@customElement("lib-breadcrumb")
 export class LibBreadcrumb extends LitElement {
   static override styles = [
-    css`${unsafeCSS(sharedTokens)}`,
-    css`${unsafeCSS(componentCss)}`,
+    css`
+      ${unsafeCSS(sharedTokens)}
+    `,
+    css`
+      ${unsafeCSS(componentCss)}
+    `,
   ];
 
   /* ── Props públicas ──────────────────────────────────── */
@@ -42,21 +45,21 @@ export class LibBreadcrumb extends LitElement {
   items: BreadcrumbItem[] = [];
 
   @property({ type: String, reflect: true })
-  separator: BreadcrumbSeparator = 'slash';
+  separator: BreadcrumbSeparator = "slash";
 
   @property({ type: String, reflect: true })
-  size: BreadcrumbSize = 'md';
+  size: BreadcrumbSize = "md";
 
   @property({ type: String, reflect: true })
-  surface: BreadcrumbSurface = 'default';
+  surface: BreadcrumbSurface = "default";
 
   @property({ type: String, reflect: true })
-  accent: BreadcrumbAccent = 'none';
+  accent: BreadcrumbAccent = "none";
 
   @property({ type: Boolean, reflect: true })
   dark = false;
 
-  @property({ type: Number, attribute: 'max-visible' })
+  @property({ type: Number, attribute: "max-visible" })
   maxVisible = 0;
 
   /* ── Estado interno ──────────────────────────────────── */
@@ -68,15 +71,15 @@ export class LibBreadcrumb extends LitElement {
 
   override render(): TemplateResult {
     return breadcrumbTemplate({
-      items:      this.items,
-      separator:  this.separator,
-      size:       this.size,
-      surface:    this.surface,
-      accent:     this.accent,
-      dark:       this.dark,
+      items: this.items,
+      separator: this.separator,
+      size: this.size,
+      surface: this.surface,
+      accent: this.accent,
+      dark: this.dark,
       maxVisible: this.maxVisible,
-      expanded:   this._expanded,
-      onExpand:   this._handleExpand.bind(this),
+      expanded: this._expanded,
+      onExpand: this._handleExpand.bind(this),
       onNavigate: this._handleNavigate.bind(this),
     });
   }
@@ -89,7 +92,7 @@ export class LibBreadcrumb extends LitElement {
 
   private _handleNavigate(item: BreadcrumbItem, index: number): void {
     this.dispatchEvent(
-      new CustomEvent<UiNavigateEventDetail>('ui-lib-navigate', {
+      new CustomEvent<UiNavigateEventDetail>("ui-lib-navigate", {
         detail: { item, index },
         bubbles: true,
         composed: true,
@@ -100,6 +103,6 @@ export class LibBreadcrumb extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'lib-breadcrumb': LibBreadcrumb;
+    "lib-breadcrumb": LibBreadcrumb;
   }
 }
