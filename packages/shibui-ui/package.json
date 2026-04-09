@@ -54,7 +54,7 @@
     "format": "prettier --write \"src/**/*.ts\" --config .config/.prettierrc.json",
     "start": "npm run dev",
     "s": "npm run dev",
-    "prepare": "if [ \"$CI\" != \"true\" ]; then husky; fi",
+    "prepare": "node -e \"if (process.env.CI !== 'true') { try { require('child_process').execSync('husky', {stdio: 'inherit'}) } catch (e) {} }\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lighthouse": "lhci autorun --config=./.config/lighthouserc.cjs",
