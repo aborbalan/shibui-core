@@ -103,7 +103,7 @@
     "stylelint": "^17.1.1",
     "stylelint-config-standard": "^40.0.0",
     "typescript": "^5.3.3",
-    "vite": "^5.0.8",
+    "vite": "^6.4.2",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.18",
     "firebase-tools": "^13.0.0"
