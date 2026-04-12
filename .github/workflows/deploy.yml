@@ -11,101 +11,96 @@ jobs:
   build_test_and_deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write # 👈 Crucial: Permite a GitHub generar el token OIDC [1]
-      contents: write # Requerido para que Semantic Release cree etiquetas y notas [2]s tags de versión a Git
+      id-token: write
+      contents: write
       pull-requests: write
       issues: write  
     timeout-minutes: 60
-    
 
     steps:
       - name: ⬇️ Checkout Repo
         uses: actions/checkout@v4
 
-            # 1. DETECCIÓN DE CAMBIOS (Ahorro de recursos) [2]
-      - uses: dorny/paths-filter@v3
+      - name: 🔍 Detect Changes
+        uses: dorny/paths-filter@v3
         id: changes
         with:
-              filters: |
-                ui: 'packages/shibui-ui/**'
-                react: 'apps/app-react/**'
-                angular: 'apps/app-angular/**'
-                svelte: 'apps/app-svelte/**'
-                  
+          filters: |
+            ui: 'packages/shibui-ui/**'
+            react: 'apps/app-react/**'
+            angular: 'apps/app-angular/**'
+            svelte: 'apps/app-svelte/**'
+
+      - name: 🥡 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: 🏗️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.13.0
-          cache: 'npm'
+          cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
       - name: 📦 Install Dependencies
-        run: npm ci --ignore-scripts 
-        working-directory: .
+        run: pnpm install --frozen-lockfile
 
-      # --- SECCIÓN PLAYWRIGHT (Integrada) ---
+      # --- SECCIÓN PLAYWRIGHT ---
       - name: 🎭 Install Playwright Browsers
-        run: npx playwright install --with-deps
-        working-directory: .
+        run: pnpm exec playwright install --with-deps
 
       - name: 🧪 Run Playwright Tests
-        run: npx playwright test
-        working-directory: .
-        # Si Playwright genera el reporte fuera de la carpeta de la lib, 
-        # asegúrate de que el path en el artifact sea correcto.
+        run: pnpm exec playwright test
 
       - name: 📊 Upload Test Report
         uses: actions/upload-artifact@v4
-        if: always() # Se sube aunque fallen los tests para poder ver el error
+        if: always()
         with:
           name: playwright-report
           path: packages/shibui-ui/playwright-report/
           retention-days: 30
 
-
       - name: ✅ Quality & Core Build
         if: steps.changes.outputs.ui == 'true' || steps.changes.outputs.react == 'true'
         run: |
-          npm run type-check -w @shibui-ui/ui
-          npm run lint -w @shibui-ui/ui
-          npm run build -w @shibui-ui/ui
+          pnpm --filter @shibui-ui/ui type-check
+          pnpm --filter @shibui-ui/ui lint
+          pnpm --filter @shibui-ui/ui build
 
-      - name: Verify NPM Connection
+      - name: 🔑 Verify NPM Connection
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-          npm whoami
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc.publish
+          npm whoami --userconfig .npmrc.publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_SECRET }}
 
       - name: 🎡 Build Storybook
         if: steps.changes.outputs.ui == 'true'
-        run: npm run build-storybook -w @shibui-ui/ui
+        run: pnpm --filter @shibui-ui/ui build-storybook
 
       - name: 🚀 Run Semantic Release
         if: github.ref == 'refs/heads/main'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_SECRET }} 
-        run: npx semantic-release
+          NPM_TOKEN: ${{ secrets.NPM_SECRET }}
+          NPM_CONFIG_PROVENANCE: true
+        run: pnpm exec semantic-release
 
- # 3. SECCIÓN DE APPS (Solo si hay cambios en React)
       - name: 📦 Build React App
         if: steps.changes.outputs.react == 'true'
-        run: npm run build -w app-react
+        run: pnpm --filter app-react build
 
-    # 4. DESPLIEGUE POR TARGETS (Programático) 
       - name: 🚀 Targeted Deploy to Firebase
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          # Desplegar Storybook si cambió la lib
           if [ "${{ steps.changes.outputs.ui }}" == "true" ]; then
-            npx firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5
+            pnpm exec firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5
           fi
-          # Desplegar App React si cambió la app
           if [ "${{ steps.changes.outputs.react }}" == "true" ]; then
-            npx firebase deploy --only hosting:react --non-interactive --project lib-ui-b67c5
+            pnpm exec firebase deploy --only hosting:react --non-interactive --project lib-ui-b67c5
           fi
 
       - name: 📢 Notify Discord

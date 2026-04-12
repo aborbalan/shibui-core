@@ -6,58 +6,41 @@
     "type": "git",
     "url": "https://github.com/aborbalan/shibui-core.git"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@9.15.0",
   "scripts": {
-    "start:react": "npm run dev -w apps/app-react",
-    "start:svelte": "npm run dev -w apps/app-svelte",
-    "start:angular": "npm run start -w apps/app-angular",
-    "dev:all": "concurrently -n \"REACT,SVELTE,ANGULAR\" -c \"cyan,magenta,blue\" \"npm run start:react\" \"npm run start:svelte\" \"npm run start:angular\"",
-    "build:shibui": "npm run build -w @shibui-ui/ui",
+    "start:react": "pnpm --filter app-react dev",
+    "start:svelte": "pnpm --filter app-svelte dev",
+    "start:angular": "pnpm --filter app-angular start",
+    "start:api": "pnpm --filter @shibui-ui/api start:dev",
+    "dev:all": "concurrently -n \"REACT,SVELTE,ANGULAR\" -c \"cyan,magenta,blue\" \"pnpm start:react\" \"pnpm start:svelte\" \"pnpm start:angular\"",
+    "build:shibui": "pnpm --filter @shibui-ui/ui build",
+    "build:api": "pnpm --filter @shibui-ui/api build",
+    "build:react": "pnpm --filter app-react build",
     "prepare": "husky",
-    "type-check": "npx tsc --noEmit --project packages/shibui-ui/tsconfig.json",
-    "storybook": "npm run storybook -w packages/shibui-ui",
-    "build-storybook": "npm run build-storybook -w packages/shibui-ui",
-    "build-react": "npm run build --workspace=app-react",
-    "lint": "npm run lint -w @shibui-ui/ui"
+    "type-check": "pnpm exec tsc --noEmit --project packages/shibui-ui/tsconfig.json",
+    "storybook": "pnpm --filter @shibui-ui/ui storybook",
+    "build-storybook": "pnpm --filter @shibui-ui/ui build-storybook",
+    "lint": "pnpm --filter @shibui-ui/ui lint"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.4.1",
+    "@commitlint/config-conventional": "^20.4.1",
     "@types/node": "^25.3.5",
     "concurrently": "^9.2.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "semantic-release": "^24.2.9",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
-    "@lhci/cli": "^0.15.1"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/github": "^11.0.6",
     "@semantic-release/npm": "^12.0.2",
     "@semantic-release/release-notes-generator": "^14.1.0"
-  },
- "overrides": {
-  "rxjs": "7.8.2",
-  "@nestjs/cli": {
-    "rxjs": "7.8.2",
-    "@angular-devkit/core": {
-      "rxjs": "7.8.2"
-    },
-    "@angular-devkit/schematics": {
-      "rxjs": "7.8.2"
-    }
-  },
-  "@nestjs/schematics": {
-    "rxjs": "7.8.2",
-    "@angular-devkit/core": {
-      "rxjs": "7.8.2"
-    },
-    "@angular-devkit/schematics": {
-      "rxjs": "7.8.2"
-    }
   }
-}
 }

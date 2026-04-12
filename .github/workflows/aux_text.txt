@@ -10,26 +10,37 @@ on:
 jobs:
   build_test_and_deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # 👈 Crucial: Permite a GitHub generar el token OIDC [1]
+      contents: write # Requerido para que Semantic Release cree etiquetas y notas [2]s tags de versión a Git
+      pull-requests: write
+      issues: write  
     timeout-minutes: 60
-
     
-    
-    defaults:
-      run:
-        working-directory: packages/shibui-ui
 
     steps:
       - name: ⬇️ Checkout Repo
         uses: actions/checkout@v4
 
+            # 1. DETECCIÓN DE CAMBIOS (Ahorro de recursos) [2]
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+              filters: |
+                ui: 'packages/shibui-ui/**'
+                react: 'apps/app-react/**'
+                angular: 'apps/app-angular/**'
+                svelte: 'apps/app-svelte/**'
+                  
       - name: 🏗️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.13.0
           cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: 📦 Install Dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts 
         working-directory: .
 
       # --- SECCIÓN PLAYWRIGHT (Integrada) ---
@@ -50,35 +61,52 @@ jobs:
           name: playwright-report
           path: packages/shibui-ui/playwright-report/
           retention-days: 30
-      # ---------------------------------------
 
-      - name: ✅ Type Check & Lint
+
+      - name: ✅ Quality & Core Build
+        if: steps.changes.outputs.ui == 'true' || steps.changes.outputs.react == 'true'
         run: |
-          npm run type-check
-          npm run lint
+          npm run type-check -w @shibui-ui/ui
+          npm run lint -w @shibui-ui/ui
+          npm run build -w @shibui-ui/ui
 
-      - name: 📦 Build Library
-        run: npm run build:shibui
-
-      - name: 📦 Build React App
+      - name: Verify NPM Connection
         run: |
-          echo "--- Directorio actual ---"
-          pwd
-          echo "--- Contenido de la raíz ---"
-          ls -F
-          echo "--- ¿Qué scripts ve npm en la raíz? ---"
-          npm run --json | grep "build-react" || echo "No se encuentra el script en el JSON"
-          
-          # Intento de build directo (saltándonos el alias si falla)
-          npm run build --workspace=app-react
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+          npm whoami
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_SECRET }}
 
       - name: 🎡 Build Storybook
-        run: npm run build-storybook
+        if: steps.changes.outputs.ui == 'true'
+        run: npm run build-storybook -w @shibui-ui/ui
 
-      - name: 🚀 Deploy to Firebase
+      - name: 🚀 Run Semantic Release
+        if: github.ref == 'refs/heads/main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_SECRET }} 
+        run: npx semantic-release
+
+ # 3. SECCIÓN DE APPS (Solo si hay cambios en React)
+      - name: 📦 Build React App
+        if: steps.changes.outputs.react == 'true'
+        run: npm run build -w app-react
+
+    # 4. DESPLIEGUE POR TARGETS (Programático) 
+      - name: 🚀 Targeted Deploy to Firebase
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-        working-directory: .
-        run: npx firebase-tools deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}" --project lib-ui-b67c5
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          # Desplegar Storybook si cambió la lib
+          if [ "${{ steps.changes.outputs.ui }}" == "true" ]; then
+            npx firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5
+          fi
+          # Desplegar App React si cambió la app
+          if [ "${{ steps.changes.outputs.react }}" == "true" ]; then
+            npx firebase deploy --only hosting:react --non-interactive --project lib-ui-b67c5
+          fi
 
       - name: 📢 Notify Discord
         if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
@@ -90,7 +118,7 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           CLEAN_MSG=$(echo "$COMMIT_MSG" | tr -d '"' | tr -d '\n' | tr -d '\r')
           curl -H "Content-Type: application/json" -X POST -d "{
-                 \"content\": \"🚀 **Nueva actualización de @shibui/ui**\",
+                 \"content\": \"🚀 **Nueva actualización de @shibui-ui/ui**\",
                  \"embeds\": [{
                    \"title\": \"Versión $VERSION desplegada con éxito\",
                    \"description\": \"**Cambios:** $CLEAN_MSG\n**Autor:** $COMMIT_AUTHOR\",

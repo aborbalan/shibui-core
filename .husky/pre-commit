@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+pnpm --filter @shibui-ui/ui type-check
 
-npm run type-check -w @shibui-ui/ui
-
-cd packages/shibui-ui && npx lint-staged && npx stylelint --config .config/.stylelintrc.json --fix "src/**/*.css"
+cd packages/shibui-ui && pnpm exec lint-staged && pnpm exec stylelint --config .config/.stylelintrc.json --fix "src/**/*.css"
