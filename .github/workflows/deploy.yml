@@ -66,16 +66,18 @@ jobs:
           pnpm --filter @shibui-ui/ui lint
           pnpm --filter @shibui-ui/ui build
 
-      - name: 🔑 Verify NPM Connection
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc.publish
-          npm whoami --userconfig .npmrc.publish
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_SECRET }}
-
       - name: 🎡 Build Storybook
         if: steps.changes.outputs.ui == 'true'
         run: pnpm --filter @shibui-ui/ui build-storybook
+
+      - name: 🔍 Debug NPM auth
+        if: github.ref == 'refs/heads/main'
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_SECRET }}
+        run: |
+          echo "Token length: ${#NPM_TOKEN}"
+          echo "Token prefix: ${NPM_TOKEN:0:8}"
+          npm whoami --auth-type=legacy
 
       
       - name: 🚀 Run Semantic Release
