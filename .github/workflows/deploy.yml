@@ -93,6 +93,12 @@ jobs:
         if: steps.changes.outputs.react == 'true'
         run: pnpm --filter app-react build
 
+      - name: 📄 Generate OpenAPI spec
+        if: steps.changes.outputs.ui == 'true' || github.ref == 'refs/heads/main'
+        run: pnpm --filter @shibui-ui/api generate:openapi
+        env:
+          DOCS_OUTPUT_DIR: ${{ github.workspace }}/apps/shibui-api/docs-dist
+
       - name: 🚀 Targeted Deploy to Firebase
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         env:
@@ -104,6 +110,7 @@ jobs:
           if [ "${{ steps.changes.outputs.react }}" == "true" ]; then
             pnpm exec firebase deploy --only hosting:react --non-interactive --project lib-ui-b67c5
           fi
+          pnpm exec firebase deploy --only hosting:shibui-api --non-interactive --project lib-ui-b67c5
 
       - name: 📢 Notify Discord
         if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')

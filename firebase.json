@@ -41,6 +41,11 @@
           "destination": "/index.html"
         }
       ]
+    },
+    {
+      "target": "shibui-api",
+      "public": "apps/shibui-api/docs-dist",
+      "ignore": ["**/node_modules/**"]
     }
   ]
 }

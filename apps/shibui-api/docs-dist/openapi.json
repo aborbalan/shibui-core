@@ -1,0 +1,845 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/api/v1/users": {
+      "post": {
+        "operationId": "UsersController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "409": {
+            "description": "Email already exists"
+          }
+        },
+        "summary": "Create a new user",
+        "tags": [
+          "users"
+        ]
+      },
+      "get": {
+        "operationId": "UsersController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of users"
+          }
+        },
+        "summary": "Get all users",
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/v1/users/{id}": {
+      "get": {
+        "operationId": "UsersController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "User UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Get a user by ID",
+        "tags": [
+          "users"
+        ]
+      },
+      "patch": {
+        "operationId": "UsersController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "User UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Update a user",
+        "tags": [
+          "users"
+        ]
+      },
+      "delete": {
+        "operationId": "UsersController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "User UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Delete a user",
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/v1/components": {
+      "post": {
+        "operationId": "ComponentsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateComponentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Component created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "409": {
+            "description": "Slug already exists"
+          }
+        },
+        "summary": "Create a new component",
+        "tags": [
+          "components"
+        ]
+      },
+      "get": {
+        "operationId": "ComponentsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of components"
+          }
+        },
+        "summary": "Get all components",
+        "tags": [
+          "components"
+        ]
+      }
+    },
+    "/api/v1/components/category/{categoryId}": {
+      "get": {
+        "operationId": "ComponentsController_findByCategory",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "description": "Category UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of components in the category"
+          }
+        },
+        "summary": "Get all components in a category",
+        "tags": [
+          "components"
+        ]
+      }
+    },
+    "/api/v1/components/{id}": {
+      "get": {
+        "operationId": "ComponentsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Component UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Component found"
+          },
+          "404": {
+            "description": "Component not found"
+          }
+        },
+        "summary": "Get a component by ID",
+        "tags": [
+          "components"
+        ]
+      },
+      "patch": {
+        "operationId": "ComponentsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Component UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateComponentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Component updated"
+          },
+          "404": {
+            "description": "Component not found"
+          }
+        },
+        "summary": "Update a component",
+        "tags": [
+          "components"
+        ]
+      },
+      "delete": {
+        "operationId": "ComponentsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Component UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Component deleted"
+          },
+          "404": {
+            "description": "Component not found"
+          }
+        },
+        "summary": "Delete a component",
+        "tags": [
+          "components"
+        ]
+      }
+    },
+    "/api/v1/categories": {
+      "post": {
+        "operationId": "CategoriesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCategoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Category created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "409": {
+            "description": "Slug already exists"
+          }
+        },
+        "summary": "Create a new category",
+        "tags": [
+          "categories"
+        ]
+      },
+      "get": {
+        "operationId": "CategoriesController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of categories"
+          }
+        },
+        "summary": "Get all categories ordered by position",
+        "tags": [
+          "categories"
+        ]
+      }
+    },
+    "/api/v1/categories/{id}": {
+      "get": {
+        "operationId": "CategoriesController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Category UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category found"
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        },
+        "summary": "Get a category by ID",
+        "tags": [
+          "categories"
+        ]
+      },
+      "patch": {
+        "operationId": "CategoriesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Category UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCategoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Category updated"
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        },
+        "summary": "Update a category",
+        "tags": [
+          "categories"
+        ]
+      },
+      "delete": {
+        "operationId": "CategoriesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Category UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Category deleted"
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        },
+        "summary": "Delete a category",
+        "tags": [
+          "categories"
+        ]
+      }
+    },
+    "/api/v1/examples": {
+      "post": {
+        "operationId": "ExamplesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExampleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Example created successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          }
+        },
+        "summary": "Create a new example",
+        "tags": [
+          "examples"
+        ]
+      },
+      "get": {
+        "operationId": "ExamplesController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of examples"
+          }
+        },
+        "summary": "Get all examples",
+        "tags": [
+          "examples"
+        ]
+      }
+    },
+    "/api/v1/examples/component/{componentId}": {
+      "get": {
+        "operationId": "ExamplesController_findByComponent",
+        "parameters": [
+          {
+            "name": "componentId",
+            "required": true,
+            "in": "path",
+            "description": "Component UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of examples for the component"
+          }
+        },
+        "summary": "Get all examples for a component ordered by position",
+        "tags": [
+          "examples"
+        ]
+      }
+    },
+    "/api/v1/examples/{id}": {
+      "get": {
+        "operationId": "ExamplesController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Example UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Example found"
+          },
+          "404": {
+            "description": "Example not found"
+          }
+        },
+        "summary": "Get an example by ID",
+        "tags": [
+          "examples"
+        ]
+      },
+      "patch": {
+        "operationId": "ExamplesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Example UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateExampleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Example updated"
+          },
+          "404": {
+            "description": "Example not found"
+          }
+        },
+        "summary": "Update an example",
+        "tags": [
+          "examples"
+        ]
+      },
+      "delete": {
+        "operationId": "ExamplesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Example UUID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Example deleted"
+          },
+          "404": {
+            "description": "Example not found"
+          }
+        },
+        "summary": "Delete an example",
+        "tags": [
+          "examples"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Shibui UI API",
+    "description": "REST API for the Shibui UI component library. Provides access to components, categories, examples and users.",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "categories",
+      "description": "Component categories and navigation structure"
+    },
+    {
+      "name": "components",
+      "description": "Web components built with Lit"
+    },
+    {
+      "name": "examples",
+      "description": "Usage examples for each component"
+    },
+    {
+      "name": "users",
+      "description": "User management"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "admin@shibui.dev"
+          },
+          "name": {
+            "type": "string",
+            "example": "Shibui Admin",
+            "maxLength": 100
+          },
+          "avatarUrl": {
+            "type": "string",
+            "example": "https://api.dicebear.com/7.x/avataaars/svg?seed=admin"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "contributor",
+              "viewer"
+            ],
+            "example": "contributor"
+          }
+        },
+        "required": [
+          "email",
+          "name",
+          "role"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateComponentDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Button",
+            "maxLength": 100
+          },
+          "slug": {
+            "type": "string",
+            "example": "shibui-button",
+            "maxLength": 100,
+            "description": "URL-friendly kebab-case identifier"
+          },
+          "tagName": {
+            "type": "string",
+            "example": "shibui-button",
+            "maxLength": 100,
+            "description": "Custom element tag name"
+          },
+          "description": {
+            "type": "string",
+            "example": "A versatile button component supporting multiple variants and states.",
+            "maxLength": 500
+          },
+          "version": {
+            "type": "string",
+            "example": "1.0.0",
+            "description": "Semver version"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "stable",
+              "deprecated"
+            ],
+            "example": "stable"
+          },
+          "categoryId": {
+            "type": "string",
+            "example": "cat-0001-0000-0000-000000000001",
+            "description": "Category UUID"
+          },
+          "packageName": {
+            "type": "string",
+            "example": "@shibui-ui/components",
+            "maxLength": 150
+          },
+          "tags": {
+            "example": [
+              "form",
+              "interactive",
+              "accessible"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "docsUrl": {
+            "type": "string",
+            "example": "https://shibui.dev/docs/button"
+          }
+        },
+        "required": [
+          "name",
+          "slug",
+          "tagName",
+          "description",
+          "version",
+          "status",
+          "categoryId"
+        ]
+      },
+      "UpdateComponentDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateCategoryDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Inputs & Forms",
+            "maxLength": 80
+          },
+          "slug": {
+            "type": "string",
+            "example": "inputs-forms",
+            "maxLength": 80,
+            "description": "URL-friendly kebab-case identifier"
+          },
+          "description": {
+            "type": "string",
+            "example": "Text fields, selects and all form-related components.",
+            "maxLength": 300
+          },
+          "icon": {
+            "type": "string",
+            "example": "form",
+            "maxLength": 50,
+            "description": "Icon name from the icon set"
+          },
+          "order": {
+            "type": "number",
+            "example": 0,
+            "minimum": 0,
+            "description": "Display order in sidebar navigation"
+          }
+        },
+        "required": [
+          "name",
+          "slug",
+          "order"
+        ]
+      },
+      "UpdateCategoryDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateExampleDto": {
+        "type": "object",
+        "properties": {
+          "componentId": {
+            "type": "string",
+            "example": "cmp-0001-0000-0000-000000000001",
+            "description": "Component UUID"
+          },
+          "title": {
+            "type": "string",
+            "example": "Basic usage",
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "example": "Default button with primary variant.",
+            "maxLength": 400
+          },
+          "code": {
+            "type": "string",
+            "example": "<shibui-button variant=\"primary\">Click me</shibui-button>",
+            "description": "Source code snippet"
+          },
+          "framework": {
+            "type": "string",
+            "enum": [
+              "vanilla",
+              "angular",
+              "react",
+              "vue"
+            ],
+            "example": "vanilla"
+          },
+          "order": {
+            "type": "number",
+            "example": 0,
+            "minimum": 0,
+            "description": "Display order within component examples"
+          },
+          "isDefault": {
+            "type": "boolean",
+            "example": true,
+            "description": "Whether this is the primary example shown by default"
+          }
+        },
+        "required": [
+          "componentId",
+          "title",
+          "code",
+          "framework",
+          "order"
+        ]
+      },
+      "UpdateExampleDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}

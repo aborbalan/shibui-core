@@ -1,5 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { apiReference } from '@scalar/nestjs-api-reference';
 import { AppModule } from './app.module';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
@@ -11,9 +13,6 @@ async function bootstrap() {
   app.setGlobalPrefix('api/v1');
 
   // ── Global validation ──────────────────────────────────────────────────────
-  // whitelist: strips properties not in the DTO
-  // forbidNonWhitelisted: throws 400 if unknown properties are sent
-  // transform: auto-converts plain objects to DTO class instances
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -27,6 +26,32 @@ async function bootstrap() {
 
   // ── Global error handler ───────────────────────────────────────────────────
   app.useGlobalFilters(new AllExceptionsFilter());
+
+  // ── OpenAPI spec ───────────────────────────────────────────────────────────
+  const config = new DocumentBuilder()
+    .setTitle('Shibui UI API')
+    .setDescription(
+      'REST API for the Shibui UI component library. Provides access to components, categories, examples and users.',
+    )
+    .setVersion('1.0.0')
+    .addTag('categories', 'Component categories and navigation structure')
+    .addTag('components', 'Web components built with Lit')
+    .addTag('examples', 'Usage examples for each component')
+    .addTag('users', 'User management')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+
+  // ── Scalar UI at /api/docs ─────────────────────────────────────────────────
+  app.use(
+    '/api/docs',
+    apiReference({
+      spec: {
+        content: document,
+      },
+      theme: 'saturn',
+    }),
+  );
 
   await app.listen(process.env.PORT ?? 3000);
 }
