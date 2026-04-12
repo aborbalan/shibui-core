@@ -78,7 +78,7 @@ jobs:
       
       - name: 📦 Publish to npm (Trusted Publisher)
         if: github.ref == 'refs/heads/main'
-        run: npm publish --provenance --access public
+        run: npm publish --provenance --access public --no-git-checks
         working-directory: packages/shibui-ui
 
       - name: 📦 Build React App
