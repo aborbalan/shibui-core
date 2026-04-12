@@ -16,7 +16,6 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -40,29 +39,29 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "dev": "vite",
-    "clean": "rimraf dist node_modules/.cache",
-    "pack:local": "npm run build && npm pack",
-    "preview": "vite preview",
-    "prebuild": "npm run clean",
-    "postbuild": "npm run type-check",
-    "type-check": "tsc --noEmit",
-    "lint": "eslint . --config .config/eslintrc.cjs --ignore-path .config/.eslintignore",
-    "stylelint": "stylelint --config .config/.stylelintrc.json --fix",
-    "stylelint:staged": "stylelint --config .config/.stylelintrc.json --fix --",
-    "format": "prettier --write \"src/**/*.ts\" --config .config/.prettierrc.json",
-    "start": "npm run dev",
-    "s": "npm run dev",
-    "prepare": "node -e \"if (process.env.CI !== 'true') { try { require('child_process').execSync('husky', {stdio: 'inherit'}) } catch (e) {} }\"",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "lighthouse": "lhci autorun --config=./.config/lighthouserc.cjs",
-    "analyze": "cem analyze --litelement --exclude dist",
-    "generate:wrappers": "tsx scripts/generate-wrappers.ts",
-    "build": "npm run clean && vite build && tsc &&  npm run analyze && npm run generate:wrappers",
-    "deploy": "npx firebase-tools deploy --only hosting:storybook --project lib-ui-b67c5"
-  },
+"scripts": {
+  "dev": "vite",
+  "clean": "rimraf dist node_modules/.cache",
+  "pack:local": "pnpm run build && npm pack",
+  "preview": "vite preview",
+  "prebuild": "pnpm run clean",
+  "postbuild": "pnpm run type-check",
+  "type-check": "tsc --noEmit",
+  "lint": "eslint . --config .config/eslintrc.cjs --ignore-path .config/.eslintignore",
+  "stylelint": "stylelint --config .config/.stylelintrc.json --fix",
+  "stylelint:staged": "stylelint --config .config/.stylelintrc.json --fix --",
+  "format": "prettier --write \"src/**/*.ts\" --config .config/.prettierrc.json",
+  "start": "pnpm run dev",
+  "s": "pnpm run dev",
+  "prepare": "node -e \"if (process.env.CI !== 'true') { try { require('child_process').execSync('husky', {stdio: 'inherit'}) } catch (e) {} }\"",
+  "storybook": "storybook dev -p 6006",
+  "build-storybook": "storybook build",
+  "lighthouse": "lhci autorun --config=./.config/lighthouserc.cjs",
+  "analyze": "cem analyze --litelement --exclude dist",
+  "generate:wrappers": "tsx scripts/generate-wrappers.ts",
+  "build": "pnpm run clean && vite build && tsc && pnpm run analyze && pnpm run generate:wrappers",
+  "deploy": "firebase-tools deploy --only hosting:storybook --project lib-ui-b67c5"
+},
   "keywords": [
     "web-components",
     "lit",
@@ -92,11 +91,13 @@
     "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^8.56.0",
     "eslint-plugin-storybook": "^10.2.6",
+    "firebase-tools": "^13.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "lit": "^3.0.0",
     "playwright": "^1.49.0",
     "prettier": "^3.1.1",
+    "rimraf": "^6.1.3",
     "sass": "^1.97.3",
     "storybook": "^10.2.6",
     "stylelint": "^17.1.1",
@@ -104,8 +105,7 @@
     "typescript": "^5.3.3",
     "vite": "^6.4.2",
     "vite-plugin-dts": "^4.5.4",
-    "vitest": "^4.0.18",
-    "firebase-tools": "^13.0.0"
+    "vitest": "^4.0.18"
   },
   "dependencies": {
     "@lit/react": "^1.0.8",
