@@ -46,7 +46,7 @@ jobs:
 
       # --- SECCIÓN PLAYWRIGHT ---
       - name: 🎭 Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm --filter @shibui-ui/ui exec playwright install --with-deps
 
       - name: 🧪 Run Playwright Tests
         run: pnpm exec playwright test
