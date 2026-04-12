@@ -77,15 +77,17 @@ jobs:
         if: steps.changes.outputs.ui == 'true'
         run: pnpm --filter @shibui-ui/ui build-storybook
 
+
+      - name: 🔑 Setup NPM auth
+        if: github.ref == 'refs/heads/main'
+        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_SECRET }}
+      
       - name: 🚀 Run Semantic Release
         if: github.ref == 'refs/heads/main'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_SECRET }}
           NPM_CONFIG_PROVENANCE: true
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
-          pnpm exec semantic-release
+        run: pnpm exec semantic-release
 
       - name: 📦 Build React App
         if: steps.changes.outputs.react == 'true'
