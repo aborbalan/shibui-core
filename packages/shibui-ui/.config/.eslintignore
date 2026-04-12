@@ -6,3 +6,4 @@ commitlint.config.cjs
 !src/**/*.ts
 !src/**/*.stories.ts
 scripts/
+playwright.config.ts
