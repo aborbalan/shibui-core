@@ -80,7 +80,9 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: npm publish --provenance --access public --no-git-checks
         working-directory: packages/shibui-ui
-
+        env:
+          NODE_AUTH_TOKEN: ${{ env.NODE_AUTH_TOKEN }}
+          
       - name: 📦 Build React App
         if: steps.changes.outputs.react == 'true'
         run: pnpm --filter app-react build
