@@ -14,7 +14,11 @@
         ],
         "svelte": [
           "shibui-showcase-svelte"
+        ],
+        "shibui-api": [
+          "shibui-api"
         ]
+
       }
     }
   },
