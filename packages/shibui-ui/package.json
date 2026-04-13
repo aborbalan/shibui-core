@@ -4,7 +4,7 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/aborbalan/shibui-core",
+    "url": "git+https://github.com/aborbalan/shibui-core.git",
     "directory": "packages/shibui-ui"
   },
   "publishConfig": {
@@ -39,29 +39,29 @@
   "files": [
     "dist"
   ],
-"scripts": {
-  "dev": "vite",
-  "clean": "rimraf dist node_modules/.cache",
-  "pack:local": "pnpm run build && npm pack",
-  "preview": "vite preview",
-  "prebuild": "pnpm run clean",
-  "postbuild": "pnpm run type-check",
-  "type-check": "tsc --noEmit",
-  "lint": "eslint . --config .config/eslintrc.cjs --ignore-path .config/.eslintignore",
-  "stylelint": "stylelint --config .config/.stylelintrc.json --fix",
-  "stylelint:staged": "stylelint --config .config/.stylelintrc.json --fix --",
-  "format": "prettier --write \"src/**/*.ts\" --config .config/.prettierrc.json",
-  "start": "pnpm run dev",
-  "s": "pnpm run dev",
-  "prepare": "node -e \"if (process.env.CI !== 'true') { try { require('child_process').execSync('husky', {stdio: 'inherit'}) } catch (e) {} }\"",
-  "storybook": "storybook dev -p 6006",
-  "build-storybook": "storybook build",
-  "lighthouse": "lhci autorun --config=./.config/lighthouserc.cjs",
-  "analyze": "cem analyze --litelement --exclude dist",
-  "generate:wrappers": "tsx scripts/generate-wrappers.ts",
-  "build": "pnpm run clean && vite build && tsc && pnpm run analyze && pnpm run generate:wrappers",
-  "deploy": "firebase-tools deploy --only hosting:storybook --project lib-ui-b67c5"
-},
+  "scripts": {
+    "dev": "vite",
+    "clean": "rimraf dist node_modules/.cache",
+    "pack:local": "pnpm run build && npm pack",
+    "preview": "vite preview",
+    "prebuild": "pnpm run clean",
+    "postbuild": "pnpm run type-check",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --config .config/eslintrc.cjs --ignore-path .config/.eslintignore",
+    "stylelint": "stylelint --config .config/.stylelintrc.json --fix",
+    "stylelint:staged": "stylelint --config .config/.stylelintrc.json --fix --",
+    "format": "prettier --write \"src/**/*.ts\" --config .config/.prettierrc.json",
+    "start": "pnpm run dev",
+    "s": "pnpm run dev",
+    "prepare": "node -e \"if (process.env.CI !== 'true') { try { require('child_process').execSync('husky', {stdio: 'inherit'}) } catch (e) {} }\"",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "lighthouse": "lhci autorun --config=./.config/lighthouserc.cjs",
+    "analyze": "cem analyze --litelement --exclude dist",
+    "generate:wrappers": "tsx scripts/generate-wrappers.ts",
+    "build": "pnpm run clean && vite build && tsc && pnpm run analyze && pnpm run generate:wrappers",
+    "deploy": "firebase-tools deploy --only hosting:storybook --project lib-ui-b67c5"
+  },
   "keywords": [
     "web-components",
     "lit",
