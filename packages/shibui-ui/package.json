@@ -60,7 +60,7 @@
     "analyze": "cem analyze --litelement --exclude dist",
     "generate:wrappers": "tsx scripts/generate-wrappers.ts",
     "build": "pnpm run clean && vite build && tsc && pnpm run analyze && pnpm run generate:wrappers",
-    "deploy": "firebase-tools deploy --only hosting:storybook --project lib-ui-b67c5"
+    "deploy": "firebase deploy --only hosting:storybook --project lib-ui-b67c5"
   },
   "keywords": [
     "web-components",
@@ -91,7 +91,6 @@
     "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^8.56.0",
     "eslint-plugin-storybook": "^10.2.6",
-    "firebase-tools": "^13.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "lit": "^3.0.0",
