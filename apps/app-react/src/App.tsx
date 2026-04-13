@@ -57,6 +57,7 @@ function App() {
 
 
   return (
+    <BrowserRouter>
 
     <div id="wrap-const-full" ref={wrapperRef} style={{
       width: '100%',
@@ -68,7 +69,6 @@ function App() {
         onNavLink={(id) => handleNavigateRoute(id)}
       />
 
-      <BrowserRouter>
 
 
         <Routes>
@@ -85,12 +85,12 @@ function App() {
 
 
         </Routes>
-      </BrowserRouter>
 
       <Footer  />
 
 
     </div>
+    </BrowserRouter>
 
   );
 }

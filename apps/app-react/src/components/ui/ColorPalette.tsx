@@ -1,5 +1,5 @@
 import React from 'react';
-import ColorSwatch, { ColorSwatchProps } from '../dumb/ColorSwatch';
+import ColorSwatch, { ColorSwatchProps } from '../shared/dumb/ColorSwatch';
 
 export interface ColorPaletteProps {
   /** Eyebrow label (ej: "Color · Washi") */
