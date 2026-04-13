@@ -20,7 +20,10 @@ jobs:
     steps:
       - name: ⬇️ Checkout Repo
         uses: actions/checkout@v4
-
+        with:
+            fetch-depth: 0
+            persist-credentials: false
+            
       - name: 🔍 Detect Changes
         uses: dorny/paths-filter@v3
         id: changes
