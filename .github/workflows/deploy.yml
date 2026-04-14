@@ -23,7 +23,7 @@ jobs:
         with:
             fetch-depth: 0
             persist-credentials: false
-            
+
       - name: 🔍 Detect Changes
         uses: dorny/paths-filter@v3
         id: changes
@@ -79,14 +79,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm exec semantic-release
       
-      - name: 📦 Publish to npm (Trusted Publisher)
+      - name: 📦 Publish to npm (OIDC)
         if: github.ref == 'refs/heads/main'
-        run: |
-          npm install -g npm@latest
-          npm publish --provenance --access public --no-git-checks
         working-directory: packages/shibui-ui
-        env:
-          NODE_AUTH_TOKEN: ${{ env.NODE_AUTH_TOKEN }}
+        run: |
+          LOCAL=$(node -p "require('./package.json').version")
+          REMOTE=$(npm view @shibui-ui/ui version 2>/dev/null || echo "0.0.0")
+          if [ "$LOCAL" != "$REMOTE" ]; then
+            echo "Nueva versión detectada ($REMOTE → $LOCAL). Publicando..."
+            npm publish --provenance --access public
+          else
+            echo "Versión $LOCAL ya publicada. Sin cambios, saltando publish."
+          fi
 
       - name: 📦 Build React App
         if: steps.changes.outputs.react == 'true'

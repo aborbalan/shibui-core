@@ -7,7 +7,7 @@ import Footer from './components/ui/Footer';
 const HomePage        = lazy(() => import('./pages/hero').then(m => ({ default: m.HomePage })));
 const ComponentsPage  = lazy(() => import('./pages/components').then(m => ({ default: m.ComponentsPage })));
 const TokensPage      = lazy(() => import('./pages/tokens').then(m => ({ default: m.TokensPage })));
-const KitchenSink     = lazy(() => import('./components/shared/KitchenSink').then(m => ({ default: m.KitchenSink })));
+const KitchenSink     = lazy(() => import('./dev/KitchenSink').then(m => ({ default: m.KitchenSink })));
 
 export function AppShell() {
   const navigate = useNavigate();
