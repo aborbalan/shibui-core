@@ -1,5 +1,5 @@
-import meData from '../../../data/me.json';
-import experienceData from '../../../data/experience.json';
+import meData from '../../data/me.json';
+import experienceData from '../../data/experience.json';
 
 const ProfileSection = () => {
   return (
