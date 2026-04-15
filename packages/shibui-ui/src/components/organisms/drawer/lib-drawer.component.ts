@@ -33,7 +33,10 @@ export class LibDrawer extends LitElement {
   ];
 
   /* ── Identificador único para aria ── */
-  readonly _uid = Math.random().toString(36).slice(2, 7);
+  readonly _uid = globalThis.crypto.getRandomValues(new Uint32Array(1))[0]
+    .toString(36)
+    .slice(0, 5)
+    .padStart(5, '0');
 
   @property({ type: Boolean, reflect: true })
   open = false;
