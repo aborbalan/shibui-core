@@ -4,7 +4,7 @@ import HeroIntro from '../../components/layout/templates/HeroIntro';
 import { LibBackground, LibDivider } from '@shibui-ui/ui/react';
 import HeroStats from './templates/HeroStats';
 import ContentSection from './templates/ContentSection';
-import CardsSection from './templates/CardsSection ';
+import CardsSection from './templates/CardsSection';
 import PhilosophySection from './templates/PhilosophySection';
 import CardsShowcase from './templates/CardsShowcase';
 import TokensSection from './templates/TokensSection';
