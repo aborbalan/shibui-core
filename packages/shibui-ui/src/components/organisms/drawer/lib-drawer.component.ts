@@ -37,7 +37,7 @@ export class LibDrawer extends LitElement {
     .getRandomValues(new Uint32Array(1))[0]
     .toString(36)
     .slice(0, 5);
-  
+
   @property({ type: Boolean, reflect: true })
   open = false;
 
