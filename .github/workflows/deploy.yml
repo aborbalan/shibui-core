@@ -139,6 +139,9 @@ jobs:
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: 🏗️ Build UI lib
+        run: pnpm --filter @shibui-ui/ui build
+
       - name: 📦 Build React App
         run: pnpm --filter app-react build
 
