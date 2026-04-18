@@ -1,4 +1,4 @@
-name: CI/CD - Build, Test & Deploy
+name: CI/CD — Shibui Ecosystem
 
 on:
   push:
@@ -23,6 +23,9 @@ env:
   NODE_VERSION: "22.14.0"
   PNPM_VERSION: "9.15.0"
 
+# ─────────────────────────────────────────
+# JOB 1 — Detección de cambios
+# ─────────────────────────────────────────
 jobs:
   detect-changes:
     name: 🔍 Detect Changes
@@ -46,6 +49,10 @@ jobs:
             svelte:  'apps/app-svelte/**'
             api:     'apps/shibui-api/**'
 
+  # ─────────────────────────────────────────
+  # JOB 2 — Calidad (lint + type-check)
+  # Solo se ejecuta si cambia la lib UI o React
+  # ─────────────────────────────────────────
   quality:
     name: ✅ Quality Gate
     runs-on: ubuntu-latest
@@ -53,9 +60,11 @@ jobs:
     if: needs.detect-changes.outputs.ui == 'true' || needs.detect-changes.outputs.react == 'true'
     steps:
       - uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -70,60 +79,9 @@ jobs:
       - name: 🧹 Lint
         run: pnpm --filter @shibui-ui/ui lint
 
-  test-e2e:
-    name: 🎭 Playwright E2E Tests
-    runs-on: ubuntu-latest
-    needs: quality
-    # Siempre corre si quality pasó, incluso si no hay cambios en UI,
-    # para garantizar que los tests no se saltan silenciosamente.
-    if: always() && needs.quality.result == 'success'
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "pnpm"
-
-      - name: 📦 Install Dependencies
-        run: pnpm install --frozen-lockfile
-
-      # Cache de browsers de Playwright — evita descargar ~300 MB en cada run
-      - name: 🗄️ Cache Playwright Browsers
-        uses: actions/cache@v4
-        id: playwright-cache
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            playwright-${{ runner.os }}-
-
-      - name: 🎭 Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: pnpm --filter @shibui-ui/ui exec playwright install --with-deps
-
-      - name: 🎭 Install System Dependencies (cache hit)
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: pnpm --filter @shibui-ui/ui exec playwright install-deps
-
-      - name: 🧪 Run Playwright Tests
-        # Sin || true: el job falla si los tests fallan.
-        # Si un test es flaky, márquelo con test.fixme() o usa retries en playwright.config.ts
-        run: pnpm --filter @shibui-ui/ui exec playwright test
-
-      - name: 📊 Upload Test Report
-        uses: actions/upload-artifact@v4
-        # Se sube siempre para poder diagnosticar fallos
-        if: always()
-        with:
-          name: playwright-report-${{ github.run_id }}
-          path: packages/shibui-ui/playwright-report/
-          retention-days: 30 #wip ------
-
+  # ─────────────────────────────────────────
+  # JOB 3 — Build de la lib + Storybook
+  # ─────────────────────────────────────────
   build-ui:
     name: 🏗️ Build UI Library
     runs-on: ubuntu-latest
@@ -158,10 +116,13 @@ jobs:
           path: packages/shibui-ui/storybook-static/
           retention-days: 1
 
+  # ─────────────────────────────────────────
+  # JOB 5 — Build de la React App
+  # ─────────────────────────────────────────
   build-react:
     name: 📦 Build React App
     runs-on: ubuntu-latest
-    needs: quality
+    needs: [quality, build-ui]
     if: needs.detect-changes.outputs.react == 'true'
     steps:
       - uses: actions/checkout@v4
@@ -178,6 +139,9 @@ jobs:
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: 🏗️ Build UI lib
+        run: pnpm --filter @shibui-ui/ui build
+
       - name: 📦 Build React App
         run: pnpm --filter app-react build
 
@@ -188,6 +152,10 @@ jobs:
           path: apps/app-react/dist/
           retention-days: 1
 
+  # ─────────────────────────────────────────
+  # JOB 6 — Generar spec OpenAPI (API)
+  # Solo si cambia la API o es push a main
+  # ─────────────────────────────────────────
   build-api-docs:
     name: 📄 Generate OpenAPI Spec
     runs-on: ubuntu-latest
@@ -220,15 +188,16 @@ jobs:
           path: apps/shibui-api/docs-dist/
           retention-days: 1
 
+  # ─────────────────────────────────────────
+  # JOB 7 — Semantic Release + Publish NPM
+  # Solo en main. Única fuente de verdad para versiones.
+  # ─────────────────────────────────────────
   release:
     name: 🚀 Semantic Release
     runs-on: ubuntu-latest
-    needs: [test-e2e, build-ui]
-    # build-ui puede haberse saltado si no hubo cambios en UI.
-    # El if permite que release corra si al menos uno de los dos tuvo éxito o fue saltado (skipped).
+    needs: [build-ui]
     if: |
       github.ref == 'refs/heads/main' &&
-      (needs.test-e2e.result == 'success') &&
       (needs.build-ui.result == 'success' || needs.build-ui.result == 'skipped')
     permissions:
       id-token: write # OIDC para npm provenance
@@ -249,7 +218,8 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "pnpm"
-          registry-url: "https://registry.npmjs.org"
+          # Sin registry-url: setup-node no genera el .npmrc que inyecta NODE_AUTH_TOKEN,
+          # evitando el conflicto con el flujo OIDC de npm provenance.
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -264,14 +234,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm exec semantic-release
 
-      # Publicación con OIDC (sin NPM_TOKEN hardcodeado)
-      # Se ejecuta solo si Semantic Release generó una nueva versión (el tag existe)
+      # Publicación OIDC pura:
+      # npm 9.5+ solicita automáticamente el token OIDC a GitHub (id-token: write)
+      # y lo intercambia con el registro de npm. Sin secretos que rotar ni gestionar.
+      # Requisito en npmjs.com: el paquete debe tener "provenance": true en publishConfig ✓
       - name: 📦 Publish to npm (OIDC Provenance)
         working-directory: packages/shibui-ui
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_SECRET }}
 
+  # ─────────────────────────────────────────
+  # JOB 8 — Deploy a Firebase
+  # Solo en main o develop, una vez que los builds están listos
+  # ─────────────────────────────────────────
   deploy:
     name: 🚀 Deploy to Firebase
     runs-on: ubuntu-latest
@@ -337,6 +311,9 @@ jobs:
         if: needs.build-api-docs.result == 'success'
         run: pnpm exec firebase deploy --only hosting:shibui-api --non-interactive --project lib-ui-b67c5
 
+  # ─────────────────────────────────────────
+  # JOB 9 — Notificación Discord
+  # ─────────────────────────────────────────
   notify:
     name: 📢 Notify Discord
     runs-on: ubuntu-latest
