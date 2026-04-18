@@ -218,26 +218,31 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "pnpm"
-          # Sin registry-url: setup-node no genera el .npmrc que inyecta NODE_AUTH_TOKEN,
-          # evitando el conflicto con el flujo OIDC de npm provenance.
+          # registry-url es necesario para que npm inicie el intercambio OIDC.
+          # Sin él, npm no sabe contra qué registry autenticarse y devuelve ENEEDAUTH.
+          # NODE_AUTH_TOKEN no se setea — npm 9.5+ usa el token OIDC automáticamente.
+          registry-url: "https://registry.npmjs.org"
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      # Semantic Release se encarga de:
-      # 1. Calcular la nueva versión a partir de los commits
-      # 2. Actualizar package.json en packages/shibui-ui (según .releaserc.json pkgRoot)
-      # 3. Crear el tag de Git y la Release en GitHub
-      # npmPublish: false en .releaserc.json → la publicación la hace el step siguiente con OIDC
+      # Semantic Release: calcula versión, actualiza package.json en pkgRoot,
+      # crea tag en Git y Release en GitHub. npmPublish: false en .releaserc.json.
       - name: 🚀 Run Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm exec semantic-release
 
-      # Publicación OIDC pura:
-      # npm 9.5+ solicita automáticamente el token OIDC a GitHub (id-token: write)
-      # y lo intercambia con el registro de npm. Sin secretos que rotar ni gestionar.
-      # Requisito en npmjs.com: el paquete debe tener "provenance": true en publishConfig ✓
+      # Build de la lib con la versión ya bumpeada por Semantic Release.
+      # Necesario porque el job corre en un runner limpio sin el dist/ generado
+      # por build-ui (que corrió en paralelo con la versión anterior).
+      - name: 🏗️ Build UI lib
+        run: pnpm --filter @shibui-ui/ui build
+
+      # Publicación OIDC: npm intercambia el token OIDC de GitHub (id-token: write)
+      # por un token de corta vida en registry.npmjs.org. Sin secretos que rotar.
+      # Requisito en npmjs.com: configurar GitHub Actions como Trusted Publisher
+      # en la página del paquete → Settings → Publishing → Provenance.
       - name: 📦 Publish to npm (OIDC Provenance)
         working-directory: packages/shibui-ui
         run: npm publish --provenance --access public
