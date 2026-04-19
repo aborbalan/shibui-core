@@ -3,6 +3,8 @@ import { Profile } from './entities/profile.entity';
 import { Skill, SkillCategory, SkillGroup } from './entities/skill.entity';
 import { AboutMeDto } from './dto/about-me.dto';
 import { WorkExperience } from './entities/work-experience.entity';
+import { Language } from './entities/language.entity';
+import { Education } from './entities/education.entity';
 
 const CATEGORY_LABELS: Record<SkillCategory, string> = {
   [SkillCategory.FRONTEND]: 'Front-End',
