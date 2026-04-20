@@ -80,7 +80,36 @@ jobs:
         run: pnpm --filter @shibui-ui/ui lint
 
   # ─────────────────────────────────────────
-  # JOB 3 — Build de la lib + Storybook
+  # JOB 3 — Quality Gate API
+  # ─────────────────────────────────────────
+  quality-api:
+    name: ✅ Quality Gate API
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.api == 'true'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔎 Type Check
+        run: pnpm --filter @shibui-ui/api build
+
+      - name: 🧹 Lint
+        run: pnpm --filter @shibui-ui/api lint
+
+  # ─────────────────────────────────────────
+  # JOB 4 — Build de la lib + Storybook
   # ─────────────────────────────────────────
   build-ui:
     name: 🏗️ Build UI Library
@@ -153,13 +182,85 @@ jobs:
           retention-days: 1
 
   # ─────────────────────────────────────────
-  # JOB 6 — Generar spec OpenAPI (API)
+  # JOB 6 — Build de la Angular App
+  # ─────────────────────────────────────────
+  build-angular:
+    name: 📦 Build Angular App
+    runs-on: ubuntu-latest
+    needs: [quality]
+    if: needs.detect-changes.outputs.angular == 'true'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🏗️ Build UI lib
+        run: pnpm --filter @shibui-ui/ui build
+
+      - name: 📦 Build Angular App
+        run: pnpm --filter app-angular build
+
+      - name: 📤 Upload Angular dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: angular-dist-${{ github.run_id }}
+          path: apps/app-angular/dist/
+          retention-days: 1
+
+  # ─────────────────────────────────────────
+  # JOB 7 — Build de la Svelte App
+  # ─────────────────────────────────────────
+  build-svelte:
+    name: 📦 Build Svelte App
+    runs-on: ubuntu-latest
+    needs: [quality]
+    if: needs.detect-changes.outputs.svelte == 'true'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🏗️ Build UI lib
+        run: pnpm --filter @shibui-ui/ui build
+
+      - name: 📦 Build Svelte App
+        run: pnpm --filter app-svelte build
+
+      - name: 📤 Upload Svelte dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: svelte-dist-${{ github.run_id }}
+          path: apps/app-svelte/dist/
+          retention-days: 1
+
+  # ─────────────────────────────────────────
+  # JOB 8 — Generar spec OpenAPI (API)
   # Solo si cambia la API o es push a main
   # ─────────────────────────────────────────
   build-api-docs:
     name: 📄 Generate OpenAPI Spec
     runs-on: ubuntu-latest
-    needs: detect-changes
+    needs: [quality-api]
     if: needs.detect-changes.outputs.api == 'true' || github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
@@ -248,22 +349,23 @@ jobs:
         run: npm publish --provenance --access public
 
   # ─────────────────────────────────────────
-  # JOB 8 — Deploy a Firebase
-  # Solo en main o develop, una vez que los builds están listos
+  # JOB 8a — Deploy apps (UI, React, Angular, Svelte)
+  # Independiente de la API para evitar skips transitivos
   # ─────────────────────────────────────────
-  deploy:
-    name: 🚀 Deploy to Firebase
+  deploy-apps:
+    name: 🚀 Deploy Apps to Firebase
     runs-on: ubuntu-latest
     needs:
-      - detect-changes
       - build-ui
       - build-react
-      - build-api-docs
-    # Se ejecuta si al menos uno de los builds tuvo éxito (los demás pueden estar skipped)
+      - build-angular
+      - build-svelte
     if: |
       (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') &&
-      (needs.build-ui.result == 'success' || needs.build-react.result == 'success' || needs.build-api-docs.result == 'success' ||
-       needs.build-ui.result == 'skipped' || needs.build-react.result == 'skipped' || needs.build-api-docs.result == 'skipped')
+      needs.build-ui.result != 'failure' &&
+      needs.build-react.result != 'failure' &&
+      needs.build-angular.result != 'failure' &&
+      needs.build-svelte.result != 'failure'
     env:
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
     steps:
@@ -281,13 +383,16 @@ jobs:
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      # Descargamos los artefactos de build según lo que cambió
       - name: 📥 Download Storybook artifact
         if: needs.build-ui.result == 'success'
         uses: actions/download-artifact@v4
         with:
           name: storybook-static-${{ github.run_id }}
           path: packages/shibui-ui/storybook-static/
+
+      - name: 🚀 Deploy Storybook
+        if: needs.build-ui.result == 'success'
+        run: pnpm exec firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5
 
       - name: 📥 Download React dist artifact
         if: needs.build-react.result == 'success'
@@ -296,24 +401,67 @@ jobs:
           name: react-dist-${{ github.run_id }}
           path: apps/app-react/dist/
 
+      - name: 🚀 Deploy React App
+        if: needs.build-react.result == 'success'
+        run: pnpm exec firebase deploy --only hosting:react --non-interactive --project lib-ui-b67c5
+
+      - name: 📥 Download Angular dist artifact
+        if: needs.build-angular.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: angular-dist-${{ github.run_id }}
+          path: apps/app-angular/dist/
+
+      - name: 🚀 Deploy Angular App
+        if: needs.build-angular.result == 'success'
+        run: pnpm exec firebase deploy --only hosting:angular --non-interactive --project lib-ui-b67c5
+
+      - name: 📥 Download Svelte dist artifact
+        if: needs.build-svelte.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: svelte-dist-${{ github.run_id }}
+          path: apps/app-svelte/dist/
+
+      - name: 🚀 Deploy Svelte App
+        if: needs.build-svelte.result == 'success'
+        run: pnpm exec firebase deploy --only hosting:svelte --non-interactive --project lib-ui-b67c5
+
+  # ─────────────────────────────────────────
+  # JOB 8b — Deploy API (completamente independiente)
+  # Solo depende de su propio build, sin relación con el resto
+  # ─────────────────────────────────────────
+  deploy-api:
+    name: 🚀 Deploy API to Firebase
+    runs-on: ubuntu-latest
+    needs: [build-api-docs]
+    if: |
+      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') &&
+      needs.build-api-docs.result == 'success'
+    env:
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: 📥 Download API docs artifact
-        if: needs.build-api-docs.result == 'success'
         uses: actions/download-artifact@v4
         with:
           name: api-docs-${{ github.run_id }}
           path: apps/shibui-api/docs-dist/
 
-      - name: 🚀 Deploy Storybook
-        if: needs.build-ui.result == 'success'
-        run: pnpm exec firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5
-
-      - name: 🚀 Deploy React App
-        if: needs.build-react.result == 'success'
-        run: pnpm exec firebase deploy --only hosting:react --non-interactive --project lib-ui-b67c5
-
       - name: 🚀 Deploy API Docs
-        # Solo si hay cambios en API o es main — ya filtrado por el job build-api-docs
-        if: needs.build-api-docs.result == 'success'
         run: pnpm exec firebase deploy --only hosting:shibui-api --non-interactive --project lib-ui-b67c5
 
   # ─────────────────────────────────────────
@@ -322,7 +470,7 @@ jobs:
   notify:
     name: 📢 Notify Discord
     runs-on: ubuntu-latest
-    needs: [deploy]
+    needs: [deploy-apps, deploy-api]
     if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
     steps:
       - uses: actions/checkout@v4
