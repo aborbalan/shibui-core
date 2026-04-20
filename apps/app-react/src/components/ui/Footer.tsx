@@ -2,7 +2,7 @@ import React from 'react';
 import { LibFooter } from '@shibui-ui/ui/react';
 import { FooterColumn, FooterLink } from '@shibui-ui/ui';
 
-type FooterVariant = 'social' | 'accordion' | 'kintsugi' | 'glitch';
+type FooterVariant = 'social' | 'accordion' | 'kintsugi' | 'glitch' | "dark";
 
 interface FooterProps {
   variant?: FooterVariant;
