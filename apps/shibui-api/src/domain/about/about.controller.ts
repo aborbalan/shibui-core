@@ -17,7 +17,7 @@ export class AboutController {
 
   @Get()
   @ApiOperation({
-    summary: 'Get full profile',
+    summary: 'Get my full profile',
     description:
       'Returns the complete about-me payload: profile, experience, skills, education and languages.',
   })
