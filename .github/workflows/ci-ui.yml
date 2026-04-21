@@ -1,63 +1,44 @@
-name: CI/CD — Shibui Ecosystem
+name: CI — UI & Apps
 
+# Este workflow nunca se dispara directamente.
+# Solo el orquestador puede invocarlo, pasándole
+# los outputs de detect-changes como inputs.
 on:
-  push:
-    branches:
-      - main
-      - develop
-      - "feature/**"
-  pull_request:
-    branches:
-      - main
-      - develop
-
-# Cancela ejecuciones obsoletas del mismo branch para ahorrar minutos
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-permissions:
-  contents: read
+  workflow_call:
+    inputs:
+      ui:
+        description: "¿Han cambiado ficheros en packages/shibui-ui?"
+        type: string
+        required: true
+      react:
+        description: "¿Han cambiado ficheros en apps/app-react?"
+        type: string
+        required: true
+      angular:
+        description: "¿Han cambiado ficheros en apps/app-angular?"
+        type: string
+        required: true
+      svelte:
+        description: "¿Han cambiado ficheros en apps/app-svelte?"
+        type: string
+        required: true
+      ref:
+        description: "Ref del branch que disparó el orquestador (ej: refs/heads/main)"
+        type: string
+        required: true
 
 env:
   NODE_VERSION: "22.14.0"
   PNPM_VERSION: "9.15.0"
 
-# ─────────────────────────────────────────
-# JOB 1 — Detección de cambios
-# ─────────────────────────────────────────
 jobs:
-  detect-changes:
-    name: 🔍 Detect Changes
-    runs-on: ubuntu-latest
-    outputs:
-      ui: ${{ steps.filter.outputs.ui }}
-      react: ${{ steps.filter.outputs.react }}
-      angular: ${{ steps.filter.outputs.angular }}
-      svelte: ${{ steps.filter.outputs.svelte }}
-      api: ${{ steps.filter.outputs.api }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          filters: |
-            ui:      'packages/shibui-ui/**'
-            react:   'apps/app-react/**'
-            angular: 'apps/app-angular/**'
-            svelte:  'apps/app-svelte/**'
-            api:     'apps/shibui-api/**'
-
   # ─────────────────────────────────────────
-  # JOB 2 — Calidad (lint + type-check)
-  # Solo se ejecuta si cambia la lib UI o React
+  # JOB 1 — Quality Gate
   # ─────────────────────────────────────────
   quality:
     name: ✅ Quality Gate
     runs-on: ubuntu-latest
-    needs: detect-changes
-    if: needs.detect-changes.outputs.ui == 'true' || needs.detect-changes.outputs.react == 'true'
+    if: inputs.ui == 'true' || inputs.react == 'true'
     steps:
       - uses: actions/checkout@v4
 
@@ -80,42 +61,13 @@ jobs:
         run: pnpm --filter @shibui-ui/ui lint
 
   # ─────────────────────────────────────────
-  # JOB 3 — Quality Gate API
-  # ─────────────────────────────────────────
-  quality-api:
-    name: ✅ Quality Gate API
-    runs-on: ubuntu-latest
-    needs: detect-changes
-    if: needs.detect-changes.outputs.api == 'true'
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "pnpm"
-
-      - name: 📦 Install Dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: 🔎 Type Check
-        run: pnpm --filter @shibui-ui/api build
-
-      - name: 🧹 Lint
-        run: pnpm --filter @shibui-ui/api lint
-
-  # ─────────────────────────────────────────
-  # JOB 4 — Build de la lib + Storybook
+  # JOB 2 — Build UI Library + Storybook
   # ─────────────────────────────────────────
   build-ui:
     name: 🏗️ Build UI Library
     runs-on: ubuntu-latest
     needs: quality
-    if: needs.detect-changes.outputs.ui == 'true'
+    if: inputs.ui == 'true'
     steps:
       - uses: actions/checkout@v4
 
@@ -137,7 +89,6 @@ jobs:
       - name: 🎡 Build Storybook
         run: pnpm --filter @shibui-ui/ui build-storybook
 
-      # Persiste el artefacto de Storybook para el job de deploy
       - name: 📤 Upload Storybook artifact
         uses: actions/upload-artifact@v4
         with:
@@ -146,13 +97,13 @@ jobs:
           retention-days: 1
 
   # ─────────────────────────────────────────
-  # JOB 5 — Build de la React App
+  # JOB 3 — Build React App
   # ─────────────────────────────────────────
   build-react:
     name: 📦 Build React App
     runs-on: ubuntu-latest
     needs: [quality, build-ui]
-    if: needs.detect-changes.outputs.react == 'true'
+    if: inputs.react == 'true'
     steps:
       - uses: actions/checkout@v4
 
@@ -182,13 +133,13 @@ jobs:
           retention-days: 1
 
   # ─────────────────────────────────────────
-  # JOB 6 — Build de la Angular App
+  # JOB 4 — Build Angular App
   # ─────────────────────────────────────────
   build-angular:
     name: 📦 Build Angular App
     runs-on: ubuntu-latest
-    needs: [quality]
-    if: needs.detect-changes.outputs.angular == 'true'
+    needs: quality
+    if: inputs.angular == 'true'
     steps:
       - uses: actions/checkout@v4
 
@@ -218,13 +169,13 @@ jobs:
           retention-days: 1
 
   # ─────────────────────────────────────────
-  # JOB 7 — Build de la Svelte App
+  # JOB 5 — Build Svelte App
   # ─────────────────────────────────────────
   build-svelte:
     name: 📦 Build Svelte App
     runs-on: ubuntu-latest
-    needs: [quality]
-    if: needs.detect-changes.outputs.svelte == 'true'
+    needs: quality
+    if: inputs.svelte == 'true'
     steps:
       - uses: actions/checkout@v4
 
@@ -254,61 +205,25 @@ jobs:
           retention-days: 1
 
   # ─────────────────────────────────────────
-  # JOB 8 — Generar spec OpenAPI (API)
-  # Solo si cambia la API o es push a main
-  # ─────────────────────────────────────────
-  build-api-docs:
-    name: 📄 Generate OpenAPI Spec
-    runs-on: ubuntu-latest
-    needs: [quality-api]
-    if: needs.detect-changes.outputs.api == 'true' || github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "pnpm"
-
-      - name: 📦 Install Dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: 📄 Generate OpenAPI spec
-        run: pnpm --filter @shibui-ui/api generate:openapi
-        env:
-          DOCS_OUTPUT_DIR: ${{ github.workspace }}/apps/shibui-api/docs-dist
-
-      - name: 📤 Upload API docs artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: api-docs-${{ github.run_id }}
-          path: apps/shibui-api/docs-dist/
-          retention-days: 1
-
-  # ─────────────────────────────────────────
-  # JOB 7 — Semantic Release + Publish NPM
-  # Solo en main. Única fuente de verdad para versiones.
+  # JOB 6 — Semantic Release + Publish NPM
+  # Solo en main, después de build-ui.
   # ─────────────────────────────────────────
   release:
     name: 🚀 Semantic Release
     runs-on: ubuntu-latest
     needs: [build-ui]
     if: |
-      github.ref == 'refs/heads/main' &&
+      inputs.ref == 'refs/heads/main' &&
       (needs.build-ui.result == 'success' || needs.build-ui.result == 'skipped')
     permissions:
-      id-token: write # OIDC para npm provenance
-      contents: write # Para que Semantic Release cree tags en Git
+      id-token: write
+      contents: write
       pull-requests: write
       issues: write
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Necesario para que Semantic Release lea el historial
+          fetch-depth: 0
           persist-credentials: false
 
       - uses: pnpm/action-setup@v4
@@ -319,38 +234,26 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "pnpm"
-          # registry-url es necesario para que npm inicie el intercambio OIDC.
-          # Sin él, npm no sabe contra qué registry autenticarse y devuelve ENEEDAUTH.
-          # NODE_AUTH_TOKEN no se setea — npm 9.5+ usa el token OIDC automáticamente.
           registry-url: "https://registry.npmjs.org"
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      # Semantic Release: calcula versión, actualiza package.json en pkgRoot,
-      # crea tag en Git y Release en GitHub. npmPublish: false en .releaserc.json.
       - name: 🚀 Run Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm exec semantic-release
 
-      # Build de la lib con la versión ya bumpeada por Semantic Release.
-      # Necesario porque el job corre en un runner limpio sin el dist/ generado
-      # por build-ui (que corrió en paralelo con la versión anterior).
-      - name: 🏗️ Build UI lib
+      - name: 🏗️ Build UI lib (con versión bumpeada)
         run: pnpm --filter @shibui-ui/ui build
 
-      # Publicación OIDC: npm intercambia el token OIDC de GitHub (id-token: write)
-      # por un token de corta vida en registry.npmjs.org. Sin secretos que rotar.
-      # Requisito en npmjs.com: configurar GitHub Actions como Trusted Publisher
-      # en la página del paquete → Settings → Publishing → Provenance.
       - name: 📦 Publish to npm (OIDC Provenance)
         working-directory: packages/shibui-ui
         run: npm publish --provenance --access public
 
   # ─────────────────────────────────────────
-  # JOB 8a — Deploy apps (UI, React, Angular, Svelte)
-  # Independiente de la API para evitar skips transitivos
+  # JOB 7 — Deploy Apps a Firebase
+  # Solo en main/develop. Tolera builds skipped.
   # ─────────────────────────────────────────
   deploy-apps:
     name: 🚀 Deploy Apps to Firebase
@@ -361,7 +264,7 @@ jobs:
       - build-angular
       - build-svelte
     if: |
-      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') &&
+      (inputs.ref == 'refs/heads/main' || inputs.ref == 'refs/heads/develop') &&
       needs.build-ui.result != 'failure' &&
       needs.build-react.result != 'failure' &&
       needs.build-angular.result != 'failure' &&
@@ -426,71 +329,3 @@ jobs:
       - name: 🚀 Deploy Svelte App
         if: needs.build-svelte.result == 'success'
         run: pnpm exec firebase deploy --only hosting:svelte --non-interactive --project lib-ui-b67c5
-
-  # ─────────────────────────────────────────
-  # JOB 8b — Deploy API (completamente independiente)
-  # Solo depende de su propio build, sin relación con el resto
-  # ─────────────────────────────────────────
-  deploy-api:
-    name: 🚀 Deploy API to Firebase
-    runs-on: ubuntu-latest
-    needs: [build-api-docs]
-    if: |
-      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') &&
-      needs.build-api-docs.result == 'success'
-    env:
-      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "pnpm"
-
-      - name: 📦 Install Dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: 📥 Download API docs artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: api-docs-${{ github.run_id }}
-          path: apps/shibui-api/docs-dist/
-
-      - name: 🚀 Deploy API Docs
-        run: pnpm exec firebase deploy --only hosting:shibui-api --non-interactive --project lib-ui-b67c5
-
-  # ─────────────────────────────────────────
-  # JOB 9 — Notificación Discord
-  # ─────────────────────────────────────────
-  notify:
-    name: 📢 Notify Discord
-    runs-on: ubuntu-latest
-    needs: [deploy-apps, deploy-api]
-    if: success() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: 📢 Send Discord Notification
-        env:
-          DISCORD_URL: ${{ secrets.DISCORD_WEBHOOK }}
-          COMMIT_MSG: ${{ github.event.head_commit.message }}
-          COMMIT_AUTHOR: ${{ github.actor }}
-        run: |
-          # Apunta a la versión real publicada, no al package.json raíz (private: true)
-          VERSION=$(node -p "require('./packages/shibui-ui/package.json').version")
-          CLEAN_MSG=$(echo "$COMMIT_MSG" | tr -d '"' | tr -d '\n' | tr -d '\r')
-          curl -H "Content-Type: application/json" -X POST -d "{
-            \"content\": \"🚀 **Nueva actualización de @shibui-ui/ui**\",
-            \"embeds\": [{
-              \"title\": \"Versión $VERSION desplegada con éxito\",
-              \"description\": \"**Cambios:** $CLEAN_MSG\n**Autor:** $COMMIT_AUTHOR\",
-              \"url\": \"https://lib-ui-b67c5.web.app\",
-              \"color\": 5814783,
-              \"footer\": { \"text\": \"Shibui UI — CI/CD System\" }
-            }]
-          }" "$DISCORD_URL"

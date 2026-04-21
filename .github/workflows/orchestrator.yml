@@ -1,0 +1,82 @@
+name: Orchestrator — Shibui Ecosystem
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - "feature/**"
+  pull_request:
+    branches:
+      - main
+      - develop
+
+# Un único punto de cancelación para todo el ecosistema
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# ─────────────────────────────────────────
+# JOB 1 — Detección de cambios
+# Única fuente de verdad sobre qué ha cambiado.
+# Sus outputs son la API pública hacia los pipelines.
+# ─────────────────────────────────────────
+jobs:
+  detect-changes:
+    name: 🔍 Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      ui:      ${{ steps.filter.outputs.ui }}
+      react:   ${{ steps.filter.outputs.react }}
+      angular: ${{ steps.filter.outputs.angular }}
+      svelte:  ${{ steps.filter.outputs.svelte }}
+      api:     ${{ steps.filter.outputs.api }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            ui:      'packages/shibui-ui/**'
+            react:   'apps/app-react/**'
+            angular: 'apps/app-angular/**'
+            svelte:  'apps/app-svelte/**'
+            api:     'apps/shibui-api/**'
+
+  # ─────────────────────────────────────────
+  # JOB 2 — Pipeline UI & Apps
+  # Se activa si cambia cualquier parte del frontend.
+  # ─────────────────────────────────────────
+  run-ui-pipeline:
+    name: 🎨 UI & Apps Pipeline
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.ui == 'true' ||
+      needs.detect-changes.outputs.react == 'true' ||
+      needs.detect-changes.outputs.angular == 'true' ||
+      needs.detect-changes.outputs.svelte == 'true'
+    uses: ./.github/workflows/ci-ui.yml
+    with:
+      ui:      ${{ needs.detect-changes.outputs.ui }}
+      react:   ${{ needs.detect-changes.outputs.react }}
+      angular: ${{ needs.detect-changes.outputs.angular }}
+      svelte:  ${{ needs.detect-changes.outputs.svelte }}
+      # El pipeline necesita saber en qué rama está para decidir si deploya
+      ref: ${{ github.ref }}
+    secrets: inherit
+
+  # ─────────────────────────────────────────
+  # JOB 3 — Pipeline API
+  # Se activa solo si cambia la API.
+  # No corre en feature/** — ver triggers de este fichero
+  # vs el if de aquí abajo para afinar más si hace falta.
+  # ─────────────────────────────────────────
+  run-api-pipeline:
+    name: 🔌 API Pipeline
+    needs: detect-changes
+    if: needs.detect-changes.outputs.api == 'true'
+    uses: ./.github/workflows/ci-api.yml
+    with:
+      ref: ${{ github.ref }}
+    secrets: inherit
