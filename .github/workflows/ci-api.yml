@@ -1,0 +1,112 @@
+name: CI — API
+
+# Este workflow nunca se dispara directamente.
+# Solo el orquestador puede invocarlo.
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: "Ref del branch que disparó el orquestador (ej: refs/heads/main)"
+        type: string
+        required: true
+
+env:
+  NODE_VERSION: "22.14.0"
+  PNPM_VERSION: "9.15.0"
+
+jobs:
+  # ─────────────────────────────────────────
+  # JOB 1 — Quality Gate API
+  # ─────────────────────────────────────────
+  quality-api:
+    name: ✅ Quality Gate API
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔎 Type Check (via build)
+        run: pnpm --filter @shibui-ui/api build
+
+      - name: 🧹 Lint
+        run: pnpm --filter @shibui-ui/api lint
+
+  # ─────────────────────────────────────────
+  # JOB 2 — Generar spec OpenAPI
+  # ─────────────────────────────────────────
+  build-api-docs:
+    name: 📄 Generate OpenAPI Spec
+    runs-on: ubuntu-latest
+    needs: quality-api
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 📄 Generate OpenAPI spec
+        run: pnpm --filter @shibui-ui/api generate:openapi
+        env:
+          DOCS_OUTPUT_DIR: ${{ github.workspace }}/apps/shibui-api/docs-dist
+
+      - name: 📤 Upload API docs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-docs-${{ github.run_id }}
+          path: apps/shibui-api/docs-dist/
+          retention-days: 1
+
+  # ─────────────────────────────────────────
+  # JOB 3 — Deploy API Docs a Firebase
+  # Solo en main/develop
+  # ─────────────────────────────────────────
+  deploy-api:
+    name: 🚀 Deploy API to Firebase
+    runs-on: ubuntu-latest
+    needs: build-api-docs
+    if: inputs.ref == 'refs/heads/main' || inputs.ref == 'refs/heads/develop'
+    env:
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 📥 Download API docs artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: api-docs-${{ github.run_id }}
+          path: apps/shibui-api/docs-dist/
+
+      - name: 🚀 Deploy API Docs
+        run: pnpm exec firebase deploy --only hosting:shibui-api --non-interactive --project lib-ui-b67c5

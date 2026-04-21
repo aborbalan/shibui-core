@@ -1,0 +1,49 @@
+name: Notify — Discord
+
+# Escucha la finalización del orquestador.
+# Al haber un único punto de entrada, este trigger
+# siempre sabe que ambos pipelines han terminado.
+on:
+  workflow_run:
+    workflows:
+      - "Orchestrator — Shibui Ecosystem"
+    types:
+      - completed
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  notify:
+    name: 📢 Send Discord Notification
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: 📢 Send Discord Notification
+        env:
+          DISCORD_URL: ${{ secrets.DISCORD_WEBHOOK }}
+          COMMIT_MSG: ${{ github.event.workflow_run.head_commit.message }}
+          COMMIT_AUTHOR: ${{ github.event.workflow_run.actor.login }}
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+        run: |
+          VERSION=$(node -p "require('./packages/shibui-ui/package.json').version")
+          CLEAN_MSG=$(echo "$COMMIT_MSG" | tr -d '"' | tr -d '\n' | tr -d '\r')
+          curl -H "Content-Type: application/json" -X POST -d "{
+            \"content\": \"🚀 **Shibui Ecosystem** actualizado en \`$BRANCH\`\",
+            \"embeds\": [{
+              \"title\": \"Versión $VERSION desplegada con éxito\",
+              \"description\": \"**Cambios:** $CLEAN_MSG\n**Autor:** $COMMIT_AUTHOR\",
+              \"url\": \"$RUN_URL\",
+              \"color\": 5814783,
+              \"footer\": { \"text\": \"Shibui UI — CI/CD System\" }
+            }]
+          }" "$DISCORD_URL"
