@@ -20,6 +20,7 @@ export function AdminLayout() {
   // Deriva el id activo del pathname: /admin/kitchen-sink → kitchen-sink
   const activeId = pathname.split('/').pop() ?? 'kitchen-sink';
 
+  
   const handleLink = (id: string) => {
     if (id === 'logout') {
       logout();
