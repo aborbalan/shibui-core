@@ -260,6 +260,10 @@ jobs:
   # ─────────────────────────────────────────
   # JOB 7 — Deploy Apps a Firebase
   # Solo en main/develop. Tolera builds skipped.
+  # FIX: always() es obligatorio para que GitHub Actions evalúe
+  # el if en lugar de auto-saltearse cuando los needs están en skipped.
+  # Sin always(), si build-ui/angular/svelte están skipped,
+  # GitHub cancela deploy-apps antes de leer la condición.
   # ─────────────────────────────────────────
   deploy-apps:
     name: 🚀 Deploy Apps to Firebase
@@ -270,6 +274,7 @@ jobs:
       - build-angular
       - build-svelte
     if: |
+      always() &&
       (inputs.ref == 'refs/heads/main' || inputs.ref == 'refs/heads/develop') &&
       needs.build-ui.result != 'failure' &&
       needs.build-react.result != 'failure' &&
