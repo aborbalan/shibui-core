@@ -11,7 +11,7 @@ export function PublicLayout() {
     <div style={{ width: '100%', minHeight: '100vh' }}>
       <ShibuiHeader
         showSearch={activeId === 'componentes'}
-        variant={activeId === 'componentes' ? 'app-bar' : 'dark'}
+        variant="dark"
         onNavLink={(id) => navigate(id === 'home' ? '/' : `/${id}`)}
       />
       <Outlet />
