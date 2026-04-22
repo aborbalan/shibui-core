@@ -13,11 +13,33 @@ import { ApiTags, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { ComponentsService } from '../components/components.service';
+import { CategoryWithComponentsDto } from './dto/category-with-components.dto';
 
 @ApiTags('categories')
 @Controller('categories')
 export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService) {}
+  constructor(
+    private readonly categoriesService: CategoriesService,
+    private readonly componentsService: ComponentsService,
+  ) {}
+
+  @Get('with-components')
+  @ApiOperation({
+    summary: 'Get all categories, each with its components embedded',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Categories with their components',
+    type: [CategoryWithComponentsDto],
+  })
+  findAllWithComponents(): CategoryWithComponentsDto[] {
+    const categories = this.categoriesService.findAll(); // ya vienen ordenadas por `order`
+    return categories.map((cat) => ({
+      ...cat,
+      components: this.componentsService.findByCategory(cat.id),
+    }));
+  }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
