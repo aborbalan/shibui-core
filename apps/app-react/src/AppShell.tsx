@@ -1,41 +1,57 @@
-
 import { lazy, Suspense } from 'react';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import ShibuiHeader from './components/ui/Header';
-import Footer from './components/ui/Footer';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { PublicLayout } from './components/layout/PublicLayout';
+import { AdminLayout } from './components/layout/AdminLayout';
+import { AuthGuard } from './auth/AuthGuard';
+import { LoginPage } from './pages/login';
+import { useAdminShortcut } from './hooks/useAdminShortcut';
 
-const HomePage        = lazy(() => import('./pages/hero').then(m => ({ default: m.HomePage })));
-const ComponentsPage  = lazy(() => import('./pages/components').then(m => ({ default: m.ComponentsPage })));
-const TokensPage      = lazy(() => import('./pages/tokens').then(m => ({ default: m.TokensPage })));
-const KitchenSink     = lazy(() => import('./dev/KitchenSink').then(m => ({ default: m.KitchenSink })));
+// — Público —
+const HomePage = lazy(() => import('./pages/hero').then(m => ({ default: m.HomePage })));
+const ComponentsPage = lazy(() => import('./pages/components').then(m => ({ default: m.ComponentsPage })));
+const TokensPage = lazy(() => import('./pages/tokens').then(m => ({ default: m.TokensPage })));
+
+// — Admin —
+const KitchenSink = lazy(() => import('./dev/KitchenSink').then(m => ({ default: m.KitchenSink })));
 
 export function AppShell() {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  // Derivado del pathname, sin useState propio
-  const activeId = pathname.replace('/', '') || 'home';
+  // Ctrl + Shift + A → /admin/login
+  useAdminShortcut();
 
   return (
-    <div style={{ width: '100%', minHeight: '100vh' }}>
-      <ShibuiHeader
-        showSearch={activeId === 'componentes'}
-        variant={activeId === 'componentes' ? 'app-bar' : 'dark'}
-        onNavLink={(id) => navigate(id === 'home' ? '/' : `/${id}`)}
-      />
+    <Suspense fallback={null}>
+      <Routes>
 
-      <Suspense fallback={null}>
-        <Routes>
-          <Route path="/"                  element={<HomePage />} />
-          <Route path="/home"              element={<HomePage />} />
-          <Route path="/tokens"            element={<TokensPage />} />
-          <Route path="/componentes"       element={<ComponentsPage />} />
-          <Route path="/dev-kitchen-sink"  element={<KitchenSink />} />
-          <Route path="*"                  element={<HomePage />} />
-        </Routes>
-      </Suspense>
+        {/* ── Mundo público ──────────────────────────────── */}
+        <Route element={<PublicLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="home" element={<HomePage />} />
+          <Route path="tokens" element={<TokensPage />} />
+          <Route path="componentes" element={<ComponentsPage />} />
+        </Route>
 
-      <Footer />
-    </div>
+        {/* ── Login admin (sin layout) ───────────────────── */}
+        <Route path="admin/login" element={<LoginPage />} />
+
+        {/* ── Mundo admin (protegido) ────────────────────── */}
+        <Route
+          path="admin"
+          element={
+            <AuthGuard>
+              <AdminLayout />
+            </AuthGuard>
+          }
+        >
+          {/* /admin → redirige al kitchen-sink por defecto */}
+          <Route index element={<Navigate to="kitchen-sink" replace />} />
+          <Route path="kitchen-sink" element={<KitchenSink />} />
+          {/* Aquí irán creciendo las rutas admin */}
+        </Route>
+
+        {/* ── Fallback ───────────────────────────────────── */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+
+      </Routes>
+    </Suspense>
   );
 }
