@@ -110,3 +110,35 @@ jobs:
 
       - name: 🚀 Deploy API Docs
         run: pnpm exec firebase deploy --only hosting:shibui-api --non-interactive --project lib-ui-b67c5
+
+  # ─────────────────────────────────────────
+  # JOB 4 — Deploy NestJS a Firebase Functions
+  # Solo en main/develop.
+  # ─────────────────────────────────────────
+  deploy-functions:
+    name: 🔥 Deploy API to Firebase Functions
+    runs-on: ubuntu-latest
+    needs: quality-api
+    if: inputs.ref == 'refs/heads/main' || inputs.ref == 'refs/heads/develop'
+    env:
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🏗️ Build API
+        run: pnpm --filter @shibui-ui/api build
+
+      - name: 🔥 Deploy Firebase Functions
+        run: pnpm exec firebase deploy --only functions:shibui-api --non-interactive --project lib-ui-b67c5

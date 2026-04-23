@@ -45,7 +45,30 @@
     {
       "target": "shibui-api",
       "public": "apps/shibui-api/docs-dist",
-      "ignore": ["**/node_modules/**"]
+      "ignore": ["**/node_modules/**"],
+      "headers": [
+        {
+          "source": "/openapi.json",
+          "headers": [
+            { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+          ]
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "source": "apps/shibui-api",
+      "codebase": "shibui-api",
+      "runtime": "nodejs22",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "test",
+        "src",
+        "**/*.spec.ts",
+        "**/*.map"
+      ]
     }
   ]
 }
