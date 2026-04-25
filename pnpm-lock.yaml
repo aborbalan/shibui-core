@@ -189,6 +189,9 @@ importers:
 
   apps/shibui-api:
     dependencies:
+      '@nestjs/cli':
+        specifier: ^11.0.0
+        version: 11.0.19(@types/node@24.12.2)
       '@nestjs/common':
         specifier: ^11.0.1
         version: 11.1.18(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -226,9 +229,6 @@ importers:
       '@eslint/js':
         specifier: ^9.18.0
         version: 9.39.4
-      '@nestjs/cli':
-        specifier: ^11.0.0
-        version: 11.0.19(@types/node@24.12.2)
       '@nestjs/schematics':
         specifier: ^11.0.0
         version: 11.0.10(chokidar@4.0.3)(typescript@5.9.3)

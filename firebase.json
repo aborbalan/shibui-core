@@ -45,7 +45,15 @@
     {
       "target": "shibui-api",
       "public": "apps/shibui-api/docs-dist",
-      "ignore": ["**/node_modules/**"]
+      "ignore": ["**/node_modules/**"],
+      "headers": [
+        {
+          "source": "/openapi.json",
+          "headers": [
+            { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+          ]
+        }
+      ]
     }
   ]
 }

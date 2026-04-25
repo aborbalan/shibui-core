@@ -110,3 +110,53 @@ jobs:
 
       - name: 🚀 Deploy API Docs
         run: pnpm exec firebase deploy --only hosting:shibui-api --non-interactive --project lib-ui-b67c5
+
+  # ─────────────────────────────────────────
+  # JOB 4 — Deploy NestJS a Cloud Run
+  # Solo en main/develop. OIDC sin secrets que rotar.
+  # ─────────────────────────────────────────
+  deploy-cloudrun:
+    name: 🐳 Deploy API to Cloud Run
+    runs-on: ubuntu-latest
+    needs: quality-api
+    if: inputs.ref == 'refs/heads/main' || inputs.ref == 'refs/heads/develop'
+    permissions:
+      contents: read
+      id-token: write # necesario para OIDC
+
+    env:
+      PROJECT_ID: lib-ui-b67c5
+      REGION: europe-west1 # ajusta a tu región
+      SERVICE: shibui-api
+      IMAGE: europe-west1-docker.pkg.dev/lib-ui-b67c5/shibui/shibui-api
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🔑 Auth OIDC → GCP
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SA }}
+
+      - name: 🐳 Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: 🏗️ Build & push Docker image
+        run: |
+          docker build \
+            -t ${{ env.IMAGE }}:${{ github.sha }} \
+            -t ${{ env.IMAGE }}:latest \
+            apps/shibui-api/
+          docker push ${{ env.IMAGE }}:${{ github.sha }}
+          docker push ${{ env.IMAGE }}:latest
+
+      - name: 🚀 Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ env.SERVICE }} \
+            --image ${{ env.IMAGE }}:${{ github.sha }} \
+            --region ${{ env.REGION }} \
+            --platform managed \
+            --allow-unauthenticated \
+            --project ${{ env.PROJECT_ID }} \
+            --quiet
