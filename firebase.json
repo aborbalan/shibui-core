@@ -55,20 +55,5 @@
         }
       ]
     }
-  ],
-  "functions": [
-    {
-      "source": "apps/shibui-api",
-      "codebase": "shibui-api",
-      "runtime": "nodejs22",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "test",
-        "src",
-        "**/*.spec.ts",
-        "**/*.map"
-      ]
-    }
   ]
 }
