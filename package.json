@@ -24,7 +24,9 @@
     "type-check": "pnpm exec tsc --noEmit --project packages/shibui-ui/tsconfig.json",
     "storybook": "pnpm --filter @shibui-ui/ui storybook",
     "build-storybook": "pnpm --filter @shibui-ui/ui build-storybook",
-    "lint": "pnpm --filter @shibui-ui/ui lint"
+    "lint": "pnpm --filter @shibui-ui/ui lint",
+"worker:cf:deploy": "pnpm --filter @shibui-api/cf-cache-worker cf:deploy",
+"worker:cf:dev": "pnpm --filter @shibui-api/cf-cache-worker dev"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.1",

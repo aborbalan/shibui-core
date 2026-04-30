@@ -36,7 +36,7 @@ export * from './components/atoms/spinner/lib-spinner.component';
 export * from './components/atoms/bento-item/lib-bento-item.component';
 export * from './components/atoms/reading-progress/lib-reading-progress.component';
 export * from './components/atoms/liquid-button/lib-liquid-button.component'
-export * from './components/atoms/text-glich/lib-text-glitch.component'
+export * from './components/atoms/text-glitch/lib-text-glitch.component'
 export * from './components/atoms/background/lib-background.component'
 export * from './components/atoms/burger-button/lib-burger-button.component'
 export * from './components/atoms/eyebrow/lib-eyebrow.component';

@@ -1,0 +1,8 @@
+name       = "shibui-api-cache"
+main       = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[vars]
+ORIGIN = "https://shibui-core.onrender.com"
+
+# Sin KV ni R2 — usamos la Cache API nativa del Worker
