@@ -80,6 +80,8 @@ jobs:
   # JOB 3 — Deploy API Docs a Firebase
   # Solo en main/develop
   # ─────────────────────────────────────────
+  #
+
   deploy-api:
     name: 🚀 Deploy API to Firebase
     runs-on: ubuntu-latest
@@ -115,25 +117,25 @@ jobs:
   # JOB 4 — Deploy NestJS a Cloud Run
   # Solo en main/develop. OIDC sin secrets que rotar.
   # ─────────────────────────────────────────
-  deploy-worker:
-    name: Deploy Cloudflare Cache Worker
-    needs: [build-api-docs]           # se ejecuta después del build
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cloudflare/worker
-    steps:
-      - uses: actions/checkout@v4
+  #deploy-worker:
+  #  name: Deploy Cloudflare Cache Worker
+  #  needs: [build-api-docs]           # se ejecuta después del build
+  #   runs-on: ubuntu-latest
+  #  defaults:
+  #    run:
+  #      working-directory: cloudflare/worker
+  #  steps:
+  #    - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
+  #    - uses: pnpm/action-setup@v3
+  #      with:
+  #        version: 9
 
-      - name: Install Worker deps
-        run: pnpm install
+  #    - name: Install Worker deps
+  #      run: pnpm install
 
-      - name: Deploy Worker
-        run: pnpm deploy
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+  #    - name: Deploy Worker
+  #      run: pnpm deploy
+  #      env:
+  #        CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+  #        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
