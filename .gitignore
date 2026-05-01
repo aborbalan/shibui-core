@@ -4,6 +4,7 @@ storybook-static/
 *.log
 .DS_Store
 .firebase/
+*.tsbuildinfo
 
 # Playwright
 /test-results/

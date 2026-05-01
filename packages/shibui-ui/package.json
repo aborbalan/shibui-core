@@ -60,7 +60,10 @@
     "analyze": "cem analyze --litelement --exclude dist",
     "generate:wrappers": "tsx scripts/generate-wrappers.ts",
     "build": "pnpm run clean && vite build && tsc && pnpm run analyze && pnpm run generate:wrappers",
-    "deploy": "firebase deploy --only hosting:storybook --project lib-ui-b67c5"
+    "deploy": "firebase deploy --only hosting:storybook --project lib-ui-b67c5",
+    "test:unit": "vitest run --config vitest.unit.config.ts",
+    "test:unit:watch": "vitest --config vitest.unit.config.ts",
+    "validate:wrappers": "tsx scripts/validate-react-wrappers.ts"
   },
   "keywords": [
     "web-components",
