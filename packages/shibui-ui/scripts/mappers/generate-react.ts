@@ -1,17 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 
-/**
- * Genera wrappers de React a partir del custom-elements.json.
- *
- * Cambios respecto a la versión anterior:
- * - Eliminado @ts-nocheck de cada fichero generado
- * - Corregida la indentación del template literal (ya no hereda
- *   los 8 espacios del bloque padre)
- * - Reemplazado React.FC<any> por ComponentType con tipado explícito
- * - Reemplazado || [] por ?? [] para consistencia con el resto del proyecto
- * - Eliminado trim() final (ya no hay sangría que recortar)
- */
 export function generateReact(manifest): void {
   const outDirReact = './dist/react';
   if (!fs.existsSync(outDirReact)) fs.mkdirSync(outDirReact, { recursive: true });
@@ -38,10 +27,10 @@ export function generateReact(manifest): void {
         ? `{\n${eventsEntries.join(',\n')}\n}`
         : '{}';
 
-      // Template limpio — sin sangría heredada del bloque padre
       const content = `import React from 'react';
 import { createComponent } from '@lit/react';
 import { ${componentName} as Element } from '../index.js';
+import type { WebComponentBaseProps } from './types.js';
 
 /**
  * React wrapper for <${tagName}>
@@ -57,8 +46,9 @@ const _${componentName} = createComponent({
 // Cast necesario para resolver la incompatibilidad entre el tipo de retorno
 // de createComponent y las restricciones de JSX. Evita @ts-nocheck manteniendo
 // type-safety en el consumidor mediante ${componentName}Props.
+// WebComponentBaseProps omite React.HTMLAttributes intencionadamente — ver types.ts.
 export const ${componentName} = _${componentName} as unknown as React.ComponentType<
-  React.HTMLAttributes<HTMLElement> & Record<string, unknown>
+  WebComponentBaseProps & Record<string, unknown>
 >;
 
 export type ${componentName}Props = React.ComponentPropsWithRef<typeof ${componentName}>;
@@ -69,11 +59,50 @@ export type ${componentName}Props = React.ComponentPropsWithRef<typeof ${compone
     });
   });
 
-  const indexContent = componentsList
-    .map(comp => `export * from './${comp.tag}';`)
-    .join('\n');
+  // ── types.ts — tipo base compartido por todos los wrappers ────────────────
+  //
+  // Por qué NO usamos React.HTMLAttributes<HTMLElement>:
+  // React define onChange como FormEventHandler<HTMLElement>. Lit custom elements
+  // disparan CustomEvent — estos tipos son incompatibles bajo tsc estricto sin cast.
+  // Al usar WebComponentBaseProps + Record<string, unknown>, el consumidor puede
+  // pasar onChange: (e: CustomEvent) => void sin ningún cast en su lado.
+  const typesContent = `/**
+ * Minimal base props shared by all web component React wrappers.
+ * Auto-generated — do not edit manually.
+ *
+ * WHY NOT React.HTMLAttributes<HTMLElement>:
+ * React types onChange as FormEventHandler<HTMLElement>, but Lit custom elements
+ * dispatch CustomEvent. These types are structurally incompatible — CustomEvent
+ * has .detail, .initCustomEvent, .composed, etc. that FormEvent lacks.
+ * Under strict tsc -b this causes a build error in consumer projects.
+ *
+ * By using this minimal base + Record<string, unknown>, consumers can pass
+ * any event handler typed as CustomEvent without casting on their side:
+ *
+ *   <LibCheckbox onChange={(e: CustomEvent<{ checked: boolean }>) => ...} />
+ *
+ * Standard structural props (style, className, children, slot, id, ref) are
+ * explicitly declared so IDEs provide autocomplete for the most common cases.
+ */
+export type WebComponentBaseProps = {
+  children?: React.ReactNode;
+  style?: React.CSSProperties;
+  className?: string;
+  slot?: string;
+  id?: string;
+  ref?: React.Ref<HTMLElement>;
+};
+`;
 
-  fs.writeFileSync(path.join(outDirReact, 'index.ts'), indexContent);
+  fs.writeFileSync(path.join(outDirReact, 'types.ts'), typesContent);
 
-  console.log('  └─ ✅ React wrappers: generated with explicit typing.');
+  // ── index.ts ──────────────────────────────────────────────────────────────
+  const indexLines = [
+    `export type { WebComponentBaseProps } from './types.js';`,
+    ...componentsList.map(comp => `export * from './${comp.tag}';`),
+  ];
+
+  fs.writeFileSync(path.join(outDirReact, 'index.ts'), indexLines.join('\n'));
+
+  console.log('  └─ ✅ React wrappers: generated with WebComponentBaseProps (no HTMLAttributes conflicts).');
 }
