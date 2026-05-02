@@ -8,10 +8,6 @@ on:
       - "feature/**"
       - "fix/**"
       - "chore/**"
-  pull_request:
-    branches:
-      - main
-      - develop
 
 # Un único punto de cancelación para todo el ecosistema
 concurrency:
