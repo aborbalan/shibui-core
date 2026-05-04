@@ -211,60 +211,7 @@ jobs:
           retention-days: 1
 
   # ─────────────────────────────────────────
-  # JOB 6 — Semantic Release + Publish NPM
-  # Solo en main, después de build-ui.
-  # ─────────────────────────────────────────
-  release:
-    name: 🚀 Semantic Release
-    runs-on: ubuntu-latest
-    needs: [build-ui]
-    if: |
-      inputs.ref == 'refs/heads/main' &&
-      (needs.build-ui.result == 'success' || needs.build-ui.result == 'skipped')
-    permissions:
-      id-token: write
-      contents: write
-      pull-requests: write
-      issues: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "pnpm"
-          registry-url: "https://registry.npmjs.org"
-
-      - name: 📦 Install Dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: 🚀 Run Semantic Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm exec semantic-release
-
-      - name: 🏗️ Build UI lib (con versión bumpeada)
-        run: pnpm --filter @shibui-ui/ui build
-
-      - name: 🧹 Remove legacy auth token from .npmrc
-        run: |
-          if [ -f ~/.npmrc ]; then
-            sed -i '/_authToken/d' ~/.npmrc
-          fi
-
-      - name: 📦 Publish to npm (OIDC Provenance)
-        working-directory: packages/shibui-ui
-        run: npm publish --provenance --access public
-
-  # ─────────────────────────────────────────
-  # JOB 7 — Deploy Apps a Firebase
+  # JOB 6 — Deploy Apps a Firebase
   # Solo en main/develop. Tolera builds skipped.
   # FIX: always() es obligatorio para que GitHub Actions evalúe
   # el if en lugar de auto-saltearse cuando los needs están en skipped.

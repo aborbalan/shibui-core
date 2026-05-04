@@ -1,0 +1,70 @@
+name: Release — npm Publish
+
+on:
+    workflow_dispatch:
+    workflow_call:  
+          inputs:
+            ref:
+              description: "Ref del branch que disparó el orquestador"
+              type: string
+              required: false
+              default: ""
+
+concurrency:
+  group: release
+  cancel-in-progress: false  # nunca cancelar un release en curso
+
+env:
+  NODE_VERSION: "22.14.0"
+  PNPM_VERSION: "9.15.0"
+
+jobs:
+  release:
+    name: 🚀 Semantic Release + npm Publish
+    runs-on: ubuntu-latest
+    # environment: npm-publish  ← aquí SÍ funciona (no es reusable workflow)
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🚀 Run Semantic Release
+        id: semantic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pnpm exec semantic-release
+          # Captura la versión que acaba de bumpearse
+          echo "version=$(node -p "require('./packages/shibui-ui/package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: 🏗️ Build UI lib (versión bumpeada)
+        run: pnpm --filter @shibui-ui/ui build
+
+      - name: 🧹 Remove _authToken from .npmrc
+        run: |
+          if [ -f ~/.npmrc ]; then
+            sed -i '/_authToken/d' ~/.npmrc
+          fi
+
+      - name: 📦 Publish to npm (OIDC Provenance)
+        working-directory: packages/shibui-ui
+        run: npm publish --provenance --access public
