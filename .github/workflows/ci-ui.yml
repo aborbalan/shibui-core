@@ -240,6 +240,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "pnpm"
+          registry-url: "https://registry.npmjs.org"
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -251,6 +252,9 @@ jobs:
 
       - name: 🏗️ Build UI lib (con versión bumpeada)
         run: pnpm --filter @shibui-ui/ui build
+
+      - name: 🧹 Remove legacy auth token from .npmrc  # ← nuevo paso
+        run: sed -i '/_authToken/d' ~/.npmrc
 
       - name: 📦 Publish to npm (OIDC Provenance)
         working-directory: packages/shibui-ui
