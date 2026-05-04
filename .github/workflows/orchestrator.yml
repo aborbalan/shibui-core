@@ -8,6 +8,32 @@ on:
       - "feature/**"
       - "fix/**"
       - "chore/**"
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:                    # ← trigger manual desde GitHub UI
+    inputs:
+      force_ui:
+        description: "Forzar pipeline UI & Storybook"
+        type: boolean
+        default: false
+      force_react:
+        description: "Forzar pipeline React App"
+        type: boolean
+        default: false
+      force_angular:
+        description: "Forzar pipeline Angular App"
+        type: boolean
+        default: false
+      force_svelte:
+        description: "Forzar pipeline Svelte App"
+        type: boolean
+        default: false
+      force_api:
+        description: "Forzar pipeline API"
+        type: boolean
+        default: false
 
 # Un único punto de cancelación para todo el ecosistema
 concurrency:
@@ -24,11 +50,11 @@ jobs:
     name: 🔍 Detect Changes
     runs-on: ubuntu-latest
     outputs:
-      ui:      ${{ steps.filter.outputs.ui }}
-      react:   ${{ steps.filter.outputs.react }}
-      angular: ${{ steps.filter.outputs.angular }}
-      svelte:  ${{ steps.filter.outputs.svelte }}
-      api:     ${{ steps.filter.outputs.api }}
+      ui:      ${{ steps.resolve.outputs.ui }}
+      react:   ${{ steps.resolve.outputs.react }}
+      angular: ${{ steps.resolve.outputs.angular }}
+      svelte:  ${{ steps.resolve.outputs.svelte }}
+      api:     ${{ steps.resolve.outputs.api }}
     steps:
       - uses: actions/checkout@v4
 
@@ -41,6 +67,16 @@ jobs:
             angular: 'apps/app-angular/**'
             svelte:  'apps/app-svelte/**'
             api:     'apps/shibui-api/**'
+
+      # OR lógico: cambio detectado ó forzado manualmente
+      - name: 🎛️ Resolve outputs (auto + manual override)
+        id: resolve
+        run: |
+          echo "ui=$([[ '${{ steps.filter.outputs.ui }}' == 'true' || '${{ inputs.force_ui }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "react=$([[ '${{ steps.filter.outputs.react }}' == 'true' || '${{ inputs.force_react }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "angular=$([[ '${{ steps.filter.outputs.angular }}' == 'true' || '${{ inputs.force_angular }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "svelte=$([[ '${{ steps.filter.outputs.svelte }}' == 'true' || '${{ inputs.force_svelte }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "api=$([[ '${{ steps.filter.outputs.api }}' == 'true' || '${{ inputs.force_api }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
 
   # ─────────────────────────────────────────
   # JOB 2 — Pipeline UI & Apps
