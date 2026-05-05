@@ -82,21 +82,42 @@ jobs:
   # JOB 2 — Pipeline UI & Apps
   # Se activa si cambia cualquier parte del frontend.
   # ─────────────────────────────────────────
-  run-ui-pipeline:
-    name: 🎨 UI & Apps Pipeline
+  run-lib-pipeline:
+    name: 📦 UI Library Pipeline
+    needs: detect-changes
+    if: needs.detect-changes.outputs.ui == 'true'
+    uses: ./.github/workflows/ci-lib.yml
+    with:
+      ui: ${{ needs.detect-changes.outputs.ui }}
+      ref: ${{ github.ref }}
+    secrets: inherit
+
+  run-apps-pipeline:
+    name: 🖥️ Apps Pipeline
     needs: detect-changes
     if: |
       needs.detect-changes.outputs.ui == 'true' ||
       needs.detect-changes.outputs.react == 'true' ||
       needs.detect-changes.outputs.angular == 'true' ||
       needs.detect-changes.outputs.svelte == 'true'
-    uses: ./.github/workflows/ci-ui.yml
+    uses: ./.github/workflows/ci-apps.yml
     with:
       ui:      ${{ needs.detect-changes.outputs.ui }}
       react:   ${{ needs.detect-changes.outputs.react }}
       angular: ${{ needs.detect-changes.outputs.angular }}
       svelte:  ${{ needs.detect-changes.outputs.svelte }}
-      # El pipeline necesita saber en qué rama está para decidir si deploya
+      ref: ${{ github.ref }}
+    secrets: inherit
+
+  run-release:
+    name: 🚀 Release Pipeline
+    needs: [detect-changes, run-lib-pipeline]
+    if: |
+      github.ref == 'refs/heads/main' &&
+      needs.detect-changes.outputs.ui == 'true' &&
+      needs.run-lib-pipeline.result == 'success'
+    uses: ./.github/workflows/release.yml
+    with:
       ref: ${{ github.ref }}
     secrets: inherit
 
@@ -115,17 +136,3 @@ jobs:
       ref: ${{ github.ref }}
     secrets: inherit
 
-
-  # JOB 4 — Release (independiente del pipeline UI)
-  run-release:
-    name: 🚀 Release Pipeline
-    needs: [detect-changes, run-ui-pipeline]
-    if: |
-      always() &&
-      github.ref == 'refs/heads/main' &&
-      needs.detect-changes.outputs.ui == 'true' &&
-      needs.run-ui-pipeline.result != 'failure'
-    uses: ./.github/workflows/release.yml
-    with:
-      ref: ${{ github.ref }}
-    secrets: inherit
