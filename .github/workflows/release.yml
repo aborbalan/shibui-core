@@ -12,7 +12,7 @@ on:
 
 concurrency:
   group: release
-  cancel-in-progress: false # nunca cancelar un release en curso
+  cancel-in-progress: false
 
 env:
   NODE_VERSION: "22.14.0"
@@ -23,7 +23,7 @@ jobs:
     name: 🚀 Semantic Release + npm Publish
     runs-on: ubuntu-latest
     permissions:
-      id-token: write   # ← requerido por npm Trusted Publishers (OIDC)
+      id-token: write     # ← requerido por npm Trusted Publishers (OIDC)
       contents: write
       pull-requests: write
       issues: write
@@ -41,8 +41,10 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "pnpm"
-          registry-url: "https://registry.npmjs.org"
-          # ⚠️ No pasar NODE_AUTH_TOKEN aquí — Trusted Publishers no lo necesita
+          # ⚠️ Sin registry-url: si se incluye, setup-node escribe
+          # //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN} en .npmrc.
+          # Con NODE_AUTH_TOKEN vacío esa línea rompe el flujo OIDC de
+          # Trusted Publishers y el registry devuelve 404 en lugar de 401.
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -58,5 +60,3 @@ jobs:
       - name: 📦 Publish to npm (OIDC Provenance)
         working-directory: packages/shibui-ui
         run: npm publish --provenance --access public
-        # npm intercambia el OIDC token automáticamente gracias a Trusted Publishers
-        # No se necesita ningún secret ni token manual
