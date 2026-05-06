@@ -24,6 +24,7 @@ export class AboutController {
   @ApiResponse({
     status: 200,
     description: 'Full about-me profile',
+    type: AboutMeDto,
   })
   getAll(): AboutMeDto {
     return this.aboutService.getAll();
@@ -34,6 +35,7 @@ export class AboutController {
   @ApiResponse({
     status: 200,
     description: 'Personal profile',
+    type: ProfileDto,
   })
   getProfile(): ProfileDto {
     return this.aboutService.getProfile();
