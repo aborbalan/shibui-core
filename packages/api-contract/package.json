@@ -1,6 +1,9 @@
 {
   
   "devDependencies": {
+
+  },
+  "optionalDependencies": {
     "@kubb/cli": "^4.36.5",
     "@kubb/core": "^4.36.5",
     "@kubb/plugin-oas": "^4.36.5",
