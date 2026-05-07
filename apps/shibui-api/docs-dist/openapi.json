@@ -36,10 +36,18 @@
           "400": {
             "description": "Validation error"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "409": {
             "description": "Email already exists"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Create a new user",
         "tags": [
           "users"
@@ -113,10 +121,18 @@
           "200": {
             "description": "User updated"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "User not found"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Update a user",
         "tags": [
           "users"
@@ -139,10 +155,18 @@
           "204": {
             "description": "User deleted"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "User not found"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Delete a user",
         "tags": [
           "users"
@@ -170,10 +194,18 @@
           "400": {
             "description": "Validation error"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "409": {
             "description": "Slug already exists"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Create a new component",
         "tags": [
           "components"
@@ -272,10 +304,18 @@
           "200": {
             "description": "Component updated"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Component not found"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Update a component",
         "tags": [
           "components"
@@ -298,13 +338,46 @@
           "204": {
             "description": "Component deleted"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Component not found"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Delete a component",
         "tags": [
           "components"
+        ]
+      }
+    },
+    "/api/v1/categories/with-components": {
+      "get": {
+        "operationId": "CategoriesController_findAllWithComponents",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Categories with their components",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CategoryWithComponentsDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get all categories, each with its components embedded",
+        "tags": [
+          "categories"
         ]
       }
     },
@@ -329,10 +402,18 @@
           "400": {
             "description": "Validation error"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "409": {
             "description": "Slug already exists"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Create a new category",
         "tags": [
           "categories"
@@ -406,10 +487,18 @@
           "200": {
             "description": "Category updated"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Category not found"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Update a category",
         "tags": [
           "categories"
@@ -432,10 +521,18 @@
           "204": {
             "description": "Category deleted"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Category not found"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Delete a category",
         "tags": [
           "categories"
@@ -462,8 +559,16 @@
           },
           "400": {
             "description": "Validation error"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Create a new example",
         "tags": [
           "examples"
@@ -562,10 +667,18 @@
           "200": {
             "description": "Example updated"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Example not found"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Update an example",
         "tags": [
           "examples"
@@ -588,13 +701,166 @@
           "204": {
             "description": "Example deleted"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Example not found"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "summary": "Delete an example",
         "tags": [
           "examples"
+        ]
+      }
+    },
+    "/api/v1/about": {
+      "get": {
+        "description": "Returns the complete about-me payload: profile, experience, skills, education and languages.",
+        "operationId": "AboutController_getAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Full about-me profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AboutMeDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get my full profile",
+        "tags": [
+          "about"
+        ]
+      }
+    },
+    "/api/v1/about/profile": {
+      "get": {
+        "operationId": "AboutController_getProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Personal profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get personal profile info",
+        "tags": [
+          "about"
+        ]
+      }
+    },
+    "/api/v1/about/experience": {
+      "get": {
+        "operationId": "AboutController_getExperience",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Work experience list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkExperienceDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get work experience ordered by recency",
+        "tags": [
+          "about"
+        ]
+      }
+    },
+    "/api/v1/about/skills": {
+      "get": {
+        "operationId": "AboutController_getSkills",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Skill groups",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SkillGroupDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get skills grouped by category",
+        "tags": [
+          "about"
+        ]
+      }
+    },
+    "/api/v1/about/education": {
+      "get": {
+        "operationId": "AboutController_getEducation",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Education list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EducationDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get education history ordered by recency",
+        "tags": [
+          "about"
+        ]
+      }
+    },
+    "/api/v1/about/languages": {
+      "get": {
+        "operationId": "AboutController_getLanguages",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Language list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LanguageDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get spoken languages",
+        "tags": [
+          "about"
         ]
       }
     }
@@ -741,6 +1007,103 @@
         "type": "object",
         "properties": {}
       },
+      "ComponentSummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "tagName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "stable",
+              "deprecated"
+            ]
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "packageName": {
+            "type": "object",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "docsUrl": {
+            "type": "object",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "tagName",
+          "description",
+          "version",
+          "status",
+          "categoryId",
+          "tags"
+        ]
+      },
+      "CategoryWithComponentsDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "description": {
+            "type": "object",
+            "nullable": true
+          },
+          "icon": {
+            "type": "object",
+            "nullable": true
+          },
+          "order": {
+            "type": "number"
+          },
+          "components": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComponentSummaryDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "order",
+          "components"
+        ]
+      },
       "CreateCategoryDto": {
         "type": "object",
         "properties": {
@@ -839,6 +1202,293 @@
       "UpdateExampleDto": {
         "type": "object",
         "properties": {}
+      },
+      "SocialLinkDto": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "example": "LinkedIn"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://www.linkedin.com/in/alejandro-borbalan"
+          }
+        },
+        "required": [
+          "label",
+          "url"
+        ]
+      },
+      "ProfileDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Alejandro Borbalán Dueñas"
+          },
+          "title": {
+            "type": "string",
+            "example": "Desarrollador Front-End Senior"
+          },
+          "location": {
+            "type": "string",
+            "example": "Zaragoza, España"
+          },
+          "email": {
+            "type": "string",
+            "example": "aborbalan.duenas@gmail.com"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "socials": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SocialLinkDto"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "title",
+          "location",
+          "email",
+          "bio",
+          "socials"
+        ]
+      },
+      "WorkExperienceDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "exp-0001"
+          },
+          "role": {
+            "type": "string",
+            "example": "Programador Sénior"
+          },
+          "company": {
+            "type": "string",
+            "example": "Nettrim Technology"
+          },
+          "location": {
+            "type": "string",
+            "example": "Zaragoza, España"
+          },
+          "startDate": {
+            "type": "string",
+            "example": "2021-11"
+          },
+          "endDate": {
+            "type": "object",
+            "example": "2025-11",
+            "nullable": true
+          },
+          "description": {
+            "type": "string"
+          },
+          "tags": {
+            "example": [
+              "Angular",
+              "TypeScript",
+              "RxJS"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          }
+        },
+        "required": [
+          "id",
+          "role",
+          "company",
+          "location",
+          "startDate",
+          "endDate",
+          "description",
+          "tags",
+          "order"
+        ]
+      },
+      "SkillDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "sk-001"
+          },
+          "name": {
+            "type": "string",
+            "example": "Angular"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "frontend",
+              "expanding",
+              "backend",
+              "architecture",
+              "testing"
+            ],
+            "example": "frontend"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "category",
+          "order"
+        ]
+      },
+      "SkillGroupDto": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": [
+              "frontend",
+              "expanding",
+              "backend",
+              "architecture",
+              "testing"
+            ],
+            "example": "frontend"
+          },
+          "label": {
+            "type": "string",
+            "example": "Front-End"
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SkillDto"
+            }
+          }
+        },
+        "required": [
+          "category",
+          "label",
+          "skills"
+        ]
+      },
+      "EducationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "edu-0001"
+          },
+          "degree": {
+            "type": "string",
+            "example": "Grado Superior"
+          },
+          "field": {
+            "type": "string",
+            "example": "Desarrollo de Aplicaciones Multiplataforma (DAM)"
+          },
+          "institution": {
+            "type": "string",
+            "example": "IES Santiago Hernández"
+          },
+          "startYear": {
+            "type": "number",
+            "example": 2018
+          },
+          "endYear": {
+            "type": "number",
+            "example": 2019
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          }
+        },
+        "required": [
+          "id",
+          "degree",
+          "field",
+          "institution",
+          "startYear",
+          "endYear",
+          "order"
+        ]
+      },
+      "LanguageDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "lang-0001"
+          },
+          "name": {
+            "type": "string",
+            "example": "Español"
+          },
+          "level": {
+            "type": "string",
+            "example": "Nativo"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "level",
+          "order"
+        ]
+      },
+      "AboutMeDto": {
+        "type": "object",
+        "properties": {
+          "profile": {
+            "$ref": "#/components/schemas/ProfileDto"
+          },
+          "experience": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkExperienceDto"
+            }
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SkillGroupDto"
+            }
+          },
+          "education": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EducationDto"
+            }
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LanguageDto"
+            }
+          }
+        },
+        "required": [
+          "profile",
+          "experience",
+          "skills",
+          "education",
+          "languages"
+        ]
       }
     }
   }
