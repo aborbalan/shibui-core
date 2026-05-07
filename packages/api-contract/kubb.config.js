@@ -1,7 +1,7 @@
 import { defineConfig } from '@kubb/core';
 import { pluginOas } from '@kubb/plugin-oas';
 import { pluginTs } from '@kubb/plugin-ts';
-import { pluginTanstackQuery } from '@kubb/plugin-tanstack-query';
+import { pluginReactQuery } from '@kubb/plugin-react-query'
 import { pluginZod } from '@kubb/plugin-zod';
 
 export default defineConfig({
@@ -14,19 +14,19 @@ export default defineConfig({
     pluginZod({ output: { path: 'zod' } }),
     
     // Generación para REACT
-    pluginTanstackQuery({
+    pluginReactQuery({
       output: { path: 'react' },
       framework: 'react',
     }),
     
     // Generación para SVELTE
-    pluginTanstackQuery({
+    pluginReactQuery({
       output: { path: 'svelte' },
       framework: 'svelte',
     }),
 
     // Generación para ANGULAR (Vía Vanilla JS/TS para máxima compatibilidad)
-    pluginTanstackQuery({
+    pluginReactQuery({
       output: { path: 'angular' },
       framework: 'react', // Usamos el core y luego Angular lo envuelve en Signals
       output: {

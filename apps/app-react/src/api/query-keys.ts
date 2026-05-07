@@ -12,17 +12,21 @@ export const queryKeys = {
     me: ["auth", "me"] as const,
   },
 
+  // ── About ─────────────────────────────────────────────
+  about: {
+    all: ["about"] as const,
+    profile: ["about", "profile"] as const,
+    experience: ["about", "experience"] as const,
+    skills: ["about", "skills"] as const,
+    education: ["about", "education"] as const,
+    languages: ["about", "languages"] as const,
+  },
+
   // ── Projects ──────────────────────────────────────────
   projects: {
     all: ["projects"] as const,
     lists: () => [...queryKeys.projects.all, "list"] as const,
     detail: (id: string) => [...queryKeys.projects.all, "detail", id] as const,
-  },
-
-  // ── Experience ────────────────────────────────────────
-  experience: {
-    all: ["experience"] as const,
-    list: () => [...queryKeys.experience.all, "list"] as const,
   },
 
   // ── Design System ─────────────────────────────────────
