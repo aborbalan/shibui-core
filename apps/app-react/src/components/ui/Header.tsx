@@ -3,22 +3,22 @@ import { LibHeader } from '@shibui-ui/ui/react';
 
 // ─── Tipos re-exportados para que el consumidor no importe de Lit ─────────────
 export interface NavLink {
-  id:       string;
-  label:    string;
-  href?:    string;
-  active?:  boolean;
+  id: string;
+  label: string;
+  href?: string;
+  active?: boolean;
   dropdown?: DropdownItem[];
 }
 
 export interface DropdownItem {
-  label:    string;
-  href?:    string;
+  label: string;
+  href?: string;
   divider?: boolean;
 }
 
 export interface HeaderAction {
-  label:    string;
-  href?:    string;
+  label: string;
+  href?: string;
   variant?: 'kaki' | 'outline' | 'ghost' | 'kintsugi' | 'glitch';
 }
 
@@ -36,35 +36,35 @@ export type HeaderVariant =
 
 export interface ShibuiHeaderProps {
   /** Variante visual del header. Default: 'kintsugi' */
-  variant?:      HeaderVariant;
+  variant?: HeaderVariant;
   /** Carácter del logo mark. Default: '渋' */
-  logoMark?:     string;
+  logoMark?: string;
   /** Nombre de marca. Default: 'shibui' */
-  brandName?:    string;
+  brandName?: string;
   /** Subtítulo del logo (solo variante shrink) */
   brandTagline?: string;
   /** URL del logo */
-  logoHref?:     string;
+  logoHref?: string;
   /** Badge de versión (solo variante dark) */
-  version?:      string;
+  version?: string;
   /** Links de navegación principal */
-  links?:        NavLink[];
+  links?: NavLink[];
   /** Botones CTA del lado derecho */
-  actions?:      HeaderAction[];
+  actions?: HeaderAction[];
   /** Texto del link de login */
-  loginLabel?:   string;
+  loginLabel?: string;
   /** URL del link de login */
-  loginHref?:    string;
+  loginHref?: string;
   /** Callback cuando se hace click en un nav link */
-  onNavLink?:    (id: string) => void;
+  onNavLink?: (id: string) => void;
   /** Callback cuando se hace click en un action */
-  onAction?:     (label: string, href?: string) => void;
+  onAction?: (label: string, href?: string) => void;
   /** className adicional para el host */
-  className?:    string;
+  className?: string;
   /** style adicional para el host */
-  style?:        React.CSSProperties;
+  style?: React.CSSProperties;
   /** Muestra la barra de búsqueda */
-  showSearch?:   boolean;
+  showSearch?: boolean;
   /** Placeholder de la barra de búsqueda */
   searchPlaceholder?: string;
 }
@@ -72,8 +72,9 @@ export interface ShibuiHeaderProps {
 // ─── Links por defecto del design system ─────────────────────────────────────
 const DEFAULT_LINKS: NavLink[] = [
   { id: 'componentes', label: 'Componentes', href: '#componentes' },
-  { id: 'tokens',      label: 'Tokens',      href: '#tokens'      },
-  { id: 'filosofia',   label: 'Filosofía',   href: '#filosofia'   },
+  { id: 'tokens', label: 'Tokens', href: '#tokens' },
+  { id: 'filosofia', label: 'Filosofía', href: '#filosofia' },
+  { id: 'about', label: 'Sobre mí', href: '/about' }
 ];
 
 const DEFAULT_ACTIONS: HeaderAction[] = [
@@ -82,14 +83,14 @@ const DEFAULT_ACTIONS: HeaderAction[] = [
 
 // ─── Componente ───────────────────────────────────────────────────────────────
 export const ShibuiHeader: React.FC<ShibuiHeaderProps> = ({
-  variant      = 'kintsugi',
-  logoMark     = '渋',
-  brandName    = 'shibui',
+  variant = 'kintsugi',
+  logoMark = '渋',
+  brandName = 'shibui',
   brandTagline,
-  logoHref     = '#',
+  logoHref = '#',
   version,
-  links        = DEFAULT_LINKS,
-  actions      = DEFAULT_ACTIONS,
+  links = DEFAULT_LINKS,
+  actions = DEFAULT_ACTIONS,
   loginLabel,
   loginHref,
   onNavLink,
