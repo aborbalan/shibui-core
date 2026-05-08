@@ -2,11 +2,21 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@shibui-ui/ui": ["../../packages/shibui-ui/dist/index.d.ts"],
-      "@shibui-ui/ui/*": ["../../packages/shibui-ui/dist/*"]
-    }
+      "@shibui-ui/ui/*": ["../../packages/shibui-ui/dist/*"],
+      "@components/*": ["src/components/*"],
+      "@context/*": ["src/context/*"],
+      "@core/*": ["src/core/*"],
+      "@pages/*": ["src/pages/*"],
+      "@shared/*": ["src/shared/*"],
+      "@templates/*": ["src/templates/*"],
+      "@env/*": ["src/environments/*"]
+    },
   },
+  "files": [
+    "src/main.ts"
+  ],
   "include": ["src/**/*.ts","src/typings.d.ts"]
 }
