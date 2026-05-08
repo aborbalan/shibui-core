@@ -10,6 +10,7 @@ import { useAdminShortcut } from './hooks/useAdminShortcut';
 const HomePage = lazy(() => import('./pages/hero').then(m => ({ default: m.HomePage })));
 const ComponentsPage = lazy(() => import('./pages/components').then(m => ({ default: m.ComponentsPage })));
 const TokensPage = lazy(() => import('./pages/tokens').then(m => ({ default: m.TokensPage })));
+const AboutPage = lazy(() => import('./pages/about').then(m => ({ default: m.AboutPage })));
 
 // — Admin —
 const KitchenSink = lazy(() => import('./dev/KitchenSink').then(m => ({ default: m.KitchenSink })));
@@ -28,6 +29,7 @@ export function AppShell() {
           <Route path="home" element={<HomePage />} />
           <Route path="tokens" element={<TokensPage />} />
           <Route path="componentes" element={<ComponentsPage />} />
+          <Route path="about" element={<AboutPage />} />
         </Route>
 
         {/* ── Login admin (sin layout) ───────────────────── */}
