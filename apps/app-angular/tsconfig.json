@@ -3,6 +3,18 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@shibui-ui/ui": ["../../packages/shibui-ui/dist/index.d.ts"],
+      "@shibui-ui/ui/*": ["../../packages/shibui-ui/dist/*"],
+      "@components/*": ["src/components/*"],
+      "@context/*": ["src/context/*"],
+      "@core/*": ["src/core/*"],
+      "@pages/*": ["src/pages/*"],
+      "@shared/*": ["src/shared/*"],
+      "@templates/*": ["src/templates/*"],
+      "@env/*": ["src/environments/*"]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -13,7 +25,8 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "preserveSymlinks": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
