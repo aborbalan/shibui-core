@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LibBackground, LibButton } from '@shibui-ui/ui/react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../core/hooks/useAuth';
 
 export function LoginPage() {
     const { login } = useAuth();

@@ -18,7 +18,7 @@ import type {
     SkillGroupDto,
     EducationDto,
     LanguageDto,
-} from '../../api/domain/about/api/about.api';
+} from '../../data/api/domain/about/api/about.api';
 
 const PROFILE: ProfileDto = {
     name: 'Alejandro Borbalán Dueñas',

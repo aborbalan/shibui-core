@@ -1,6 +1,6 @@
 import React from 'react';
-import { PALETTE_WASHI } from '../../../data/constants/colors';
-import ColorPalette from '../../../components/ui/ColorPalette';
+import { PALETTE_WASHI } from '../../../core/data/constants/colors';
+import ColorPalette from '../../../components/ColorPalette';
 
 /* ── Tipos ── */
 interface SpacingItem {

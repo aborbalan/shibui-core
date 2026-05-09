@@ -1,4 +1,4 @@
-import { ColorPaletteProps } from "../../components/ui/ColorPalette";
+import { ColorPaletteProps } from "../../../components/ColorPalette";
 
 export const PALETTE_WASHI: ColorPaletteProps = {
     eyebrow: 'Color · Washi',

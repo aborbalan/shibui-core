@@ -1,6 +1,6 @@
 import React from 'react';
 import { LibBadge, LibEyebrow } from '@shibui-ui/ui/react';
-import type { SkillGroupDto } from '../../../api/domain/about/api/about.api';
+import type { SkillGroupDto } from '../../../data/api/domain/about/api/about.api';
 
 interface SkillsSectionProps {
     skillGroups: SkillGroupDto[];

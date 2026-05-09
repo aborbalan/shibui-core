@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import ShibuiHeader from '../ui/Header';
-import Footer from '../ui/Footer';
+import ShibuiHeader from '../../components/Header';
+import Footer from '../../components/Footer';
 
 export function PublicLayout() {
   const navigate = useNavigate();

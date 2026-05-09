@@ -1,7 +1,8 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './../../../shared/components/header/header';
 import { Footer } from "src/shared/components/footer/footer";
+import { BackgroundLogicService } from '@core/services/background.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -13,4 +14,6 @@ import { Footer } from "src/shared/components/footer/footer";
 })
 export class MainLayoutComponent {
 
+  public bgService = inject(BackgroundLogicService);
+  public currentVariant = computed(() => this.bgService.currentVariant());
 }

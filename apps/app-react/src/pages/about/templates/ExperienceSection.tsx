@@ -1,6 +1,6 @@
 import React from 'react';
 import { LibBadge, LibEyebrow, LibTimeline, LibTimelineItem } from '@shibui-ui/ui/react';
-import type { WorkExperienceDto } from '../../../api/domain/about/api/about.api';
+import type { WorkExperienceDto } from '../../../data/api/domain/about/api/about.api';
 
 interface ExperienceSectionProps {
     experience: WorkExperienceDto[];
