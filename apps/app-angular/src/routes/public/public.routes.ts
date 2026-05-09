@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const PUBLIC_ROUTES: Routes = [
   { 
     path: '', 
-    loadComponent: () => import('@pages/public/home/home').then(m => m.Home) 
+    loadComponent: () => import('@pages/public/hero/hero').then(m => m.Hero) 
   },
   { 
     path: 'login', 
