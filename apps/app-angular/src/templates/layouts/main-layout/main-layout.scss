@@ -1,0 +1,23 @@
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Altura fija al 100% de la ventana */
+  overflow: hidden;
+}
+
+.content-area {
+  flex: 1; /* Ocupa todo el espacio restante */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  * {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+header,
+footer {
+  flex-shrink: 0; /* Asegura que el header y footer no se "aplasten" */
+}

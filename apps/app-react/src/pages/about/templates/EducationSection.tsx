@@ -3,7 +3,7 @@ import { LibBadge, LibEyebrow } from '@shibui-ui/ui/react';
 import type {
     EducationDto,
     LanguageDto,
-} from '../../../api/domain/about/api/about.api';
+} from '../../../data/api/domain/about/api/about.api';
 
 interface EducationSectionProps {
     education: EducationDto[];

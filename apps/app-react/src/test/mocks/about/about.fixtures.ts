@@ -1,8 +1,8 @@
-import { ProfileDto, WorkExperienceDto } from "../../../api/domain/about/api/about.api";
-import { SkillGroupDto } from "../../../api/domain/about/api/about.api";
-import { EducationDto } from "../../../api/domain/about/api/about.api";
-import { LanguageDto } from "../../../api/domain/about/api/about.api";
-import { AboutMeDto } from "../../../api/domain/about/api/about.api";
+import { ProfileDto, WorkExperienceDto } from "../../../data/api/domain/about/api/about.api";
+import { SkillGroupDto } from "../../../data/api/domain/about/api/about.api";
+import { EducationDto } from "../../../data/api/domain/about/api/about.api";
+import { LanguageDto } from "../../../data/api/domain/about/api/about.api";
+import { AboutMeDto } from "../../../data/api/domain/about/api/about.api";
 
   
   export const profileFixture: ProfileDto    = {

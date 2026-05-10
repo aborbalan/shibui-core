@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
-import { AppShell } from './AppShell';
-import { AuthProvider } from './auth/AuthProvider';
+import { AppShell } from './shell/AppShell';
+import { AuthProvider } from './core/auth/AuthProvider';
 
 function App() {
   return (

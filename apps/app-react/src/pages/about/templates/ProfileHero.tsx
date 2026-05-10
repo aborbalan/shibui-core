@@ -1,6 +1,6 @@
 import React from 'react';
 import { LibAvatar, LibBadge, LibButton, LibEyebrow } from '@shibui-ui/ui/react';
-import type { ProfileDto } from '../../../api/domain/about/api/about.api';
+import type { ProfileDto } from '../../../data/api/domain/about/api/about.api';
 
 interface ProfileHeroProps {
     profile: ProfileDto;

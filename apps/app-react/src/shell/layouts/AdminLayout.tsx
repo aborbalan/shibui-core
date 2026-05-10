@@ -1,7 +1,7 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { LibSidebar } from '@shibui-ui/ui/react';
 import type { SidebarLink } from '@shibui-ui/ui';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../core/hooks/useAuth';
 
 const ADMIN_LINKS: SidebarLink[] = [
   // — Dev Tools —

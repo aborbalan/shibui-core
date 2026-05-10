@@ -1,19 +1,19 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { PublicLayout } from './components/layout/PublicLayout';
-import { AdminLayout } from './components/layout/AdminLayout';
-import { AuthGuard } from './auth/AuthGuard';
-import { LoginPage } from './pages/login';
-import { useAdminShortcut } from './hooks/useAdminShortcut';
+import { PublicLayout } from './layouts/PublicLayout';
+import { AdminLayout } from '../components/layout/AdminLayout';
+import { AuthGuard } from '../core/auth/AuthGuard';
+import { LoginPage } from '../pages/login';
+import { useAdminShortcut } from '../core/hooks/useAdminShortcut';
 
 // — Público —
-const HomePage = lazy(() => import('./pages/hero').then(m => ({ default: m.HomePage })));
-const ComponentsPage = lazy(() => import('./pages/components').then(m => ({ default: m.ComponentsPage })));
-const TokensPage = lazy(() => import('./pages/tokens').then(m => ({ default: m.TokensPage })));
-const AboutPage = lazy(() => import('./pages/about').then(m => ({ default: m.AboutPage })));
+const HomePage = lazy(() => import('../pages/hero').then(m => ({ default: m.HomePage })));
+const ComponentsPage = lazy(() => import('../pages/components').then(m => ({ default: m.ComponentsPage })));
+const TokensPage = lazy(() => import('../pages/tokens').then(m => ({ default: m.TokensPage })));
+const AboutPage = lazy(() => import('../pages/about').then(m => ({ default: m.AboutPage })));
 
 // — Admin —
-const KitchenSink = lazy(() => import('./dev/KitchenSink').then(m => ({ default: m.KitchenSink })));
+const KitchenSink = lazy(() => import('../dev/KitchenSink').then(m => ({ default: m.KitchenSink })));
 
 export function AppShell() {
   // Ctrl + Shift + A → /admin/login
