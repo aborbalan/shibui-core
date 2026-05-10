@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { PublicLayout } from './layouts/PublicLayout';
-import { AdminLayout } from '../components/layout/AdminLayout';
+import { AdminLayout } from './layouts/AdminLayout';
 import { AuthGuard } from '../core/auth/AuthGuard';
 import { LoginPage } from '../pages/login';
 import { useAdminShortcut } from '../core/hooks/useAdminShortcut';
