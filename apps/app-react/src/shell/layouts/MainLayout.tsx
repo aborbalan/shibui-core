@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Sidebar from './Sidebar';
-import { DownloadCVModal } from './modals/DownloadCVModal';
 import { Outlet, useLocation } from 'react-router-dom';
+import { DownloadCVModal } from '../../components/modals/DownloadCVModal';
+import Sidebar from '../../components/Sidebar';
 
 interface MainLayoutProps {
   activeTab: string;
