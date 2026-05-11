@@ -1,0 +1,26 @@
+.content-section {
+      
+      .heading {
+        font-family: var(--lib-font-display, "Cormorant Garamond", Georgia, serif);
+        font-size: clamp(2.2rem, 5vw, 3.5rem);
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        margin: 0 0 var(--lib-space-lg, 1.5rem) 0;
+        max-width: 640px;
+      }
+      
+      .accent {
+        font-style: italic;
+        color: var(--color-kaki-400, #D97234);
+      }
+      
+      .description {
+        font-family: var(--lib-font-body, "Shippori Mincho", serif);
+        font-size: var(--text-sm, 0.8125rem);
+        line-height: 1.9;
+        max-width: 520px;
+        margin: 0;
+      }
+  }
+  
