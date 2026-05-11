@@ -2,7 +2,6 @@ import React from 'react';
 import { LibBackground } from '@shibui-ui/ui/react';
 
 import TokensSidebar from './templates/TokensSidebar';
-import TokensHero from './templates/ComponentsIntro';
 import ColorsSection from './templates/ColorsSection';
 import TypographySection from './templates/TypographySection';
 import SpacingSection from './templates/SpacingSection';
@@ -33,7 +32,6 @@ export const TokensPage: React.FC = () => {
           }}
         >
           {/* ── Intro ─────────────────────────────────────────────── */}
-          <TokensHero surface="dark" />
 
           {/* ── Secciones por categoría ───────────────────────────── */}
           <ColorsSection />
