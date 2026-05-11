@@ -1,10 +1,10 @@
-# Shibui (lib-ui) — Arquitectura, Convenciones y Contexto
+# Shibui UI (`@shibui/ui`) — Librería de componentes Lit
 
 ## Visión general
 
-Shibui (渋い) es una librería de **Web Components agnóstica** construida con Lit y TypeScript estricto, con el objetivo de publicarse como **paquete npm**. El nombre y la estética están inspirados en el concepto japonés de belleza simple, sutil y duradera.
+Shibui (渋い) es una librería de **Web Components agnóstica** construida con Lit y TypeScript estricto, publicada como paquete npm.
 
-El design system se basa en **CSS custom properties (tokens)** organizados en capas: primitivos → compuestos → semánticos. El sistema incluye además dos efectos visuales opcionales que los componentes pueden adoptar cuando tiene sentido: glassmorphism ("Efecto Agua") y spotlight reactivo al cursor ("Kintsugi Digital").
+El design system se basa en **CSS custom properties (tokens)** organizados en capas: primitivos → compuestos → semánticos. Incluye dos efectos visuales opcionales: glassmorphism ("Efecto Agua") y spotlight reactivo al cursor ("Kintsugi Digital").
 
 ---
 
@@ -12,8 +12,7 @@ El design system se basa en **CSS custom properties (tokens)** organizados en ca
 
 - **Lit** — Web Components nativos, Shadow DOM
 - **TypeScript estricto** — `exactOptionalPropertyTypes`, tipado explícito en todos los métodos
-- **Node** — NVM (v22.12.0 LTS)
-- **Vite** — bundler y dev server (HMR ultra-rápido)
+- **Vite** — bundler y dev server (HMR)
 - **Storybook** — documentación y desarrollo aislado de componentes
 - **CSS puro** — sin Tailwind, todo mediante CSS custom properties con `@layer tokens, reset, components`
 - **Iconografía** — Phosphor Icons abstraídos en `lib-icon`
@@ -21,36 +20,19 @@ El design system se basa en **CSS custom properties (tokens)** organizados en ca
 
 ---
 
-## Estructura del proyecto
-
-Monorepo gestionado con **npm workspaces** (`shibui-ecosystem`).
-
-```
-raíz/
-  .config/                → Configuración compartida raíz (eslint, prettier, commitlint)
-  .github/                → GitHub Actions (CI/CD)
-  .husky/                 → Git hooks raíz (pre-commit, commit-msg)
-  apps/
-    app-react/            → App de testing con React
-    app-svelte/           → App de testing con Svelte
-    app-angular/          → App de testing con Angular
-  packages/
-    shibui-ui/            → Paquete principal (@shibui/ui)
-  package.json            → Raíz del workspace — scripts orquestados con -w
-```
-
-### Estructura interna de `packages/shibui-ui/`
+## Estructura interna
 
 ```
 packages/shibui-ui/
   .config/                → Configuración local del paquete
-  .firebase/              → Configuración de Firebase Hosting
-  .husky/                 → Git hooks del paquete
-  .lighthouseci/          → Configuración de Lighthouse CI
+    .eslintignore
+    .eslintrc.json
+    .prettierrc.json
+    .stylelintrc.json
+    commitlint.config.cjs
+    lighthouserc.cjs
   .storybook/             → Configuración visual de Storybook
-  architecture/           → Documentación de arquitectura
-  dist/                   → Build de producción (generado)
-  docs/                   → Documentación adicional
+  .lighthouseci/          → Configuración de Lighthouse CI
   models/                 → Única fuente de verdad para tipos compartidos
     ui/                   → Tokens de interfaz (LibVariant, LibSize...)
     storybook/            → Interfaces auxiliares para stories
@@ -65,36 +47,24 @@ packages/shibui-ui/
         glass.css         → Mixin glassmorphism (en desarrollo)
         index.css         → Re-exportaciones de estilos compartidos
       index.css           → Entry point de estilos
-  .config/                → Toda la configuración del paquete centralizada aquí
-    .eslintignore
-    .eslintrc.json
-    .prettierrc.json
-    .stylelintrc.json
-    commitlint.config.cjs
-    lighthouserc.cjs
-  firebase.json           → Config de Firebase Hosting
   vite.config.ts          → Bundler
   tsconfig.json           → TypeScript del paquete
 ```
 
-### Scripts principales (desde la raíz)
+### Scripts (desde la raíz del monorepo)
 
 ```bash
-npm run storybook        # Arranca Storybook en shibui-ui
-npm run start:react      # App de testing React
-npm run start:svelte     # App de testing Svelte
-npm run start:angular    # App de testing Angular
-npm run dev:all          # Las tres apps en paralelo
-npm run build            # Build de @shibui/ui
-npm run type-check       # TypeScript check sobre shibui-ui
-npm run lint             # ESLint global
+pnpm storybook       # Arranca Storybook
+pnpm build:shibui    # Build de @shibui/ui
+pnpm type-check      # tsc --noEmit
+pnpm lint            # ESLint
 ```
 
 ---
 
 ## Estructura de cada componente
 
-Cada componente sigue obligatoriamente esta estructura de 5 ficheros:
+Cada componente sigue **obligatoriamente** esta estructura de 5 ficheros:
 
 ```
 lib-[nombre]/
@@ -134,7 +104,6 @@ export * from './components/[atoms|molecules|organisms]/lib-[nombre]/index';
 **Estructura:**
 - Los templates van en ficheros `.html.ts` separados, nunca inline en el componente
 - Los tipos e interfaces se importan siempre desde `src/models/`, nunca se definen inline
-- No se inicia un componente nuevo sin haber integrado el anterior en `develop`
 
 **TypeScript:**
 - Retornos explícitos obligatorios en todos los métodos (`: TemplateResult`, `: void`)
@@ -192,30 +161,8 @@ Para garantizar IntelliSense correcto en las apps consumidoras:
 ## Testing y calidad
 
 - **Playwright** — E2E, component testing y visual regression
-- **Husky pre-commit** — `npm run type-check` + `lint-staged`
-- **Husky commit-msg** — `commitlint` (`.config/commitlint.config.cjs`)
 - **Lighthouse CI** — requiere build previo de Storybook (`storybook-static`). Config en `.config/lighthouserc.cjs`
 - Ningún código entra en `main` sin pasar Lighthouse y linter en CI
-
----
-
-## Flujo de trabajo
-
-**GitFlow:**
-- `main` — Producción
-- `develop` — Integración
-- `feature/*` — Desarrollo
-
-**CI/CD (GitHub Actions — `.github/workflows/deploy.yml`):**
-`npm ci` → `lint` → `build-storybook` → `lighthouse` → `firebase deploy`
-
-- **Firebase Hosting** — Preview de Storybook en cada PR
-- **Semantic Release** — Automatización de versiones en NPM
-- **Secretos** — `FIREBASE_TOKEN` en GitHub repository secrets
-
-**Ritual de cierre obligatorio** al finalizar cada tarea o componente:
-1. Push de la rama actual
-2. Merge a `develop` (preferiblemente `--no-ff`)
 
 ---
 
@@ -236,5 +183,3 @@ Para garantizar IntelliSense correcto en las apps consumidoras:
 - Los efectos glass y spotlight son opcionales — no añadirlos salvo que se pida explícitamente
 - Los tipos siempre desde `src/models/`, nunca inline
 - Si hay duda sobre convenciones, preguntar antes de asumir
-- Recordar el ritual de cierre (push + merge a develop) al finalizar cada componente
-- Ofrecer comandos de git con mensaje de commit al finalizar una feature o componente
