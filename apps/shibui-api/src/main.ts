@@ -40,6 +40,7 @@ async function bootstrap() {
     .addTag('categories', 'Component categories and navigation structure')
     .addTag('components', 'Web components built with Lit')
     .addTag('examples', 'Usage examples for each component')
+    .addTag('tokens', 'Design tokens (CSS custom properties) from @shibui/ui')
     .addTag('users', 'User management')
     .build();
 
