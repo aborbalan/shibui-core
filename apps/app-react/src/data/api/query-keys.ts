@@ -35,4 +35,13 @@ export const queryKeys = {
     components: () => [...queryKeys.designSystem.all, "components"] as const,
     tokens: () => [...queryKeys.designSystem.all, "tokens"] as const,
   },
+
+  // ── Tokens ────────────────────────────────────────────
+  tokens: {
+    all: ["tokens"] as const,
+    categories: ["tokens", "categories"] as const,
+    byCategory: (category: string) =>
+      ["tokens", "category", category] as const,
+    detail: (id: string) => ["tokens", "detail", id] as const,
+  },
 } as const;
