@@ -1,5 +1,5 @@
 import { LibBackground } from "@shibui-ui/ui/react";
-import TokensIntro from "./templates/ComponentsIntro";
+import TokensIntro from "./templates/TokensIntro";
 
 
 
