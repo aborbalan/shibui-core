@@ -1,0 +1,114 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-GLASS-CARD — Shibui UI · Efecto Agua
+   Variant   : paper (default) · water · kaki
+   Intensity : low · md (default) · high
+   ============================================================
+
+   Arquitectura de capas:
+     1. .glass-card          → backdrop-filter + fondo tintado
+     2. .glass-card::before  → reflexión de luz (--lib-glass-shine)
+     3. .glass-card__slot    → contenido slotado, z-index: 1
+
+   Requisito del padre: el contenedor externo debe tener
+   un fondo oscuro visible para que el blur sea efectivo.
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+}
+
+@layer components {
+
+  /* ── Contenedor base ────────────────────────────────────────── */
+  .glass-card {
+    position: relative;
+    overflow: hidden;                           /* imprescindible para blur */
+    border-radius: var(--radius-lg);            /* 8px */
+
+    /* Glass base — paper por defecto */
+    background:        var(--lib-glass-bg);
+    backdrop-filter: var(--lib-glass-filter);
+    border:            var(--lib-glass-border);
+    box-shadow:        var(--lib-glass-shadow);
+    transition:
+      box-shadow  var(--duration-slow) var(--ease-default),
+      transform   var(--duration-slow) var(--ease-default);
+  }
+
+  .glass-card:hover {
+    box-shadow: var(--lib-glass-shadow-hover);
+    transform:  translateY(-2px);
+  }
+
+  /* ── Shine — reflexión de luz ───────────────────────────────── */
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--lib-glass-shine);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Slot — encima del shine ────────────────────────────────── */
+  .glass-card__slot {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ============================================================
+     VARIANTES DE COLOR
+     ============================================================ */
+
+  /* paper — ya aplicado en base */
+
+  :host([variant="water"]) .glass-card {
+    background: var(--lib-glass-bg-water);
+  }
+
+  :host([variant="kaki"]) .glass-card {
+    background: var(--lib-glass-bg-kaki);
+  }
+
+  /* ============================================================
+     INTENSIDADES — sobreescriben blur y opacity
+     ============================================================ */
+
+  /* low: blur 4px · opacity 0.10 */
+  :host([intensity="low"]) .glass-card {
+    background: oklch(98% 0.01 60deg / var(--lib-glass-opacity-low));
+    backdrop-filter:  blur(var(--lib-glass-blur-low)) saturate(var(--lib-glass-saturate-amount));
+  }
+
+  /* md — valor por defecto, no necesita override */
+
+  /* high: blur 25px · opacity 0.25 */
+  :host([intensity="high"]) .glass-card {
+    background: oklch(98% 0.01 60deg / var(--lib-glass-opacity-high));
+    backdrop-filter:  blur(var(--lib-glass-blur-high)) saturate(var(--lib-glass-saturate-amount));
+  }
+
+  /* Combinaciones variant + intensity — mantienen el tinte correcto */
+  :host([variant="water"][intensity="low"]) .glass-card {
+    background: oklch(55% 0.06 210deg / var(--lib-glass-opacity-low));
+  }
+
+  :host([variant="water"][intensity="high"]) .glass-card {
+    background: oklch(55% 0.06 210deg / var(--lib-glass-opacity-high));
+  }
+
+  :host([variant="kaki"][intensity="low"]) .glass-card {
+    background: oklch(45% 0.05 45deg / var(--lib-glass-opacity-low));
+  }
+
+  :host([variant="kaki"][intensity="high"]) .glass-card {
+    background: oklch(45% 0.05 45deg / var(--lib-glass-opacity-high));
+  }
+}

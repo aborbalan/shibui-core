@@ -7,7 +7,7 @@ export * from './components/atoms/avatar/lib-avatar.component';
 export * from './components/atoms/skeleton/lib-skeleton.component';
 export * from './components/atoms/text-list/lib-text-list.component';
 export * from './components/atoms/close-button/lib-close-button.component';
-export * from './components/atoms/glass-card/lib-glass-card.component';
+export * from './components/atoms/card/glass-card/lib-glass-card.component';
 export * from './components/atoms/progress/lib-progress.component';
 export * from './components/atoms/accordion-item/lib-accordion-item.component';
 export * from './components/atoms/tooltip/lib-tooltip.component';
@@ -22,7 +22,7 @@ export * from './components/atoms/label/lib-label.component';
 export * from './components/atoms/icon/lib-icon.component';
 export * from './components/atoms/button/lib-button.component';
 export * from './components/atoms/magnetic/lib-magnetic.component';
-export * from './components/atoms/spotlight-card/lib-spotlight-card.component';
+export * from './components/atoms/card/spotlight-card/lib-spotlight-card.component';
 export * from './components/atoms/lib-counter/lib-counter.component'
 export * from './components/atoms/divider/lib-divider.component'
 export * from './components/atoms/spacer/lib-spacer.component';
