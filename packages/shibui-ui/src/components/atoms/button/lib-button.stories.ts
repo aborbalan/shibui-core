@@ -13,7 +13,7 @@ const meta: Meta<LibButtonStoryArgs> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'ghost', 'accent', 'danger'],
+      options: ['primary', 'secondary', 'ghost', 'accent', 'danger', 'kintsugi', 'brutal'],
       description: 'Variante visual del botón',
     },
     size: {
@@ -29,6 +29,10 @@ const meta: Meta<LibButtonStoryArgs> = {
       control: 'boolean',
       description: 'Activa el efecto Agua (glassmorphism)',
     },
+    spotlight: {
+      control: 'boolean',
+      description: 'Activa el overlay spotlight reactivo al cursor',
+    },
   },
   render: (args): TemplateResult => html`
     <lib-button
@@ -36,6 +40,7 @@ const meta: Meta<LibButtonStoryArgs> = {
       size=${args.size}
       ?disabled=${args.disabled}
       ?glass=${args.glass}
+      ?spotlight=${args.spotlight}
     >
       ${args.slotContent || 'Shibui Button'}
     </lib-button>
@@ -51,6 +56,7 @@ export const Playground: Story = {
     size: 'md',
     disabled: false,
     glass: false,
+    spotlight: false,
     slotContent: 'Shibui Button',
   },
 };
@@ -65,6 +71,77 @@ export const AllVariants: Story = {
       <lib-button variant="ghost">Ghost</lib-button>
       <lib-button variant="accent">Accent</lib-button>
       <lib-button variant="danger">Danger</lib-button>
+      <lib-button variant="kintsugi">Kintsugi</lib-button>
+      <lib-button variant="brutal">Brutal</lib-button>
+    </div>
+  `,
+};
+
+/* ── Kintsugi ── */
+export const Kintsugi: Story = {
+  name: 'Kintsugi ◈',
+  parameters: {
+    backgrounds: { default: 'dark' },
+  },
+  render: (): TemplateResult => html`
+    <div style="
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--lib-space-md);
+      align-items: center;
+      justify-content: center;
+      padding: var(--lib-space-xl);
+      background: var(--color-washi-950, #120E0A);
+    ">
+      <lib-button variant="kintsugi" size="sm">金継ぎ</lib-button>
+      <lib-button variant="kintsugi" size="md">Kintsugi</lib-button>
+      <lib-button variant="kintsugi" size="lg">継ぐ</lib-button>
+    </div>
+  `,
+};
+
+/* ── Brutal ── */
+export const Brutal: Story = {
+  name: 'Brutal ◼',
+  parameters: {
+    backgrounds: { default: 'light' },
+  },
+  render: (): TemplateResult => html`
+    <div style="
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--lib-space-md);
+      align-items: center;
+      justify-content: center;
+      padding: var(--lib-space-xl);
+      background: var(--color-washi-100, #F2EDE6);
+    ">
+      <lib-button variant="brutal" size="sm">EXECUTE</lib-button>
+      <lib-button variant="brutal" size="md">DEPLOY</lib-button>
+      <lib-button variant="brutal" size="lg">ABORT</lib-button>
+    </div>
+  `,
+};
+
+/* ── Spotlight ── */
+export const SpotlightEffect: Story = {
+  name: 'Spotlight — Efecto cursor',
+  parameters: {
+    backgrounds: { default: 'dark' },
+  },
+  render: (): TemplateResult => html`
+    <div style="
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--lib-space-md);
+      align-items: center;
+      justify-content: center;
+      padding: var(--lib-space-xl);
+      background: var(--color-washi-950, #120E0A);
+    ">
+      <lib-button variant="primary" ?spotlight=${true}>Primary</lib-button>
+      <lib-button variant="kintsugi" ?spotlight=${true}>Kintsugi</lib-button>
+      <lib-button variant="brutal" ?spotlight=${true} style="background: var(--color-washi-50);">Brutal</lib-button>
     </div>
   `,
 };

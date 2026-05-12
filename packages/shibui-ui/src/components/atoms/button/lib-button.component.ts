@@ -1,7 +1,8 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { generateUniqueId } from '../../../core/a11y';
-import type { LibSize, LibVariant, UiClickEventDetail } from '../../../types';
+import type { LibSize, UiClickEventDetail } from '../../../types';
+import type { LibButtonVariant } from './lib-button.types';
 import buttonCss from './lib-button.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import { buttonTemplate } from './lib-button.html';
@@ -32,10 +33,10 @@ export class LibButton extends LitElement {
   }
 
   /**
- * @type {"default" | "primary" | "secondary" | "success" | "warning" | "danger" | "accent"}
+ * @type {"primary" | "secondary" | "ghost" | "accent" | "danger" | "kintsugi" | "brutal"}
  */
   @property({ type: String, reflect: true })
-  variant: LibVariant = 'primary';
+  variant: LibButtonVariant = 'primary';
 
   /**
  * @type {"sm" | "md" | "lg" | "xl"}
@@ -54,6 +55,40 @@ export class LibButton extends LitElement {
  */
   @property({ type: Boolean, reflect: true })
   glass = false;
+
+  /**
+ * @type {boolean}
+ */
+  @property({ type: Boolean, reflect: true })
+  spotlight = false;
+
+  private _onMouseMove = (e: MouseEvent): void => {
+    if (!this.spotlight) return;
+    const btn = this.shadowRoot?.querySelector('.btn');
+    if (!btn) return;
+    const rect = btn.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    this.style.setProperty('--lib-spotlight-x', `${x}%`);
+    this.style.setProperty('--lib-spotlight-y', `${y}%`);
+  };
+
+  private _onMouseLeave = (): void => {
+    this.style.setProperty('--lib-spotlight-x', '50%');
+    this.style.setProperty('--lib-spotlight-y', '50%');
+  };
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('mousemove', this._onMouseMove);
+    this.addEventListener('mouseleave', this._onMouseLeave);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('mousemove', this._onMouseMove);
+    this.removeEventListener('mouseleave', this._onMouseLeave);
+  }
 
   /**
  * @type {'button' | 'submit' | 'reset'}
@@ -85,7 +120,8 @@ export class LibButton extends LitElement {
       handleClick: this._handleClick.bind(this),
       variant: this.variant,
       size: this.size,
-      glass:this.glass,
+      glass: this.glass,
+      spotlight: this.spotlight,
       customPadding: this.customPadding ?? undefined,
     });
   }
