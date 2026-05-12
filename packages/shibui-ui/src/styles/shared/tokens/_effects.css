@@ -1,0 +1,108 @@
+:host, :root {
+  /* ======================================================
+     GLASS SYSTEM (Efecto Enso)
+     ====================================================== */
+
+  /* --- Primitivos Glass --- */
+  --lib-glass-blur-amount:     12px;
+  --lib-glass-saturate-amount: 120%;
+  --lib-glass-bg-opacity:      0.15;
+  --lib-glass-border-opacity:  0.20;
+  --lib-glass-shadow-opacity:  0.37;
+  --lib-glass-shine-start:     0.35;
+  --lib-glass-shine-end:       0.05;
+
+  /* --- Intensidades Glass --- */
+  --lib-glass-blur-low:  4px;
+  --lib-glass-blur-md:   12px;
+  --lib-glass-blur-high: 25px;
+
+  --lib-glass-opacity-low:  0.10;
+  --lib-glass-opacity-md:   0.15;
+  --lib-glass-opacity-high: 0.25;
+
+  /* --- Tokens compuestos Glass --- */
+  --lib-glass-bg:
+    oklch(98% 0.01 60deg / var(--lib-glass-bg-opacity));
+
+  --lib-glass-bg-water:
+    oklch(55% 0.06 210deg / var(--lib-glass-bg-opacity));
+
+  --lib-glass-bg-kaki:
+    oklch(45% 0.05 45deg / var(--lib-glass-bg-opacity));
+
+  --lib-glass-filter:
+    blur(var(--lib-glass-blur-amount))
+    saturate(var(--lib-glass-saturate-amount));
+
+  --lib-glass-border:
+    1px solid oklch(100% 0 0deg / var(--lib-glass-border-opacity));
+
+  --lib-glass-shadow:
+    0 8px 32px oklch(0% 0 0deg / var(--lib-glass-shadow-opacity));
+
+  --lib-glass-shadow-hover:
+    0 20px 45px oklch(0% 0 0deg / 0.5);
+
+  --lib-glass-shine:
+    linear-gradient(
+      135deg,
+      oklch(100% 0 0deg / var(--lib-glass-shine-start)) 0%,
+      oklch(100% 0 0deg / var(--lib-glass-shine-end))   50%,
+      oklch(100% 0 0deg / 0)                            100%
+    );
+
+  --lib-glass-text:        var(--lib-shibui-paper);
+  --lib-glass-text-shadow: 0 1px 3px oklch(0% 0 0deg / 0.3);
+
+  /* ======================================================
+     SPOTLIGHT SYSTEM (Kintsugi Digital)
+     ====================================================== */
+
+  /* --- Primitivos Spotlight --- */
+  --lib-spotlight-opacity:    0.12;
+  --lib-spotlight-feather:    60%;
+  --lib-spotlight-x:          50%;
+  --lib-spotlight-y:          50%;
+  --lib-spotlight-transition: background 0.15s ease-out;
+
+  /* --- Gradientes Spotlight --- */
+  --lib-spotlight-gradient:
+    radial-gradient(
+      circle at var(--lib-spotlight-x) var(--lib-spotlight-y),
+      oklch(45% 0.05 45deg / var(--lib-spotlight-opacity)) 0%,
+      oklch(45% 0.05 45deg / 0)                            var(--lib-spotlight-feather)
+    );
+
+  --lib-spotlight-gradient-water:
+    radial-gradient(
+      circle at var(--lib-spotlight-x) var(--lib-spotlight-y),
+      oklch(55% 0.06 210deg / var(--lib-spotlight-opacity)) 0%,
+      oklch(55% 0.06 210deg / 0)                            var(--lib-spotlight-feather)
+    );
+
+  --lib-spotlight-gradient-white:
+    radial-gradient(
+      circle at var(--lib-spotlight-x) var(--lib-spotlight-y),
+      oklch(100% 0 0deg / 0.10) 0%,
+      oklch(100% 0 0deg / 0)    var(--lib-spotlight-feather)
+    );
+
+  /* ======================================================
+     TEXTURAS Y EFECTOS DECORATIVOS
+     ====================================================== */
+
+  /* --- Textura de ruido (metal/seda) --- */
+  --lib-metal-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  --lib-metal-texture-opacity: 0.03;
+
+  /* --- Borde kintsugi (hilo de oro en las grietas) --- */
+  --lib-kintsugi-border:
+    linear-gradient(
+      135deg,
+      oklch(45% 0.05 45deg / 0.6) 0%,
+      oklch(45% 0.05 45deg / 0)   40%,
+      oklch(45% 0.05 45deg / 0)   60%,
+      oklch(45% 0.05 45deg / 0.3) 100%
+    );
+}
