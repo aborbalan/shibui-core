@@ -234,7 +234,22 @@
 
   :host([variant="kintsugi"]) .card {
     background: var(--color-washi-950, #120E0A);
-    border-color: rgb(184, 90, 30, 0.15);
+    border-color: transparent;
+  }
+
+  /* Hilo de oro en el borde — misma técnica mask-composite que spotlight-card */
+  :host([variant="kintsugi"]) .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: var(--lib-kintsugi-border);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 0;
   }
 
   :host([variant="kintsugi"]) .card::before {
@@ -481,6 +496,64 @@
     :host([variant="washi"]) .card:hover {
       border-color: var(--color-washi-300, #D3C8BC);
       box-shadow: var(--shadow-md);
+    }
+  }
+
+  /* ── Brutal ── */
+  :host([variant="brutal"]) .card {
+    background: var(--color-washi-50);
+    border: 2px solid var(--color-ink-100);
+    box-shadow: var(--lib-shadow-brutal);
+    transition:
+      transform var(--duration-fast) var(--ease-default),
+      box-shadow var(--duration-fast) var(--ease-default);
+  }
+
+  /* Barra superior celadón — el único acento de color */
+  :host([variant="brutal"]) .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--color-celadon-400);
+    pointer-events: none;
+  }
+
+  :host([variant="brutal"]) ::slotted([slot="tag"]) {
+    font-family: var(--lib-font-mono);
+    color: var(--color-washi-500);
+    letter-spacing: var(--tracking-widest);
+  }
+
+  :host([variant="brutal"]) ::slotted([slot="title"]) {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink-100);
+    text-transform: uppercase;
+  }
+
+  :host([variant="brutal"]) .card-body {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.04em;
+    line-height: var(--leading-relaxed);
+    color: var(--color-washi-600);
+  }
+
+  :host([variant="brutal"]) .card-footer {
+    border-top-color: var(--color-washi-300);
+    color: var(--color-washi-500);
+  }
+
+  /* Hover clásico brutalista: el elemento se hunde en su propia sombra */
+  @media (hover: hover) {
+    :host([variant="brutal"]) .card:hover {
+      transform: translate(4px, 4px);
+      box-shadow: none;
     }
   }
 }

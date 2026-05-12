@@ -3,29 +3,23 @@ import { customElement, property } from "lit/decorators.js";
 import sharedTokens from "../../../styles/shared/tokens.css?inline";
 import cardStyles from "./lib-card.css?inline";
 import { cardTemplate } from "./lib-card.html";
+import type { LibCardVariant } from "./lib-card.types";
 
-export type LibCardVariant =
-  | "default"
-  | "inverse"
-  | "accent"
-  | "featured"
-  | "kintsugi"
-  | "glitch"
-  | "celadon"
-  | "washi";
+export type { LibCardVariant } from "./lib-card.types";
 
 /**
  * @element lib-card
  *
- * @attr {'default'|'inverse'|'accent'|'featured'|'kintsugi'|'glitch'|'celadon'|'washi'} variant
+ * @attr {'default'|'inverse'|'accent'|'featured'|'kintsugi'|'glitch'|'celadon'|'washi'|'brutal'} variant
  *   - default   → superficie elevada neutra
  *   - inverse   → fondo washi-900 oscuro
  *   - accent    → borde izquierdo de color (`accent-color`)
  *   - featured  → fondo kaki degradado, título grande — pensado para 2 columnas en grid
- *   - kintsugi  → seam de oro animado en borde superior + shimmer en título
+ *   - kintsugi  → seam de oro animado en borde superior + hilo kintsugi-border en borde
  *   - glitch    → estética terminal CRT, scanlines, fuente mono
  *   - celadon   → acento verde-gris japonés para estados de éxito / énfasis secundario
  *   - washi     → paleta neutra cálida, superficie washi-50/100
+ *   - brutal    → superficie clara, borde sólido ink, --lib-shadow-brutal; hover hunde el elemento en su sombra
  *
  * @attr {string}  accent-color - Color del borde (solo variante `accent`).
  * @attr {string}  kanji        - Carácter kanji decorativo de fondo (ej: "渋", "金", "間").

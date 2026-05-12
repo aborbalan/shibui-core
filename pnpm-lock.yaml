@@ -189,8 +189,8 @@ importers:
   apps/app-svelte:
     dependencies:
       '@shibui-ui/ui':
-        specifier: file:../../packages/shibui-ui
-        version: file:packages/shibui-ui(@types/react@19.2.14)(lit@3.3.2)
+        specifier: workspace:*
+        version: link:../../packages/shibui-ui
     devDependencies:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^6.2.1
@@ -2425,6 +2425,7 @@ packages:
   '@kubb/plugin-oas@4.37.2':
     resolution: {integrity: sha512-MYDZiFap0w9C63m70WJDyL0XGR+efyfwsTgpq6EvZpBk4yCbg6oIXiNPIivKJCqO9RXgBdnyBeGgZMSqBCvdvg==}
     engines: {node: '>=20'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@kubb/fabric-core': 0.14.0
       '@kubb/react-fabric': 0.14.0
@@ -3580,11 +3581,6 @@ packages:
 
   '@shibui-ui/ui@1.7.0':
     resolution: {integrity: sha512-jpc8jYtKeu8gfjtdBWJcZ5cCTdLQ2vlHktSKccUtk4ABaQ+FK4fS3maisSDpCrU4pP+LI1IIZozhqixt57IdZA==}
-    peerDependencies:
-      lit: ^3.0.0
-
-  '@shibui-ui/ui@file:packages/shibui-ui':
-    resolution: {directory: packages/shibui-ui, type: directory}
     peerDependencies:
       lit: ^3.0.0
 
@@ -13823,14 +13819,6 @@ snapshots:
       - supports-color
 
   '@shibui-ui/ui@1.7.0(@types/react@19.2.14)(lit@3.3.2)':
-    dependencies:
-      '@lit/react': 1.0.8(@types/react@19.2.14)
-      '@phosphor-icons/core': 2.1.1
-      lit: 3.3.2
-    transitivePeerDependencies:
-      - '@types/react'
-
-  '@shibui-ui/ui@file:packages/shibui-ui(@types/react@19.2.14)(lit@3.3.2)':
     dependencies:
       '@lit/react': 1.0.8(@types/react@19.2.14)
       '@phosphor-icons/core': 2.1.1
