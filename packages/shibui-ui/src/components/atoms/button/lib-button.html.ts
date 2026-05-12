@@ -1,5 +1,6 @@
 import { html, nothing, TemplateResult } from 'lit';
-import type { LibSize, LibVariant } from '../../../types';
+import type { LibSize } from '../../../types';
+import type { LibButtonVariant } from './lib-button.types';
 
 export interface ButtonTemplateProps {
   buttonId: string;
@@ -7,9 +8,10 @@ export interface ButtonTemplateProps {
   disabled: boolean;
   ariaLabel?: string | undefined;
   handleClick: (event: Event) => void;
-  variant: LibVariant;
+  variant: LibButtonVariant;
   size: LibSize;
   glass: boolean;
+  spotlight: boolean;
   customPadding?: string | undefined;
 }
     
@@ -28,6 +30,7 @@ export function buttonTemplate(props: ButtonTemplateProps): TemplateResult {
       @click="${props.handleClick}"
       class="btn"
     >
+      ${props.spotlight ? html`<span class="spotlight-layer" aria-hidden="true"></span>` : nothing}
       <slot name="prefix"></slot>
       <slot></slot>
       <slot name="suffix"></slot>
