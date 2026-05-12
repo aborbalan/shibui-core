@@ -5,7 +5,7 @@ import '../../atoms/button/lib-button.component';
 import './card-grid/lib-card-grid.component';
 
 type LibCardArgs = {
-  variant: 'default' | 'inverse' | 'accent' | 'featured' | 'kintsugi' | 'glitch' | 'celadon' | 'washi';
+  variant: 'default' | 'inverse' | 'accent' | 'featured' | 'kintsugi' | 'glitch' | 'celadon' | 'washi' | 'brutal';
   accentColor: string;
   kanji: string;
 };
@@ -17,7 +17,7 @@ const meta: Meta<LibCardArgs> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'inverse', 'accent', 'featured', 'kintsugi', 'glitch', 'celadon', 'washi'],
+      options: ['default', 'inverse', 'accent', 'featured', 'kintsugi', 'glitch', 'celadon', 'washi', 'brutal'],
       description: 'Variante visual de la card',
     },
     accentColor: {
@@ -30,7 +30,7 @@ const meta: Meta<LibCardArgs> = {
     },
   },
   render: (args): TemplateResult => html`
-    <div style="width:320px;padding:var(--lib-space-xl);background:${['kintsugi','inverse','featured','glitch','celadon'].includes(args.variant) ? 'var(--color-washi-950,#120E0A)' : '#fff'};">
+    <div style="width:320px;padding:var(--lib-space-xl);background:${['kintsugi','inverse','featured','glitch','celadon'].includes(args.variant) ? 'var(--color-washi-950,#120E0A)' : 'var(--color-washi-100,#F2EDE6)'};">
       <lib-card variant="${args.variant}" accent-color="${args.accentColor}" kanji="${args.kanji}">
         <span slot="tag">Etiqueta</span>
         <h2 slot="title">Título de la card</h2>
@@ -93,6 +93,16 @@ export const AllVariants: Story = {
         <p>Paleta neutral cálida. 11 pasos desde washi-50 hasta washi-950. El alma cromática del sistema.</p>
         <div slot="footer">
           <span>Washi</span>
+          <lib-button variant="ghost" size="sm">Ver más</lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card variant="brutal" kanji="力">
+        <span slot="tag">Brutal variant</span>
+        <h2 slot="title">Brutal</h2>
+        <p>Superficie clara, borde ink sólido y sombra dura de 4px. Hover hunde el elemento en su sombra.</p>
+        <div slot="footer">
+          <span>Shadow · 4px</span>
           <lib-button variant="ghost" size="sm">Ver más</lib-button>
         </div>
       </lib-card>
@@ -263,6 +273,54 @@ export const Featured: Story = {
     </div>
   `,
   parameters: { backgrounds: { default: 'dark' }, layout: 'fullscreen' },
+};
+
+/* ── Brutal ── */
+export const Brutal: Story = {
+  name: 'Brutal ◼',
+  render: (): TemplateResult => html`
+    <div style="
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--lib-space-xl);
+      padding: var(--lib-space-xl);
+      background: var(--color-washi-100, #F2EDE6);
+    ">
+      <lib-card variant="brutal" kanji="力">
+        <span slot="tag">01 · Design system</span>
+        <h2 slot="title">Tokens</h2>
+        <p>CSS custom properties en capas: primitivos, compuestos y semánticos. Un sistema sin dependencias.</p>
+        <div slot="footer">
+          <span>Atom</span>
+          <lib-button variant="ghost" size="sm">Ver más</lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card variant="brutal" kanji="型">
+        <span slot="tag">02 · Componentes</span>
+        <h2 slot="title">Web Components</h2>
+        <p>Agnósticos de framework. Shadow DOM nativo. Funcionan en React, Svelte, Angular y vanilla.</p>
+        <div slot="footer">
+          <span>Atom</span>
+          <lib-button variant="ghost" size="sm">Ver más</lib-button>
+        </div>
+      </lib-card>
+
+      <lib-card variant="brutal" kanji="影">
+        <span slot="tag">03 · Efectos</span>
+        <h2 slot="title">Shadow Brutal</h2>
+        <p>Sombra sólida de 4px. Hover clásico brutalista: el elemento se hunde en su propia sombra.</p>
+        <div slot="footer">
+          <span>--lib-shadow-brutal</span>
+          <lib-button variant="ghost" size="sm">Ver más</lib-button>
+        </div>
+      </lib-card>
+    </div>
+  `,
+  parameters: {
+    backgrounds: { default: 'light' },
+    layout: 'fullscreen',
+  },
 };
 
 /* ── Kintsugi ── */
