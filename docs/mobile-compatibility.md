@@ -55,7 +55,7 @@
 | label | `lib-label` | ✅ | — | Elemento de formulario estándar |
 | liquid-button | `lib-liquid-button` | ⚠️ | — | El efecto líquido depende de hover/mouse; se degrada a botón estándar en touch |
 | magnetic | `lib-magnetic` | ⚠️ | — | Atracción basada en posición del puntero; sin efecto en touch |
-| progress | `lib-progress` | ✅ | — | `prefers-reduced-motion` aplicado |
+| progress | `lib-progress` | ✅ | — | Barra de progreso animada; sin `prefers-reduced-motion` implementado |
 | progress-circle | `lib-progress-circle` | ✅ | — | SVG estático, sin interacción |
 | quote | `lib-quote` | ✅ | — | Contenido estático |
 | radio | `lib-radio` | ✅ | — | Elemento de formulario estándar |
@@ -65,11 +65,11 @@
 | select-option | `lib-select-option` | ✅ | — | Subcomponente de `lib-select`, hereda su comportamiento |
 | skeleton | `lib-skeleton` | ✅ | — | `prefers-reduced-motion` aplicado |
 | spacer | `lib-spacer` | ✅ | — | Utilidad de layout, neutral |
-| spinner | `lib-spinner` | ✅ | — | `prefers-reduced-motion` aplicado |
+| spinner | `lib-spinner` | ✅ | — | Animación de carga; sin `prefers-reduced-motion` implementado |
 | status-dot | `lib-status-dot` | ✅ | — | `prefers-reduced-motion`; indicador visual estático |
 | step | `lib-step` | 🔧 | — | Subcomponente de `lib-stepper`; sin media queries propias |
 | switch | `lib-switch` | ✅ | — | `prefers-reduced-motion`; área de tap adecuada |
-| text-glitch | `lib-text-glitch` | ⚠️ | — | Animación CSS intensa; puede impactar rendimiento en gama baja; respetar `prefers-reduced-motion` |
+| text-glitch | `lib-text-glitch` | ⚠️ | — | Animación CSS intensa (23 directivas); puede impactar rendimiento en gama baja; sin `prefers-reduced-motion` implementado |
 | text-list | `lib-text-list` | ✅ | — | Contenido estático, fluye con el layout |
 | tooltip | `lib-tooltip` | ⚠️ | — | Activación por hover; en touch no hay evento equivalente nativo |
 | visually-hidden | `lib-visually-hidden` | 🔧 | — | Utilidad de accesibilidad; no genera UI visible |
@@ -80,7 +80,7 @@
 
 | Componente | Tag | Estado | Breakpoints | Observaciones |
 |-----------|-----|--------|-------------|---------------|
-| alert | `lib-alert` | ✅ | 640px | Layout refluye a columna en mobile |
+| alert | `lib-alert` | ✅ | — | Flex layout; sin breakpoint propio definido en CSS |
 | breadcrumb | `lib-breadcrumb` | ✅ | — | Overflow horizontal implícito; considerar truncado en rutas largas |
 | button-group | `lib-button-group` | ✅ | — | Flex wrap natural; usar `wrap` en grupos anchos |
 | checkbox-card | `lib-checkbox-card` | ✅ | — | Área de tap suficiente |
@@ -171,9 +171,9 @@ Usado en `lib-cursor-follower` para desactivar completamente el componente en pa
 
 ### `@media (prefers-reduced-motion: reduce)`
 
-Aplicado en **27+ componentes**. Desactiva o simplifica animaciones para usuarios con preferencias de movimiento reducido (accesibilidad y rendimiento en mobile).
+Aplicado en **~25 componentes**. Desactiva o simplifica animaciones para usuarios con preferencias de movimiento reducido (accesibilidad y rendimiento en mobile).
 
-Componentes que lo implementan: accordion, bento-item, carousel, close-button, copy-button, counter, drawer, header, kbd, parallax, progress, rating, reading-progress, sidebar, skeleton, spinner, stagger, status-dot, step, stepper, switch, timeline, toast-manager, tree-select, y otros.
+Componentes que lo implementan: accordion, bento-item, carousel, close-button, copy-button, counter, drawer, header, kbd, parallax, rating, reading-progress, sidebar, skeleton, stagger, status-dot, step, stepper, switch, timeline, toast-manager, tree-select, y otros.
 
 ---
 
