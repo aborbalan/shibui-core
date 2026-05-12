@@ -6,7 +6,8 @@ export type LibCardVariant =
   | 'kintsugi'
   | 'glitch'
   | 'celadon'
-  | 'washi';
+  | 'washi'
+  | 'brutal';
 
 export interface ComponentCardTag {
   label: string;
