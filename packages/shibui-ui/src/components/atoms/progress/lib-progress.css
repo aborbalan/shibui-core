@@ -359,4 +359,15 @@
     letter-spacing: var(--tracking-wide);
     color: var(--text-muted);
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pb-fill,
+    .pb-segment {
+      transition: none;
+    }
+
+    :host([indeterminate]) .pb-fill::after {
+      animation: none;
+    }
+  }
 }
