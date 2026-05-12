@@ -340,14 +340,14 @@
     background: var(--color-ink-100);
     border-color: var(--color-ink-100);
     color: var(--color-washi-50);
-    box-shadow: 2px 2px 0px 0px var(--lib-shibui-ink);
+    box-shadow: 2px 2px 0 0 var(--lib-shibui-ink);
   }
 
   :host([variant="brutal"][status="error"]) .step-node {
     background: var(--color-washi-50);
     border-color: var(--color-error);
     color: var(--color-error);
-    box-shadow: 4px 4px 0px 0px var(--color-error);
+    box-shadow: 4px 4px 0 0 var(--color-error);
   }
 
   :host([variant="brutal"]) .step-connector {
