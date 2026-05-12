@@ -1,9 +1,9 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { LibGlassVariant, LibGlassIntensity } from './lib-glass-card.html';
+import type { LibGlassVariant, LibGlassIntensity } from './lib-glass-card.types';
 import { glassCardTemplate } from './lib-glass-card.html';
 import glassCss from './lib-glass-card.css?inline';
-import sharedTokens from '../../../styles/shared/tokens.css?inline';
+import sharedTokens from '../../../../styles/shared/tokens.css?inline';
 
 /**
  * @element lib-glass-card
