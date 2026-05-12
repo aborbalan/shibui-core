@@ -1,29 +1,246 @@
-:host {
-  display: block;
-  font-family: sans-serif;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-PAGINATION — Shibui UI
+   Tamaños  : sm · md · lg
+   Variantes: default · outline · ghost
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  button {
+    font: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    appearance: none;
+  }
 }
 
-.pagination-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 12px 0;
-}
+@layer components {
 
-.page-numbers {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+  /* ────────────────────────────────────────
+     CONTENEDOR
+     ──────────────────────────────────────── */
+  .pg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lib-space-sm);
+    flex-wrap: wrap;
+  }
 
-.ellipsis {
-  color: #a0aec0;
-  padding: 0 4px;
-  user-select: none;
-}
+  /* Grupo central de números */
+  .pg-numbers {
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-xs);
+  }
 
-/* Ajuste fino para los botones de número para que sean más cuadrados */
-lib-button[variant="neutral"] {
-  --custom-padding: 0 12px;
+  /* ────────────────────────────────────────
+     BOTÓN BASE (números + prev/next)
+     ──────────────────────────────────────── */
+  .pg-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lib-space-xs);
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-secondary);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    min-width: var(--_pg-size, 32px);
+    height: var(--_pg-size, 32px);
+    padding: 0 var(--lib-space-sm);
+    white-space: nowrap;
+    user-select: none;
+    transition:
+      background var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out),
+      color var(--duration-base) var(--ease-out);
+  }
+
+  .pg-btn:hover:not(:disabled, .pg-btn--active) {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
+
+  .pg-btn:focus-visible {
+    outline: 2px solid var(--color-kaki-400);
+    outline-offset: 2px;
+  }
+
+  .pg-btn:active:not(:disabled) {
+    transform: scale(.96);
+  }
+
+  /* Página activa */
+  .pg-btn--active {
+    background: var(--color-washi-900);
+    border-color: var(--color-washi-900);
+    color: var(--color-washi-50);
+    cursor: default;
+  }
+
+  /* Deshabilitado */
+  .pg-btn:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+  }
+
+  /* Prev / Next — ligeramente más anchos */
+  .pg-btn--nav {
+    padding: 0 var(--lib-space-md);
+  }
+
+  /* SVG chevron dentro de los botones nav */
+  .pg-btn--nav svg {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+  }
+
+  /* Ellipsis */
+  .pg-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--_pg-size, 32px);
+    height: var(--_pg-size, 32px);
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    user-select: none;
+  }
+
+  /* ────────────────────────────────────────
+     TAMAÑOS — prop size en :host
+     ──────────────────────────────────────── */
+  :host([size="sm"]) {
+    --_pg-size: 26px;
+  }
+
+  :host([size="sm"]) .pg-btn {
+    font-size: 10px;
+    padding: 0 var(--lib-space-xs);
+  }
+
+  :host([size="sm"]) .pg-btn--nav {
+    padding: 0 var(--lib-space-sm);
+  }
+
+  :host([size="sm"]) .pg-ellipsis {
+    font-size: 10px;
+  }
+
+  :host([size="md"]) {
+    --_pg-size: 32px;
+  }
+
+  /* default */
+
+  :host([size="lg"]) {
+    --_pg-size: 40px;
+  }
+
+  :host([size="lg"]) .pg-btn {
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wider);
+    padding: 0 var(--lib-space-md);
+  }
+
+  :host([size="lg"]) .pg-btn--nav {
+    padding: 0 calc(var(--lib-space-md) + var(--lib-space-xs));
+  }
+
+  /* ────────────────────────────────────────
+     VARIANTES
+     ──────────────────────────────────────── */
+
+  /* Outline — sin fondo, solo borde */
+  :host([variant="outline"]) .pg-btn {
+    background: transparent;
+  }
+
+  :host([variant="outline"]) .pg-btn:hover:not(:disabled, .pg-btn--active) {
+    background: var(--bg-surface);
+  }
+
+  :host([variant="outline"]) .pg-btn--active {
+    background: transparent;
+    border-color: var(--color-washi-900);
+    color: var(--color-washi-900);
+  }
+
+  /* Ghost — sin borde ni fondo */
+  :host([variant="ghost"]) .pg-btn {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  :host([variant="ghost"]) .pg-btn:hover:not(:disabled, .pg-btn--active) {
+    background: var(--bg-surface);
+    border-color: transparent;
+  }
+
+  :host([variant="ghost"]) .pg-btn--active {
+    background: var(--bg-surface);
+    border-color: transparent;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  /* ────────────────────────────────────────
+     INFO — total de resultados (opcional)
+     ──────────────────────────────────────── */
+  .pg-info {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* ── Dark ── */
+  :host([dark]) .pg-btn {
+    background: var(--color-washi-800);
+    border-color: var(--color-washi-700);
+    color: var(--color-washi-400);
+  }
+
+  :host([dark]) .pg-btn:hover:not(:disabled, .pg-btn--active) {
+    background: var(--color-washi-700);
+    border-color: var(--color-washi-600);
+    color: var(--color-washi-100);
+  }
+
+  :host([dark]) .pg-btn--active {
+    background: var(--color-washi-50);
+    border-color: var(--color-washi-50);
+    color: var(--color-washi-950);
+  }
+
+  :host([dark]) .pg-ellipsis {
+    color: var(--color-washi-600);
+  }
+
+  :host([dark]) .pg-info {
+    color: var(--color-washi-600);
+  }
+
 }

@@ -9,7 +9,8 @@ interface AccordionItemArgs {
 }
 
 const meta: Meta<AccordionItemArgs> = {
-  title: 'Display/Accordion Item', // Organización funcional para el menú
+  title: 'Components/Atoms/AccordionItem',
+  tags:['autodocs'],
   component: 'lib-accordion-item',
   argTypes: {
     label: { control: 'text' },

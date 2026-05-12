@@ -1,1 +1,1 @@
-npx --no -- commitlint --edit --config .config/commitlint.config.cjs
+pnpm exec commitlint --edit --config .config/commitlint.config.cjs

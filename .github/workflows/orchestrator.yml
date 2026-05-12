@@ -1,0 +1,138 @@
+name: Orchestrator — Shibui Ecosystem
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - "feature/**"
+      - "fix/**"
+      - "chore/**"
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:                    # ← trigger manual desde GitHub UI
+    inputs:
+      force_ui:
+        description: "Forzar pipeline UI & Storybook"
+        type: boolean
+        default: false
+      force_react:
+        description: "Forzar pipeline React App"
+        type: boolean
+        default: false
+      force_angular:
+        description: "Forzar pipeline Angular App"
+        type: boolean
+        default: false
+      force_svelte:
+        description: "Forzar pipeline Svelte App"
+        type: boolean
+        default: false
+      force_api:
+        description: "Forzar pipeline API"
+        type: boolean
+        default: false
+
+# Un único punto de cancelación para todo el ecosistema
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# ─────────────────────────────────────────
+# JOB 1 — Detección de cambios
+# Única fuente de verdad sobre qué ha cambiado.
+# Sus outputs son la API pública hacia los pipelines.
+# ─────────────────────────────────────────
+jobs:
+  detect-changes:
+    name: 🔍 Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      ui:      ${{ steps.resolve.outputs.ui }}
+      react:   ${{ steps.resolve.outputs.react }}
+      angular: ${{ steps.resolve.outputs.angular }}
+      svelte:  ${{ steps.resolve.outputs.svelte }}
+      api:     ${{ steps.resolve.outputs.api }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            ui:      'packages/shibui-ui/**'
+            react:   'apps/app-react/**'
+            angular: 'apps/app-angular/**'
+            svelte:  'apps/app-svelte/**'
+            api:     'apps/shibui-api/**'
+
+      # OR lógico: cambio detectado ó forzado manualmente
+      - name: 🎛️ Resolve outputs (auto + manual override)
+        id: resolve
+        run: |
+          echo "ui=$([[ '${{ steps.filter.outputs.ui }}' == 'true' || '${{ inputs.force_ui }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "react=$([[ '${{ steps.filter.outputs.react }}' == 'true' || '${{ inputs.force_react }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "angular=$([[ '${{ steps.filter.outputs.angular }}' == 'true' || '${{ inputs.force_angular }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "svelte=$([[ '${{ steps.filter.outputs.svelte }}' == 'true' || '${{ inputs.force_svelte }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "api=$([[ '${{ steps.filter.outputs.api }}' == 'true' || '${{ inputs.force_api }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+
+  # ─────────────────────────────────────────
+  # JOB 2 — Pipeline UI & Apps
+  # Se activa si cambia cualquier parte del frontend.
+  # ─────────────────────────────────────────
+  run-lib-pipeline:
+    name: 📦 UI Library Pipeline
+    needs: detect-changes
+    if: needs.detect-changes.outputs.ui == 'true'
+    uses: ./.github/workflows/ci-lib.yml
+    with:
+      ui: ${{ needs.detect-changes.outputs.ui }}
+      ref: ${{ github.ref }}
+    secrets: inherit
+
+  run-apps-pipeline:
+    name: 🖥️ Apps Pipeline
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.ui == 'true' ||
+      needs.detect-changes.outputs.react == 'true' ||
+      needs.detect-changes.outputs.angular == 'true' ||
+      needs.detect-changes.outputs.svelte == 'true'
+    uses: ./.github/workflows/ci-apps.yml
+    with:
+      ui:      ${{ needs.detect-changes.outputs.ui }}
+      react:   ${{ needs.detect-changes.outputs.react }}
+      angular: ${{ needs.detect-changes.outputs.angular }}
+      svelte:  ${{ needs.detect-changes.outputs.svelte }}
+      ref: ${{ github.ref }}
+    secrets: inherit
+
+  run-release:
+    name: 🚀 Release Pipeline
+    needs: [detect-changes, run-lib-pipeline]
+    if: |
+      github.ref == 'refs/heads/main' &&
+      needs.detect-changes.outputs.ui == 'true' &&
+      needs.run-lib-pipeline.result == 'success'
+    uses: ./.github/workflows/release.yml
+    with:
+      ref: ${{ github.ref }}
+    secrets: inherit
+
+  # ─────────────────────────────────────────
+  # JOB 3 — Pipeline API
+  # Se activa solo si cambia la API.
+  # No corre en feature/** — ver triggers de este fichero
+  # vs el if de aquí abajo para afinar más si hace falta.
+  # ─────────────────────────────────────────
+  run-api-pipeline:
+    name: 🔌 API Pipeline
+    needs: detect-changes
+    if: needs.detect-changes.outputs.api == 'true'
+    uses: ./.github/workflows/ci-api.yml
+    with:
+      ref: ${{ github.ref }}
+    secrets: inherit
+

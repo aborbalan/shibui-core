@@ -8,7 +8,8 @@
       "custom-property-empty-line-before": null,
       "comment-empty-line-before": null,
       "color-function-notation": null,
-      "alpha-value-notation": "number"
+      "alpha-value-notation": "number",
+      "no-descending-specificity": null
     },
     "ignoreFiles": [
       "dist/**/*",

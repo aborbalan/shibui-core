@@ -1,0 +1,23 @@
+@layer components {
+    :host {
+      display: block;
+      width: 100%;
+    }
+  
+    .aspect-ratio-container {
+      position: relative;
+      width: 100%;
+      /* La magia sucede aquí usando la variable que pasaremos por TS */
+      aspect-ratio: var(--lib-aspect-ratio, 1 / 1);
+    }
+  
+    /* Forzamos a que cualquier hijo (img, video, iframe) ocupe todo el espacio */
+    ::slotted(*) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }

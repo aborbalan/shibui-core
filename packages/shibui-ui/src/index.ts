@@ -7,8 +7,7 @@ export * from './components/atoms/avatar/lib-avatar.component';
 export * from './components/atoms/skeleton/lib-skeleton.component';
 export * from './components/atoms/text-list/lib-text-list.component';
 export * from './components/atoms/close-button/lib-close-button.component';
-export * from './components/atoms/glass-card/lib-glass-card.component';
-export * from './components/atoms/lib-panel/lib-panel.component';
+export * from './components/atoms/card/glass-card/lib-glass-card.component';
 export * from './components/atoms/progress/lib-progress.component';
 export * from './components/atoms/accordion-item/lib-accordion-item.component';
 export * from './components/atoms/tooltip/lib-tooltip.component';
@@ -23,35 +22,77 @@ export * from './components/atoms/label/lib-label.component';
 export * from './components/atoms/icon/lib-icon.component';
 export * from './components/atoms/button/lib-button.component';
 export * from './components/atoms/magnetic/lib-magnetic.component';
-export * from './components/atoms/spotlight-card/lib-spotlight-card.component';
-export * from './components/atoms/lib-counter/lib-counter.component';
+export * from './components/atoms/card/spotlight-card/lib-spotlight-card.component';
+export * from './components/atoms/lib-counter/lib-counter.component'
+export * from './components/atoms/divider/lib-divider.component'
+export * from './components/atoms/spacer/lib-spacer.component';
+export * from './components/atoms/ripple/lib-ripple.component';
+export * from './components/atoms/aspect-ratio/lib-aspect-ratio.component';
+export * from './components/atoms/visually-hidden/lib-visually-hidden.component';
+export * from './components/atoms/checkbox/lib-checkbox.component';
+export * from './components/atoms/radio/lib-radio.component';
+export * from './components/atoms/kbd/lib-kbd.component';
+export * from './components/atoms/spinner/lib-spinner.component';
+export * from './components/atoms/bento-item/lib-bento-item.component';
+export * from './components/atoms/reading-progress/lib-reading-progress.component';
+export * from './components/atoms/liquid-button/lib-liquid-button.component'
+export * from './components/atoms/text-glitch/lib-text-glitch.component'
+export * from './components/atoms/background/lib-background.component'
+export * from './components/atoms/burger-button/lib-burger-button.component'
+export * from './components/atoms/eyebrow/lib-eyebrow.component';
+export * from './components/atoms/display-heading/lib-display-heading.component';
+export * from './components/atoms/card/card-grid/lib-card-grid.component';
+export * from './components/atoms/content-pillar/content-pillar.component';
+export * from './components/atoms/quote/lib-quote.component';
+export * from './components/atoms/color-scale/lib-color-scale.component';
 
-export * from './components/molecules/form-field/lib-form-field.component';
+
 export * from './components/molecules/breadcrumb/lib-breadcrumb.component';
-export * from './components/molecules/profile-card/lib-profile-card.component';
 export * from './components/molecules/select/lib-select.component';
 export * from './components/molecules/lib-alert/lib-alert.component';
 export * from './components/molecules/dropdown/lib-dropdown.component';
 export * from './components/molecules/empty-state/lib-empty-state.component';
-export * from './components/molecules/multiselect/lib-multiselect.component';
 export * from './components/molecules/chip/lib-chip.component';
 export * from './components/molecules/file-uploader/lib-file-uploader.component';
 export * from './components/molecules/segmented-control/lib-segmented-control.component';
 export * from './components/molecules/input/lib-input.component';
 export * from './components/molecules/range-slider/lib-range-slider.component';
-export * from './components/molecules/tree-select/lib-tree-node.component';
+export * from './components/molecules/tree-select/lib-tree-select.component.html';
 export * from './components/molecules/color-picker/lib-color-picker.component';
 export * from './components/molecules/pagination/lib-pagination.component';
-export * from './components/molecules/table-search/lib-table-search.component';
+export * from './components/molecules/tabs/lib-tabs.component';
+export * from './components/molecules/modal/lib-modal.component';
+export * from './components/molecules/tree-select/lib-tree-node.component';
+export * from './components/molecules/button-group/lib-button-group.component';
+export * from './components/molecules/checkbox-card/lib-checkbox-card.component';
+export * from './components/molecules/header/lib-header.component';
+
+export * from './components/atoms/code-block/lib-code-block.component';
+
 
 export * from './components/organisms/dialog/lib-dialog.component';
-export * from './components/organisms/lib-list/lib-list.component';
 export * from './components/organisms/sidebar/lib-sidebar.component';
-export * from './components/organisms/lib-auth-form/lib-auth-form.component';
 export * from './components/organisms/stepper/lib-stepper.component';
 export * from './components/organisms/drawer/lib-drawer.component';
-export * from './components/organisms/timeline/lib-timeline-item.component';
 export * from './components/organisms/data-table/lib-data-table.component';
 export * from './components/organisms/accordion/lib-accordion.component';
+export * from './components/organisms/toast-manager/lib-toast-manager.component';
+export * from './components/organisms/parallax-container/lib-parallax.component';
+export * from './components/organisms/parallax-text/lib-parallax-text-stack.component';
+export * from './components/organisms/timeline/lib-timeline-item.component';
+export * from './components/organisms/timeline/lib-timeline.component';
+
+export * from './components/organisms/horizontal-scroll-section/lib-horizontal-scroll-section.component';
+export * from './components/organisms/carousel/lib-carousel.component';
+export * from './components/organisms/bento-grid/lib-bento-grid.component'
+export * from './components/organisms/footer/lib-footer.component';
+
+
+export * from './components/organisms/cursor-follower/lib-cursor-follower.component';
+export * from './components/organisms/stagger/lib-stagger-container.component';
+
+export * from './components/molecules/lib-alert/lib-alert.types';
+
+export * from './types/public';
 
 console.log('Library initialized');

@@ -1,57 +1,215 @@
-:host {
-  display: inline-block;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-CLOSE-BUTTON — Shibui UI
+   Variantes : ghost · subtle · outlined · filled · filled-round · danger · on-dark
+   Sizes     : sm (24px) · md (32px) · lg (40px) · xl (48px)
+   Icons     : x · x-circle · x-square  (via lib-icon name prop)
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.close-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border-radius: var(--lib-radius-sm, 4px);
-  color: var(--lib-color-text-muted);
-}
+@layer components {
 
-/* --- Variantes basadas en Tokens --- */
+  /* ── Base ──────────────────────────────────────────────────── */
+  .close-btn {
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    color: var(--text-muted);
+    line-height: 1;
+    outline: none;
+    transition:
+      color        var(--duration-fast) var(--ease-default),
+      background   var(--duration-base) var(--ease-default),
+      border-color var(--duration-base) var(--ease-default),
+      transform    var(--duration-base) var(--ease-bounce),
+      opacity      var(--duration-base);
+  }
 
-.close-btn.neutral:hover {
-  background-color: var(--lib-color-neutral-90);
-  color: var(--lib-color-neutral-10);
-}
+  .close-btn:disabled {
+    opacity: 0.35;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 
-.close-btn.primary:hover {
-  background-color: var(--lib-color-primary-light);
-  color: var(--lib-color-primary);
-}
+  /* Focus ring — base */
+  .close-btn:focus-visible {
+    box-shadow: 0 0 0 3px var(--color-ink-20);
+  }
 
-.close-btn.danger:hover {
-  background-color: var(--lib-color-danger-light);
-  color: var(--lib-color-danger);
-}
+  /* ── Sizes ─────────────────────────────────────────────────── */
+  :host([size="sm"]) .close-btn { width: 24px;
+     height: 24px; }
 
-.close-btn.white {
-  color: white;
-  opacity: 0.8;
-}
+  :host([size="md"]) .close-btn { width: 32px;
+     height: 32px; }
 
-.close-btn.white:hover {
-  background-color: rgb(255, 255, 255, 0.2);
-  opacity: 1;
-}
+  :host([size="lg"]) .close-btn { width: 40px;
+     height: 40px; }
 
-.close-btn.sm {
-  width: var(--lib-size-sm, 24px);
-  height: var(--lib-size-sm, 24px);
-}
+  :host([size="xl"]) .close-btn { width: 48px;
+     height: 48px; }
 
-.close-btn.md {
-  width: var(--lib-size-md, 32px);
-  height: var(--lib-size-md, 32px);
-}
+  /* ============================================================
+     VARIANT — GHOST (default)
+     Invisible track, solo el icono
+     ============================================================ */
+  :host([variant="ghost"]) .close-btn {
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+  }
 
-.close-btn.lg {
-  width: var(--lib-size-lg, 40px);
-  height: var(--lib-size-lg, 40px);
+  :host([variant="ghost"]) .close-btn:hover {
+    color: var(--text-primary);
+    background: var(--color-washi-200);
+  }
+
+  :host([variant="ghost"]) .close-btn:active {
+    transform: scale(0.88);
+  }
+
+  /* ============================================================
+     VARIANT — SUBTLE
+     Superficie ligera, rotacion al hover
+     ============================================================ */
+  :host([variant="subtle"]) .close-btn {
+    color: var(--text-secondary);
+    border-radius: var(--radius-full);
+  }
+
+  :host([variant="subtle"]) .close-btn:hover {
+    color: var(--text-primary);
+    background: var(--color-washi-200);
+    transform: rotate(90deg);
+  }
+
+  :host([variant="subtle"]) .close-btn:active {
+    transform: rotate(90deg) scale(0.88);
+    background: var(--color-washi-300);
+  }
+
+  /* ============================================================
+     VARIANT — OUTLINED
+     Borde visible en reposo
+     ============================================================ */
+  :host([variant="outlined"]) .close-btn {
+    color: var(--text-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-sm);
+  }
+
+  :host([variant="outlined"]) .close-btn:hover {
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+  }
+
+  :host([variant="outlined"]) .close-btn:active {
+    transform: scale(0.9);
+  }
+
+  /* ============================================================
+     VARIANT — FILLED
+     Fondo sólido, sin radius full
+     ============================================================ */
+  :host([variant="filled"]) .close-btn {
+    color: var(--bg-elevated);
+    background: var(--color-washi-800);
+    border-radius: var(--radius-sm);
+  }
+
+  :host([variant="filled"]) .close-btn:hover {
+    background: var(--color-washi-900);
+    transform: scale(1.05);
+  }
+
+  :host([variant="filled"]) .close-btn:active {
+    transform: scale(0.9);
+  }
+
+  /* ============================================================
+     VARIANT — FILLED-ROUND
+     Fondo sólido + radius full + rotacion al hover
+     ============================================================ */
+  :host([variant="filled-round"]) .close-btn {
+    color: var(--bg-elevated);
+    background: var(--color-washi-800);
+    border-radius: var(--radius-full);
+  }
+
+  :host([variant="filled-round"]) .close-btn:hover {
+    background: var(--color-washi-900);
+    transform: rotate(90deg) scale(1.08);
+  }
+
+  :host([variant="filled-round"]) .close-btn:active {
+    transform: rotate(90deg) scale(0.9);
+  }
+
+  /* ============================================================
+     VARIANT — DANGER
+     ============================================================ */
+  :host([variant="danger"]) .close-btn {
+    color: var(--color-error);
+    border-radius: var(--radius-sm);
+  }
+
+  :host([variant="danger"]) .close-btn:hover {
+    color: var(--color-error);
+    background: oklch(35% 0.10 20deg / 0.10);
+  }
+
+  :host([variant="danger"]) .close-btn:active {
+    transform: scale(0.88);
+  }
+
+  :host([variant="danger"]) .close-btn:focus-visible {
+    box-shadow: 0 0 0 3px oklch(35% 0.10 20deg / 0.15);
+  }
+
+  /* ============================================================
+     VARIANT — ON-DARK
+     Para superficies oscuras: glass, banners, modales oscuros
+     ============================================================ */
+  :host([variant="on-dark"]) .close-btn {
+    color: oklch(100% 0 0deg / 0.45);
+    border-radius: var(--radius-full);
+  }
+
+  :host([variant="on-dark"]) .close-btn:hover {
+    color: oklch(100% 0 0deg / 0.9);
+    background: oklch(100% 0 0deg / 0.10);
+    transform: rotate(90deg);
+  }
+
+  :host([variant="on-dark"]) .close-btn:active {
+    transform: rotate(90deg) scale(0.88);
+  }
+
+  :host([variant="on-dark"]) .close-btn:focus-visible {
+    box-shadow: 0 0 0 3px oklch(100% 0 0deg / 0.20);
+  }
+
+  /* ============================================================
+     REDUCCION DE MOVIMIENTO
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    .close-btn {
+      transition: none;
+    }
+  }
 }

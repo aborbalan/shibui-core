@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "usage_md": { "type": "string" },
+    "codes": {
+      "type": "object",
+      "properties": {
+        "react": { "type": "string" },
+        "angular": { "type": "string" },
+        "svelte": { "type": "string" }
+      }
+    }
+  },
+  "x-readme-ref-name": "ComponentContent"
+}

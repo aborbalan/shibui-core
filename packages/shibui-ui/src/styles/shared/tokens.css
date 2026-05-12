@@ -1,32 +1,46 @@
-:host {
-  /* --- 1. ESCALA DE AIRE (Sistema de 4px) --- */
-  --lib-spacing-unit: 0.25rem; /* 4px */
+:host, :root {
+  /* ==========================================================
+     COLORS — PRIMITIVE PALETTE
+     ========================================================== */
+
+     --text-xs:   0.6875rem;  /*  11px */
+     --text-sm:   0.8125rem;  /*  13px */
+     --text-base: 0.9375rem;  /*  15px */
+     --text-md:   1.0625rem;  /*  17px */
+     --text-lg:   1.25rem;    /*  20px */
+     --text-xl:   1.5rem;     /*  24px */
+     --text-2xl:  2rem;       /*  32px */
+     --text-3xl:  2.75rem;    /*  44px */
+     --text-4xl:  3.75rem;    /*  60px */
+     --text-5xl:  5rem;       /*  80px */
+
+     --weight-light:    300;
+--weight-regular:  400;
+--weight-medium:   500;
+--weight-semibold: 600;
+
+
+  /* --- MAPEADO SEMÁNTICO (SHIBUI) --- */
+  --lib-shibui-water: var(--color-celadon-500);
+  --lib-shibui-kaki: var(--color-kaki-500);
+  --lib-shibui-paper: var(--color-washi-100);
+  --lib-shibui-ink: var(--color-ink-100);
+
+  /* --- 1. ESCALA DE AIRE (Armonía de 4px) --- */
+  --lib-spacing-unit: 0.25rem;
   --lib-space-xs: var(--lib-spacing-unit); /* 4px */
   --lib-space-sm: calc(var(--lib-spacing-unit) * 2); /* 8px */
-  --lib-space-md: calc(var(--lib-spacing-unit) * 4); /* 16px */
+  --lib-space-md: calc(
+    var(--lib-spacing-unit) * 4
+  ); /* 16px - El Estándar de Oro */
+
   --lib-space-lg: calc(var(--lib-spacing-unit) * 6); /* 24px */
   --lib-space-xl: calc(var(--lib-spacing-unit) * 8); /* 32px */
 
-  	
-  /* --- 2. FONT SIZES (Escala Editorial) --- */
-  --text-xs:   0.6875rem;  /* 11px */
-  --text-sm:   0.8125rem;  /* 13px */
-  --text-base: 0.9375rem;  /* 15px */
-  --text-md:   1.0625rem;  /* 17px */
-  --text-lg:   1.25rem;    /* 20px */
-  --text-xl:   1.5rem;     /* 24px */
-  --text-2xl:  2rem;       /* 32px */
-  --text-3xl:  2.75rem;    /* 44px */
-  --text-4xl:  3.75rem;    /* 60px */
-  --text-5xl:  5rem;       /* 80px */
-
-  /* --- 2. RADIOS (Geometría) --- */
-  --radius-none: 0;
-  --radius-sm:   2px;
-  --radius-md:   4px;
-  --radius-lg:   8px;
-  --radius-xl:   16px;
-  --radius-full: 9999px;
+  /* --- 3. MAPEADO SEMÁNTICO BASE --- */
+  --lib-color-primary: var(--lib-shibui-water);
+  --lib-color-bg: var(--lib-shibui-paper);
+  --lib-color-text: var(--lib-shibui-ink);
 
   /* --- 3. SOMBRAS (Elevación) --- */
   --shadow-sm: 0 1px 2px var(--color-ink-10);
@@ -34,11 +48,13 @@
   --shadow-lg: 0 8px 24px var(--color-ink-10), 0 2px 4px var(--color-ink-10);
   --shadow-xl: 0 20px 48px var(--color-ink-20);
 
-  /* --- 3. FONT WEIGHTS (Jerarquía) --- */
-  --weight-light:    300;
-  --weight-regular:  400;
-  --weight-medium:   500;
-  --weight-semibold: 600;
+  /* --- 2. TIPOGRAFÍA (SHIBUI EDITORIAL) --- */
+  --lib-font-display: "Cormorant Garamond", serif;
+  --lib-font-body: "Shippori Mincho", serif;
+  --lib-font-mono: "DM Mono", monospace;
+
+  /* --- 4. TIPOGRAFÍA ELEGANTE --- */
+  --lib-font-family-base: var(--lib-font-body);
 
     /* --- 3. LINE HEIGHTS (Legibilidad) --- */
     --leading-tight:   1.2;
@@ -121,6 +137,12 @@
   --color-info:    oklch(58.33% 0.068 171.21deg); /* #4E9482 (Coincide con Celadon-400) */
   --color-white:   oklch(100% 0 0deg);             /* #FFFFFF -> Blanco puro */
 
+  /* Derivados de estado — fondos y bordes suaves */
+--color-error-subtle:   #FFF0EE;  /* fondo badge/alert error */
+--color-error-border:   #F5C4BC;  /* borde badge/alert error */
+--color-success-subtle: #EFF5F1;  /* fondo badge/alert success */
+--color-success-border: #BDD8C5;  /* borde badge/alert success */
+
   /* --- 7. BACKGROUNDS SEMÁNTICOS --- */
   --bg-base:     var(--color-washi-50);
   --bg-surface:  var(--color-washi-100);
@@ -140,20 +162,11 @@
   --border-default: var(--color-washi-300);
   --border-strong:  var(--color-washi-500);
 
-  /* --- 9. RADIOS BRUTALISTAS --- */
-  --lib-radius-xs: 0px;
-  --lib-radius-sm: 0px;
-  --lib-radius-md: 1px;
-  --lib-radius-lg: 2px;
-
-  /* --- 10. TIPOGRAFÍA EDITORIAL --- */
-  --lib-font-display: "Cormorant Garamond", serif;
-  --lib-font-body:    "Shippori Mincho", serif;
-  --lib-font-mono:    "DM Mono", monospace;
   
   --lib-tracking-elegant: 0.15em;
-  --lib-text-transform: uppercase;
   --lib-font-size-base: 14px;
+  --lib-text-transform: uppercase;
+  --lib-border-width: 1.5px;
 
   /* --- 11. GLASS SYSTEM (Efecto Enso) --- */
   --lib-glass-blur-amount:     12px;
@@ -278,9 +291,25 @@ linear-gradient(
       oklch(45% 0.05 45deg / 0.3) 100%
     );
 
-  /* --- 11. EFECTOS Y BORDES --- */
-  --lib-border-width: 1.5px;
-  --lib-shadow-brutal: 4px 4px 0px 0px var(--color-ink-100);
+  /* --- ESCALA DE RADIOS ESTÁNDAR --- */
+  --radius-none: 0;
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+
+  /* --- NUEVA ESCALA DE RADIOS BRUTALISTA --- */
+  --lib-radius-xs: 0px; /* Antes 2px */
+  --lib-radius-sm: 0px; /* Antes 4px */
+  --lib-radius-md: 1px; /* Antes 8px - Casi recto */
+  --lib-radius-lg: 2px; /* Antes 16px - El máximo permitido */
+
+  /* --- SOMBRAS BRUTALISTAS (Hard Shadows) --- */
+
+  /* Pasamos de sombras difuminadas a sombras sólidas y definidas */
+  --lib-shadow-brutal: 4px 4px 0px 0px var(--lib-shibui-ink);
+  --lib-shadow-glass: 0 8px 32px 0 oklch(25% 0.02 45deg / 0.2);
 }
 
 /* --- DARK MODE OVERRIDES --- */

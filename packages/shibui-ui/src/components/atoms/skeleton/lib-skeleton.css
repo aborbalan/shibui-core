@@ -1,64 +1,190 @@
-:host {
-  display: block;
+@layer tokens, reset, components;
 
-  --skeleton-bg: var(--lib-color-neutral-90, #e0e0e0);
-  --skeleton-highlight: var(--lib-color-neutral-95, rgb(255, 255, 255, 0.5));
+/* ============================================================
+   LIB-SKELETON — Shibui UI · 骨格
+   Shape     : line · title · h1 · avatar · icon · btn · badge · pill · img · rect
+   Animation : shimmer (default) · wave · pulse
+   Surface   : light (default) · dark · kaki
+   ============================================================
+
+   Arquitectura de animación:
+     shimmer  — barrido de luz lateral vía background-position (1.8s)
+     wave     — mismo barrido, ritmo más lento y orgánico (2.4s)
+     pulse    — opacidad sin movimiento (1.8s)
+
+   El gradiente shimmer usa background-size: 300% 100% para que
+   el barrido de posición 100%→-100% recorra toda la anchura.
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.skeleton {
-  position: relative;
-  overflow: hidden;
-  background-color: var(--skeleton-bg);
-  border-radius: var(--lib-radius-md, 4px);
-}
+@layer components {
 
-/* Variantes de forma */
-:host([variant="circle"]) .skeleton {
-  border-radius: 50%;
-}
+  /* ── Base — shimmer light ────────────────────────────────── */
+  .sk {
+    display: block;
+    width: 100%;
+    border-radius: var(--radius-sm);
 
-:host([variant="text"]) .skeleton {
-  border-radius: 2px;
-  margin-bottom: 0.5em;
-}
-
-/* Animación Shimmer (Barrido de luz) */
-:host([animated]) .skeleton::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  transform: translateX(-100%);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--skeleton-highlight),
-    transparent
-  );
-  animation: shimmer 1.5s infinite linear;
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
+    /* Gradiente shimmer — surface light por defecto */
+    background: linear-gradient(
+      90deg,
+      var(--color-washi-200) 25%,
+      var(--color-washi-100) 50%,
+      var(--color-washi-200) 75%
+    );
+    background-size: 300% 100%;
+    animation: sk-shimmer 1.8s ease-in-out infinite;
   }
 
-  100% {
-    transform: translateX(100%);
-  }
-}
+  /* ============================================================
+     ANIMACIONES
+     ============================================================ */
 
-/* Animación Pulse (Opcional, si prefieres un parpadeo suave) */
-:host([animated="pulse"]) .skeleton {
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
+  @keyframes sk-shimmer {
+    0%   { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
   }
 
-  50% {
-    opacity: 0.5;
+  @keyframes sk-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+  }
+
+  /* wave — mismo shimmer, ritmo más lento y orgánico */
+  :host([animation="wave"]) .sk {
+    animation-duration: 2.4s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  }
+
+  /* pulse — sin barrido, solo opacidad */
+  :host([animation="pulse"]) .sk {
+    background: var(--color-washi-200);
+    animation: sk-pulse 1.8s ease-in-out infinite;
+  }
+
+  /* ============================================================
+     SUPERFICIES
+     ============================================================ */
+
+  /* dark */
+  :host([surface="dark"]) .sk {
+    background: linear-gradient(
+      90deg,
+      var(--color-washi-800) 25%,
+      var(--color-washi-700) 50%,
+      var(--color-washi-800) 75%
+    );
+    background-size: 300% 100%;
+    animation: sk-shimmer 1.8s ease-in-out infinite;
+  }
+
+  :host([surface="dark"][animation="wave"]) .sk {
+    animation-duration: 2.4s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  }
+
+  :host([surface="dark"][animation="pulse"]) .sk {
+    background: var(--color-washi-700);
+    animation: sk-pulse 1.8s ease-in-out infinite;
+  }
+
+  /* kaki — tinte cálido para superficies premium */
+  :host([surface="kaki"]) .sk {
+    background: linear-gradient(
+      90deg,
+      var(--color-kaki-200) 25%,
+      var(--color-kaki-100) 50%,
+      var(--color-kaki-200) 75%
+    );
+    background-size: 300% 100%;
+    animation: sk-shimmer 1.8s ease-in-out infinite;
+  }
+
+  :host([surface="kaki"][animation="wave"]) .sk {
+    animation-duration: 2.4s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  }
+
+  :host([surface="kaki"][animation="pulse"]) .sk {
+    background: var(--color-kaki-200);
+    animation: sk-pulse 1.8s ease-in-out infinite;
+  }
+
+  /* ============================================================
+     SHAPES — primitivos semánticos
+     ============================================================ */
+
+  /* line — texto corrido */
+  :host([shape="line"]) .sk {
+    height: 13px;
+  }
+
+  /* title — encabezado secundario */
+  :host([shape="title"]) .sk {
+    height: 22px;
+  }
+
+  /* h1 — encabezado principal */
+  :host([shape="h1"]) .sk {
+    height: 36px;
+  }
+
+  /* avatar — circular, tamaño libre vía width/height */
+  :host([shape="avatar"]) .sk {
+    border-radius: var(--radius-full);
+  }
+
+  /* icon — cuadrado pequeño */
+  :host([shape="icon"]) .sk {
+    border-radius: var(--radius-sm);
+  }
+
+  /* btn — altura de botón / input */
+  :host([shape="btn"]) .sk {
+    height: 36px;
+  }
+
+  /* badge — etiqueta compacta */
+  :host([shape="badge"]) .sk {
+    height: 20px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* pill — chip redondeado */
+  :host([shape="pill"]) .sk {
+    height: 22px;
+    border-radius: var(--radius-full);
+  }
+
+  /* img — bloque imagen */
+  :host([shape="img"]) .sk {
+    height: 160px;
+  }
+
+  /* rect — bloque libre, sin altura propia */
+  :host([shape="rect"]) .sk {
+    border-radius: var(--radius-sm);
+  }
+
+  /* ============================================================
+     ACCESIBILIDAD
+     ============================================================ */
+
+  @media (prefers-reduced-motion: reduce) {
+    .sk {
+      animation: none;
+      /* Fallback estático al tono medio de cada superficie */
+      background: var(--color-washi-200);
+      background-size: unset;
+    }
+
+    :host([surface="dark"]) .sk  { background: var(--color-washi-700); }
+    :host([surface="kaki"]) .sk  { background: var(--color-kaki-200); }
   }
 }

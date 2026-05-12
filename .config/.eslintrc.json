@@ -27,6 +27,8 @@
   "ignorePatterns": [
     "dist",
     "node_modules",
-    "*.d.ts"
+    "*.d.ts",
+    "package.json", // Añadir aquí también por seguridad
+    "package-lock.json"
   ]
 }

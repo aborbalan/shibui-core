@@ -1,82 +1,218 @@
-:host {
-  display: block;
+@layer tokens, reset, components;
 
-  --divider-color: #e2e8f0;
-  --divider-thickness: 1px;
-  --divider-gap: 16px;
+/* ============================================================
+   LIB-DIVIDER — Shibui UI
+   Orientation : horizontal (default) · vertical
+   Styles      : hairline · default · strong · heavy · dashed · dotted · gradient
+   Colors      : default · kaki · celadon
+   Align       : left · center · right
+   Ornament    : none · dot · diamond
+   Label style : mono · display · kanji
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    width: 100%;
+  }
+
+  /* Vertical: inline, altura gestionada por el padre */
+  :host([orientation="vertical"]) {
+    display: inline-flex;
+    width: auto;
+    height: 100%;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-:host([orientation="horizontal"]) {
-  width: 100%;
-  margin: 16px 0;
-}
+@layer components {
 
-:host([orientation="vertical"]) {
-  display: inline-flex;
-  height: 100%;
-  min-height: 1em;
-  vertical-align: middle;
-  margin: 0 16px;
-  width: var(--divider-thickness);
-}
+  /* ── Contenedor base ───────────────────────────────────────── */
+  .dv {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: var(--lib-space-md);
+  }
 
-.divider-container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
+  :host([orientation="vertical"]) .dv {
+    flex-direction: column;
+    width: auto;
+    height: 100%;
+    gap: var(--lib-space-sm);
+  }
 
-:host([orientation="vertical"]) .divider-container {
-  flex-direction: column;
-}
+  /* ── Línea base ────────────────────────────────────────────── */
+  .dv__line {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    /* Horizontal por defecto */
+    height: 1px;
+    width: auto;
+    background: var(--border-subtle);
+  }
 
-.line {
-  background-color: var(--divider-color);
-  flex-grow: 1;
-}
+  :host([orientation="vertical"]) .dv__line {
+    height: auto;
+    width: 1px;
+  }
 
-:host([align="left"]) .line-before {
-  flex-grow: 0;
-}
+  /* ============================================================
+     ESTILOS — horizontales
+     ============================================================ */
 
-:host([align="right"]) .line-after {
-  flex-grow: 0;
-}
+  /* hairline — borde-subtle, 1px (default del reset) */
 
-/* Ajustes de grosor según orientación */
-:host([orientation="horizontal"]) .line {
-  height: var(--divider-thickness);
-}
+  :host([style-variant="default"]) .dv__line {
+    background: var(--border-default);
+  }
 
-:host([orientation="vertical"]) .line {
-  width: var(--divider-thickness);
-}
+  :host([style-variant="strong"]) .dv__line {
+    height: 2px;
+    background: var(--border-strong);
+  }
 
-/* Estilo Faded (Degradado) */
-:host([faded][orientation="horizontal"]) .line-before {
-  background: linear-gradient(to right, transparent, var(--divider-color));
-}
+  :host([style-variant="heavy"]) .dv__line {
+    height: 4px;
+    background: var(--color-washi-900);
+  }
 
-:host([faded][orientation="horizontal"]) .line-after {
-  background: linear-gradient(to left, transparent, var(--divider-color));
-}
+  :host([style-variant="dashed"]) .dv__line {
+    background: none;
+    border-top: 1px dashed var(--border-default);
+    height: 0;
+  }
 
-/* Manejo del Slot (Texto/Icono) */
-.content {
-  display: inline-block;
-  white-space: nowrap;
-}
+  :host([style-variant="dotted"]) .dv__line {
+    background: none;
+    border-top: 1px dotted var(--color-washi-400);
+    height: 0;
+  }
 
-/* Si el slot está vacío, quitamos el gap */
-.content:empty {
-  display: none;
-}
+  :host([style-variant="gradient"]) .dv__line {
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      var(--border-default) 20%,
+      var(--border-default) 80%,
+      transparent 100%
+    );
+  }
 
-.content:not(:empty) {
-  padding: 0 var(--divider-gap);
-  font-size: 12px;
-  color: #718096;
-  text-transform: uppercase;
-  font-weight: 600;
+  /* ── Estilos verticales ──────────────────────────────────── */
+  :host([orientation="vertical"][style-variant="default"]) .dv__line {
+    background: var(--border-default);
+  }
+
+  :host([orientation="vertical"][style-variant="strong"]) .dv__line {
+    width: 2px;
+    background: var(--border-strong);
+    height: auto;
+  }
+
+  :host([orientation="vertical"][style-variant="dashed"]) .dv__line {
+    background: none;
+    border-left: 1px dashed var(--border-default);
+    width: 0;
+  }
+
+  :host([orientation="vertical"][style-variant="gradient"]) .dv__line {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--border-default) 20%,
+      var(--border-default) 80%,
+      transparent 100%
+    );
+  }
+
+  /* ============================================================
+     COLORES — kaki · celadon
+     ============================================================ */
+  :host([color="kaki"]) .dv__line {
+    background: var(--color-kaki-500);
+    height: 2px;
+  }
+
+  :host([color="celadon"]) .dv__line {
+    background: var(--color-celadon-500);
+    height: 2px;
+  }
+
+  /* ============================================================
+     ALINEACIÓN (solo horizontal)
+     Acorta el segmento opuesto al label a 24px
+     ============================================================ */
+  :host([align="left"])  .dv__line:first-child { max-width: 24px; }
+  :host([align="right"]) .dv__line:last-child  { max-width: 24px; }
+
+  /* ============================================================
+     ORNAMENTOS
+     ============================================================ */
+  .dv__ornament {
+    flex-shrink: 0;
+  }
+
+  .dv__ornament--dot {
+    width: 5px;
+    height: 5px;
+    border-radius: var(--radius-full);
+    background: var(--color-washi-400);
+  }
+
+  .dv__ornament--diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--color-washi-400);
+    transform: rotate(45deg);
+  }
+
+  /* Ornamentos heredan color del modificador */
+  :host([color="kaki"])    .dv__ornament { background: var(--color-kaki-500); }
+  :host([color="celadon"]) .dv__ornament { background: var(--color-celadon-500); }
+
+  /* ============================================================
+     LABELS
+     ============================================================ */
+  .dv__label {
+    flex-shrink: 0;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  /* mono — DM Mono, uppercase, muted */
+  .dv__label--mono {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* display — Cormorant italic, secondary */
+  .dv__label--display {
+    font-family: var(--lib-font-display);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-light);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-secondary);
+    text-transform: none;
+    font-style: italic;
+  }
+
+  /* kanji — Cormorant, washi-300, decorativo */
+  .dv__label--kanji {
+    font-family: var(--lib-font-display);
+    font-size: 1.25rem;
+    color: var(--color-washi-300);
+    line-height: 1;
+    text-transform: none;
+  }
+
+  /* Label hereda acento kaki cuando color="kaki" */
+  :host([color="kaki"]) .dv__label--mono {
+    color: var(--color-kaki-500);
+  }
 }

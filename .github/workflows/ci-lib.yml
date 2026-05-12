@@ -1,0 +1,90 @@
+name: CI — UI Library
+
+on:
+  workflow_call:
+    inputs:
+      ui:
+        type: string
+        required: true
+      ref:
+        type: string
+        required: true
+
+env:
+  NODE_VERSION: "22.14.0"
+  PNPM_VERSION: "9.15.0"
+
+jobs:
+  quality:
+    name: ✅ Quality Gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 🔎 Type Check
+        run: pnpm --filter @shibui-ui/ui type-check
+      - name: 🧹 Lint
+        run: pnpm --filter @shibui-ui/ui lint
+
+  build-ui:
+    name: 🏗️ Build UI Library
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 🏗️ Build Library
+        run: pnpm --filter @shibui-ui/ui build
+      - name: 🎡 Build Storybook
+        run: pnpm --filter @shibui-ui/ui build-storybook
+      - name: 📤 Upload Storybook artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: storybook-static-${{ github.run_id }}
+          path: packages/shibui-ui/storybook-static/
+          retention-days: 1
+
+  deploy-storybook:
+    name: 🚀 Deploy Storybook
+    runs-on: ubuntu-latest
+    needs: build-ui
+    if: |
+      always() &&
+      needs.build-ui.result == 'success' &&
+      (inputs.ref == 'refs/heads/main' || inputs.ref == 'refs/heads/develop')
+    env:
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 📥 Download Storybook artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook-static-${{ github.run_id }}
+          path: packages/shibui-ui/storybook-static/
+      - name: 🚀 Deploy Storybook
+        run: pnpm exec firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5

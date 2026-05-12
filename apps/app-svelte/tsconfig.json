@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@shibui/ui": ["../../packages/shibui-ui/src/index.ts"],
-      "@shibui/ui/*": ["../../packages/shibui-ui/src/*"]
+      "@shibui-ui/ui": ["../../packages/shibui-ui/src/index.ts"],
+      "@shibui-ui/ui/*": ["../../packages/shibui-ui/src/*"]
     }
   },
   "include": [

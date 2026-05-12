@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "type": { "type": "string" },
+    "default": { "type": "string" },
+    "desc": { "type": "string" }
+  },
+  "x-readme-ref-name": "PropDefinition"
+}

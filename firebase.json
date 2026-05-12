@@ -1,0 +1,59 @@
+{
+  "hosting": [
+    {
+      "target": "storybook",
+      "public": "packages/shibui-ui/storybook-static",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "target": "react",
+      "public": "apps/app-react/dist",
+      "ignore": ["**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "target": "angular",
+      "public": "apps/app-angular/dist",
+      "ignore": ["**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "target": "svelte",
+      "public": "apps/app-svelte/dist",
+      "ignore": ["**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "target": "shibui-api",
+      "public": "apps/shibui-api/docs-dist",
+      "ignore": ["**/node_modules/**"],
+      "headers": [
+        {
+          "source": "/openapi.json",
+          "headers": [
+            { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+          ]
+        }
+      ]
+    }
+  ]
+}

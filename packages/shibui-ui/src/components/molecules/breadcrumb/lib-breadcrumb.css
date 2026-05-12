@@ -1,47 +1,292 @@
-:host {
-  display: block;
-  font-family: var(--lib-font-main, sans-serif);
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-BREADCRUMB — Shibui UI
+   Separadores : slash · chevron · dot · line
+   Tamaños     : sm · md (default) · lg
+   Superficies : default · filled · pill
+   Acentos     : kaki · celadon · bold
+   Modificador : dark
+   Truncado    : .bc-item.bc-hidden → oculto / bc-revealed → visible
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.breadcrumb-list {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  gap: 8px;
-}
+@layer components {
 
-/* Fusionamos aquí los estilos de item */
-.breadcrumb-item {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* El gap que añadimos para el icono */
-  font-size: 14px;
-  color: var(--lib-color-neutral-600, #666);
-}
+  /* ── Raíz ──────────────────────────────────────────────── */
+  .bc {
+    display: flex;
+    align-items: center;
+  }
 
-.breadcrumb-link {
-  color: var(--lib-color-primary-500, #007bff);
-  text-decoration: none;
-  transition: color 0.2s;
-}
+  .bc-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    list-style: none;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+  }
 
-.breadcrumb-link:hover {
-  text-decoration: underline;
-}
+  .bc-item {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: relative; /* para el dropdown */
+  }
 
-.breadcrumb-current {
-  color: var(--lib-color-neutral-900, #333);
-  font-weight: 600;
-  pointer-events: none;
-}
+  /* ── Link — crumb ancestro ─────────────────────────────── */
+  .bc-link {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: var(--lib-space-xs) var(--lib-space-xs);
+    transition: color var(--duration-fast);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-xs);
+  }
+  .bc-link:hover { color: var(--text-primary); }
 
-/* Fusionamos aquí los estilos del separador */
-.separator {
-  margin: 0 4px; /* El margen que añadimos */
-  display: flex;
-  align-items: center;
-  color: var(--lib-color-neutral-400, #999);
+  /* ── Current — último ítem, página activa ──────────────── */
+  .bc-current {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-secondary);
+    white-space: nowrap;
+    padding: var(--lib-space-xs) var(--lib-space-xs);
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-xs);
+  }
+
+  /* ── Separador ─────────────────────────────────────────── */
+  .bc-sep {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--lib-space-sm);
+    color: var(--color-washi-300);
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  /* Slash */
+  .bc-slash .bc-sep::before {
+    content: '/';
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  /* Dot */
+  .bc-dot .bc-sep::before {
+    content: '·';
+    font-family: var(--lib-font-mono);
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  /* Line */
+  .bc-line .bc-sep::before {
+    content: '—';
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  /* Chevron — usa lib-icon, sin ::before */
+  .bc-chevron .bc-sep {
+    padding: 0 var(--lib-space-xs);
+    font-size: 12px;
+  }
+  .bc-chevron .bc-sep::before { content: none; }
+
+  /* ── Icono dentro del crumb ────────────────────────────── */
+  .bc-icon {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    opacity: 0.7;
+  }
+
+  /* ── Tamaños ───────────────────────────────────────────── */
+  .bc-sm .bc-link,
+  .bc-sm .bc-current  { font-size: 10px;
+     letter-spacing: var(--tracking-wide); }
+  .bc-sm .bc-sep      { padding: 0 var(--lib-space-xs); }
+  .bc-sm .bc-icon     { font-size: 11px; }
+
+  .bc-lg .bc-link,
+  .bc-lg .bc-current  { font-family: var(--lib-font-body);
+     font-size: var(--text-sm); letter-spacing: 0; }
+  .bc-lg .bc-icon     { font-size: 15px; }
+
+  /* ── Filled — barra con fondo ──────────────────────────── */
+  .bc-filled {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: var(--lib-space-sm) var(--lib-space-md);
+  }
+
+  /* ── Pill — crumbs individuales ────────────────────────── */
+  .bc-pill .bc-link {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: var(--lib-space-xs) var(--lib-space-sm);
+    transition:
+      background     var(--duration-fast),
+      border-color   var(--duration-fast),
+      color          var(--duration-fast);
+  }
+
+  .bc-pill .bc-link:hover {
+    background: var(--color-washi-200);
+    border-color: var(--border-default);
+    color: var(--text-primary);
+  }
+
+  .bc-pill .bc-current {
+    background: var(--color-washi-900);
+    color: var(--color-washi-50);
+    border: 1px solid var(--color-washi-900);
+    padding: var(--lib-space-xs) var(--lib-space-sm);
+  }
+  .bc-pill .bc-sep { padding: 0 var(--lib-space-sm); }
+
+  /* ── Acentos en ítem activo ────────────────────────────── */
+  .bc-kaki    .bc-current          { color: var(--color-kaki-500); }
+  .bc-kaki    .bc-link:hover       { color: var(--color-kaki-500); }
+  .bc-celadon .bc-current          { color: var(--color-celadon-500); }
+  .bc-celadon .bc-link:hover       { color: var(--color-celadon-500); }
+
+  .bc-bold    .bc-current          { color: var(--text-primary);
+     font-weight: 600; }
+
+  /* ── Ellipsis — truncado expansible ───────────────────── */
+  .bc-ellipsis {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-muted);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 1px var(--lib-space-sm);
+    cursor: pointer;
+    transition:
+      background   var(--duration-fast),
+      color        var(--duration-fast),
+      border-color var(--duration-fast);
+    line-height: 1.6;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .bc-ellipsis:hover {
+    background: var(--color-washi-200);
+    border-color: var(--border-default);
+    color: var(--text-primary);
+  }
+
+  /* ── Dropdown panel ────────────────────────────────────── */
+  .bc-dropdown-wrap { position: relative; }
+
+  .bc-dropdown-panel {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: var(--z-dropdown, 300);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    box-shadow: var(--shadow-md);
+    min-width: 180px;
+    opacity: 0;
+    transform: translateY(-4px) scaleY(0.97);
+    transform-origin: top left;
+    pointer-events: none;
+    transition:
+      opacity   160ms var(--ease-out),
+      transform 180ms var(--ease-out);
+  }
+
+  .bc-dropdown-panel.is-open {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    pointer-events: auto;
+  }
+
+  .bc-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-sm);
+    padding: var(--lib-space-sm) var(--lib-space-md);
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-secondary);
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background var(--duration-fast),
+      color      var(--duration-fast);
+  }
+
+  .bc-dropdown-item:hover { background: var(--bg-surface);
+     color: var(--text-primary); }
+
+  .bc-dropdown-item-icon {
+    font-size: 14px;
+    color: var(--text-muted);
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  /* ── Dark ──────────────────────────────────────────────── */
+  .bc-dark .bc-link         { color: oklch(32% 0.02 50deg); }
+  .bc-dark .bc-link:hover   { color: oklch(65% 0.02 55deg); }
+  .bc-dark .bc-current      { color: oklch(55% 0.02 55deg); }
+  .bc-dark .bc-sep          { color: oklch(22% 0.02 45deg); }
+
+  .bc-dark.bc-filled        { background: oklch(14% 0.02 45deg);
+     border-color: oklch(20% 0.02 45deg); }
+
+  .bc-dark .bc-ellipsis     {
+    background: oklch(14% 0.02 45deg);
+    border-color: oklch(20% 0.02 45deg);
+    color: oklch(35% 0.02 50deg);
+  }
+
+  .bc-dark .bc-ellipsis:hover {
+    background: oklch(18% 0.02 45deg);
+    color: oklch(65% 0.02 55deg);
+  }
+
+  .bc-dark.bc-pill .bc-link       { background: oklch(14% 0.02 45deg);
+     border-color: oklch(20% 0.02 45deg); }
+  .bc-dark.bc-pill .bc-link:hover { background: oklch(20% 0.02 45deg); }
+
+  .bc-dark.bc-pill .bc-current    {
+    background: oklch(60% 0.02 55deg);
+    color: var(--color-washi-950);
+    border-color: oklch(60% 0.02 55deg);
+  }
+
+  .bc-dark .bc-dropdown-panel {
+    background: oklch(16% 0.02 45deg);
+    border-color: oklch(22% 0.02 45deg);
+  }
+  .bc-dark .bc-dropdown-item      { color: oklch(42% 0.02 50deg); }
+
+  .bc-dark .bc-dropdown-item:hover { background: oklch(20% 0.02 45deg);
+     color: oklch(65% 0.02 55deg); }
 }

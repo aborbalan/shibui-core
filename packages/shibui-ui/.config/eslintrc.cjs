@@ -1,18 +1,21 @@
+const path = require('path');
+
 module.exports = {
   root: true,
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2022,
     sourceType: "module",
-    project: ["./tsconfig.json", "./.config/tsconfig.json"],
-    tsconfigRootDir: __dirname + "/.."
+    project: path.resolve(__dirname, '../tsconfig.json'),
+    tsconfigRootDir: path.resolve(__dirname, '../'),
+    extraFileExtensions: ['.json'] 
   },
   plugins: [
     "@typescript-eslint"
   ],
   overrides: [
     {
-      files: ["**/*.html.ts"],
+      files: ["**/*.html.ts",'*.test.ts', '*.spec.ts'],
       parserOptions: {
         project: ["./tsconfig.json"],
         extraFileExtensions: [".html.ts"]
@@ -37,6 +40,9 @@ module.exports = {
   ignorePatterns: [
     "dist",
     "node_modules",
-    "*.d.ts"
+    "*.d.ts",
+    "!src/**/*",
+    'package.json', // Añadir aquí también por seguridad
+    'package-lock.json'
   ]
 };

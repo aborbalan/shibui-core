@@ -1,59 +1,134 @@
-:host {
-  display: block;
-  border-bottom: 1px solid #e2e8f0;
+@layer tokens, reset, components;
 
-  --accordion-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* ============================================================
+   LIB-ACCORDION-ITEM — Shibui UI
+   
+   API de CSS custom properties (sobreescribibles por lib-accordion):
+   --accordion-item-trigger-px        padding inline del trigger     (flush → 0)
+   --accordion-item-content-px        padding inline del content     (flush → 0)
+   --accordion-item-trigger-hover-bg  fondo hover del trigger        (flush → transparent)
+   --accordion-item-body-bg           fondo del body                 (accent → kaki-50)
+   --accordion-item-trigger-bg        fondo del trigger abierto      (accent → kaki-50)
+   --accordion-item-accent-border     borde izquierdo del item       (accent → 2px kaki-400)
+   --accordion-item-label-color       color del label abierto        (accent → kaki-600)
+   --accordion-item-icon-color        color del icono abierto        (accent → kaki-400)
+   --accordion-item-content-border    color borde top del content    (accent → kaki-200)
+   --accordion-item-content-color     color del texto del content    (accent → kaki-600)
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.25rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1a202c;
-  transition: background-color 0.2s;
-}
+@layer components {
 
-.header:hover {
-  background-color: #f7fafc;
-}
+  /* Defaults de la API — el padre los sobreescribe para sus variantes */
+  :host {
+    --accordion-item-trigger-px:       var(--lib-space-md);
+    --accordion-item-content-px:       var(--lib-space-md);
+    --accordion-item-trigger-hover-bg: var(--bg-surface);
+    --accordion-item-body-bg:          var(--bg-elevated);
+    --accordion-item-trigger-bg:       var(--bg-elevated);
+    --accordion-item-accent-border:    2px solid transparent;
+    --accordion-item-label-color:      var(--text-primary);
+    --accordion-item-icon-color:       var(--text-muted);
+    --accordion-item-content-border:   var(--border-subtle);
+    --accordion-item-content-color:    var(--text-secondary);
+  }
 
-.icon {
-  font-size: 0.75rem;
-  transition: transform var(--accordion-transition);
-  color: #a0aec0;
-}
+  /* Separador inferior — el padre decide si eliminarlo */
+  .accordion-item__root {
+    border-bottom: 1px solid var(--border-subtle);
+    border-left: var(--accordion-item-accent-border);
+    transition:
+      border-color var(--duration-slow) var(--ease-out),
+      background   var(--duration-base) var(--ease-default);
+  }
 
-:host([open]) .icon {
-  transform: rotate(180deg);
-}
+  /* Trigger */
+  .accordion-item__trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--lib-space-md);
+    padding: var(--lib-space-sm) var(--accordion-item-trigger-px);
+    /* padding vertical fijo del styleguide: space-5 (~20px) */
+    padding-block: var(--space-5, 1.25rem);
+    background: var(--accordion-item-trigger-bg);
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--duration-base) var(--ease-default);
+  }
 
-.content-wrapper {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--accordion-transition);
-  overflow: hidden;
-}
+  .accordion-item__trigger:hover {
+    background: var(--accordion-item-trigger-hover-bg);
+  }
 
-:host([open]) .content-wrapper {
-  grid-template-rows: 1fr;
-}
+  /* Label */
+  .accordion-item__label {
+    font-family: var(--lib-font-body);
+    font-size: var(--text-base);
+    font-weight: var(--weight-regular);
+    color: var(--accordion-item-label-color);
+    line-height: var(--leading-snug);
+  }
 
-.content {
-  min-height: 0;
-}
+  /* Icono chevron */
+  .accordion-item__icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    color: var(--accordion-item-icon-color);
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
 
-/* Espaciado para el contenido inyectado vía slot */
-.content ::slotted(*) {
-  padding: 0 1.25rem 1.25rem;
-  margin: 0;
-  color: #4a5568;
-  line-height: 1.6;
+  :host([open]) .accordion-item__icon {
+    transform: rotate(180deg);
+  }
+
+  /* Body — animacion grid-template-rows */
+  .accordion-item__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--duration-slow) var(--ease-out);
+    background: var(--accordion-item-body-bg);
+  }
+
+  :host([open]) .accordion-item__body {
+    grid-template-rows: 1fr;
+  }
+
+  .accordion-item__body-inner {
+    overflow: hidden;
+  }
+
+  /* Content */
+  .accordion-item__content {
+    padding-inline: var(--accordion-item-content-px);
+    padding-bottom: var(--lib-space-md);
+    font-size: var(--text-sm);
+    color: var(--accordion-item-content-color);
+    line-height: var(--leading-relaxed);
+    border-top: 1px solid var(--accordion-item-content-border);
+  }
+
+  /* Contenido proyectado via slot */
+  .accordion-item__content ::slotted(*) {
+    margin: 0;
+    padding-top: var(--lib-space-md);
+  }
+
+  /* Reduccion de movimiento */
+  @media (prefers-reduced-motion: reduce) {
+    .accordion-item__body,
+    .accordion-item__icon,
+    .accordion-item__trigger {
+      transition: none;
+    }
+  }
 }

@@ -1,56 +1,126 @@
-:host {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 2px 10px;
-  border-radius: 100px;
-  font-family: sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  white-space: nowrap;
-  transition: all 0.2s;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-BADGE — Shibui UI
+   Variantes : default · accent · celadon · dark · error · success · warning
+   Modificadores: size (sm/md) · dot · pill
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 }
 
-/* Variantes formateadas para Stylelint */
-:host([variant="primary"]) {
-  background: #e3f2fd;
-  color: #1976d2;
-  border: 1px solid #bbdefb;
-}
+@layer components {
 
-:host([variant="success"]) {
-  background: #e8f5e9;
-  color: #2e7d32;
-  border: 1px solid #c8e6c9;
-}
+  /* ── Base ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--lib-space-xs);
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    white-space: nowrap;
+    line-height: 1;
+    padding: var(--lib-space-xs) var(--lib-space-sm);
+    border: var(--lib-border-width) solid transparent;
+    border-radius: var(--lib-radius-xs);
+    user-select: none;
+  }
 
-:host([variant="warning"]) {
-  background: #fff3e0;
-  color: #ef6c00;
-  border: 1px solid #ffe0b2;
-}
+  /* ── Size: md (default) ── */
+  :host([size="md"]) .badge,
+  .badge {
+    padding: var(--lib-space-xs) var(--lib-space-sm);
+    font-size: 10px;
+  }
 
-:host([variant="error"]) {
-  background: #ffebee;
-  color: #c62828;
-  border: 1px solid #ffcdd2;
-}
+  /* ── Size: sm ── */
+  :host([size="sm"]) .badge {
+    padding: 2px var(--lib-space-xs);
+    font-size: 9px;
+    letter-spacing: var(--tracking-wide);
+  }
 
-:host([variant="neutral"]) {
-  background: #f5f5f5;
-  color: #616161;
-  border: 1px solid #e0e0e0;
-}
+  /* ── Pill modifier ── */
+  :host([pill]) .badge {
+    border-radius: var(--radius-full);
+    padding-inline: var(--lib-space-md);
+  }
 
-/* Elementos internos */
-.remove-btn {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  border-radius: 50%;
-  padding: 1px;
-}
+  /* ── Dot indicador ── */
+  .badge__dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: var(--radius-full);
+    background: currentcolor;
+    opacity: 0.75;
+    flex-shrink: 0;
+  }
 
-.remove-btn:hover {
-  background: rgb(0, 0, 0, 0.1);
+  /* ============================================================
+     VARIANTES
+     ============================================================ */
+
+  /* ── Default ── */
+  :host([variant="default"]) .badge,
+  .badge {
+    background: var(--color-washi-100);
+    color: var(--text-secondary);
+    border-color: var(--border-default);
+  }
+
+  /* ── Accent (kaki / persimón) ── */
+  :host([variant="accent"]) .badge {
+    background: var(--color-kaki-50);
+    color: var(--color-kaki-600);
+    border-color: var(--color-kaki-200);
+  }
+
+  /* ── Celadón (jade) ── */
+  :host([variant="celadon"]) .badge {
+    background: var(--color-celadon-50);
+    color: var(--color-celadon-600);
+    border-color: var(--color-celadon-200);
+  }
+
+  /* ── Dark (inverso) ── */
+  :host([variant="dark"]) .badge {
+    background: var(--color-washi-900);
+    color: var(--color-washi-300);
+    border-color: var(--color-washi-700);
+  }
+
+  /* ── Error ── */
+  :host([variant="error"]) .badge {
+    background: oklch(97% 0.01 15deg);
+    color: var(--color-error);
+    border-color: oklch(85% 0.04 15deg);
+  }
+
+  /* ── Success ── */
+  :host([variant="success"]) .badge {
+    background: oklch(97% 0.01 150deg);
+    color: var(--color-success);
+    border-color: oklch(85% 0.04 150deg);
+  }
+
+  /* ── Warning ── */
+  :host([variant="warning"]) .badge {
+    background: oklch(97% 0.02 80deg);
+    color: var(--color-warning);
+    border-color: oklch(87% 0.05 80deg);
+  }
 }

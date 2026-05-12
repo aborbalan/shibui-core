@@ -1,0 +1,60 @@
+[
+    {
+      "company": "nettrim technology",
+      "position": "Programador Sénior",
+      "location": "Zaragoza, España",
+      "period": "nov. 2021 - nov. 2025 (Actualidad)",
+      "duration": "4 años 1 mes",
+      "description": "Liderazgo técnico en proyectos complejos, aplicando arquitectura hexagonal para garantizar la escalabilidad y el desacoplamiento del dominio.",
+      "aptitudes": ["Angular", "JavaScript", "Express.js", "React.js", "TypeScript", "RxJS", "Arquitectura Hexagonal", "Astro.js"],
+      "brandColor": "oklch(60% 0.14 230)"
+    },
+    {
+      "company": "10Labs",
+      "position": "Programador",
+      "location": "Zaragoza, Aragón, España",
+      "period": "nov. 2020 - nov. 2021",
+      "duration": "1 año 1 mes",
+      "description": "Desarrollo de soluciones robustas y mantenibles utilizando TypeScript y ecosistemas modernos de JS.",
+      "aptitudes": ["Angular", "JavaScript", "Express.js", "TypeScript", "Ionic"],
+      "brandColor": "oklch(65% 0.25 320)"
+    },
+    {
+      "company": "Deloitte España",
+      "position": "Desarrollador de front-end",
+      "location": "Zaragoza y alrededores, España",
+      "period": "oct. 2019 - ago. 2020",
+      "duration": "11 meses",
+      "description": "Consultoría tecnológica para grandes clientes, enfocada en la calidad del código y rendimiento en el cliente.",
+      "aptitudes": ["JavaScript", "TypeScript", "Angular"],
+      "brandColor": "oklch(55% 0.05 0)"
+    },
+    {
+      "company": "YL-Verkot Oy",
+      "position": "Aprendiz en prácticas",
+      "location": "Tampere Area, Finlandia",
+      "period": "mar. 2019 - jun. 2019",
+      "duration": "4 meses",
+      "description": "Experiencia internacional trabajando con estándares web y aproximación inicial a Web Components.",
+      "aptitudes": ["JavaScript", "Express.js", "Python", "Componentes web", "Angular", "Cells (Principiante)"],
+      "brandColor": "oklch(50% 0.15 260)"
+    },
+    {
+      "company": "Indra",
+      "position": "Programador",
+      "location": "Zaragoza, España",
+      "period": "jul. 2018 - ene. 2019",
+      "duration": "7 meses",
+      "aptitudes": ["PL/1", "Java"],
+      "brandColor": "oklch(45% 0.05 240)"
+    },
+    {
+      "company": "Hiberus Tecnología",
+      "position": "Programador",
+      "location": "Zaragoza, España",
+      "period": "ago. 2017 - jun. 2018",
+      "duration": "11 meses",
+      "aptitudes": ["JavaScript", "Angular"],
+      "brandColor": "oklch(40% 0.18 275)"
+    }
+  ]

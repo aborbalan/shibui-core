@@ -5,7 +5,7 @@
 
 onMount(async () => {
   // Esto asegura que el código de Lit solo se ejecute cuando el DOM esté listo
-  await import('@shibui/ui');
+  await import("@shibui-ui/ui");
 });
 export const ssr = false;
 </script>

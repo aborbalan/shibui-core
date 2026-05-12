@@ -1,29 +1,83 @@
-import { LitElement, unsafeCSS, TemplateResult } from 'lit';
+import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import type { LibAvatarSize, LibAvatarShape, LibAvatarColor } from './lib-avatar.html';
 import { avatarTemplate } from './lib-avatar.html';
-import cssStyles from './lib-avatar.css?inline';
+import avatarCss from './lib-avatar.css?inline';
+import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
+/**
+ * @element lib-avatar
+ *
+ * Avatar con tres modos de contenido: imagen, iniciales e icono.
+ * Jerarquia: si src falla -> iniciales -> slot default (icono).
+ *
+ * @slot          - Icono de fallback cuando no hay imagen ni iniciales
+ * @slot status   - Indicador de estado (lib-status-dot)
+ *
+ * @example
+ * <lib-avatar src="..." name="Ana Bel" size="lg" color="kaki"></lib-avatar>
+ * <lib-avatar name="Ana Bel" shape="squircle">
+ *   <lib-status-dot slot="status" variant="success" pulse></lib-status-dot>
+ * </lib-avatar>
+ */
 @customElement('lib-avatar')
 export class LibAvatar extends LitElement {
-  static override styles = unsafeCSS(cssStyles);
+  static override styles = [
+    css`${unsafeCSS(sharedTokens)}`,
+    css`${unsafeCSS(avatarCss)}`,
+  ];
 
-  @property({ type: String }) src = '';
-  @property({ type: String }) name = '';
-  @property({ type: String, reflect: true }) size: 'sm' | 'md' | 'lg' = 'md';
-  @property({ type: Boolean, reflect: true }) rounded = false;
+  /** URL de la imagen */
+  @property({ type: String })
+  src = '';
 
-  @state() private hasError = false;
+  /** Nombre completo — genera las iniciales automáticamente */
+  @property({ type: String })
+  name = '';
+
+  /** Escala de tamaño */
+  @property({ type: String, reflect: true })
+  size: LibAvatarSize = 'md';
+
+  /** Forma del avatar */
+  @property({ type: String, reflect: true })
+  shape: LibAvatarShape = 'circle';
+
+  /** Paleta de color para el fondo de iniciales/icono */
+  @property({ type: String, reflect: true })
+  color: LibAvatarColor = 'washi';
+
+  @state() private _hasError = false;
 
   private _getInitials(name: string): string {
-    if (!name) return '';
-    const parts = name.split(' ');
-    return parts.map(p => p[0]).join('').toUpperCase().substring(0, 2);
+    if (!name.trim()) return '';
+    return name
+      .split(' ')
+      .map(p => p[0])
+      .join('')
+      .toUpperCase()
+      .substring(0, 2);
   }
 
-  protected override render(): TemplateResult {
-    const initials = this._getInitials(this.name);
-    const showImage = !!this.src && !this.hasError;
-    
-    return avatarTemplate(this, showImage, initials, () => this.hasError = true);
+  override render(): TemplateResult {
+    const initials  = this._getInitials(this.name);
+    const showImage = !!this.src && !this._hasError;
+
+    return avatarTemplate({
+      src: this.src,
+      name: this.name,
+      size: this.size,
+      shape: this.shape,
+      color: this.color,
+      showImage,
+      initials,
+      onError: () => { this._hasError = true; },
+    });
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'lib-avatar': LibAvatar;
   }
 }

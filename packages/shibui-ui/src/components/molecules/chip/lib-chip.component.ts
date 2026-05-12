@@ -1,52 +1,109 @@
-import { LitElement, html, css, TemplateResult, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import chipStyles from './lib-chip.css?inline';
+import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
+import { customElement, property, query } from 'lit/decorators.js';
+import { chipTemplate } from './lib-chip.html';
+import chipCss from './lib-chip.css?inline';
+import sharedTokens from '../../../styles/shared/tokens.css?inline';
+import type { ChipKind, ChipSize, ChipColor } from './lib-chip.types';
 
+/**
+ * lib-chip — Chip Shibui (SG-26)
+ *
+ * Tres familias semánticas controladas por `kind`:
+ *   - static  → etiqueta read-only, taxonomía
+ *   - toggle  → filtro seleccionable (aria-checkbox)
+ *   - input   → tag removible con botón ×
+ *
+ * @prop kind       — 'static' | 'toggle' | 'input'
+ * @prop size       — 'xs' | 'sm' | 'md' | 'lg'
+ * @prop color      — 'default' | 'kaki' | 'celadon' | 'error' | 'info' | 'dark'
+ * @prop selected   — Estado seleccionado (solo kind=toggle)
+ * @prop dot        — Dot de color antes del texto
+ * @prop aria-label — Texto accesible del chip
+ *
+ * @fires ui-lib-chip-toggle  — { detail: { selected: boolean } }  (kind=toggle)
+ * @fires ui-lib-chip-remove  — { detail: {} }                     (kind=input)
+ *
+ * @slot         — Texto/label del chip
+ * @slot icon    — Icono a la izquierda del texto
+ * @slot avatar  — Avatar circular (solo kind=input, opcionalmente static)
+ */
 @customElement('lib-chip')
 export class LibChip extends LitElement {
-  static override styles = [css`${unsafeCSS(chipStyles)}` || []];
+  static override styles = [
+    css`${unsafeCSS(sharedTokens)}`,
+    css`${unsafeCSS(chipCss)}`,
+  ];
 
-  @property({ type: String }) label = '';
-  @property({ type: String }) avatar = '';
-  @property({ type: Boolean, reflect: true }) removable = false;
-  @property({ type: Boolean, reflect: true }) selectable = false;
-  @property({ type: Boolean, reflect: true }) active = false;
+  @property({ type: String, reflect: true })
+  kind: ChipKind = 'static';
 
-  private _handleRemove(e: Event):void {
-    e.stopPropagation();
-    this.dispatchEvent(new CustomEvent('chip-remove', {
-      detail: { label: this.label },
+  @property({ type: String, reflect: true })
+  size: ChipSize = 'md';
+
+  @property({ type: String, reflect: true })
+  color: ChipColor = 'default';
+
+  @property({ type: Boolean, reflect: true })
+  selected = false;
+
+  @property({ type: Boolean, reflect: true })
+  dot = false;
+
+  @property({ type: String, attribute: 'aria-label' })
+  override ariaLabel = '';
+
+  @query('.chip-input')
+  declare private _inputEl: HTMLElement | null;
+
+  /* ── Toggle ── */
+  _handleToggle(): void {
+    this.selected = !this.selected;
+    this.dispatchEvent(new CustomEvent('ui-lib-chip-toggle', {
+      detail: { selected: this.selected },
       bubbles: true,
-      composed: true
+      composed: true,
     }));
   }
 
-  private _handleClick():void {
-    if (this.selectable) {
-      this.active = !this.active;
+  /* ── Remove con animación de salida ── */
+  _handleRemove(e: MouseEvent): void {
+    e.stopPropagation();
+    const el = this._inputEl;
+    if (!el) {
+      this._emitRemove();
+      return;
     }
+    el.classList.add('is-removing');
+    el.addEventListener('animationend', (): void => {
+      this._emitRemove();
+    }, { once: true });
   }
 
-  override render(): TemplateResult {
-    return html`
-      <div 
-        class="chip" 
-        tabindex="0" 
-        @click=${this._handleClick}
-        role=${this.selectable ? 'button' : 'listitem'}
-      >
-        ${this.avatar ? html`<img class="avatar" src="${this.avatar}" alt="${this.label}">` : ''}
-        
-        <span class="label">${this.label}</span>
+  private _emitRemove(): void {
+    this.dispatchEvent(new CustomEvent('ui-lib-chip-remove', {
+      detail: {},
+      bubbles: true,
+      composed: true,
+    }));
+  }
 
-        ${this.removable ? html`
-          <button class="remove-btn" @click=${this._handleRemove} aria-label="Remove ${this.label}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 6L6 18M6 6l12 12"></path>
-            </svg>
-          </button>
-        ` : ''}
-      </div>
-    `;
+  /* ── Animación de entrada (llamar desde fuera si se crea dinámicamente) ── */
+  animateIn(): void {
+    const el = this._inputEl ?? this.shadowRoot?.querySelector('.chip, .chip-toggle') as HTMLElement | null;
+    if (!el) return;
+    el.classList.remove('is-entering');
+    void el.offsetWidth; // reflow
+    el.classList.add('is-entering');
+    el.addEventListener('animationend', (): void => el.classList.remove('is-entering'), { once: true });
+  }
+
+  protected override render(): TemplateResult {
+    return chipTemplate(this);
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'lib-chip': LibChip;
   }
 }

@@ -1,0 +1,15 @@
+<div class="layout-wrapper">
+  <!--servicio para cambiar de pestañas segun el tipo de layout-->
+  <app-header></app-header>
+
+  <!--servicio para cambiar de fondo segun la page , de momento sera estatico-->
+  <main class="content-area">
+    <lib-background [variant]="currentVariant()">
+      <router-outlet></router-outlet>
+    </lib-background>
+  </main>
+
+  <footer class="main-footer">
+    <app-footer></app-footer>
+  </footer>
+</div>

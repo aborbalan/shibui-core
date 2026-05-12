@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "required": ["id", "name", "slug", "order"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "slug": { "type": "string" },
+    "order": { "type": "number" },
+    "icon": { "type": "string" }
+  },
+  "x-readme-ref-name": "Category"
+}
