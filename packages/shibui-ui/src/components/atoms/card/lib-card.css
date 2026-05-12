@@ -234,7 +234,22 @@
 
   :host([variant="kintsugi"]) .card {
     background: var(--color-washi-950, #120E0A);
-    border-color: rgb(184, 90, 30, 0.15);
+    border-color: transparent;
+  }
+
+  /* Hilo de oro en el borde — misma técnica mask-composite que spotlight-card */
+  :host([variant="kintsugi"]) .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: var(--lib-kintsugi-border);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 0;
   }
 
   :host([variant="kintsugi"]) .card::before {

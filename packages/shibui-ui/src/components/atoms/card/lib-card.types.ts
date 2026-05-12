@@ -1,4 +1,12 @@
-export type ComponentCardVariant = 'default' | 'featured';
+export type LibCardVariant =
+  | 'default'
+  | 'inverse'
+  | 'accent'
+  | 'featured'
+  | 'kintsugi'
+  | 'glitch'
+  | 'celadon'
+  | 'washi';
 
 export interface ComponentCardTag {
   label: string;

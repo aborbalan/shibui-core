@@ -3,16 +3,9 @@ import { customElement, property } from "lit/decorators.js";
 import sharedTokens from "../../../styles/shared/tokens.css?inline";
 import cardStyles from "./lib-card.css?inline";
 import { cardTemplate } from "./lib-card.html";
+import type { LibCardVariant } from "./lib-card.types";
 
-export type LibCardVariant =
-  | "default"
-  | "inverse"
-  | "accent"
-  | "featured"
-  | "kintsugi"
-  | "glitch"
-  | "celadon"
-  | "washi";
+export type { LibCardVariant } from "./lib-card.types";
 
 /**
  * @element lib-card
