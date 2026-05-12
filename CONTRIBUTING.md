@@ -61,7 +61,7 @@ refactor(lib-badge): extract template to html.ts
 
 ---
 
-## Checklist — componente nuevo
+## Checklist — componente nuevo - libreria de componentes
 
 Seguir este orden sin saltarse pasos:
 
@@ -88,7 +88,6 @@ El pipeline se ejecuta en cada push a `develop` y en cada PR hacia `main`.
 npm ci → lint → build-storybook → lighthouse → firebase deploy
 ```
 
-- **Lighthouse CI** — requiere el build de Storybook previo (`storybook-static/`). Config en `.config/lighthouserc.cjs`.
 - **Firebase Hosting** — despliega el Storybook como preview en cada PR.
 - **Semantic Release** — genera versión y tag en NPM automáticamente al mergear a `main`.
 - **Secretos necesarios** — `FIREBASE_TOKEN` en GitHub repository secrets.

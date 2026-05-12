@@ -29,10 +29,21 @@ export const queryKeys = {
     detail: (id: string) => [...queryKeys.projects.all, "detail", id] as const,
   },
 
-  // ── Design System ─────────────────────────────────────
-  designSystem: {
-    all: ["design-system"] as const,
-    components: () => [...queryKeys.designSystem.all, "components"] as const,
-    tokens: () => [...queryKeys.designSystem.all, "tokens"] as const,
+  // ── Components ────────────────────────────────────────
+  components: {
+    all: ["components"] as const,
+    withCategories: ["components", "with-categories"] as const,
+    bySlug: (slug: string) => ["components", "slug", slug] as const,
+    examples: (componentId: string) =>
+      ["components", "examples", componentId] as const,
+  },
+
+  // ── Tokens ────────────────────────────────────────────
+  tokens: {
+    all: ["tokens"] as const,
+    categories: ["tokens", "categories"] as const,
+    byCategory: (category: string) =>
+      ["tokens", "category", category] as const,
+    detail: (id: string) => ["tokens", "detail", id] as const,
   },
 } as const;

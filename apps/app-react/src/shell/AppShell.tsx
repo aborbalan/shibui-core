@@ -9,8 +9,10 @@ import { useAdminShortcut } from '../core/hooks/useAdminShortcut';
 // — Público —
 const HomePage = lazy(() => import('../pages/hero').then(m => ({ default: m.HomePage })));
 const ComponentsPage = lazy(() => import('../pages/components').then(m => ({ default: m.ComponentsPage })));
+const ComponentDetailPage = lazy(() => import('../pages/components/ComponentDetailPage').then(m => ({ default: m.ComponentDetailPage })));
 const TokensPage = lazy(() => import('../pages/tokens').then(m => ({ default: m.TokensPage })));
 const AboutPage = lazy(() => import('../pages/about').then(m => ({ default: m.AboutPage })));
+const FilosofiaPage = lazy(() => import('../pages/filosofia').then(m => ({ default: m.FilosofiaPage })));
 
 // — Admin —
 const KitchenSink = lazy(() => import('../dev/KitchenSink').then(m => ({ default: m.KitchenSink })));
@@ -29,7 +31,9 @@ export function AppShell() {
           <Route path="home" element={<HomePage />} />
           <Route path="tokens" element={<TokensPage />} />
           <Route path="componentes" element={<ComponentsPage />} />
+          <Route path="componentes/:slug" element={<ComponentDetailPage />} />
           <Route path="about" element={<AboutPage />} />
+          <Route path="filosofia" element={<FilosofiaPage />} />
         </Route>
 
         {/* ── Login admin (sin layout) ───────────────────── */}

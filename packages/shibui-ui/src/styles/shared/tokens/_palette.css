@@ -1,0 +1,45 @@
+:host, :root {
+  /* --- WASHI: Tonos de papel neutros --- */
+  --color-washi-50:  oklch(97.77% 0.003 68.35deg);  /* #FAF7F4 */
+  --color-washi-100: oklch(94.29% 0.007 72.91deg);  /* #F2EDE6 */
+  --color-washi-200: oklch(88.59% 0.008 72.93deg);  /* #E5DDD3 */
+  --color-washi-300: oklch(81.39% 0.01  74.43deg);  /* #D3C8BC */
+  --color-washi-400: oklch(71.05% 0.013 74.74deg);  /* #B8A99A */
+  --color-washi-500: oklch(59.45% 0.015 75.31deg);  /* #9A8878 */
+  --color-washi-600: oklch(48.51% 0.014 76.22deg);  /* #7A6A5C */
+  --color-washi-700: oklch(37.66% 0.013 77.58deg);  /* #5C4E42 */
+  --color-washi-800: oklch(26.83% 0.012 79.82deg);  /* #3D332A */
+  --color-washi-900: oklch(17.39% 0.01  83.02deg);  /* #221C16 */
+  --color-washi-950: oklch(11.39% 0.009 84.7deg);   /* #120E0A */
+
+  /* --- INK: Transparencias de Sumi --- */
+  --color-ink-0:   oklch(11.39% 0.009 84.7deg / 0);    /* #1A140E al   0% */
+  --color-ink-10:  oklch(11.39% 0.009 84.7deg / 0.06); /* #1A140E al   6% */
+  --color-ink-20:  oklch(11.39% 0.009 84.7deg / 0.12); /* #1A140E al  12% */
+  --color-ink-40:  oklch(11.39% 0.009 84.7deg / 0.25); /* #1A140E al  25% */
+  --color-ink-60:  oklch(11.39% 0.009 84.7deg / 0.5);  /* #1A140E al  50% */
+  --color-ink-80:  oklch(11.39% 0.009 84.7deg / 0.75); /* #1A140E al  75% */
+  --color-ink-100: oklch(11.39% 0.009 84.7deg / 1);    /* #1A140E al 100% */
+
+  /* --- KAKI: Acento caqui/persimón --- */
+  --color-kaki-50:  oklch(96.88% 0.012 55.48deg); /* #FDF3EC */
+  --color-kaki-100: oklch(91.31% 0.038 65.52deg); /* #FAE2CC */
+  --color-kaki-200: oklch(81.87% 0.076 60.59deg); /* #F4C099 */
+  --color-kaki-300: oklch(70.92% 0.125 52.88deg); /* #EB9660 */
+  --color-kaki-400: oklch(61.85% 0.149 48.72deg); /* #D97234 */
+  --color-kaki-500: oklch(51.65% 0.134 46.13deg); /* #B85A1E */
+  --color-kaki-600: oklch(40.5%  0.108 44.59deg); /* #8C4115 */
+  --color-kaki-700: oklch(29.17% 0.08  44.25deg); /* #602C0E */
+
+  /* --- CELADÓN: Acento jade --- */
+  --color-celadon-50:  oklch(96.39% 0.007 172.9deg);   /* #EFF5F3 */
+  --color-celadon-100: oklch(90.69% 0.021 169.15deg);  /* #D3E8E1 */
+  --color-celadon-200: oklch(81.25% 0.039 171.18deg);  /* #A8D0C4 */
+  --color-celadon-300: oklch(70.21% 0.057 167.31deg);  /* #79B5A3 */
+  --color-celadon-400: oklch(58.33% 0.068 171.21deg);  /* #4E9482 */
+  --color-celadon-500: oklch(45.54% 0.059 173.23deg);  /* #357164 */
+  --color-celadon-600: oklch(33.72% 0.046 173.86deg);  /* #245249 */
+
+  /* --- BASE --- */
+  --color-white: oklch(100% 0 0deg); /* #FFFFFF */
+}

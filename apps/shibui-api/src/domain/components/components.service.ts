@@ -1270,6 +1270,13 @@ export class ComponentsService {
     return component;
   }
 
+  findBySlug(slug: string): Component {
+    const component = this.components.find((c) => c.slug === slug);
+    if (!component)
+      throw new NotFoundException(`Component with slug "${slug}" not found`);
+    return component;
+  }
+
   findByCategory(categoryId: string): Component[] {
     return this.components.filter((c) => c.categoryId === categoryId);
   }

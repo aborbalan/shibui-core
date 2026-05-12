@@ -40,6 +40,7 @@ async function bootstrap() {
     .addTag('categories', 'Component categories and navigation structure')
     .addTag('components', 'Web components built with Lit')
     .addTag('examples', 'Usage examples for each component')
+    .addTag('tokens', 'Design tokens (CSS custom properties) from @shibui/ui')
     .addTag('users', 'User management')
     .build();
 
@@ -55,6 +56,14 @@ async function bootstrap() {
       theme: 'saturn',
     }),
   );
+
+  // ── CORS ──────────────────────────────────────────────────────────────────
+  app.enableCors({
+    origin: process.env.CORS_ORIGINS?.split(',') ?? ['http://localhost:5173'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  });
 
   await app.listen(process.env.PORT ?? 3000);
 }

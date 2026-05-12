@@ -1,0 +1,46 @@
+:host, :root {
+  /* --- Escala de tamaños --- */
+  --text-xs:   0.6875rem; /*  11px */
+  --text-sm:   0.8125rem; /*  13px */
+  --text-base: 0.9375rem; /*  15px */
+  --text-md:   1.0625rem; /*  17px */
+  --text-lg:   1.25rem;   /*  20px */
+  --text-xl:   1.5rem;    /*  24px */
+  --text-2xl:  2rem;      /*  32px */
+  --text-3xl:  2.75rem;   /*  44px */
+  --text-4xl:  3.75rem;   /*  60px */
+  --text-5xl:  5rem;      /*  80px */
+
+  /* --- Pesos --- */
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* --- Familias tipográficas --- */
+  --lib-font-display:     "Cormorant Garamond", serif;
+  --lib-font-body:        "Shippori Mincho", serif;
+  --lib-font-mono:        "DM Mono", monospace;
+  --lib-font-family-base: var(--lib-font-body);
+
+  /* --- Interlineado --- */
+  --leading-tight:   1.2;
+  --leading-snug:    1.4;
+  --leading-normal:  1.6;
+  --leading-relaxed: 1.8;
+  --leading-loose:   2.2;
+
+  /* --- Tracking editorial --- */
+  --tracking-tight:   -0.02em;
+  --tracking-normal:   0em;
+  --tracking-wide:     0.08em;
+  --tracking-wider:    0.15em;
+  --tracking-widest:   0.25em;
+
+  /* --- Tokens lib de tipografía --- */
+  --lib-tracking-elegant: 0.15em;
+  --lib-font-size-base:   14px;
+  --lib-text-transform:   uppercase;
+  --lib-border-width:     1.5px;
+}

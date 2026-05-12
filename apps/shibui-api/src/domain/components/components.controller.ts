@@ -58,6 +58,15 @@ export class ComponentsController {
     return this.componentsService.findByCategory(categoryId);
   }
 
+  @Get('slug/:slug')
+  @ApiOperation({ summary: 'Get a component by slug' })
+  @ApiParam({ name: 'slug', description: 'Component slug, e.g. lib-button' })
+  @ApiResponse({ status: 200, description: 'Component found' })
+  @ApiResponse({ status: 404, description: 'Component not found' })
+  findBySlug(@Param('slug') slug: string) {
+    return this.componentsService.findBySlug(slug);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get a component by ID' })
   @ApiParam({ name: 'id', description: 'Component UUID' })

@@ -1,7 +1,32 @@
 <div class="hero-wrapper">
+  <div class="hero-intro-wrapper">
+    <lib-eyebrow>Design System · v1.0.0 · Zaragoza</lib-eyebrow>
+    <lib-display-heading
+      line1="La belleza 
+        de lo"
+      surface="washi"
+      accent="austero"
+      description="66 componentes. Sin dependencias externas. CSS puro y vanilla JS bajo principios estéticos japoneses — wabi-sabi, kintsugi y ma. Donde cada elemento justifica su presencia."
+    ></lib-display-heading>
 
-    <div class="hero-intro-wrapper">
-
+    <div class="button-group">
+      <lib-button variant="primary">VER COMPONENTES</lib-button>
+      <lib-button variant="ghost">LEER FILOSOFÍA</lib-button>
     </div>
+  </div>
 
+  <lib-divider>sobre...</lib-divider>
+
+  <div>
+    <app-content-section
+      [eyebrow]="'03 · Proyectos'"
+      [headingLine1]="'Arquitectura que'"
+      [headingLine2Prefix]="'perdura,'"
+      headingAccent="zero deps"
+      description="Cada decisión técnica tiene un porqué."
+      surface="transparent"
+    ></app-content-section>
+  </div>
+
+  <div></div>
 </div>
