@@ -1,0 +1,28 @@
+:host, :root {
+  /* --- Colores semánticos de estado --- */
+  --color-error:   oklch(36.16% 0.106 28.52deg);  /* #8C2A1A */
+  --color-warning: oklch(47.53% 0.088 77.58deg);  /* #8C6A1A */
+  --color-success: oklch(38.41% 0.063 147.16deg); /* #2A5C3A */
+  --color-info:    oklch(58.33% 0.068 171.21deg); /* #4E9482 */
+
+  /* --- Fondos y bordes sutiles --- */
+  --color-error-subtle:    #FFF0EE;
+  --color-error-border:    #F5C4BC;
+  --color-warning-subtle:  #FDF8EE;
+  --color-warning-border:  #F5E0A0;
+  --color-success-subtle:  #EFF5F1;
+  --color-success-border:  #BDD8C5;
+  --color-info-subtle:     #EFF5F3;
+  --color-info-border:     #A8D0C4;
+
+  /* --- Textos de estado --- */
+  --text-error:   var(--color-error);
+  --text-warning: var(--color-warning);
+  --text-success: var(--color-success);
+  --text-info:    var(--color-info);
+
+  /* --- Estado deshabilitado --- */
+  --color-disabled-bg:     var(--color-washi-100);
+  --color-disabled-text:   var(--color-washi-400);
+  --color-disabled-border: var(--color-washi-200);
+}
