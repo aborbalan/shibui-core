@@ -5,7 +5,7 @@ import type {
   LibStepOrientation,
   LibStepVariant,
   LibStepSize,
-} from './lib-step.html';
+} from './lib-step.types';
 import { stepTemplate } from './lib-step.html';
 import stepCss from './lib-step.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
