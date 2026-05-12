@@ -1,7 +1,7 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { LibSpotlightVariant } from './lib-spotlight-card.component.html';
-import { spotlightCardTemplate } from './lib-spotlight-card.component.html';
+import type { LibSpotlightVariant } from './lib-spotlight-card.types';
+import { spotlightCardTemplate } from './lib-spotlight-card.html';
 import spotlightCss from './lib-spotlight-card.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
