@@ -50,14 +50,18 @@ const config: UserConfig & { test?: InlineConfig } = {
         {
           name: 'emit-tokens-css',
           generateBundle(): void {
-            this.emitFile({
-              type: 'asset',
-              fileName: 'tokens.css',
-              source: fs.readFileSync(
-                resolve(__dirname, 'src/styles/shared/tokens.css'),
-                'utf-8'
-              ),
-            });
+            const tokensDir = resolve(__dirname, 'src/styles/shared/tokens');
+            const source = fs.readFileSync(
+              resolve(__dirname, 'src/styles/shared/tokens.css'),
+              'utf-8'
+            );
+            // Inline @import url('./tokens/_xxx.css') so dist/tokens.css is self-contained
+            const inlined = source.replace(
+              /@import url\(['"]?\.\/tokens\/([^'")\s]+)['"]?\);?\r?\n?/g,
+              (_, filename: string) =>
+                fs.readFileSync(resolve(tokensDir, filename), 'utf-8') + '\n'
+            );
+            this.emitFile({ type: 'asset', fileName: 'tokens.css', source: inlined });
           },
         },
       ]
