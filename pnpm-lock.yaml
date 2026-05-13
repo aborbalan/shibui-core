@@ -6,6 +6,7 @@ settings:
 
 overrides:
   '@playwright/test': 1.49.1
+  jsonpath-plus: '>=10.2.0'
 
 importers:
 
@@ -7307,11 +7308,6 @@ packages:
   jsonpath-plus@10.4.0:
     resolution: {integrity: sha512-T92WWatJXmhBbKsgH/0hl+jxjdXrifi5IKeMY02DWggRxX0UElcbVzPlmgLTbvsPeW1PasQ6xE2Q75stkhGbsA==}
     engines: {node: '>=18.0.0'}
-    hasBin: true
-
-  jsonpath-plus@9.0.0:
-    resolution: {integrity: sha512-bqE77VIDStrOTV/czspZhTn+o27Xx9ZJRGVkdVShEtPoqsIx5yALv3lWVU6y+PqYvWPJNWE7ORCQheQkEe0DDA==}
-    engines: {node: '>=14.0.0'}
     hasBin: true
 
   jsonpathly@3.0.0:
@@ -18356,13 +18352,6 @@ snapshots:
       jsep: 1.4.0
     optional: true
 
-  jsonpath-plus@9.0.0:
-    dependencies:
-      '@jsep-plugin/assignment': 1.3.0(jsep@1.4.0)
-      '@jsep-plugin/regex': 1.0.4(jsep@1.4.0)
-      jsep: 1.4.0
-    optional: true
-
   jsonpathly@3.0.0:
     optional: true
 
@@ -19282,7 +19271,7 @@ snapshots:
       '@readme/json-schema-ref-parser': 1.2.0
       '@types/json-schema': 7.0.15
       json-schema-merge-allof: 0.8.1
-      jsonpath-plus: 9.0.0
+      jsonpath-plus: 10.4.0
       jsonpointer: 5.0.1
       memoizee: 0.4.17
       oas-normalize: 11.1.4
