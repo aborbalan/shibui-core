@@ -16,6 +16,7 @@
     "start:svelte": "pnpm --filter app-svelte dev",
     "start:angular": "pnpm --filter app-angular start",
     "start:api": "pnpm --filter @shibui-ui/api start:dev",
+    "start:tauri": "pnpm --filter @shibui/app-tauri tauri dev",
     "dev:all": "concurrently -n \"REACT,SVELTE,ANGULAR\" -c \"cyan,magenta,blue\" \"pnpm start:react\" \"pnpm start:svelte\" \"pnpm start:angular\"",
     "build:shibui": "pnpm --filter @shibui-ui/ui build",
     "build:api": "pnpm --filter @shibui-ui/api build",
