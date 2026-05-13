@@ -1,5 +1,5 @@
 import React from "react";
-import { LibComponentGrid, LibSpinner, LibAlert, LibDivider } from "@shibui-ui/ui/react";
+import { LibComponentGrid, LibSpinner, LibAlert, LibDivider, LibEmptyState } from "@shibui-ui/ui/react";
 import type { CategoryWithComponentsDto } from "../../../data/api/domain/components/api/components.api";
 import { ComponentCard } from "./ComponentCard";
 
@@ -8,6 +8,7 @@ interface ComponentsGridProps {
   onSelect: (slug: string) => void;
   isLoading?: boolean;
   error?: Error | null;
+  emptySearch?: boolean;
 }
 
 const sectionStyle: React.CSSProperties = {
@@ -28,6 +29,7 @@ export const ComponentsGrid: React.FC<ComponentsGridProps> = ({
   onSelect,
   isLoading,
   error,
+  emptySearch,
 }) => {
   if (isLoading) {
     return (
@@ -42,6 +44,16 @@ export const ComponentsGrid: React.FC<ComponentsGridProps> = ({
       <LibAlert type="error" heading="Error al cargar componentes">
         {error.message}
       </LibAlert>
+    );
+  }
+
+  if (emptySearch) {
+    return (
+      <LibEmptyState
+        title="Sin resultados"
+        description="Ningún componente coincide con tu búsqueda."
+        icon="magnifying-glass"
+      />
     );
   }
 
