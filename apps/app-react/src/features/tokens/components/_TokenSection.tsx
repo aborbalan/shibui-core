@@ -1,4 +1,5 @@
 import React from 'react';
+import { LibEyebrow } from '@shibui-ui/ui/react';
 
 interface TokenSectionProps {
   id: string;
@@ -16,29 +17,9 @@ export const TokenSection: React.FC<TokenSectionProps> = ({
   children,
 }) => (
   <section id={id} style={{ marginBottom: '5rem', scrollMarginTop: '80px' }}>
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.7rem',
-        fontFamily: 'var(--lib-font-mono)',
-        fontSize: '0.6rem',
-        letterSpacing: '0.26em',
-        textTransform: 'uppercase',
-        color: 'color-mix(in oklch, var(--color-kaki-400) 60%, transparent)',
-        marginBottom: '0.75rem',
-      }}
-    >
-      <span
-        style={{
-          width: '22px',
-          height: '1px',
-          background: 'linear-gradient(90deg, var(--color-kaki-400), transparent)',
-          flexShrink: 0,
-        }}
-      />
+    <LibEyebrow color="kaki" line="left" size="sm" style={{ marginBottom: '0.75rem' }}>
       {eyebrow}
-    </div>
+    </LibEyebrow>
 
     <h2
       style={{

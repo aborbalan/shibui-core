@@ -50,14 +50,15 @@ const config: UserConfig & { test?: InlineConfig } = {
         {
           name: 'emit-tokens-css',
           generateBundle(): void {
-            this.emitFile({
-              type: 'asset',
-              fileName: 'tokens.css',
-              source: fs.readFileSync(
-                resolve(__dirname, 'src/styles/shared/tokens.css'),
-                'utf-8'
-              ),
-            });
+            const tokensDir = resolve(dirname, 'src/styles/shared/tokens');
+            const partials = [
+              '_palette.css', '_typography.css', '_spacing.css',
+              '_motion.css', '_state.css', '_semantic.css', '_effects.css',
+            ];
+            const source = partials
+              .map(f => fs.readFileSync(resolve(tokensDir, f), 'utf-8'))
+              .join('\n');
+            this.emitFile({ type: 'asset', fileName: 'tokens.css', source });
           },
         },
       ]
