@@ -1,4 +1,5 @@
 import React from 'react';
+import { LibSkeleton, LibDivider } from '@shibui-ui/ui/react';
 import type { DesignTokenDto } from '../../../data/api/domain/tokens/api/tokens.api';
 
 interface TokenRowProps {
@@ -62,33 +63,18 @@ interface SubHeaderProps {
 }
 
 export const SubHeader: React.FC<SubHeaderProps> = ({ label, first }) => (
-  <div
-    style={{
-      fontFamily: 'var(--lib-font-mono)',
-      fontSize: '0.58rem',
-      letterSpacing: '0.22em',
-      textTransform: 'uppercase',
-      color: 'color-mix(in oklch, var(--color-kaki-400) 45%, transparent)',
-      borderBottom: '1px solid color-mix(in oklch, var(--color-washi-700) 35%, transparent)',
-      paddingBottom: '0.4rem',
-      marginBottom: '0.75rem',
-      marginTop: first ? '0' : '2rem',
-    }}
+  <LibDivider
+    color="kaki"
+    label-style="mono"
+    align="left"
+    style={{ marginBottom: '0.75rem', marginTop: first ? '0' : '2rem' }}
   >
     {label}
-  </div>
+  </LibDivider>
 );
 
-export const LoadingText: React.FC<{ label?: string }> = ({ label }) => (
-  <span
-    style={{
-      fontFamily: 'var(--lib-font-mono)',
-      fontSize: '0.72rem',
-      color: 'var(--text-muted)',
-    }}
-  >
-    Cargando{label ? ` ${label}` : ''}…
-  </span>
+export const LoadingText: React.FC<{ label?: string }> = () => (
+  <LibSkeleton shape="line" surface="dark" width="180px" />
 );
 
 export const ErrorText: React.FC<{ error: Error | null }> = ({ error }) => (
