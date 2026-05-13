@@ -1,34 +1,24 @@
 import React from "react";
-import { LibEmptyState, LibCodeBlock } from "@shibui-ui/ui/react";
+import { LibEmptyState, LibCodeBlock, LibSegmentedControl } from "@shibui-ui/ui/react";
 import type { ExampleDto, ExampleFramework } from "../../../data/api/domain/components/api/components.api";
 
 interface ComponentDetailExamplesProps {
   examples: ExampleDto[];
 }
 
+interface SegmentedOption {
+  label: string;
+  value: string;
+}
+
 const FRAMEWORK_ORDER: ExampleFramework[] = ["vanilla", "react", "angular", "vue"];
 
 const frameworkLabel: Record<ExampleFramework, string> = {
-  vanilla: "HTML / Vanilla",
-  react: "React",
+  vanilla: "HTML",
+  react:   "React",
   angular: "Angular",
-  vue: "Vue",
+  vue:     "Vue",
 };
-
-const tabStyle = (active: boolean): React.CSSProperties => ({
-  fontFamily: "var(--lib-font-mono)",
-  fontSize: "0.72rem",
-  letterSpacing: "0.06em",
-  padding: "0.35rem 0.85rem",
-  border: "none",
-  borderRadius: "4px",
-  cursor: "pointer",
-  background: active
-    ? "color-mix(in oklch, var(--color-kaki-500) 25%, transparent)"
-    : "transparent",
-  color: active ? "var(--color-kaki-200)" : "var(--color-kaki-500)",
-  transition: "background 0.15s, color 0.15s",
-});
 
 export const ComponentDetailExamples: React.FC<ComponentDetailExamplesProps> = ({ examples }) => {
   const grouped = FRAMEWORK_ORDER.reduce<Record<ExampleFramework, ExampleDto[]>>(
@@ -55,21 +45,28 @@ export const ComponentDetailExamples: React.FC<ComponentDetailExamplesProps> = (
     );
   }
 
+  const options: SegmentedOption[] = availableFrameworks.map((fw) => ({
+    label: frameworkLabel[fw],
+    value: fw,
+  }));
+
   const currentExamples = activeFramework ? grouped[activeFramework] : [];
 
   return (
     <div>
-      <div style={{ display: "flex", gap: "0.25rem", marginBottom: "1.25rem", flexWrap: "wrap" }}>
-        {availableFrameworks.map((fw) => (
-          <button
-            key={fw}
-            style={tabStyle(fw === activeFramework)}
-            onClick={() => setActiveFramework(fw)}
-          >
-            {frameworkLabel[fw]}
-          </button>
-        ))}
-      </div>
+      {availableFrameworks.length > 1 && (
+        <div style={{ marginBottom: "1.25rem" }}>
+          <LibSegmentedControl
+            variant="outline"
+            size="sm"
+            options={options}
+            value={activeFramework ?? availableFrameworks[0]}
+            onUiLibChange={(e: CustomEvent) =>
+              setActiveFramework(e.detail.value as ExampleFramework)
+            }
+          />
+        </div>
+      )}
 
       {currentExamples.map((example) => (
         <div key={example.id} style={{ marginBottom: "1.5rem" }}>
