@@ -1,4 +1,5 @@
 import React from "react";
+import { LibButton, LibBadge, LibChip, LibDivider, LibSpinner } from "@shibui-ui/ui/react";
 import type { ComponentDto, ExampleDto } from "../../../data/api/domain/components/api/components.api";
 import { ComponentDetailExamples } from "./ComponentDetailExamples";
 
@@ -9,31 +10,16 @@ interface ComponentDetailViewProps {
   onBack: () => void;
 }
 
-const statusColor: Record<string, string> = {
-  stable: "var(--color-celadon-300)",
-  draft: "var(--color-kaki-300)",
-  deprecated: "color-mix(in oklch, red 60%, white)",
+const statusVariant: Record<string, string> = {
+  stable:     "success",
+  draft:      "warning",
+  deprecated: "error",
 };
 
-const tagStyle: React.CSSProperties = {
+const metaStyle: React.CSSProperties = {
   fontFamily: "var(--lib-font-mono)",
   fontSize: "0.65rem",
-  letterSpacing: "0.08em",
-  padding: "0.2rem 0.55rem",
-  borderRadius: "4px",
-  background: "color-mix(in oklch, var(--color-kaki-600) 20%, transparent)",
-  color: "var(--color-kaki-300)",
-};
-
-const sectionHeadingStyle: React.CSSProperties = {
-  fontFamily: "var(--lib-font-mono)",
-  fontSize: "0.7rem",
-  letterSpacing: "0.1em",
-  textTransform: "uppercase",
-  color: "var(--color-kaki-400)",
-  marginBottom: "1rem",
-  paddingBottom: "0.5rem",
-  borderBottom: "1px solid color-mix(in oklch, var(--color-kaki-600) 30%, transparent)",
+  color: "var(--color-kaki-500)",
 };
 
 export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
@@ -45,45 +31,25 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
   return (
     <article>
       {/* Back */}
-      <button
-        onClick={onBack}
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "0.4rem",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          fontFamily: "var(--lib-font-mono)",
-          fontSize: "0.72rem",
-          color: "var(--color-kaki-400)",
-          marginBottom: "2rem",
-          padding: 0,
-        }}
-      >
-        ← Componentes
-      </button>
+      <div style={{ marginBottom: "2rem" }}>
+        <LibButton variant="ghost" size="sm" onClick={onBack}>
+          ← Componentes
+        </LibButton>
+      </div>
 
       {/* Header */}
       <header style={{ marginBottom: "2.5rem" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
-          <span
-            style={{
-              fontFamily: "var(--lib-font-mono)",
-              fontSize: "0.65rem",
-              letterSpacing: "0.08em",
-              color: statusColor[component.status] ?? statusColor.draft,
-            }}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
+          <LibBadge
+            variant={statusVariant[component.status] ?? "default"}
+            size="sm"
+            pill
           >
             {component.status.toUpperCase()}
-          </span>
-          <span style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.65rem", color: "var(--color-kaki-500)" }}>
-            v{component.version}
-          </span>
+          </LibBadge>
+          <span style={metaStyle}>v{component.version}</span>
           {component.packageName && (
-            <span style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.65rem", color: "var(--color-kaki-500)" }}>
-              {component.packageName}
-            </span>
+            <span style={metaStyle}>{component.packageName}</span>
           )}
         </div>
 
@@ -91,12 +57,7 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
           {component.name}
         </h1>
 
-        <p style={{
-          fontFamily: "var(--lib-font-mono)",
-          fontSize: "0.85rem",
-          color: "var(--color-kaki-400)",
-          marginBottom: "1rem",
-        }}>
+        <p style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.85rem", color: "var(--color-kaki-400)", marginBottom: "1rem" }}>
           {"<"}{component.tagName}{">"}
         </p>
 
@@ -109,18 +70,24 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
       {component.tags.length > 0 && (
         <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", marginBottom: "3rem" }}>
           {component.tags.map((tag) => (
-            <span key={tag} style={tagStyle}>{tag}</span>
+            <LibChip key={tag} kind="static" size="xs" color="default">
+              {tag}
+            </LibChip>
           ))}
         </div>
       )}
 
       {/* Examples */}
       <section>
-        <h2 style={sectionHeadingStyle}>Ejemplos</h2>
+        <h2 style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--color-kaki-400)", marginBottom: "0.75rem" }}>
+          Ejemplos
+        </h2>
+        <LibDivider style={{ marginBottom: "1.25rem" }} />
+
         {isLoadingExamples ? (
-          <p style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.8rem", color: "var(--color-kaki-400)" }}>
-            Cargando ejemplos…
-          </p>
+          <div style={{ display: "flex", justifyContent: "center", padding: "2rem 0" }}>
+            <LibSpinner size="md" />
+          </div>
         ) : (
           <ComponentDetailExamples examples={examples} />
         )}

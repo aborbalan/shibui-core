@@ -58,8 +58,21 @@ async function bootstrap() {
   );
 
   // ── CORS ──────────────────────────────────────────────────────────────────
+  // localhost siempre permitido (cualquier puerto) para desarrollo local.
+  // En producción se añaden los orígenes de CORS_ORIGINS (CSV).
+  const productionOrigins = process.env.CORS_ORIGINS?.split(',').map((o) => o.trim()).filter(Boolean) ?? [];
+
   app.enableCors({
-    origin: process.env.CORS_ORIGINS?.split(',') ?? ['http://localhost:5173'],
+    origin: (origin, callback) => {
+      // Peticiones sin origin (curl, server-to-server) → permitir
+      if (!origin) return callback(null, true);
+
+      const isLocalhost = /^https?:\/\/localhost(:\d+)?$/.test(origin);
+      if (isLocalhost || productionOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error(`Origin ${origin} not allowed by CORS`));
+    },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
