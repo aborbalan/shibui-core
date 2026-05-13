@@ -1,5 +1,5 @@
 import React from 'react';
-import { LibBackground, LibDivider } from '@shibui-ui/ui/react';
+import { LibDivider } from '@shibui-ui/ui/react';
 
 import ProfileHero from './templates/ProfileHero';
 import ExperienceSection from './templates/ExperienceSection';
@@ -166,15 +166,14 @@ const LANGUAGES: LanguageDto[] = [
 
 export const AboutPage: React.FC = () => {
     return (
-        <LibBackground variant="ash-grid">
-            <div
-                style={{
-                    maxWidth: '900px',
-                    margin: '0 auto',
-                    padding: 'clamp(1.5rem, 5vw, 5rem)',
-                    paddingTop: 'calc(80px + clamp(1.5rem, 3vw, 3rem))', // compensa el header fijo
-                }}
-            >
+        <div
+            style={{
+                maxWidth: '900px',
+                margin: '0 auto',
+                padding: 'clamp(1.5rem, 5vw, 5rem)',
+                paddingTop: 'calc(80px + clamp(1.5rem, 3vw, 3rem))', // compensa el header fijo
+            }}
+        >
                 {/* 1 · Perfil */}
                 <ProfileHero profile={PROFILE} openToWork />
 
@@ -192,8 +191,7 @@ export const AboutPage: React.FC = () => {
 
                 {/* 4 · Educación + Idiomas */}
                 <EducationSection education={EDUCATION} languages={LANGUAGES} />
-            </div>
-        </LibBackground>
+        </div>
     );
 };
 

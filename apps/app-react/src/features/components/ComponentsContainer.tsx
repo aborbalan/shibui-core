@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { LibBackground, LibDisplayHeading, LibInput } from "@shibui-ui/ui/react";
+import { LibDisplayHeading, LibInput } from "@shibui-ui/ui/react";
 import { useCategoriesWithComponents } from "../../data/api/domain/components/hooks/useComponents";
 import { ComponentsGrid } from "./components/ComponentsGrid";
 import type { CategoryWithComponentsDto } from "../../data/api/domain/components/api/components.api";
@@ -40,20 +40,19 @@ export const ComponentsContainer: React.FC = () => {
   const handleSelect = (slug: string) => navigate(`/componentes/${slug}`);
 
   return (
-    <LibBackground variant="midnight">
-      <div
-        style={{
-          maxWidth: "1080px",
-          margin: "0 auto",
-          padding: "calc(56px + 3rem) clamp(1.5rem, 4vw, 3.5rem) 6rem",
-        }}
-      >
+    <div
+      style={{
+        maxWidth: "1080px",
+        margin: "0 auto",
+        padding: "calc(56px + 3rem) clamp(1.5rem, 4vw, 3.5rem) 6rem",
+      }}
+    >
         {/* Título */}
         <div style={{ marginBottom: "2.5rem" }}>
           <LibDisplayHeading
             tag="h1"
             size="md"
-            surface="dark"
+            surface="light"
             line1="Librería de"
             accent="componentes"
             description={
@@ -85,7 +84,6 @@ export const ComponentsContainer: React.FC = () => {
           error={error}
           emptySearch={query.trim().length > 0 && filtered.length === 0}
         />
-      </div>
-    </LibBackground>
+    </div>
   );
 };
