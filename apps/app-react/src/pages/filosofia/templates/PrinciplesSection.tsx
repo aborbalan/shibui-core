@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface Principle {
   num: string;
   title: string;
@@ -38,23 +36,17 @@ export const PrinciplesSection: React.FC = () => {
     <section style={{ padding: 'clamp(3rem, 6vh, 5rem) 0' }}>
 
       <div style={{ marginBottom: 'clamp(2.5rem, 5vh, 4rem)' }}>
-        <lib-eyebrow
-          color="dark"
-          size="sm"
-          style={{ marginBottom: '1rem', display: 'inline-flex' } as React.CSSProperties}
+        <lib-display-heading
+          line1="De la filosofía"
+          accent="a la práctica."
+          surface="dark"
+          size="md"
+          tag="h2"
         >
-          Principios de diseño
-        </lib-eyebrow>
-        <h2 style={{
-          fontFamily: 'var(--lib-font-display, "Cormorant Garamond", serif)',
-          fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
-          fontWeight: 300,
-          letterSpacing: '-0.02em',
-          color: 'rgba(250, 247, 244, 0.55)',
-          margin: 0,
-        }}>
-          De la filosofía<em style={{ fontStyle: 'italic', color: 'var(--color-kaki-400, #D97234)' }}> a la práctica.</em>
-        </h2>
+          <lib-eyebrow slot="eyebrow" color="dark" size="sm">
+            Principios de diseño
+          </lib-eyebrow>
+        </lib-display-heading>
       </div>
 
       <div style={{

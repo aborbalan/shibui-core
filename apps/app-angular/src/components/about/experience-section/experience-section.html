@@ -1,0 +1,42 @@
+<section class="experience-section">
+  <div class="section-header">
+    <lib-eyebrow color="dark" size="sm" class="eyebrow">Experiencia · Work History</lib-eyebrow>
+    <h2 class="section-title">
+      Trayectoria <em>profesional</em>
+    </h2>
+  </div>
+
+  <lib-timeline>
+    @for (item of sorted(); track item.id) {
+      <lib-timeline-item [status]="item.endDate === null ? 'current' : 'done'">
+        <div class="timeline-content">
+          <div class="meta-row">
+            <div class="company-block">
+              <p class="company-name">{{ item.company }}</p>
+              <h3 class="role">{{ item.role }}</h3>
+              <p class="location">⌖ {{ item.location }}</p>
+            </div>
+            <div class="dates-block">
+              <p class="date-range">
+                {{ formatDate(item.startDate) }} — {{ item.endDate ? formatDate(item.endDate) : 'Actualidad' }}
+              </p>
+              <p class="duration">{{ formatDuration(item.startDate, item.endDate) }}</p>
+            </div>
+          </div>
+
+          @if (item.description) {
+            <p class="description">{{ item.description }}</p>
+          }
+
+          @if (item.tags.length > 0) {
+            <div class="tags">
+              @for (tag of item.tags; track tag) {
+                <lib-badge variant="dark">{{ tag }}</lib-badge>
+              }
+            </div>
+          }
+        </div>
+      </lib-timeline-item>
+    }
+  </lib-timeline>
+</section>

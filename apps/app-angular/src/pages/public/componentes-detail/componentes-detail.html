@@ -1,0 +1,12 @@
+<div class="detail-page-wrapper">
+  @if (component()) {
+    <app-component-detail-view
+      [component]="component()!"
+      (back)="goBack()"
+    />
+  } @else {
+    <div class="loading">
+      <p>Cargando…</p>
+    </div>
+  }
+</div>

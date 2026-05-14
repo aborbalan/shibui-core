@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import dts from 'vite-plugin-dts';
 /**
  * Vite configuration for UI library
- * 
+ *
  * Goals:
  * - Real tree-shaking (Zero-Bloat)
  * - Optimized build for distribution
@@ -32,7 +32,7 @@ const config: UserConfig & { test?: InlineConfig } = {
   // Reduce console output
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(dirname, '../src/index.ts'),
 
       name: 'ShibuiUI',
       fileName: 'index',
@@ -50,7 +50,7 @@ const config: UserConfig & { test?: InlineConfig } = {
         {
           name: 'emit-tokens-css',
           generateBundle(): void {
-            const tokensDir = resolve(dirname, 'src/styles/shared/tokens');
+            const tokensDir = resolve(dirname, '../src/styles/shared/tokens');
             const partials = [
               '_palette.css', '_typography.css', '_spacing.css',
               '_motion.css', '_state.css', '_semantic.css', '_effects.css',
@@ -84,11 +84,11 @@ const config: UserConfig & { test?: InlineConfig } = {
     projects: [{
       extends: true,
       plugins: [
-        
+
       // The plugin will run tests for the stories defined in your Storybook config
       // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
       storybookTest({
-        configDir: path.join(dirname, '.storybook')
+        configDir: path.join(dirname, '../.storybook')
       }),
     ],
       test: {
@@ -100,7 +100,7 @@ const config: UserConfig & { test?: InlineConfig } = {
             browser: 'chromium'
           }]
         },
-        setupFiles: ['.storybook/vitest.setup.ts']
+        setupFiles: ['../.storybook/vitest.setup.ts']
       }
     }]
   }

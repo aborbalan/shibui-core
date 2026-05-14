@@ -1,0 +1,11 @@
+.tokens-layout {
+  display: flex;
+  min-height: calc(100vh - 56px);
+  padding-top: 56px;
+
+  .tokens-main {
+    flex: 1;
+    padding: 3rem clamp(1.5rem, 4vw, 3.5rem) 6rem;
+    max-width: 1080px;
+  }
+}
