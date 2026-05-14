@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from '@env/environment';
 import { ApiEnvelope } from '@data/models/api.models';
 import { CategoryWithComponentsDto, ComponentDto } from '@data/models/components.models';
@@ -13,12 +13,12 @@ export class ComponentsService {
   getCategoriesWithComponents(): Observable<CategoryWithComponentsDto[]> {
     return this.http
       .get<ApiEnvelope<CategoryWithComponentsDto[]>>(`${this.base}/api/v1/categories/with-components`)
-      .pipe(map((r) => r.data));
+      .pipe(map((r) => r.data), catchError(() => of([])));
   }
 
-  getBySlug(slug: string): Observable<ComponentDto> {
+  getBySlug(slug: string): Observable<ComponentDto | null> {
     return this.http
       .get<ApiEnvelope<ComponentDto>>(`${this.base}/api/v1/components/slug/${slug}`)
-      .pipe(map((r) => r.data));
+      .pipe(map((r) => r.data), catchError(() => of(null)));
   }
 }
