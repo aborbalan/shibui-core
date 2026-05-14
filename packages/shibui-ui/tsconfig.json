@@ -47,10 +47,9 @@
   "include": [
     "src/**/*",
     "vite-env.d.ts",
-    "commitlint.config.cjs",
-    "vitest.unit.config.ts",
-    ".husky/**/*",
-    "vite.config.ts",
+    ".config/commitlint.config.cjs",
+    ".config/vitest.unit.config.ts",
+    ".config/vite.config.ts",
     "src/**/*.test.ts", 
     "tests/**/*.ts",
     "**/*.test.ts",

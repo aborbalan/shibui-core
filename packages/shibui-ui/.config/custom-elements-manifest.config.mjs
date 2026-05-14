@@ -7,7 +7,7 @@ export default {
     /** Plugins específicos para Lit */
     litelement: true,
     /** Evitar que intente generar readmes si no los necesitas ahora */
-    plugins: [], 
+    plugins: [],
     /** Exclusiones */
     exclude: ['dist', 'node_modules', 'scripts'],
     /** No fallar si no hay JSDoc en todo */

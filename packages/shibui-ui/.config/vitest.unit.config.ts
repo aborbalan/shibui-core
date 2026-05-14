@@ -19,16 +19,16 @@ export default defineConfig({
     environment: 'node',
 
     // Incluye solo los tests de scripts/
-    include: ['scripts/**/*.test.ts'],
+    include: ['../scripts/**/*.test.ts'],
 
     // Excluye los tests de Storybook que van en src/
-    exclude: ['src/**/*.stories.ts', 'node_modules', 'dist'],
+    exclude: ['../src/**/*.stories.ts', 'node_modules', 'dist'],
 
     // Cobertura opcional: actívala con --coverage
     coverage: {
       provider: 'v8',
-      include: ['scripts/**/*.ts'],
-      exclude: ['scripts/**/*.test.ts'],
+      include: ['../scripts/**/*.ts'],
+      exclude: ['../scripts/**/*.test.ts'],
       reporter: ['text', 'lcov'],
       thresholds: {
         lines:      80,
