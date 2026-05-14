@@ -40,10 +40,10 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --config .config/vite.config.ts",
     "clean": "rimraf dist node_modules/.cache",
     "pack:local": "pnpm run build && npm pack",
-    "preview": "vite preview",
+    "preview": "vite preview --config .config/vite.config.ts",
     "prebuild": "pnpm run clean",
     "postbuild": "pnpm run type-check",
     "type-check": "tsc --noEmit",
@@ -57,12 +57,12 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lighthouse": "lhci autorun --config=./.config/lighthouserc.cjs",
-    "analyze": "cem analyze --litelement --exclude dist",
+    "analyze": "cem analyze --litelement --exclude dist --config .config/custom-elements-manifest.config.mjs",
     "generate:wrappers": "tsx scripts/generate-wrappers.ts",
-    "build": "pnpm run clean && vite build && tsc && pnpm run analyze && pnpm run generate:wrappers",
+    "build": "pnpm run clean && vite build --config .config/vite.config.ts && tsc && pnpm run analyze && pnpm run generate:wrappers",
     "deploy": "firebase deploy --only hosting:storybook --project lib-ui-b67c5",
-    "test:unit": "vitest run --config vitest.unit.config.ts",
-    "test:unit:watch": "vitest --config vitest.unit.config.ts",
+    "test:unit": "vitest run --config .config/vitest.unit.config.ts",
+    "test:unit:watch": "vitest --config .config/vitest.unit.config.ts",
     "validate:wrappers": "tsx scripts/validate-react-wrappers.ts"
   },
   "keywords": [
