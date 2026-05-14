@@ -22,7 +22,7 @@
     },
     {
       "target": "angular",
-      "public": "apps/app-angular/dist",
+      "public": "apps/app-angular/dist/app-angular/browser",
       "ignore": ["**/node_modules/**"],
       "rewrites": [
         {
