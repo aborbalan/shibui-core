@@ -354,3 +354,76 @@ export const Kintsugi: Story = {
   `,
   parameters: { backgrounds: { default: 'dark' }, layout: 'fullscreen' },
 };
+
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Contextos estéticos
+   ═══════════════════════════════════════════════════════════════ */
+
+const katachiList = [
+  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び',     desc: 'austero, dark + glass' },
+  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ', desc: 'dorado, reparado' },
+  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び',     desc: 'envejecido, papel' },
+  { id: 'terminal', kanji: '>_', label: 'terminal',         desc: 'CRT, digital duro' },
+  { id: 'shizen',   kanji: '自', label: 'shizen · 自然',    desc: 'natural, sin adorno' },
+  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁',   desc: 'jade, frío' },
+] as const;
+
+export const KatachiContexts: Story = {
+  name: 'Katachi · 6 contexts',
+  render: (): TemplateResult => html`
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--lib-space-xl);padding:var(--lib-space-xl);background:var(--color-washi-100);">
+      ${katachiList.map(k => html`
+        <section data-katachi="${k.id}" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
+          <header style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
+            <strong style="font-family:'Shippori Mincho',serif;font-size:1.5rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>
+            &nbsp;data-katachi="${k.id}"
+          </header>
+          <lib-card kanji="${k.kanji}">
+            <span slot="tag">${k.label}</span>
+            <h2 slot="title">Katachi card</h2>
+            <p>${k.desc}. La kanji watermark y el body text adaptan al contexto vía <code>--katachi-accent-muted</code> y <code>--katachi-fg-muted</code>.</p>
+            <div slot="footer">
+              <span>Default variant</span>
+              <lib-button variant="ghost" size="sm">Detail</lib-button>
+            </div>
+          </lib-card>
+        </section>
+      `)}
+    </div>
+  `,
+  parameters: { layout: 'fullscreen' },
+};
+
+export const KatachiExplicitOverride: Story = {
+  name: 'Katachi · explicit variant wins',
+  render: (): TemplateResult => html`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--lib-space-xl);padding:var(--lib-space-xl);background:var(--color-washi-100);">
+      <section data-katachi="kintsugi" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
+        <header style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
+          <strong style="font-family:'Shippori Mincho',serif;font-size:1.5rem;color:var(--katachi-accent);">金</strong>
+          &nbsp;data-katachi="kintsugi" + default variant
+        </header>
+        <lib-card kanji="金">
+          <span slot="tag">Ambient katachi</span>
+          <h2 slot="title">Hereda kintsugi</h2>
+          <p>Sin variant explícito — la card adopta la paleta del katachi activo.</p>
+          <div slot="footer"><span>variant="default"</span></div>
+        </lib-card>
+      </section>
+
+      <section data-katachi="kintsugi" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
+        <header style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
+          <strong style="font-family:'Shippori Mincho',serif;font-size:1.5rem;color:var(--katachi-accent);">金</strong>
+          &nbsp;data-katachi="kintsugi" + variant="washi"
+        </header>
+        <lib-card variant="washi" kanji="和">
+          <span slot="tag">Explicit override</span>
+          <h2 slot="title">Washi gana</h2>
+          <p>El <code>variant="washi"</code> explícito tiene mayor especificidad que el contexto ambient.</p>
+          <div slot="footer"><span>variant="washi"</span></div>
+        </lib-card>
+      </section>
+    </div>
+  `,
+  parameters: { layout: 'fullscreen' },
+};

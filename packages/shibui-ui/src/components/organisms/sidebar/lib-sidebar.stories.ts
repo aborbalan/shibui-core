@@ -313,3 +313,47 @@ export const Collapsible: Story = {
     </div>
   `,
 };
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Contextos estéticos
+   ─────────────────────────────────────────────────────────────
+   lib-sidebar's "dark" default is intentionally fixed.
+   Use variant="light" explicitly inside light katachi contexts.
+   ═══════════════════════════════════════════════════════════════ */
+
+const katachiList = [
+  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び',     sidebarVariant: 'dark' as const },
+  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ', sidebarVariant: 'kintsugi' as const },
+  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び',     sidebarVariant: 'light' as const },
+  { id: 'shizen',   kanji: '自', label: 'shizen · 自然',    sidebarVariant: 'light' as const },
+] as const;
+
+const SAMPLE_SIDEBAR_LINKS: SidebarLink[] = [
+  { id: 'dashboard', label: 'Dashboard', icon: '▣' },
+  { id: 'projects',  label: 'Projects',  icon: '◯' },
+  { id: 'settings',  label: 'Settings',  icon: '⚙' },
+];
+
+export const KatachiContexts: Story = {
+  name: 'Katachi · adaptive via variant choice',
+  render: (): TemplateResult => html`
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--lib-space-xl);padding:var(--lib-space-xl);background:var(--color-washi-100);min-height:560px;">
+      ${katachiList.map(k => html`
+        <section data-katachi="${k.id}" style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+          <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
+            <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label} · variant="${k.sidebarVariant}"
+          </header>
+          <div style="display:flex;height:360px;background:var(--bg-base);">
+            <lib-sidebar
+              variant="${k.sidebarVariant}"
+              brandName="Shibui"
+              .links="${SAMPLE_SIDEBAR_LINKS}"
+              style="--lib-sidebar-width:200px;"
+            ></lib-sidebar>
+            <div style="flex:1;padding:var(--lib-space-lg);color:var(--text-secondary);font-family:var(--lib-font-mono);font-size:11px;">Content area<br/>(inherits the katachi context)</div>
+          </div>
+        </section>
+      `)}
+    </div>
+  `,
+  parameters: { layout: 'fullscreen' },
+};
