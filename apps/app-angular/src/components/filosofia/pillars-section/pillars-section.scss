@@ -3,25 +3,6 @@
 
   .section-header {
     margin-bottom: clamp(2.5rem, 5vh, 4rem);
-
-    .eyebrow {
-      margin-bottom: 1rem;
-      display: inline-flex;
-    }
-
-    .section-title {
-      font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 300;
-      letter-spacing: -0.02em;
-      color: rgba(250, 247, 244, 0.55);
-      margin: 0;
-
-      em {
-        font-style: italic;
-        color: var(--color-kaki-400, #d97234);
-      }
-    }
   }
 
   .pillars-grid {
