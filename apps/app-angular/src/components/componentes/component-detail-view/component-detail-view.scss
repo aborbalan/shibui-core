@@ -1,0 +1,88 @@
+.detail-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+
+  .back-btn {
+    align-self: flex-start;
+    font-family: var(--lib-font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(184, 90, 30, 0.6);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+
+    &:hover {
+      color: rgba(184, 90, 30, 0.9);
+    }
+  }
+
+  .detail-header {
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+
+      .tag-name {
+        font-family: var(--lib-font-mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.14em;
+        color: rgba(184, 90, 30, 0.55);
+      }
+
+      .version {
+        font-family: var(--lib-font-mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        color: rgba(250, 247, 244, 0.2);
+      }
+    }
+
+    .component-name {
+      font-family: var(--lib-font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      color: rgba(250, 247, 244, 0.8);
+      margin: 0 0 1rem 0;
+    }
+
+    .component-description {
+      font-family: var(--lib-font-body);
+      font-size: 1rem;
+      color: rgba(250, 247, 244, 0.4);
+      line-height: 1.8;
+      max-width: 640px;
+      margin: 0;
+    }
+  }
+
+  .tags-section,
+  .preview-section {
+    .eyebrow {
+      display: inline-flex;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .preview-area {
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,39 @@
+<div class="detail-wrapper">
+  <button class="back-btn" (click)="back.emit()">← Volver</button>
+
+  <div class="detail-header">
+    <div class="meta-row">
+      <span class="tag-name">{{ component().tagName }}</span>
+      <lib-badge [variant]="component().status === 'stable' ? 'celadon' : component().status === 'deprecated' ? 'warning' : 'dark'">
+        {{ component().status }}
+      </lib-badge>
+      @if (component().version) {
+        <span class="version">v{{ component().version }}</span>
+      }
+    </div>
+
+    <h1 class="component-name">{{ component().name }}</h1>
+
+    @if (component().description) {
+      <p class="component-description">{{ component().description }}</p>
+    }
+  </div>
+
+  @if (component().tags.length > 0) {
+    <div class="tags-section">
+      <lib-eyebrow color="dark" size="sm" class="eyebrow">Tags</lib-eyebrow>
+      <div class="tags">
+        @for (tag of component().tags; track tag) {
+          <lib-badge variant="dark">{{ tag }}</lib-badge>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="preview-section">
+    <lib-eyebrow color="dark" size="sm" class="eyebrow">Preview</lib-eyebrow>
+    <div class="preview-area">
+      <div [innerHTML]="'<' + component().tagName + '>' + component().name + '</' + component().tagName + '>'"></div>
+    </div>
+  </div>
+</div>

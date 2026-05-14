@@ -1,0 +1,9 @@
+<nav class="tokens-sidebar">
+  <ul class="sidebar-list">
+    @for (link of links; track link.anchor) {
+      <li>
+        <a [href]="'#' + link.anchor" class="sidebar-link">{{ link.label }}</a>
+      </li>
+    }
+  </ul>
+</nav>

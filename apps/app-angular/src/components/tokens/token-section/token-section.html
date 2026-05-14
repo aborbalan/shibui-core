@@ -1,0 +1,19 @@
+<section class="token-section" [id]="anchor()">
+  <div class="section-header">
+    <lib-eyebrow color="dark" size="sm" class="eyebrow">{{ anchor() }}</lib-eyebrow>
+    <h2 class="section-title">{{ title() }}</h2>
+    @if (description()) {
+      <p class="section-description">{{ description() }}</p>
+    }
+  </div>
+
+  @if (tokens().length === 0) {
+    <p class="empty-text">Sin tokens en esta categoría.</p>
+  } @else {
+    <div class="token-list">
+      @for (token of tokens(); track token.id) {
+        <app-token-row [token]="token" />
+      }
+    </div>
+  }
+</section>

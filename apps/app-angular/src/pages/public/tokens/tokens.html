@@ -1,0 +1,68 @@
+<div class="tokens-layout">
+  <app-tokens-sidebar />
+
+  <main class="tokens-main">
+    <app-token-section
+      [tokens]="colorTokens()"
+      title="Colores"
+      anchor="colors"
+      description="Paleta de colores primitivos y semánticos del sistema."
+    />
+
+    <app-token-section
+      [tokens]="typographyTokens()"
+      title="Tipografía"
+      anchor="typography"
+      description="Escala tipográfica: familias, tamaños y pesos."
+    />
+
+    <app-token-section
+      [tokens]="spacingTokens()"
+      title="Espaciado"
+      anchor="spacing"
+      description="Tokens de espaciado y tamaño para layout y componentes."
+    />
+
+    <app-token-section
+      [tokens]="radiusTokens()"
+      title="Radio"
+      anchor="radius"
+      description="Escala de border-radius del sistema."
+    />
+
+    <app-token-section
+      [tokens]="shadowTokens()"
+      title="Sombras"
+      anchor="shadows"
+      description="Elevación y capas de sombra."
+    />
+
+    <app-token-section
+      [tokens]="animationTokens()"
+      title="Animación"
+      anchor="animation"
+      description="Duraciones y curvas de transición."
+    />
+
+    <app-token-section
+      [tokens]="zIndexTokens()"
+      title="Z-Index"
+      anchor="z-index"
+      description="Escala de capas de apilamiento."
+    />
+
+    <app-token-section
+      [tokens]="glassTokens()"
+      title="Glass"
+      anchor="glass"
+      description="Tokens para efectos glass y backdrop-filter."
+    />
+
+    <app-token-section
+      [tokens]="spotlightTokens()"
+      title="Spotlight"
+      anchor="spotlight"
+      description="Efectos especiales de spotlight y luz focal."
+    />
+  </main>
+</div>

@@ -1,0 +1,22 @@
+<div class="component-card" (click)="onSelect()" (keydown.enter)="onSelect()" tabindex="0" role="button">
+  <div class="card-header">
+    <span class="tag-name">{{ component().tagName }}</span>
+    <lib-badge [variant]="component().status === 'stable' ? 'celadon' : component().status === 'deprecated' ? 'warning' : 'dark'">
+      {{ component().status }}
+    </lib-badge>
+  </div>
+
+  <h3 class="card-name">{{ component().name }}</h3>
+
+  @if (component().description) {
+    <p class="card-description">{{ component().description }}</p>
+  }
+
+  @if (component().tags.length > 0) {
+    <div class="card-tags">
+      @for (tag of component().tags.slice(0, 3); track tag) {
+        <lib-badge variant="dark">{{ tag }}</lib-badge>
+      }
+    </div>
+  }
+</div>

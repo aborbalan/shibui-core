@@ -1,0 +1,33 @@
+.state-wrapper {
+  padding: 4rem 0;
+  text-align: center;
+
+  .state-text {
+    font-family: var(--lib-font-mono, 'DM Mono', monospace);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: rgba(250, 247, 244, 0.2);
+  }
+}
+
+.category-group {
+  margin-bottom: 3rem;
+
+  .category-header {
+    margin-bottom: 1.25rem;
+
+    .category-description {
+      font-family: var(--lib-font-body);
+      font-size: 0.82rem;
+      color: rgba(250, 247, 244, 0.3);
+      margin: 0.5rem 0 0 0;
+    }
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
