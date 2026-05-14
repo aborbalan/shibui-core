@@ -1465,6 +1465,35 @@
     :host([variant="shrink"][shrunk]) .hdr {
         height: 44px;
     }
+
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       Cuando variant="classic" (default reflejado por Lit), el
+       header hereda paleta semántica del katachi/tema activo.
+
+       El surface (.hdr) ya consume --bg-elevated y --border-subtle
+       (líneas 56-62) — adapta solo. Aquí se sobreescriben los textos
+       hardcoded (brand-name + link) para que también respeten la
+       jerarquía semántica.
+
+       Cambios:
+         --color-washi-900 → --text-primary   (brand-name)
+         --color-washi-600 → --text-secondary (link)
+       Valores idénticos en light mode default; bajo katachi/dark
+       el texto adapta automáticamente.
+
+       Variants explícitos (dark, transparent, kintsugi, glitch,
+       centered, mega, minimal, shrink) intactos.
+       ─────────────────────────────────────────────────────────── */
+
+    :host([variant="classic"]) .hdr-brand-name {
+        color: var(--text-primary);
+    }
+
+    :host([variant="classic"]) .hdr-link {
+        color: var(--text-secondary);
+    }
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
 }
 
 /* ── Reducir motion ── */
