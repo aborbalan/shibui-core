@@ -1,4 +1,5 @@
 import React from 'react';
+import { LibColorScale } from '@shibui-ui/ui/react';
 import { TokenSection } from './_TokenSection';
 import { TokenRow, SubHeader, LoadingText, ErrorText } from './_TokenRow';
 import { useTokensByCategory } from '../../../data/api/domain/tokens/hooks/useTokens';
@@ -47,28 +48,6 @@ function groupSemantic(tokens: DesignTokenDto[]) {
   return groups;
 }
 
-const PaletteSwatch: React.FC<{ token: DesignTokenDto; isInk?: boolean }> = ({ token, isInk }) => (
-  <div style={{ flex: '1 0 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem' }}>
-    <div
-      style={{
-        width: '100%',
-        height: '44px',
-        borderRadius: '2px',
-        border: '1px solid color-mix(in oklch, var(--color-washi-700) 25%, transparent)',
-        position: 'relative',
-        overflow: 'hidden',
-        background: isInk ? 'white' : `var(${token.cssVar})`,
-      }}
-    >
-      {isInk && (
-        <div style={{ position: 'absolute', inset: 0, background: `var(${token.cssVar})` }} />
-      )}
-    </div>
-    <span style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.55rem', color: 'var(--text-muted)', textAlign: 'center' }}>
-      {token.name.split('-').pop()}
-    </span>
-  </div>
-);
 
 const ColorsSection: React.FC = () => {
   const primitives = useTokensByCategory('color-primitive');
@@ -89,21 +68,14 @@ const ColorsSection: React.FC = () => {
       {primitives.isError && <ErrorText error={primitives.error} />}
       {paletteGroups && PALETTES.map(palette => (
         <div key={palette} style={{ marginBottom: '1.5rem' }}>
-          <div style={{
-            fontFamily: 'var(--lib-font-mono)',
-            fontSize: '0.6rem',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            color: 'var(--text-muted)',
-            marginBottom: '0.5rem',
-          }}>
-            {palette}
-          </div>
-          <div style={{ display: 'flex', gap: '0.375rem' }}>
-            {paletteGroups[palette].map(t => (
-              <PaletteSwatch key={t.id} token={t} isInk={palette === 'ink'} />
-            ))}
-          </div>
+          <LibColorScale
+            name={palette}
+            steps={paletteGroups[palette].map(t => ({
+              step: parseInt(t.name.split('-').pop() ?? '0'),
+              hex: `var(${t.cssVar})`,
+              oklch: t.value,
+            }))}
+          />
         </div>
       ))}
 

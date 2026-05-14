@@ -1,6 +1,5 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { LibBackground } from "@shibui-ui/ui/react";
 import {
   useComponentBySlug,
   useComponentExamples,
@@ -33,31 +32,29 @@ export const ComponentDetailContainer: React.FC = () => {
   const handleBack = () => navigate("/componentes");
 
   return (
-    <LibBackground variant="midnight">
-      <div
-        style={{
-          maxWidth: "860px",
-          margin: "0 auto",
-          padding: "calc(56px + 3rem) clamp(1.5rem, 4vw, 3.5rem) 6rem",
-        }}
-      >
-        {isPending && <p style={loadingStyle}>Cargando componente…</p>}
+    <div
+      style={{
+        maxWidth: "860px",
+        margin: "0 auto",
+        padding: "calc(56px + 3rem) clamp(1.5rem, 4vw, 3.5rem) 6rem",
+      }}
+    >
+      {isPending && <p style={loadingStyle}>Cargando componente…</p>}
 
-        {error && (
-          <p style={errorStyle}>
-            Componente no encontrado: {error.message}
-          </p>
-        )}
+      {error && (
+        <p style={errorStyle}>
+          Componente no encontrado: {error.message}
+        </p>
+      )}
 
-        {component && (
-          <ComponentDetailView
-            component={component}
-            examples={examples}
-            isLoadingExamples={isLoadingExamples}
-            onBack={handleBack}
-          />
-        )}
-      </div>
-    </LibBackground>
+      {component && (
+        <ComponentDetailView
+          component={component}
+          examples={examples}
+          isLoadingExamples={isLoadingExamples}
+          onBack={handleBack}
+        />
+      )}
+    </div>
   );
 };

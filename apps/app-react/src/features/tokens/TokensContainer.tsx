@@ -1,6 +1,4 @@
 import React from 'react';
-import { LibBackground } from '@shibui-ui/ui/react';
-
 import TokensSidebar from './components/TokensSidebar';
 import ColorsSection from './components/ColorsSection';
 import TypographySection from './components/TypographySection';
@@ -14,14 +12,13 @@ import SpotlightSection from './components/SpotlightSection';
 
 export const TokensContainer: React.FC = () => {
   return (
-    <LibBackground variant="midnight">
-      <div
-        style={{
-          display: 'flex',
-          minHeight: 'calc(100vh - 56px)',
-          paddingTop: '56px',
-        }}
-      >
+    <div
+      style={{
+        display: 'flex',
+        minHeight: 'calc(100vh - 56px)',
+        paddingTop: '56px',
+      }}
+    >
         <TokensSidebar />
 
         <main
@@ -41,8 +38,7 @@ export const TokensContainer: React.FC = () => {
           <GlassSection />
           <SpotlightSection />
         </main>
-      </div>
-    </LibBackground>
+    </div>
   );
 };
 

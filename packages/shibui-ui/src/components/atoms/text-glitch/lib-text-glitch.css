@@ -426,4 +426,17 @@
     100% { clip-path: inset(22% 0 58% 0);
        transform: translate(-3px,  1px) skewX(-2deg); }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tg-inner::before,
+    .tg-inner::after {
+      animation: none !important;
+      opacity: 0 !important;
+    }
+
+    .char.is-scrambling {
+      animation: none !important;
+      color: inherit;
+    }
+  }
 }

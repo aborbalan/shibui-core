@@ -1,7 +1,7 @@
 // apps/app-react/src/pages/Home/index.tsx
 import React from 'react';
 import HeroIntro from '../../templates/HeroIntro';
-import { LibBackground, LibDivider } from '@shibui-ui/ui/react';
+import { LibDivider } from '@shibui-ui/ui/react';
 import HeroStats from './templates/HeroStats';
 import ContentSection from './templates/ContentSection';
 import CardsSection from './templates/CardsSection';
@@ -17,8 +17,7 @@ export const HomePage: React.FC = () => {
       minHeight: '100vh',
     }}>
 
-      <LibBackground variant="ash-grid">
-        <main style={{ flex: 1, padding: '90px 60px' }}>
+      <main style={{ flex: 1, padding: '90px 60px' }}>
           <div style={{ flex: 1, paddingBottom: '30px' }}>
             <HeroIntro
               onPrimary={() => document.querySelector('#componentes')?.scrollIntoView({ behavior: 'smooth' })}
@@ -72,8 +71,7 @@ export const HomePage: React.FC = () => {
           <div style={{ flex: 1, paddingBottom: '30px' }}>
           <TokensSection></TokensSection>
           </div>
-        </main>
-      </LibBackground>
+      </main>
 
 
     </div>

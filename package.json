@@ -16,6 +16,7 @@
     "start:svelte": "pnpm --filter app-svelte dev",
     "start:angular": "pnpm --filter app-angular start",
     "start:api": "pnpm --filter @shibui-ui/api start:dev",
+    "start:tauri": "pnpm --filter @shibui/app-tauri tauri dev",
     "dev:all": "concurrently -n \"REACT,SVELTE,ANGULAR\" -c \"cyan,magenta,blue\" \"pnpm start:react\" \"pnpm start:svelte\" \"pnpm start:angular\"",
     "build:shibui": "pnpm --filter @shibui-ui/ui build",
     "build:api": "pnpm --filter @shibui-ui/api build",
@@ -29,8 +30,8 @@
 "worker:cf:dev": "pnpm --filter @shibui-api/cf-cache-worker dev"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.4.1",
-    "@commitlint/config-conventional": "^20.4.1",
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
     "@types/node": "^25.3.5",
     "concurrently": "^9.2.1",
     "firebase-tools": "^15.14.0",
@@ -48,7 +49,9 @@
   },
   "pnpm": {
   "overrides": {
-    "@playwright/test": "1.49.1"
+    "@playwright/test": ">=1.55.1",
+    "jsonpath-plus": ">=10.2.0",
+    "fast-uri": ">=3.1.2"
   }
 }
 }
