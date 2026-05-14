@@ -1,0 +1,20 @@
+<section class="principles-section">
+  <div class="section-header">
+    <lib-eyebrow color="dark" size="sm" class="eyebrow">Principios de diseño</lib-eyebrow>
+    <h2 class="section-title">
+      De la filosofía<em> a la práctica.</em>
+    </h2>
+  </div>
+
+  <div class="principles-grid">
+    @for (principle of principles; track principle.num) {
+      <div class="principle-item">
+        <div class="principle-num">{{ principle.num }}</div>
+        <div class="principle-content">
+          <p class="principle-title">{{ principle.title }}</p>
+          <p class="principle-description">{{ principle.description }}</p>
+        </div>
+      </div>
+    }
+  </div>
+</section>

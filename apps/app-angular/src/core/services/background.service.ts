@@ -18,13 +18,21 @@ export class BackgroundLogicService {
 
     if (url.includes('/login')) {
       return 'pulse';
-    } 
-    
+    }
+
     if (url.includes('/dashboard')) {
       return 'mesh';
     }
 
-    return 'washi-grain'; // Valor por defecto
+    if (url.includes('/tokens')) {
+      return 'mesh';
+    }
+
+    if (url.includes('/componentes')) {
+      return 'washi-grain';
+    }
+
+    return 'washi-grain';
   });
 
   constructor() {

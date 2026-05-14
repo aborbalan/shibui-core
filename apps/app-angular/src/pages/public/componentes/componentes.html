@@ -1,0 +1,28 @@
+<div class="componentes-wrapper">
+  <div class="page-header">
+    <lib-display-heading
+      tag="h1"
+      size="md"
+      surface="light"
+      line1="Librería de"
+      accent="componentes"
+      [description]="categories().length > 0 ? totalComponents() + ' componentes · ' + categories().length + ' categorías' : undefined"
+    ></lib-display-heading>
+  </div>
+
+  <div class="search-wrapper">
+    <lib-input
+      placeholder="Buscar por nombre, tag o descripción…"
+      (uiLibInput)="onQueryChange($event)"
+    >
+      <lib-icon slot="prefix" name="magnifying-glass" size="sm"></lib-icon>
+    </lib-input>
+  </div>
+
+  <app-components-grid
+    [categories]="filtered()"
+    [loading]="loading()"
+    [emptySearch]="emptySearch()"
+    (componentSelect)="onComponentSelect($event)"
+  />
+</div>

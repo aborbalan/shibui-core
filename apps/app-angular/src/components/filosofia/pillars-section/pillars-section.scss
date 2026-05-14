@@ -1,0 +1,71 @@
+.pillars-section {
+  padding: clamp(3rem, 6vh, 5rem) 0;
+
+  .section-header {
+    margin-bottom: clamp(2.5rem, 5vh, 4rem);
+
+    .eyebrow {
+      margin-bottom: 1rem;
+      display: inline-flex;
+    }
+
+    .section-title {
+      font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      color: rgba(250, 247, 244, 0.55);
+      margin: 0;
+
+      em {
+        font-style: italic;
+        color: var(--color-kaki-400, #d97234);
+      }
+    }
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .pillar-card {
+    background: rgba(18, 14, 10, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(12px);
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pillar-kanji {
+    position: absolute;
+    top: -0.5rem;
+    right: 1rem;
+    font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
+    font-size: clamp(5rem, 10vw, 8rem);
+    font-weight: 300;
+    color: rgba(184, 90, 30, 0.08);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .pillar-label {
+    font-family: var(--lib-font-mono, 'DM Mono', monospace);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(184, 90, 30, 0.6);
+    margin: 0 0 1rem 0;
+  }
+
+  .pillar-description {
+    font-family: var(--lib-font-body, 'Shippori Mincho', serif);
+    font-size: clamp(0.82rem, 1.2vw, 0.92rem);
+    color: rgba(250, 247, 244, 0.3);
+    line-height: 1.9;
+    margin: 0;
+  }
+}

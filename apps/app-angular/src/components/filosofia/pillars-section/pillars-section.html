@@ -1,0 +1,18 @@
+<section class="pillars-section">
+  <div class="section-header">
+    <lib-eyebrow color="dark" size="sm" class="eyebrow">Los tres pilares</lib-eyebrow>
+    <h2 class="section-title">
+      Tres conceptos,<em> una intención.</em>
+    </h2>
+  </div>
+
+  <div class="pillars-grid">
+    @for (pillar of pillars; track pillar.kanji) {
+      <div class="pillar-card">
+        <div class="pillar-kanji">{{ pillar.kanji }}</div>
+        <p class="pillar-label">{{ pillar.label }}</p>
+        <p class="pillar-description">{{ pillar.description }}</p>
+      </div>
+    }
+  </div>
+</section>

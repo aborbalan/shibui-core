@@ -1,0 +1,44 @@
+.philosophy-hero {
+  padding: clamp(4rem, 10vh, 7rem) clamp(1.5rem, 5vw, 5rem);
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto;
+
+  .eyebrow {
+    margin-bottom: 2rem;
+    display: inline-flex;
+  }
+
+  .title-line1 {
+    font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: rgba(250, 247, 244, 0.55);
+    margin-bottom: 0.3rem;
+  }
+
+  .title-line2 {
+    font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: clamp(2rem, 4vh, 3.5rem);
+
+    em {
+      font-style: italic;
+      color: var(--color-kaki-400, #d97234);
+    }
+  }
+
+  .description {
+    font-family: var(--lib-font-body, 'Shippori Mincho', serif);
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    color: rgba(250, 247, 244, 0.35);
+    line-height: 1.9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}

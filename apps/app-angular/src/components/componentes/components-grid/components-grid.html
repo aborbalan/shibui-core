@@ -1,0 +1,28 @@
+@if (loading()) {
+  <div class="state-wrapper">
+    <p class="state-text">Cargando componentes…</p>
+  </div>
+} @else if (emptySearch()) {
+  <div class="state-wrapper">
+    <p class="state-text">Sin resultados para esa búsqueda.</p>
+  </div>
+} @else {
+  @for (category of categories(); track category.id) {
+    <div class="category-group">
+      <div class="category-header">
+        <lib-eyebrow color="dark" size="sm">{{ category.name }}</lib-eyebrow>
+        @if (category.description) {
+          <p class="category-description">{{ category.description }}</p>
+        }
+      </div>
+      <div class="cards-grid">
+        @for (component of category.components; track component.id) {
+          <app-component-card
+            [component]="component"
+            (select)="componentSelect.emit($event)"
+          />
+        }
+      </div>
+    </div>
+  }
+}

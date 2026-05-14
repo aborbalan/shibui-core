@@ -1,0 +1,15 @@
+<div class="token-row">
+  @if (isColor) {
+    <div class="color-swatch" [style.background]="token().value"></div>
+  }
+
+  <div class="token-info">
+    <span class="token-name">{{ token().name }}</span>
+    <code class="token-var">{{ token().cssVar }}</code>
+    @if (token().description) {
+      <span class="token-desc">{{ token().description }}</span>
+    }
+  </div>
+
+  <code class="token-value">{{ token().value }}</code>
+</div>
