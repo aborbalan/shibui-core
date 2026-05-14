@@ -28,7 +28,7 @@ import envelope from '@phosphor-icons/core/assets/regular/envelope.svg?raw';
 import paperPlaneRight from '@phosphor-icons/core/assets/regular/paper-plane-right.svg?raw';
 import phone from '@phosphor-icons/core/assets/regular/phone.svg?raw';
 import megaphone from '@phosphor-icons/core/assets/regular/megaphone.svg?raw';
-import rsa from '@phosphor-icons/core/assets/regular/rss.svg?raw';
+import rss from '@phosphor-icons/core/assets/regular/rss.svg?raw';
 import x from '@phosphor-icons/core/assets/regular/x.svg?raw';
 import xSquare from '@phosphor-icons/core/assets/regular/x-square.svg?raw';
 import xCircle from '@phosphor-icons/core/assets/regular/x-circle.svg?raw';
@@ -152,7 +152,7 @@ export const ICON_REGISTRY: Record<string, string> = {
 'send': paperPlaneRight,
 'phone': phone,
 'announcement': megaphone,
-'rss': rsa,
+'rss': rss,
 'camera': camera,
 'image': image,
 'play': play,
@@ -258,7 +258,7 @@ export {
   shareNetwork as share,
   link,
   dribbbleLogo as dribbbleLogo,
-  exportIcon as export,
+  exportIcon,
   file,
   folder,
   paperclip as attachment,
@@ -268,7 +268,7 @@ export {
   paperPlaneRight as send,
   phone,
   megaphone as announcement,
-  rsa as rss,
+  rss,
   camera,
   image,
   play,
@@ -324,7 +324,7 @@ export {
   book,
   bookOpen as read,
   graduationCap as education,
-  chalkboard as class,
+  chalkboard,
   student,
   certificate as verify,
   pen as write,
@@ -336,7 +336,7 @@ export {
   balloon as celebrate,
   umbrella as weatherSafe,
   lightbulb as idea,
-  trash as delete,
+  trash,
   basketball as sports,
   soccerBall as soccer,
   trophy as award,

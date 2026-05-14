@@ -49,7 +49,7 @@ jobs:
       - name: 🚀 Run Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm exec semantic-release
+        run: pnpm exec semantic-release --config .config/.releaserc.json
 
       - name: 🏗️ Build UI lib (versión bumpeada)
         run: pnpm --filter @shibui-ui/ui build
