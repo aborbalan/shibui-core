@@ -146,4 +146,23 @@
   .is-disabled .input-label {
     color: var(--text-muted);
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-input ya está completamente tokenizado a nivel semántico:
+     - .input-wrapper: --bg-elevated, --border-default
+     - input native:   --text-primary, --border-strong (placeholder)
+     - .input-label:   --border-default
+     - slots/toggle:   --text-muted / --text-primary
+     - estados error/disabled: --color-error / --text-muted
+
+     El componente no tiene atributo variant — los estados (error,
+     disabled, focus) se manejan vía clases internas y propiedades
+     reflejadas. Todos los tokens en uso adaptan al katachi/tema
+     activo automáticamente.
+
+     Sin overrides ambient necesarios. Bloque marcador para
+     discoverability en futuras auditorías.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
