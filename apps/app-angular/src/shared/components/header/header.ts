@@ -1,4 +1,5 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { HeaderAction, NavLink } from '@shibui-ui/ui/components/molecules/header/lib-header.types';
 
 @Component({
@@ -10,6 +11,7 @@ import { HeaderAction, NavLink } from '@shibui-ui/ui/components/molecules/header
   styleUrl: './header.scss',
 })
 export class HeaderComponent {
+  private router = inject(Router);
 
   DEFAULT_LINKS: NavLink[] = [
     { id: 'componentes', label: 'Componentes', href: '/componentes' },
@@ -17,10 +19,19 @@ export class HeaderComponent {
     { id: 'filosofia', label: 'Filosofía', href: '/filosofia' },
     { id: 'about', label: 'Sobre mí', href: '/about' },
   ];
-  
+
   DEFAULT_ACTIONS: HeaderAction[] = [
     { label: 'Empezar →', href: '#', variant: 'kintsugi' },
   ];
-  
 
+  onLinkClick(event: Event): void {
+    const id = (event as CustomEvent<{ id: string }>).detail.id;
+    const link = this.DEFAULT_LINKS.find(l => l.id === id);
+    if (link?.href) this.router.navigateByUrl(link.href);
+  }
+
+  onActionClick(event: Event): void {
+    const href = (event as CustomEvent<{ href: string }>).detail.href;
+    if (href && href !== '#') this.router.navigateByUrl(href);
+  }
 }
