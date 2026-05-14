@@ -556,4 +556,33 @@
       box-shadow: none;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     Cuando variant="default" (default reflejado por Lit), extiende
+     la sensibilidad a katachi a los elementos que NO consumen
+     tokens semánticos por sí solos.
+
+     Ya-adaptivos sin override aquí:
+     - .card (usa --bg-elevated, --border-subtle, --shadow-lg)
+     - .card-footer (usa --text-muted, --border-subtle)
+     - ::slotted([slot="tag"]) (usa --text-muted)
+     - ::slotted([slot="title"]) (usa --text-secondary)
+
+     Override solo donde había color hardcoded. Fallback a valor
+     actual para garantizar cero regresión sin [data-katachi] ancestor.
+
+     Selector :host([variant="default"]) es mutuamente excluyente
+     con :host([variant="kintsugi"]), etc. — los variants explícitos
+     no se ven afectados.
+     ─────────────────────────────────────────────────────────── */
+
+  :host([variant="default"]) .card-kanji {
+    color: var(--katachi-accent-muted, rgb(0, 0, 0, 0.04));
+  }
+
+  :host([variant="default"]) .card-body {
+    color: var(--katachi-fg-muted, var(--color-washi-500));
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
