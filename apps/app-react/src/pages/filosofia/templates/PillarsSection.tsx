@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface Pillar {
   kanji: string;
   label: string;
@@ -32,23 +30,17 @@ export const PillarsSection: React.FC = () => {
     <section style={{ padding: 'clamp(3rem, 6vh, 5rem) 0' }}>
 
       <div style={{ marginBottom: 'clamp(2.5rem, 5vh, 4rem)' }}>
-        <lib-eyebrow
-          color="dark"
-          size="sm"
-          style={{ marginBottom: '1rem', display: 'inline-flex' } as React.CSSProperties}
+        <lib-display-heading
+          line1="Tres conceptos,"
+          accent="una intención."
+          surface="dark"
+          size="md"
+          tag="h2"
         >
-          Los tres pilares
-        </lib-eyebrow>
-        <h2 style={{
-          fontFamily: 'var(--lib-font-display, "Cormorant Garamond", serif)',
-          fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
-          fontWeight: 300,
-          letterSpacing: '-0.02em',
-          color: 'rgba(250, 247, 244, 0.55)',
-          margin: 0,
-        }}>
-          Tres conceptos,<em style={{ fontStyle: 'italic', color: 'var(--color-kaki-400, #D97234)' }}> una intención.</em>
-        </h2>
+          <lib-eyebrow slot="eyebrow" color="dark" size="sm">
+            Los tres pilares
+          </lib-eyebrow>
+        </lib-display-heading>
       </div>
 
       <div style={{
