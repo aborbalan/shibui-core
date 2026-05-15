@@ -608,4 +608,27 @@
   :host([dark]) .sel-panel-footer-text {
     color: oklch(30% 0.02 50deg);
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-select base (variant="default") está completamente tokenizado:
+     - .sel-trigger: --bg-elevated, --border-default, --text-secondary
+     - hover/focus/open: --bg-surface, --border-strong, --color-washi-800
+     - chevron + placeholder: --text-muted
+
+     El único elemento con paleta hardcoded es el badge multi-count
+     (.sel-trigger-count) — se aplica override semántico:
+       --color-washi-900 → --bg-inverse  (badge background)
+       --color-washi-50  → --text-inverse (badge text)
+     Valores idénticos en light mode; bajo katachi/dark se invierte
+     automáticamente y mantiene contraste.
+
+     Variants explícitos (filled, ghost, dark) intactos.
+     ─────────────────────────────────────────────────────────── */
+
+  .sel-trigger-count {
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

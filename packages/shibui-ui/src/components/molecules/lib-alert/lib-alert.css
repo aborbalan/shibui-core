@@ -193,4 +193,21 @@
     position: relative;
     z-index: 1;
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-alert ya está completamente tokenizado:
+     - type="default": --bg-surface, --border-strong, --text-secondary
+     - Otros tipos (info, warning, error, success): paleta intencional
+     - glass: --lib-glass-* (adaptiva al katachi)
+
+     Default ya hereda contexto katachi automáticamente vía tokens
+     semánticos. Variants explícitos de estado mantienen su paleta
+     deliberada (colores de feedback semánticos: error rojo, warning
+     amarillo, etc.).
+
+     Sin overrides ambient necesarios. Bloque marcador para
+     discoverability en futuras auditorías.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
