@@ -621,4 +621,25 @@
       opacity: 0;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     variant="outline" es el default (LibSegmentedVariant = 'outline').
+     Cambios:
+       thumb bg:          --color-washi-900 → --bg-inverse
+       active option color: --color-washi-50 → --text-inverse
+     Valores idénticos en light mode; bajo katachi/dark el thumb
+     invierte y mantiene contraste con el track.
+
+     Variants explícitos underline/pill sin cambios.
+     ─────────────────────────────────────────────────────────── */
+
+  :host([variant="outline"]) .seg-thumb {
+    background: var(--bg-inverse);
+  }
+
+  :host([variant="outline"]) .seg-option.is-active {
+    color: var(--text-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
