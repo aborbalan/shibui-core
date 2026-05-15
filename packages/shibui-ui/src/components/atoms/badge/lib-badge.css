@@ -123,4 +123,24 @@
     color: var(--color-warning);
     border-color: oklch(87% 0.05 80deg);
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     Cuando variant="default" (default reflejado por Lit), el badge
+     hereda automáticamente el surface del katachi activo.
+
+     El color y border-color del default ya son semánticos
+     (--text-secondary, --border-default), así que adaptan solos.
+
+     Solo se sobreescribe background: --color-washi-100 → --bg-surface
+     (valores idénticos en light mode, divergen bajo katachi/dark).
+
+     Selector :host([variant="default"]) es mutuamente excluyente
+     con :host([variant="accent"]), etc. — variants explícitos intactos.
+     ─────────────────────────────────────────────────────────── */
+
+  :host([variant="default"]) .badge {
+    background: var(--bg-surface);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
