@@ -301,4 +301,18 @@
     .mo-backdrop       { padding: var(--lib-space-md); }
     .mo-panel-wrap     { max-height: calc(100vh - var(--lib-space-md) * 2); }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-modal default usa tokens semánticos (--bg-elevated,
+     --border-subtle, --text-primary). Adapta a katachi automaticamente.
+
+     Las únicas refs hardcoded son para el scrollbar (--color-washi-300)
+     — color muy sutil, sin cambios funcionales.
+
+     Variant explícita dark (.mo-dark) mantiene su paleta.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

@@ -969,4 +969,22 @@
     }
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-drawer default usa tokens semánticos para la superficie
+     principal. Las refs hardcoded restantes son en:
+     - Side handles (washi-200/300, sutiles indicadores visuales)
+     - variants explícitos kintsugi/glitch (washi-950, deliberados)
+
+     Cambios mínimos: hacer el handle bar de top/bottom (más visible)
+     adaptive vía --border-default. El side handle queda fixed para
+     mantener su sutileza intencional.
+
+     Variants kintsugi/glitch sin cambios.
+     ─────────────────────────────────────────────────────────── */
+
+  .dr-handle-bar {
+    background: var(--border-default);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

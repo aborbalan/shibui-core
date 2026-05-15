@@ -383,7 +383,21 @@
     .step-connector,
     .step-label { transition: none; }
 
-    :host([variant="kintsugi"][status="active"]) .step-node::after { 
+    :host([variant="kintsugi"][status="active"]) .step-node::after {
       animation: none; }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-step ya consume --lib-kintsugi-border en su variant kintsugi —
+     conectado al sistema de tokens efecto. La estructura base usa
+     una mezcla de palette refs y tokens semánticos para los nodes,
+     connectors y status states (pending/active/completed/error).
+
+     Status states tienen paleta semántica deliberada. Variants
+     kintsugi/glitch sin cambios.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

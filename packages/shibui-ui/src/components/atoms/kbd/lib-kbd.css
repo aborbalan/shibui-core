@@ -164,4 +164,17 @@
   @media (prefers-reduced-motion: reduce) {
     .kbd { transition: none; }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-kbd base usa tokens semánticos (--bg-elevated, --border-default,
+     --text-secondary). El shadow box hardcoded washi-300 es decorativo
+     intencional para simular profundidad de tecla — no se conviene a
+     semantic porque pierde el efecto físico.
+
+     Variants explícitos (dark, ghost) sin cambios.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

@@ -239,4 +239,13 @@
     }
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-rating tiene multiples color="..." variants (washi, celadon,
+     kaki, ink). El base empty-star washi-300 es intencionalmente
+     sutil. Color variants tienen paleta deliberada.
+
+     Sin overrides ambient. Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

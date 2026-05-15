@@ -419,4 +419,18 @@
   .tip-light ::slotted(.tip-sep) {
     background: var(--border-subtle);
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-tooltip default es variant="dark" — convención de usabilidad:
+     tooltips usan superficie oscura para separación visual y
+     legibilidad sobre cualquier contexto.
+
+     Variants light/kintsugi/celadon explícitos disponibles si el dev
+     necesita adaptar. Mantener fixed-dark default por consistencia
+     cross-context.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

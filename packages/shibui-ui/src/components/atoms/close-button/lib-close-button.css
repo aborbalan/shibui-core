@@ -212,4 +212,14 @@
       transition: none;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-close-button tiene variants ghost/subtle/on-dark/danger
+     explícitas que cubren los casos de superficie. El desarrollador
+     elige variant="on-dark" para katachi/dark intencionalmente.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

@@ -234,4 +234,23 @@
     :host([layout="inline"]) .es-body { align-items: center; }
     :host([layout="inline"]) .es-actions { justify-content: center; }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-empty-state tiene 4 refs hardcoded en:
+     - .es-icon-wrap bg/color (washi-100/400) → semantic
+     - .es-kanji color (washi-200) → mantenido por su sutileza
+     - .es-prompt (washi-300) → mantenido (decoración sutil)
+
+     Cambios:
+       --color-washi-100 → --bg-surface    (icon wrap bg)
+       --color-washi-400 → --text-muted    (icon wrap color)
+     Valores idénticos en light mode; adaptan a katachi/dark.
+     ─────────────────────────────────────────────────────────── */
+
+  .es-icon-wrap {
+    background: var(--bg-surface);
+    color: var(--text-muted);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
