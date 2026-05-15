@@ -370,4 +370,17 @@
       animation: none;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-progress fill default usa --color-washi-900 → --bg-inverse
+     (identical default, invierte coherentemente bajo katachi/dark).
+
+     Variants explícitos (kaki, celadon, danger, dark) sin cambios.
+     ─────────────────────────────────────────────────────────── */
+
+  .pb-fill {
+    background: var(--bg-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
