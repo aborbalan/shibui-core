@@ -215,4 +215,19 @@
   :host([color="kaki"]) .dv__label--mono {
     color: var(--color-kaki-500);
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-divider tiene múltiples style-variants. Cambio surgical:
+       style-variant="heavy" línea fuerte: --color-washi-900 → --bg-inverse
+     (identical default; invierte coherentemente bajo katachi/dark).
+
+     Otras variants (dotted con washi-400) usan paleta sutil
+     intencional — sin cambios.
+     ─────────────────────────────────────────────────────────── */
+
+  :host([style-variant="heavy"]) .dv__line {
+    background: var(--bg-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

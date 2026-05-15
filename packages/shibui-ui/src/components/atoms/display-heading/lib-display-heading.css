@@ -159,4 +159,19 @@
         max-width: var(--dh-max-width);
         text-align: center;
     }
+
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-display-heading usa custom properties locales (--dh-color-*)
+       que apuntan a tonos washi-800 y washi-500 deliberadamente
+       distintos de los semánticos (text-primary=washi-900, text-muted=
+       washi-400). Es una decisión editorial intencional — los display
+       headings son ligeramente menos contrastados que body text.
+
+       Ya soporta surface="dark" y surface="washi" via atributos
+       explícitos, complementando lo que katachi proveerá vía contexto.
+
+       Sin overrides ambient — marker para discoverability.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
 }
