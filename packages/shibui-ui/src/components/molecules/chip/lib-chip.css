@@ -430,4 +430,29 @@
     height: 1em;
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     Cambios en las dos familias core del chip:
+
+     1. .chip (familia "static"): bg --color-washi-100 → --bg-surface
+        (identical default; adapta a katachi).
+
+     2. :host([selected]) .chip-toggle (familia "toggle" estado activo):
+        bg/border --color-washi-900 → --bg-inverse
+        color     --color-washi-50  → --text-inverse
+        (identical default; invierte coherentemente bajo katachi/dark).
+
+     Variant dark y family "input" mantienen su paleta intencional.
+     ─────────────────────────────────────────────────────────── */
+
+  .chip {
+    background: var(--bg-surface);
+  }
+
+  :host([selected]) .chip-toggle {
+    background: var(--bg-inverse);
+    border-color: var(--bg-inverse);
+    color: var(--text-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

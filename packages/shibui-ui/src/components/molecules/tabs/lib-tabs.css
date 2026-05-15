@@ -767,4 +767,27 @@
     justify-content: center;
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     .tb-tab base usa --color-washi-{400, 700, 900} hardcoded.
+     Mapeo a semantic tokens:
+       muted/inactive: --color-washi-400 → --text-muted     (identical)
+       active:         --color-washi-900 → --text-primary   (identical)
+
+     Hover state (washi-700) se mantiene — no hay equivalente semántico
+     exacto (text-secondary es washi-600, ligeramente más claro).
+
+     Aplica a todas las variants (underline, pill, card, outline, etc.)
+     porque las reglas base .tb-tab no están scoped por variant.
+     Variants explícitos dark/kintsugi/glitch mantienen sus overrides.
+     ─────────────────────────────────────────────────────────── */
+
+  .tb-tab {
+    color: var(--text-muted);
+  }
+
+  .tb-tab.is-active {
+    color: var(--text-primary);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

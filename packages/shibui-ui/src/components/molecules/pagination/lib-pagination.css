@@ -243,4 +243,21 @@
     color: var(--color-washi-600);
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     Active page button (.pg-btn--active) usa --color-washi-900/50
+     hardcoded → --bg-inverse / --text-inverse para adaptar al katachi.
+
+     Valores idénticos en light mode; bajo katachi/dark la página
+     activa invierte coherentemente con el contraste del contexto.
+
+     Variants explícitos (dark) sin cambios.
+     ─────────────────────────────────────────────────────────── */
+
+  .pg-btn--active {
+    background: var(--bg-inverse);
+    border-color: var(--bg-inverse);
+    color: var(--text-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
