@@ -333,4 +333,17 @@
     color: var(--color-washi-600);
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-dropdown default usa tokens semánticos (--bg-elevated,
+     --border-default, --text-primary). Adapta a katachi automaticamente.
+
+     La variant explícita "filled" usa --color-washi-900/50 hardcoded
+     como decisión deliberada — variant invertida intencional. Sin cambios.
+
+     Variants kaki, ghost, dark mantienen su paleta.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

@@ -289,4 +289,21 @@
 
   .bc-dark .bc-dropdown-item:hover { background: oklch(20% 0.02 45deg);
      color: oklch(65% 0.02 55deg); }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     El bc-current de la variant pill usa --color-washi-900/50
+     hardcoded — mapean limpiamente a --bg-inverse / --text-inverse
+     (valores idénticos en light mode; invierten bajo katachi/dark).
+
+     Variants bc-kaki, bc-celadon, bc-bold, bc-dark sin cambios
+     (mayor especificidad por la clase de variant).
+     ─────────────────────────────────────────────────────────── */
+
+  .bc-pill .bc-current {
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+    border-color: var(--bg-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
