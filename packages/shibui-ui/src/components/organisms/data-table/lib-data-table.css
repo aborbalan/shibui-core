@@ -914,4 +914,19 @@
     background-size: 600px 100%;
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-data-table tiene variants (lines, striped, dense) y modifier
+     [dark]. La base usa una mezcla de tokens semánticos (--bg-elevated,
+     --border-default, --text-primary) y palette refs para detalles
+     hover/active.
+
+     El modifier [dark] cubre el caso katachi-dark explícitamente.
+     Para katachi-light el default funciona vía tokens semánticos.
+
+     Bloque marcador para discoverability. Refinamientos detallados
+     pueden venir en iteraciones futuras dada la complejidad del
+     componente (rows, headers, cells, hover, sort, etc.).
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
