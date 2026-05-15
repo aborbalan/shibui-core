@@ -6,6 +6,7 @@ export * from './badge/lib-badge.component';
 export * from './bento-item/lib-bento-item.component';
 export * from './burger-button/lib-burger-button.component';
 export * from './button/lib-button.component';
+export * from './canvas/lib-canvas.component';
 export * from './card/lib-card.component';
 export * from './card/glass-card/lib-glass-card.component';
 export * from './card/spotlight-card/lib-spotlight-card.component';
