@@ -661,4 +661,13 @@
         }
     }
 
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-burger-button tiene variants ink/kanji/washi/framed/kintsugi/
+       glitch — el dev elige según superficie. Las refs hardcoded
+       washi-50/600 son para el focus ring (alto contraste físico).
+
+       Bloque marcador para discoverability.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
 }

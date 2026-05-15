@@ -244,4 +244,17 @@
       transition: none;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-copy-button tiene 4 variants: ghost (default), outlined,
+     filled, subtle, on-dark. Cada uno con paleta intencional:
+       - filled: invertido (--color-washi-900/50) — caso de botón
+                 prominent sobre superficie clara
+       - subtle: bg muy sutil (washi-100/200) — hover physical
+       - on-dark: para katachi/dark explícito
+
+     El desarrollador elige según necesidad. Marker para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
