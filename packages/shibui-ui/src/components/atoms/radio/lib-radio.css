@@ -181,4 +181,21 @@
       transition: none;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     Mismo patrón que lib-checkbox: el circle en estado checked
+     usa --bg-inverse en lugar de --color-washi-900 hardcoded.
+
+     Valores idénticos en light mode; bajo katachi/dark el radio
+     invierte de forma coherente con el contraste del contexto.
+
+     Variants explícitas kaki/error sin cambios (mayor especificidad).
+     ─────────────────────────────────────────────────────────── */
+
+  :host([checked]) .radio__circle {
+    background: var(--bg-inverse);
+    border-color: var(--bg-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

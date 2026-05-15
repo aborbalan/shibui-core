@@ -264,4 +264,25 @@
     :host([variant="kintsugi"][checked]) .sw-track::before,
     :host([variant="kintsugi"][checked]) .sw-thumb { animation: none; }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     Para variant="default" del switch, hacer el track sensible al
+     contexto katachi:
+       --color-washi-300 → --border-default  (unchecked track)
+       --color-washi-900 → --bg-inverse      (checked track)
+     Valores idénticos en light mode; bajo katachi/dark el track
+     adapta al contexto manteniendo contraste con el thumb.
+
+     Variants explícitos (kintsugi, etc.) sin cambios.
+     ─────────────────────────────────────────────────────────── */
+
+  :host([variant="default"]) .sw-track {
+    background: var(--border-default);
+  }
+
+  :host([variant="default"][checked]) .sw-track {
+    background: var(--bg-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

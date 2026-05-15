@@ -179,4 +179,19 @@
     color: rgb(250, 247, 244, 0.85);
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-button-group orchestrates lib-button instances. Las propias
+     lib-buttons ya adaptan al katachi (PR #290), así que el grupo
+     hereda el comportamiento sin overrides adicionales.
+
+     El split-menu interno usa --color-washi-100 (washi suave) como
+     border-bottom — diseño deliberado para una separación muy sutil.
+     Mantener fixed para no alterar el equilibrio visual de la lista.
+
+     Variant explícito dark mantiene su paleta intencional.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
