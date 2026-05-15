@@ -218,6 +218,9 @@ importers:
 
   apps/app-tauri:
     dependencies:
+      '@shibui-ui/ui':
+        specifier: workspace:*
+        version: link:../../packages/shibui-ui
       '@tauri-apps/api':
         specifier: ^2
         version: 2.11.0
@@ -230,6 +233,9 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.2.5(react@19.2.5)
+      react-router-dom:
+        specifier: ^7.14.0
+        version: 7.14.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
     devDependencies:
       '@tauri-apps/cli':
         specifier: ^2
@@ -244,8 +250,8 @@ importers:
         specifier: ^4.6.0
         version: 4.7.0(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(sass@1.99.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
       typescript:
-        specifier: ~5.8.3
-        version: 5.8.3
+        specifier: ~5.9.3
+        version: 5.9.3
       vite:
         specifier: ^7.0.4
         version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(sass@1.99.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)
@@ -9828,11 +9834,6 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@5.8.3:
-    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
   typescript@5.9.3:
     resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
@@ -14778,7 +14779,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.0.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.4)(happy-dom@20.9.0)(jsdom@27.4.0(@noble/hashes@1.8.0))(msw@2.14.3(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(sass@1.97.3)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
+      vitest: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@20.19.39)(@vitest/coverage-v8@4.1.4)(happy-dom@20.9.0)(jsdom@27.4.0(@noble/hashes@1.8.0))(msw@2.14.3(@types/node@20.19.39)(typescript@5.9.3))(vite@6.4.2(@types/node@20.19.39)(jiti@2.6.1)(sass@1.99.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
 
   '@vitest/expect@3.2.4':
     dependencies:
@@ -21343,8 +21344,6 @@ snapshots:
       - supports-color
 
   typescript@5.4.5: {}
-
-  typescript@5.8.3: {}
 
   typescript@5.9.3: {}
 
