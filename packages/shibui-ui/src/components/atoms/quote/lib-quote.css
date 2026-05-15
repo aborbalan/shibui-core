@@ -107,4 +107,16 @@
         color: var(--q-cite-color);
         margin-top: 1.5rem;
     }
+
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-quote ya soporta superficies light/dark/washi via atributo
+       surface="..." con custom properties locales (--q-text-color,
+       --q-cite-color). Decisión editorial: los tonos son levemente
+       distintos a los semánticos para reflejar la elegancia
+       tipográfica de la cita (Cormorant Garamond italic).
+
+       Sin overrides ambient. Marker para discoverability.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
 }

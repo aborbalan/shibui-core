@@ -312,4 +312,15 @@
     :host([effect='glitch']) .eb::before {
         background: linear-gradient(90deg, rgb(250, 247, 244, 0.25), transparent);
     }
+
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-eyebrow utiliza atributos color="..." explícitos (washi,
+       celadon, kaki, ink) cada uno con su paleta intencional. No hay
+       una variant "default" en el sentido katachi — el desarrollador
+       elige el color del eyebrow deliberadamente.
+
+       Sin overrides ambient. Marker para discoverability.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
 }
