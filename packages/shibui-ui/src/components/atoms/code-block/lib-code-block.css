@@ -168,4 +168,18 @@
   :host([variant="ghost"]) .code-block__pre {
     color: var(--color-washi-800);
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-code-block usa --lib-shadow-brutal en default — ya conectado
+     al sistema de tokens semánticos. Las refs hardcoded de palette
+     son principalmente en variants ghost/brutal con paleta intencional
+     editorial.
+
+     Variants explícitos cubren los casos de superficie. El default
+     usa shadow-brutal que está ya conectado al sistema katachi.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
