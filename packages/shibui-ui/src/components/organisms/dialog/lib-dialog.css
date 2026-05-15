@@ -390,4 +390,18 @@
       margin: auto;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-dialog default usa tokens semánticos completos (--bg-elevated,
+     --border-default, --text-primary/secondary). Adapta a katachi
+     automaticamente.
+
+     Las refs hardcoded son:
+     - scrollbar washi-300 (subtle, no-op)
+     - variant="dark" washi-950 (explicit variant, deliberate)
+
+     Sin cambios funcionales. Bloque marcador.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
