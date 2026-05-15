@@ -928,4 +928,21 @@
     }
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     El variant="dark" (default) de lib-sidebar es deliberadamente
+     una superficie oscura fija — actúa como ancla estructural visual
+     independientemente del tema circundante. La estilizadura base
+     (.sidebar líneas 51-53) usa --color-washi-950 hardcoded por diseño.
+
+     Para páginas en katachi claros (sabi, shizen) usar explícitamente
+     variant="light", que ya consume --bg-elevated/--border-subtle.
+
+     Este bloque queda como marcador documentando que lib-sidebar fue
+     auditado para Phase 2 y la decisión consciente fue no introducir
+     overrides ambient — la decisión de superficie es del usuario
+     vía variant explícito. Refinamientos futuros podrían introducir
+     variant="adaptive" que siga --katachi-family.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
