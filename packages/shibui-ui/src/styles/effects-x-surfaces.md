@@ -2,7 +2,8 @@
 
 > Registro de implementación real. Se actualiza componente a componente en orden alfabético.
 > La compatibilidad teórica de la matriz global está en `shibui-surfaces-x-effects.html`.
-> Última auditoría: 2026-05-11 — átomos, moléculas y organismos verificados sobre CSS real.
+> Última auditoría: 2026-05-15 — átomos, moléculas y organismos verificados sobre CSS real.
+> Añadida sección Katachi (形) — cobertura del sistema de contextos estéticos.
 
 ---
 
@@ -1845,4 +1846,75 @@ La mayoría de componentes con tratamiento kintsugi o glitch usan CSS baked-in e
 
 ---
 
-*Última actualización: 2026-05-11 — auditoría completa sobre CSS real · átomos · moléculas · organismos*
+## Katachi (形) — cobertura por componente
+
+> **Sistema añadido el 2026-05-15** tras consolidar los PRs #281–#302 (Fases 1, 2 y rollout B1–B6).
+> Detalle conceptual en `src/styles/shared/tokens/_katachi.css`.
+
+Cada componente con presencia katachi lleva un bloque marcador delimitado al
+final de su `@layer components`:
+
+```css
+/* ─── KATACHI · ambient context ─────────────────────── */
+…
+/* ─── /KATACHI ───────────────────────────────────────── */
+```
+
+Existen **dos modos de presencia**:
+
+- **Semantic override** — el bloque sustituye colores hardcoded (`--color-washi-X`)
+  por tokens semánticos (`--bg-surface`, `--bg-inverse`, `--text-primary`, etc.)
+  cuando el default coincide con el valor original. Esto activa la respuesta
+  ambiental: el componente se adapta al katachi del ancestro sin más cambios.
+- **Marker-only** — el bloque solo documenta que el componente ya consume tokens
+  semánticos en su default y, por tanto, ya hereda el katachi por construcción.
+  Sirve como anchor de búsqueda y como confirmación explícita.
+
+### Cobertura por fase
+
+| Fase | PR | Tipo | Componentes | Estado |
+|------|-----|------|-------------|--------|
+| 1 | #281 | Sistema | `_katachi.css` con 6 contextos (wabi · kintsugi · sabi · terminal · shizen · celadon) | ✅ |
+| 2 (piloto) | #289 | Semantic | `lib-card` · `lib-button` · `lib-badge` | ✅ |
+| 2 (structural) | #291 | Semantic | `lib-header` · `lib-sidebar` | ✅ |
+| 2 (forms) | #292 | Semantic | `lib-alert` · `lib-input` · `lib-select` | ✅ |
+| 2 (storybook) | #294 | Demo | Story `Foundations/Katachi Demo` | ✅ |
+| B1 (forms) | #296 | Mixto | `lib-checkbox` · `lib-radio` · `lib-switch` · `lib-segmented-control` (semantic) · `lib-button-group` (marker) | ✅ |
+| B2 (nav) | #297 | Mixto | `lib-breadcrumb` · `lib-tabs` · `lib-pagination` · `lib-chip` (semantic) · `lib-dropdown` (marker) | ✅ |
+| B3 (overlays) | #298 | Mixto | `lib-drawer` · `lib-empty-state` (semantic) · `lib-modal` · `lib-dialog` (marker) | ✅ |
+| B4 (display) | #299 | Mixto | `lib-divider` (semantic, heavy variant) · `lib-display-heading` · `lib-quote` · `lib-eyebrow` · `lib-kbd` (marker) | ✅ |
+| B5 (misc) | #300 | Mixto | `lib-status-dot` · `lib-progress` (semantic) · `lib-close-button` · `lib-copy-button` · `lib-burger-button` · `lib-tooltip` · `lib-rating` (marker) | ✅ |
+| B6 (layout) | #301 | Marker | `lib-footer` · `lib-data-table` · `lib-timeline` · `lib-code-block` · `lib-step` | ✅ |
+| 3 (canvas) | #303 | DX | `<lib-canvas>` wrapper con typed `KatachiId` | 🔲 (en review) |
+
+### Total
+
+- **39 componentes** con bloque KATACHI documentado
+- **18 con semantic overrides activos** (`--bg-inverse`, `--bg-surface`, `--text-inverse`, etc.)
+- **21 marker-only** (ya tokenizados en su default)
+- **0 conflictos** detectados entre contextos katachi y variantes explícitas
+
+### Cómo se activa
+
+```html
+<!-- Vía atributo en cualquier ancestor (HTML element o custom element) -->
+<body data-katachi="kintsugi">
+  <lib-card>…</lib-card>  <!-- adopta superficie kintsugi automáticamente -->
+</body>
+
+<!-- O vía wrapper tipado (Fase 3) -->
+<lib-canvas katachi="kintsugi" display="block" pad="xl">
+  <lib-card>…</lib-card>
+</lib-canvas>
+```
+
+### Compatibilidad con variantes explícitas
+
+El sistema katachi nunca pisa una variante explícita. Cuando un componente lleva
+`variant="kintsugi"` directamente, su tratamiento `:host([variant="kintsugi"])`
+gana por especificidad sobre el bloque ambient `:host(:not([variant]))`. Los
+selectores son **mutuamente exclusivos por construcción**, no por precedencia.
+
+---
+
+*Última actualización: 2026-05-15 — auditoría completa sobre CSS real · átomos · moléculas · organismos · sistema Katachi (Fases 1+2+3, B1–B6) consolidado*
