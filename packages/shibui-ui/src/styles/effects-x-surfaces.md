@@ -2,8 +2,8 @@
 
 > Registro de implementación real. Se actualiza componente a componente en orden alfabético.
 > La compatibilidad teórica de la matriz global está en `shibui-surfaces-x-effects.html`.
-> Última auditoría: 2026-05-15 — átomos, moléculas y organismos verificados sobre CSS real.
-> Añadida sección Katachi (形) — cobertura del sistema de contextos estéticos.
+> Última auditoría: 2026-05-16 — átomos, moléculas y organismos verificados sobre CSS real.
+> Sistema Katachi (形) completado al 100% (77/77 componentes con bloque KATACHI).
 
 ---
 
@@ -1848,7 +1848,8 @@ La mayoría de componentes con tratamiento kintsugi o glitch usan CSS baked-in e
 
 ## Katachi (形) — cobertura por componente
 
-> **Sistema añadido el 2026-05-15** tras consolidar los PRs #281–#302 (Fases 1, 2 y rollout B1–B6).
+> **Sistema completado al 100% el 2026-05-16** tras los PRs #281–#313 (Fases 1+2+3, rollout B1–B6 y tanda C1–C5).
+> Todos los 77 componentes con CSS file llevan el bloque marcador KATACHI.
 > Detalle conceptual en `src/styles/shared/tokens/_katachi.css`.
 
 Cada componente con presencia katachi lleva un bloque marcador delimitado al
@@ -1885,14 +1886,30 @@ Existen **dos modos de presencia**:
 | B4 (display) | #299 | Mixto | `lib-divider` (semantic, heavy variant) · `lib-display-heading` · `lib-quote` · `lib-eyebrow` · `lib-kbd` (marker) | ✅ |
 | B5 (misc) | #300 | Mixto | `lib-status-dot` · `lib-progress` (semantic) · `lib-close-button` · `lib-copy-button` · `lib-burger-button` · `lib-tooltip` · `lib-rating` (marker) | ✅ |
 | B6 (layout) | #301 | Marker | `lib-footer` · `lib-data-table` · `lib-timeline` · `lib-code-block` · `lib-step` | ✅ |
-| 3 (canvas) | #303 | DX | `<lib-canvas>` wrapper con typed `KatachiId` | 🔲 (en review) |
+| 3 (canvas) | #303 | DX | `<lib-canvas>` wrapper con typed `KatachiId` | ✅ |
+| Docs | #304 | Docs | KATACHI.md · Katachi.mdx · katachi-migration.md · effects-x-surfaces (sección Katachi) | ✅ |
+| Visual regression | #305 | Tests | Playwright suite + fixture HTML para los 6 katachi (scaffold) | ✅ |
+| C1 (atoms) | #309 | Mixto | `lib-liquid-button` (semantic, variant ink) · `lib-accordion-item` · `lib-avatar` · `lib-bento-item` · `lib-card-grid` · `lib-color-scale` · `lib-label` · `lib-counter` (marker) | ✅ |
+| C2 (molecules) | #310 | Mixto | `lib-color-picker` · `lib-file-uploader` · `lib-range-slider` · `lib-tree-select` (semantic) · `lib-checkbox-card` (marker) | ✅ |
+| C3 (organisms) | #311 | Marker | `lib-accordion` · `lib-bento-grid` · `lib-stepper` · `lib-toast-manager` | ✅ |
+| C4 (effect/primitive) | #312 | Marker | `lib-glass-card` · `lib-spotlight-card` · `lib-spinner` · `lib-skeleton` · `lib-text-glitch` | ✅ |
+| C5 (utility/producer/animator) | #313 | Marker | `lib-aspect-ratio` · `lib-visually-hidden` · `lib-ripple` · `lib-magnetic` · `lib-text-list` · `lib-select-option` · `lib-progress-circle` · `lib-reading-progress` · `lib-icon` · `lib-background` · `lib-cursor-follower` · `lib-parallax` · `lib-parallax-text-stack` · `lib-horizontal-scroll-section` · `lib-stagger` · `lib-carousel` | ✅ |
 
-### Total
+### Total — sistema completado
 
-- **39 componentes** con bloque KATACHI documentado
-- **18 con semantic overrides activos** (`--bg-inverse`, `--bg-surface`, `--text-inverse`, etc.)
-- **21 marker-only** (ya tokenizados en su default)
+- **77 componentes** con bloque KATACHI documentado (**100% de cobertura**)
+- **23 con semantic overrides activos** (`--bg-inverse`, `--bg-surface`, `--text-inverse`, etc. — cambian de aspecto bajo katachi)
+- **54 marker-only** (defaults ya conectados, primitivos con paleta deliberada, utility/producer/animator)
 - **0 conflictos** detectados entre contextos katachi y variantes explícitas
+
+### Desglose semantic / marker por categoría
+
+| Categoría | Semantic | Marker | Total |
+|-----------|----------|--------|-------|
+| Atoms (cards, buttons, inputs, displays) | 14 | 28 | 42 |
+| Molecules (forms, nav, overlays) | 8 | 5 | 13 |
+| Organisms (layout, structural, animators) | 1 | 21 | 22 |
+| **Total** | **23** | **54** | **77** |
 
 ### Cómo se activa
 
@@ -1917,4 +1934,4 @@ selectores son **mutuamente exclusivos por construcción**, no por precedencia.
 
 ---
 
-*Última actualización: 2026-05-15 — auditoría completa sobre CSS real · átomos · moléculas · organismos · sistema Katachi (Fases 1+2+3, B1–B6) consolidado*
+*Última actualización: 2026-05-16 — auditoría completa sobre CSS real · átomos · moléculas · organismos · sistema Katachi (Fases 1+2+3, B1–B6, C1–C5) completado al 100% (77/77 componentes)*
