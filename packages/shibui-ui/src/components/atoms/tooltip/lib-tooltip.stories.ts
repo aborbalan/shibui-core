@@ -40,7 +40,7 @@ const col = (inner: TemplateResult, sublabel: string, dark = false): TemplateRes
 
 
 const meta: Meta<LibTooltipArgs> = {
-  title: 'Components/Atoms/Tooltip',
+  title: 'Overlay/Tooltip',
   tags:['autodocs'],
   component: 'lib-tooltip',
   argTypes: {

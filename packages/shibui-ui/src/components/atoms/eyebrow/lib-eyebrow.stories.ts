@@ -66,7 +66,7 @@ const stageWashi = (content: ReturnType<typeof html>): TemplateResult => html`
 
 /* ── Meta ── */
 const meta: Meta<LibEyebrow> = {
-  title: "Data Display/Eyebrow",
+  title: "Foundations/Typography/Eyebrow",
   component: "lib-eyebrow",
   tags: ["autodocs"],
   parameters: {

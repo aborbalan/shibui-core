@@ -13,7 +13,7 @@ interface StepArgs {
 }
 
 const meta: Meta<StepArgs> = {
-  title: 'Components/Atoms/Step',
+  title: 'Navigation/Step',
   tags:['autodocs'],
   component: 'lib-step',
   argTypes: {

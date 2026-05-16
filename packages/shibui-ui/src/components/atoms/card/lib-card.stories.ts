@@ -11,7 +11,7 @@ type LibCardArgs = {
 };
 
 const meta: Meta<LibCardArgs> = {
-  title: 'Layout & Surfaces/Card',
+  title: 'Content/Card',
   tags:['autodocs'],
   component: 'lib-card',
   argTypes: {

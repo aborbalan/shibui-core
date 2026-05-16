@@ -65,7 +65,7 @@ const footerBtns = (id: string, confirmLabel = 'Aceptar', danger = false): Templ
 
 /* ── Meta ───────────────────────────────────────────────────── */
 const meta: Meta<LibModalArgs> = {
-  title: 'Components/Molecules/Modal',
+  title: 'Overlay/Modal',
   tags:['autodocs'],
   component: 'lib-modal',
   argTypes: {

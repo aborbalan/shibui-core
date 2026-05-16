@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-checkbox-card.component';
 
 const meta: Meta = {
-  title: 'Components/Molecules/CheckboxCard',
+  title: 'Forms/Checkbox Card',
   tags:['autodocs'],
   component: 'lib-checkbox-card',
   argTypes: {

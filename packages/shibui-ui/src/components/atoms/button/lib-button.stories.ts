@@ -6,7 +6,7 @@ import type { LibButton } from './lib-button.component';
 type LibButtonStoryArgs = LibButton & { slotContent?: string | TemplateResult };
 
 const meta: Meta<LibButtonStoryArgs> = {
-  title: 'Components/Atoms/Button',
+  title: 'Actions/Button',
   tags:['autodocs'],
   component: 'lib-button',
 

@@ -8,7 +8,7 @@ const stageLight = (c: ReturnType<typeof html>):TemplateResult => html`<div styl
 const stageWashi = (c: ReturnType<typeof html>):TemplateResult => html`<div style="padding:3rem 2.5rem;background:var(--color-washi-100,#F2EDE6);">${c}</div>`;
 
 const meta: Meta<LibQuote> = {
-  title: 'Data Display/Quote',
+  title: 'Content/Quote',
   component: 'lib-quote',
   tags: ['autodocs'],
   parameters: {

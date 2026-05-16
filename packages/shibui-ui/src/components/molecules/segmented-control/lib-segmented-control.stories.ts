@@ -47,7 +47,7 @@ type Args = Partial<LibSegmentedControl> & {
 };
 
 const meta: Meta<Args> = {
-  title: 'Components/Molecules/Segmented Control',
+  title: 'Forms/Segmented Control',
   tags:['autodocs'],
   component: 'lib-segmented-control',
 

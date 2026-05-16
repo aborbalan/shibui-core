@@ -9,7 +9,7 @@ type LibCodeBlockStoryArgs = Pick<
 >;
 
 const meta: Meta<LibCodeBlockStoryArgs> = {
-  title: 'Layout & Surfaces/CodeBlock',
+  title: 'Content/Code Block',
   tags:['autodocs'],
   component: 'lib-code-block',
 

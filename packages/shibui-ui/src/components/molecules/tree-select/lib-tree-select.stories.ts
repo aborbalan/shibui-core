@@ -105,7 +105,7 @@ const FILTER_NODES: TreeNode[] = [
 /* ──────────────────────────────────────────────────────────── */
 
 const meta: Meta = {
-  title: 'Components/Molecules/TreeSelect',
+  title: 'Forms/Tree Select',
   tags:['autodocs'],
   component: 'lib-tree-select',
   parameters: {

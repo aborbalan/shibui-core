@@ -9,7 +9,7 @@ interface AccordionItemArgs {
 }
 
 const meta: Meta<AccordionItemArgs> = {
-  title: 'Components/Atoms/AccordionItem',
+  title: 'Layout/Accordion Item',
   tags:['autodocs'],
   component: 'lib-accordion-item',
   argTypes: {

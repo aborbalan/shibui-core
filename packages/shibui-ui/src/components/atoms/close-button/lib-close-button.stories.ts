@@ -9,7 +9,7 @@ type LibCloseButtonStoryArgs = Pick<
 >;
 
 const meta: Meta<LibCloseButtonStoryArgs> = {
-  title: 'Components/Atoms/CloseButton',
+  title: 'Actions/Close Button',
   tags:['autodocs'],
   component: 'lib-close-button',
 

@@ -10,7 +10,7 @@ type RsArgs = Pick<LibRangeSlider,
 >;
 
 const meta: Meta<RsArgs> = {
-  title: 'Components/Molecules/RangeSlider',
+  title: 'Forms/Range Slider',
   tags:['autodocs'],
   component: 'lib-range-slider',
   argTypes: {

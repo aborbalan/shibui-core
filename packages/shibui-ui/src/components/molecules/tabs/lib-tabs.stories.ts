@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-tabs.component';
 
 const meta: Meta = {
-  title: 'Components/Molecules/Tabs',
+  title: 'Navigation/Tabs',
   tags:['autodocs'],
   component: 'lib-tabs',
   argTypes: {

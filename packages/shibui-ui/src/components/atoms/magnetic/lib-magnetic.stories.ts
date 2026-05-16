@@ -4,7 +4,7 @@ import './lib-magnetic.component';
 import '../button/lib-button.component'; // Asegúrate de que esta ruta sea correcta
 
 const meta: Meta = {
-  title: 'Components/Atoms/Magnetic',
+  title: 'Actions/Magnetic',
   tags:['autodocs'],
   component: 'lib-magnetic',
   argTypes: {

@@ -7,7 +7,7 @@ import type { LibAccordion } from './lib-accordion.component';
 type LibAccordionStoryArgs = Pick<LibAccordion, 'variant' | 'exclusive'>;
 
 const meta: Meta<LibAccordionStoryArgs> = {
-  title: 'Components/Organisms/Accordion',
+  title: 'Layout/Accordion',
   component: 'lib-accordion',
   tags:['autodocs'],
   argTypes: {
