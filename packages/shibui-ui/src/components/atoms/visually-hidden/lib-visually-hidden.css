@@ -12,4 +12,14 @@
       white-space: nowrap !important;
       border: 0 !important;
     }
+
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-visually-hidden es un truco a11y: oculta visualmente
+       el contenido manteniéndolo accesible al screen reader. No
+       tiene render visual, por tanto el katachi no aplica.
+
+       Bloque marcador para discoverability.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
   }

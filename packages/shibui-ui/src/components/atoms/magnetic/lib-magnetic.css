@@ -9,3 +9,13 @@
   /* El secreto está en esta transición suave */
   transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
+
+/* ─── KATACHI · ambient context ──────────────────────────────
+   lib-magnetic es un wrapper de transformación que aplica
+   atracción al cursor. No tiene superficie propia — su hijo
+   slotted hereda el katachi del ancestro.
+
+   Bloque marcador para discoverability.
+   ─────────────────────────────────────────────────────────── */
+
+/* ─── /KATACHI ───────────────────────────────────────────── */

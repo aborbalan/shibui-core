@@ -116,4 +116,14 @@
     }
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-parallax-text-stack apila layers tipográficos con
+     parallax horizontal. El color del texto se hereda (color:
+     inherit) y las capas outline usan stroke. Sin superficie
+     propia — adapta al katachi del ancestro vía color.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

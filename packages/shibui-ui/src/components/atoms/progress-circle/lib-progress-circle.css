@@ -162,4 +162,20 @@
       animation: none;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-progress-circle tiene variants de color (kaki/celadon/
+     error) y un default washi-900/washi-200 que es una paleta
+     deliberada para el arco progress. El label central ya
+     consume --text-primary / --text-muted.
+
+     No se aplica semantic override sobre el arc default porque
+     cambiar washi-900 → --bg-inverse rompería el contraste con
+     el track washi-200. Para variar paleta, usar [variant]
+     explícito.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

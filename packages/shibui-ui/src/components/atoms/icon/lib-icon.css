@@ -28,3 +28,14 @@ svg {
 .variant-secondary { color: var(--lib-color-secondary); }
 .variant-success { color: var(--lib-color-success); }
 .variant-danger { color: var(--lib-color-danger); }
+
+/* ─── KATACHI · ambient context ──────────────────────────────
+   lib-icon usa `color: currentcolor` — hereda el color del
+   ancestro automáticamente. Las clases variant-* mapean a
+   --lib-color-* (tokens semánticos por uso). El icon es un
+   primitivo neutro respecto al katachi.
+
+   Bloque marcador para discoverability.
+   ─────────────────────────────────────────────────────────── */
+
+/* ─── /KATACHI ───────────────────────────────────────────── */

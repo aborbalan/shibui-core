@@ -215,4 +215,15 @@
     .cr-dot          { transition: background var(--duration-base); }
     :host([mode="fade"]) ::slotted(*) { transition: none; }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-carousel es un viewport que gestiona movimiento de
+     slides. Las slides proyectadas vía slot heredan el katachi
+     del ancestro. Los controles UI (dots, arrows, counter) ya
+     consumen tokens semánticos cuando los hay.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
