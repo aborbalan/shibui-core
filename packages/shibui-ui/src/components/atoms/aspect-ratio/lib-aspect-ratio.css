@@ -20,4 +20,14 @@
       height: 100%;
       object-fit: cover;
     }
+
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-aspect-ratio es un wrapper utilitario sin superficie
+       propia. Reserva la proporción del contenido slotted.
+       El katachi se hereda del ancestro sin override.
+
+       Bloque marcador para discoverability.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
   }

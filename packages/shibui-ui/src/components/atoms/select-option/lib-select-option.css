@@ -95,4 +95,15 @@
   :host([selected]) .option-check {
     opacity: 1;
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-select-option es un sub-component que vive dentro de
+     lib-select. Ya consume tokens semánticos (--bg-surface,
+     --text-primary, --text-secondary, --text-muted) y hereda
+     katachi automáticamente vía el padre.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

@@ -83,4 +83,14 @@
     user-select: none;
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-horizontal-scroll-section ya consume --bg-base en el
+     sticky-wrapper y --text-muted en los hints. Hereda katachi
+     automáticamente. Es un viewport translator de scroll, sin
+     identidad cromática propia.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

@@ -297,4 +297,19 @@
     100% { transform: translateX(120%);
         opacity: 0;   }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-reading-progress tiene 4 tones explícitos
+     (kaki · celadon · ink · kintsugi) — paletas deliberadas
+     que definen la identidad de la barra. El tone kintsugi
+     incluso lleva su propio shimmer animado.
+
+     No se aplica semantic override: estos tonos son la API
+     pública del componente. Para variar por katachi, usar
+     [tone] explícito.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

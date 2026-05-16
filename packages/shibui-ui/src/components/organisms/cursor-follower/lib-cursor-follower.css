@@ -146,4 +146,16 @@
       display: none;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-cursor-follower es un overlay fixed con su propia
+     paleta por modo (ink/minimal/kaki/ghost). Vive fuera del
+     flujo del documento (z-index: 9999) y no consume superficie
+     del ancestro. El katachi se aplica al contenido bajo el
+     cursor, no al cursor mismo.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

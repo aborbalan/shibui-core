@@ -50,4 +50,14 @@
     }
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-stagger es un orquestador de animación en cascada. Sólo
+     coordina entry transitions (opacity + transform) — sin
+     superficie propia. Los hijos slotted heredan el katachi del
+     ancestro.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
