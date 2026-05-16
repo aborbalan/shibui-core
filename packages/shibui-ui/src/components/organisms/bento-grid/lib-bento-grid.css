@@ -70,4 +70,15 @@
     }
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-bento-grid default ya consume tokens semánticos
+     (--bg-elevated, --border-subtle, --border-strong). Hereda
+     katachi automáticamente. La estética bento se mantiene en
+     cualquier contexto: superficie elevada + borde sutil con
+     hover lift.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

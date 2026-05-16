@@ -31,4 +31,15 @@
   :host([orientation="vertical"]) .stepper-track {
     flex-direction: column;
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-stepper es un contenedor de coordinación: no tiene
+     superficie propia, solo gestiona el layout flex de los
+     lib-step hijos. Los steps individuales adaptan su katachi
+     directamente (lib-step ya tiene el bloque KATACHI).
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

@@ -676,4 +676,20 @@
       transform: translateX(100%);
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-text-list ya consume tokens semánticos directamente
+     (--bg-elevated, --bg-surface, --border-subtle, --text-*,
+     --color-washi-*). El atributo [dark] es una capa explícita
+     histórica que sigue ganando por especificidad cuando se
+     activa, ortogonal al katachi.
+
+     Para usar el list bajo un katachi dark sin pasar [dark]
+     explícito, el componente se adapta automáticamente vía los
+     tokens semánticos.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

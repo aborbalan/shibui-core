@@ -439,4 +439,22 @@
       color: inherit;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-text-glitch es un efecto visual con 6 variants
+     (slice · scan · shift · decode · redact · noise). Las
+     paletas kaki/celadon que pintan los fantasmas RGB y la
+     barra redact (washi-900) son deliberadas — definen la
+     estética glitch como tal, independientemente del katachi
+     del ancestro.
+
+     El katachi terminal está diseñado para potenciar este
+     componente: combina bien con cualquier variant. Bajo
+     wabi/kintsugi/celadon también funciona, manteniendo su
+     identidad visual.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

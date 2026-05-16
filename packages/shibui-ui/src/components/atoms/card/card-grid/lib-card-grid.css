@@ -57,4 +57,18 @@
             grid-template-columns: 1fr;
         }
     }
+
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-card-grid es un componente de layout puro (display: grid
+       + span management para featured cards). No tiene superficie
+       propia más allá del separador semi-transparente entre celdas
+       (--cg-bg: rgba con alpha bajo).
+
+       Las cards proyectadas vía slot heredan el katachi del ancestro
+       común — el grid en sí no necesita override.
+
+       Bloque marcador para discoverability.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
 }

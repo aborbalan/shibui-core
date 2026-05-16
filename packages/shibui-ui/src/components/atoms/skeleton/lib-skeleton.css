@@ -187,4 +187,22 @@
     :host([surface="dark"]) .sk  { background: var(--color-washi-700); }
     :host([surface="kaki"]) .sk  { background: var(--color-kaki-200); }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-skeleton es un primitivo de loading state con su propia
+     dimensión [surface] (light · dark · kaki). Las paletas
+     washi-100/200/700/800 y kaki-100/200 son específicas para
+     el efecto shimmer (necesitan dos tonos contiguos en el
+     gradient).
+
+     Para usar bajo un katachi dark sin pasar [surface] explícito,
+     el comportamiento actual es razonable: el skeleton se ve
+     "claro" siempre — lo cual es coherente con su rol de
+     placeholder neutro. Si se desea adaptación, el consumidor
+     pasa [surface="dark"] explícito.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

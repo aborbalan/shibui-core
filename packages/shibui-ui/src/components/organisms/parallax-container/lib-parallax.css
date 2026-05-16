@@ -52,4 +52,13 @@
     }
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-parallax-container es un viewport con overflow:hidden
+     que aplica transform a sus hijos vía rAF. Sin superficie
+     propia — los hijos slotted heredan el katachi del ancestro.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

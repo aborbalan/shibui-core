@@ -73,4 +73,15 @@
       margin-bottom: calc(-1 * var(--lib-space-sm));
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-toast-manager es un contenedor fixed-positioned que
+     orquesta animaciones de entrada/salida de lib-alert hijos.
+     No tiene superficie propia. Cada toast (lib-alert) adapta su
+     katachi directamente (lib-alert ya tiene el bloque KATACHI).
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

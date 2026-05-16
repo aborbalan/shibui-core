@@ -111,4 +111,22 @@
   :host([variant="kaki"][intensity="high"]) .glass-card {
     background: oklch(45% 0.05 45deg / var(--lib-glass-opacity-high));
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-glass-card consume los effect tokens del sistema
+     (--lib-glass-bg, --lib-glass-filter, --lib-glass-shadow,
+     --lib-glass-shine, --lib-glass-border). Esos tokens son
+     exactamente los que katachi ajusta:
+       · wabi      → refuerza (blur 20px, satura 140%)
+       · kintsugi  → silencia (blur 0, opacity 0) por conflicto
+       · sabi      → silencia (incompatible con washi/handmade)
+       · terminal  → silencia (opuesto al CRT)
+       · shizen    → respeta defaults (compatible)
+       · celadon   → tono water (jade frío)
+
+     Bloque marcador para discoverability — ya integrado por
+     consumo de tokens, sin override propio.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

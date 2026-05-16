@@ -825,4 +825,21 @@
             transform: translateX(200%);
         }
     }
+
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-background es un PRODUCER de superficie: 52 variants
+       (washi, sumi, kintsugi, glitch, celadon-mist, particles,
+       fireflies, etc.) implementan su efecto visual de forma
+       autónoma. NO consume superficie del ancestro — la produce.
+
+       Por tanto el katachi no se aplica como override: cada
+       variant es ya una identidad estética completa. Para
+       coordinar con un katachi específico, usar la variant
+       correspondiente (e.g. variant="kintsugi" bajo
+       data-katachi="kintsugi").
+
+       Bloque marcador para discoverability.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
 }
