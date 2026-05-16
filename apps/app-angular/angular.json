@@ -31,7 +31,10 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"]
+            "styles": [
+              "node_modules/@shibui-ui/ui/dist/tokens.css",
+              "src/styles.scss"
+            ]
           },
           "configurations": {
             "production": {

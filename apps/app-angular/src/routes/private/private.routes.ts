@@ -1,12 +1,19 @@
 import { Routes } from '@angular/router';
+import { authGuard } from 'src/core/auth/auth.guard';
 
 export const PRIVATE_ROUTES: Routes = [
-  { 
-    path: '', // Esto sería /dashboard
-    //loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent) 
+  {
+    path: 'login',
+    loadComponent: () => import('@pages/private/auth/login').then((m) => m.AdminLogin),
   },
-  { 
-    path: 'profile', // Esto sería /dashboard/profile
-    //loadComponent: () => import('./profile/profile.component').then(m => m.ProfileComponent) 
-  }
+  {
+    path: 'kitchen-sink',
+    canActivate: [authGuard],
+    loadComponent: () => import('@pages/private/kitchen/kitchen').then((m) => m.Kitchen),
+  },
+  {
+    path: '',
+    redirectTo: 'kitchen-sink',
+    pathMatch: 'full',
+  },
 ];

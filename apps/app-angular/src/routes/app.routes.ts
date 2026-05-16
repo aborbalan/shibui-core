@@ -15,7 +15,7 @@ export const routes: Routes = [
         loadChildren: () => import('./public/public.routes').then((m) => m.PUBLIC_ROUTES),
       },
       {
-        path: 'dashboard',
+        path: 'admin',
         component: PrivateLayoutComponent,
         loadChildren: () => import('./private/private.routes').then((m) => m.PRIVATE_ROUTES),
       },
