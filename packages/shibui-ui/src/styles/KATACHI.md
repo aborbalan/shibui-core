@@ -1,8 +1,8 @@
 # Katachi · 形 · Sistema de contextos estéticos
 
-> **Estado**: Fases 1+2 mergeadas a `main`. Fase 3 (`<lib-canvas>` wrapper) en review (#303).
-> Cobertura B1–B6 completada: 39 componentes con bloque KATACHI documentado.
-> Última actualización: 2026-05-15
+> **Estado**: Sistema completado al 100%. Fases 1+2+3, rollouts B1–B6 y C1–C5 mergeadas a `main`.
+> **Cobertura: 77/77 componentes con bloque KATACHI documentado** (23 semantic + 54 marker).
+> Última actualización: 2026-05-16
 
 ---
 
@@ -43,7 +43,7 @@ Matriz completa de compatibilidad efectos × katachi en `effects-x-surfaces.md`.
 
 ---
 
-## Estado actual — Fases 1 + 2 mergeadas, Fase 3 en review
+## Estado actual — sistema completado al 100%
 
 ### Lo que está implementado
 
@@ -117,25 +117,32 @@ Con `data-katachi="kintsugi"` activo, los siguientes tokens computan a:
 
 ---
 
-## Estado de la transición — cobertura actual
+## Estado de la transición — cobertura completa
 
-Tras Fases 1+2 y rollout B1–B6, la cobertura completa por categoría:
+Tras Fases 1+2+3, rollouts B1–B6 y C1–C5, todos los componentes con CSS file
+llevan el bloque KATACHI documentado:
 
 | Categoría | Componentes con bloque KATACHI | Tipo |
 |-----------|-------------------------------|------|
-| Cards & superficie | `lib-card` · `lib-bento-item` · `lib-glass-card` · `lib-spotlight-card` | Semantic |
-| Interactivos | `lib-button` · `lib-badge` · `lib-checkbox` · `lib-radio` · `lib-switch` · `lib-segmented-control` | Mixto |
-| Estructurales | `lib-header` · `lib-sidebar` · `lib-footer` · `lib-drawer` | Mixto |
-| Navegación | `lib-breadcrumb` · `lib-tabs` · `lib-pagination` · `lib-chip` · `lib-dropdown` | Mixto |
-| Forms | `lib-input` · `lib-select` · `lib-alert` · `lib-button-group` | Mixto |
-| Overlays | `lib-modal` · `lib-dialog` · `lib-empty-state` · `lib-tooltip` | Marker |
-| Display | `lib-divider` · `lib-display-heading` · `lib-quote` · `lib-eyebrow` · `lib-kbd` · `lib-status-dot` · `lib-progress` | Mixto |
+| Cards & superficie | `lib-card` · `lib-bento-item` · `lib-glass-card` · `lib-spotlight-card` · `lib-card-grid` · `lib-bento-grid` | Mixto |
+| Interactivos | `lib-button` · `lib-badge` · `lib-checkbox` · `lib-radio` · `lib-switch` · `lib-segmented-control` · `lib-liquid-button` · `lib-checkbox-card` | Mixto |
+| Estructurales | `lib-header` · `lib-sidebar` · `lib-footer` · `lib-drawer` · `lib-accordion` · `lib-accordion-item` | Mixto |
+| Navegación | `lib-breadcrumb` · `lib-tabs` · `lib-pagination` · `lib-chip` · `lib-dropdown` · `lib-tree-select` | Mixto |
+| Forms | `lib-input` · `lib-select` · `lib-alert` · `lib-button-group` · `lib-color-picker` · `lib-file-uploader` · `lib-range-slider` · `lib-label` · `lib-select-option` | Mixto |
+| Overlays | `lib-modal` · `lib-dialog` · `lib-empty-state` · `lib-tooltip` · `lib-toast-manager` | Marker |
+| Display | `lib-divider` · `lib-display-heading` · `lib-quote` · `lib-eyebrow` · `lib-kbd` · `lib-status-dot` · `lib-progress` · `lib-progress-circle` · `lib-reading-progress` · `lib-counter` · `lib-text-list` · `lib-text-glitch` · `lib-color-scale` | Mixto |
 | Botones secundarios | `lib-close-button` · `lib-copy-button` · `lib-burger-button` · `lib-rating` | Marker |
-| Layout/data | `lib-data-table` · `lib-timeline` · `lib-code-block` · `lib-step` | Marker |
-| **Total** | **39 componentes** | **18 semantic + 21 marker** |
+| Layout/data | `lib-data-table` · `lib-timeline` · `lib-code-block` · `lib-step` · `lib-stepper` · `lib-carousel` | Marker |
+| Loading primitives | `lib-spinner` · `lib-skeleton` | Marker |
+| Avatar & icon | `lib-avatar` · `lib-icon` | Marker |
+| DX wrapper | `lib-canvas` | (sistema) |
+| Producer | `lib-background` (52 variants) | Marker |
+| Utility & a11y | `lib-aspect-ratio` · `lib-visually-hidden` · `lib-ripple` · `lib-magnetic` · `lib-spacer` | Marker |
+| Animators & viewport | `lib-cursor-follower` · `lib-parallax` · `lib-parallax-text-stack` · `lib-horizontal-scroll-section` · `lib-stagger` | Marker |
+| **Total** | **77 componentes** | **23 semantic + 54 marker** |
 
 - **Semantic** = el bloque sustituye colores hardcoded por tokens (`--bg-inverse`, etc.); el componente cambia de aspecto bajo katachi.
-- **Marker** = el componente ya consumía tokens semánticos en su default; el bloque solo documenta y sirve como anchor de búsqueda.
+- **Marker** = el componente ya consumía tokens semánticos en su default, o tiene una paleta deliberada por variant que NO debe adaptarse al katachi; el bloque solo documenta y sirve como anchor de búsqueda.
 
 ---
 
@@ -164,14 +171,15 @@ Añadir al final de cada componente prioritario el bloque ambient:
 **Especificidad**: `:host([variant="kintsugi"])` y `:host(:not([variant]))` son
 mutuamente exclusivos por construcción. El `variant=""` explícito siempre gana.
 
-**Adopción ejecutada** (PRs mergeados a `main` el 2026-05-15):
-1. `lib-card` — #289
-2. `lib-button` + `lib-badge` — #290
-3. `lib-header` + `lib-sidebar` — #291
-4. `lib-alert` + `lib-input` + `lib-select` — #292
-5. Rollout B1–B6 (29 componentes restantes) — #296 → #301
+**Adopción ejecutada** (PRs mergeados a `main`):
+1. `lib-card` — #289 (2026-05-15)
+2. `lib-button` + `lib-badge` — #290 (2026-05-15)
+3. `lib-header` + `lib-sidebar` — #291 (2026-05-15)
+4. `lib-alert` + `lib-input` + `lib-select` — #292 (2026-05-15)
+5. Rollout B1–B6 (29 componentes) — #296 → #301 (2026-05-15)
+6. Tanda C1–C5 (38 componentes restantes) — #309 → #313 (2026-05-16)
 
-### ✅ Fase 3 — `<lib-canvas>` wrapper (en review #303)
+### ✅ Fase 3 — `<lib-canvas>` wrapper (mergeada en #303)
 
 Componente que refleja `katachi="…"` como `data-katachi` en el host. Útil para
 type-safety y futura propagación JS (eventos, `prefers-reduced-motion` por zona).
