@@ -100,4 +100,18 @@
       transition: none;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-accordion default ya consume tokens semánticos
+     (--bg-elevated, --border-subtle). Las variants flush/separated
+     pasan a transparent (heredan del contexto del ancestro). La
+     variant accent es una paleta kaki deliberada.
+
+     Los hijos lib-accordion-item heredan el katachi via su API
+     de CSS custom properties.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
