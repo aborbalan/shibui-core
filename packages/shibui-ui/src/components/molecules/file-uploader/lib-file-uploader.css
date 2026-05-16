@@ -566,4 +566,27 @@
       transform: rotate(360deg);
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     fu-summary-btn (washi-900 / washi-50) es el botón de acción
+     primaria del uploader — swap a tokens semánticos para que
+     invierta correctamente bajo katachis dark.
+
+     El resto del componente ya consume tokens semánticos
+     directamente (--bg-elevated, --bg-surface, --border-subtle,
+     --text-primary, --text-secondary, --text-muted) y se adapta
+     por herencia.
+     ─────────────────────────────────────────────────────────── */
+
+  .fu-summary-btn {
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+  }
+
+  .fu-summary-btn:hover {
+    background: var(--bg-inverse);
+    opacity: 0.85;
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
