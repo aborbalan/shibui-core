@@ -19,3 +19,17 @@
     color: var(--lib-color-danger); /* Usamos el token de peligro para el asterisco */
     font-weight: bold;
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-label es un form helper minimal que delega su color a
+     tokens generales (--lib-color-text, --lib-color-danger). Vive
+     siempre dentro de un form/field y hereda el contexto del
+     contenedor.
+
+     No requiere semantic override propio: cuando el katachi
+     redefine los tokens de texto, el label los recoge.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */

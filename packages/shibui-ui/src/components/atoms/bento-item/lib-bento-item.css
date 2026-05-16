@@ -70,4 +70,15 @@
     }
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-bento-item ya consume tokens semánticos directamente en su
+     default (--bg-elevated, --border-subtle, --border-strong).
+     Hereda katachi automáticamente — un grid bento dentro de
+     [data-katachi="kintsugi"] adopta superficie elevada kintsugi
+     sin más cambios.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

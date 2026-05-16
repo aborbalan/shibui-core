@@ -155,4 +155,18 @@
   @media (prefers-reduced-motion: reduce) {
     .cnt-digit-inner { transition: none; }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-counter ya consume tokens semánticos en sus rows default
+     (--text-primary, --text-muted). Los tones explícitos
+     (kaki · celadon · error · muted · on-dark) son una dimensión
+     ortogonal: paleta deliberada para destacar la métrica.
+
+     El default adapta superficie por katachi automáticamente. Los
+     tones explícitos siguen ganando como deben.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

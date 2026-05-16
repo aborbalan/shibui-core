@@ -105,4 +105,15 @@
     }
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-color-scale es un "producer" de palette — sus swatches
+     usan colores recibidos vía property (no consume tokens de
+     superficie). Las legends y labels ya consumen --text-muted
+     que se adapta al katachi.
+
+     El componente expone palette, no la consume. Bloque marcador
+     para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
