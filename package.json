@@ -48,10 +48,16 @@
     "@semantic-release/release-notes-generator": "^14.1.0"
   },
   "pnpm": {
-  "overrides": {
-    "@playwright/test": ">=1.55.1",
-    "jsonpath-plus": ">=10.2.0",
-    "fast-uri": ">=3.1.2"
+    "overrides": {
+      "@playwright/test": ">=1.55.1",
+      "jsonpath-plus": ">=10.2.0",
+      "fast-uri": ">=3.1.2",
+      "minimatch": ">=9.0.7",
+      "path-to-regexp": ">=8.0.0",
+      "undici": ">=6.24.0",
+      "ws": ">=8.17.1",
+      "esbuild": ">=0.25.0",
+      "ip-address": ">=10.1.1"
+    }
   }
-}
 }
