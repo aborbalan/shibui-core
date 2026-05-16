@@ -601,4 +601,20 @@
         border-color: var(--color-kaki-500);
     }
 
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-checkbox-card default ya consume tokens semánticos
+       (--bg-elevated, --bg-surface, --border-subtle,
+       --border-default, --text-primary, --text-secondary,
+       --text-muted) — hereda katachi por construcción.
+
+       Los estados checked (kaki por default, celadon por color
+       attribute) son paletas deliberadas y no se tocan. El
+       attribute `[dark]` con rgba blanco hardcoded es una capa
+       ortogonal (sin relación con katachi); se mantiene para
+       backward compat.
+
+       Bloque marcador para discoverability.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
 }

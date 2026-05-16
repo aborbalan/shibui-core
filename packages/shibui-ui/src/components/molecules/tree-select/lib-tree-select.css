@@ -577,4 +577,21 @@
   .ts-inline .ts-footer {
     flex-shrink: 0;
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     ts-btn-confirm (washi-900 / washi-50) es la acción primaria
+     del tree-select — swap a tokens semánticos para que invierta
+     correctamente bajo katachis dark.
+
+     El hover swap a kaki-500 se mantiene como acento deliberado.
+     El resto del componente ya consume tokens semánticos para
+     superficie, borde y texto.
+     ─────────────────────────────────────────────────────────── */
+
+  .ts-btn-confirm {
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

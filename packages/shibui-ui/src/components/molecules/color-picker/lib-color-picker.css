@@ -618,4 +618,32 @@
     pointer-events: none;
     opacity: 0.5;
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     cp-btn-ok (washi-900 / washi-50) y .cp-swatch.is-selected
+     border (washi-900) son los puntos del color picker que
+     representan la acción primaria y la selección — swap a
+     tokens semánticos para que inviertan correctamente bajo
+     katachis dark (kintsugi/wabi/terminal).
+
+     El atributo `[dark]` con oklch hardcoded sigue siendo una
+     capa ortogonal y prioritaria (no usa katachi). Las swatches
+     mantienen sus colores reales — son contenido.
+     ─────────────────────────────────────────────────────────── */
+
+  .cp-btn-ok {
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+  }
+
+  .cp-btn-ok:hover {
+    background: var(--bg-inverse);
+    opacity: 0.85;
+  }
+
+  .cp-swatch.is-selected::after {
+    border-color: var(--bg-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
