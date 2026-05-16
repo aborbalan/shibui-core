@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import pw from '@playwright/test';
+const { test, expect } = pw;
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
