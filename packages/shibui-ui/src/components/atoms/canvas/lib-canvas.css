@@ -1,0 +1,57 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-CANVAS — Shibui UI · 形 · wrapper de contexto katachi
+   ────────────────────────────────────────────────────────────
+   Refleja `katachi` como `data-katachi` en el host. Las
+   custom properties definidas en _katachi.css se propagan a
+   todos los hijos (atraviesan Shadow DOM por herencia).
+
+   Modos de layout:
+     · display="contents" (default) → no introduce caja, sólo contexto
+     · display="block"              → reserva una caja con superficie
+     · display="flex"               → caja flex column gap-md
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: contents;
+  }
+}
+
+@layer components {
+
+  :host([display="block"]),
+  :host([display="flex"]) {
+    display: block;
+    background: var(--bg-base);
+    color: var(--text-primary);
+  }
+
+  :host([display="flex"]) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-md);
+  }
+
+  /* min-h="screen" → reservar viewport completo cuando se usa
+     como root del documento (típico en demo pages) */
+  :host([min-h="screen"]) {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  /* padding shortcut (sólo aplica en modos con caja) */
+  :host([display="block"][pad]),
+  :host([display="flex"][pad]) {
+    padding: var(--lib-space-lg);
+  }
+  :host([display="block"][pad="xl"]),
+  :host([display="flex"][pad="xl"]) {
+    padding: var(--lib-space-xl);
+  }
+  :host([display="block"][pad="2xl"]),
+  :host([display="flex"][pad="2xl"]) {
+    padding: var(--lib-space-2xl);
+  }
+}

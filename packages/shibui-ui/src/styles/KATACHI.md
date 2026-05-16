@@ -1,7 +1,8 @@
 # Katachi · 形 · Sistema de contextos estéticos
 
-> **Estado**: Fase 1 completada · Documenta el estado inicial de la transición.
-> Última actualización: 2026-05-14
+> **Estado**: Fases 1+2 mergeadas a `main`. Fase 3 (`<lib-canvas>` wrapper) en review (#303).
+> Cobertura B1–B6 completada: 39 componentes con bloque KATACHI documentado.
+> Última actualización: 2026-05-15
 
 ---
 
@@ -42,7 +43,7 @@ Matriz completa de compatibilidad efectos × katachi en `effects-x-surfaces.md`.
 
 ---
 
-## Estado actual — Fase 1
+## Estado actual — Fases 1 + 2 mergeadas, Fase 3 en review
 
 ### Lo que está implementado
 
@@ -116,19 +117,25 @@ Con `data-katachi="kintsugi"` activo, los siguientes tokens computan a:
 
 ---
 
-## Estado de la transición — qué adapta hoy vs. mañana
+## Estado de la transición — cobertura actual
 
-| Componente                  | Adapta hoy (sin opt-in JS) | Mejora con Fase 2 |
-|-----------------------------|----------------------------|-------------------|
-| `lib-bento-item`            | ✅ Sí — ya consume `--bg-elevated` | ↗ Migración a awareness explícita |
-| `lib-alert` (variante default) | ✅ Sí — consume tokens semánticos | ↗ Awareness explícita |
-| `lib-glass-card`            | ✅ Sí — consume `--lib-glass-*` | (sin cambios) |
-| `lib-spotlight-card`        | ✅ Sí — consume `--lib-spotlight-*` + `--lib-kintsugi-border` | (sin cambios) |
-| `lib-card`                  | ⚠️ Parcialmente — `variant="default"` consume tokens, variants explícitos NO | ✅ Fase 2 añade `:host(:not([variant]))` ambient block |
-| `lib-button`                | ⚠️ Parcialmente | ✅ Fase 2 |
-| `lib-header`                | ⚠️ Parcialmente | ✅ Fase 2 |
-| `lib-sidebar`               | ⚠️ Parcialmente | ✅ Fase 2 |
-| Resto de componentes        | ⚠️ Depende — los que usan tokens semánticos sí, los que tienen baked-in CSS no | ✅ Fase 2 / 3 |
+Tras Fases 1+2 y rollout B1–B6, la cobertura completa por categoría:
+
+| Categoría | Componentes con bloque KATACHI | Tipo |
+|-----------|-------------------------------|------|
+| Cards & superficie | `lib-card` · `lib-bento-item` · `lib-glass-card` · `lib-spotlight-card` | Semantic |
+| Interactivos | `lib-button` · `lib-badge` · `lib-checkbox` · `lib-radio` · `lib-switch` · `lib-segmented-control` | Mixto |
+| Estructurales | `lib-header` · `lib-sidebar` · `lib-footer` · `lib-drawer` | Mixto |
+| Navegación | `lib-breadcrumb` · `lib-tabs` · `lib-pagination` · `lib-chip` · `lib-dropdown` | Mixto |
+| Forms | `lib-input` · `lib-select` · `lib-alert` · `lib-button-group` | Mixto |
+| Overlays | `lib-modal` · `lib-dialog` · `lib-empty-state` · `lib-tooltip` | Marker |
+| Display | `lib-divider` · `lib-display-heading` · `lib-quote` · `lib-eyebrow` · `lib-kbd` · `lib-status-dot` · `lib-progress` | Mixto |
+| Botones secundarios | `lib-close-button` · `lib-copy-button` · `lib-burger-button` · `lib-rating` | Marker |
+| Layout/data | `lib-data-table` · `lib-timeline` · `lib-code-block` · `lib-step` | Marker |
+| **Total** | **39 componentes** | **18 semantic + 21 marker** |
+
+- **Semantic** = el bloque sustituye colores hardcoded por tokens (`--bg-inverse`, etc.); el componente cambia de aspecto bajo katachi.
+- **Marker** = el componente ya consumía tokens semánticos en su default; el bloque solo documenta y sirve como anchor de búsqueda.
 
 ---
 
@@ -140,7 +147,7 @@ Con `data-katachi="kintsugi"` activo, los siguientes tokens computan a:
 - Integración con `emit-tokens-css`
 - Documentación inicial (este archivo)
 
-### 🔲 Fase 2 — Awareness en componentes
+### ✅ Fase 2 — Awareness en componentes (completada)
 
 Añadir al final de cada componente prioritario el bloque ambient:
 
@@ -157,13 +164,14 @@ Añadir al final de cada componente prioritario el bloque ambient:
 **Especificidad**: `:host([variant="kintsugi"])` y `:host(:not([variant]))` son
 mutuamente exclusivos por construcción. El `variant=""` explícito siempre gana.
 
-**Orden de adopción** (un PR por grupo):
-1. `lib-card` — más usado
-2. `lib-button` + `lib-badge`
-3. `lib-header` + `lib-sidebar` — estructurales
-4. `lib-alert` + `lib-input` + `lib-select` — formularios
+**Adopción ejecutada** (PRs mergeados a `main` el 2026-05-15):
+1. `lib-card` — #289
+2. `lib-button` + `lib-badge` — #290
+3. `lib-header` + `lib-sidebar` — #291
+4. `lib-alert` + `lib-input` + `lib-select` — #292
+5. Rollout B1–B6 (29 componentes restantes) — #296 → #301
 
-### 🔲 Fase 3 — `<lib-canvas>` wrapper opcional
+### ✅ Fase 3 — `<lib-canvas>` wrapper (en review #303)
 
 Componente que refleja `katachi="…"` como `data-katachi` en el host. Útil para
 type-safety y futura propagación JS (eventos, `prefers-reduced-motion` por zona).
@@ -171,10 +179,24 @@ type-safety y futura propagación JS (eventos, `prefers-reduced-motion` por zona
 ```typescript
 @customElement('lib-canvas')
 export class LibCanvas extends LitElement {
-  @property({ reflect: true, attribute: 'katachi' })
-  katachi: KatachiId = 'shizen';
-  // CSS: :host { display: contents; }
+  @property({ type: String, reflect: true })
+  katachi: KatachiId | '' = '';
+
+  override willUpdate(changed: Map<string, unknown>): void {
+    if (changed.has('katachi')) {
+      if (this.katachi) this.setAttribute('data-katachi', this.katachi);
+      else              this.removeAttribute('data-katachi');
+    }
+  }
 }
+```
+
+Uso desde apps consumidoras con tipado:
+
+```html
+<lib-canvas katachi="kintsugi" display="block" pad="xl">
+  <lib-card>…</lib-card>
+</lib-canvas>
 ```
 
 ---
@@ -219,5 +241,7 @@ element hosts). Katachi extiende este patrón añadiendo soporte light-DOM via
 - Plan completo de implementación: `~/.claude/plans/pure-watching-biscuit.md`
 - Documento maestro visual: `~/.claude/plans/shibui-katachi-master.html`
 - Matriz componentes × efectos × superficies: `effects-x-surfaces.md`
+- Guía de migración para apps consumidoras: `docs/styles/katachi-migration.md`
+- Showcase visual en Storybook: `Foundations/Katachi (形)`
 - Plugin de build: `packages/shibui-ui/.config/vite.config.ts` (función `emit-tokens-css`)
 - Definición de tokens: `packages/shibui-ui/src/styles/shared/tokens/_katachi.css`
