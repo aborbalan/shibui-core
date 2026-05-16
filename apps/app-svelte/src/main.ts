@@ -1,4 +1,5 @@
 import { mount } from 'svelte'
+import '@shibui-ui/ui/tokens'
 import './app.css'
 import App from './App.svelte'
 

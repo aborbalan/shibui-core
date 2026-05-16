@@ -1,38 +1,37 @@
 <script lang="ts">
-
-  import Counter from './lib/Counter.svelte'
   import { onMount } from 'svelte';
+  import { route, navigate } from './lib/router';
+  import { isAuthenticated } from './lib/auth';
+  import Home from './routes/Home.svelte';
+  import Login from './routes/Login.svelte';
+  import Kitchen from './routes/Kitchen.svelte';
 
-onMount(async () => {
-  // Esto asegura que el código de Lit solo se ejecute cuando el DOM esté listo
-  await import("@shibui-ui/ui");
-});
-export const ssr = false;
+  onMount(async () => {
+    await import('@shibui-ui/ui');
+  });
+
+  function onKeydown(e: KeyboardEvent) {
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
+      e.preventDefault();
+      navigate('/admin/login');
+    }
+  }
+
+  let authed = $derived($isAuthenticated);
+  let path = $derived($route);
+
+  $effect(() => {
+    if (path === '/admin/kitchen-sink' && !authed) navigate('/admin/login');
+    if (path === '/admin') navigate('/admin/kitchen-sink');
+  });
 </script>
 
-<main>
+<svelte:window on:keydown={onKeydown} />
 
-  <h1>Prueba en Svelte</h1>
-<lib-button variant="primary">Botón Shibui</lib-button>
-
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
-</main>
-
-<style>
-
-  .read-the-docs {
-    color: #888;
-  }
-</style>
+{#if path === '/admin/login'}
+  <Login />
+{:else if path === '/admin/kitchen-sink' && authed}
+  <Kitchen />
+{:else}
+  <Home />
+{/if}
