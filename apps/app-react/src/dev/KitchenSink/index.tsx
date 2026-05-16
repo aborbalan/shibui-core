@@ -1,31 +1,39 @@
-// apps/app-react/src/pages/KitchenSink/index.tsx
-import React from 'react';
-import { OrganismsSink } from './OrganismsSink';
+import { useState } from 'react';
 import { AtomsSink } from './AtomSink';
 import { MoleculesSink } from './MoleculesSink';
+import { OrganismsSink } from './OrganismsSink';
+import { KatachiSwitcher } from './KatachiSwitcher';
+import type { KatachiId } from './catalog';
 
 export const KitchenSink: React.FC = () => {
-  return (
-    <div style={{ 
-      width: '100%',
-      minHeight: '100vh',
-      backgroundColor: 'var(--bg-base)',
-      color: 'var(--color-washi-50)',
-      padding: 'var(--lib-space-xl)',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center'
-    }}>
-      <header style={{ marginBottom: 'var(--lib-space-2xl)' }}>
-        <h1 style={{ fontSize: 'var(--text-3xl)', marginBottom: '0.5rem' }}>Kitchen Sink</h1>
-        <p style={{ color: 'var(--color-washi-400)' }}>Refactorizado por niveles de Atomic Design</p>
-      </header>
+  const [katachi, setKatachi] = useState<KatachiId | ''>('');
 
-      <main style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
+  return (
+    <div style={{ minHeight: '100vh', background: 'var(--bg-base)', color: 'var(--text-primary)' }}>
+      <KatachiSwitcher value={katachi} onChange={setKatachi} />
+
+      <div
+        {...(katachi ? { 'data-katachi': katachi } : {})}
+        style={{
+          padding: 'var(--lib-space-xl)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'var(--lib-space-2xl)',
+        }}
+      >
+        <header style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-xs)' }}>
+          <h1 style={{ fontSize: 'var(--text-3xl)', margin: 0 }}>Kitchen Sink</h1>
+          <p style={{ color: 'var(--text-muted)', margin: 0 }}>
+            78 componentes <code>lib-*</code> bajo contexto Katachi{' '}
+            <strong style={{ color: 'var(--text-primary)' }}>{katachi || 'none'}</strong>.
+            Cambia el switcher arriba para reevaluar la propagación.
+          </p>
+        </header>
+
         <AtomsSink />
         <MoleculesSink />
         <OrganismsSink />
-      </main>
+      </div>
     </div>
   );
 };
