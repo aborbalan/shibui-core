@@ -6,7 +6,7 @@ import type { LibTextGlitch } from './lib-text-glitch.component';
 type LibTextGlitchArgs = Pick<LibTextGlitch, 'text' | 'variant' | 'trigger' | 'active'>;
 
 const meta: Meta<LibTextGlitchArgs> = {
-  title: 'Components/Atoms/Text Glitch',
+  title: 'Content/Text Glitch',
   tags:['autodocs'],
   component: 'lib-text-glitch',
   argTypes: {

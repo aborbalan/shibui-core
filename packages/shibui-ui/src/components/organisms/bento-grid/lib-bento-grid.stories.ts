@@ -4,7 +4,7 @@ import './lib-bento-grid.component';
 import './../../atoms/bento-item/lib-bento-item.component';
 
 const meta: Meta = {
-  title: 'Components/Layout/Bento Grid',
+  title: 'Layout/Bento Grid',
   tags:['autodocs'],
   component: 'lib-bento-grid',
   argTypes: {

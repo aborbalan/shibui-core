@@ -9,7 +9,7 @@ import type { LibTimeline } from './lib-timeline.component';
 type Args = Partial<LibTimeline>;
 
 const meta: Meta<Args> = {
-  title: 'Components/Organisms/Timeline',
+  title: 'Content/Timeline',
   tags:['autodocs'],
   component: 'lib-timeline',
   argTypes: {

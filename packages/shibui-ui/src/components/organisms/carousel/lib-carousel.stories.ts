@@ -6,7 +6,7 @@ import type { LibCarousel } from './lib-carousel.component';
 type CarouselArgs = Pick<LibCarousel, 'mode' | 'peek' | 'arrows' | 'dots' | 'counter' | 'loop' | 'autoplay'>;
 
 const meta: Meta<CarouselArgs> = {
-  title: 'Components/Organisms/Carousel',
+  title: 'Motion/Carousel',
   tags:['autodocs'],
   component: 'lib-carousel',
   argTypes: {

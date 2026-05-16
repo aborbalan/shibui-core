@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-rating.component';
 
 const meta: Meta = {
-  title: 'Components/Forms/Rating',
+  title: 'Forms/Rating',
   tags:['autodocs'],
   component: 'lib-rating',
   argTypes: {

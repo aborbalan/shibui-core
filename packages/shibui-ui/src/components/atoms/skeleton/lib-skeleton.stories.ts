@@ -12,7 +12,7 @@ const preview = (bg: string, content: TemplateResult): TemplateResult => html`
 `;
 
 const meta: Meta<LibSkeletonStoryArgs> = {
-  title: 'Components/Atoms/Skeleton',
+  title: 'Feedback/Skeleton',
   tags:['autodocs'],
   component: 'lib-skeleton',
 

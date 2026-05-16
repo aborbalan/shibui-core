@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-chip.component';
 
 const meta: Meta = {
-  title: 'Components/Atoms/Chip',
+  title: 'Actions/Chip',
   tags:['autodocs'],
   component: 'lib-chip',
   argTypes: {

@@ -9,7 +9,7 @@ type LibAvatarStoryArgs = Pick<LibAvatar, 'src' | 'name' | 'size' | 'shape' | 'c
 const DEMO_IMG = 'https://i.pravatar.cc/200?img=32';
 
 const meta: Meta<LibAvatarStoryArgs> = {
-  title: 'Components/Atoms/Avatar',
+  title: 'Content/Avatar',
   tags:['autodocs'],
   component: 'lib-avatar',
 

@@ -41,7 +41,7 @@ const LINKS_GLITCH: SidebarLink[] = [
 
 /* ── Meta ── */
 const meta: Meta<StoryArgs> = {
-  title: 'Components/Organisms/Sidebar',
+  title: 'Navigation/Sidebar',
   tags:['autodocs'],
   component: 'lib-sidebar',
   parameters: { layout: 'fullscreen' },

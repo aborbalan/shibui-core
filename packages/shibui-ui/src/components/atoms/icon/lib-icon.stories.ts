@@ -9,7 +9,7 @@ interface IconStoryArgs {
 }
 
 const meta: Meta<IconStoryArgs> = {
-  title: 'Components/Display/Icon',
+  title: 'Content/Icon',
   tags:['autodocs'],
   component: 'lib-icon',
   argTypes: {

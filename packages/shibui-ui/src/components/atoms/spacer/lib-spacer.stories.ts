@@ -3,7 +3,7 @@ import { html, TemplateResult } from 'lit';
 import './lib-spacer.component';
 
 export default {
-  title: 'Components/Atoms/Spacer',
+  title: 'Foundations/Spacing/Spacer',
   tags:['autodocs'],
   component: 'lib-spacer',
   argTypes: {

@@ -10,7 +10,7 @@ interface SelectOptionArgs {
 }
 
 const meta: Meta<SelectOptionArgs> = {
-  title: 'Components/Atoms/SelectOption',
+  title: 'Forms/Select Option',
   tags:['autodocs'],
   component: 'lib-select-option',
   argTypes: {

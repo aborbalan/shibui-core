@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import "./lib-stagger-container.component";
 
 const meta: Meta = {
-  title: "Components/Organisms/StaggerContainer",
+  title: "Motion/Stagger",
   tags: ["autodocs"],
   component: "lib-stagger-container",
   parameters: {
