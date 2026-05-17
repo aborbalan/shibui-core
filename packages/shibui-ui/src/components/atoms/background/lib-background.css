@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-BACKGROUND — Shibui UI
-   34 variantes: 10 light · 10 dark · 5 gradient · 5 animated · 4 canvas
+   55 variantes: 16 light · 16 dark · 8 gradient · 9 animated · 6 canvas
    ============================================================ */
 
 @layer reset {
@@ -467,7 +467,7 @@
 
     /* 36 · shoji — 障子 paper screen */
     :host([variant="shoji"]) .bg-base {
-        background-color: #FDFAF6;
+        background-color: var(--color-washi-50);
         background-image:
             linear-gradient(rgb(160, 140, 118, 0.07) 1px, transparent 1px),
             linear-gradient(90deg, rgb(160, 140, 118, 0.07) 1px, transparent 1px),
@@ -510,14 +510,36 @@
 
     /* 39 · chirimen — 縮緬 crepe silk fine crinkle */
     :host([variant="chirimen"]) .bg-base {
-        background-color: #FAF6F0;
+        background-color: var(--color-washi-50);
         background-image:
             url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9 0.3' numOctaves='3' seed='5' stitchTiles='stitch'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='2' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23c)' fill='rgb(160,140,118)' opacity='0.04'/%3E%3C/svg%3E");
         background-repeat: repeat;
     }
 
+    /* 40 · celadon-wash — 青磁洗い light celadon-tinted paper */
+    :host([variant="celadon-wash"]) .bg-base {
+        background-color: var(--color-celadon-50);
+        background-image:
+            radial-gradient(ellipse 70% 60% at 70% 30%,
+                rgb(78, 148, 130, 0.08) 0%,
+                transparent 65%),
+            radial-gradient(ellipse 50% 40% at 20% 70%,
+                rgb(78, 148, 130, 0.05) 0%,
+                transparent 60%),
+            repeating-linear-gradient(0deg,
+                transparent,
+                transparent 3px,
+                rgb(78, 148, 130, 0.025) 3px,
+                rgb(78, 148, 130, 0.025) 4px),
+            repeating-linear-gradient(90deg,
+                transparent,
+                transparent 3px,
+                rgb(78, 148, 130, 0.025) 3px,
+                rgb(78, 148, 130, 0.025) 4px);
+    }
+
     /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
-       DARK — Nuevas (40–44)
+       DARK — Nuevas (41–45)
     ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
 
     /* 40 · obsidian — 黒曜石 mineral shimmer */
@@ -577,8 +599,20 @@
                 rgb(184, 90, 30, 0.04) 100%);
     }
 
+    /* 46 · celadon — 青磁 deep jade surface */
+    :host([variant="celadon"]) .bg-base {
+        background-color: #050B09;
+        background-image:
+            linear-gradient(rgb(78, 148, 130, 0.055) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(78, 148, 130, 0.055) 1px, transparent 1px),
+            radial-gradient(ellipse 60% 50% at 50% 50%,
+                rgb(78, 148, 130, 0.06) 0%,
+                transparent 70%);
+        background-size: 40px 40px, 40px 40px, auto;
+    }
+
     /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
-       GRADIENTS — Nuevos (45–47)
+       GRADIENTS — Nuevos (47–49)
     ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
 
     /* 45 · sakura — 桜 rosa-washi suave */
@@ -739,8 +773,80 @@
         }
     }
 
+    /* 54 · glitch — CRT terminal jitter */
+    :host([variant="glitch"]) .bg-base {
+        background: #050A08;
+        background-image: repeating-linear-gradient(0deg,
+                transparent 0,
+                transparent 3px,
+                rgb(250, 247, 244, 0.012) 3px,
+                rgb(250, 247, 244, 0.012) 4px);
+    }
+
+    :host([variant="glitch"]) .bg-overlay {
+        background: transparent;
+        animation: bg-glitch-jitter 6s steps(1) infinite;
+    }
+
+    :host([variant="glitch"]) .bg-overlay::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--color-celadon-400);
+        pointer-events: none;
+    }
+
+    :host([variant="glitch"]) .bg-overlay::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(0deg,
+                transparent,
+                transparent 3px,
+                rgb(255, 255, 255, 0.012) 3px,
+                rgb(255, 255, 255, 0.012) 4px);
+        pointer-events: none;
+    }
+
+    @keyframes bg-glitch-jitter {
+        0%,
+        85%,
+        100% {
+            transform: none;
+            opacity: 1;
+        }
+
+        86% {
+            transform: translateX(-3px);
+            opacity: 0.85;
+        }
+
+        87% {
+            transform: translateX(3px);
+            opacity: 0.9;
+        }
+
+        88% {
+            transform: translateX(-1px);
+            opacity: 1;
+        }
+
+        89% {
+            transform: translateX(0);
+            opacity: 0.7;
+        }
+
+        90% {
+            transform: translateX(2px);
+            opacity: 1;
+        }
+    }
+
     /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
-       CANVAS BASE COLORS — Nuevas (51–52)
+       CANVAS BASE COLORS — Nuevas (55–56)
     ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
 
     :host([variant="fireflies"]) {
@@ -825,4 +931,21 @@
             transform: translateX(200%);
         }
     }
+
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-background es un PRODUCER de superficie: 55 variants
+       (washi, sumi, kintsugi, glitch, celadon, celadon-wash,
+       celadon-mist, particles, fireflies, etc.) implementan su efecto visual de forma
+       autónoma. NO consume superficie del ancestro — la produce.
+
+       Por tanto el katachi no se aplica como override: cada
+       variant es ya una identidad estética completa. Para
+       coordinar con un katachi específico, usar la variant
+       correspondiente (e.g. variant="kintsugi" bajo
+       data-katachi="kintsugi").
+
+       Bloque marcador para discoverability.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
 }

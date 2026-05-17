@@ -1,9 +1,8 @@
 import { html, nothing, svg, TemplateResult } from 'lit';
+import type { LibStepStatus, LibStepOrientation } from './lib-step.types';
 
-export type LibStepStatus      = 'pending' | 'active' | 'completed' | 'error';
-export type LibStepOrientation = 'horizontal' | 'vertical';
-export type LibStepVariant     = 'default' | 'minimal' | 'kintsugi';
-export type LibStepSize        = 'sm' | 'md' | 'lg';
+export type { LibStepStatus, LibStepOrientation } from './lib-step.types';
+export type { LibStepVariant, LibStepSize } from './lib-step.types';
 
 export interface StepTemplateProps {
   index:       number;

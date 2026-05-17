@@ -4,7 +4,7 @@ import './lib-button-group.component';
 import '../../atoms/button/lib-button.component';
 
 const meta: Meta = {
-  title: 'Components/Molecules/ButtonGroup',
+  title: 'Actions/Button Group',
   tags:['autodocs'],
   component: 'lib-button-group',
   argTypes: {

@@ -377,4 +377,31 @@
     .rs-fill, .rs-fill-dual { transition: none; }
     .rs input[type="range"]::-webkit-slider-thumb { transition: none; }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     Default fill (--rs-fill-color: washi-900) y track-bg
+     (--rs-track-bg: washi-200) son los valores que representan
+     superficie/inverso en light. Swap a tokens semánticos para
+     que el slider sin tone explícito se adapte al katachi.
+
+     Los tones explícitos (kaki/celadon/error/washi/dark) son
+     paletas deliberadas y siguen ganando. El tooltip washi-900/50
+     también se actualiza para coherencia.
+     ─────────────────────────────────────────────────────────── */
+
+  .rs {
+    --rs-fill-color: var(--bg-inverse);
+    --rs-track-bg:   var(--border-subtle);
+  }
+
+  .rs-tooltip-bubble {
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+  }
+
+  .rs-tooltip-bubble::after {
+    border-top-color: var(--bg-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

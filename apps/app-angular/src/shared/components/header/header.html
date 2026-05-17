@@ -3,7 +3,7 @@
   logo-mark="渋"
   brand-name="shibui"
   brand-tagline="shibui"
-  logo-href="#"
+  logo-href="/"
   version="1.0.0"
   login-label="Login"
   login-href="#"
@@ -11,4 +11,6 @@
   search-placeholder="Buscar..."
   [links]="DEFAULT_LINKS"
   [actions]="DEFAULT_ACTIONS"
+  (ui-lib-header-link)="onLinkClick($event)"
+  (ui-lib-header-action)="onActionClick($event)"
 ></lib-header>

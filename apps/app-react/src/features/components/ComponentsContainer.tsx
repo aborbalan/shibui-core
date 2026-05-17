@@ -1,66 +1,89 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { LibBackground } from "@shibui-ui/ui/react";
+import { LibDisplayHeading, LibInput } from "@shibui-ui/ui/react";
 import { useCategoriesWithComponents } from "../../data/api/domain/components/hooks/useComponents";
 import { ComponentsGrid } from "./components/ComponentsGrid";
+import type { CategoryWithComponentsDto } from "../../data/api/domain/components/api/components.api";
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+function filterCategories(
+  categories: CategoryWithComponentsDto[],
+  query: string
+): CategoryWithComponentsDto[] {
+  if (!query.trim()) return categories;
+  const q = query.toLowerCase();
+  return categories
+    .map((cat) => ({
+      ...cat,
+      components: cat.components.filter(
+        (c) =>
+          c.name.toLowerCase().includes(q) ||
+          c.tagName.toLowerCase().includes(q) ||
+          c.description.toLowerCase().includes(q) ||
+          c.tags.some((t) => t.toLowerCase().includes(q))
+      ),
+    }))
+    .filter((cat) => cat.components.length > 0);
+}
+
+// ─── Component ───────────────────────────────────────────────────────────────
 
 export const ComponentsContainer: React.FC = () => {
   const navigate = useNavigate();
   const { data: categories = [], isPending, error } = useCategoriesWithComponents();
+  const [query, setQuery] = React.useState("");
 
-  const handleSelect = (slug: string) => {
-    navigate(`/componentes/${slug}`);
-  };
+  const filtered = filterCategories(categories, query);
+  const totalComponents = categories.reduce((acc, c) => acc + c.components.length, 0);
+
+  const handleSelect = (slug: string) => navigate(`/componentes/${slug}`);
 
   return (
-    <LibBackground variant="midnight">
-      <div
-        style={{
-          maxWidth: "1080px",
-          margin: "0 auto",
-          padding: "calc(56px + 3rem) clamp(1.5rem, 4vw, 3.5rem) 6rem",
-        }}
-      >
-        <header style={{ marginBottom: "3rem" }}>
-          <p
-            style={{
-              fontFamily: "var(--lib-font-mono)",
-              fontSize: "0.65rem",
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "var(--color-kaki-400)",
-              marginBottom: "0.75rem",
-            }}
-          >
-            Design System
-          </p>
-          <h1
-            style={{
-              fontSize: "clamp(2rem, 5vw, 3rem)",
-              fontWeight: 600,
-              marginBottom: "0.75rem",
-            }}
-          >
-            Componentes
-          </h1>
-          <p
-            style={{
-              fontSize: "1rem",
-              color: "var(--color-ink-300)",
-              maxWidth: "52ch",
-            }}
-          >
-            {!isPending && !error && `${categories.reduce((acc, c) => acc + c.components.length, 0)} componentes · ${categories.length} categorías`}
-          </p>
-        </header>
+    <div
+      style={{
+        maxWidth: "1080px",
+        margin: "0 auto",
+        padding: "calc(56px + 3rem) clamp(1.5rem, 4vw, 3.5rem) 6rem",
+      }}
+    >
+        {/* Título */}
+        <div style={{ marginBottom: "2.5rem" }}>
+          <LibDisplayHeading
+            tag="h1"
+            size="md"
+            surface="light"
+            line1="Librería de"
+            accent="componentes"
+            description={
+              !isPending && !error
+                ? `${totalComponents} componentes · ${categories.length} categorías`
+                : undefined
+            }
+          />
+        </div>
 
+        {/* Buscador */}
+        <div style={{ maxWidth: "420px", marginBottom: "2.5rem" }}>
+          <LibInput
+            placeholder="Buscar por nombre, tag o descripción…"
+            value={query}
+            onUiLibInput={(e: CustomEvent<{ value: string }>) =>
+              setQuery(e.detail.value)
+            }
+          >
+            <lib-icon slot="prefix" name="magnifying-glass" size="sm" />
+          </LibInput>
+        </div>
+
+        {/* Grid */}
         <ComponentsGrid
-          categories={categories}
+          categories={filtered}
           onSelect={handleSelect}
           isLoading={isPending}
           error={error}
+          emptySearch={query.trim().length > 0 && filtered.length === 0}
         />
-      </div>
-    </LibBackground>
+    </div>
   );
 };

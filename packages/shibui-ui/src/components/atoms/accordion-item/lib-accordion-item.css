@@ -131,4 +131,18 @@
       transition: none;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-accordion-item ya consume tokens semánticos via la API de
+     CSS custom properties (--accordion-item-body-bg →
+     --bg-elevated, --accordion-item-trigger-hover-bg →
+     --bg-surface, etc.). Hereda el katachi por construcción.
+
+     El padre lib-accordion sobreescribe esta API para sus variantes
+     (accent, flush…) y mantiene la coherencia katachi.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

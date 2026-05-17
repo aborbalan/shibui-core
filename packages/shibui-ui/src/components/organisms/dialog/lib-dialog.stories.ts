@@ -15,7 +15,7 @@ type DialogStoryArgs = Pick<
 >;
 
 const meta: Meta<DialogStoryArgs> = {
-  title: 'Components/Organisms/Dialog',
+  title: 'Overlay/Dialog',
   tags:['autodocs'],
   component: 'lib-dialog',
   argTypes: {

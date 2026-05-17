@@ -11,7 +11,7 @@ const stageLight = (c: ReturnType<typeof html>): TemplateResult =>
   html`<div style="padding:2.5rem;background:#fff;">${c}</div>`;
 
 const meta: Meta<LibContentPillar> = {
-  title: "Data Display/ContentPillar",
+  title: "Content/Content Pillar",
   tags:['autodocs'],
   component: "lib-content-pillar",
   parameters: { layout: "fullscreen", backgrounds: { default: "dark" } },

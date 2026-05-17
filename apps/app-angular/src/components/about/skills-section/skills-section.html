@@ -1,0 +1,28 @@
+<section class="skills-section">
+  <div class="section-header">
+    <lib-eyebrow color="dark" size="sm" class="eyebrow">Skills · Stack técnico</lib-eyebrow>
+    <lib-display-heading
+      tag="h2"
+      size="sm"
+      surface="dark"
+      line1="Herramientas"
+      accent="del oficio"
+    ></lib-display-heading>
+  </div>
+
+  <div class="skills-grid">
+    @for (group of skillGroups(); track group.category) {
+      <div class="skill-group">
+        <div class="group-header">
+          <span class="group-kanji">{{ getKanji(group.category) }}</span>
+          <span class="group-label">{{ group.label }}</span>
+        </div>
+        <div class="skill-badges">
+          @for (skill of sortedSkills(group); track skill.id) {
+            <lib-badge [variant]="getVariant(group.category)">{{ skill.name }}</lib-badge>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

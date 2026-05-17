@@ -1,5 +1,5 @@
 import React from "react";
-import { LibComponentGrid } from "@shibui-ui/ui/react";
+import { LibComponentGrid, LibSpinner, LibAlert, LibDivider, LibEmptyState } from "@shibui-ui/ui/react";
 import type { CategoryWithComponentsDto } from "../../../data/api/domain/components/api/components.api";
 import { ComponentCard } from "./ComponentCard";
 
@@ -8,6 +8,7 @@ interface ComponentsGridProps {
   onSelect: (slug: string) => void;
   isLoading?: boolean;
   error?: Error | null;
+  emptySearch?: boolean;
 }
 
 const sectionStyle: React.CSSProperties = {
@@ -19,24 +20,8 @@ const headingStyle: React.CSSProperties = {
   fontSize: "0.7rem",
   letterSpacing: "0.12em",
   textTransform: "uppercase",
-  color: "var(--color-kaki-400)",
-  marginBottom: "1rem",
-  paddingBottom: "0.5rem",
-  borderBottom: "1px solid color-mix(in oklch, var(--color-kaki-600) 30%, transparent)",
-};
-
-const loadingStyle: React.CSSProperties = {
-  color: "var(--color-kaki-300)",
-  fontFamily: "var(--lib-font-mono)",
-  fontSize: "0.8rem",
-  padding: "2rem 0",
-};
-
-const errorStyle: React.CSSProperties = {
-  color: "color-mix(in oklch, red 60%, white)",
-  fontFamily: "var(--lib-font-mono)",
-  fontSize: "0.8rem",
-  padding: "2rem 0",
+  color: "var(--color-kaki-700)",
+  marginBottom: "0.75rem",
 };
 
 export const ComponentsGrid: React.FC<ComponentsGridProps> = ({
@@ -44,16 +29,31 @@ export const ComponentsGrid: React.FC<ComponentsGridProps> = ({
   onSelect,
   isLoading,
   error,
+  emptySearch,
 }) => {
   if (isLoading) {
-    return <p style={loadingStyle}>Cargando componentes…</p>;
+    return (
+      <div style={{ display: "flex", justifyContent: "center", padding: "4rem 0" }}>
+        <LibSpinner size="lg" />
+      </div>
+    );
   }
 
   if (error) {
     return (
-      <p style={errorStyle}>
-        Error al cargar componentes: {error.message}
-      </p>
+      <LibAlert type="error" heading="Error al cargar componentes">
+        {error.message}
+      </LibAlert>
+    );
+  }
+
+  if (emptySearch) {
+    return (
+      <LibEmptyState
+        title="Sin resultados"
+        description="Ningún componente coincide con tu búsqueda."
+        icon="magnifying-glass"
+      />
     );
   }
 
@@ -67,6 +67,7 @@ export const ComponentsGrid: React.FC<ComponentsGridProps> = ({
               ({category.components.length})
             </span>
           </h2>
+          <LibDivider style={{ marginBottom: "1rem" }} />
           <LibComponentGrid>
             {category.components.map((component) => (
               <ComponentCard

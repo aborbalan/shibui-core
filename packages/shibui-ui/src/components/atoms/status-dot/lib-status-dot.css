@@ -202,7 +202,19 @@
       animation: none;
        opacity: 0; }
 
-    .sd             { 
+    .sd             {
       animation: none; }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     base .sd usa washi-400 → --text-muted (identical default,
+     adapta a katachi/dark). Status variants (online/offline/etc)
+     usan paleta semántica intencional sin cambios.
+     ─────────────────────────────────────────────────────────── */
+
+  .sd {
+    background: var(--text-muted);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

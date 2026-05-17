@@ -596,4 +596,15 @@
   :host([size="lg"]) .tl-card {
     padding: var(--lib-space-md) var(--lib-space-lg);
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-timeline tiene una mezcla heavy de tokens semánticos (--bg-*,
+     --text-*, --border-*) con algunas refs hardcoded para detalles
+     de nodos y connectors. La estructura base adapta bien al katachi.
+
+     Refinamientos surgical pueden venir en iteraciones futuras.
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

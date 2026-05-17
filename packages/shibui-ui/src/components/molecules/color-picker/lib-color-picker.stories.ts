@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-color-picker.component';
 
 const meta: Meta = {
-  title: 'Components/Organisms/ColorPicker',
+  title: 'Forms/Color Picker',
   tags:['autodocs'],
   component: 'lib-color-picker',
   argTypes: {

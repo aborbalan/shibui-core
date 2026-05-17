@@ -6,7 +6,7 @@ import type { LibKbd } from './lib-kbd.component';
 type KbdArgs = Pick<LibKbd, 'size' | 'variant' | 'pressed'>;
 
 const meta: Meta<KbdArgs> = {
-  title: 'Components/Atoms/Kbd',
+  title: 'Content/Kbd',
   tags:['autodocs'],
   component: 'lib-kbd',
   argTypes: {

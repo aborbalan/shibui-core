@@ -1,0 +1,253 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Katachi (形)" />
+
+# Katachi · 形 · Aesthetic contexts
+
+> **Katachi (形)** significa "forma, configuración". En Shibui UI es la capa que agrupa
+> **superficie + efectos + temperatura cromática** en una personalidad visual nombrada,
+> propagable a un árbol entero desde un único atributo en cualquier ancestro.
+
+Se activa con `data-katachi="x"` en cualquier elemento contenedor (o vía `<lib-canvas katachi="x">`). Las CSS custom properties propagan por herencia y atraviesan Shadow DOM, así que todos los descendientes adoptan el contexto sin más cableado.
+
+```html
+<body data-katachi="kintsugi">
+  <lib-card>…</lib-card>            <!-- adopta superficie kintsugi -->
+  <lib-button>…</lib-button>        <!-- adopta paleta kaki -->
+  <lib-glass-card>…</lib-glass-card><!-- glass silenciado (conflicto) -->
+</body>
+```
+
+---
+
+## Los 6 katachi
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+  gap: '16px',
+  margin: '24px 0'
+}}>
+
+  {/* WABI */}
+  <div data-katachi="wabi" style={{
+    background: 'oklch(11.39% 0.009 84.7deg)',
+    color: 'oklch(97.77% 0.003 68.35deg)',
+    padding: '24px',
+    borderRadius: '4px',
+    minHeight: '180px'
+  }}>
+    <div style={{display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:'16px'}}>
+      <strong style={{fontFamily:'monospace', fontSize:'11px', letterSpacing:'0.25em', textTransform:'uppercase', opacity:0.7}}>Wabi</strong>
+      <span style={{fontSize:'24px', opacity:0.5, fontFamily:"'Shippori Mincho',serif"}}>侘び</span>
+    </div>
+    <p style={{margin:0, fontFamily:"'Shippori Mincho',serif", fontSize:'13px', opacity:0.7, lineHeight:1.6}}>
+      Austero, brumoso. Dark + glass atmosférico reforzado.
+    </p>
+    <p style={{margin:'12px 0 0', fontFamily:'monospace', fontSize:'10px', opacity:0.5, letterSpacing:'0.08em'}}>
+      acento → celadon-400
+    </p>
+  </div>
+
+  {/* KINTSUGI */}
+  <div data-katachi="kintsugi" style={{
+    background: 'oklch(11.39% 0.009 84.7deg)',
+    color: 'oklch(97.77% 0.003 68.35deg / 0.7)',
+    padding: '24px',
+    borderRadius: '4px',
+    minHeight: '180px',
+    position: 'relative',
+    boxShadow: 'inset 0 0 0 1px oklch(45% 0.05 45deg / 0.4)'
+  }}>
+    <div style={{display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:'16px'}}>
+      <strong style={{fontFamily:'monospace', fontSize:'11px', letterSpacing:'0.25em', textTransform:'uppercase', color:'oklch(61.85% 0.149 48.72deg)'}}>Kintsugi</strong>
+      <span style={{fontSize:'24px', opacity:0.6, fontFamily:"'Shippori Mincho',serif", color:'oklch(61.85% 0.149 48.72deg)'}}>金継ぎ</span>
+    </div>
+    <p style={{margin:0, fontFamily:"'Shippori Mincho',serif", fontSize:'13px', opacity:0.7, lineHeight:1.6}}>
+      Reparado con oro. Kintsugi-border + spotlight reforzado.
+    </p>
+    <p style={{margin:'12px 0 0', fontFamily:'monospace', fontSize:'10px', opacity:0.5, letterSpacing:'0.08em'}}>
+      acento → kaki-400
+    </p>
+  </div>
+
+  {/* SABI */}
+  <div data-katachi="sabi" style={{
+    background: '#FAF7F4',
+    color: '#221C16',
+    padding: '24px',
+    borderRadius: '4px',
+    minHeight: '180px',
+    boxShadow: '4px 4px 0 0 #221C16',
+    border: '1px solid #221C16'
+  }}>
+    <div style={{display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:'16px'}}>
+      <strong style={{fontFamily:'monospace', fontSize:'11px', letterSpacing:'0.25em', textTransform:'uppercase'}}>Sabi</strong>
+      <span style={{fontSize:'24px', opacity:0.6, fontFamily:"'Shippori Mincho',serif"}}>寂び</span>
+    </div>
+    <p style={{margin:0, fontFamily:"'Shippori Mincho',serif", fontSize:'13px', color:'#7A6A5C', lineHeight:1.6}}>
+      Envejecido. Papel washi + shadow brutal de tinta.
+    </p>
+    <p style={{margin:'12px 0 0', fontFamily:'monospace', fontSize:'10px', color:'#9A8878', letterSpacing:'0.08em'}}>
+      acento → kaki-600
+    </p>
+  </div>
+
+  {/* TERMINAL */}
+  <div data-katachi="terminal" style={{
+    background: 'oklch(8% 0.012 200deg)',
+    color: 'oklch(75% 0.057 167.31deg)',
+    padding: '24px',
+    borderRadius: '0',
+    minHeight: '180px',
+    border: '1px solid oklch(58.33% 0.068 171.21deg / 0.3)',
+    boxShadow: '4px 4px 0 0 oklch(58.33% 0.068 171.21deg)'
+  }}>
+    <div style={{display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:'16px'}}>
+      <strong style={{fontFamily:'monospace', fontSize:'11px', letterSpacing:'0.25em', textTransform:'uppercase'}}>Terminal</strong>
+      <span style={{fontSize:'24px', opacity:0.6, fontFamily:'monospace'}}>{'>'}_</span>
+    </div>
+    <p style={{margin:0, fontFamily:'monospace', fontSize:'12px', lineHeight:1.6}}>
+      CRT digital duro. Glitch + scanlines + shadow brutal.
+    </p>
+    <p style={{margin:'12px 0 0', fontFamily:'monospace', fontSize:'10px', opacity:0.6, letterSpacing:'0.08em'}}>
+      acento → celadon-400
+    </p>
+  </div>
+
+  {/* SHIZEN */}
+  <div data-katachi="shizen" style={{
+    background: '#FFFFFF',
+    color: '#221C16',
+    padding: '24px',
+    borderRadius: '4px',
+    minHeight: '180px',
+    border: '1px solid #E5DDD3'
+  }}>
+    <div style={{display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:'16px'}}>
+      <strong style={{fontFamily:'monospace', fontSize:'11px', letterSpacing:'0.25em', textTransform:'uppercase'}}>Shizen</strong>
+      <span style={{fontSize:'24px', opacity:0.6, fontFamily:"'Shippori Mincho',serif"}}>自然</span>
+    </div>
+    <p style={{margin:0, fontFamily:"'Shippori Mincho',serif", fontSize:'13px', color:'#7A6A5C', lineHeight:1.6}}>
+      Natural, limpio, sin adorno. Estado base/reset.
+    </p>
+    <p style={{margin:'12px 0 0', fontFamily:'monospace', fontSize:'10px', color:'#9A8878', letterSpacing:'0.08em'}}>
+      acento → kaki-500
+    </p>
+  </div>
+
+  {/* CELADON */}
+  <div data-katachi="celadon" style={{
+    background: 'oklch(18% 0.025 178deg)',
+    color: 'oklch(90% 0.04 180deg)',
+    padding: '24px',
+    borderRadius: '4px',
+    minHeight: '180px',
+    boxShadow: 'inset 0 0 80px oklch(58.33% 0.068 171.21deg / 0.15)'
+  }}>
+    <div style={{display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:'16px'}}>
+      <strong style={{fontFamily:'monospace', fontSize:'11px', letterSpacing:'0.25em', textTransform:'uppercase'}}>Celadon</strong>
+      <span style={{fontSize:'24px', opacity:0.6, fontFamily:"'Shippori Mincho',serif"}}>青磁</span>
+    </div>
+    <p style={{margin:0, fontFamily:"'Shippori Mincho',serif", fontSize:'13px', opacity:0.8, lineHeight:1.6}}>
+      Jade, frío sereno. Spotlight water + glass compatible.
+    </p>
+    <p style={{margin:'12px 0 0', fontFamily:'monospace', fontSize:'10px', opacity:0.5, letterSpacing:'0.08em'}}>
+      acento → celadon-300
+    </p>
+  </div>
+
+</div>
+
+---
+
+## Cómo activarlo
+
+### 1 · Atributo en contenedor HTML
+
+```html
+<body data-katachi="kintsugi">
+  <!-- todo el árbol hereda el contexto -->
+</body>
+
+<section data-katachi="sabi">
+  <!-- solo esta sección adopta sabi -->
+</section>
+```
+
+### 2 · Wrapper tipado (`<lib-canvas>`)
+
+```html
+<lib-canvas katachi="kintsugi" display="block" pad="xl">
+  <lib-card>…</lib-card>
+</lib-canvas>
+```
+
+| Atributo | Valores | Notas |
+|----------|---------|-------|
+| `katachi` | `'' \| 'wabi' \| 'kintsugi' \| 'sabi' \| 'terminal' \| 'shizen' \| 'celadon'` | Tipado `KatachiId` en TS |
+| `display` | `'contents' \| 'block' \| 'flex'` | `contents` = sólo contexto, sin caja |
+| `pad` | `'' \| 'lg' \| 'xl' \| '2xl'` | Shortcut para box modes |
+| `min-h` | `'' \| 'screen'` | Útil para demo pages a viewport completo |
+
+### 3 · Atributo directo en un custom element
+
+```html
+<lib-card data-katachi="celadon">…</lib-card>
+```
+
+Selector dual `[data-katachi="x"], :host([data-katachi="x"])` garantiza que ambos patrones funcionan.
+
+---
+
+## Matriz de compatibilidad
+
+| Katachi | glass | spotlight | kintsugi-border | shadow-brutal |
+|---------|-------|-----------|-----------------|---------------|
+| **wabi**     | ✅ reforzado | ❌ off | 🔲 compatible | ❌ conflicto |
+| **kintsugi** | ❌ off | ✅ reforzado | ✅ reforzado | ❌ conflicto |
+| **sabi**     | ❌ off | ❌ off | ❌ conflicto | ✅ nativo |
+| **terminal** | ❌ off | ❌ off | ❌ conflicto | ✅ con tinte celadón |
+| **shizen**   | 🔲 compatible | ❌ off | 🔲 compatible | 🔲 compatible |
+| **celadon**  | 🔲 compatible (water) | ✅ reforzado (water) | 🔲 compatible | ❌ conflicto |
+
+Los efectos marcados como ❌ se **silencian** vía tokens (`--lib-glass-blur-amount: 0px`, etc.), no se prohíben. Un componente que los consume sigue renderizando, simplemente sin el efecto.
+
+---
+
+## Anidamiento
+
+Los katachi se anidan libremente — la regla del descendiente más cercano gana porque cada bloque redefine sus propios tokens semánticos:
+
+```html
+<section data-katachi="kintsugi">
+  <lib-card>…</lib-card>           <!-- kintsugi -->
+  <aside data-katachi="terminal">
+    <lib-card>…</lib-card>         <!-- terminal -->
+  </aside>
+</section>
+```
+
+---
+
+## Compatibilidad con `variant=""` explícito
+
+El sistema katachi **nunca pisa una variante explícita**:
+
+```html
+<section data-katachi="kintsugi">
+  <lib-card>kintsugi (ambient)</lib-card>
+  <lib-card variant="washi">washi (override explícito gana)</lib-card>
+</section>
+```
+
+`:host([variant="washi"])` y `:host(:not([variant]))` son mutuamente exclusivos por construcción, no por especificidad. El `variant=""` explícito siempre tiene la última palabra.
+
+---
+
+## Referencias
+
+- **Definición de tokens** — `src/styles/shared/tokens/_katachi.css`
+- **Estado y guía completa** — `src/styles/KATACHI.md`
+- **Matriz componentes × superficies × efectos** — `src/styles/effects-x-surfaces.md`
+- **Wrapper tipado** — `Components/Atoms/Canvas` (Storybook)

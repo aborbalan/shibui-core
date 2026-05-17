@@ -31,7 +31,7 @@ const cardInner = (label: string, title: string, body: string, code: string): Te
 `;
 
 const meta: Meta<LibSpotlightCardStoryArgs> = {
-  title: 'Components/Atoms/SpotlightCard',
+  title: 'Content/Card Spotlight',
   component: 'lib-spotlight-card',
   tags:['autodocs'],
   parameters: {

@@ -7,3 +7,4 @@ commitlint.config.cjs
 !src/**/*.stories.ts
 scripts/
 playwright.config.ts
+tests/

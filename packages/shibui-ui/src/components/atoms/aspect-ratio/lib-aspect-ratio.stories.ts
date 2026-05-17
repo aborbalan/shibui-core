@@ -3,7 +3,7 @@ import { html, TemplateResult } from 'lit';
 import './lib-aspect-ratio.component';
 
 const meta: Meta = {
-  title: 'Components/Atoms/AspectRatio',
+  title: 'Layout/Aspect Ratio',
   tags:['autodocs'],
   component: 'lib-aspect-ratio',
 };

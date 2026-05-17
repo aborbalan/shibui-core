@@ -418,4 +418,30 @@ dark     boolean — optimiza colores para fondos oscuros
     transform: rotate(218deg) translateX(27px) translateY(-50%);
     opacity: 0.06;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host([variant="enso"]) svg,
+    :host(:not([variant])) svg,
+    .sp-sumi,
+    .sp-kintsugi,
+    .sp-shizuku {
+      animation: none;
+    }
+  }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-spinner es un primitivo de loading state con 4 variants
+     (enso · sumi · kintsugi · shizuku) y 3 tones (ink · kaki ·
+     celadon) + dark attribute. Cada variant tiene su propia
+     paleta hardcoded en OKLCH — son identidades visuales
+     deliberadas (la tinta sumi negra, el oro kintsugi cálido,
+     etc.) que no deben adaptarse al katachi del ancestro.
+
+     Si necesitas un spinner que invierta bajo dark katachi,
+     usa el atributo [dark] explícito (existente).
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

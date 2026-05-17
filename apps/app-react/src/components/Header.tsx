@@ -73,7 +73,7 @@ export interface ShibuiHeaderProps {
 const DEFAULT_LINKS: NavLink[] = [
   { id: 'componentes', label: 'Componentes', href: '#componentes' },
   { id: 'tokens', label: 'Tokens', href: '#tokens' },
-  { id: 'filosofia', label: 'Filosofía', href: '/filosofia' },
+  { id: 'philosophy', label: 'Filosofía', href: '/philosophy' },
   { id: 'about', label: 'Sobre mí', href: '/about' }
 ];
 
@@ -120,7 +120,7 @@ export const ShibuiHeader: React.FC<ShibuiHeaderProps> = ({
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 200,
+        zIndex: 'var(--z-overlay)' as unknown as number,
         ...style,
       }}
       onUiLibHeaderLink={(e: CustomEvent) => onNavLink?.(e.detail.id)}

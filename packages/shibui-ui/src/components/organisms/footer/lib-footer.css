@@ -712,4 +712,15 @@
             grid-template-columns: 1fr;
         }
     }
+
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-footer tiene 4 variants (social default, accordion, kintsugi,
+       glitch) — cada una con tematización deliberada. El default
+       "social" usa paleta intencional dark para cierre de página.
+       El dev puede usar variant="..." explícito en katachi específicos.
+
+       Bloque marcador para discoverability.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
 }

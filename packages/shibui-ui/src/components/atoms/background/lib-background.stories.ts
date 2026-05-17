@@ -68,23 +68,24 @@ function bgGrid(
 
 /* ── Meta ── */
 const meta: Meta = {
-  title: "Components/Atoms/Background",
+  title: "Utilities/Background",
   tags:['autodocs'],
   component: "lib-background",
   parameters: {
     docs: {
       description: {
         component: `
-**lib-background** — 52 fondos decorativos derivados de los tokens Shibui.
+**lib-background** — 55 fondos decorativos derivados de los tokens Shibui.
 
 Úsalo como contenedor de sección, hero, card o panel. El contenido se proyecta en el \`slot\` por defecto.
 
 **Categorías:**
-- **Light (15)** — papeles y textiles japoneses: seigaiha, tatami, kagome, shoji, shibori…
-- **Dark (15)** — tinta sumi: kintsugi, ash-grid, forge, obsidian, void…
+- **Light (16)** — papeles y textiles japoneses: seigaiha, tatami, kagome, shoji, celadon-wash…
+- **Dark (16)** — tinta sumi: kintsugi, ash-grid, forge, obsidian, celadon…
 - **Gradient (8)** — mesh radial: aurora-light, sakura, twilight, jade-deep…
-- **Animated CSS (8)** — sin JS: breathing, pulse, fog, static…
+- **Animated CSS (9)** — sin JS: breathing, pulse, fog, static, glitch…
 - **Canvas (6)** — generativo: particles, fireflies, ink-wash, constellation…
+- **Celadon (4)** — familia jade completa: celadon-wash, celadon-mist, celadon, jade-deep…
 
 \`\`\`html
 <lib-background variant="fireflies" style="height: 400px;">
@@ -116,6 +117,7 @@ const meta: Meta = {
         "shibori",
         "ori",
         "chirimen",
+        "celadon-wash",
         /* Dark */
         "sumi",
         "sumi-grain",
@@ -132,6 +134,7 @@ const meta: Meta = {
         "void",
         "yami",
         "midnight",
+        "celadon",
         /* Gradient */
         "aurora-light",
         "kaki-glow",
@@ -150,6 +153,7 @@ const meta: Meta = {
         "pulse",
         "fog",
         "static",
+        "glitch",
         /* Canvas */
         "particles",
         "rain",
@@ -194,7 +198,7 @@ export const Playground: Story = {
 
 /* ── Light ── */
 export const Light: Story = {
-  name: "Light — Washi (15)",
+  name: "Light — Washi (16)",
   render: (): TemplateResult =>
     bgGrid([
       { variant: "washi", label: "01 · washi" },
@@ -212,29 +216,31 @@ export const Light: Story = {
       { variant: "shibori", label: "13 · 絞り shibori" },
       { variant: "ori", label: "14 · 織 ori" },
       { variant: "chirimen", label: "15 · 縮緬 chirimen" },
+      { variant: "celadon-wash", label: "16 · 青磁洗い celadon wash" },
     ]),
 };
 
 /* ── Dark ── */
 export const Dark: Story = {
-  name: "Dark — Sumi (15)",
+  name: "Dark — Sumi (16)",
   render: (): TemplateResult =>
     bgGrid([
-      { variant: "sumi", label: "16 · 墨 sumi", dark: true },
-      { variant: "sumi-grain", label: "17 · sumi grain", dark: true },
-      { variant: "kintsugi", label: "18 · 金継 kintsugi", dark: true },
-      { variant: "ash-grid", label: "19 · 灰 ash grid", dark: true },
-      { variant: "ink-dot", label: "20 · 点 ink dot", dark: true },
-      { variant: "mokume", label: "21 · 木目 mokume", dark: true },
-      { variant: "kumo", label: "22 · 雲 kumo", dark: true },
-      { variant: "temari", label: "23 · 手鞠 temari", dark: true },
-      { variant: "dusk", label: "24 · 宵 dusk", dark: true },
-      { variant: "embers", label: "25 · 炎 embers", dark: true },
-      { variant: "obsidian", label: "26 · 黒曜石 obsidian", dark: true },
-      { variant: "forge", label: "27 · 鍛冶 forge", dark: true },
-      { variant: "void", label: "28 · 虚空 void", dark: true },
-      { variant: "yami", label: "29 · 闇 yami", dark: true },
-      { variant: "midnight", label: "30 · 深夜 midnight", dark: true },
+      { variant: "sumi", label: "17 · 墨 sumi", dark: true },
+      { variant: "sumi-grain", label: "18 · sumi grain", dark: true },
+      { variant: "kintsugi", label: "19 · 金継 kintsugi", dark: true },
+      { variant: "ash-grid", label: "20 · 灰 ash grid", dark: true },
+      { variant: "ink-dot", label: "21 · 点 ink dot", dark: true },
+      { variant: "mokume", label: "22 · 木目 mokume", dark: true },
+      { variant: "kumo", label: "23 · 雲 kumo", dark: true },
+      { variant: "temari", label: "24 · 手鞠 temari", dark: true },
+      { variant: "dusk", label: "25 · 宵 dusk", dark: true },
+      { variant: "embers", label: "26 · 炎 embers", dark: true },
+      { variant: "obsidian", label: "27 · 黒曜石 obsidian", dark: true },
+      { variant: "forge", label: "28 · 鍛冶 forge", dark: true },
+      { variant: "void", label: "29 · 虚空 void", dark: true },
+      { variant: "yami", label: "30 · 闇 yami", dark: true },
+      { variant: "midnight", label: "31 · 深夜 midnight", dark: true },
+      { variant: "celadon", label: "32 · 青磁 celadon", dark: true },
     ]),
 };
 
@@ -280,27 +286,62 @@ export const Gradients: Story = {
   `,
 };
 
-/* ── Animated ── */
-export const Animated: Story = {
-  name: "Animated — CSS puro (8)",
+/* ── Celadon ── */
+export const Celadon: Story = {
+  name: "Celadon — Familia jade (4)",
   render: (): TemplateResult => html`
     <div
       style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:24px;background:#F2EDE6;"
     >
       ${(
         [
-          { variant: "breathing", label: "39 · breathing · 6s", dark: false },
+          { variant: "celadon-wash", label: "celadon-wash · light · papel jade", dark: false },
+          { variant: "celadon-mist", label: "celadon-mist · gradient · niebla jade", dark: false },
+          { variant: "celadon",      label: "celadon · dark · superficie jade", dark: true },
+          { variant: "jade-deep",   label: "jade-deep · gradient · profundidad jade", dark: true },
+        ] as Array<{ variant: LibBackgroundVariant; label: string; dark: boolean }>
+      ).map(
+        ({ variant, label, dark }) => html`
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <lib-background
+              variant="${variant}"
+              style="height:240px;border-radius:2px;display:block;"
+            >
+              ${dark ? DEMO_DARK : DEMO_LIGHT}
+            </lib-background>
+            <span
+              style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:#9A8878;"
+              >${label}</span
+            >
+          </div>
+        `,
+      )}
+    </div>
+  `,
+};
+
+/* ── Animated ── */
+export const Animated: Story = {
+  name: "Animated — CSS puro (9)",
+  render: (): TemplateResult => html`
+    <div
+      style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:24px;background:#F2EDE6;"
+    >
+      ${(
+        [
+          { variant: "breathing", label: "42 · breathing · 6s", dark: false },
           {
             variant: "aurora-drift",
-            label: "40 · aurora drift · 12s",
+            label: "43 · aurora drift · 12s",
             dark: true,
           },
-          { variant: "scan", label: "41 · scan · 5s", dark: true },
-          { variant: "ink-drop", label: "42 · ink drop · 4s", dark: false },
-          { variant: "shimmer", label: "43 · shimmer · 4s", dark: false },
-          { variant: "pulse", label: "44 · pulse · 4s", dark: true },
-          { variant: "fog", label: "45 · fog · 10s", dark: true },
-          { variant: "static", label: "46 · static · CRT", dark: true },
+          { variant: "scan", label: "44 · scan · 5s", dark: true },
+          { variant: "ink-drop", label: "45 · ink drop · 4s", dark: false },
+          { variant: "shimmer", label: "46 · shimmer · 4s", dark: false },
+          { variant: "pulse", label: "47 · pulse · 4s", dark: true },
+          { variant: "fog", label: "48 · fog · 10s", dark: true },
+          { variant: "static", label: "49 · static · CRT", dark: true },
+          { variant: "glitch", label: "50 · glitch · CRT 6s", dark: true },
         ] as Array<{
           variant: LibBackgroundVariant;
           label: string;
@@ -366,6 +407,53 @@ export const Canvas: Story = {
   `,
 };
 
+/* ── Katachi coverage ── */
+export const KatachiCoverage: Story = {
+  name: "Katachi — Guía de contextos",
+  render: (): TemplateResult => html`
+    <div style="display:flex;flex-direction:column;gap:2px;padding:24px;background:#F2EDE6;">
+      <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#9A8878;margin:0 0 20px;">
+        variante recomendada por contexto katachi
+      </p>
+      ${(
+        [
+          { katachi: "wabi · 侘び",     variants: ["washi", "washi-grain", "tatami"],                          dark: false },
+          { katachi: "kintsugi · 金継ぎ", variants: ["kintsugi"],                                               dark: true  },
+          { katachi: "sabi · 寂び",     variants: ["sumi", "ash-grid", "ink-dot"],                             dark: true  },
+          { katachi: "terminal",        variants: ["glitch", "scan", "static"],                                dark: true  },
+          { katachi: "shizen · 自然",   variants: ["particles", "rain", "constellation", "fireflies"],         dark: true  },
+          { katachi: "celadon · 青磁",  variants: ["celadon-wash", "celadon-mist", "celadon", "jade-deep"],   dark: false },
+        ] as Array<{ katachi: string; variants: LibBackgroundVariant[]; dark: boolean }>
+      ).map(
+        ({ katachi, variants, dark }) => html`
+          <div style="margin-bottom:20px;">
+            <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#7A6A5C;margin:0 0 6px;">
+              ${katachi}
+            </p>
+            <div style="display:grid;grid-template-columns:repeat(${variants.length},1fr);gap:8px;">
+              ${variants.map(
+                (variant) => html`
+                  <div style="display:flex;flex-direction:column;gap:4px;">
+                    <lib-background
+                      variant="${variant}"
+                      style="height:120px;border-radius:2px;display:block;"
+                    >
+                      ${dark ? DEMO_DARK : DEMO_LIGHT}
+                    </lib-background>
+                    <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#9A8878;">
+                      ${variant}
+                    </span>
+                  </div>
+                `,
+              )}
+            </div>
+          </div>
+        `,
+      )}
+    </div>
+  `,
+};
+
 /* ── Hero real ── */
 export const HeroExample: Story = {
   name: "Uso real — Hero",
@@ -401,7 +489,7 @@ export const HeroExample: Story = {
         >
           <span
             style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(250,247,244,0.2);"
-            >蛍 · 52 · backgrounds</span
+            >蛍 · 55 · backgrounds</span
           >
           <h2
             style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:300;letter-spacing:-0.02em;color:rgba(250,247,244,0.55);margin:0;"

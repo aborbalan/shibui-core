@@ -1,0 +1,9 @@
+.philosophy-wrapper {
+  padding-top: calc(80px + clamp(2rem, 5vh, 4rem));
+
+  .content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 5vw, 5rem);
+  }
+}

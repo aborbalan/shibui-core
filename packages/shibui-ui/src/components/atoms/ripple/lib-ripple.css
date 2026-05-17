@@ -25,4 +25,14 @@
         opacity: 0;
       }
     }
+
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-ripple es un overlay de feedback táctil. Su color se
+       define vía --lib-ripple-color (prop inline). No consume
+       superficie del ancestro.
+
+       Bloque marcador para discoverability.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
   } /* Asegúrate de que solo haya UNA llave aquí */

@@ -205,4 +205,105 @@
   :host([glass][variant="primary"]) .btn::after {
     display: none;
   }
+
+  /* ============================================================
+     KINTSUGI — Borde dorado fractura
+     ============================================================ */
+
+  :host([variant="kintsugi"]) .btn {
+    background: var(--color-washi-950);
+    color: var(--color-washi-50);
+    border-color: transparent;
+  }
+
+  :host([variant="kintsugi"]) .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: var(--lib-kintsugi-border);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @media (hover: hover) {
+    :host([variant="kintsugi"]) .btn:hover {
+      background: var(--color-washi-900);
+    }
+  }
+
+  /* ============================================================
+     BRUTAL — Sombra sólida ink, hover hunde
+     ============================================================ */
+
+  :host([variant="brutal"]) .btn {
+    background: var(--color-washi-50);
+    color: var(--color-ink-100);
+    border: 2px solid var(--color-ink-100);
+    box-shadow: var(--lib-shadow-brutal);
+    border-radius: 0;
+    transition:
+      transform var(--duration-fast) var(--ease-default),
+      box-shadow var(--duration-fast) var(--ease-default);
+  }
+
+  @media (hover: hover) {
+    :host([variant="brutal"]) .btn:hover {
+      transform: translate(4px, 4px);
+      box-shadow: none;
+    }
+  }
+
+  :host([variant="brutal"]) .btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+  }
+
+  /* ============================================================
+     SPOTLIGHT — Overlay reactivo al cursor
+     ============================================================ */
+
+  .spotlight-layer {
+    position: absolute;
+    inset: 0;
+    background: var(--lib-spotlight-gradient-white);
+    transition: var(--lib-spotlight-transition);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Sobre superficies claras → gradiente kaki */
+  :host([variant="brutal"]) .spotlight-layer,
+  :host([variant="secondary"]) .spotlight-layer,
+  :host([variant="ghost"]) .spotlight-layer {
+    background: var(--lib-spotlight-gradient);
+  }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     Cuando variant="primary" (default reflejado por Lit), el botón
+     hereda inversión semántica del katachi/tema activo.
+
+     Cambio: --color-washi-900/--color-washi-50 → --bg-inverse/--text-inverse
+     (valores idénticos en light mode default; bajo katachi dark o
+     [data-theme="dark"] el botón se invierte automáticamente y queda
+     legible sobre fondo oscuro).
+
+     Selector :host([variant="primary"]) es mutuamente excluyente con
+     secondary/ghost/accent/danger/kintsugi/brutal — esos variants
+     mantienen su styling explícito sin cambios.
+
+     Reglas relacionadas que no cambian:
+     - .btn::after (sweep kaki al hover)
+     - .btn:hover (box-shadow)
+     - [glass][variant="primary"] (variante water con --lib-glass-bg-water)
+     ─────────────────────────────────────────────────────────── */
+
+  :host([variant="primary"]) .btn {
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

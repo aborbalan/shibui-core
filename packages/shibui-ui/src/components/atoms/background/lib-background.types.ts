@@ -1,9 +1,9 @@
 /* ============================================================
    LIB-BACKGROUND — Tipos e interfaces públicas
-   52 variantes: 15 light · 15 dark · 8 gradient · 8 animated · 6 canvas
+   55 variantes: 16 light · 16 dark · 8 gradient · 9 animated · 6 canvas
    ============================================================ */
 
-/** 15 fondos light inspirados en papel y textil japonés */
+/** 16 fondos light inspirados en papel y textil japonés */
 export type LibBackgroundLight =
   | 'washi'
   | 'washi-grain'
@@ -20,9 +20,10 @@ export type LibBackgroundLight =
   | 'shoji'       /* 障子  paper screen fine grid */
   | 'shibori'     /* 絞り  tie-dye concentric circles */
   | 'ori'         /* 織   diagonal woven textile */
-  | 'chirimen';   /* 縮緬  crepe silk fine crinkle */
+  | 'chirimen'    /* 縮緬  crepe silk fine crinkle */
+  | 'celadon-wash'; /* 青磁洗い  light celadon-tinted paper */
 
-/** 15 fondos dark derivados de la tinta sumi */
+/** 16 fondos dark derivados de la tinta sumi */
 export type LibBackgroundDark =
   | 'sumi'
   | 'sumi-grain'
@@ -39,7 +40,8 @@ export type LibBackgroundDark =
   | 'forge'       /* 鍛冶   brasa naranja desde abajo */
   | 'void'        /* 虚空   vignette radial, oscuridad pura */
   | 'yami'        /* 闇     degradado de profundidad casi imperceptible */
-  | 'midnight';   /* 深夜   matriz de puntos finos sobre near-black */
+  | 'midnight'    /* 深夜   matriz de puntos finos sobre near-black */
+  | 'celadon';    /* 青磁   dark jade surface — deep celadon grid */
 
 /** 8 fondos de gradiente mesh */
 export type LibBackgroundGradient =
@@ -53,7 +55,7 @@ export type LibBackgroundGradient =
   | 'twilight'    /* 黄昏  kaki cálido a oscuro */
   | 'jade-deep';  /* 翡翠  celadón profundo con humo */
 
-/** 8 fondos animados en CSS puro */
+/** 9 fondos animados en CSS puro */
 export type LibBackgroundAnimated =
   | 'breathing'
   | 'aurora-drift'
@@ -63,7 +65,8 @@ export type LibBackgroundAnimated =
   /* ── Nuevos ── */
   | 'pulse'       /* anillos kintsugi expandiéndose desde el centro */
   | 'fog'         /* niebla lenta cruzando de izquierda a derecha */
-  | 'static';     /* ruido CRT — estética glitch */
+  | 'static'      /* ruido CRT — estética glitch */
+  | 'glitch';     /* CRT terminal — scanlines + horizontal RGB jitter */
 
 /** 6 fondos generativos en Canvas 2D */
 export type LibBackgroundCanvas =
@@ -75,7 +78,7 @@ export type LibBackgroundCanvas =
   | 'fireflies'   /* partículas luminosas con movimiento orgánico */
   | 'ink-wash';   /* manchas de tinta expandiéndose sobre papel */
 
-/** Unión completa de las 52 variantes */
+/** Unión completa de las 55 variantes */
 export type LibBackgroundVariant =
   | LibBackgroundLight
   | LibBackgroundDark
@@ -99,8 +102,8 @@ export const BG_CANVAS_VARIANTS = new Set<LibBackgroundVariant>([
 export const BG_DARK_VARIANTS = new Set<LibBackgroundVariant>([
   'sumi', 'sumi-grain', 'kintsugi', 'ash-grid', 'ink-dot',
   'mokume', 'kumo', 'temari', 'dusk', 'embers',
-  'obsidian', 'forge', 'void', 'yami', 'midnight',
+  'obsidian', 'forge', 'void', 'yami', 'midnight', 'celadon',
   'noctiluca', 'aurora-drift', 'scan', 'particles', 'rain',
   'constellation', 'twilight', 'jade-deep', 'pulse', 'fog',
-  'static', 'fireflies', 'ink-wash',
+  'static', 'glitch', 'fireflies', 'ink-wash',
 ]);

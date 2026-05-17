@@ -1,0 +1,6 @@
+.about-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 5rem);
+  padding-top: calc(80px + clamp(1.5rem, 3vw, 3rem));
+}

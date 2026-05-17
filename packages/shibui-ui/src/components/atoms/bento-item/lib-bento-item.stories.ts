@@ -4,7 +4,7 @@ import './lib-bento-item.component';
 
 // 1. Definimos la metadata del componente (Meta)
 const meta: Meta = {
-  title: 'Components/Atoms/Bento Item',
+  title: 'Layout/Bento Item',
   
   component: 'lib-bento-item',
   argTypes: {

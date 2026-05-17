@@ -221,4 +221,28 @@
       transition: none;
     }
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     El checkbox no tiene una "default variant" en su estado base —
+     los estilos checked/indeterminate aplican siempre que no haya
+     variant="kaki" o variant="error" explícitos.
+
+     Cambio: --color-washi-900 → --bg-inverse en checked/indeterminate
+     (valores idénticos en light mode; bajo katachi/dark el box
+     invierte de forma coherente con el contraste del contexto).
+
+     El stroke del check (white) se mantiene — siempre será visible
+     porque el bg invertido es siempre contrastado.
+
+     Las variants explícitas kaki/error mantienen su paleta intencional
+     (mayor especificidad).
+     ─────────────────────────────────────────────────────────── */
+
+  :host([checked]) .checkbox__box,
+  :host([indeterminate]) .checkbox__box {
+    background: var(--bg-inverse);
+    border-color: var(--bg-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

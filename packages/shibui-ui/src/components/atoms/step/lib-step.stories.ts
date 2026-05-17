@@ -8,18 +8,18 @@ interface StepArgs {
   index:       number;
   status:      'pending' | 'active' | 'completed' | 'error';
   orientation: 'horizontal' | 'vertical';
-  variant:     'default' | 'minimal' | 'kintsugi';
+  variant:     'default' | 'minimal' | 'kintsugi' | 'brutal';
   size:        'sm' | 'md' | 'lg';
 }
 
 const meta: Meta<StepArgs> = {
-  title: 'Components/Atoms/Step',
+  title: 'Navigation/Step',
   tags:['autodocs'],
   component: 'lib-step',
   argTypes: {
     status:      { control: 'select', options: ['pending', 'active', 'completed', 'error'] },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
-    variant:     { control: 'select', options: ['default', 'minimal', 'kintsugi'] },
+    variant:     { control: 'select', options: ['default', 'minimal', 'kintsugi', 'brutal'] },
     size:        { control: 'select', options: ['sm', 'md', 'lg'] },
     label:       { control: 'text' },
     sub:         { control: 'text' },
@@ -51,6 +51,55 @@ export const Playground: Story = {
     index: 1, status: 'pending',
     orientation: 'horizontal', variant: 'default', size: 'md',
   },
+};
+
+/* ── Kintsugi ── */
+export const Kintsugi: Story = {
+  name: 'Kintsugi ◈',
+  parameters: { backgrounds: { default: 'dark' } },
+  render: (): TemplateResult => html`
+    <div style="display:flex; gap:0; padding:48px; background:var(--color-washi-950, #120E0A);">
+      ${([
+        { status: 'completed', index: 1, label: '金継ぎ', desc: '完了' },
+        { status: 'active',    index: 2, label: '修復',   desc: '進行中' },
+        { status: 'pending',   index: 3, label: '完成',   desc: '待機' },
+      ] as const).map(({ status, index, label, desc }) => html`
+        <lib-step
+          variant="kintsugi"
+          status=${status}
+          index=${index}
+          label=${label}
+          sub=${desc}
+          ?last=${index === 3}
+        ></lib-step>
+      `)}
+    </div>
+  `,
+};
+
+/* ── Brutal ── */
+export const Brutal: Story = {
+  name: 'Brutal ◼',
+  parameters: { backgrounds: { default: 'light' } },
+  render: (): TemplateResult => html`
+    <div style="display:flex; gap:0; padding:48px; background:var(--color-washi-100, #F2EDE6);">
+      ${([
+        { status: 'completed', index: 1, label: 'INIT',   desc: 'Done' },
+        { status: 'active',    index: 2, label: 'BUILD',  desc: 'Running' },
+        { status: 'pending',   index: 3, label: 'DEPLOY', desc: 'Waiting' },
+        { status: 'error',     index: 4, label: 'TEST',   desc: 'Failed' },
+      ] as const).map(({ status, index, label, desc }) => html`
+        <lib-step
+          variant="brutal"
+          status=${status}
+          index=${index}
+          label=${label}
+          sub=${desc}
+          ?last=${index === 4}
+        ></lib-step>
+      `)}
+    </div>
+  `,
 };
 
 /* ── Cuatro estados ── */

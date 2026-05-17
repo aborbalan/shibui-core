@@ -165,4 +165,23 @@
     color: var(--color-washi-400);
   }
 
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     variant="ink" usa washi-900 (== --bg-inverse en light mode) y
+     washi-100 (≈ --text-inverse). Swap a tokens semánticos para
+     que en katachis dark (kintsugi/wabi/terminal) el botón "ink"
+     invierta correctamente y siga siendo el botón primario del
+     contexto.
+
+     Las demás variantes (kaki, celadon, danger, ghost, washi) son
+     paletas deliberadas — no se tocan.
+
+     Especificidad equivalente al selector original.
+     ─────────────────────────────────────────────────────────── */
+
+  :host([variant="ink"]) .btn {
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

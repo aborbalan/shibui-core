@@ -1,5 +1,5 @@
 import React from 'react';
-import { LibBadge, LibEyebrow } from '@shibui-ui/ui/react';
+import { LibBadge, LibDisplayHeading, LibEyebrow } from '@shibui-ui/ui/react';
 import type { SkillGroupDto } from '../../../data/api/domain/about/api/about.api';
 
 interface SkillsSectionProps {
@@ -29,30 +29,21 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
         <section
             style={{
                 padding: 'clamp(2.5rem, 5vh, 4rem) 0',
-                borderTop: '1px solid rgba(255,255,255,0.05)',
+                borderTop: '1px solid var(--border-subtle)',
             }}
         >
             {/* Header */}
-            <div style={{ marginBottom: '2.5rem' }}>
-                <LibEyebrow color="dark" size="sm" style={{ display: 'inline-flex', marginBottom: '1rem' } as React.CSSProperties}>
+            <div style={{ marginBottom: 'var(--lib-space-2xl)' }}>
+                <LibEyebrow color="dark" size="sm" style={{ display: 'inline-flex', marginBottom: 'var(--lib-space-md)' } as React.CSSProperties}>
                     Skills · Stack técnico
                 </LibEyebrow>
-                <h2
-                    style={{
-                        fontFamily: 'var(--lib-font-display)',
-                        fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
-                        fontWeight: 300,
-                        letterSpacing: '-0.02em',
-                        lineHeight: 1.15,
-                        color: 'rgba(250,247,244,0.65)',
-                        margin: 0,
-                    }}
-                >
-                    Herramientas{' '}
-                    <em style={{ fontStyle: 'italic', color: 'var(--color-kaki-400, #D97234)' }}>
-                        del oficio
-                    </em>
-                </h2>
+                <LibDisplayHeading
+                    tag="h2"
+                    size="sm"
+                    surface="dark"
+                    line1="Herramientas"
+                    accent="del oficio"
+                />
             </div>
 
             {/* Grid de grupos */}
@@ -61,7 +52,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
                     gap: '1px',
-                    background: 'rgba(255,255,255,0.04)',
+                    background: 'var(--border-subtle)',
                 }}
             >
                 {skillGroups.map((group) => {
@@ -72,21 +63,21 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
                         <div
                             key={group.category}
                             style={{
-                                background: 'var(--color-washi-950, #120E0A)',
-                                padding: '1.5rem 1.75rem',
+                                background: 'var(--color-washi-950)',
+                                padding: 'var(--lib-space-lg) var(--lib-space-xl)',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: '1rem',
+                                gap: 'var(--lib-space-md)',
                             }}
                         >
                             {/* Category header */}
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--lib-space-md)' }}>
                                 <span
                                     style={{
                                         fontFamily: 'var(--lib-font-display)',
-                                        fontSize: '1.8rem',
-                                        fontWeight: 300,
-                                        color: 'rgba(184,90,30,0.25)',
+                                        fontSize: 'var(--text-2xl)',
+                                        fontWeight: 'var(--weight-light)' as React.CSSProperties['fontWeight'],
+                                        color: 'color-mix(in oklch, var(--color-kaki-500), transparent 75%)',
                                         lineHeight: 1,
                                         flexShrink: 0,
                                     }}
@@ -96,10 +87,10 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
                                 <span
                                     style={{
                                         fontFamily: 'var(--lib-font-mono)',
-                                        fontSize: '0.6rem',
-                                        letterSpacing: '0.22em',
+                                        fontSize: 'var(--text-xs)',
+                                        letterSpacing: 'var(--lib-tracking-elegant)',
                                         textTransform: 'uppercase',
-                                        color: 'rgba(184,90,30,0.5)',
+                                        color: 'color-mix(in oklch, var(--color-kaki-500), transparent 50%)',
                                     }}
                                 >
                                     {group.label}

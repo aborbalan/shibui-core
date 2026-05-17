@@ -14,7 +14,7 @@ type LibInputArgs = {
 };
 
 const meta: Meta<LibInputArgs> = {
-  title: 'Components/Molecules/Input',
+  title: 'Forms/Input',
   tags:['autodocs'],
   component: 'lib-input',
   argTypes: {
@@ -112,4 +112,34 @@ export const Disabled: Story = {
       <lib-input label="Email" value="fixed@example.com" ?disabled="${true}"></lib-input>
     </div>
   `,
+};
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Contextos estéticos
+   ═══════════════════════════════════════════════════════════════ */
+
+const katachiList = [
+  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び' },
+  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ' },
+  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び' },
+  { id: 'terminal', kanji: '>_', label: 'terminal' },
+  { id: 'shizen',   kanji: '自', label: 'shizen · 自然' },
+  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁' },
+] as const;
+
+export const KatachiContexts: Story = {
+  name: 'Katachi · 6 contexts',
+  render: (): TemplateResult => html`
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--lib-space-lg);padding:var(--lib-space-xl);background:var(--color-washi-100);">
+      ${katachiList.map(k => html`
+        <section data-katachi="${k.id}" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
+          <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
+            <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label}
+          </header>
+          <lib-input label="Tu nombre" placeholder="Akira Kurosawa"></lib-input>
+          <lib-input label="Email" type="email" placeholder="hello@shibui.dev"></lib-input>
+        </section>
+      `)}
+    </div>
+  `,
+  parameters: { layout: 'fullscreen' },
 };

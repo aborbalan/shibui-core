@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-pagination.component';
 
 const meta: Meta = {
-  title: 'Components/Navigation/Pagination',
+  title: 'Navigation/Pagination',
   tags:['autodocs'],
   component: 'lib-pagination',
   argTypes: {

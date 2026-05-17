@@ -11,7 +11,7 @@ interface AlertArgs {
 }
 
 const meta: Meta<AlertArgs> = {
-  title: 'Components/Molecules/Alert',
+  title: 'Feedback/Alert',
   tags:['autodocs'],
   component: 'lib-alert',
   argTypes: {
@@ -190,4 +190,52 @@ export const FormContext: Story = {
       </lib-alert>
     </div>
   `,
+};
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Contextos estéticos
+   ═══════════════════════════════════════════════════════════════ */
+
+const katachiList = [
+  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び' },
+  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ' },
+  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び' },
+  { id: 'shizen',   kanji: '自', label: 'shizen · 自然' },
+  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁' },
+] as const;
+
+export const KatachiContexts: Story = {
+  name: 'Katachi · 5 contexts',
+  render: (): TemplateResult => html`
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:var(--lib-space-xl);padding:var(--lib-space-xl);background:var(--color-washi-100);">
+      ${katachiList.map(k => html`
+        <section data-katachi="${k.id}" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
+          <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
+            <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label}
+          </header>
+          <lib-alert type="default" heading="Notification">
+            La superficie y el texto se adaptan al katachi vía tokens semánticos (--bg-surface, --text-secondary).
+          </lib-alert>
+        </section>
+      `)}
+    </div>
+  `,
+  parameters: { layout: 'fullscreen' },
+};
+
+export const KatachiSemanticStatesPreserved: Story = {
+  name: 'Katachi · semantic states unchanged',
+  render: (): TemplateResult => html`
+    <div style="padding:var(--lib-space-xl);background:var(--color-washi-100);display:flex;flex-direction:column;gap:var(--lib-space-md);">
+      <header style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
+        Bajo data-katachi="kintsugi" — los tipos de feedback semánticos mantienen su paleta deliberada
+      </header>
+      <section data-katachi="kintsugi" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
+        <lib-alert type="info"    heading="Info">Información neutra que respeta el katachi.</lib-alert>
+        <lib-alert type="success" heading="Success">Verde semántico se mantiene — la semántica gana sobre estética.</lib-alert>
+        <lib-alert type="warning" heading="Warning">Amarillo semántico se mantiene.</lib-alert>
+        <lib-alert type="error"   heading="Error">Rojo semántico se mantiene.</lib-alert>
+      </section>
+    </div>
+  `,
+  parameters: { layout: 'fullscreen' },
 };

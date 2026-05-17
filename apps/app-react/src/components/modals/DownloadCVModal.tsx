@@ -32,18 +32,18 @@ export const DownloadCVModal: React.FC<DownloadCVModalProps> = ({ isOpen, onClos
                     padding: '1rem 0'
                 }}>
                     <LibCheckbox label="Español" checked={selectedLangs.es} onChange={(event: CustomEvent) => setSelectedLangs({ ...selectedLangs, es: event.detail.checked })}></LibCheckbox>
-                    <LibCheckbox label="Ingles" checked={selectedLangs.en} onChange={(event: CustomEvent) => setSelectedLangs({ ...selectedLangs, en: event.detail.checked })}></LibCheckbox>
+                    <LibCheckbox label="Inglés" checked={selectedLangs.en} onChange={(event: CustomEvent) => setSelectedLangs({ ...selectedLangs, en: event.detail.checked })}></LibCheckbox>
                 </div>
 
                 {/* Contenido del modal */}
             </div>
             <div slot="footer" style={{
                 display: 'flex',
-                gap: '1rem',
+                gap: 'var(--lib-space-md)',
                 justifyContent: 'flex-end',
                 width: '100%',
-                paddingTop: '1.5rem',
-                borderTop: '1px solid rgba(255, 255, 255, 0.1)'
+                paddingTop: 'var(--lib-space-lg)',
+                borderTop: '1px solid var(--border-subtle)'
             }}>
                 <LibButton
                     variant="ghost"

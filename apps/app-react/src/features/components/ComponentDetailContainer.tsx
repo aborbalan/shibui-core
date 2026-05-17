@@ -1,6 +1,5 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { LibBackground } from "@shibui-ui/ui/react";
 import {
   useComponentBySlug,
   useComponentExamples,
@@ -8,14 +7,14 @@ import {
 import { ComponentDetailView } from "./components/ComponentDetailView";
 
 const errorStyle: React.CSSProperties = {
-  color: "color-mix(in oklch, red 60%, white)",
+  color: "color-mix(in oklch, red 60%, black)",
   fontFamily: "var(--lib-font-mono)",
   fontSize: "0.8rem",
   padding: "4rem clamp(1.5rem, 4vw, 3.5rem)",
 };
 
 const loadingStyle: React.CSSProperties = {
-  color: "var(--color-kaki-300)",
+  color: "var(--color-kaki-700)",
   fontFamily: "var(--lib-font-mono)",
   fontSize: "0.8rem",
   padding: "4rem clamp(1.5rem, 4vw, 3.5rem)",
@@ -33,31 +32,29 @@ export const ComponentDetailContainer: React.FC = () => {
   const handleBack = () => navigate("/componentes");
 
   return (
-    <LibBackground variant="midnight">
-      <div
-        style={{
-          maxWidth: "860px",
-          margin: "0 auto",
-          padding: "calc(56px + 3rem) clamp(1.5rem, 4vw, 3.5rem) 6rem",
-        }}
-      >
-        {isPending && <p style={loadingStyle}>Cargando componente…</p>}
+    <div
+      style={{
+        maxWidth: "860px",
+        margin: "0 auto",
+        padding: "calc(56px + 3rem) clamp(1.5rem, 4vw, 3.5rem) 6rem",
+      }}
+    >
+      {isPending && <p style={loadingStyle}>Cargando componente…</p>}
 
-        {error && (
-          <p style={errorStyle}>
-            Componente no encontrado: {error.message}
-          </p>
-        )}
+      {error && (
+        <p style={errorStyle}>
+          Componente no encontrado: {error.message}
+        </p>
+      )}
 
-        {component && (
-          <ComponentDetailView
-            component={component}
-            examples={examples}
-            isLoadingExamples={isLoadingExamples}
-            onBack={handleBack}
-          />
-        )}
-      </div>
-    </LibBackground>
+      {component && (
+        <ComponentDetailView
+          component={component}
+          examples={examples}
+          isLoadingExamples={isLoadingExamples}
+          onBack={handleBack}
+        />
+      )}
+    </div>
   );
 };

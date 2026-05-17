@@ -139,4 +139,22 @@
     border-color: var(--color-washi-800); }
   :host([color="dark"]) .avatar__initials  { color: var(--color-washi-300); }
   :host([color="dark"]) .avatar__icon      { color: var(--color-washi-500); }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-avatar tiene un atributo `color` (washi · kaki · celadon ·
+     dark) que es una dimensión ortogonal al katachi: define la
+     paleta de la cara, no la superficie del entorno. No se aplica
+     semantic override sobre los hardcoded `--color-washi-X` del
+     face default porque cambiar esos colores alteraría el look
+     intencional de la cara washi independientemente del katachi.
+
+     El avatar hereda el contexto a nivel de tokens generales
+     (border-radius, tipografía) y mantiene su identidad cromática
+     propia. Para variar el avatar por superficie usa `color="dark"`
+     explícito.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

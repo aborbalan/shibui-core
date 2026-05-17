@@ -106,4 +106,26 @@
     position: relative;
     z-index: 3;
   }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-spotlight-card consume los effect tokens del sistema
+     (--lib-spotlight-gradient*, --lib-kintsugi-border). Esos
+     tokens son los que katachi ajusta:
+       · kintsugi  → refuerza spotlight (opacity 0.18, feather 50%)
+                     y kintsugi-border (oro más intenso)
+       · celadon   → refuerza con variante water (jade frío)
+       · wabi      → silencia spotlight (opacity 0)
+       · sabi      → silencia spotlight (opuesto al estilo papel)
+       · terminal  → silencia spotlight (opuesto al CRT)
+       · shizen    → silencia spotlight (limpio, sin foco reactivo)
+
+     La superficie dark hardcoded del componente es deliberada
+     (la card vive sobre un fondo oscuro propio para que el
+     spotlight tenga contraste).
+
+     Bloque marcador para discoverability — ya integrado por
+     consumo de tokens, sin override propio.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

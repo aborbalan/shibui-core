@@ -6,7 +6,7 @@ import type { LibSpinner } from './lib-spinner.component';
 type LibSpinnerArgs = Pick<LibSpinner, 'variant' | 'size' | 'tone' | 'dark' | 'label'>;
 
 const meta: Meta<LibSpinnerArgs> = {
-  title: 'Components/Atoms/Spinner',
+  title: 'Feedback/Spinner',
   tags:['autodocs'],
   component: 'lib-spinner',
   argTypes: {
