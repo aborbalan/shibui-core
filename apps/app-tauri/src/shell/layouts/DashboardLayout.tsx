@@ -3,40 +3,38 @@ import { LibSidebar } from '@shibui-ui/ui/react';
 import type { SidebarLink } from '@shibui-ui/ui';
 import { useAuth } from '../../core/hooks/useAuth';
 
-const ADMIN_LINKS: SidebarLink[] = [
-  { id: 'kitchen-sink', label: 'Kitchen Sink', icon: 'flask',    group: 'Dev Tools' },
-  { id: 'tokens',       label: 'Tokens',       icon: 'palette' },
-  { id: 'components',   label: 'Componentes',  icon: 'stack' },
-  { id: 'logout',       label: 'Cerrar sesión', icon: 'sign-out', group: 'Sesión' },
+const SIDEBAR_LINKS: SidebarLink[] = [
+  { id: 'dashboard', label: 'Dashboard', icon: 'squares-four', group: 'Workspace' },
+  { id: 'logout',    label: 'Salir',     icon: 'sign-out',     group: 'Sesión' },
 ];
 
-export function AdminLayout() {
+export function DashboardLayout() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { logout } = useAuth();
 
-  const activeId = pathname.split('/').pop() ?? 'kitchen-sink';
+  const activeId = pathname.replace('/', '') || 'dashboard';
 
   const handleLink = (id: string) => {
     if (id === 'logout') {
       logout();
-      navigate('/');
+      navigate('/login');
       return;
     }
-    navigate(`/admin/${id}`);
+    navigate(`/${id === 'dashboard' ? '' : id}`);
   };
 
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden' }}>
       <LibSidebar
-        user-role="Admin"
-        user-name="Shibui Dev"
+        user-role="Dev"
+        user-name="Shibui"
         brand-name="shibui"
         variant="kintsugi"
         colapsed="true"
         logo-mark="渋"
         show-search="false"
-        links={ADMIN_LINKS}
+        links={SIDEBAR_LINKS}
         active-id={activeId}
         onUiLibSidebarLink={(e: CustomEvent<{ id: string }>) => handleLink(e.detail.id)}
       />

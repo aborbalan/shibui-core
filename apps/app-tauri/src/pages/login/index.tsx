@@ -11,7 +11,7 @@ export function LoginPage() {
   const [error, setError] = useState(false);
   const [shake, setShake] = useState(false);
 
-  const from = (location.state as { from?: Location })?.from?.pathname ?? '/admin';
+  const from = (location.state as { from?: Location })?.from?.pathname ?? '/';
 
   const handleSubmit = () => {
     const ok = login(password);
@@ -67,7 +67,7 @@ export function LoginPage() {
               textTransform: 'uppercase',
               color: 'rgba(250,247,244,0.2)',
             }}>
-              admin · acceso restringido
+              acceso restringido
             </span>
           </div>
 

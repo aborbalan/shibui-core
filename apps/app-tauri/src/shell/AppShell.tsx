@@ -1,53 +1,29 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { PublicLayout } from './layouts/PublicLayout';
-import { AdminLayout } from './layouts/AdminLayout';
+import { DashboardLayout } from './layouts/DashboardLayout';
 import { AuthGuard } from '../core/auth/AuthGuard';
 import { LoginPage } from '../pages/login';
-import { useAdminShortcut } from '../core/hooks/useAdminShortcut';
 
-// — Público —
-const HomePage       = lazy(() => import('../pages/hero').then(m => ({ default: m.HomePage })));
-const ComponentsPage = lazy(() => import('../pages/components').then(m => ({ default: m.ComponentsPage })));
-const TokensPage     = lazy(() => import('../pages/tokens').then(m => ({ default: m.TokensPage })));
-const AboutPage      = lazy(() => import('../pages/about').then(m => ({ default: m.AboutPage })));
-const FilosofiaPage  = lazy(() => import('../pages/filosofia').then(m => ({ default: m.FilosofiaPage })));
-
-// — Admin —
-const KitchenSink = lazy(() => import('../dev/KitchenSink').then(m => ({ default: m.KitchenSink })));
+const DashboardPage = lazy(() => import('../pages/dashboard').then(m => ({ default: m.DashboardPage })));
 
 export function AppShell() {
-  // Ctrl + Shift + A → /admin/login
-  useAdminShortcut();
-
   return (
     <Suspense fallback={null}>
       <Routes>
 
-        {/* ── Mundo público ──────────────────────────────── */}
-        <Route element={<PublicLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="home" element={<HomePage />} />
-          <Route path="tokens" element={<TokensPage />} />
-          <Route path="componentes" element={<ComponentsPage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="filosofia" element={<FilosofiaPage />} />
-        </Route>
+        {/* ── Login (sin layout) ─────────────────────────── */}
+        <Route path="login" element={<LoginPage />} />
 
-        {/* ── Login admin (sin layout) ───────────────────── */}
-        <Route path="admin/login" element={<LoginPage />} />
-
-        {/* ── Mundo admin (protegido) ────────────────────── */}
+        {/* ── Dashboard (protegido) ──────────────────────── */}
         <Route
-          path="admin"
+          path="/"
           element={
             <AuthGuard>
-              <AdminLayout />
+              <DashboardLayout />
             </AuthGuard>
           }
         >
-          <Route index element={<Navigate to="kitchen-sink" replace />} />
-          <Route path="kitchen-sink" element={<KitchenSink />} />
+          <Route index element={<DashboardPage />} />
         </Route>
 
         {/* ── Fallback ───────────────────────────────────── */}
