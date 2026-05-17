@@ -111,7 +111,7 @@ jobs:
           path: apps/shibui-api/docs-dist/
 
       - name: 🚀 Deploy API Docs
-        run: pnpm exec firebase deploy --only hosting:shibui-api --non-interactive --project lib-ui-b67c5
+        run: pnpm exec firebase deploy --only hosting:shibui-api --non-interactive --project lib-ui-b67c5 --config .config/firebase.json
 
   # ─────────────────────────────────────────
   # JOB 4 — Deploy NestJS a Cloud Run
