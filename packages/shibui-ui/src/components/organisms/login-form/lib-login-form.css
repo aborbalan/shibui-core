@@ -1,0 +1,77 @@
+@layer tokens, reset, components;
+
+@layer reset {
+  :host {
+    display: block;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@layer components {
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-lg);
+    width: 100%;
+    max-width: 400px;
+    padding: var(--lib-space-xl);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    box-shadow: var(--shadow-md);
+  }
+
+  .login-form-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-xs);
+  }
+
+  .login-form-title {
+    font-family: var(--lib-font-display);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-light);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+
+  .login-form-subtitle {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .login-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-md);
+  }
+
+  .login-form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-sm);
+  }
+
+  .login-form-actions lib-button {
+    width: 100%;
+  }
+
+  :host([loading]) {
+    cursor: wait;
+  }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-login-form usa tokens semánticos completos (--bg-elevated,
+     --border-default, --text-primary/secondary). Adapta a todos
+     los katachi automáticamente. Taxonomía: semantic.
+     ─────────────────────────────────────────────────────────── */
+}
