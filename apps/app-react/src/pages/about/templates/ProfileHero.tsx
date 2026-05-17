@@ -1,5 +1,5 @@
 import React from 'react';
-import { LibAvatar, LibBadge, LibButton, LibEyebrow } from '@shibui-ui/ui/react';
+import { LibAvatar, LibBadge, LibButton, LibDisplayHeading, LibEyebrow } from '@shibui-ui/ui/react';
 import type { ProfileDto } from '../../../data/api/domain/about/api/about.api';
 
 interface ProfileHeroProps {
@@ -16,11 +16,11 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ profile, openToWork = 
                 gap: 'clamp(2rem, 4vw, 4rem)',
                 alignItems: 'start',
                 padding: 'clamp(3rem, 6vh, 5rem) 0',
-                borderBottom: '1px solid rgba(255,255,255,0.05)',
+                borderBottom: '1px solid var(--border-subtle)',
             }}
         >
             {/* ── Avatar col ── */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--lib-space-md)' }}>
                 <div style={{ position: 'relative' }}>
                     <LibAvatar
                         name={profile.name}
@@ -37,29 +37,29 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ profile, openToWork = 
                                 width: '18px',
                                 height: '18px',
                                 borderRadius: '50%',
-                                background: 'oklch(65% 0.18 145)',
-                                border: '2px solid var(--color-washi-950, #120E0A)',
-                                boxShadow: '0 0 8px oklch(65% 0.18 145 / 0.6)',
+                                background: 'var(--color-success)',
+                                border: '2px solid var(--color-washi-950)',
+                                boxShadow: '0 0 8px color-mix(in oklch, var(--color-success), transparent 40%)',
                             }}
                         />
                     )}
                 </div>
 
                 {/* Social links */}
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <div style={{ display: 'flex', gap: 'var(--lib-space-sm)' }}>
                     {profile.socials.map((social) => (
                         <LibButton
                             key={social.label}
                             variant="ghost"
                             size="sm"
                             style={{ padding: '0.35rem 0.65rem' } as React.CSSProperties}
-                            onClick={() => window.open(social.url, '_blank')}
+                            onUiLibClick={() => window.open(social.url, '_blank')}
                         >
                             <span
                                 style={{
                                     fontFamily: 'var(--lib-font-mono)',
-                                    fontSize: '0.6rem',
-                                    letterSpacing: '0.16em',
+                                    fontSize: 'var(--text-xs)',
+                                    letterSpacing: 'var(--lib-tracking-elegant)',
                                     textTransform: 'uppercase',
                                 }}
                             >
@@ -71,9 +71,9 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ profile, openToWork = 
             </div>
 
             {/* ── Content col ── */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-lg)' }}>
                 {/* Eyebrow */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--lib-space-md)', flexWrap: 'wrap' }}>
                     <LibEyebrow color="dark" size="sm" style={{ display: 'inline-flex' } as React.CSSProperties}>
                         Perfil · About Me
                     </LibEyebrow>
@@ -84,44 +84,24 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ profile, openToWork = 
                     )}
                 </div>
 
-                {/* Name */}
-                <div>
-                    <h1
-                        style={{
-                            fontFamily: 'var(--lib-font-display, "Cormorant Garamond", serif)',
-                            fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-                            fontWeight: 300,
-                            letterSpacing: '-0.02em',
-                            lineHeight: 1.1,
-                            color: 'rgba(250,247,244,0.85)',
-                            margin: 0,
-                        }}
-                    >
-                        {profile.name}
-                    </h1>
-                    <p
-                        style={{
-                            fontFamily: 'var(--lib-font-mono)',
-                            fontSize: '0.72rem',
-                            letterSpacing: '0.22em',
-                            textTransform: 'uppercase',
-                            color: 'rgba(184,90,30,0.6)',
-                            margin: '0.5rem 0 0 0',
-                        }}
-                    >
-                        {profile.title}
-                    </p>
-                </div>
+                {/* Name + title — reemplaza <h1> y <p> manuales */}
+                <LibDisplayHeading
+                    tag="h1"
+                    size="md"
+                    surface="dark"
+                    line1={profile.name}
+                    accent={profile.title}
+                />
 
                 {/* Location */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <span style={{ color: 'rgba(250,247,244,0.2)', fontSize: '0.75rem' }}>⌖</span>
+                    <span style={{ color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>⌖</span>
                     <span
                         style={{
                             fontFamily: 'var(--lib-font-mono)',
-                            fontSize: '0.65rem',
-                            letterSpacing: '0.14em',
-                            color: 'rgba(250,247,244,0.25)',
+                            fontSize: 'var(--text-xs)',
+                            letterSpacing: 'var(--lib-tracking-elegant)',
+                            color: 'var(--text-muted)',
                             textTransform: 'uppercase',
                         }}
                     >
@@ -132,10 +112,10 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ profile, openToWork = 
                 {/* Bio */}
                 <p
                     style={{
-                        fontFamily: 'var(--lib-font-body, "Shippori Mincho", serif)',
-                        fontSize: 'clamp(0.875rem, 1.4vw, 1rem)',
-                        color: 'rgba(250,247,244,0.45)',
-                        lineHeight: 1.85,
+                        fontFamily: 'var(--lib-font-body)',
+                        fontSize: 'var(--text-sm)',
+                        color: 'var(--text-secondary)',
+                        lineHeight: 'var(--leading-relaxed)',
                         maxWidth: '600px',
                         margin: 0,
                     }}
@@ -148,22 +128,22 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ profile, openToWork = 
                     href={`mailto:${profile.email}`}
                     style={{
                         fontFamily: 'var(--lib-font-mono)',
-                        fontSize: '0.72rem',
-                        letterSpacing: '0.1em',
-                        color: 'rgba(184,90,30,0.5)',
+                        fontSize: 'var(--text-xs)',
+                        letterSpacing: 'var(--tracking-wide)',
+                        color: 'var(--text-link)',
                         textDecoration: 'none',
                         alignSelf: 'flex-start',
-                        borderBottom: '1px solid rgba(184,90,30,0.2)',
+                        borderBottom: '1px solid var(--border-default)',
                         paddingBottom: '1px',
-                        transition: 'color 0.2s, border-color 0.2s',
+                        transition: 'color var(--duration-base) var(--ease-default), border-color var(--duration-base) var(--ease-default)',
                     }}
                     onMouseEnter={(e) => {
-                        (e.target as HTMLElement).style.color = 'rgba(184,90,30,0.9)';
-                        (e.target as HTMLElement).style.borderColor = 'rgba(184,90,30,0.6)';
+                        (e.target as HTMLElement).style.color = 'var(--text-link-hover)';
+                        (e.target as HTMLElement).style.borderColor = 'var(--border-strong)';
                     }}
                     onMouseLeave={(e) => {
-                        (e.target as HTMLElement).style.color = 'rgba(184,90,30,0.5)';
-                        (e.target as HTMLElement).style.borderColor = 'rgba(184,90,30,0.2)';
+                        (e.target as HTMLElement).style.color = 'var(--text-link)';
+                        (e.target as HTMLElement).style.borderColor = 'var(--border-default)';
                     }}
                 >
                     {profile.email}

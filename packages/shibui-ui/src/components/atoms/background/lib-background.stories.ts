@@ -75,7 +75,7 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-**lib-background** — 52 fondos decorativos derivados de los tokens Shibui.
+**lib-background** — 55 fondos decorativos derivados de los tokens Shibui.
 
 Úsalo como contenedor de sección, hero, card o panel. El contenido se proyecta en el \`slot\` por defecto.
 
@@ -85,6 +85,7 @@ const meta: Meta = {
 - **Gradient (8)** — mesh radial: aurora-light, sakura, twilight, jade-deep…
 - **Animated CSS (9)** — sin JS: breathing, pulse, fog, static, glitch…
 - **Canvas (6)** — generativo: particles, fireflies, ink-wash, constellation…
+- **Celadon (4)** — familia jade completa: celadon-wash, celadon-mist, celadon, jade-deep…
 
 \`\`\`html
 <lib-background variant="fireflies" style="height: 400px;">
@@ -271,6 +272,40 @@ export const Gradients: Story = {
             <lib-background
               variant="${variant}"
               style="height:220px;border-radius:2px;display:block;"
+            >
+              ${dark ? DEMO_DARK : DEMO_LIGHT}
+            </lib-background>
+            <span
+              style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:#9A8878;"
+              >${label}</span
+            >
+          </div>
+        `,
+      )}
+    </div>
+  `,
+};
+
+/* ── Celadon ── */
+export const Celadon: Story = {
+  name: "Celadon — Familia jade (4)",
+  render: (): TemplateResult => html`
+    <div
+      style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:24px;background:#F2EDE6;"
+    >
+      ${(
+        [
+          { variant: "celadon-wash", label: "celadon-wash · light · papel jade", dark: false },
+          { variant: "celadon-mist", label: "celadon-mist · gradient · niebla jade", dark: false },
+          { variant: "celadon",      label: "celadon · dark · superficie jade", dark: true },
+          { variant: "jade-deep",   label: "jade-deep · gradient · profundidad jade", dark: true },
+        ] as Array<{ variant: LibBackgroundVariant; label: string; dark: boolean }>
+      ).map(
+        ({ variant, label, dark }) => html`
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <lib-background
+              variant="${variant}"
+              style="height:240px;border-radius:2px;display:block;"
             >
               ${dark ? DEMO_DARK : DEMO_LIGHT}
             </lib-background>

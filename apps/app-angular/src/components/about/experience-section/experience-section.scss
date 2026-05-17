@@ -8,21 +8,6 @@
       display: inline-flex;
       margin-bottom: 1rem;
     }
-
-    .section-title {
-      font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 300;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      color: rgba(250, 247, 244, 0.65);
-      margin: 0;
-
-      em {
-        font-style: italic;
-        color: var(--color-kaki-400, #d97234);
-      }
-    }
   }
 
   .timeline-content {
@@ -45,16 +30,16 @@
     font-size: 0.6rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: rgba(184, 90, 30, 0.55);
+    color: color-mix(in oklch, var(--color-kaki-500), transparent 45%);
     margin: 0 0 0.2rem 0;
   }
 
   .role {
     font-family: var(--lib-font-display);
     font-size: clamp(1.1rem, 2vw, 1.5rem);
-    font-weight: 400;
+    font-weight: var(--weight-regular);
     letter-spacing: -0.01em;
-    color: rgba(250, 247, 244, 0.75);
+    color: var(--text-primary);
     margin: 0;
   }
 
@@ -62,7 +47,7 @@
     font-family: var(--lib-font-mono);
     font-size: 0.6rem;
     letter-spacing: 0.12em;
-    color: rgba(250, 247, 244, 0.2);
+    color: var(--text-muted);
     margin: 0.25rem 0 0 0;
   }
 
@@ -74,7 +59,7 @@
       font-family: var(--lib-font-mono);
       font-size: 0.65rem;
       letter-spacing: 0.1em;
-      color: rgba(250, 247, 244, 0.3);
+      color: var(--text-secondary);
       margin: 0;
     }
 
@@ -82,7 +67,7 @@
       font-family: var(--lib-font-mono);
       font-size: 0.6rem;
       letter-spacing: 0.08em;
-      color: rgba(250, 247, 244, 0.15);
+      color: var(--text-muted);
       margin: 0.2rem 0 0 0;
     }
   }
@@ -90,8 +75,8 @@
   .description {
     font-family: var(--lib-font-body);
     font-size: 0.875rem;
-    color: rgba(250, 247, 244, 0.35);
-    line-height: 1.8;
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
     margin: 0;
     max-width: 560px;
   }

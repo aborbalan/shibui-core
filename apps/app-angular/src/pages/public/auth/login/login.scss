@@ -1,79 +1,52 @@
-.login-wrapper{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+.login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
 
-    margin-top: 100px;
-    .card{
-        width: 100%;
-        max-width: 380px;
-        padding: 2.5rem;
-        background: rgba(18, 14, 10, 0.85);
-        border: 1px solid rgba(255, 255, 255, 0.07); // Estado por defecto
-        backdrop-filter: blur(12px);
-        display: flex;
-        flex-direction: column;
-        gap: 1.75rem;
-        transition: border 0.3s ease;
-      
-        // Clase dinámica para el error
-        &.has-error {
-          border: 1px solid rgba(220, 60, 60, 0.4);
-        }
-      
-        // Clase dinámica para el shake
-        &.is-shaking {
-          animation: shake 0.4s ease;
-        }
+.card-wrapper {
+  width: 100%;
+  max-width: 380px;
 
-        .text-part{
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            .kanji{
-                font-family: var(--lib-font-display, "Cormorant Garamond", serif);
-                font-size: 2rem;
-                font-weight: 300;
-                color: rgba(184, 90, 30, 0.6);
-                line-height: 1;
-            }
-            .access-message{
-                font-family: var(--lib-font-mono, "DM Mono", monospace);
-                color: rgba(250,247,244,0.2);
-                font-size: 0.6rem;
-                letter-spacing: 0.24em;
-                text-transform: uppercase;
-            }
-        }
-        .tobedetermined{
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            .label-{
-                font-family: var(--lib-font-mono, "DM Mono", monospace);
-                font-size: 0.6rem;
-                letter-spacing: 0.2em;
-                text-transform: uppercase;
-                color: rgba(250,247,244,0.25);
-            }
-        }
-    }
+  &.is-shaking {
+    animation: shake 0.4s ease;
+  }
+}
+
+.login-form {
+  padding: var(--lib-space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--lib-space-xl);
+}
+
+.text-part {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lib-space-xs);
+
+  .kanji {
+    font-family: var(--lib-font-display);
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-light);
+    color: color-mix(in oklch, var(--color-kaki-500), transparent 40%);
+    line-height: 1;
+  }
+
+  .access-message {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
 }
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-8px); }
-  75% { transform: translateX(8px); }
+  20%       { transform: translateX(-8px); }
+  40%       { transform: translateX(8px); }
+  60%       { transform: translateX(-5px); }
+  80%       { transform: translateX(5px); }
 }
-
-
-/*
-  style={{
-                fontFamily: 'var(--lib-font-mono, "DM Mono", monospace)',
-                fontSize: '0.6rem',
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                color: 'rgba(250,247,244,0.25)',
-            }}
-*/
