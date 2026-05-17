@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-liquid-button.component';
 
 const meta: Meta = {
-  title: 'Components/Atoms/ButtonLiquid',
+  title: 'Actions/Button Liquid',
   tags:['autodocs'],
   component: 'lib-button-liquid',
   argTypes: {

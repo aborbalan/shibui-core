@@ -3,7 +3,7 @@ import { html, TemplateResult } from 'lit';
 import './lib-visually-hidden.component';
 
 const meta: Meta = {
-  title: 'Components/Atoms/VisuallyHidden',
+  title: 'Utilities/Visually Hidden',
   tags:['autodocs'],
   component: 'lib-visually-hidden',
 };

@@ -9,7 +9,7 @@ type LibRadioStoryArgs = Pick<
 >;
 
 const meta: Meta<LibRadioStoryArgs> = {
-  title: 'Components/Atoms/Radio',
+  title: 'Forms/Radio',
   tags:['autodocs'],
   component: 'lib-radio',
 

@@ -22,7 +22,7 @@ const withLabel = (label: string, content: TemplateResult): TemplateResult => ht
 `;
 
 const meta: Meta<LibStatusDotStoryArgs> = {
-  title: 'Components/Atoms/StatusDot',
+  title: 'Feedback/Status Dot',
   component: 'lib-status-dot',
   tags:['autodocs'],
   argTypes: {

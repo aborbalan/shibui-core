@@ -21,7 +21,7 @@ interface SelectArgs {
 }
 
 const meta: Meta<SelectArgs> = {
-  title: 'Components/Molecules/Select',
+  title: 'Forms/Select',
   tags:['autodocs'],
   component: 'lib-select',
   argTypes: {

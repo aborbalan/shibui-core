@@ -19,7 +19,7 @@ const KATACHI: Array<{ id: KatachiId; kanji: string; label: string; tagline: str
 ];
 
 const meta: Meta<LibCanvasStoryArgs> = {
-  title: 'Components/Atoms/Canvas',
+  title: 'Utilities/Canvas',
   component: 'lib-canvas',
   tags: ['autodocs'],
   argTypes: {

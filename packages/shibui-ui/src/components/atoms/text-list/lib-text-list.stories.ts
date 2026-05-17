@@ -83,7 +83,7 @@ const DL_ITEMS: DlItem[] = [
 type Args = Partial<LibTextList>;
 
 const meta: Meta<Args> = {
-  title: 'Components/Atoms/Text List',
+  title: 'Content/Text List',
   component: 'lib-text-list',
   tags:['autodocs'],
   argTypes: {

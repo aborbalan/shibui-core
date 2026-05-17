@@ -9,7 +9,8 @@
       "comment-empty-line-before": null,
       "color-function-notation": null,
       "alpha-value-notation": "number",
-      "no-descending-specificity": null
+      "no-descending-specificity": null,
+      "no-duplicate-selectors": null
     },
     "ignoreFiles": [
       "dist/**/*",

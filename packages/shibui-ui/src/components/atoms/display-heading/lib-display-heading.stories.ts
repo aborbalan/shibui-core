@@ -25,7 +25,7 @@ const stageWashi = (content: ReturnType<typeof html>):TemplateResult => html`
 
 /* ── Meta ── */
 const meta: Meta<LibDisplayHeading> = {
-  title: 'Data Display/DisplayHeading',
+  title: 'Foundations/Typography/Display Heading',
   component: 'lib-display-heading',
   tags: ['autodocs'],
   parameters: {

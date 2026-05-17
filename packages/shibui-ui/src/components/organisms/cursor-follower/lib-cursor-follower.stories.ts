@@ -18,7 +18,7 @@ const zoneBase = `
 `;
 
 const meta: Meta = {
-  title: 'Components/Organisms/CursorFollower',
+  title: 'Motion/Cursor Follower',
   tags:['autodocs'],
   component: 'lib-cursor-follower',
   parameters: {

@@ -40,7 +40,7 @@ const cardContent = (label: string, title: string, body: string, tag: string): T
 `;
 
 const meta: Meta<LibGlassCardStoryArgs> = {
-  title: 'Components/Atoms/GlassCard',
+  title: 'Content/Card Glass',
   component: 'lib-glass-card',
   tags:['autodocs'],
   parameters: {

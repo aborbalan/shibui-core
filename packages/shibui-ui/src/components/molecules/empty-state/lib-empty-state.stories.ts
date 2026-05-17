@@ -9,7 +9,7 @@ type EmptyStateArgs = Pick<
 >;
 
 const meta: Meta<EmptyStateArgs> = {
-  title: 'Components/Molecules/EmptyState',
+  title: 'Feedback/Empty State',
   tags:['autodocs'],
   component: 'lib-empty-state',
   argTypes: {

@@ -3,7 +3,7 @@ import { html, TemplateResult } from 'lit';
 import './lib-ripple.component';
 
 const meta: Meta = {
-  title: 'Components/Atoms/Ripple',
+  title: 'Motion/Ripple',
   tags:['autodocs'],
   component: 'lib-ripple',
 };
