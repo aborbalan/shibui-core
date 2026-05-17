@@ -15,3 +15,4 @@ export * from './stepper/lib-stepper.component';
 export * from './timeline/lib-timeline.component';
 export * from './timeline/lib-timeline-item.component';
 export * from './toast-manager/lib-toast-manager.component';
+export * from './login-form/lib-login-form.component';
