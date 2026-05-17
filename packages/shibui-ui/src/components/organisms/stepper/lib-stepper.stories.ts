@@ -14,7 +14,7 @@ const wrap = (bg: string, content: TemplateResult, pad = '40px'): TemplateResult
 `;
 
 const meta: Meta<StepperArgs> = {
-  title: 'Components/Organisms/Stepper',
+  title: 'Navigation/Stepper',
   tags:['autodocs'],
   component: 'lib-stepper',
   argTypes: {

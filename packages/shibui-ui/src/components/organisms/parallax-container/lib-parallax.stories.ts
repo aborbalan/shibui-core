@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-parallax.component';
 
 const meta: Meta = {
-  title: 'Components/Organisms/ParallaxContainer',
+  title: 'Motion/Parallax Container',
   tags:['autodocs'],
   component: 'lib-parallax-container',
   parameters: {

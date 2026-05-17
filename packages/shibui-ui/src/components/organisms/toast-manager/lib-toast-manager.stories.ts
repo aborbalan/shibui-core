@@ -4,7 +4,7 @@ import './lib-toast-manager.component';
 import type { LibToastManager } from './lib-toast-manager.component';
 
 const meta: Meta = {
-  title: 'Components/Organisms/ToastManager',
+  title: 'Feedback/Toast Manager',
   tags:['autodocs'],
   component: 'lib-toast-manager',
   parameters: {

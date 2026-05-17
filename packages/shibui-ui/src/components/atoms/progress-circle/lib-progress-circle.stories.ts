@@ -22,7 +22,7 @@ const withLabel = (label: string, content: TemplateResult): TemplateResult => ht
 `;
 
 const meta: Meta<LibProgressCircleStoryArgs> = {
-  title: 'Components/Atoms/ProgressCircle',
+  title: 'Feedback/Progress Circle',
   tags:['autodocs'],
   component: 'lib-progress-circle',
 

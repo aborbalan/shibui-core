@@ -9,7 +9,7 @@ type CounterArgs = Pick<LibCounter,
 >;
 
 const meta: Meta<CounterArgs> = {
-  title: 'Components/Atoms/Counter',
+  title: 'Data/Counter',
   tags:['autodocs'],
   component: 'lib-counter',
   argTypes: {

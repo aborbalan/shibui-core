@@ -57,7 +57,7 @@ const GLITCH_NAV_LINKS = [
 ];
 
 const meta: Meta<LibFooter> = {
-  title: 'Layout & Surfaces/Footer',
+  title: 'Layout/Footer',
   
   component: 'lib-footer',
   tags: ['autodocs'],

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-horizontal-scroll-section.component';
 
 const meta: Meta = {
-  title: 'Components/Organisms/HorizontalScrollSection',
+  title: 'Motion/Horizontal Scroll Section',
   tags:['autodocs'],
   component: 'lib-horizontal-scroll-section',
   parameters: {

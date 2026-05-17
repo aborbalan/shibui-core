@@ -59,7 +59,7 @@ type LibDataTableArgs = Pick<
 >;
 
 const meta: Meta<LibDataTableArgs> = {
-  title: 'Components/Organisms/Data Table',
+  title: 'Data/Data Table',
   tags:['autodocs'],
   component: 'lib-data-table',
   argTypes: {

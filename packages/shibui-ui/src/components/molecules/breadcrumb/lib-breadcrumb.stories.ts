@@ -30,7 +30,7 @@ const ICON_ITEMS: BreadcrumbItem[] = [
 
 /* ── Meta ──────────────────────────────────────────────── */
 const meta: Meta<StoryArgs> = {
-  title: 'Components/Molecules/Breadcrumb',
+  title: 'Navigation/Breadcrumb',
   component: 'lib-breadcrumb',
   tags:['autodocs'],
   argTypes: {

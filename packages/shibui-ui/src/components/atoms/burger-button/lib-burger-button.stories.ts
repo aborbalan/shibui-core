@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-burger-button.component';
 
 const meta: Meta = {
-  title: 'Components/Atoms/Burger',
+  title: 'Actions/Burger',
   tags:['autodocs'],
   component: 'lib-burger',
   argTypes: {

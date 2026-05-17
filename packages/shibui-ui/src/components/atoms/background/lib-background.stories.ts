@@ -68,7 +68,7 @@ function bgGrid(
 
 /* ── Meta ── */
 const meta: Meta = {
-  title: "Components/Atoms/Background",
+  title: "Utilities/Background",
   tags:['autodocs'],
   component: "lib-background",
   parameters: {

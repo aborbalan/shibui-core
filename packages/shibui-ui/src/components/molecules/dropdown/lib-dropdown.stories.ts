@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-dropdown.component';
 
 const meta: Meta = {
-  title: 'Components/Navigation/Dropdown',
+  title: 'Navigation/Dropdown',
   tags:['autodocs'],
   component: 'lib-dropdown',
   argTypes: {

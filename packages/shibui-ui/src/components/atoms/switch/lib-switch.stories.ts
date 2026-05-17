@@ -6,7 +6,7 @@ import type { LibSwitch } from './lib-switch.component';
 type SwitchArgs = Pick<LibSwitch, 'checked' | 'disabled' | 'variant' | 'size' | 'label' | 'sub'>;
 
 const meta: Meta<SwitchArgs> = {
-  title: 'Components/Atoms/Switch',
+  title: 'Forms/Switch',
   tags:['autodocs'],
   component: 'lib-switch',
   argTypes: {
