@@ -19,7 +19,7 @@ const statusVariant: Record<string, string> = {
 const metaStyle: React.CSSProperties = {
   fontFamily: "var(--lib-font-mono)",
   fontSize: "0.65rem",
-  color: "var(--color-kaki-500)",
+  color: "var(--color-kaki-700)",
 };
 
 export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
@@ -57,11 +57,11 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
           {component.name}
         </h1>
 
-        <p style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.85rem", color: "var(--color-kaki-400)", marginBottom: "1rem" }}>
+        <p style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.85rem", color: "var(--color-kaki-600)", marginBottom: "1rem" }}>
           {"<"}{component.tagName}{">"}
         </p>
 
-        <p style={{ fontSize: "1rem", lineHeight: 1.65, color: "var(--color-ink-200)", maxWidth: "60ch" }}>
+        <p style={{ fontSize: "1rem", lineHeight: 1.65, color: "var(--color-washi-700)", maxWidth: "60ch" }}>
           {component.description}
         </p>
       </header>
@@ -79,7 +79,7 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
 
       {/* Examples */}
       <section>
-        <h2 style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--color-kaki-400)", marginBottom: "0.75rem" }}>
+        <h2 style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--color-kaki-700)", marginBottom: "0.75rem" }}>
           Ejemplos
         </h2>
         <LibDivider style={{ marginBottom: "1.25rem" }} />
