@@ -4,7 +4,7 @@
   gap: clamp(2rem, 4vw, 4rem);
   align-items: start;
   padding: clamp(3rem, 6vh, 5rem) 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-subtle);
 
   .avatar-col {
     display: flex;
@@ -22,9 +22,9 @@
         width: 18px;
         height: 18px;
         border-radius: 50%;
-        background: oklch(65% 0.18 145);
-        border: 2px solid var(--color-washi-950, #120e0a);
-        box-shadow: 0 0 8px oklch(65% 0.18 145 / 0.6);
+        background: var(--color-success);
+        border: 2px solid var(--color-washi-950);
+        box-shadow: 0 0 8px color-mix(in oklch, var(--color-success), transparent 40%);
       }
     }
 
@@ -57,34 +57,13 @@
       }
     }
 
-    .name-block {
-      .name {
-        font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
-        font-size: clamp(2rem, 4vw, 3.2rem);
-        font-weight: 300;
-        letter-spacing: -0.02em;
-        line-height: 1.1;
-        color: rgba(250, 247, 244, 0.85);
-        margin: 0;
-      }
-
-      .title {
-        font-family: var(--lib-font-mono);
-        font-size: 0.72rem;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: rgba(184, 90, 30, 0.6);
-        margin: 0.5rem 0 0 0;
-      }
-    }
-
     .location {
       display: flex;
       align-items: center;
       gap: 0.4rem;
 
       .location-icon {
-        color: rgba(250, 247, 244, 0.2);
+        color: var(--text-muted);
         font-size: 0.75rem;
       }
 
@@ -92,16 +71,16 @@
         font-family: var(--lib-font-mono);
         font-size: 0.65rem;
         letter-spacing: 0.14em;
-        color: rgba(250, 247, 244, 0.25);
+        color: var(--text-muted);
         text-transform: uppercase;
       }
     }
 
     .bio {
-      font-family: var(--lib-font-body, 'Shippori Mincho', serif);
+      font-family: var(--lib-font-body);
       font-size: clamp(0.875rem, 1.4vw, 1rem);
-      color: rgba(250, 247, 244, 0.45);
-      line-height: 1.85;
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
       max-width: 600px;
       margin: 0;
     }
@@ -110,16 +89,16 @@
       font-family: var(--lib-font-mono);
       font-size: 0.72rem;
       letter-spacing: 0.1em;
-      color: rgba(184, 90, 30, 0.5);
+      color: var(--text-link);
       text-decoration: none;
       align-self: flex-start;
-      border-bottom: 1px solid rgba(184, 90, 30, 0.2);
+      border-bottom: 1px solid var(--border-default);
       padding-bottom: 1px;
       transition: color 0.2s, border-color 0.2s;
 
       &:hover {
-        color: rgba(184, 90, 30, 0.9);
-        border-color: rgba(184, 90, 30, 0.6);
+        color: var(--text-accent);
+        border-color: var(--text-accent);
       }
     }
   }

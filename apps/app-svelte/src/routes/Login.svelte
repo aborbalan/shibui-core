@@ -4,48 +4,106 @@
 
   let password = $state('');
   let error = $state(false);
+  let shake = $state(false);
 
-  function submit(e: Event) {
-    e.preventDefault();
+  function handleLogin() {
     if (login(password)) {
       navigate('/admin/kitchen-sink');
     } else {
       error = true;
-      setTimeout(() => (error = false), 600);
+      shake = true;
+      setTimeout(() => (shake = false), 500);
     }
+  }
+
+  function onFormSubmit(e: Event) {
+    e.preventDefault();
+    handleLogin();
   }
 </script>
 
-<div class="login-wrapper">
-  <form onsubmit={submit}>
-    <h1>Admin · Kitchen</h1>
-    <p>Acceso dev — password: <code>shibui-dev</code></p>
-    <input
-      type="password"
-      bind:value={password}
-      placeholder="password"
-      class:shake={error}
-    />
-    {#if error}<p class="err">password incorrecto</p>{/if}
-    <button type="submit">entrar</button>
-  </form>
-</div>
+<lib-background variant="ash-grid">
+  <div class="login-wrapper">
+    <div class="card-wrapper" class:is-shaking={shake}>
+      <lib-glass-card variant="kaki" intensity="high">
+        <form class="login-form" onsubmit={onFormSubmit}>
+
+          <div class="brand">
+            <span class="kanji">渋</span>
+            <span class="access-message">admin · acceso restringido</span>
+          </div>
+
+          <lib-input
+            type="password"
+            label="Contraseña"
+            placeholder="••••••••••"
+            value={password}
+            error={error}
+            errorMessage="Contraseña incorrecta"
+            onui-lib-input={(e: Event) => { password = (e as CustomEvent).detail.value; error = false; }}
+          ></lib-input>
+
+          <lib-button variant="primary" onui-lib-click={handleLogin}>
+            Entrar
+          </lib-button>
+
+        </form>
+      </lib-glass-card>
+    </div>
+  </div>
+</lib-background>
 
 <style>
-  .login-wrapper { display: flex; align-items: center; justify-content: center; min-height: 80vh; }
-  form { display: flex; flex-direction: column; gap: 1rem; min-width: 320px; padding: 2rem;
-         background: var(--bg-surface); border: 1px solid var(--border-default); }
-  h1 { margin: 0; font-size: 1.5rem; color: var(--text-primary); }
-  p { margin: 0; color: var(--text-muted); font-size: 0.85rem; }
-  code { background: var(--bg-elevated); padding: 2px 6px; border-radius: 2px; }
-  input { padding: 0.6rem 0.8rem; border: 1px solid var(--border-default); background: var(--bg-base);
-          color: var(--text-primary); font-family: inherit; }
-  input.shake { animation: shake 0.4s; border-color: oklch(60% 0.2 25); }
-  .err { color: oklch(60% 0.2 25); }
-  button { padding: 0.6rem; background: var(--text-primary); color: var(--bg-base); border: none; cursor: pointer; }
+  .login-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .card-wrapper {
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .card-wrapper.is-shaking {
+    animation: shake 0.4s ease;
+  }
+
+  .login-form {
+    padding: var(--lib-space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-xl);
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-xs);
+  }
+
+  .kanji {
+    font-family: var(--lib-font-display);
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-light);
+    color: color-mix(in oklch, var(--color-kaki-500), transparent 40%);
+    line-height: 1;
+  }
+
+  .access-message {
+    font-family: var(--lib-font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
   @keyframes shake {
     0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-6px); }
-    75% { transform: translateX(6px); }
+    20%       { transform: translateX(-8px); }
+    40%       { transform: translateX(8px); }
+    60%       { transform: translateX(-5px); }
+    80%       { transform: translateX(5px); }
   }
 </style>

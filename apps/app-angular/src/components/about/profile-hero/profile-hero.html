@@ -15,7 +15,7 @@
 
     <div class="social-links">
       @for (social of profile().socials; track social.label) {
-        <lib-button variant="ghost" size="sm" (click)="openUrl(social.url)">
+        <lib-button variant="ghost" size="sm" (uiLibClick)="openUrl(social.url)">
           <span class="social-label">{{ social.label }}</span>
         </lib-button>
       }
@@ -31,10 +31,13 @@
       }
     </div>
 
-    <div class="name-block">
-      <h1 class="name">{{ profile().name }}</h1>
-      <p class="title">{{ profile().title }}</p>
-    </div>
+    <lib-display-heading
+      tag="h1"
+      size="md"
+      surface="dark"
+      [line1]="profile().name"
+      [accent]="profile().title"
+    ></lib-display-heading>
 
     <div class="location">
       <span class="location-icon">⌖</span>
