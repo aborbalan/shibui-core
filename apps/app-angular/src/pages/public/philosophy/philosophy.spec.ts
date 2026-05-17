@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Filosofia } from './filosofia';
+import { Philosophy } from './philosophy';
 
-describe('Filosofia', () => {
-  let component: Filosofia;
-  let fixture: ComponentFixture<Filosofia>;
+describe('Philosophy', () => {
+  let component: Philosophy;
+  let fixture: ComponentFixture<Philosophy>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Filosofia],
+      imports: [Philosophy],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Filosofia);
+    fixture = TestBed.createComponent(Philosophy);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
