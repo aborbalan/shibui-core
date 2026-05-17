@@ -47,7 +47,7 @@
       </svg>
       Ver componentes
     </lib-button>
-    <lib-button variant="ghost" size="lg" onui-lib-click={() => navigate('/filosofia')}>
+    <lib-button variant="ghost" size="lg" onui-lib-click={() => navigate('/philosophy')}>
       Leer filosofía
     </lib-button>
   </lib-button-group>

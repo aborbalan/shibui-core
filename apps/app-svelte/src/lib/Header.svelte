@@ -7,7 +7,7 @@
   const LINKS = [
     { id: 'componentes', label: 'Componentes', href: '#/componentes' },
     { id: 'tokens',      label: 'Tokens',      href: '#/tokens'      },
-    { id: 'filosofia',   label: 'Filosofía',   href: '#/filosofia'   },
+    { id: 'philosophy',  label: 'Filosofía',   href: '#/philosophy'  },
     { id: 'about',       label: 'Sobre mí',    href: '#/about'       },
   ];
 
