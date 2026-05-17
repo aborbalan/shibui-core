@@ -14,7 +14,7 @@ export class HeaderComponent {
   DEFAULT_LINKS: NavLink[] = [
     { id: 'componentes', label: 'Componentes', href: '#componentes' },
     { id: 'tokens', label: 'Tokens', href: '#tokens' },
-    { id: 'filosofia', label: 'Filosofía', href: '#filosofia' },
+    { id: 'filosofia', label: 'Filosofía', href: '/filosofia' },
     { id: 'about', label: 'Sobre mí', href: '/about' }
   ];
   

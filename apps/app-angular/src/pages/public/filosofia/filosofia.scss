@@ -1,0 +1,114 @@
+.filosofia-wrapper {
+  padding-top: calc(80px + clamp(2rem, 5vh, 4rem));
+}
+
+.hero-section {
+  padding: clamp(4rem, 10vh, 7rem) clamp(1.5rem, 5vw, 5rem);
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.sections-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 5rem);
+}
+
+.section-heading {
+  margin-bottom: clamp(2.5rem, 5vh, 4rem);
+}
+
+.pillars-section,
+.principles-section {
+  padding: clamp(3rem, 6vh, 5rem) 0;
+}
+
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+.pillar-card {
+  background: rgba(18, 14, 10, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  position: relative;
+  overflow: hidden;
+}
+
+.pillar-kanji {
+  position: absolute;
+  top: -0.5rem;
+  right: 1rem;
+  font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
+  font-size: clamp(5rem, 10vw, 8rem);
+  font-weight: 300;
+  color: rgba(184, 90, 30, 0.08);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+.pillar-label {
+  font-family: var(--lib-font-mono, 'DM Mono', monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(184, 90, 30, 0.6);
+  margin: 0 0 1rem 0;
+}
+
+.pillar-description {
+  font-family: var(--lib-font-body, 'Shippori Mincho', serif);
+  font-size: clamp(0.82rem, 1.2vw, 0.92rem);
+  color: rgba(250, 247, 244, 0.65);
+  line-height: 1.9;
+  margin: 0;
+}
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+.principle-item {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.principle-num {
+  font-family: var(--lib-font-mono, 'DM Mono', monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: rgba(184, 90, 30, 0.55);
+  line-height: 1;
+  flex-shrink: 0;
+  padding-top: 0.2rem;
+}
+
+.principle-content {
+  flex: 1;
+}
+
+.principle-title {
+  font-family: var(--lib-font-mono, 'DM Mono', monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(250, 247, 244, 0.70);
+  margin: 0 0 0.6rem 0;
+}
+
+.principle-description {
+  font-family: var(--lib-font-body, 'Shippori Mincho', serif);
+  font-size: clamp(0.82rem, 1.2vw, 0.92rem);
+  color: rgba(250, 247, 244, 0.60);
+  line-height: 1.9;
+  margin: 0;
+}
