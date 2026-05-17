@@ -1,16 +1,13 @@
 <section [ngStyle]="currentSurfaceStyle" class="content-section">
-  
+
     <lib-eyebrow>{{ eyebrow() }}</lib-eyebrow>
 
-
     <lib-display-heading
-    [line1]="headingLine1()"
-    [line2Prefix]="headingLine2Prefix()"
-    surface="washi"
-    [accent]="headingAccent()"
-    [description]="description()"
-  ></lib-display-heading>
-
-  <span>{{headingLine2Prefix()}}</span>
+      [line1]="headingLine1()"
+      [line2Prefix]="headingLine2Prefix()"
+      [surface]="toDisplaySurface"
+      [accent]="headingAccent()"
+      [description]="description()"
+    ></lib-display-heading>
 
 </section>

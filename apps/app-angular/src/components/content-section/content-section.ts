@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, input, Input } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
 
 export type ContentSectionSurface = 'dark' | 'light' | 'washi' | 'transparent';
 
@@ -19,48 +19,19 @@ export class ContentSectionComponent {
   description = input<string>('Cada componente existe porque tiene un propósito claro...');
   surface = input<ContentSectionSurface>('dark');
 
-constructor() {
-    // Se ejecuta cada vez que 'surface' cambia
-    effect(() => {
-      console.log(this.headingLine2Prefix());
-    });
-  }
-
-
- 
-
-  // Mapas de configuración similares a React
   readonly SURFACES: Record<ContentSectionSurface, string> = {
-    dark: 'var(--color-washi-950, #120E0A)',
-    light: '#ffffff',
-    washi: 'var(--color-washi-100, #F2EDE6)',
+    dark: 'var(--color-washi-950)',
+    light: 'var(--color-white)',
+    washi: 'var(--color-washi-100)',
     transparent: 'none'
-  };
-
-  readonly HEADING_COLORS: Record<ContentSectionSurface, string> = {
-    dark: 'rgba(250, 247, 244, 0.65)',
-    light: 'var(--color-washi-800, #3D332A)',
-    washi: 'var(--color-washi-800, #3D332A)',
-    transparent: 'var(--color-washi-800, #3D332A)'
-  };
-
-  readonly DESC_COLORS: Record<ContentSectionSurface, string> = {
-    dark: 'rgba(250, 247, 244, 0.28)',
-    light: 'var(--color-washi-500, #9A8878)',
-    washi: 'var(--color-washi-600, #7A6A5C)',
-    transparent: 'var(--color-washi-800, #3D332A)'
   };
 
   get currentSurfaceStyle() {
     return { 'background': this.SURFACES[this.surface()] };
   }
 
-  get headingColor() {
-    return this.HEADING_COLORS[this.surface()];
+  get toDisplaySurface(): 'dark' | 'light' | 'washi' {
+    const s = this.surface();
+    return s === 'transparent' ? 'light' : s;
   }
-
-  get descColor() {
-    return this.DESC_COLORS[this.surface()];
-  }
-  
 }

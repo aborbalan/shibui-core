@@ -1,30 +1,30 @@
-<div class="login-wrapper">
-    <p>login works!</p>
+<lib-background variant="ash-grid">
+  <div class="login-wrapper">
+    <div class="card-wrapper" [class.is-shaking]="shake()">
+      <lib-glass-card variant="kaki" intensity="high">
+        <form class="login-form" (submit)="handleSubmit($event)">
 
+          <div class="text-part">
+            <span class="kanji">渋</span>
+            <span class="access-message">admin · acceso restringido</span>
+          </div>
 
-    <!--intercambiar por componente-->
-    <div class="card">
-        <!---->
-        <div class="text-part">
-            <span class="kanji">
-                渋
-            </span>
-            <span class="access-message">
-                admin · acceso restringido
-            </span>
-        </div>
-        <div class="tobedetermined">
-            <label class="label-">
-                Contraseña
-            </label>
-            <lib-input></lib-input>
-        </div>
+          <lib-input
+            type="password"
+            label="Contraseña"
+            placeholder="••••••••••"
+            [value]="password()"
+            [error]="error()"
+            errorMessage="Contraseña incorrecta"
+            (uiLibInput)="password.set($event.detail.value); error.set(false)"
+          ></lib-input>
 
-        <lib-button type="primary">
+          <lib-button variant="primary" (uiLibClick)="handleSubmit()">
             Entrar
-        </lib-button>
+          </lib-button>
+
+        </form>
+      </lib-glass-card>
     </div>
-
-
-</div>  
-  
+  </div>
+</lib-background>
