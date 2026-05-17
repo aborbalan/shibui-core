@@ -4,7 +4,9 @@
 
 Shibui (渋い) es una librería de **Web Components agnóstica** construida con Lit y TypeScript estricto, publicada como paquete npm.
 
-El design system se basa en **CSS custom properties (tokens)** organizados en capas: primitivos → compuestos → semánticos. Incluye dos efectos visuales opcionales: glassmorphism ("Efecto Agua") y spotlight reactivo al cursor ("Kintsugi Digital").
+Estado actual: **77 componentes** (43 átomos + 18 moléculas + 16 organismos) con **sistema Katachi (形)** completo — 6 contextos estéticos (`wabi`, `kintsugi`, `sabi`, `terminal`, `shizen`, `celadon`) que reescriben tokens semánticos en cascada vía atributo `data-katachi`.
+
+El design system se basa en **CSS custom properties (tokens)** organizados en capas: primitivos → compuestos → semánticos → Katachi (overrides contextuales). Incluye efectos visuales opcionales: glassmorphism ("Efecto Agua") y spotlight reactivo al cursor ("Kintsugi Digital").
 
 ---
 
@@ -38,14 +40,27 @@ packages/shibui-ui/
     storybook/            → Interfaces auxiliares para stories
   src/
     components/
-      atoms/              → lib-button, lib-icon, lib-label
-      molecules/          → lib-input
-      organisms/          → lib-sidebar
+      atoms/              → 43 átomos (lib-button, lib-icon, lib-canvas, lib-label, lib-badge, lib-avatar…)
+      molecules/          → 18 moléculas (lib-input, lib-select, lib-tabs, lib-modal, lib-alert…)
+      organisms/          → 16 organismos (lib-accordion, lib-carousel, lib-data-table, lib-sidebar…)
     styles/
       shared/
-        tokens.css        → Tokens del sistema (--lib-*)
-        glass.css         → Mixin glassmorphism (en desarrollo)
+        tokens.css        → Entry point legacy de tokens (--lib-*)
+        glass.css         → Mixin glassmorphism
+        tokens/
+          _palette.css    → Paleta primitiva OKLCH
+          _semantic.css   → Tokens semánticos por defecto (--bg-base, --text-primary…)
+          _katachi.css    → 6 contextos: [data-katachi="wabi|kintsugi|sabi|terminal|shizen|celadon"]
+          _spacing.css    → Escala 4pt
+          _typography.css → Escala tipográfica + familias
+          _motion.css     → Easings y durations
+          _state.css      → Hover/focus/disabled
+          _effects.css    → Glass + spotlight + Kintsugi border
+          TOKENS.md       → Documentación de la jerarquía
         index.css         → Re-exportaciones de estilos compartidos
+      KATACHI.md          → Filosofía + cuándo usar cada katachi
+      Katachi.mdx         → Foundation story para Storybook
+      effects-x-surfaces.md → Fuente de verdad: coverage por componente (semantic | marker | effect)
       index.css           → Entry point de estilos
   vite.config.ts          → Bundler
   tsconfig.json           → TypeScript del paquete
@@ -148,6 +163,30 @@ Paleta washi, kaki, celadón. Escala tipográfica, espaciado 4pt, sombras, radio
 
 ---
 
+## Sistema Katachi (形)
+
+Seis contextos estéticos que reescriben los tokens semánticos manteniendo los nombres. Se activan poniendo `data-katachi="<id>"` en cualquier ancestro:
+
+| ID | Estética | Coverage |
+|---|---|---|
+| `wabi` | Imperfección serena — washi, ink, espacios amplios | tokens semánticos |
+| `kintsugi` | Dark + acento dorado en grietas | tokens semánticos + efecto kintsugi-border |
+| `sabi` | Patina envejecida, sombras brutales | tokens semánticos |
+| `terminal` | Mono + glitch + verde fósforo | tokens semánticos + lib-text-glitch |
+| `shizen` | Naturaleza — verdes botánicos, formas orgánicas | tokens semánticos |
+| `celadon` | Cerámica coreana — celadón frío, vidrioso | tokens semánticos |
+
+**Taxonomía de cobertura** (en `styles/effects-x-surfaces.md`):
+- 🟢 **semantic** (~23 comp.) — consume tokens semánticos, cambia visualmente con cada katachi
+- 🔵 **marker** (~50 comp.) — neutral estructural, no necesita override
+- ⚪ **effect** (~4 comp.) — efectos puros (parallax, stagger, cursor-follower), agnósticos
+
+**Wrapper DX**: `<lib-canvas katachi="kintsugi">…</lib-canvas>` aplica el atributo + un fondo de fondo apropiado. Útil en Storybook y previews.
+
+Verificación visual de las 6 propagaciones: kitchen-sink en cada app consumidora (`/admin/kitchen-sink` en React/Angular/Svelte).
+
+---
+
 ## Integración por framework (contrato de consumo)
 
 Para garantizar IntelliSense correcto en las apps consumidoras:
@@ -160,9 +199,10 @@ Para garantizar IntelliSense correcto en las apps consumidoras:
 
 ## Testing y calidad
 
-- **Playwright** — E2E, component testing y visual regression
+- **Playwright** — E2E, component testing y **visual regression** (baselines snapshots por componente × katachi)
 - **Lighthouse CI** — requiere build previo de Storybook (`storybook-static`). Config en `.config/lighthouserc.cjs`
 - Ningún código entra en `main` sin pasar Lighthouse y linter en CI
+- Cambios en `_katachi.css` o tokens semánticos detonan diffs visuales en CI — actualizar baselines deliberadamente
 
 ---
 
@@ -182,4 +222,6 @@ Para garantizar IntelliSense correcto en las apps consumidoras:
 - Proponer siempre la Storybook story junto al componente
 - Los efectos glass y spotlight son opcionales — no añadirlos salvo que se pida explícitamente
 - Los tipos siempre desde `src/models/`, nunca inline
+- **Katachi-aware**: si un componente nuevo es `semantic` (depende del look), consume tokens semánticos (`--bg-elevated`, `--text-primary`, `--accent-primary`…) en vez de la paleta primitiva. Añadirlo a `styles/effects-x-surfaces.md` con su coverage
+- Si añades un componente nuevo, actualizar también los `catalog.ts` de los kitchen-sinks (React/Angular/Svelte) con su slug + coverage
 - Si hay duda sobre convenciones, preguntar antes de asumir

@@ -1,47 +1,174 @@
-# Svelte + TS + Vite
+# app-svelte — App de testing Svelte para Shibui UI
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+App Svelte que consume `@shibui-ui/ui` y ofrece un panel admin con kitchen-sink para validar visualmente los 77 componentes bajo los 6 contextos Katachi en un entorno Svelte 5 + runes.
 
-## Recommended IDE Setup
+---
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+## Stack
 
-## Need an official Svelte framework?
+- **Svelte 5** — runes (`$state`, `$derived`, `$effect`, `$props`, `$bindable`), Snippets para slots
+- **TypeScript estricto**
+- **Vite** — bundler y dev server
+- **Router hash custom** — `src/lib/router.ts` (~30 LOC, sin dependencias externas)
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+No usa SvelteKit ni `svelte-spa-router`. El router custom hash-based sirve para 3 rutas y evita una dependencia más.
 
-## Technical considerations
+---
 
-**Why use this over SvelteKit?**
+## Estructura
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
 ```
+src/
+  App.svelte                → Host del router + listener Ctrl+Shift+A → /#/admin/login
+  main.ts                   → Bootstrap: import '@shibui-ui/ui' + '@shibui-ui/ui/tokens' (statico, evita FOUC)
+  app.css                   → Estilos globales
+  shibui-elements.d.ts      → Augment de svelte/elements para tipar lib-*
+  lib/
+    router.ts               → Mini hash-router: writable<string> + navigate()
+    auth.ts                 → Store sessionStorage-based: isAuthenticated, login, logout
+    Counter.svelte          → Demo component
+  routes/
+    Home.svelte             → Página pública
+    Login.svelte            → /#/admin/login (password 'shibui-dev')
+    Kitchen.svelte          → /#/admin/kitchen-sink (container del kitchen)
+    kitchen/
+      KatachiSwitcher.svelte → Segmented sticky con 7 opciones (none + 6 katachi)
+      KitchenItem.svelte    → Wrapper de cada componente
+      StatusBadge.svelte    → Chip 🟢 semantic · 🔵 marker · ⚪ effect
+      AtomsSink.svelte      → 43 átomos
+      MoleculesSink.svelte  → 18 moléculas
+      OrganismsSink.svelte  → 16 organismos
+      catalog.ts            → Coverage por slug (fuente: packages/shibui-ui/src/styles/effects-x-surfaces.md)
+```
+
+---
+
+## Routing
+
+Hash-based, gestionado en `App.svelte`:
+
+| Ruta | Acceso |
+|---|---|
+| `/#/` | Público — `Home.svelte` |
+| `/#/admin/login` | Público — `Login.svelte` |
+| `/#/admin/kitchen-sink` | Protegido (gated por `isAuthenticated` store) — `Kitchen.svelte` |
+
+`Ctrl+Shift+A` desde cualquier vista → navega a `/#/admin/login`.
+
+**Router API** (`lib/router.ts`):
+
+```typescript
+import { route, navigate } from './lib/router';
+
+// route es un Readable<string> con el path actual ('/admin/login', etc.)
+// navigate(path) actualiza window.location.hash
+```
+
+---
+
+## Auth
+
+Store sessionStorage-based, mismo contrato que React/Angular:
+
+```typescript
+import { writable } from 'svelte/store';
+
+const initial = sessionStorage.getItem('admin_auth') === 'true';
+export const isAuthenticated = writable(initial);
+
+export const login = (password: string): boolean => {
+  if (password === 'shibui-dev') {
+    sessionStorage.setItem('admin_auth', 'true');
+    isAuthenticated.set(true);
+    return true;
+  }
+  return false;
+};
+
+export const logout = (): void => { /* ... */ };
+```
+
+El guard se aplica inline en `App.svelte`:
+
+```svelte
+{#if path === '/admin/kitchen-sink' && $isAuthenticated}
+  <Kitchen />
+{:else if path === '/admin/kitchen-sink'}
+  <!-- redirige a /#/admin/login -->
+{/if}
+```
+
+---
+
+## Integración con Shibui UI
+
+```typescript
+// main.ts
+import '@shibui-ui/ui';          // registra todos los custom elements
+import '@shibui-ui/ui/tokens';   // carga tokens.css estáticamente (evita FOUC)
+```
+
+```typescript
+// shibui-elements.d.ts — augment de svelte/elements
+declare module 'svelte/elements' {
+  export interface SvelteHTMLElements {
+    [key: `lib-${string}`]: HTMLAttributes<HTMLElement> & {
+      [propName: string]: unknown;
+    };
+  }
+}
+```
+
+---
+
+## Kitchen Sink (`/#/admin/kitchen-sink`)
+
+Página dev para inspeccionar las 77 piezas bajo los 6 contextos Katachi en vivo.
+
+**Patrón switcher Svelte 5 runes:**
+
+```svelte
+<script lang="ts">
+  import type { KatachiId } from '@shibui-ui/ui';
+  import KatachiSwitcher from './kitchen/KatachiSwitcher.svelte';
+
+  let katachi = $state<KatachiId | ''>('');
+</script>
+
+<KatachiSwitcher bind:value={katachi} />
+<div data-katachi={katachi || null}>
+  <AtomsSink />
+  <MoleculesSink />
+  <OrganismsSink />
+</div>
+```
+
+Cambiar el switcher actualiza `data-katachi` en el contenedor → todos los `lib-*` re-pintan en vivo. Verifica que la propagación Katachi funciona a través de Vite + Svelte sin tooling extra.
+
+---
+
+## Convenciones
+
+- **Runes obligatorios** — nada de `let`/`export let` legacy. Usar `$state`, `$derived`, `$effect`, `$props`, `$bindable`
+- **Slots vía Snippets** — `Snippet` de `svelte` (no `<slot>` legacy)
+- **Stores tradicionales** para estado compartido entre rutas (`writable`, `readable`) — runes son sólo intra-componente
+- **No SvelteKit** — esta app es deliberadamente SPA pura sin SSR
+
+---
+
+## Scripts
+
+```bash
+pnpm start:svelte           # Dev server (desde raíz del monorepo)
+
+# Desde apps/app-svelte:
+pnpm dev                    # Dev server
+pnpm build                  # Build de producción
+pnpm check                  # svelte-check (type-check + a11y)
+```
+
+---
+
+## Variables de entorno
+
+Sin variables de entorno configuradas de momento. Usar `.env.local` con prefijo `VITE_` cuando sea necesario.
