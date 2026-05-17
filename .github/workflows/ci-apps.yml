@@ -127,6 +127,8 @@ jobs:
           cache: "pnpm"
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
+      - name: 🔧 Copy .firebaserc to config dir
+        run: cp .firebaserc .config/.firebaserc
       - name: 📥 Download React dist artifact
         if: needs.build-react.result == 'success'
         uses: actions/download-artifact@v4
