@@ -185,4 +185,18 @@ Definir en `.env.local` (no committear).
 ## KitchenSink (`src/dev/KitchenSink/`)
 
 Área de desarrollo accesible en `/admin/kitchen-sink` (requiere login).  
-Organizada en `AtomSink`, `MoleculesSink` y `OrganismsSink` para probar los componentes Lit de forma aislada en un contexto React real.
+Renderiza las **77 piezas de `@shibui-ui/ui`** (43 átomos + 18 moléculas + 16 organismos) en un grid único bajo un contenedor con `data-katachi` reactivo.
+
+```
+KitchenSink/
+  index.tsx              → Container con state<KatachiId | ''> y contenedor data-katachi
+  KatachiSwitcher.tsx    → Segmented sticky: none + 6 katachi (wabi, kintsugi, sabi, terminal, shizen, celadon)
+  KitchenItem.tsx        → Wrapper de cada componente (header + slot + StatusBadge)
+  StatusBadge.tsx        → Chip 🟢 semantic · 🔵 marker · ⚪ effect
+  catalog.ts             → Coverage por slug (fuente: packages/shibui-ui/src/styles/effects-x-surfaces.md)
+  AtomSink.tsx           → 43 átomos
+  MoleculesSink.tsx      → 18 moléculas
+  OrganismsSink.tsx      → 16 organismos
+```
+
+El switcher cambia `data-katachi` en el contenedor raíz del kitchen → todos los componentes se re-pintan en vivo. Sirve como verificación de propagación del sistema Katachi a través de los wrappers `@shibui-ui/ui/react`.
