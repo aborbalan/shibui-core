@@ -17,6 +17,11 @@ export class Login {
   error = signal(false);
   shake = signal(false);
 
+  onPasswordInput(e: Event): void {
+    this.password.set((e as CustomEvent<{ value: string }>).detail.value);
+    this.error.set(false);
+  }
+
   handleSubmit(e?: Event): void {
     e?.preventDefault();
     const ok = this.auth.login(this.password());

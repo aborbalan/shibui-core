@@ -40,10 +40,10 @@
             value={password}
             error={error}
             errorMessage="Contraseña incorrecta"
-            on:ui-lib-input={(e) => { password = e.detail.value; error = false; }}
+            onui-lib-input={(e: Event) => { password = (e as CustomEvent).detail.value; error = false; }}
           ></lib-input>
 
-          <lib-button variant="primary" on:ui-lib-click={handleLogin}>
+          <lib-button variant="primary" onui-lib-click={handleLogin}>
             Entrar
           </lib-button>
 

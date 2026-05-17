@@ -16,7 +16,7 @@
             [value]="password()"
             [error]="error()"
             errorMessage="Contraseña incorrecta"
-            (uiLibInput)="password.set($event.detail.value); error.set(false)"
+            (uiLibInput)="onPasswordInput($event)"
           ></lib-input>
 
           <lib-button variant="primary" (uiLibClick)="handleSubmit()">
