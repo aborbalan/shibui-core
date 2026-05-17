@@ -120,7 +120,7 @@ export const ShibuiHeader: React.FC<ShibuiHeaderProps> = ({
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 200,
+        zIndex: 'var(--z-overlay)' as unknown as number,
         ...style,
       }}
       onUiLibHeaderLink={(e: CustomEvent) => onNavLink?.(e.detail.id)}
