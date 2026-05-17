@@ -16,7 +16,7 @@ const statusVariant: Record<string, string> = {
 export const ComponentCard: React.FC<ComponentCardProps> = ({ component, onSelect }) => {
   return (
     <LibCard
-      variant="inverse"
+      variant="washi"
       style={{ cursor: "pointer" }}
       onClick={() => onSelect(component.slug)}
     >
