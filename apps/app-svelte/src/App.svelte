@@ -5,7 +5,7 @@
   import Header from './lib/Header.svelte';
   import Hero from './routes/Hero.svelte';
   import About from './routes/About.svelte';
-  import Filosofia from './routes/Filosofia.svelte';
+  import Philosophy from './routes/Philosophy.svelte';
   import Componentes from './routes/Componentes.svelte';
   import Tokens from './routes/Tokens.svelte';
   import Login from './routes/Login.svelte';
@@ -25,7 +25,7 @@
   let authed = $derived($isAuthenticated);
   let path = $derived($route);
 
-  const PUBLIC_ROUTES = ['/', '/home', '/about', '/filosofia', '/componentes', '/tokens'];
+  const PUBLIC_ROUTES = ['/', '/home', '/about', '/philosophy', '/componentes', '/tokens'];
 
   $effect(() => {
     if (path === '/admin/kitchen-sink' && !authed) navigate('/admin/login');
@@ -49,8 +49,8 @@
   <lib-background variant="ash-grid" style="min-height:100vh;">
     {#if path === '/about'}
       <About />
-    {:else if path === '/filosofia'}
-      <Filosofia />
+    {:else if path === '/philosophy'}
+      <Philosophy />
     {:else if path === '/componentes'}
       <Componentes />
     {:else if path === '/tokens'}

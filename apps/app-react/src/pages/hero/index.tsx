@@ -21,7 +21,7 @@ export const HomePage: React.FC = () => {
           <div style={{ flex: 1, paddingBottom: '30px' }}>
             <HeroIntro
               onPrimary={() => document.querySelector('#componentes')?.scrollIntoView({ behavior: 'smooth' })}
-              onGhost={() => document.querySelector('#filosofia')?.scrollIntoView({ behavior: 'smooth' })}
+              onGhost={() => document.querySelector('#philosophy')?.scrollIntoView({ behavior: 'smooth' })}
             />
           </div>
 

@@ -92,7 +92,7 @@ export const PillarsSection: React.FC = () => {
             <p style={{
               fontFamily: 'var(--lib-font-body, "Shippori Mincho", serif)',
               fontSize: 'clamp(0.82rem, 1.2vw, 0.92rem)',
-              color: 'rgba(250, 247, 244, 0.3)',
+              color: 'rgba(250, 247, 244, 0.65)',
               lineHeight: 1.9,
               margin: 0,
             }}>

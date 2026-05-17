@@ -10,8 +10,8 @@ export const PUBLIC_ROUTES: Routes = [
     loadComponent: () => import('@pages/public/auth/login/login').then((m) => m.Login),
   },
   {
-    path: 'filosofia',
-    loadComponent: () => import('@pages/public/filosofia/filosofia').then((m) => m.Filosofia),
+    path: 'philosophy',
+    loadComponent: () => import('@pages/public/philosophy/philosophy').then((m) => m.Philosophy),
   },
   {
     path: 'about',

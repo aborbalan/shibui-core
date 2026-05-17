@@ -5,7 +5,7 @@ import PhilosophyHero from './templates/PhilosophyHero';
 import PillarsSection from './templates/PillarsSection';
 import PrinciplesSection from './templates/PrinciplesSection';
 
-export const FilosofiaPage: React.FC = () => {
+export const PhilosophyPage: React.FC = () => {
   return (
     <div style={{ paddingTop: 'calc(80px + clamp(2rem, 5vh, 4rem))' }}>
 
@@ -29,4 +29,4 @@ export const FilosofiaPage: React.FC = () => {
   );
 };
 
-export default FilosofiaPage;
+export default PhilosophyPage;
