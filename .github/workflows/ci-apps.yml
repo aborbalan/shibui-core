@@ -135,7 +135,7 @@ jobs:
           path: apps/app-react/dist/
       - name: 🚀 Deploy React App
         if: needs.build-react.result == 'success'
-        run: pnpm exec firebase deploy --only hosting:react --non-interactive --project lib-ui-b67c5
+        run: pnpm exec firebase deploy --only hosting:react --non-interactive --project lib-ui-b67c5 --config .config/firebase.json
       - name: 📥 Download Angular dist artifact
         if: needs.build-angular.result == 'success'
         uses: actions/download-artifact@v4
@@ -144,7 +144,7 @@ jobs:
           path: apps/app-angular/dist/
       - name: 🚀 Deploy Angular App
         if: needs.build-angular.result == 'success'
-        run: pnpm exec firebase deploy --only hosting:angular --non-interactive --project lib-ui-b67c5
+        run: pnpm exec firebase deploy --only hosting:angular --non-interactive --project lib-ui-b67c5 --config .config/firebase.json
       - name: 📥 Download Svelte dist artifact
         if: needs.build-svelte.result == 'success'
         uses: actions/download-artifact@v4
@@ -153,4 +153,4 @@ jobs:
           path: apps/app-svelte/dist/
       - name: 🚀 Deploy Svelte App
         if: needs.build-svelte.result == 'success'
-        run: pnpm exec firebase deploy --only hosting:svelte --non-interactive --project lib-ui-b67c5
+        run: pnpm exec firebase deploy --only hosting:svelte --non-interactive --project lib-ui-b67c5 --config .config/firebase.json
