@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LibBackground, LibButton } from '@shibui-ui/ui/react';
+import { LibBackground, LibButton, LibGlassCard, LibInput } from '@shibui-ui/ui/react';
 import { useAuth } from '../../core/hooks/useAuth';
 
 export function LoginPage() {
@@ -11,7 +11,6 @@ export function LoginPage() {
     const [error, setError] = useState(false);
     const [shake, setShake] = useState(false);
 
-    // Redirige a donde intentaba ir, o al dashboard por defecto
     const from = (location.state as { from?: Location })?.from?.pathname ?? '/admin';
 
     const handleSubmit = () => {
@@ -25,10 +24,6 @@ export function LoginPage() {
         }
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter') handleSubmit();
-    };
-
     return (
         <LibBackground variant="ash-grid">
             <div style={{
@@ -37,91 +32,66 @@ export function LoginPage() {
                 justifyContent: 'center',
                 minHeight: '100vh',
             }}>
-                <div
+                <LibGlassCard
+                    variant="kaki"
+                    intensity="high"
                     style={{
                         width: '100%',
                         maxWidth: '380px',
-                        padding: '2.5rem',
-                        background: 'rgba(18, 14, 10, 0.85)',
-                        border: `1px solid ${error ? 'rgba(220, 60, 60, 0.4)' : 'rgba(255,255,255,0.07)'}`,
-                        backdropFilter: 'blur(12px)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '1.75rem',
                         animation: shake ? 'shake 0.4s ease' : undefined,
-                    }}
+                    } as React.CSSProperties}
                 >
-                    {/* Marca */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                        <span style={{
-                            fontFamily: 'var(--lib-font-display, "Cormorant Garamond", serif)',
-                            fontSize: '2rem',
-                            fontWeight: 300,
-                            color: 'rgba(184, 90, 30, 0.6)',
-                            lineHeight: 1,
-                        }}>
-                            渋
-                        </span>
-                        <span style={{
-                            fontFamily: 'var(--lib-font-mono, "DM Mono", monospace)',
-                            fontSize: '0.6rem',
-                            letterSpacing: '0.24em',
-                            textTransform: 'uppercase',
-                            color: 'rgba(250,247,244,0.2)',
-                        }}>
-                            admin · acceso restringido
-                        </span>
-                    </div>
-
-                    {/* Campo de contraseña */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <label style={{
-                            fontFamily: 'var(--lib-font-mono, "DM Mono", monospace)',
-                            fontSize: '0.6rem',
-                            letterSpacing: '0.2em',
-                            textTransform: 'uppercase',
-                            color: 'rgba(250,247,244,0.25)',
-                        }}>
-                            Contraseña
-                        </label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => { setPassword(e.target.value); setError(false); }}
-                            onKeyDown={handleKeyDown}
-                            autoFocus
-                            style={{
-                                background: 'rgba(255,255,255,0.04)',
-                                border: `1px solid ${error ? 'rgba(220,60,60,0.5)' : 'rgba(255,255,255,0.08)'}`,
-                                color: 'rgba(250,247,244,0.75)',
-                                padding: '0.625rem 0.875rem',
-                                fontFamily: 'var(--lib-font-mono, "DM Mono", monospace)',
-                                fontSize: '0.875rem',
-                                letterSpacing: '0.08em',
-                                outline: 'none',
-                                width: '100%',
-                                boxSizing: 'border-box',
-                                transition: 'border-color 0.2s',
-                            }}
-                            placeholder="••••••••••"
-                        />
-                        {error && (
+                    <form
+                        onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}
+                        onKeyDown={(e) => { if (e.key === 'Enter') handleSubmit(); }}
+                        style={{
+                            padding: 'var(--lib-space-2xl)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 'var(--lib-space-xl)',
+                        }}
+                    >
+                        {/* Marca */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-xs)' }}>
+                            <span style={{
+                                fontFamily: 'var(--lib-font-display)',
+                                fontSize: 'var(--text-3xl)',
+                                fontWeight: 'var(--weight-light)' as React.CSSProperties['fontWeight'],
+                                color: 'color-mix(in oklch, var(--color-kaki-500), transparent 40%)',
+                                lineHeight: 1,
+                            }}>
+                                渋
+                            </span>
                             <span style={{
                                 fontFamily: 'var(--lib-font-mono)',
-                                fontSize: '0.6rem',
-                                letterSpacing: '0.14em',
-                                color: 'rgba(220,60,60,0.7)',
+                                fontSize: 'var(--text-xs)',
+                                letterSpacing: 'var(--tracking-widest)',
                                 textTransform: 'uppercase',
+                                color: 'var(--text-muted)',
                             }}>
-                                Contraseña incorrecta
+                                admin · acceso restringido
                             </span>
-                        )}
-                    </div>
+                        </div>
 
-                    <LibButton variant="primary" onUiLibClick={handleSubmit}>
-                        Entrar
-                    </LibButton>
-                </div>
+                        {/* Campo de contraseña — reemplaza <label> + <input> + error span */}
+                        <LibInput
+                            type="password"
+                            label="Contraseña"
+                            placeholder="••••••••••"
+                            value={password}
+                            error={error}
+                            errorMessage="Contraseña incorrecta"
+                            onUiLibInput={(e: CustomEvent) => {
+                                setPassword(e.detail.value);
+                                setError(false);
+                            }}
+                        />
+
+                        <LibButton variant="primary" onUiLibClick={handleSubmit}>
+                            Entrar
+                        </LibButton>
+                    </form>
+                </LibGlassCard>
             </div>
 
             {/* Keyframe de shake local */}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { LibButton, LibButtonGroup } from '@shibui-ui/ui/react';
 
 interface HeroIntroProps {
@@ -13,27 +13,15 @@ interface HeroIntroProps {
   onGhost?:      () => void;
 }
 
-// ─── Tokens que viven en :host de Lit y no llegan al DOM global ───────────────
-const TOKENS: React.CSSProperties = {
-  ['--lib-font-display' as string]: '"Cormorant Garamond", Georgia, serif',
-  ['--lib-font-mono'    as string]: '"DM Mono", "Courier New", monospace',
-  ['--lib-font-body'    as string]: '"Shippori Mincho", "Times New Roman", serif',
-  ['--color-kaki-400'   as string]: 'oklch(61.85% 0.149 48.72deg)',
-  ['--color-kaki-500'   as string]: 'oklch(51.65% 0.134 46.13deg)',
-};
-
 const EASE    = 'cubic-bezier(0,0,0.2,1)';
 const STYLE_ID = 'hero-intro-keyframes';
 
-// ─── Inyecta @keyframes + fuentes una sola vez en <head> ─────────────────────
 function useHeroKeyframes(): void {
-  useEffect(() => {
+  React.useEffect(() => {
     if (document.getElementById(STYLE_ID)) return;
     const style = document.createElement('style');
     style.id = STYLE_ID;
     style.textContent = `
-      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400&family=Shippori+Mincho:wght@400;600&display=swap');
-
       @keyframes fadeUp {
         from { opacity: 0; transform: translateY(20px); }
         to   { opacity: 1; transform: translateY(0); }
@@ -58,34 +46,33 @@ export const HeroIntro: React.FC<HeroIntroProps> = ({
 
   const defaultSubtitle: React.ReactNode = (
     <>
-      <strong style={{ color: 'rgba(250,247,244,0.55)', fontWeight: 600 }}>
+      <strong style={{ color: 'var(--text-primary)', fontWeight: 'var(--weight-semibold)' as React.CSSProperties['fontWeight'] }}>
         66 componentes.
       </strong>{' '}
       Sin dependencias externas. CSS puro y vanilla JS bajo principios
       estéticos japoneses —{' '}
-      <strong style={{ color: 'rgba(250,247,244,0.55)', fontWeight: 600 }}>wabi-sabi</strong>,{' '}
-      <strong style={{ color: 'rgba(250,247,244,0.55)', fontWeight: 600 }}>kintsugi</strong>{' '}
+      <strong style={{ color: 'var(--text-primary)', fontWeight: 'var(--weight-semibold)' as React.CSSProperties['fontWeight'] }}>wabi-sabi</strong>,{' '}
+      <strong style={{ color: 'var(--text-primary)', fontWeight: 'var(--weight-semibold)' as React.CSSProperties['fontWeight'] }}>kintsugi</strong>{' '}
       y{' '}
-      <strong style={{ color: 'rgba(250,247,244,0.55)', fontWeight: 600 }}>ma</strong>.
+      <strong style={{ color: 'var(--text-primary)', fontWeight: 'var(--weight-semibold)' as React.CSSProperties['fontWeight'] }}>ma</strong>.
       {' '}Donde cada elemento justifica su presencia.
     </>
   );
 
   return (
-    // El div raíz expone los tokens como CSS custom properties al árbol descendente
-    <div style={{ ...TOKENS }}>
+    <div>
 
       {/* Eyebrow */}
       <div style={{
         fontFamily:    'var(--lib-font-mono)',
-        fontSize:      '0.68rem',
-        letterSpacing: '0.28em',
+        fontSize:      'var(--text-xs)',
+        letterSpacing: 'var(--tracking-widest)',
         textTransform: 'uppercase',
-        color:         'rgba(184,90,30,0.55)',
-        marginBottom:  '1.5rem',
+        color:         'color-mix(in oklch, var(--color-kaki-500), transparent 45%)',
+        marginBottom:  'var(--lib-space-2xl)',
         display:       'flex',
         alignItems:    'center',
-        gap:           '0.75rem',
+        gap:           'var(--lib-space-md)',
         opacity:       0,
         animation:     `fadeUp 0.8s 0.1s ${EASE} forwards`,
       }}>
@@ -102,12 +89,12 @@ export const HeroIntro: React.FC<HeroIntroProps> = ({
       {/* Title */}
       <h1 style={{
         fontFamily:    'var(--lib-font-display)',
-        fontSize:      'clamp(3.5rem, 9vw, 9rem)',
-        fontWeight:    300,
-        lineHeight:    1.0,
-        letterSpacing: '-0.03em',
-        color:         'rgba(250,247,244,0.72)',
-        margin:        '0 0 1.25rem 0',
+        fontSize:      'var(--text-5xl)',
+        fontWeight:    'var(--weight-light)' as React.CSSProperties['fontWeight'],
+        lineHeight:    'var(--leading-tight)',
+        letterSpacing: 'var(--tracking-tight)',
+        color:         'var(--text-primary)',
+        margin:        '0 0 var(--lib-space-lg) 0',
         opacity:       0,
         animation:     `fadeUp 0.9s 0.2s ${EASE} forwards`,
       }}>
@@ -124,11 +111,11 @@ export const HeroIntro: React.FC<HeroIntroProps> = ({
       {/* Subtitle */}
       <p style={{
         fontFamily:   'var(--lib-font-body)',
-        fontSize:     'clamp(0.85rem, 1.5vw, 1.05rem)',
-        color:        'rgba(250,247,244,0.3)',
-        lineHeight:   1.9,
+        fontSize:     'var(--text-sm)',
+        color:        'var(--text-secondary)',
+        lineHeight:   'var(--leading-relaxed)',
         maxWidth:     520,
-        margin:       '0 0 2.5rem 0',
+        margin:       '0 0 var(--lib-space-2xl) 0',
         opacity:      0,
         animation:    `fadeUp 0.9s 0.35s ${EASE} forwards`,
       }}>

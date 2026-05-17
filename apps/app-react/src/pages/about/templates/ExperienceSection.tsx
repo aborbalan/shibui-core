@@ -1,5 +1,5 @@
 import React from 'react';
-import { LibBadge, LibEyebrow, LibTimeline, LibTimelineItem } from '@shibui-ui/ui/react';
+import { LibBadge, LibDisplayHeading, LibEyebrow, LibTimeline, LibTimelineItem } from '@shibui-ui/ui/react';
 import type { WorkExperienceDto } from '../../../data/api/domain/about/api/about.api';
 
 interface ExperienceSectionProps {
@@ -32,26 +32,17 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
     return (
         <section style={{ padding: 'clamp(2.5rem, 5vh, 4rem) 0' }}>
             {/* Header */}
-            <div style={{ marginBottom: '2.5rem' }}>
-                <LibEyebrow color="dark" size="sm" style={{ display: 'inline-flex', marginBottom: '1rem' } as React.CSSProperties}>
+            <div style={{ marginBottom: 'var(--lib-space-2xl)' }}>
+                <LibEyebrow color="dark" size="sm" style={{ display: 'inline-flex', marginBottom: 'var(--lib-space-md)' } as React.CSSProperties}>
                     Experiencia · Work History
                 </LibEyebrow>
-                <h2
-                    style={{
-                        fontFamily: 'var(--lib-font-display, "Cormorant Garamond", serif)',
-                        fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
-                        fontWeight: 300,
-                        letterSpacing: '-0.02em',
-                        lineHeight: 1.15,
-                        color: 'rgba(250,247,244,0.65)',
-                        margin: 0,
-                    }}
-                >
-                    Trayectoria{' '}
-                    <em style={{ fontStyle: 'italic', color: 'var(--color-kaki-400, #D97234)' }}>
-                        profesional
-                    </em>
-                </h2>
+                <LibDisplayHeading
+                    tag="h2"
+                    size="sm"
+                    surface="dark"
+                    line1="Trayectoria"
+                    accent="profesional"
+                />
             </div>
 
             {/* Timeline */}
@@ -61,13 +52,12 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                         key={item.id}
                         status={item.endDate === null ? 'current' : 'done'}
                     >
-                        {/* Contenido del item */}
                         <div
                             style={{
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: '0.75rem',
-                                paddingBottom: '2rem',
+                                gap: 'var(--lib-space-md)',
+                                paddingBottom: 'var(--lib-space-2xl)',
                             }}
                         >
                             {/* Company + dates row */}
@@ -76,7 +66,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                                     display: 'flex',
                                     alignItems: 'flex-start',
                                     justifyContent: 'space-between',
-                                    gap: '1rem',
+                                    gap: 'var(--lib-space-md)',
                                     flexWrap: 'wrap',
                                 }}
                             >
@@ -84,10 +74,10 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                                     <p
                                         style={{
                                             fontFamily: 'var(--lib-font-mono)',
-                                            fontSize: '0.6rem',
-                                            letterSpacing: '0.22em',
+                                            fontSize: 'var(--text-xs)',
+                                            letterSpacing: 'var(--lib-tracking-elegant)',
                                             textTransform: 'uppercase',
-                                            color: 'rgba(184,90,30,0.55)',
+                                            color: 'color-mix(in oklch, var(--color-kaki-500), transparent 45%)',
                                             margin: '0 0 0.2rem 0',
                                         }}
                                     >
@@ -96,10 +86,10 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                                     <h3
                                         style={{
                                             fontFamily: 'var(--lib-font-display)',
-                                            fontSize: 'clamp(1.1rem, 2vw, 1.5rem)',
-                                            fontWeight: 400,
-                                            letterSpacing: '-0.01em',
-                                            color: 'rgba(250,247,244,0.75)',
+                                            fontSize: 'var(--text-xl)',
+                                            fontWeight: 'var(--weight-regular)' as React.CSSProperties['fontWeight'],
+                                            letterSpacing: 'var(--tracking-tight)',
+                                            color: 'var(--text-primary)',
                                             margin: 0,
                                         }}
                                     >
@@ -108,9 +98,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                                     <p
                                         style={{
                                             fontFamily: 'var(--lib-font-mono)',
-                                            fontSize: '0.6rem',
-                                            letterSpacing: '0.12em',
-                                            color: 'rgba(250,247,244,0.2)',
+                                            fontSize: 'var(--text-xs)',
+                                            letterSpacing: 'var(--tracking-wide)',
+                                            color: 'var(--text-muted)',
                                             margin: '0.25rem 0 0 0',
                                         }}
                                     >
@@ -123,9 +113,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                                     <p
                                         style={{
                                             fontFamily: 'var(--lib-font-mono)',
-                                            fontSize: '0.65rem',
-                                            letterSpacing: '0.1em',
-                                            color: 'rgba(250,247,244,0.3)',
+                                            fontSize: 'var(--text-xs)',
+                                            letterSpacing: 'var(--tracking-wide)',
+                                            color: 'var(--text-secondary)',
                                             margin: 0,
                                         }}
                                     >
@@ -134,9 +124,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                                     <p
                                         style={{
                                             fontFamily: 'var(--lib-font-mono)',
-                                            fontSize: '0.6rem',
-                                            letterSpacing: '0.08em',
-                                            color: 'rgba(250,247,244,0.15)',
+                                            fontSize: 'var(--text-xs)',
+                                            letterSpacing: 'var(--tracking-normal)',
+                                            color: 'var(--text-muted)',
                                             margin: '0.2rem 0 0 0',
                                         }}
                                     >
@@ -150,9 +140,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                                 <p
                                     style={{
                                         fontFamily: 'var(--lib-font-body)',
-                                        fontSize: '0.875rem',
-                                        color: 'rgba(250,247,244,0.35)',
-                                        lineHeight: 1.8,
+                                        fontSize: 'var(--text-sm)',
+                                        color: 'var(--text-secondary)',
+                                        lineHeight: 'var(--leading-relaxed)',
                                         margin: 0,
                                         maxWidth: '560px',
                                     }}
