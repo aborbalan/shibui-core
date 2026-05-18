@@ -1,4 +1,5 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-spinner.component';
 import type { LibSpinner } from './lib-spinner.component';
@@ -316,4 +317,21 @@ export const Context: Story = {
 
     </div>
   `,
+};
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · ARIA y estructura
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestARIA: Story = {
+  name: 'Test · role=status y aria-label correctos',
+  tags: ['test'],
+  args: { label: 'Cargando datos', size: 'md', variant: 'enso' },
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-spinner') as HTMLElement;
+    const status = el.shadowRoot!.querySelector('[role="status"]');
+
+    expect(status).not.toBeNull();
+    expect(status?.getAttribute('aria-label')).toBe('Cargando datos');
+    expect(status?.getAttribute('aria-live')).toBe('polite');
+  },
 };

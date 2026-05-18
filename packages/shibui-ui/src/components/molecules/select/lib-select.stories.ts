@@ -1,5 +1,6 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, fireEvent } from 'storybook/test';
 import './lib-select.component';
 
 interface SelectArgs {
@@ -393,4 +394,65 @@ export const KatachiContexts: Story = {
     </div>
   `,
   parameters: { layout: 'fullscreen' },
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · Selección y eventos
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestSelectChangeEvent: Story = {
+  name: 'Test · ui-lib-select-change con value y label correctos',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <div style="padding: 2rem; max-width: 320px; height: 300px;">
+      <lib-select label="Opción" placeholder="Selecciona…">
+        <lib-select-option value="opt1">Opción 1</lib-select-option>
+        <lib-select-option value="opt2">Opción 2</lib-select-option>
+      </lib-select>
+    </div>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-select') as HTMLElement & { openPanel(): void };
+
+    let detail: { value: string; label: string } | null = null;
+    canvasElement.addEventListener('ui-lib-select-change', (e) => {
+      detail = (e as CustomEvent<{ value: string; label: string }>).detail;
+    }, { once: true });
+
+    // Open via public API then simulate option-selected from slotted option
+    el.openPanel();
+    await new Promise<void>((resolve) => setTimeout(resolve, 50));
+
+    el.dispatchEvent(new CustomEvent('option-selected', {
+      detail: { value: 'opt1', label: 'Opción 1' },
+      bubbles: true,
+    }));
+
+    await new Promise<void>((resolve) => setTimeout(resolve, 50));
+
+    expect(detail).not.toBeNull();
+    expect(detail!.value).toBe('opt1');
+    expect(detail!.label).toBe('Opción 1');
+  },
+};
+
+export const TestDisabledSelect: Story = {
+  name: 'Test · disabled bloquea la apertura del panel',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <div style="padding: 2rem; max-width: 320px;">
+      <lib-select label="Bloqueado" disabled placeholder="No disponible">
+        <lib-select-option value="a">A</lib-select-option>
+      </lib-select>
+    </div>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-select') as HTMLElement;
+    const trigger = el.shadowRoot!.querySelector('.sel-trigger') as HTMLElement;
+
+    fireEvent.click(trigger);
+    await new Promise<void>((resolve) => setTimeout(resolve, 50));
+
+    expect(el.hasAttribute('open')).toBe(false);
+  },
 };

@@ -1,7 +1,9 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, userEvent, fireEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-button.component';
 import type { LibButton } from './lib-button.component';
+import type { UiClickEventDetail } from '../../../types';
 
 type LibButtonStoryArgs = LibButton & { slotContent?: string | TemplateResult };
 
@@ -245,6 +247,48 @@ export const KatachiContexts: Story = {
     </div>
   `,
   parameters: { layout: 'fullscreen' },
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · Interacción y eventos
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestClickEvent: Story = {
+  name: 'Test · ui-lib-click se dispara con detail',
+  tags: ['test'],
+  args: { variant: 'primary', size: 'md', disabled: false },
+  play: async ({ canvasElement }): Promise<void> => {
+    const btn = canvasElement.querySelector('lib-button') as HTMLElement;
+    const shadowBtn = btn.shadowRoot!.querySelector('.btn') as HTMLElement;
+
+    let detail: UiClickEventDetail | null = null;
+    canvasElement.addEventListener('ui-lib-click', (e) => {
+      detail = (e as CustomEvent<UiClickEventDetail>).detail;
+    }, { once: true });
+
+    await userEvent.click(shadowBtn);
+
+    expect(detail).not.toBeNull();
+    expect(detail!.timestamp).toBeGreaterThan(0);
+  },
+};
+
+export const TestDisabledBlocksEvent: Story = {
+  name: 'Test · disabled bloquea el evento',
+  tags: ['test'],
+  args: { variant: 'primary', size: 'md', disabled: true },
+  play: async ({ canvasElement }): Promise<void> => {
+    const btn = canvasElement.querySelector('lib-button') as HTMLElement;
+    const shadowBtn = btn.shadowRoot!.querySelector('.btn') as HTMLElement;
+
+    let fired = false;
+    canvasElement.addEventListener('ui-lib-click', () => { fired = true; }, { once: true });
+
+    // fireEvent bypasses pointer-events:none on disabled button; component handler still checks disabled
+    fireEvent.click(shadowBtn);
+
+    expect(fired).toBe(false);
+  },
 };
 
 export const KatachiExplicitOverride: Story = {

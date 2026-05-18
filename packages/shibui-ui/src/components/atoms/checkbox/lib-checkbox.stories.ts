@@ -1,7 +1,8 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, fireEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-checkbox.component';
-import type { LibCheckbox } from './lib-checkbox.component';
+import type { LibCheckbox, CheckboxChangeDetail } from './lib-checkbox.component';
 
 type LibCheckboxStoryArgs = Pick<
   LibCheckbox,
@@ -145,6 +146,44 @@ export const WithSublabel: Story = {
       ></lib-checkbox>
     </div>
   `,
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · Interacción y eventos
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestCheckEvent: Story = {
+  name: 'Test · change event con detail correcto',
+  tags: ['test'],
+  args: { label: 'Test checkbox', value: 'test-value', checked: false, disabled: false },
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-checkbox') as HTMLElement;
+    const input = el.shadowRoot!.querySelector('input[type="checkbox"]') as HTMLInputElement;
+
+    let detail: CheckboxChangeDetail | null = null;
+    canvasElement.addEventListener('change', (e) => {
+      detail = (e as CustomEvent<CheckboxChangeDetail>).detail;
+    }, { once: true });
+
+    fireEvent.click(input);
+
+    expect(detail).not.toBeNull();
+    expect(detail!.checked).toBe(true);
+    expect(detail!.value).toBe('test-value');
+  },
+};
+
+export const TestDisabledCheckbox: Story = {
+  name: 'Test · disabled bloquea el evento',
+  tags: ['test'],
+  args: { label: 'Disabled', value: 'x', disabled: true, checked: false },
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-checkbox') as HTMLElement;
+    const input = el.shadowRoot!.querySelector('input[type="checkbox"]') as HTMLInputElement;
+
+    expect(el.hasAttribute('disabled')).toBe(true);
+    expect(input.disabled).toBe(true);
+  },
 };
 
 /* ── Indeterminate group ── */

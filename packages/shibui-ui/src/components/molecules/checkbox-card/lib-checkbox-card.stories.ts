@@ -1,5 +1,6 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, fireEvent } from 'storybook/test';
 import './lib-checkbox-card.component';
 
 const meta: Meta = {
@@ -313,4 +314,50 @@ export const States: Story = {
 
     </div>
   `,
+};
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · Interacción y eventos
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestCheckboxCardChange: Story = {
+  name: 'Test · ui-lib-checkbox-card-change al hacer check',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <div style="padding: 2rem; max-width: 280px;">
+      <lib-checkbox-card card-title="Módulo" value="test-module">
+      </lib-checkbox-card>
+    </div>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-checkbox-card') as HTMLElement;
+    const input = el.shadowRoot!.querySelector('input.cc-input') as HTMLInputElement;
+
+    let detail: { checked: boolean; value: string } | null = null;
+    canvasElement.addEventListener('ui-lib-checkbox-card-change', (e) => {
+      detail = (e as CustomEvent<{ checked: boolean; value: string }>).detail;
+    }, { once: true });
+
+    fireEvent.click(input);
+
+    expect(detail).not.toBeNull();
+    expect(detail!.checked).toBe(true);
+    expect(detail!.value).toBe('test-module');
+  },
+};
+
+export const TestDisabledCheckboxCard: Story = {
+  name: 'Test · disabled bloquea el evento',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <div style="padding: 2rem; max-width: 280px;">
+      <lib-checkbox-card card-title="Bloqueado" value="blocked" disabled>
+      </lib-checkbox-card>
+    </div>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-checkbox-card') as HTMLElement;
+    const input = el.shadowRoot!.querySelector('input.cc-input') as HTMLInputElement;
+
+    expect(input.disabled).toBe(true);
+  },
 };

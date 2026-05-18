@@ -1,5 +1,6 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect } from 'storybook/test';
 import './lib-progress.component';
 import type { ProgressSegment } from './lib-progress.types';
 
@@ -282,5 +283,41 @@ export const MultiSegment: Story = {
 
       </div>
     `;
+  },
+};
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · ARIA y accesibilidad
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestProgressbarARIA: Story = {
+  name: 'Test · role=progressbar y aria-valuenow correctos',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <lib-progress value="75" max="100" aria-label="Progreso de carga"></lib-progress>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-progress') as HTMLElement;
+    const bar = el.shadowRoot!.querySelector('[role="progressbar"]');
+
+    expect(bar).not.toBeNull();
+    expect(bar?.getAttribute('aria-valuenow')).toBe('75');
+    expect(bar?.getAttribute('aria-valuemin')).toBe('0');
+    expect(bar?.getAttribute('aria-valuemax')).toBe('100');
+  },
+};
+
+export const TestIndeterminateNoValueNow: Story = {
+  name: 'Test · indeterminate omite aria-valuenow',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <lib-progress indeterminate aria-label="Cargando"></lib-progress>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-progress') as HTMLElement;
+    const bar = el.shadowRoot!.querySelector('[role="progressbar"]');
+
+    expect(bar).not.toBeNull();
+    // When indeterminate, aria-valuenow should not be set
+    expect(bar?.hasAttribute('aria-valuenow')).toBe(false);
   },
 };

@@ -1,4 +1,5 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-badge.component';
 import type { LibBadge } from './lib-badge.component';
@@ -209,4 +210,33 @@ export const KatachiExplicitOverride: Story = {
     </div>
   `,
   parameters: { layout: 'fullscreen' },
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · Render y atributos
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestDotRenders: Story = {
+  name: 'Test · dot=true renderiza el indicador visual',
+  tags: ['test'],
+  args: { variant: 'success', dot: true, slotContent: 'Activo' },
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-badge') as HTMLElement;
+    const dot = el.shadowRoot!.querySelector('.badge__dot');
+
+    expect(dot).not.toBeNull();
+    expect(dot?.getAttribute('aria-hidden')).toBe('true');
+  },
+};
+
+export const TestNoDotByDefault: Story = {
+  name: 'Test · dot=false no renderiza el indicador',
+  tags: ['test'],
+  args: { variant: 'default', dot: false, slotContent: 'Badge' },
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-badge') as HTMLElement;
+    const dot = el.shadowRoot!.querySelector('.badge__dot');
+
+    expect(dot).toBeNull();
+  },
 };
