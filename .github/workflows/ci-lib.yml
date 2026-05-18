@@ -76,7 +76,7 @@ jobs:
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
       - name: 🌐 Install Playwright Chromium
-        run: npx playwright install chromium --with-deps
+        run: pnpm --filter @shibui-ui/ui exec playwright install chromium --with-deps
       - name: 🧪 Run Story Tests
         run: pnpm --filter @shibui-ui/ui test:stories
 
