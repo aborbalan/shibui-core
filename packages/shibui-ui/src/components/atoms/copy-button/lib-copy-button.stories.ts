@@ -1,4 +1,5 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, userEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-copy-button.component';
 import type { LibCopyButton } from './lib-copy-button.component';
@@ -201,4 +202,29 @@ export const ContextCodeBlock: Story = {
       </div>
     </div>
   `,
+};
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · Interacción y eventos
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestCopyEvent: Story = {
+  name: 'Test · lib-copy se dispara al copiar',
+  tags: ['test'],
+  args: { value: 'test-copy-value', variant: 'ghost', disabled: false },
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-copy-button') as HTMLElement;
+    const btn = el.shadowRoot!.querySelector('button') as HTMLElement;
+
+    let detail: { value: string } | null = null;
+    canvasElement.addEventListener('lib-copy', (e) => {
+      detail = (e as CustomEvent<{ value: string }>).detail;
+    }, { once: true });
+
+    await userEvent.click(btn);
+    // Wait for the async clipboard operation to resolve
+    await new Promise<void>((resolve) => setTimeout(resolve, 150));
+
+    expect(detail).not.toBeNull();
+    expect(detail!.value).toBe('test-copy-value');
+  },
 };

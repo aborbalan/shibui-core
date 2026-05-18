@@ -1,5 +1,6 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, userEvent } from 'storybook/test';
 import './lib-color-picker.component';
 
 const meta: Meta = {
@@ -271,4 +272,60 @@ export const InContext: Story = {
 
     </div>
   `,
+};
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · Eventos de cambio de color
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestColorChange: Story = {
+  name: 'Test · ui-lib-change al mover el slider de tono',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <div style="padding: 2rem;">
+      <lib-color-picker value="#B85A1E" variant="inline"></lib-color-picker>
+    </div>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-color-picker') as HTMLElement;
+    const hueSlider = el.shadowRoot!.querySelector('.cp-hue') as HTMLInputElement;
+
+    let detail: { hex: string; h: number; s: number; l: number } | null = null;
+    canvasElement.addEventListener('ui-lib-change', (e) => {
+      detail = (e as CustomEvent<{ hex: string; h: number; s: number; l: number }>).detail;
+    }, { once: true });
+
+    // Simulate moving the hue slider
+    Object.defineProperty(hueSlider, 'value', { value: '180', configurable: true, writable: true });
+    hueSlider.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+
+    await new Promise<void>((resolve) => setTimeout(resolve, 50));
+
+    expect(detail).not.toBeNull();
+    expect(typeof detail!.hex).toBe('string');
+    expect(detail!.hex).toMatch(/^#[0-9A-Fa-f]{6}$/);
+  },
+};
+
+export const TestSwatchClick: Story = {
+  name: 'Test · ui-lib-swatch-click al clickar swatch',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <div style="padding: 2rem;">
+      <lib-color-swatches value="#B85A1E"></lib-color-swatches>
+    </div>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-color-swatches') as HTMLElement;
+    const swatch = el.shadowRoot!.querySelector('.cp-swatch') as HTMLElement;
+
+    let detail: { value: string } | null = null;
+    canvasElement.addEventListener('ui-lib-swatch-click', (e) => {
+      detail = (e as CustomEvent<{ value: string }>).detail;
+    }, { once: true });
+
+    await userEvent.click(swatch);
+
+    expect(detail).not.toBeNull();
+    expect(typeof detail!.value).toBe('string');
+  },
 };

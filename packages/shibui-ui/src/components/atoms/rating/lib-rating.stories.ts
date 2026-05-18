@@ -1,5 +1,6 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, userEvent } from 'storybook/test';
 import './lib-rating.component';
 
 const meta: Meta = {
@@ -257,4 +258,54 @@ export const InTable: Story = {
       </div>
     </div>
   `,
+};
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · Interacción y eventos
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestRatingEvent: Story = {
+  name: 'Test · ui-lib-rating-change con value correcto',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <div style="padding:2rem;">
+      <lib-rating value="0" max="5"></lib-rating>
+    </div>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-rating') as HTMLElement;
+    const items = el.shadowRoot!.querySelectorAll('.rt-item');
+    const thirdStar = items[2] as HTMLElement;
+
+    let detail: { value: number; prev: number } | null = null;
+    canvasElement.addEventListener('ui-lib-rating-change', (e) => {
+      detail = (e as CustomEvent<{ value: number; prev: number }>).detail;
+    }, { once: true });
+
+    await userEvent.click(thirdStar);
+
+    expect(detail).not.toBeNull();
+    expect(detail!.value).toBe(3);
+    expect(detail!.prev).toBe(0);
+  },
+};
+
+export const TestReadonlyBlocksEvent: Story = {
+  name: 'Test · readonly no dispara evento',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <div style="padding:2rem;">
+      <lib-rating value="3" max="5" readonly></lib-rating>
+    </div>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-rating') as HTMLElement;
+    const items = el.shadowRoot!.querySelectorAll('.rt-item');
+
+    let fired = false;
+    canvasElement.addEventListener('ui-lib-rating-change', () => { fired = true; }, { once: true });
+
+    if (items[4]) await userEvent.click(items[4] as HTMLElement);
+
+    expect(fired).toBe(false);
+  },
 };
