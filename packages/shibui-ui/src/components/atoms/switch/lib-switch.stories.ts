@@ -1,5 +1,5 @@
 ﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from 'storybook/test';
+import { expect, userEvent, fireEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-switch.component';
 import type { LibSwitch } from './lib-switch.component';
@@ -120,7 +120,7 @@ export const TestToggleEvent: Story = {
       detail = (e as CustomEvent<{ checked: boolean }>).detail;
     }, { once: true });
 
-    await userEvent.click(input);
+    fireEvent.click(input);
 
     expect(detail).not.toBeNull();
     expect(detail!.checked).toBe(true);
@@ -138,7 +138,7 @@ export const TestDisabledSwitch: Story = {
     let fired = false;
     canvasElement.addEventListener('ui-lib-change', () => { fired = true; }, { once: true });
 
-    await userEvent.click(input, { skipHover: true });
+    fireEvent.click(input);
 
     expect(fired).toBe(false);
   },

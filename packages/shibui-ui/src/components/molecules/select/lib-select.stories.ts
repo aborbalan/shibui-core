@@ -1,6 +1,6 @@
 ﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from 'storybook/test';
+import { expect, userEvent, fireEvent } from 'storybook/test';
 import './lib-select.component';
 
 interface SelectArgs {
@@ -450,7 +450,7 @@ export const TestDisabledSelect: Story = {
     const el = canvasElement.querySelector('lib-select') as HTMLElement;
     const trigger = el.shadowRoot!.querySelector('.sel-trigger') as HTMLElement;
 
-    await userEvent.click(trigger);
+    fireEvent.click(trigger);
     await new Promise<void>((resolve) => setTimeout(resolve, 50));
 
     expect(el.hasAttribute('open')).toBe(false);

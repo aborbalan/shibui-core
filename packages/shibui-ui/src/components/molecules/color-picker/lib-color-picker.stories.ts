@@ -287,15 +287,15 @@ export const TestColorChange: Story = {
   `,
   play: async ({ canvasElement }): Promise<void> => {
     const el = canvasElement.querySelector('lib-color-picker') as HTMLElement;
-    const hueSlider = el.shadowRoot!.querySelector('.cp-hue') as HTMLInputElement;
+    const hueSlider = el.shadowRoot!.querySelector('.cp-range-hue') as HTMLInputElement;
 
     let detail: { hex: string; h: number; s: number; l: number } | null = null;
     canvasElement.addEventListener('ui-lib-change', (e) => {
       detail = (e as CustomEvent<{ hex: string; h: number; s: number; l: number }>).detail;
     }, { once: true });
 
-    // Simulate moving the hue slider
-    Object.defineProperty(hueSlider, 'value', { value: '180', configurable: true, writable: true });
+    // Simulate moving the hue slider via direct value assignment + input event
+    hueSlider.value = '180';
     hueSlider.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
     await new Promise<void>((resolve) => setTimeout(resolve, 50));

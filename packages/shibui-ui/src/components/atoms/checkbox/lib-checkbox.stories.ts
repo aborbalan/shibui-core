@@ -1,5 +1,5 @@
 ﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from 'storybook/test';
+import { expect, userEvent, fireEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-checkbox.component';
 import type { LibCheckbox, CheckboxChangeDetail } from './lib-checkbox.component';
@@ -165,7 +165,7 @@ export const TestCheckEvent: Story = {
       detail = (e as CustomEvent<CheckboxChangeDetail>).detail;
     }, { once: true });
 
-    await userEvent.click(input);
+    fireEvent.click(input);
 
     expect(detail).not.toBeNull();
     expect(detail!.checked).toBe(true);
@@ -184,7 +184,7 @@ export const TestDisabledCheckbox: Story = {
     let fired = false;
     canvasElement.addEventListener('change', () => { fired = true; }, { once: true });
 
-    await userEvent.click(input, { skipHover: true });
+    fireEvent.click(input);
 
     expect(fired).toBe(false);
   },
