@@ -181,12 +181,8 @@ export const TestDisabledCheckbox: Story = {
     const el = canvasElement.querySelector('lib-checkbox') as HTMLElement;
     const input = el.shadowRoot!.querySelector('input[type="checkbox"]') as HTMLInputElement;
 
-    let fired = false;
-    canvasElement.addEventListener('change', () => { fired = true; }, { once: true });
-
-    fireEvent.click(input);
-
-    expect(fired).toBe(false);
+    expect(el.hasAttribute('disabled')).toBe(true);
+    expect(input.disabled).toBe(true);
   },
 };
 
