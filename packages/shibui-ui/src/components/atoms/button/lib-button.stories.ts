@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from '@storybook/test';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, userEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-button.component';
 import type { LibButton } from './lib-button.component';
@@ -269,7 +269,7 @@ export const TestClickEvent: Story = {
     await userEvent.click(shadowBtn);
 
     expect(detail).not.toBeNull();
-    expect((detail as UiClickEventDetail).timestamp).toBeGreaterThan(0);
+    expect(detail!.timestamp).toBeGreaterThan(0);
   },
 };
 

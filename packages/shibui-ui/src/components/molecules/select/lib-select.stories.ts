@@ -1,6 +1,6 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent } from 'storybook/test';
 import './lib-select.component';
 
 interface SelectArgs {
@@ -431,8 +431,8 @@ export const TestSelectChangeEvent: Story = {
     await new Promise<void>((resolve) => setTimeout(resolve, 50));
 
     expect(detail).not.toBeNull();
-    expect((detail as { value: string; label: string }).value).toBe('opt1');
-    expect((detail as { value: string; label: string }).label).toBe('Opción 1');
+    expect(detail!.value).toBe('opt1');
+    expect(detail!.label).toBe('Opción 1');
   },
 };
 

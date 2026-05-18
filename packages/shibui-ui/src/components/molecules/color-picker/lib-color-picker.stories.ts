@@ -1,6 +1,6 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent } from 'storybook/test';
 import './lib-color-picker.component';
 
 const meta: Meta = {
@@ -301,8 +301,8 @@ export const TestColorChange: Story = {
     await new Promise<void>((resolve) => setTimeout(resolve, 50));
 
     expect(detail).not.toBeNull();
-    expect(typeof (detail as { hex: string }).hex).toBe('string');
-    expect((detail as { hex: string }).hex).toMatch(/^#[0-9A-Fa-f]{6}$/);
+    expect(typeof detail!.hex).toBe('string');
+    expect(detail!.hex).toMatch(/^#[0-9A-Fa-f]{6}$/);
   },
 };
 
@@ -326,6 +326,6 @@ export const TestSwatchClick: Story = {
     await userEvent.click(swatch);
 
     expect(detail).not.toBeNull();
-    expect(typeof (detail as { value: string }).value).toBe('string');
+    expect(typeof detail!.value).toBe('string');
   },
 };

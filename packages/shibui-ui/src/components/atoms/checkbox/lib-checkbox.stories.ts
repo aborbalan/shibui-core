@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from '@storybook/test';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, userEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-checkbox.component';
 import type { LibCheckbox, CheckboxChangeDetail } from './lib-checkbox.component';
@@ -168,8 +168,8 @@ export const TestCheckEvent: Story = {
     await userEvent.click(input);
 
     expect(detail).not.toBeNull();
-    expect((detail as CheckboxChangeDetail).checked).toBe(true);
-    expect((detail as CheckboxChangeDetail).value).toBe('test-value');
+    expect(detail!.checked).toBe(true);
+    expect(detail!.value).toBe('test-value');
   },
 };
 

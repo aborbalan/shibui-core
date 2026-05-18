@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from '@storybook/test';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, userEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-copy-button.component';
 import type { LibCopyButton } from './lib-copy-button.component';
@@ -225,6 +225,6 @@ export const TestCopyEvent: Story = {
     await new Promise<void>((resolve) => setTimeout(resolve, 150));
 
     expect(detail).not.toBeNull();
-    expect((detail as { value: string }).value).toBe('test-copy-value');
+    expect(detail!.value).toBe('test-copy-value');
   },
 };

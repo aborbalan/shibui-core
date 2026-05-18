@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect } from '@storybook/test';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-badge.component';
 import type { LibBadge } from './lib-badge.component';

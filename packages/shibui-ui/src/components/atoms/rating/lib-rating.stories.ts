@@ -1,6 +1,6 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent } from 'storybook/test';
 import './lib-rating.component';
 
 const meta: Meta = {
@@ -284,8 +284,8 @@ export const TestRatingEvent: Story = {
     await userEvent.click(thirdStar);
 
     expect(detail).not.toBeNull();
-    expect((detail as { value: number; prev: number }).value).toBe(3);
-    expect((detail as { value: number; prev: number }).prev).toBe(0);
+    expect(detail!.value).toBe(3);
+    expect(detail!.prev).toBe(0);
   },
 };
 

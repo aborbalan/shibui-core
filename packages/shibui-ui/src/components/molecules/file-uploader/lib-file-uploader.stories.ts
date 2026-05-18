@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 
 // ✅ side-effect import — registra el custom element
 import './lib-file-uploader.component';
@@ -299,8 +299,8 @@ export const TestFilesChange: Story = {
     await new Promise<void>((resolve) => setTimeout(resolve, 50));
 
     expect(detail).not.toBeNull();
-    expect((detail as { files: File[] }).files).toHaveLength(1);
-    expect((detail as { files: File[] }).files[0]!.name).toBe('test.txt');
+    expect(detail!.files).toHaveLength(1);
+    expect(detail!.files[0]!.name).toBe('test.txt');
   },
 };
 

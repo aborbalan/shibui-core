@@ -1,6 +1,6 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 import './lib-progress.component';
 import type { ProgressSegment } from './lib-progress.types';
 

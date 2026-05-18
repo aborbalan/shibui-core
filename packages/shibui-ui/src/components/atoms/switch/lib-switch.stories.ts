@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from '@storybook/test';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, userEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-switch.component';
 import type { LibSwitch } from './lib-switch.component';
@@ -123,7 +123,7 @@ export const TestToggleEvent: Story = {
     await userEvent.click(input);
 
     expect(detail).not.toBeNull();
-    expect((detail as { checked: boolean }).checked).toBe(true);
+    expect(detail!.checked).toBe(true);
   },
 };
 

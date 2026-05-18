@@ -1,6 +1,6 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from '@storybook/test';
+import { expect, userEvent } from 'storybook/test';
 import './lib-checkbox-card.component';
 
 const meta: Meta = {
@@ -340,8 +340,8 @@ export const TestCheckboxCardChange: Story = {
     await userEvent.click(input);
 
     expect(detail).not.toBeNull();
-    expect((detail as { checked: boolean; value: string }).checked).toBe(true);
-    expect((detail as { checked: boolean; value: string }).value).toBe('test-module');
+    expect(detail!.checked).toBe(true);
+    expect(detail!.value).toBe('test-module');
   },
 };
 

@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect } from '@storybook/test';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-range-slider.component';
 import type { LibRangeSlider } from './lib-range-slider.component';
@@ -273,6 +273,6 @@ export const TestRangeChangeEvent: Story = {
     await new Promise<void>((resolve) => setTimeout(resolve, 50));
 
     expect(detail).not.toBeNull();
-    expect((detail as { value: number }).value).toBe(75);
+    expect(detail!.value).toBe(75);
   },
 };

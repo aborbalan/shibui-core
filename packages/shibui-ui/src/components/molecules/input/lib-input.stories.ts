@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from '@storybook/test';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, userEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-input.component';
 
@@ -165,7 +165,7 @@ export const TestInputEvent: Story = {
     await userEvent.type(input, 'hola');
 
     expect(detail).not.toBeNull();
-    expect(typeof (detail as { value: string }).value).toBe('string');
+    expect(typeof detail!.value).toBe('string');
   },
 };
 
