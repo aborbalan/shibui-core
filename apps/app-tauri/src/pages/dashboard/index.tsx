@@ -1,6 +1,4 @@
 import ReactGridLayout from 'react-grid-layout';
-import 'react-grid-layout/css/styles.css';
-import 'react-resizable/css/styles.css';
 import { useGadgetLayout } from '../../hooks/useGadgetLayout';
 import { NotesGadget } from '../../gadgets/NotesGadget';
 import { SystemMonitorGadget } from '../../gadgets/SystemMonitorGadget';
