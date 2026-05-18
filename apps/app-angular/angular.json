@@ -38,6 +38,9 @@
           },
           "configurations": {
             "production": {
+              "define": {
+                "__API_URL__": "\"https://shibui-core.onrender.com\""
+              },
               "budgets": [
                 {
                   "type": "initial",
@@ -53,6 +56,9 @@
               "outputHashing": "all"
             },
             "development": {
+              "define": {
+                "__API_URL__": "\"http://localhost:3000\""
+              },
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
