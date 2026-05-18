@@ -1,6 +1,6 @@
 ﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent, fireEvent } from 'storybook/test';
+import { expect, fireEvent } from 'storybook/test';
 import './lib-checkbox-card.component';
 
 const meta: Meta = {

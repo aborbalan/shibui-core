@@ -1,5 +1,5 @@
 ﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent, fireEvent } from 'storybook/test';
+import { expect, fireEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-switch.component';
 import type { LibSwitch } from './lib-switch.component';
