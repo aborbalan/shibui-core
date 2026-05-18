@@ -60,6 +60,26 @@ jobs:
           path: packages/shibui-ui/storybook-static/
           retention-days: 1
 
+  test-stories:
+    name: 🧪 Story Tests
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 🌐 Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+      - name: 🧪 Run Story Tests
+        run: pnpm --filter @shibui-ui/ui test:stories
+
   deploy-storybook:
     name: 🚀 Deploy Storybook
     runs-on: ubuntu-latest

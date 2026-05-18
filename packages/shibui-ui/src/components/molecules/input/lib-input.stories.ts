@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, userEvent } from '@storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-input.component';
 
@@ -142,4 +143,52 @@ export const KatachiContexts: Story = {
     </div>
   `,
   parameters: { layout: 'fullscreen' },
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · Interacción y accesibilidad
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestInputEvent: Story = {
+  name: 'Test · ui-lib-input se dispara al teclear',
+  tags: ['test'],
+  args: { label: 'Email', placeholder: 'test@example.com', type: 'text', disabled: false, error: false },
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-input') as HTMLElement;
+    const input = el.shadowRoot!.querySelector('input') as HTMLInputElement;
+
+    let detail: { value: string } | null = null;
+    canvasElement.addEventListener('ui-lib-input', (e) => {
+      detail = (e as CustomEvent<{ value: string }>).detail;
+    }, { once: true });
+
+    await userEvent.type(input, 'hola');
+
+    expect(detail).not.toBeNull();
+    expect(typeof (detail as { value: string }).value).toBe('string');
+  },
+};
+
+export const TestErrorAriaInvalid: Story = {
+  name: 'Test · error=true activa aria-invalid',
+  tags: ['test'],
+  args: { label: 'Email', error: true, errorMessage: 'Campo requerido' },
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-input') as HTMLElement;
+    const input = el.shadowRoot!.querySelector('input');
+
+    expect(input?.getAttribute('aria-invalid')).toBe('true');
+  },
+};
+
+export const TestDisabledInput: Story = {
+  name: 'Test · disabled bloquea la edición',
+  tags: ['test'],
+  args: { label: 'Campo', disabled: true },
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-input') as HTMLElement;
+    const input = el.shadowRoot!.querySelector('input') as HTMLInputElement;
+
+    expect(input.disabled).toBe(true);
+  },
 };

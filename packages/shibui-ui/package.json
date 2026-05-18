@@ -63,6 +63,8 @@
     "deploy": "firebase deploy --only hosting:storybook --project lib-ui-b67c5 --config ../../.config/firebase.json",
     "test:unit": "vitest run --config .config/vitest.unit.config.ts",
     "test:unit:watch": "vitest --config .config/vitest.unit.config.ts",
+    "test:stories": "vitest run --config .config/vite.config.ts --project storybook",
+    "test:stories:watch": "vitest --config .config/vite.config.ts --project storybook",
     "test:visual": "playwright test --config .config/playwright.config.js visual/",
     "test:visual:update": "playwright test --config .config/playwright.config.js visual/ --update-snapshots",
     "validate:wrappers": "tsx scripts/validate-react-wrappers.ts"

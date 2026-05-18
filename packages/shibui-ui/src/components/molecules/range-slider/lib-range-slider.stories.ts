@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect } from '@storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-range-slider.component';
 import type { LibRangeSlider } from './lib-range-slider.component';
@@ -243,4 +244,35 @@ export const DarkSurface: Story = {
 
     </div>
   `,
+};
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · Interacción y eventos
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestRangeChangeEvent: Story = {
+  name: 'Test · ui-lib-change con value correcto',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <div style="padding:2rem; max-width:400px;">
+      <lib-range-slider label="Volumen" value="0" min="0" max="100" unit="%"></lib-range-slider>
+    </div>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-range-slider') as HTMLElement;
+    const input = el.shadowRoot!.querySelector('input[type="range"]') as HTMLInputElement;
+
+    let detail: { value: number } | null = null;
+    canvasElement.addEventListener('ui-lib-change', (e) => {
+      detail = (e as CustomEvent<{ value: number }>).detail;
+    }, { once: true });
+
+    // Simulate range input change programmatically
+    Object.defineProperty(input, 'value', { value: '75', configurable: true, writable: true });
+    input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+
+    await new Promise<void>((resolve) => setTimeout(resolve, 50));
+
+    expect(detail).not.toBeNull();
+    expect((detail as { value: number }).value).toBe(75);
+  },
 };

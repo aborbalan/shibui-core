@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { expect, userEvent } from '@storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-switch.component';
 import type { LibSwitch } from './lib-switch.component';
@@ -100,6 +101,47 @@ export const KintsugiSizes: Story = {
       `)}
     </div>
   `,
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · Interacción y eventos
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestToggleEvent: Story = {
+  name: 'Test · ui-lib-change se dispara al toggle',
+  tags: ['test'],
+  args: { label: 'Test switch', checked: false, disabled: false },
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-switch') as HTMLElement;
+    const input = el.shadowRoot!.querySelector('input[type="checkbox"]') as HTMLInputElement;
+
+    let detail: { checked: boolean } | null = null;
+    canvasElement.addEventListener('ui-lib-change', (e) => {
+      detail = (e as CustomEvent<{ checked: boolean }>).detail;
+    }, { once: true });
+
+    await userEvent.click(input);
+
+    expect(detail).not.toBeNull();
+    expect((detail as { checked: boolean }).checked).toBe(true);
+  },
+};
+
+export const TestDisabledSwitch: Story = {
+  name: 'Test · disabled bloquea el evento',
+  tags: ['test'],
+  args: { label: 'Disabled', disabled: true, checked: false },
+  play: async ({ canvasElement }): Promise<void> => {
+    const el = canvasElement.querySelector('lib-switch') as HTMLElement;
+    const input = el.shadowRoot!.querySelector('input[type="checkbox"]') as HTMLInputElement;
+
+    let fired = false;
+    canvasElement.addEventListener('ui-lib-change', () => { fired = true; }, { once: true });
+
+    await userEvent.click(input, { skipHover: true });
+
+    expect(fired).toBe(false);
+  },
 };
 
 /* ── Kintsugi: con label + sub ── */
