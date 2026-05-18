@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "storybook",
-      "public": "../packages/shibui-ui/storybook-static",
+      "public": "packages/shibui-ui/storybook-static",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -11,7 +11,7 @@
     },
     {
       "target": "react",
-      "public": "../apps/app-react/dist",
+      "public": "apps/app-react/dist",
       "ignore": ["**/node_modules/**"],
       "rewrites": [
         {
@@ -22,7 +22,7 @@
     },
     {
       "target": "angular",
-      "public": "../apps/app-angular/dist/app-angular/browser",
+      "public": "apps/app-angular/dist/app-angular/browser",
       "ignore": ["**/node_modules/**"],
       "rewrites": [
         {
@@ -33,7 +33,7 @@
     },
     {
       "target": "svelte",
-      "public": "../apps/app-svelte/dist",
+      "public": "apps/app-svelte/dist",
       "ignore": ["**/node_modules/**"],
       "rewrites": [
         {
@@ -44,7 +44,7 @@
     },
     {
       "target": "shibui-api",
-      "public": "../apps/shibui-api/docs-dist",
+      "public": "apps/shibui-api/docs-dist",
       "ignore": ["**/node_modules/**"],
       "headers": [
         {
