@@ -102,7 +102,7 @@ const config: UserConfig & { test?: InlineConfig } = {
             browser: 'chromium'
           }]
         },
-        setupFiles: ['../.storybook/vitest.setup.ts']
+        setupFiles: [path.join(dirname, '../.storybook/vitest.setup.ts')]
       }
     }]
   }

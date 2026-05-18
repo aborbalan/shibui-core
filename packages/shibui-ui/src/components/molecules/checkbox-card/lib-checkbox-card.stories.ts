@@ -1,6 +1,6 @@
 ﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from 'storybook/test';
+import { expect, fireEvent } from 'storybook/test';
 import './lib-checkbox-card.component';
 
 const meta: Meta = {
@@ -337,7 +337,7 @@ export const TestCheckboxCardChange: Story = {
       detail = (e as CustomEvent<{ checked: boolean; value: string }>).detail;
     }, { once: true });
 
-    await userEvent.click(input);
+    fireEvent.click(input);
 
     expect(detail).not.toBeNull();
     expect(detail!.checked).toBe(true);

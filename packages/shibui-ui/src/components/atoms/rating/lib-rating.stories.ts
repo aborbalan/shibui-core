@@ -1,6 +1,6 @@
 ﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from 'storybook/test';
+import { expect, userEvent, fireEvent } from 'storybook/test';
 import './lib-rating.component';
 
 const meta: Meta = {
@@ -304,7 +304,7 @@ export const TestReadonlyBlocksEvent: Story = {
     let fired = false;
     canvasElement.addEventListener('ui-lib-rating-change', () => { fired = true; }, { once: true });
 
-    if (items[4]) await userEvent.click(items[4] as HTMLElement);
+    if (items[4]) fireEvent.click(items[4] as HTMLElement);
 
     expect(fired).toBe(false);
   },

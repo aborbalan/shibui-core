@@ -215,13 +215,19 @@ export const TestCopyEvent: Story = {
     const el = canvasElement.querySelector('lib-copy-button') as HTMLElement;
     const btn = el.shadowRoot!.querySelector('button') as HTMLElement;
 
+    // Headless Chromium requires a user gesture for clipboard; mock it
+    Object.defineProperty(navigator, 'clipboard', {
+      value: { writeText: (): Promise<void> => Promise.resolve() },
+      configurable: true,
+      writable: true,
+    });
+
     let detail: { value: string } | null = null;
     canvasElement.addEventListener('lib-copy', (e) => {
       detail = (e as CustomEvent<{ value: string }>).detail;
     }, { once: true });
 
     await userEvent.click(btn);
-    // Wait for the async clipboard operation to resolve
     await new Promise<void>((resolve) => setTimeout(resolve, 150));
 
     expect(detail).not.toBeNull();

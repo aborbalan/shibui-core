@@ -1,5 +1,5 @@
 ﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
-import { expect, userEvent } from 'storybook/test';
+import { expect, userEvent, fireEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-button.component';
 import type { LibButton } from './lib-button.component';
@@ -284,8 +284,8 @@ export const TestDisabledBlocksEvent: Story = {
     let fired = false;
     canvasElement.addEventListener('ui-lib-click', () => { fired = true; }, { once: true });
 
-    // Native disabled button should not fire the custom event
-    await userEvent.click(shadowBtn, { skipHover: true });
+    // fireEvent bypasses pointer-events:none on disabled button; component handler still checks disabled
+    fireEvent.click(shadowBtn);
 
     expect(fired).toBe(false);
   },
