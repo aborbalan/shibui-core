@@ -68,8 +68,8 @@
   /* Focus ring */
   .radio__input:focus-visible ~ .radio__circle,
   .radio:focus-within .radio__circle {
-    box-shadow: 0 0 0 3px var(--color-ink-20);
-    border-color: var(--color-washi-700);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--lib-comp-border-focus, var(--border-focus)) 30%, transparent);
+    border-color: var(--lib-comp-border-strong, var(--border-strong));
   }
 
   /* ── Dot interior ──────────────────────────────────────────── */
@@ -85,8 +85,8 @@
 
   /* ── Selected state ────────────────────────────────────────── */
   :host([checked]) .radio__circle {
-    background: var(--color-washi-900);
-    border-color: var(--color-washi-900);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   :host([checked]) .radio__dot {
@@ -183,19 +183,8 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     Mismo patrón que lib-checkbox: el circle en estado checked
-     usa --bg-inverse en lugar de --color-washi-900 hardcoded.
-
-     Valores idénticos en light mode; bajo katachi/dark el radio
-     invierte de forma coherente con el contraste del contexto.
-
-     Variants explícitas kaki/error sin cambios (mayor especificidad).
+     checked usa --lib-comp-bg-inverse en el selector base.
+     Focus ring usa --lib-comp-border-focus y border-strong.
+     Variants kaki/error mantienen su paleta (mayor especificidad).
      ─────────────────────────────────────────────────────────── */
-
-  :host([checked]) .radio__circle {
-    background: var(--bg-inverse);
-    border-color: var(--bg-inverse);
-  }
-
-  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

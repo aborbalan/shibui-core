@@ -77,7 +77,7 @@
   /* ── Default ── */
   :host([variant="default"]) .badge,
   .badge {
-    background: var(--color-washi-100);
+    background: var(--lib-comp-bg-subtle, var(--bg-surface));
     color: var(--text-secondary);
     border-color: var(--border-default);
   }
@@ -98,9 +98,9 @@
 
   /* ── Dark (inverso) ── */
   :host([variant="dark"]) .badge {
-    background: var(--color-washi-900);
-    color: var(--color-washi-300);
-    border-color: var(--color-washi-700);
+    background: var(--lib-comp-bg-inverse, var(--color-washi-900));
+    color: var(--lib-comp-fg-sec, var(--color-washi-300));
+    border-color: var(--lib-comp-border, var(--color-washi-700));
   }
 
   /* ── Error ── */
@@ -125,22 +125,9 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     Cuando variant="default" (default reflejado por Lit), el badge
-     hereda automáticamente el surface del katachi activo.
-
-     El color y border-color del default ya son semánticos
-     (--text-secondary, --border-default), así que adaptan solos.
-
-     Solo se sobreescribe background: --color-washi-100 → --bg-surface
-     (valores idénticos en light mode, divergen bajo katachi/dark).
-
-     Selector :host([variant="default"]) es mutuamente excluyente
-     con :host([variant="accent"]), etc. — variants explícitos intactos.
+     default y dark usan --lib-comp-* como valor primario; cuando
+     katachi está activo el contexto prevalece sobre el variant.
+     Variants semánticos (error, success, warning, accent, celadon)
+     mantienen su paleta de estado — son feedback visual, no estética.
      ─────────────────────────────────────────────────────────── */
-
-  :host([variant="default"]) .badge {
-    background: var(--bg-surface);
-  }
-
-  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

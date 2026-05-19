@@ -634,11 +634,11 @@
      ─────────────────────────────────────────────────────────── */
 
   :host([variant="outline"]) .seg-thumb {
-    background: var(--bg-inverse);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   :host([variant="outline"]) .seg-option.is-active {
-    color: var(--text-inverse);
+    color: var(--lib-comp-fg-inverse, var(--text-inverse));
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

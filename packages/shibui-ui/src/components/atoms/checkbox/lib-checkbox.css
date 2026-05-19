@@ -67,20 +67,20 @@
   /* Focus ring */
   .checkbox__input:focus-visible ~ .checkbox__box,
   .checkbox:focus-within .checkbox__box {
-    box-shadow: 0 0 0 3px var(--color-ink-20);
-    border-color: var(--color-washi-700);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--lib-comp-border-focus, var(--border-focus)) 30%, transparent);
+    border-color: var(--lib-comp-border-strong, var(--border-strong));
   }
 
   /* ── Checked ───────────────────────────────────────────────── */
   :host([checked]) .checkbox__box {
-    background: var(--color-washi-900);
-    border-color: var(--color-washi-900);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   /* ── Indeterminate ─────────────────────────────────────────── */
   :host([indeterminate]) .checkbox__box {
-    background: var(--color-washi-900);
-    border-color: var(--color-washi-900);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   /* ── SVG check ─────────────────────────────────────────────── */
@@ -223,26 +223,10 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     El checkbox no tiene una "default variant" en su estado base —
-     los estilos checked/indeterminate aplican siempre que no haya
-     variant="kaki" o variant="error" explícitos.
-
-     Cambio: --color-washi-900 → --bg-inverse en checked/indeterminate
-     (valores idénticos en light mode; bajo katachi/dark el box
-     invierte de forma coherente con el contraste del contexto).
-
-     El stroke del check (white) se mantiene — siempre será visible
-     porque el bg invertido es siempre contrastado.
-
-     Las variants explícitas kaki/error mantienen su paleta intencional
-     (mayor especificidad).
+     checked/indeterminate usan --lib-comp-bg-inverse en el selector
+     base. Con katachi activo ese token se define y gana; sin katachi
+     el fallback --bg-inverse reproduce el comportamiento original.
+     Focus ring usa --lib-comp-border-focus y border-strong.
+     Variants kaki/error mantienen su paleta (mayor especificidad).
      ─────────────────────────────────────────────────────────── */
-
-  :host([checked]) .checkbox__box,
-  :host([indeterminate]) .checkbox__box {
-    background: var(--bg-inverse);
-    border-color: var(--bg-inverse);
-  }
-
-  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

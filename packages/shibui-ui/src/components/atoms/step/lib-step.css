@@ -107,21 +107,21 @@
 
   /* Active */
   :host([status="active"]) .step-node {
-    background: var(--color-washi-900);
-    border-color: var(--color-washi-900);
-    color: var(--color-washi-50);
-    box-shadow: 0 0 0 4px var(--color-washi-100);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    color: var(--lib-comp-fg-inverse, var(--text-inverse));
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--lib-comp-bg-inverse, var(--bg-inverse)) 15%, transparent);
   }
   :host([status="active"]) .step-label { color: var(--text-primary); }
 
   /* Completed */
   :host([status="completed"]) .step-node {
-    background: var(--color-washi-700);
-    border-color: var(--color-washi-700);
-    color: var(--color-washi-50);
+    background: var(--lib-comp-border-strong, var(--border-strong));
+    border-color: var(--lib-comp-border-strong, var(--border-strong));
+    color: var(--lib-comp-fg-inverse, var(--text-inverse));
   }
   :host([status="completed"]) .step-label  { color: var(--text-secondary); }
-  :host([status="completed"]) .step-connector { background: var(--color-washi-700); }
+  :host([status="completed"]) .step-connector { background: var(--lib-comp-border-strong, var(--border-strong)); }
 
   /* Error */
   :host([status="error"]) .step-node {
@@ -191,9 +191,9 @@
      ============================================================ */
 
   :host([variant="kintsugi"][status="completed"]) .step-node {
-    background: var(--color-washi-900);
+    background: var(--lib-comp-bg, var(--color-washi-900));
     border: none;
-    color: var(--color-washi-200);
+    color: var(--lib-comp-fg-sec, var(--text-secondary));
   }
 
   :host([variant="kintsugi"][status="completed"]) .step-node::after {
@@ -211,9 +211,9 @@
   }
 
   :host([variant="kintsugi"][status="active"]) .step-node {
-    background: var(--color-washi-950);
+    background: var(--lib-comp-bg, var(--color-washi-950));
     border: none;
-    color: var(--color-washi-200);
+    color: var(--lib-comp-fg-sec, var(--text-secondary));
     box-shadow: 0 0 0 4px oklch(45% 0.05 45deg / 0.1); /* glow kintsugi, sin token equivalente */
   }
 
@@ -241,16 +241,16 @@
     background: linear-gradient(90deg, oklch(45% 0.04 60deg / 0.5), oklch(55% 0.05 65deg / 0.3));
   }
 
-  :host([variant="kintsugi"]) .step-label { color: var(--color-washi-700); }
-  :host([variant="kintsugi"][status="active"]) .step-label    { color: var(--color-washi-100); }
-  :host([variant="kintsugi"][status="completed"]) .step-label { color: var(--color-washi-500); }
+  :host([variant="kintsugi"]) .step-label { color: var(--lib-comp-fg-muted, var(--text-muted)); }
+  :host([variant="kintsugi"][status="active"]) .step-label    { color: var(--lib-comp-fg, var(--text-primary)); }
+  :host([variant="kintsugi"][status="completed"]) .step-label { color: var(--lib-comp-fg-sec, var(--text-secondary)); }
 
   :host([variant="kintsugi"]) .step-node {
-    background: var(--color-washi-950);
-    border-color: var(--color-washi-800);
-    color: var(--color-washi-700);
+    background: var(--lib-comp-bg, var(--color-washi-950));
+    border-color: var(--lib-comp-border, var(--border-default));
+    color: var(--lib-comp-fg-muted, var(--text-muted));
   }
-  :host([variant="kintsugi"]) .step-connector { background: var(--color-washi-800); }
+  :host([variant="kintsugi"]) .step-connector { background: var(--lib-comp-border, var(--border-default)); }
 
   /* ============================================================
      ORIENTATION — VERTICAL

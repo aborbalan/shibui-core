@@ -244,6 +244,118 @@ element hosts). Katachi extiende este patrón añadiendo soporte light-DOM via
 
 ---
 
+## Contrato variant × katachi — tokens `--lib-comp-*`
+
+### El problema
+
+Los componentes con `variant` explícito hardcodean valores primitivos (`var(--color-washi-*)`,
+`rgb(...)`) que son inmunes a la herencia de tokens semánticos. Resultado: un
+`<lib-button variant="kintsugi">` dentro de `data-katachi="celadon"` ignora el contexto
+y queda visualmente incongruente.
+
+### La solución: GUITV + tokens de contexto
+
+Se definen 14 tokens `--lib-comp-*` **únicamente bajo `[data-katachi]`** en `_katachi.css`.
+Los componentes los consumen como valor primario con el valor original como fallback:
+
+```css
+/* Patrón GUITV (Guaranteed Invalid at Computed Value Time) */
+background: var(--lib-comp-bg, var(--color-washi-950));
+color:      var(--lib-comp-fg, var(--text-primary));
+```
+
+| Escenario | Resultado |
+|-----------|-----------|
+| Sin katachi activo | `--lib-comp-*` no definido → GUITV → fallback exacto al original |
+| Con katachi activo | `--lib-comp-*` definido por `_katachi.css` → katachi gana |
+
+**La garantía**: sin `data-katachi` en el árbol, el comportamiento visual es
+**bit-a-bit idéntico** al anterior. No hay riesgo de regresión.
+
+### Los 14 tokens de contexto
+
+Definidos en `_katachi.css` bajo `[data-katachi], :host([data-katachi])`:
+
+| Token | Valor | Uso típico |
+|-------|-------|-----------|
+| `--lib-comp-bg` | `var(--bg-elevated)` | Fondo principal del componente |
+| `--lib-comp-bg-hover` | `var(--bg-surface)` | Fondo en hover |
+| `--lib-comp-bg-active` | `var(--bg-base)` | Fondo en pressed/active |
+| `--lib-comp-bg-inverse` | `var(--bg-inverse)` | Fondo "filled" (btn primary, etc.) |
+| `--lib-comp-bg-subtle` | `var(--bg-surface)` | Overlay sutil (ghost hover) |
+| `--lib-comp-fg` | `var(--text-primary)` | Texto principal |
+| `--lib-comp-fg-sec` | `var(--text-secondary)` | Texto secundario |
+| `--lib-comp-fg-muted` | `var(--text-muted)` | Texto atenuado |
+| `--lib-comp-fg-inverse` | `var(--text-inverse)` | Texto sobre fondo inverse |
+| `--lib-comp-fg-accent` | `var(--text-accent)` | Color de acento |
+| `--lib-comp-border` | `var(--border-default)` | Borde estándar |
+| `--lib-comp-border-subtle` | `var(--border-subtle)` | Borde sutil |
+| `--lib-comp-border-strong` | `var(--border-strong)` | Borde fuerte |
+| `--lib-comp-border-focus` | `var(--border-focus)` | Focus ring |
+
+### Componentes actualizados (22 ficheros CSS)
+
+| Fichero | Tokens aplicados |
+|---------|-----------------|
+| `_katachi.css` | definición de los 14 tokens |
+| `atoms/button` | primary, secondary, ghost, kintsugi, brutal |
+| `atoms/card` | inverse, kintsugi, glitch, celadon, washi, brutal |
+| `atoms/badge` | celadon |
+| `atoms/switch` | kintsugi |
+| `atoms/step` | active/completed status + kintsugi |
+| `atoms/checkbox` | focus ring + checked |
+| `atoms/radio` | focus ring + checked |
+| `atoms/close-button` | focus ring + ghost/subtle hover + filled |
+| `atoms/burger-button` | focus ring |
+| `atoms/kbd` | box-shadow + pressed + dark |
+| `atoms/tooltip` | dark bubble + arrows |
+| `molecules/breadcrumb` | separator + pill current + ellipsis hover |
+| `molecules/pagination` | active page button + outline active |
+| `molecules/tabs` | tab states + glitch ink underline |
+| `molecules/segmented-control` | outline thumb + active option |
+| `molecules/dropdown` | filled trigger + active item + scrollbar |
+| `molecules/header` | kintsugi/glitch bg + classic/minimal colors + outline action + breadcrumb/search |
+| `organisms/sidebar` | kintsugi/glitch bg + mobile toggle |
+| `organisms/drawer` | drag-hint + handle bar + scrollbar + dark/kintsugi-dark/glitch-dark bg + glitch seam |
+| `organisms/footer` | `--ft-*` token definitions (base light + dark surface) + `.ft-brand` |
+
+### Exclusiones deliberadas
+
+Los pseudo-elementos con efectos visuales propios **no se modifican**:
+
+- `::after` de kintsugi-seam animados (header, sidebar, drawer, footer)
+- `::before` de glitch scanlines / RGB ghost layers
+- `::before/::after` de logo-ring (conic-gradient animado)
+- `lib-spinner` variant kintsugi — anillo OKLCH dorado, identidad estética fija
+
+### Naming collision — `variant="kintsugi"` vs `data-katachi="kintsugi"`
+
+Son mecanismos ortogonales. `variant="kintsugi"` en un componente aplica
+la estética fija hardcoded del componente. `data-katachi="kintsugi"` en un
+ancestro define el contexto ambient.
+
+Cuando ambos coinciden (componente kintsugi dentro de sección kintsugi),
+los `--lib-comp-*` ya son los tokens del katachi kintsugi → resultado visual
+coherente. No hay colisión: el mecanismo los hace compatibles sin renombrar.
+
+### Verificación
+
+```bash
+# 1. Playwright visual regression — baselines sin katachi NO deben cambiar
+pnpm exec playwright test --project=visual
+
+# 2. Con katachi — actualizar baselines deliberadamente
+pnpm exec playwright test --update-snapshots --project=katachi
+
+# 3. Kitchen-sinks con data-katachi="terminal" y data-katachi="wabi"
+# apps/app-react/src/pages/kitchen-sink (y Angular/Svelte equivalentes)
+
+# 4. Type-check y lint
+pnpm type-check && pnpm lint
+```
+
+---
+
 ## Referencias
 
 - Plan completo de implementación: `~/.claude/plans/pure-watching-biscuit.md`
