@@ -20,7 +20,6 @@
 }
 
 @layer components {
-
   :host([display="block"]),
   :host([display="flex"]) {
     display: block;
@@ -46,10 +45,12 @@
   :host([display="flex"][pad]) {
     padding: var(--lib-space-lg);
   }
+
   :host([display="block"][pad="xl"]),
   :host([display="flex"][pad="xl"]) {
     padding: var(--lib-space-xl);
   }
+
   :host([display="block"][pad="2xl"]),
   :host([display="flex"][pad="2xl"]) {
     padding: var(--lib-space-2xl);
