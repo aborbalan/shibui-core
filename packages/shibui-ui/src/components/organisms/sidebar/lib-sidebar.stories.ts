@@ -321,10 +321,12 @@ export const Collapsible: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const katachiList = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び',     sidebarVariant: 'dark' as const },
+  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び',      sidebarVariant: 'dark'     as const },
   { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ', sidebarVariant: 'kintsugi' as const },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び',     sidebarVariant: 'light' as const },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然',    sidebarVariant: 'light' as const },
+  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び',      sidebarVariant: 'light'    as const },
+  { id: 'terminal', kanji: '>_', label: 'terminal',          sidebarVariant: 'dark'     as const },
+  { id: 'shizen',   kanji: '自', label: 'shizen · 自然',     sidebarVariant: 'light'    as const },
+  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁',    sidebarVariant: 'dark'     as const },
 ] as const;
 
 const SAMPLE_SIDEBAR_LINKS: SidebarLink[] = [
@@ -334,7 +336,7 @@ const SAMPLE_SIDEBAR_LINKS: SidebarLink[] = [
 ];
 
 export const KatachiContexts: Story = {
-  name: 'Katachi · adaptive via variant choice',
+  name: 'Katachi · 6 contexts',
   render: (): TemplateResult => html`
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--lib-space-xl);padding:var(--lib-space-xl);background:var(--color-washi-100);min-height:560px;">
       ${katachiList.map(k => html`

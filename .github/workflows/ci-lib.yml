@@ -106,5 +106,7 @@ jobs:
         with:
           name: storybook-static-${{ github.run_id }}
           path: packages/shibui-ui/storybook-static/
+      - name: 🔧 Copy .firebaserc to config dir
+        run: cp .firebaserc .config/.firebaserc
       - name: 🚀 Deploy Storybook
         run: pnpm exec firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5

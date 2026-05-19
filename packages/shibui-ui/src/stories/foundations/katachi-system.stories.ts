@@ -5,6 +5,9 @@ import '../../components/atoms/card/lib-card.component';
 import '../../components/atoms/button/lib-button.component';
 import '../../components/atoms/badge/lib-badge.component';
 import '../../components/atoms/divider/lib-divider.component';
+import '../../components/molecules/chip/lib-chip.component';
+import '../../components/molecules/tabs/lib-tabs.component';
+import '../../components/atoms/reading-progress/lib-reading-progress.component';
 import type { KatachiId } from '../../../models/ui/common';
 
 type KatachiSystemArgs = Record<string, never>;
@@ -132,7 +135,69 @@ export const Celadon: Story = {
   name: 'Celadon · 青磁',
   render: (): TemplateResult => html`
     <lib-canvas katachi="celadon" display="block" pad="2xl" min-h="screen">
-      ${sampleContent(KATACHI[5]!)}
+      <div style="display:flex;flex-direction:column;gap:32px;max-width:640px;margin:0 auto;">
+
+        <!-- Tarjeta semántica — adapta vía katachi -->
+        ${sampleContent(KATACHI[5]!)}
+
+        <!-- Componentes nativos celadon (Tier A) -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;opacity:.45;margin:0;">
+            componentes · tier A — celadon nativo
+          </p>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;">
+            <lib-chip color="celadon">青磁</lib-chip>
+            <lib-chip color="celadon">Sistema activo</lib-chip>
+            <lib-chip color="celadon">Latencia 42ms</lib-chip>
+            <lib-badge variant="celadon">celadon-400</lib-badge>
+          </div>
+        </div>
+
+        <!-- Tabs con color celadon -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;opacity:.45;margin:0;">
+            lib-tabs · color="celadon" + dark
+          </p>
+          <lib-tabs
+            color="celadon"
+            ?dark=${true}
+            active="overview"
+            .items="${[
+              { id: 'overview',   label: 'Overview'    },
+              { id: 'components', label: 'Componentes' },
+              { id: 'tokens',     label: 'Tokens'      },
+            ]}"
+          >
+            <div slot="overview"   style="padding:12px 0;font-size:13px;opacity:.65;">Vista general del sistema celadon.</div>
+            <div slot="components" style="padding:12px 0;font-size:13px;opacity:.65;">77 componentes — 13 Tier A nativos jade.</div>
+            <div slot="tokens"     style="padding:12px 0;font-size:13px;opacity:.65;">celadon-400 · oklch(15% 0.02 180deg)</div>
+          </lib-tabs>
+        </div>
+
+        <!-- Reading progress celadon -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;opacity:.45;margin:0;">
+            lib-reading-progress · tone="celadon"
+          </p>
+          <lib-reading-progress tone="celadon" variant="bar" style="position:static;width:100%;"></lib-reading-progress>
+        </div>
+
+        <lib-divider></lib-divider>
+
+        <!-- Botones bajo katachi celadon -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;opacity:.45;margin:0;">
+            lib-button · semantic override via katachi
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <lib-button>Primary</lib-button>
+            <lib-button variant="secondary">Secondary</lib-button>
+            <lib-button variant="ghost">Ghost</lib-button>
+            <lib-button variant="accent">Accent</lib-button>
+          </div>
+        </div>
+
+      </div>
     </lib-canvas>
   `,
   parameters: { layout: 'fullscreen' },

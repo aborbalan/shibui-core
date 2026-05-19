@@ -363,10 +363,12 @@ export const Playground: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const katachiList = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び' },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ' },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び' },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然' },
+  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び',     family: 'dark'  },
+  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ', family: 'dark'  },
+  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び',     family: 'light' },
+  { id: 'terminal', kanji: '_',  label: 'terminal · _',    family: 'dark'  },
+  { id: 'shizen',   kanji: '自', label: 'shizen · 自然',   family: 'light' },
+  { id: 'celadon',  kanji: '磁', label: 'celadon · 青磁',  family: 'dark'  },
 ] as const;
 
 const SAMPLE_LINKS: NavLink[] = [
@@ -376,21 +378,27 @@ const SAMPLE_LINKS: NavLink[] = [
 ];
 
 export const KatachiContexts: Story = {
-  name: 'Katachi · 4 contexts',
+  name: 'Katachi · 6 contexts',
   render: (): TemplateResult => html`
-    <div style="display:flex;flex-direction:column;gap:var(--lib-space-xl);padding:var(--lib-space-xl);background:var(--color-washi-100);">
+    <div style="display:flex;flex-direction:column;gap:1px;background:var(--color-washi-300);">
       ${katachiList.map(k => html`
-        <section data-katachi="${k.id}" style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
-          <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-            <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label}
-          </header>
-          <div style="background:var(--bg-base);">
+        <section data-katachi="${k.id}" style="display:flex;flex-direction:column;">
+          <div style="background:var(--bg-base); padding:4px 16px 0;">
+            <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;opacity:.45;display:inline-flex;align-items:center;gap:6px;">
+              <strong style="font-family:'Shippori Mincho',serif;font-size:1.1rem;color:var(--katachi-accent,inherit);opacity:1;">${k.kanji}</strong>
+              ${k.label}
+            </span>
+          </div>
+          <div>
             <lib-header
-              variant="classic"
-              brandName="Shibui"
+              variant="${k.family === 'dark' ? 'dark' : 'classic'}"
+              brand-name="Shibui"
+              login-label="Entrar"
               .links="${SAMPLE_LINKS}"
+              .actions="${[{ label: k.family === 'dark' ? 'Empezar' : 'Empezar gratis', href: '#', variant: 'kaki' }]}"
             ></lib-header>
           </div>
+          <div style="background:var(--bg-base);height:48px;border-top:1px solid var(--border-subtle);"></div>
         </section>
       `)}
     </div>

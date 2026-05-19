@@ -1934,4 +1934,22 @@ selectores son **mutuamente exclusivos por construcción**, no por precedencia.
 
 ---
 
-*Última actualización: 2026-05-16 — auditoría completa sobre CSS real · átomos · moléculas · organismos · sistema Katachi (Fases 1+2+3, B1–B6, C1–C5) completado al 100% (77/77 componentes)*
+*Última actualización: 2026-05-18 — auditoría completa sobre CSS real · átomos · moléculas · organismos · sistema Katachi (Fases 1+2+3, B1–B6, C1–C5) completado al 100% (77/77 componentes)*
+
+---
+
+## Auditoría Celadon (青磁) — readiness por componente
+
+> Detalle completo en `celadon-audit.md`. Este bloque es la vista rápida de producto.
+> Katachi celadon: superficie dark jade · acento `celadon-400` · efecto `spotlight-water`.
+
+| Tier | Criterio | Componentes |
+|------|----------|-------------|
+| **A — Nativo** | Prop celadon + dark-ready | `lib-card` · `lib-background` · `lib-tabs` · `lib-segmented-control` · `lib-range-slider` · `lib-chip` · `lib-tooltip` · `lib-kbd` · `lib-reading-progress` · `lib-counter` · `lib-avatar` · `lib-liquid-button` · `lib-parallax-text` |
+| **B — Semántico** | Auto-adapta vía semantic override | `lib-button` · `lib-badge` · `lib-header` · `lib-sidebar` · `lib-alert` · `lib-input` · `lib-select` · `lib-checkbox` · `lib-radio` · `lib-switch` · `lib-breadcrumb` · `lib-drawer` · `lib-empty-state` · `lib-divider` · `lib-display-heading` · `lib-quote` · `lib-progress` · `lib-status-dot` · `lib-tree-select` *(+ lib-card · lib-segmented-control · lib-chip · lib-liquid-button)* |
+| **C — Neutro** | Utility/wrapper, funciona sin cambio | `lib-glass-card` · `lib-file-uploader` · `lib-color-picker` · `lib-accordion` · `lib-bento-grid` · `lib-carousel` · `lib-stagger` · `lib-parallax-container` · `lib-horizontal-scroll-section` · `lib-cursor-follower` · `lib-toast-manager` · `lib-stepper`/`lib-step` · `lib-bento-item` · `lib-card-grid` · `lib-button-group` · `lib-accordion-item` · `lib-icon` · `lib-label` · `lib-eyebrow` · `lib-select-option` · `lib-ripple` · `lib-magnetic` · `lib-spacer` · `lib-aspect-ratio` · `lib-visually-hidden` · `lib-color-scale` |
+| **D — Parcial ⚠️** | Prop celadon sin dark adaptation | `lib-progress` · `lib-progress-circle` · `lib-rating` · `lib-checkbox-card` · `lib-empty-state` |
+| **E — Pendiente 🔲** | Compatible, sin implementar | `lib-spotlight-card` *(spotlight="water" pendiente verificación)* · `lib-button` *(secondary/ghost en dark)* · `lib-dropdown` · `lib-pagination` |
+| **F — Excluir** | No aplica o incompatible | `lib-burger-button` · `lib-text-glitch` · `lib-code-block` · variante `glitch` de header · variante `kintsugi` de spinner |
+
+**Listos sin trabajo adicional:** A + B + C = 63 / 77 (82 %) · **Gap menor:** D = 5 (7 %) · **Pendiente:** E = 4 (5 %)
