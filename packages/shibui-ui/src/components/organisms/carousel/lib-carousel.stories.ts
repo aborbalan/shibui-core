@@ -198,3 +198,45 @@ export const AutoplayLoop: Story = {
     </div>
   `,
 };
+
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Contextos estéticos
+   ═══════════════════════════════════════════════════════════════ */
+
+const katachiList = [
+  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び' },
+  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ' },
+  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び' },
+  { id: 'terminal', kanji: '>_', label: 'terminal' },
+  { id: 'shizen',   kanji: '自', label: 'shizen · 自然' },
+  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁' },
+] as const;
+
+const KATACHI_SLIDES = [
+  { label: '侘び · Wabi',    bg: 'oklch(15% 0.01 50deg)' },
+  { label: '寂び · Sabi',    bg: 'oklch(92% 0.02 50deg)' },
+  { label: '自然 · Shizen',  bg: 'oklch(88% 0.04 130deg)' },
+];
+
+export const KatachiContexts: Story = {
+  name: 'Katachi · 6 contexts',
+  render: (): TemplateResult => html`
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--lib-space-lg);padding:var(--lib-space-xl);background:var(--color-washi-100);">
+      ${katachiList.map(k => html`
+        <section data-katachi="${k.id}" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
+          <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
+            <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label}
+          </header>
+          <lib-carousel dots style="max-width:100%;">
+            ${KATACHI_SLIDES.map(s => html`
+              <div style="aspect-ratio:16/6;display:flex;align-items:center;justify-content:center;background:${s.bg};">
+                <span style="font-family:'Shippori Mincho',serif;font-size:1.1rem;color:var(--text-primary);">${s.label}</span>
+              </div>
+            `)}
+          </lib-carousel>
+        </section>
+      `)}
+    </div>
+  `,
+  parameters: { layout: 'fullscreen' },
+};
