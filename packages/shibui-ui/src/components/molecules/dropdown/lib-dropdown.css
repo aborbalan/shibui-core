@@ -70,7 +70,7 @@
 
   :host([open]) .dd-trigger {
     background: var(--bg-surface);
-    border-color: var(--color-washi-700);
+    border-color: var(--lib-comp-border-strong, var(--border-strong));
   }
 
   .dd-trigger:focus-visible {
@@ -118,18 +118,18 @@
 
   /* Filled */
   :host([variant="filled"]) .dd-trigger {
-    background: var(--color-washi-900);
-    border-color: var(--color-washi-900);
-    color: var(--color-washi-50);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    color: var(--lib-comp-fg-inverse, var(--text-inverse));
   }
 
   :host([variant="filled"]) .dd-trigger:hover {
-    background: var(--color-washi-800);
-    border-color: var(--color-washi-800);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   :host([variant="filled"]) .dd-chevron {
-    color: var(--color-washi-400);
+    color: var(--lib-comp-fg-muted, var(--text-muted));
   }
 
   /* Kaki */
@@ -212,7 +212,7 @@
 
   ::slotted(.dd-item.is-active) {
     color: var(--text-primary);
-    background: var(--color-washi-100);
+    background: var(--lib-comp-bg-subtle, var(--bg-surface));
   }
 
   ::slotted(.dd-item.is-disabled) {
@@ -282,7 +282,7 @@
   }
 
   .dd-scroll-wrap::-webkit-scrollbar-thumb {
-    background: var(--color-washi-300);
+    background: var(--lib-comp-border, var(--border-default));
     border-radius: 2px;
   }
 

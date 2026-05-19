@@ -70,7 +70,7 @@
      KINTSUGI
      ══════════════════════════════════════ */
   :host([variant="kintsugi"]) .sidebar {
-    background: var(--color-washi-950);
+    background: var(--lib-comp-bg, var(--color-washi-950));
     border-right: none;
   }
 
@@ -110,7 +110,7 @@
      GLITCH
      ══════════════════════════════════════ */
   :host([variant="glitch"]) .sidebar {
-    background: var(--color-washi-950);
+    background: var(--lib-comp-bg, var(--color-washi-950));
     border-right: 1px solid rgb(255, 255, 255, .06);
     animation: sb-glitch-border 7s steps(1) infinite;
   }
@@ -874,8 +874,8 @@
     z-index: var(--z-modal);
     width: 44px;
     height: 44px;
-    background: var(--color-washi-900);
-    color: var(--color-washi-50);
+    background: var(--lib-comp-bg-inverse, var(--color-washi-900));
+    color: var(--lib-comp-fg-inverse, var(--color-washi-50));
     align-items: center;
     justify-content: center;
     box-shadow: var(--shadow-lg);
@@ -929,19 +929,19 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     El variant="dark" (default) de lib-sidebar es deliberadamente
-     una superficie oscura fija — actúa como ancla estructural visual
-     independientemente del tema circundante. La estilizadura base
-     (.sidebar líneas 51-53) usa --color-washi-950 hardcoded por diseño.
+     variant="dark" (default): superficie oscura estructural fija —
+     .sidebar usa --color-washi-950 hardcoded por diseño deliberado.
+     Para katachi claros, usar variant="light" explícito.
 
-     Para páginas en katachi claros (sabi, shizen) usar explícitamente
-     variant="light", que ya consume --bg-elevated/--border-subtle.
+     variant="kintsugi" + "glitch": bg envueltos con --lib-comp-bg
+     (GUITV) — sin katachi idéntico al original; con katachi activo,
+     adaptan al contexto.
 
-     Este bloque queda como marcador documentando que lib-sidebar fue
-     auditado para Phase 2 y la decisión consciente fue no introducir
-     overrides ambient — la decisión de superficie es del usuario
-     vía variant explícito. Refinamientos futuros podrían introducir
-     variant="adaptive" que siga --katachi-family.
+     .sb-toggle (FAB mobile): bg/color envueltos con
+     --lib-comp-bg-inverse / --lib-comp-fg-inverse.
+
+     Pseudo-elementos animados (::after kintsugi-seam, ::before
+     glitch scanlines, logo-mark::before/::after ring): sin cambios.
      ─────────────────────────────────────────────────────────── */
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

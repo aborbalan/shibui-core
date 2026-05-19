@@ -88,11 +88,6 @@
      ============================================================ */
 
   /* ── Primary — fondo oscuro + sweep kaki al hover ── */
-  :host([variant="primary"]) .btn {
-    background: var(--color-washi-900);
-    color: var(--color-washi-50);
-  }
-
   :host([variant="primary"]) .btn::after {
     content: '';
     position: absolute;
@@ -120,9 +115,9 @@
   }
 
   :host([variant="secondary"]) .btn:hover {
-    background: var(--color-washi-900);
-    color: var(--color-washi-50);
-    border-color: var(--color-washi-900);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    color: var(--lib-comp-fg-inverse, var(--text-inverse));
+    border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   /* ── Ghost — sin fondo ── */
@@ -132,8 +127,8 @@
   }
 
   :host([variant="ghost"]) .btn:hover {
-    color: var(--text-primary);
-    background: var(--color-ink-10);
+    color: var(--lib-comp-fg, var(--text-primary));
+    background: var(--lib-comp-bg-subtle, var(--bg-surface));
   }
 
   /* ── Accent — kaki sólido ── */
@@ -211,8 +206,8 @@
      ============================================================ */
 
   :host([variant="kintsugi"]) .btn {
-    background: var(--color-washi-950);
-    color: var(--color-washi-50);
+    background: var(--lib-comp-bg, var(--color-washi-950));
+    color: var(--lib-comp-fg, var(--color-washi-50));
     border-color: transparent;
   }
 
@@ -230,7 +225,7 @@
 
   @media (hover: hover) {
     :host([variant="kintsugi"]) .btn:hover {
-      background: var(--color-washi-900);
+      background: var(--lib-comp-bg-hover, var(--color-washi-900));
     }
   }
 
@@ -239,9 +234,9 @@
      ============================================================ */
 
   :host([variant="brutal"]) .btn {
-    background: var(--color-washi-50);
-    color: var(--color-ink-100);
-    border: 2px solid var(--color-ink-100);
+    background: var(--lib-comp-bg-inverse, var(--color-washi-50));
+    color: var(--lib-comp-fg-inverse, var(--color-ink-100));
+    border: 2px solid var(--lib-comp-border-strong, var(--color-ink-100));
     box-shadow: var(--lib-shadow-brutal);
     border-radius: 0;
     transition:
@@ -282,22 +277,15 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     Cuando variant="primary" (default reflejado por Lit), el botón
-     hereda inversión semántica del katachi/tema activo.
+     primary ya consume --bg-inverse/--text-inverse (tokens semánticos),
+     por lo que responde automáticamente a cualquier katachi activo.
 
-     Cambio: --color-washi-900/--color-washi-50 → --bg-inverse/--text-inverse
-     (valores idénticos en light mode default; bajo katachi dark o
-     [data-theme="dark"] el botón se invierte automáticamente y queda
-     legible sobre fondo oscuro).
+     secondary, ghost, kintsugi y brutal usan --lib-comp-* como valor
+     primario: cuando katachi está activo esos tokens se definen y
+     ganan; sin katachi el fallback reproduce el comportamiento original.
 
-     Selector :host([variant="primary"]) es mutuamente excluyente con
-     secondary/ghost/accent/danger/kintsugi/brutal — esos variants
-     mantienen su styling explícito sin cambios.
-
-     Reglas relacionadas que no cambian:
-     - .btn::after (sweep kaki al hover)
-     - .btn:hover (box-shadow)
-     - [glass][variant="primary"] (variante water con --lib-glass-bg-water)
+     Los ::before y ::after con efectos decorativos (sweep kaki, borde
+     kintsugi) no se modifican — son efectos de identidad del variant.
      ─────────────────────────────────────────────────────────── */
 
   :host([variant="primary"]) .btn {

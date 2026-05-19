@@ -157,7 +157,7 @@
     width: 3px;
     height: 32px;
     border-radius: 999px;
-    background: var(--color-washi-200);
+    background: var(--lib-comp-border-subtle, var(--color-washi-200));
     transform: translateY(-50%);
     pointer-events: none;
   }
@@ -181,7 +181,7 @@
   .dr-handle-bar {
     width: 36px;
     height: 3px;
-    background: var(--color-washi-300);
+    background: var(--lib-comp-border, var(--color-washi-300));
     border-radius: 999px;
   }
 
@@ -274,12 +274,12 @@
   }
 
   .dr-body::-webkit-scrollbar-thumb {
-    background: var(--color-washi-300);
+    background: var(--lib-comp-border, var(--color-washi-300));
     border-radius: 2px;
   }
 
   .dr-body::-webkit-scrollbar-thumb:hover {
-    background: var(--color-washi-500);
+    background: var(--lib-comp-border-strong, var(--color-washi-500));
   }
 
   .dr-body::-webkit-scrollbar-track {
@@ -340,7 +340,7 @@
      DARK
      ════════════════════════════════ */
   :host([variant="dark"]) .dr {
-    background: var(--color-washi-950);
+    background: var(--lib-comp-bg, var(--color-washi-950));
     border-color: rgb(255, 255, 255, .07) !important;
   }
 
@@ -514,7 +514,7 @@
      KINTSUGI DARK
      ════════════════════════════════ */
   :host([variant="kintsugi-dark"]) .dr {
-    background: var(--color-washi-950);
+    background: var(--lib-comp-bg, var(--color-washi-950));
     border-color: rgb(184, 90, 30, .2) !important;
   }
 
@@ -617,7 +617,7 @@
     bottom: 0;
     left: 0;
     width: 1px;
-    background: var(--color-washi-900);
+    background: var(--lib-comp-bg-inverse, var(--color-washi-900));
     animation: dr-seam-glitch 7s steps(1) infinite;
     pointer-events: none;
   }
@@ -629,7 +629,7 @@
     bottom: 0;
     right: 0;
     width: 1px;
-    background: var(--color-washi-900);
+    background: var(--lib-comp-bg-inverse, var(--color-washi-900));
     animation: dr-seam-glitch 7s steps(1) infinite;
     pointer-events: none;
   }
@@ -673,7 +673,7 @@
      GLITCH DARK
      ════════════════════════════════ */
   :host([variant="glitch-dark"]) .dr {
-    background: var(--color-washi-950);
+    background: var(--lib-comp-bg, var(--color-washi-950));
     border-color: rgb(255, 255, 255, .06) !important;
     animation: dr-glitch-slide 6s steps(1) infinite, dr-flicker 6s steps(1) infinite;
   }
@@ -970,20 +970,22 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     lib-drawer default usa tokens semánticos para la superficie
-     principal. Las refs hardcoded restantes son en:
-     - Side handles (washi-200/300, sutiles indicadores visuales)
-     - variants explícitos kintsugi/glitch (washi-950, deliberados)
+     lib-drawer default usa tokens semánticos para la superficie.
 
-     Cambios mínimos: hacer el handle bar de top/bottom (más visible)
-     adaptive vía --border-default. El side handle queda fixed para
-     mantener su sutileza intencional.
+     Cambios vía --lib-comp-* (GUITV):
+     - Side drag-hint (::before): --lib-comp-border-subtle
+     - Handle bar (.dr-handle-bar): --lib-comp-border
+     - Scrollbar thumb: --lib-comp-border / --lib-comp-border-strong
+     - dark/kintsugi-dark/glitch-dark bg: --lib-comp-bg
+     - glitch seam (::after): --lib-comp-bg-inverse
 
-     Variants kintsugi/glitch sin cambios.
+     Pseudo-elementos con efectos kintsugi/glitch (::after gold seam,
+     ::before scanlines, RGB ghost layers): sin cambios — efectos
+     decorativos propios.
      ─────────────────────────────────────────────────────────── */
 
   .dr-handle-bar {
-    background: var(--border-default);
+    background: var(--lib-comp-border, var(--border-default));
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

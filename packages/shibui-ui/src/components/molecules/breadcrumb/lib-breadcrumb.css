@@ -76,7 +76,7 @@
     display: flex;
     align-items: center;
     padding: 0 var(--lib-space-sm);
-    color: var(--color-washi-300);
+    color: var(--lib-comp-border, var(--border-default));
     user-select: none;
     flex-shrink: 0;
   }
@@ -151,7 +151,7 @@
   }
 
   .bc-pill .bc-link:hover {
-    background: var(--color-washi-200);
+    background: var(--lib-comp-bg-subtle, var(--bg-surface));
     border-color: var(--border-default);
     color: var(--text-primary);
   }
@@ -193,7 +193,7 @@
   }
 
   .bc-ellipsis:hover {
-    background: var(--color-washi-200);
+    background: var(--lib-comp-bg-subtle, var(--bg-surface));
     border-color: var(--border-default);
     color: var(--text-primary);
   }
@@ -300,9 +300,9 @@
      ─────────────────────────────────────────────────────────── */
 
   .bc-pill .bc-current {
-    background: var(--bg-inverse);
-    color: var(--text-inverse);
-    border-color: var(--bg-inverse);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    color: var(--lib-comp-fg-inverse, var(--text-inverse));
+    border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

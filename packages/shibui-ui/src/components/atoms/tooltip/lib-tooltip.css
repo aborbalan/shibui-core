@@ -44,8 +44,8 @@
   .tip-bubble {
     position: absolute;
     z-index: var(--z-tooltip, 400);
-    background: var(--color-washi-900);
-    color: var(--color-washi-100);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    color: var(--lib-comp-fg-inverse, var(--text-inverse));
     font-family: var(--lib-font-mono);
     font-size: 11px;
     letter-spacing: var(--tracking-wide);
@@ -146,7 +146,7 @@
   .tip-wrap:not([data-pos]) .tip-bubble::after {
     top: 100%; left: 50%;
     transform: translateX(-50%);
-    border-top-color: var(--color-washi-900);
+    border-top-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   /* BOTTOM */
@@ -165,7 +165,7 @@
   .tip-wrap[data-pos="bottom"] .tip-bubble::after {
     bottom: 100%; left: 50%;
     transform: translateX(-50%);
-    border-bottom-color: var(--color-washi-900);
+    border-bottom-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   /* LEFT */
@@ -184,7 +184,7 @@
   .tip-wrap[data-pos="left"] .tip-bubble::after {
     left: 100%; top: 50%;
     transform: translateY(-50%);
-    border-left-color: var(--color-washi-900);
+    border-left-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   /* RIGHT */
@@ -203,7 +203,7 @@
   .tip-wrap[data-pos="right"] .tip-bubble::after {
     right: 100%; top: 50%;
     transform: translateY(-50%);
-    border-right-color: var(--color-washi-900);
+    border-right-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   /* TOP-START */
@@ -221,7 +221,7 @@
 
   .tip-wrap[data-pos="top-start"] .tip-bubble::after {
     top: 100%; left: var(--lib-space-md);
-    border-top-color: var(--color-washi-900);
+    border-top-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   /* TOP-END */
@@ -239,7 +239,7 @@
 
   .tip-wrap[data-pos="top-end"] .tip-bubble::after {
     top: 100%; right: var(--lib-space-md);
-    border-top-color: var(--color-washi-900);
+    border-top-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   /* BOTTOM-START */
@@ -257,7 +257,7 @@
 
   .tip-wrap[data-pos="bottom-start"] .tip-bubble::after {
     bottom: 100%; left: var(--lib-space-md);
-    border-bottom-color: var(--color-washi-900);
+    border-bottom-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   /* BOTTOM-END */
@@ -275,7 +275,7 @@
 
   .tip-wrap[data-pos="bottom-end"] .tip-bubble::after {
     bottom: 100%; right: var(--lib-space-md);
-    border-bottom-color: var(--color-washi-900);
+    border-bottom-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
 
@@ -421,15 +421,12 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     lib-tooltip default es variant="dark" — convención de usabilidad:
-     tooltips usan superficie oscura para separación visual y
-     legibilidad sobre cualquier contexto.
-
-     Variants light/kintsugi/celadon explícitos disponibles si el dev
-     necesita adaptar. Mantener fixed-dark default por consistencia
-     cross-context.
-
-     Bloque marcador para discoverability.
+     El tooltip default usa --lib-comp-bg-inverse / --lib-comp-fg-inverse
+     como fondo/texto. Sin katachi los tokens son GUITV → fallback
+     --bg-inverse/--text-inverse (washi-900/washi-50 en light mode).
+     Con katachi activo heredan el inverso del contexto.
+     Variants semánticos (light, kaki, celadon, error) mantienen
+     su paleta — son feedback visual, no estética de contexto.
      ─────────────────────────────────────────────────────────── */
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

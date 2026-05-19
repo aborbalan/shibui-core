@@ -722,7 +722,7 @@
 
   /* Glitch ink flickers */
   :host([glitch][variant="underline"]) .tb-ink {
-    background: var(--color-washi-900);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     animation: tb-glitch-flicker 6s steps(1) infinite !important;
   }
 
@@ -782,11 +782,15 @@
      ─────────────────────────────────────────────────────────── */
 
   .tb-tab {
-    color: var(--text-muted);
+    color: var(--lib-comp-fg-muted, var(--text-muted));
+  }
+
+  .tb-tab:hover {
+    color: var(--lib-comp-fg-sec, var(--text-secondary));
   }
 
   .tb-tab.is-active {
-    color: var(--text-primary);
+    color: var(--lib-comp-fg, var(--text-primary));
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

@@ -132,7 +132,7 @@
      ══════════════════════════════════════ */
     :host([variant="kintsugi"]) .hdr {
         height: 64px;
-        background: var(--color-washi-950);
+        background: var(--lib-comp-bg, var(--color-washi-950));
         border-bottom: none;
         padding: 0 var(--lib-space-xl);
         gap: var(--lib-space-xl);
@@ -174,7 +174,7 @@
      ══════════════════════════════════════ */
     :host([variant="glitch"]) .hdr {
         height: 56px;
-        background: var(--color-washi-950);
+        background: var(--lib-comp-bg, var(--color-washi-950));
         border-bottom: 1px solid rgb(255, 255, 255, .06);
         padding: 0 var(--lib-space-lg);
         gap: var(--lib-space-xl);
@@ -298,7 +298,7 @@
         display: block;
         font-family: var(--lib-font-body);
         font-size: var(--text-sm);
-        color: var(--color-washi-700);
+        color: var(--lib-comp-fg-sec, var(--color-washi-700));
         padding: var(--lib-space-xs) 0;
         transition: color var(--duration-fast);
     }
@@ -469,11 +469,11 @@
     }
 
     .hdr-breadcrumb-sep {
-        color: var(--color-washi-300);
+        color: var(--lib-comp-border, var(--color-washi-300));
     }
 
     .hdr-breadcrumb-current {
-        color: var(--color-washi-700);
+        color: var(--lib-comp-fg-sec, var(--color-washi-700));
         text-transform: uppercase;
     }
 
@@ -532,8 +532,8 @@
     .hdr-search-kbd {
         font-family: var(--lib-font-mono);
         font-size: 7px;
-        color: var(--color-washi-300);
-        border: 1px solid var(--color-washi-200);
+        color: var(--lib-comp-fg-muted, var(--color-washi-300));
+        border: 1px solid var(--lib-comp-border-subtle, var(--color-washi-200));
         padding: 0 4px;
         flex-shrink: 0;
         margin-left: auto;
@@ -725,7 +725,7 @@
     :host([variant="classic"]) .hdr-brand-name,
     :host([variant="mega"]) .hdr-brand-name,
     :host([variant="shrink"]) .hdr-brand-name {
-        color: var(--color-washi-900);
+        color: var(--lib-comp-fg, var(--color-washi-900));
     }
 
     :host([variant="dark"]) .hdr-brand-name {
@@ -746,7 +746,7 @@
     }
 
     :host([variant="centered"]) .hdr-brand-name {
-        color: var(--color-washi-900);
+        color: var(--lib-comp-fg, var(--color-washi-900));
         font-size: 1.35rem;
         letter-spacing: .1em;
     }
@@ -755,7 +755,7 @@
         font-family: var(--lib-font-display);
         font-size: 1.4rem;
         letter-spacing: .12em;
-        color: var(--color-washi-700);
+        color: var(--lib-comp-fg-sec, var(--color-washi-700));
     }
 
     /* Version badge (dark) */
@@ -831,7 +831,7 @@
     :host([variant="centered"]) .hdr-link,
     :host([variant="mega"]) .hdr-link,
     :host([variant="shrink"]) .hdr-link {
-        color: var(--color-washi-600);
+        color: var(--lib-comp-fg-sec, var(--color-washi-600));
     }
 
     /* Dark */
@@ -881,18 +881,18 @@
         font-size: var(--text-sm);
         letter-spacing: 0;
         text-transform: none;
-        color: var(--color-washi-500);
+        color: var(--lib-comp-fg-sec, var(--color-washi-500));
         position: relative;
         padding-bottom: 2px;
     }
 
     :host([variant="minimal"]) .hdr-link:hover {
         opacity: 1;
-        color: var(--color-washi-900);
+        color: var(--lib-comp-fg, var(--color-washi-900));
     }
 
     :host([variant="minimal"]) .hdr-link.is-active {
-        color: var(--color-washi-900);
+        color: var(--lib-comp-fg, var(--color-washi-900));
     }
 
     :host([variant="minimal"]) .hdr-link.is-active::after {
@@ -902,7 +902,7 @@
         left: 0;
         right: 0;
         height: 1px;
-        background: var(--color-washi-700);
+        background: var(--lib-comp-fg-sec, var(--color-washi-700));
     }
 
     /* ── Chevron for dropdown trigger ── */
@@ -940,7 +940,7 @@
 
     /* Dark dropdown */
     :host([variant="dark"]) .hdr-dd-menu {
-        background: var(--color-washi-900);
+        background: var(--lib-comp-bg, var(--color-washi-900));
         border-color: rgb(255, 255, 255, .1);
     }
 
@@ -951,17 +951,17 @@
         font-size: 9px;
         letter-spacing: .12em;
         text-transform: uppercase;
-        color: var(--color-washi-500);
+        color: var(--lib-comp-fg-sec, var(--color-washi-500));
         transition: all var(--duration-fast);
     }
 
     .hdr-dd-item:hover {
         background: var(--bg-base);
-        color: var(--color-washi-900);
+        color: var(--lib-comp-fg, var(--color-washi-900));
     }
 
     .hdr-dd-item--divider {
-        border-top: 1px solid var(--color-washi-100);
+        border-top: 1px solid var(--lib-comp-border-subtle, var(--color-washi-100));
     }
 
     :host([variant="dark"]) .hdr-dd-item {
@@ -1015,13 +1015,13 @@
     /* outline */
     .hdr-action--outline {
         background: transparent;
-        color: var(--color-washi-600);
-        border: 1px solid var(--color-washi-300);
+        color: var(--lib-comp-fg-sec, var(--color-washi-600));
+        border: 1px solid var(--lib-comp-border, var(--color-washi-300));
     }
 
     .hdr-action--outline:hover {
-        border-color: var(--color-washi-500);
-        color: var(--color-washi-900);
+        border-color: var(--lib-comp-border-strong, var(--color-washi-500));
+        color: var(--lib-comp-fg, var(--color-washi-900));
     }
 
     /* ghost (dark backgrounds) */
@@ -1096,7 +1096,7 @@
     :host([variant="classic"]) .hdr-login,
     :host([variant="shrink"]) .hdr-login,
     :host([variant="mega"]) .hdr-login {
-        color: var(--color-washi-500);
+        color: var(--lib-comp-fg-sec, var(--color-washi-500));
     }
 
     :host([variant="dark"]) .hdr-login {
@@ -1167,6 +1167,25 @@
             transition: none !important;
         }
     }
+
+    /* ─── KATACHI · ambient context ──────────────────────────────
+       lib-header adapta a katachi vía --lib-comp-* (GUITV):
+
+       classic/centered/mega/shrink: brand-name + links + login
+       envueltos con --lib-comp-fg / --lib-comp-fg-sec.
+       minimal: brand-name, links, hover, active + underline
+       envueltos con --lib-comp-fg / --lib-comp-fg-sec.
+       kintsugi/glitch: .hdr bg envuelto con --lib-comp-bg.
+       mega-link, hdr-dd-item, action--outline, breadcrumb,
+       search-kbd: border/color envueltos con --lib-comp-*.
+
+       Pseudo-elementos animados (::after kintsugi-seam, ::before
+       glitch scanlines, logo-mark::before/::after ring) y variants
+       con rgb() hardcoded (dark, transparent, kintsugi-links,
+       glitch-links): deliberados — sin cambios.
+       ─────────────────────────────────────────────────────────── */
+
+    /* ─── /KATACHI ───────────────────────────────────────────── */
 
 }
 
@@ -1466,34 +1485,6 @@
         height: 44px;
     }
 
-    /* ─── KATACHI · ambient context ──────────────────────────────
-       Cuando variant="classic" (default reflejado por Lit), el
-       header hereda paleta semántica del katachi/tema activo.
-
-       El surface (.hdr) ya consume --bg-elevated y --border-subtle
-       (líneas 56-62) — adapta solo. Aquí se sobreescriben los textos
-       hardcoded (brand-name + link) para que también respeten la
-       jerarquía semántica.
-
-       Cambios:
-         --color-washi-900 → --text-primary   (brand-name)
-         --color-washi-600 → --text-secondary (link)
-       Valores idénticos en light mode default; bajo katachi/dark
-       el texto adapta automáticamente.
-
-       Variants explícitos (dark, transparent, kintsugi, glitch,
-       centered, mega, minimal, shrink) intactos.
-       ─────────────────────────────────────────────────────────── */
-
-    :host([variant="classic"]) .hdr-brand-name {
-        color: var(--text-primary);
-    }
-
-    :host([variant="classic"]) .hdr-link {
-        color: var(--text-secondary);
-    }
-
-    /* ─── /KATACHI ───────────────────────────────────────────── */
 }
 
 /* ── Reducir motion ── */

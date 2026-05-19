@@ -48,7 +48,7 @@
 
   /* Focus ring — base */
   .close-btn:focus-visible {
-    box-shadow: 0 0 0 3px var(--color-ink-20);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--lib-comp-border-focus, var(--border-focus)) 30%, transparent);
   }
 
   /* ── Sizes ─────────────────────────────────────────────────── */
@@ -75,7 +75,7 @@
 
   :host([variant="ghost"]) .close-btn:hover {
     color: var(--text-primary);
-    background: var(--color-washi-200);
+    background: var(--lib-comp-bg-subtle, var(--bg-surface));
   }
 
   :host([variant="ghost"]) .close-btn:active {
@@ -93,13 +93,13 @@
 
   :host([variant="subtle"]) .close-btn:hover {
     color: var(--text-primary);
-    background: var(--color-washi-200);
+    background: var(--lib-comp-bg-subtle, var(--bg-surface));
     transform: rotate(90deg);
   }
 
   :host([variant="subtle"]) .close-btn:active {
     transform: rotate(90deg) scale(0.88);
-    background: var(--color-washi-300);
+    background: var(--lib-comp-bg-hover, var(--bg-surface));
   }
 
   /* ============================================================
@@ -127,13 +127,13 @@
      Fondo sólido, sin radius full
      ============================================================ */
   :host([variant="filled"]) .close-btn {
-    color: var(--bg-elevated);
-    background: var(--color-washi-800);
+    color: var(--lib-comp-fg-inverse, var(--text-inverse));
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     border-radius: var(--radius-sm);
   }
 
   :host([variant="filled"]) .close-btn:hover {
-    background: var(--color-washi-900);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     transform: scale(1.05);
   }
 
@@ -146,13 +146,13 @@
      Fondo sólido + radius full + rotacion al hover
      ============================================================ */
   :host([variant="filled-round"]) .close-btn {
-    color: var(--bg-elevated);
-    background: var(--color-washi-800);
+    color: var(--lib-comp-fg-inverse, var(--text-inverse));
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     border-radius: var(--radius-full);
   }
 
   :host([variant="filled-round"]) .close-btn:hover {
-    background: var(--color-washi-900);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     transform: rotate(90deg) scale(1.08);
   }
 
