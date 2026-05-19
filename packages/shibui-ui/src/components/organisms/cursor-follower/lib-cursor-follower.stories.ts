@@ -239,7 +239,7 @@ export const KatachiContexts: Story = {
           <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
             <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label}
           </header>
-          <lib-cursor-follower mode="dot" style="display:block;">
+          <lib-cursor-follower mode="ink" style="display:block;">
             <div style="height:120px;background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;cursor:none;">
               <span style="font-family:var(--lib-font-mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;pointer-events:none;">mueve el cursor aquí</span>
             </div>
