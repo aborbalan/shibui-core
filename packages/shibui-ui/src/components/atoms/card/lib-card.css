@@ -150,25 +150,25 @@
 
   /* ── Inverse ── */
   :host([variant="inverse"]) .card {
-    background: var(--color-washi-900);
-    border-color: var(--color-washi-800);
+    background: var(--lib-comp-bg-inverse, var(--color-washi-900));
+    border-color: var(--lib-comp-border, var(--color-washi-800));
   }
 
   :host([variant="inverse"]) ::slotted([slot="title"]) {
-    color: var(--color-washi-50);
+    color: var(--lib-comp-fg-inverse, var(--color-washi-50));
   }
 
   :host([variant="inverse"]) .card-body {
-    color: var(--color-washi-400);
+    color: var(--lib-comp-fg-sec, var(--color-washi-400));
   }
 
   :host([variant="inverse"]) .card-footer {
-    border-top-color: var(--color-washi-800);
-    color: var(--color-washi-600);
+    border-top-color: var(--lib-comp-border, var(--color-washi-800));
+    color: var(--lib-comp-fg-muted, var(--color-washi-600));
   }
 
   :host([variant="inverse"]) ::slotted([slot="tag"]) {
-    color: var(--color-washi-500);
+    color: var(--lib-comp-fg-muted, var(--color-washi-500));
   }
 
   /* ── Accent ── */
@@ -233,7 +233,7 @@
   }
 
   :host([variant="kintsugi"]) .card {
-    background: var(--color-washi-950, #120E0A);
+    background: var(--lib-comp-bg, var(--color-washi-950, #120E0A));
     border-color: transparent;
   }
 
@@ -287,16 +287,16 @@
   }
 
   :host([variant="kintsugi"]) ::slotted([slot="tag"]) {
-    color: rgb(184, 90, 30, 0.35);
+    color: var(--lib-comp-fg-muted, rgb(184, 90, 30, 0.35));
   }
 
   :host([variant="kintsugi"]) .card-body {
-    color: rgb(250, 247, 244, 0.25);
+    color: var(--lib-comp-fg-sec, rgb(250, 247, 244, 0.25));
   }
 
   :host([variant="kintsugi"]) .card-footer {
-    border-top-color: rgb(255, 255, 255, 0.06);
-    color: rgb(250, 247, 244, 0.18);
+    border-top-color: var(--lib-comp-border-subtle, rgb(255, 255, 255, 0.06));
+    color: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.18));
   }
 
   @media (hover: hover) {
@@ -337,8 +337,8 @@
   }
 
   :host([variant="glitch"]) .card {
-    background: var(--color-washi-950, #120E0A);
-    border-color: rgb(255, 255, 255, 0.06);
+    background: var(--lib-comp-bg, var(--color-washi-950, #120E0A));
+    border-color: var(--lib-comp-border-subtle, rgb(255, 255, 255, 0.06));
     animation: glitch-drift 7s steps(1) infinite;
   }
 
@@ -386,13 +386,13 @@
     font-family: var(--lib-font-mono);
     font-size: 0.65rem;
     letter-spacing: 0.08em;
-    color: rgb(250, 247, 244, 0.2);
+    color: var(--lib-comp-fg-sec, rgb(250, 247, 244, 0.2));
     line-height: 1.9;
   }
 
   :host([variant="glitch"]) .card-footer {
-    border-top-color: rgb(255, 255, 255, 0.06);
-    color: rgb(250, 247, 244, 0.15);
+    border-top-color: var(--lib-comp-border-subtle, rgb(255, 255, 255, 0.06));
+    color: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.15));
   }
 
   :host([variant="glitch"]) .card-kanji {
@@ -408,8 +408,8 @@
 
   /* ── Celadon ── */
   :host([variant="celadon"]) .card {
-    background: var(--color-washi-950, #120E0A);
-    border-color: rgb(78, 148, 130, 0.15);
+    background: var(--lib-comp-bg, var(--color-washi-950, #120E0A));
+    border-color: var(--lib-comp-border-subtle, rgb(78, 148, 130, 0.15));
   }
 
   /* Barra superior celadón */
@@ -433,12 +433,12 @@
   }
 
   :host([variant="celadon"]) .card-body {
-    color: rgb(250, 247, 244, 0.25);
+    color: var(--lib-comp-fg-sec, rgb(250, 247, 244, 0.25));
   }
 
   :host([variant="celadon"]) .card-footer {
-    border-top-color: rgb(255, 255, 255, 0.06);
-    color: rgb(250, 247, 244, 0.18);
+    border-top-color: var(--lib-comp-border-subtle, rgb(255, 255, 255, 0.06));
+    color: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.18));
   }
 
   :host([variant="celadon"]) .card-kanji {
@@ -455,8 +455,8 @@
 
   /* ── Washi ── */
   :host([variant="washi"]) .card {
-    background: var(--color-washi-50, #FAF7F4);
-    border-color: var(--color-washi-200, #E5DDD3);
+    background: var(--lib-comp-bg-inverse, var(--color-washi-50, #FAF7F4));
+    border-color: var(--lib-comp-border-subtle, var(--color-washi-200, #E5DDD3));
   }
 
   /* Barra superior washi */
@@ -476,16 +476,16 @@
   }
 
   :host([variant="washi"]) ::slotted([slot="title"]) {
-    color: var(--color-washi-800, #3D332A);
+    color: var(--lib-comp-fg, var(--color-washi-800, #3D332A));
   }
 
   :host([variant="washi"]) .card-body {
-    color: var(--color-washi-600, #7A6A5C);
+    color: var(--lib-comp-fg-sec, var(--color-washi-600, #7A6A5C));
   }
 
   :host([variant="washi"]) .card-footer {
-    border-top-color: var(--color-washi-200, #E5DDD3);
-    color: var(--color-washi-400, #B8A99A);
+    border-top-color: var(--lib-comp-border-subtle, var(--color-washi-200, #E5DDD3));
+    color: var(--lib-comp-fg-muted, var(--color-washi-400, #B8A99A));
   }
 
   :host([variant="washi"]) .card-kanji {
@@ -501,8 +501,8 @@
 
   /* ── Brutal ── */
   :host([variant="brutal"]) .card {
-    background: var(--color-washi-50);
-    border: 2px solid var(--color-ink-100);
+    background: var(--lib-comp-bg-inverse, var(--color-washi-50));
+    border: 2px solid var(--lib-comp-border-strong, var(--color-ink-100));
     box-shadow: var(--lib-shadow-brutal);
     transition:
       transform var(--duration-fast) var(--ease-default),
@@ -532,7 +532,7 @@
     font-size: var(--text-xl);
     font-weight: var(--weight-medium);
     letter-spacing: var(--tracking-tight);
-    color: var(--color-ink-100);
+    color: var(--lib-comp-fg, var(--color-ink-100));
     text-transform: uppercase;
   }
 
@@ -541,12 +541,12 @@
     font-size: var(--text-xs);
     letter-spacing: 0.04em;
     line-height: var(--leading-relaxed);
-    color: var(--color-washi-600);
+    color: var(--lib-comp-fg-sec, var(--color-washi-600));
   }
 
   :host([variant="brutal"]) .card-footer {
-    border-top-color: var(--color-washi-300);
-    color: var(--color-washi-500);
+    border-top-color: var(--lib-comp-border, var(--color-washi-300));
+    color: var(--lib-comp-fg-muted, var(--color-washi-500));
   }
 
   /* Hover clásico brutalista: el elemento se hunde en su propia sombra */

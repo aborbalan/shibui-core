@@ -16,16 +16,16 @@
         --ft-pad-y: var(--lib-space-xl, 2rem);
         --ft-max-width: 1200px;
 
-        /* Colores base (light) */
-        --ft-bg: var(--color-washi-50, #FAF7F4);
-        --ft-border: var(--color-washi-200, #E5DDD3);
-        --ft-text: var(--color-washi-900, #221C16);
-        --ft-text-muted: var(--color-washi-400, #B8A99A);
-        --ft-text-faint: var(--color-washi-300, #D3C8BC);
+        /* Colores base (light) — katachi-aware vía --lib-comp-* */
+        --ft-bg: var(--lib-comp-bg, var(--color-washi-50, #FAF7F4));
+        --ft-border: var(--lib-comp-border, var(--color-washi-200, #E5DDD3));
+        --ft-text: var(--lib-comp-fg, var(--color-washi-900, #221C16));
+        --ft-text-muted: var(--lib-comp-fg-muted, var(--color-washi-400, #B8A99A));
+        --ft-text-faint: var(--lib-comp-fg-muted, var(--color-washi-300, #D3C8BC));
         --ft-accent: var(--color-kaki-500, #B85A1E);
         --ft-accent-hover: var(--color-kaki-600, #8C4115);
-        --ft-link: var(--color-washi-400, #B8A99A);
-        --ft-link-hover: var(--color-washi-900, #221C16);
+        --ft-link: var(--lib-comp-fg-sec, var(--color-washi-400, #B8A99A));
+        --ft-link-hover: var(--lib-comp-fg, var(--color-washi-900, #221C16));
 
         /* Kintsugi gold seam */
         --ft-gold-start: rgb(184, 90, 30, 0.4);
@@ -42,17 +42,17 @@
         --ft-ease-out: cubic-bezier(0, 0, 0.2, 1);
     }
 
-    /* Dark surface override */
+    /* Dark surface override — katachi-aware vía --lib-comp-* */
     :host([variant='accordion']),
     :host([variant='kintsugi']),
     :host([variant='glitch']) {
-        --ft-bg: var(--color-washi-950, #120E0A);
-        --ft-border: rgb(255, 255, 255, 0.07);
-        --ft-text: rgb(250, 247, 244, 0.85);
-        --ft-text-muted: rgb(250, 247, 244, 0.35);
-        --ft-text-faint: rgb(250, 247, 244, 0.12);
-        --ft-link: rgb(250, 247, 244, 0.22);
-        --ft-link-hover: rgb(250, 247, 244, 0.85);
+        --ft-bg: var(--lib-comp-bg, var(--color-washi-950, #120E0A));
+        --ft-border: var(--lib-comp-border-subtle, rgb(255, 255, 255, 0.07));
+        --ft-text: var(--lib-comp-fg, rgb(250, 247, 244, 0.85));
+        --ft-text-muted: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.35));
+        --ft-text-faint: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.12));
+        --ft-link: var(--lib-comp-fg-sec, rgb(250, 247, 244, 0.22));
+        --ft-link-hover: var(--lib-comp-fg, rgb(250, 247, 244, 0.85));
     }
 }
 
@@ -128,7 +128,7 @@
         font-family: var(--ft-font-display);
         font-weight: 300;
         letter-spacing: 0.15em;
-        color: var(--color-washi-800, #3D332A);
+        color: var(--lib-comp-fg, var(--color-washi-800, #3D332A));
         line-height: 1;
     }
 
@@ -714,12 +714,21 @@
     }
 
     /* ─── KATACHI · ambient context ──────────────────────────────
-       lib-footer tiene 4 variants (social default, accordion, kintsugi,
-       glitch) — cada una con tematización deliberada. El default
-       "social" usa paleta intencional dark para cierre de página.
-       El dev puede usar variant="..." explícito en katachi específicos.
+       lib-footer usa un sistema de tokens --ft-* internos definidos
+       en @layer tokens. La adaptación katachi se aplica en ese capa:
 
-       Bloque marcador para discoverability.
+       Tokens base (light): --ft-bg/border/text/link envueltos con
+       --lib-comp-* (GUITV) — sin katachi idéntico al original;
+       con katachi activo, adaptan al contexto.
+
+       Dark surface override (accordion/kintsugi/glitch): misma
+       estrategia — los fallbacks mantienen los valores oscuros
+       originales sin katachi.
+
+       .ft-brand: color directo envuelto con --lib-comp-fg.
+
+       Animaciones kintsugi-seam, glitch-border, scanlines, cursors:
+       sin cambios — efectos decorativos propios de cada variante.
        ─────────────────────────────────────────────────────────── */
 
     /* ─── /KATACHI ───────────────────────────────────────────── */

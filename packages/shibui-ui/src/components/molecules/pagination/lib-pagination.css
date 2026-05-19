@@ -183,8 +183,8 @@
 
   :host([variant="outline"]) .pg-btn--active {
     background: transparent;
-    border-color: var(--color-washi-900);
-    color: var(--color-washi-900);
+    border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
   /* Ghost — sin borde ni fondo */
@@ -254,9 +254,9 @@
      ─────────────────────────────────────────────────────────── */
 
   .pg-btn--active {
-    background: var(--bg-inverse);
-    border-color: var(--bg-inverse);
-    color: var(--text-inverse);
+    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    color: var(--lib-comp-fg-inverse, var(--text-inverse));
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

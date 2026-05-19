@@ -317,3 +317,46 @@
   --lib-glass-bg: var(--lib-glass-bg-water);
   --lib-glass-blur-amount: 14px;
 }
+
+
+/* ════════════════════════════════════════════════════════════
+   KATACHI · COMPONENT CONTEXT TOKENS
+   ────────────────────────────────────────────────────────────
+   Tokens --lib-comp-* definidos ÚNICAMENTE cuando un katachi
+   está activo en cualquier ancestro. Los componentes los usan
+   como valor primario en sus variant rules:
+
+     background: var(--lib-comp-bg, <fallback-sin-katachi>)
+
+   Con katachi activo  → --lib-comp-bg resuelve al valor del
+                         contexto → katachi prevalece sobre variant
+   Sin katachi activo  → --lib-comp-bg es GUITV → usa el fallback
+                         → variant funciona sin cambios
+
+   Los fallbacks apuntan a los tokens semánticos que el katachi
+   activo ya ha sobreescrito, por lo que los valores son siempre
+   coherentes con el contexto.
+   ════════════════════════════════════════════════════════════ */
+
+[data-katachi],
+:host([data-katachi]) {
+  /* ── Fondos ───────────────────────────────────────────── */
+  --lib-comp-bg:            var(--bg-elevated);
+  --lib-comp-bg-hover:      var(--bg-surface);
+  --lib-comp-bg-active:     var(--bg-base);
+  --lib-comp-bg-inverse:    var(--bg-inverse);
+  --lib-comp-bg-subtle:     var(--bg-surface);
+
+  /* ── Textos ───────────────────────────────────────────── */
+  --lib-comp-fg:            var(--text-primary);
+  --lib-comp-fg-sec:        var(--text-secondary);
+  --lib-comp-fg-muted:      var(--text-muted);
+  --lib-comp-fg-inverse:    var(--text-inverse);
+  --lib-comp-fg-accent:     var(--text-accent);
+
+  /* ── Bordes ───────────────────────────────────────────── */
+  --lib-comp-border:        var(--border-default);
+  --lib-comp-border-subtle: var(--border-subtle);
+  --lib-comp-border-strong: var(--border-strong);
+  --lib-comp-border-focus:  var(--border-focus);
+}

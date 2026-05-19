@@ -48,8 +48,8 @@
 
     .burger:focus-visible {
         box-shadow:
-            0 0 0 2px var(--color-washi-50),
-            0 0 0 4px var(--color-washi-600);
+            0 0 0 2px var(--lib-comp-fg-inverse, var(--text-inverse)),
+            0 0 0 4px var(--lib-comp-border-focus, var(--border-focus));
     }
 
     /* Lines container */
