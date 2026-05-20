@@ -316,6 +316,15 @@
   /* ── Glass: compatible (tonos fríos casan bien) ──────── */
   --lib-glass-bg: var(--lib-glass-bg-water);
   --lib-glass-blur-amount: 14px;
+
+  /* ── Glaze: más luminoso en contexto celadón nativo ──── */
+  --lib-celadon-glaze:
+    linear-gradient(
+      105deg,
+      transparent 25%,
+      oklch(92% 0.015 172deg / 0.30) 50%,
+      transparent 75%
+    );
 }
 
 

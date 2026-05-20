@@ -1,4 +1,4 @@
-﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { expect, userEvent, fireEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-button.component';
@@ -9,14 +9,14 @@ type LibButtonStoryArgs = LibButton & { slotContent?: string | TemplateResult };
 
 const meta: Meta<LibButtonStoryArgs> = {
   title: 'Actions/Button',
-  tags:['autodocs'],
+  tags: ['autodocs'],
   component: 'lib-button',
 
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'ghost', 'accent', 'danger', 'kintsugi', 'brutal'],
-      description: 'Variante visual del botón',
+      options: ['primary', 'secondary', 'ghost', 'accent', 'danger'],
+      description: 'Rol semántico del botón (prominencia y comportamiento). La estética viene del contexto katachi del ancestor.',
     },
     size: {
       control: 'select',
@@ -63,9 +63,9 @@ export const Playground: Story = {
   },
 };
 
-/* ── Variantes ── */
+/* ── Roles semánticos (sin contexto katachi) ── */
 export const AllVariants: Story = {
-  name: 'All Variants.',
+  name: 'Roles — sin contexto',
   render: (): TemplateResult => html`
     <div style="display: flex; flex-wrap: wrap; gap: var(--lib-space-md); align-items: center; padding: var(--lib-space-lg);">
       <lib-button variant="primary">Primary</lib-button>
@@ -73,77 +73,6 @@ export const AllVariants: Story = {
       <lib-button variant="ghost">Ghost</lib-button>
       <lib-button variant="accent">Accent</lib-button>
       <lib-button variant="danger">Danger</lib-button>
-      <lib-button variant="kintsugi">Kintsugi</lib-button>
-      <lib-button variant="brutal">Brutal</lib-button>
-    </div>
-  `,
-};
-
-/* ── Kintsugi ── */
-export const Kintsugi: Story = {
-  name: 'Kintsugi ◈',
-  parameters: {
-    backgrounds: { default: 'dark' },
-  },
-  render: (): TemplateResult => html`
-    <div style="
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--lib-space-md);
-      align-items: center;
-      justify-content: center;
-      padding: var(--lib-space-xl);
-      background: var(--color-washi-950, #120E0A);
-    ">
-      <lib-button variant="kintsugi" size="sm">金継ぎ</lib-button>
-      <lib-button variant="kintsugi" size="md">Kintsugi</lib-button>
-      <lib-button variant="kintsugi" size="lg">継ぐ</lib-button>
-    </div>
-  `,
-};
-
-/* ── Brutal ── */
-export const Brutal: Story = {
-  name: 'Brutal ◼',
-  parameters: {
-    backgrounds: { default: 'light' },
-  },
-  render: (): TemplateResult => html`
-    <div style="
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--lib-space-md);
-      align-items: center;
-      justify-content: center;
-      padding: var(--lib-space-xl);
-      background: var(--color-washi-100, #F2EDE6);
-    ">
-      <lib-button variant="brutal" size="sm">EXECUTE</lib-button>
-      <lib-button variant="brutal" size="md">DEPLOY</lib-button>
-      <lib-button variant="brutal" size="lg">ABORT</lib-button>
-    </div>
-  `,
-};
-
-/* ── Spotlight ── */
-export const SpotlightEffect: Story = {
-  name: 'Spotlight — Efecto cursor',
-  parameters: {
-    backgrounds: { default: 'dark' },
-  },
-  render: (): TemplateResult => html`
-    <div style="
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--lib-space-md);
-      align-items: center;
-      justify-content: center;
-      padding: var(--lib-space-xl);
-      background: var(--color-washi-950, #120E0A);
-    ">
-      <lib-button variant="primary" ?spotlight=${true}>Primary</lib-button>
-      <lib-button variant="kintsugi" ?spotlight=${true}>Kintsugi</lib-button>
-      <lib-button variant="brutal" ?spotlight=${true} style="background: var(--color-washi-50);">Brutal</lib-button>
     </div>
   `,
 };
@@ -175,21 +104,35 @@ export const Disabled: Story = {
 /* ── Glass — Efecto Agua ── */
 export const GlassEffect: Story = {
   name: 'Glass — Efecto Agua',
-  parameters: {
-    backgrounds: { default: 'gradient' },
-  },
+  parameters: { backgrounds: { default: 'gradient' } },
   render: (): TemplateResult => html`
     <div style="
       padding: var(--lib-space-xl);
-      display: flex;
-      flex-wrap: wrap;
+      display: flex; flex-wrap: wrap;
       gap: var(--lib-space-md);
-      align-items: center;
-      justify-content: center;
+      align-items: center; justify-content: center;
     ">
       <lib-button ?glass=${true}>Paper Glass</lib-button>
       <lib-button ?glass=${true} variant="primary">Water Glass</lib-button>
       <lib-button ?glass=${true} variant="accent">Kaki Glass</lib-button>
+    </div>
+  `,
+};
+
+/* ── Spotlight — Efecto cursor ── */
+export const SpotlightEffect: Story = {
+  name: 'Spotlight — Efecto cursor',
+  parameters: { backgrounds: { default: 'dark' } },
+  render: (): TemplateResult => html`
+    <div style="
+      display: flex; flex-wrap: wrap; gap: var(--lib-space-md);
+      align-items: center; justify-content: center;
+      padding: var(--lib-space-xl);
+      background: var(--color-washi-950, #120E0A);
+    ">
+      <lib-button variant="primary"   ?spotlight=${true}>Primary</lib-button>
+      <lib-button variant="secondary" ?spotlight=${true}>Secondary</lib-button>
+      <lib-button variant="accent"    ?spotlight=${true}>Accent</lib-button>
     </div>
   `,
 };
@@ -216,24 +159,36 @@ export const WithIcons: Story = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
+   KATACHI · 形 · Efectos ambient por contexto estético
+   ═══════════════════════════════════════════════════════════════
+   Los efectos decorativos (gold border, glaze shimmer, brutal
+   shadow) se activan automáticamente cuando el componente vive
+   dentro de un ancestor con [data-katachi="x"].
    ═══════════════════════════════════════════════════════════════ */
 
-const katachiList = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び' },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ' },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び' },
-  { id: 'terminal', kanji: '>_', label: 'terminal' },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然' },
-  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁' },
-] as const;
-
+/* ── Katachi · vista general (6 contextos) ── */
 export const KatachiContexts: Story = {
-  name: 'Katachi · 6 contexts',
+  name: 'Katachi · 6 contextos',
   render: (): TemplateResult => html`
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--lib-space-lg);padding:var(--lib-space-xl);background:var(--color-washi-100);">
-      ${katachiList.map(k => html`
-        <section data-katachi="${k.id}" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
+    <div style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--lib-space-lg);
+      padding: var(--lib-space-xl);
+      background: var(--color-washi-100);
+    ">
+      ${([
+        { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び' },
+        { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ' },
+        { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び' },
+        { id: 'terminal', kanji: '>_', label: 'terminal' },
+        { id: 'shizen',   kanji: '自', label: 'shizen · 自然' },
+        { id: 'celadon',  kanji: '青', label: 'celadon · 青磁' },
+      ] as const).map(k => html`
+        <section
+          data-katachi="${k.id}"
+          style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);"
+        >
           <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
             <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label}
           </header>
@@ -247,6 +202,94 @@ export const KatachiContexts: Story = {
     </div>
   `,
   parameters: { layout: 'fullscreen' },
+};
+
+/* ── Katachi · Kintsugi — borde dorado fractura ── */
+export const KatachiKintsugi: Story = {
+  name: 'Katachi · Kintsugi ◈',
+  parameters: { backgrounds: { default: 'dark' } },
+  render: (): TemplateResult => html`
+    <div
+      data-katachi="kintsugi"
+      style="
+        display: flex; flex-wrap: wrap; gap: var(--lib-space-md);
+        align-items: center; justify-content: center;
+        padding: var(--lib-space-xl);
+        background: var(--bg-base);
+      "
+    >
+      <lib-button variant="primary">Primary</lib-button>
+      <lib-button variant="secondary">Secondary</lib-button>
+      <lib-button variant="ghost">Ghost</lib-button>
+      <lib-button variant="accent">Accent</lib-button>
+    </div>
+  `,
+};
+
+/* ── Katachi · Celadon — glaze shimmer sweep ── */
+export const KatachiCeladon: Story = {
+  name: 'Katachi · Celadon ◎',
+  parameters: { backgrounds: { default: 'dark' } },
+  render: (): TemplateResult => html`
+    <div
+      data-katachi="celadon"
+      style="
+        display: flex; flex-wrap: wrap; gap: var(--lib-space-md);
+        align-items: center; justify-content: center;
+        padding: var(--lib-space-xl);
+        background: var(--bg-base);
+      "
+    >
+      <lib-button variant="primary">Primary</lib-button>
+      <lib-button variant="secondary">Secondary</lib-button>
+      <lib-button variant="ghost">Ghost</lib-button>
+      <lib-button variant="accent">Accent</lib-button>
+    </div>
+  `,
+};
+
+/* ── Katachi · Sabi — brutal shadow, papel envejecido ── */
+export const KatachiSabi: Story = {
+  name: 'Katachi · Sabi ◻',
+  parameters: { backgrounds: { default: 'light' } },
+  render: (): TemplateResult => html`
+    <div
+      data-katachi="sabi"
+      style="
+        display: flex; flex-wrap: wrap; gap: var(--lib-space-lg);
+        align-items: center; justify-content: center;
+        padding: var(--lib-space-xl);
+        background: var(--bg-base);
+      "
+    >
+      <lib-button variant="primary">Primary</lib-button>
+      <lib-button variant="secondary">Secondary</lib-button>
+      <lib-button variant="ghost">Ghost</lib-button>
+      <lib-button variant="accent">Accent</lib-button>
+    </div>
+  `,
+};
+
+/* ── Katachi · Terminal — brutal celadón ── */
+export const KatachiTerminal: Story = {
+  name: 'Katachi · Terminal >_',
+  parameters: { backgrounds: { default: 'dark' } },
+  render: (): TemplateResult => html`
+    <div
+      data-katachi="terminal"
+      style="
+        display: flex; flex-wrap: wrap; gap: var(--lib-space-lg);
+        align-items: center; justify-content: center;
+        padding: var(--lib-space-xl);
+        background: var(--bg-base);
+      "
+    >
+      <lib-button variant="primary">Primary</lib-button>
+      <lib-button variant="secondary">Secondary</lib-button>
+      <lib-button variant="ghost">Ghost</lib-button>
+      <lib-button variant="accent">Accent</lib-button>
+    </div>
+  `,
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -289,28 +332,4 @@ export const TestDisabledBlocksEvent: Story = {
 
     expect(fired).toBe(false);
   },
-};
-
-export const KatachiExplicitOverride: Story = {
-  name: 'Katachi · explicit variant wins',
-  render: (): TemplateResult => html`
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--lib-space-xl);padding:var(--lib-space-xl);background:var(--color-washi-100);">
-      <section data-katachi="kintsugi" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
-        <header style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-          <strong style="font-family:'Shippori Mincho',serif;font-size:1.5rem;color:var(--katachi-accent);">金</strong>&nbsp;katachi="kintsugi" · primary (default)
-        </header>
-        <lib-button variant="primary">Hereda contexto</lib-button>
-        <p style="font-family:var(--lib-font-mono);font-size:10px;color:var(--text-muted);margin:0;">El primary button usa <code>--bg-inverse</code>/<code>--text-inverse</code> y se invierte para legibilidad bajo kintsugi.</p>
-      </section>
-
-      <section data-katachi="kintsugi" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
-        <header style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-          <strong style="font-family:'Shippori Mincho',serif;font-size:1.5rem;color:var(--katachi-accent);">金</strong>&nbsp;katachi="kintsugi" · variant="kintsugi" explícito
-        </header>
-        <lib-button variant="kintsugi">Override explícito</lib-button>
-        <p style="font-family:var(--lib-font-mono);font-size:10px;color:var(--text-muted);margin:0;">El <code>variant="kintsugi"</code> explícito mantiene su seam dorado independiente del contexto.</p>
-      </section>
-    </div>
-  `,
-  parameters: { layout: 'fullscreen' },
 };
