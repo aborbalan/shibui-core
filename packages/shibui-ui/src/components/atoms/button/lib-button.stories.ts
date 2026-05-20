@@ -204,6 +204,28 @@ export const KatachiContexts: Story = {
   parameters: { layout: 'fullscreen' },
 };
 
+/* ── Katachi · Wabi — dark atmosférico, glass ── */
+export const KatachiWabi: Story = {
+  name: 'Katachi · Wabi 侘',
+  parameters: { backgrounds: { default: 'dark' } },
+  render: (): TemplateResult => html`
+    <div
+      data-katachi="wabi"
+      style="
+        display: flex; flex-wrap: wrap; gap: var(--lib-space-md);
+        align-items: center; justify-content: center;
+        padding: var(--lib-space-xl);
+        background: var(--bg-base);
+      "
+    >
+      <lib-button variant="primary">Primary</lib-button>
+      <lib-button variant="secondary">Secondary</lib-button>
+      <lib-button variant="ghost">Ghost</lib-button>
+      <lib-button variant="accent">Accent</lib-button>
+    </div>
+  `,
+};
+
 /* ── Katachi · Kintsugi — borde dorado fractura ── */
 export const KatachiKintsugi: Story = {
   name: 'Katachi · Kintsugi ◈',
