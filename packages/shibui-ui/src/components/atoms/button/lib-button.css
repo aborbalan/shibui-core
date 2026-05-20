@@ -37,7 +37,6 @@
     line-height: 1;
     padding: var(--lib-space-sm) var(--lib-space-md);
     width: 100%;
-
     border: var(--lib-border-width) solid transparent;
     border-radius: var(--radius-none);
     background: transparent;

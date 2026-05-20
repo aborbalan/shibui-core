@@ -210,20 +210,20 @@ export const KatachiContexts: Story = {
    Cada componente debe tener estas historias como mínimo.
    ═══════════════════════════════════════════════════════════════ */
 
-export const {
-  KatachiShizen,
-  KatachiWabi,
-  KatachiKintsugi,
-  KatachiCeladon,
-  KatachiSabi,
-  KatachiTerminal,
-} = createKatachiStories<LibButtonStoryArgs>(() => html`
+const _katachi = createKatachiStories<LibButtonStoryArgs>(() => html`
   <lib-button variant="primary">Primary</lib-button>
   <lib-button variant="secondary">Secondary</lib-button>
   <lib-button variant="ghost">Ghost</lib-button>
   <lib-button variant="accent">Accent</lib-button>
   <lib-button variant="danger">Danger</lib-button>
 `);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
 
 /* ═══════════════════════════════════════════════════════════════
    TESTS · Interacción y eventos

@@ -116,17 +116,17 @@ export const CustomHeight: Story = {
    ver cómo se leen las escalas sobre paper vs dark.
    ═══════════════════════════════════════════════════════════════ */
 
-export const {
-  KatachiShizen,
-  KatachiWabi,
-  KatachiKintsugi,
-  KatachiCeladon,
-  KatachiSabi,
-  KatachiTerminal,
-} = createKatachiStories<object>(() => html`
+const _katachi = createKatachiStories<object>(() => html`
   <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);width:100%;max-width:520px;">
     <lib-color-scale name="washi"   .steps="${WASHI}"   show-labels></lib-color-scale>
     <lib-color-scale name="kaki"    .steps="${KAKI}"    show-labels></lib-color-scale>
     <lib-color-scale name="celadón" .steps="${CELADON}" show-labels></lib-color-scale>
   </div>
 `);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;

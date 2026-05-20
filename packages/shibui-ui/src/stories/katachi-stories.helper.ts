@@ -9,13 +9,20 @@ import type { StoryObj } from '@storybook/web-components-vite';
 
      import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
-     export const {
-       KatachiShizen, KatachiWabi, KatachiKintsugi,
-       KatachiCeladon, KatachiSabi, KatachiTerminal,
-     } = createKatachiStories(() => html`
+     // ⚠️  NO usar destructuring inline — el indexer estático de
+     //    Storybook 10 no resuelve `export const { A } = fn()`.
+     //    Siempre acceder via propiedad explícita:
+
+     const _katachi = createKatachiStories<MyArgs>(() => html`
        <mi-componente variant="primary">Primary</mi-componente>
        <mi-componente variant="secondary">Secondary</mi-componente>
      `);
+     export const KatachiShizen   = _katachi.KatachiShizen;
+     export const KatachiWabi     = _katachi.KatachiWabi;
+     export const KatachiKintsugi = _katachi.KatachiKintsugi;
+     export const KatachiCeladon  = _katachi.KatachiCeladon;
+     export const KatachiSabi     = _katachi.KatachiSabi;
+     export const KatachiTerminal = _katachi.KatachiTerminal;
 
    El renderContent recibe el id del katachi activo por si el
    componente necesita adaptar su contenido por contexto.
