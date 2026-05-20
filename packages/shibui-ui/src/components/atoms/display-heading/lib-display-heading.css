@@ -182,5 +182,35 @@
        estética de cerámica reparada. Aceptado intencionalmente.
        ─────────────────────────────────────────────────────────── */
 
+    /* ── Terminal · tipografía monoespaciada ──────────────────
+       Cormorant Garamond queda fuera de contexto en terminal.
+       DM Mono encaja con la estética CRT/digital.
+       El acento pierde el italic (mono no tiene itálica real)
+       — el color (kaki-400 cálido en verde frío) diferencia
+       suficientemente el fragmento de acento.
+       Usando :host-context() sobre elementos internos — funciona
+       porque no afecta custom props del :host (sin conflicto de
+       capas).                                                   */
+
+    @supports selector(:host-context(a)) {
+      :host-context([data-katachi="terminal"]) .dh-heading {
+        font-family: var(--lib-font-mono, 'DM Mono', monospace);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+      }
+
+      :host-context([data-katachi="terminal"]) .dh-accent {
+        font-style: normal;
+        font-weight: 500;
+      }
+
+      :host-context([data-katachi="terminal"]) .dh-desc {
+        font-family: var(--lib-font-mono, 'DM Mono', monospace);
+        font-size: 0.75rem;
+        letter-spacing: 0.03em;
+        line-height: 2;
+      }
+    }
+
     /* ─── /KATACHI ───────────────────────────────────────────── */
 }
