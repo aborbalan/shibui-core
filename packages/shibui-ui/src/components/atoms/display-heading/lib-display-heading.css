@@ -161,17 +161,31 @@
     }
 
     /* ─── KATACHI · ambient context ──────────────────────────────
-       lib-display-heading usa custom properties locales (--dh-color-*)
-       que apuntan a tonos washi-800 y washi-500 deliberadamente
-       distintos de los semánticos (text-primary=washi-900, text-muted=
-       washi-400). Es una decisión editorial intencional — los display
-       headings son ligeramente menos contrastados que body text.
+       Un único bloque cubre los 6 katachi: los tokens semánticos
+       del contexto activo (--text-primary, --text-accent,
+       --text-secondary) ya llevan el color correcto para cada uno.
 
-       Ya soporta surface="dark" y surface="washi" via atributos
-       explícitos, complementando lo que katachi proveerá vía contexto.
+       katachi       heading          accent           desc
+       ──────────────────────────────────────────────────────────
+       shizen        washi-900        kaki-500         washi-600
+       wabi          washi-50         celadon-300      washi-400
+       kintsugi      washi-50/55%     kaki-400         washi-50/35%
+       celadon       celadon-90%      celadon-300      celadon-75%
+       sabi          washi-900        kaki-600         washi-600
+       terminal      celadon-300      kaki-400         celadon-65%
 
-       Sin overrides ambient — marker para discoverability.
+       Precedencia: @layer components > @layer tokens → katachi
+       prevalece sobre surface="dark"|"washi" cuando ambos están
+       activos (caso poco habitual pero predecible).
        ─────────────────────────────────────────────────────────── */
+
+    @supports selector(:host-context(a)) {
+      :host-context([data-katachi]) {
+        --dh-color-heading: var(--text-primary);
+        --dh-color-accent:  var(--text-accent);
+        --dh-color-desc:    var(--text-secondary);
+      }
+    }
 
     /* ─── /KATACHI ───────────────────────────────────────────── */
 }
