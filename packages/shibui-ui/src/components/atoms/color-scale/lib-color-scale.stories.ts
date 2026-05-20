@@ -2,7 +2,7 @@ import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj }  from '@storybook/web-components-vite';
 import './lib-color-scale.component';
 import type { ColorStep } from './lib-color-scale.types';
-import { createKatachiStories, type KatachiId, type KatachiMeta } from '../../../stories/katachi-stories.helper';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 /* ── Paletas del sistema ── */
 const WASHI: ColorStep[] = [
@@ -111,20 +111,10 @@ export const CustomHeight: Story = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
-   Cada katachi expone las paletas que mejor representan
-   su personalidad visual (solo flavor, sin cambio funcional).
+   KATACHI · 形 · Las 3 paletas del sistema sobre cada fondo
+   El componente no cambia por contexto; las historias permiten
+   ver cómo se leen las escalas sobre paper vs dark.
    ═══════════════════════════════════════════════════════════════ */
-
-/** Paletas asignadas a cada katachi como flavor visual */
-const KATACHI_PALETTES: Record<KatachiId, { name: string; steps: ColorStep[] }[]> = {
-  shizen:   [{ name: 'washi',   steps: WASHI   }, { name: 'kaki',    steps: KAKI    }],
-  wabi:     [{ name: 'washi',   steps: WASHI   }, { name: 'celadón', steps: CELADON }],
-  kintsugi: [{ name: 'kaki',    steps: KAKI    }, { name: 'washi',   steps: WASHI   }],
-  sabi:     [{ name: 'washi',   steps: WASHI   }, { name: 'kaki',    steps: KAKI    }],
-  terminal: [{ name: 'celadón', steps: CELADON }, { name: 'washi',   steps: WASHI   }],
-  celadon:  [{ name: 'celadón', steps: CELADON }, { name: 'washi',   steps: WASHI   }],
-};
 
 export const {
   KatachiShizen,
@@ -133,13 +123,10 @@ export const {
   KatachiCeladon,
   KatachiSabi,
   KatachiTerminal,
-} = createKatachiStories<object>((katachi: KatachiMeta) => {
-  const palettes = KATACHI_PALETTES[katachi.id] ?? KATACHI_PALETTES['shizen'];
-  return html`
-    <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);width:100%;max-width:520px;">
-      ${palettes.map(p => html`
-        <lib-color-scale name="${p.name}" .steps="${p.steps}" show-labels></lib-color-scale>
-      `)}
-    </div>
-  `;
-});
+} = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);width:100%;max-width:520px;">
+    <lib-color-scale name="washi"   .steps="${WASHI}"   show-labels></lib-color-scale>
+    <lib-color-scale name="kaki"    .steps="${KAKI}"    show-labels></lib-color-scale>
+    <lib-color-scale name="celadón" .steps="${CELADON}" show-labels></lib-color-scale>
+  </div>
+`);
