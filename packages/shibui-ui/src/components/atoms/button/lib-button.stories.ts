@@ -204,6 +204,28 @@ export const KatachiContexts: Story = {
   parameters: { layout: 'fullscreen' },
 };
 
+/* ── Katachi · Shizen — contexto estándar (base) ── */
+export const KatachiShizen: Story = {
+  name: 'Katachi · Shizen 自 · estándar',
+  render: (): TemplateResult => html`
+    <div
+      data-katachi="shizen"
+      style="
+        display: flex; flex-wrap: wrap; gap: var(--lib-space-md);
+        align-items: center; justify-content: center;
+        padding: var(--lib-space-xl);
+        background: var(--bg-base);
+      "
+    >
+      <lib-button variant="primary">Primary</lib-button>
+      <lib-button variant="secondary">Secondary</lib-button>
+      <lib-button variant="ghost">Ghost</lib-button>
+      <lib-button variant="accent">Accent</lib-button>
+      <lib-button variant="danger">Danger</lib-button>
+    </div>
+  `,
+};
+
 /* ── Katachi · Wabi — dark atmosférico, glass ── */
 export const KatachiWabi: Story = {
   name: 'Katachi · Wabi 侘',
