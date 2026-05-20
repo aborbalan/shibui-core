@@ -12,18 +12,23 @@
         --eb-size: 0.65rem;
         --eb-tracking: 0.24em;
 
-        /* Color base (kaki tenue) */
-        --eb-color: rgb(184, 90, 30, 0.55);
+        /* Color base — bridge token (GUITV sin katachi → kaki-400/55%)
+           Con katachi activo, toma --text-accent del contexto:
+             wabi/celadon → celadon-300 (jade)
+             kintsugi     → kaki-400   (dorado)
+             sabi         → kaki-600   (kaki profundo)
+             terminal     → kaki-400   (cálido sobre CRT verde)  */
+        --eb-color:       var(--lib-comp-fg-accent, rgb(184, 90, 30, 0.55));
 
         /* Línea */
         --eb-line-w: 28px;
         --eb-line-w-hover: 40px;
-        --eb-line-grad: linear-gradient(90deg, var(--color-kaki-400, #D97234), transparent);
-        --eb-line-grad-r: linear-gradient(270deg, var(--color-kaki-400, #D97234), transparent);
+        --eb-line-grad:   linear-gradient(90deg,  var(--lib-comp-fg-accent, var(--color-kaki-400, #D97234)), transparent);
+        --eb-line-grad-r: linear-gradient(270deg, var(--lib-comp-fg-accent, var(--color-kaki-400, #D97234)), transparent);
 
         /* Dot */
         --eb-dot-size: 5px;
-        --eb-dot-color: var(--color-kaki-400, #D97234);
+        --eb-dot-color: var(--lib-comp-fg-accent, var(--color-kaki-400, #D97234));
 
         /* Número badge */
         --eb-num-color: rgb(184, 90, 30, 0.3);
@@ -314,12 +319,17 @@
     }
 
     /* ─── KATACHI · ambient context ──────────────────────────────
-       lib-eyebrow utiliza atributos color="..." explícitos (washi,
-       celadon, kaki, ink) cada uno con su paleta intencional. No hay
-       una variant "default" en el sentido katachi — el desarrollador
-       elige el color del eyebrow deliberadamente.
+       Los bridge tokens en :host cubren el estado predeterminado
+       (sin color= explícito). Los atributos color="washi|celadon…"
+       siguen funcionando: su specificity (0,1,0) supera a :host
+       (0,0,0) dentro de @layer tokens, por lo que son overrides
+       deliberados del desarrollador — katachi no los pisa.
 
-       Sin overrides ambient. Marker para discoverability.
+       effect="kintsugi" y effect="glitch" son correctos por diseño
+       y no necesitan overrides de contexto.
+
+       La fuente ya es --lib-font-mono por defecto → terminal encaja
+       sin cambios adicionales.
        ─────────────────────────────────────────────────────────── */
 
     /* ─── /KATACHI ───────────────────────────────────────────── */
