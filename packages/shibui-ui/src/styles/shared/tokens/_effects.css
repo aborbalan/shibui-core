@@ -31,6 +31,9 @@
   --lib-glass-bg-kaki:
     oklch(45% 0.05 45deg / var(--lib-glass-bg-opacity));
 
+  --lib-glass-bg-celadon:
+    oklch(48% 0.05 172deg / var(--lib-glass-bg-opacity));
+
   --lib-glass-filter:
     blur(var(--lib-glass-blur-amount))
     saturate(var(--lib-glass-saturate-amount));

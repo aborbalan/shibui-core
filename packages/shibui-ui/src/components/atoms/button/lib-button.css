@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-BUTTON — Shibui UI
-   Variantes: primary · secondary · ghost · accent · danger
+   Variantes: primary · secondary · ghost · accent · celadon · danger · kintsugi · brutal
    Modificadores: glass · size (sm/md/lg) · disabled
    ============================================================ */
 
@@ -142,6 +142,40 @@
     box-shadow: var(--shadow-md);
   }
 
+  /* ── Celadon — cerámica jade, glaze shimmer ── */
+  :host([variant="celadon"]) .btn {
+    background: var(--color-celadon-500);
+    color: var(--color-celadon-50);
+    border-color: transparent;
+  }
+
+  /* Glaze shimmer — reflexión de vidriado cerámico, sweep en hover
+     Usa ::after (::before lo reserva el glass shine) */
+  :host([variant="celadon"]) .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      oklch(92% 0.015 172deg / 0.22) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform var(--duration-slow) var(--ease-out);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  :host([variant="celadon"]) .btn:hover {
+    background: var(--color-celadon-600);
+    box-shadow: var(--shadow-md);
+  }
+
+  :host([variant="celadon"]) .btn:hover::after {
+    transform: translateX(100%);
+  }
+
   /* ── Danger — borde rojo ── */
   :host([variant="danger"]) .btn {
     background: transparent;
@@ -196,8 +230,19 @@
     border-color: oklch(45% 0.05 45deg / 0.35);
   }
 
+  /* Glass + Celadon → variante jade */
+  :host([glass][variant="celadon"]) .btn {
+    background: var(--lib-glass-bg-celadon);
+    border-color: oklch(48% 0.05 172deg / 0.30);
+  }
+
   /* Glass anula el sweep ::after del primary */
   :host([glass][variant="primary"]) .btn::after {
+    display: none;
+  }
+
+  /* Glass anula el glaze ::after del celadon */
+  :host([glass][variant="celadon"]) .btn::after {
     display: none;
   }
 
@@ -284,8 +329,11 @@
      primario: cuando katachi está activo esos tokens se definen y
      ganan; sin katachi el fallback reproduce el comportamiento original.
 
-     Los ::before y ::after con efectos decorativos (sweep kaki, borde
-     kintsugi) no se modifican — son efectos de identidad del variant.
+     accent y celadon son paletas fijas (kaki/celadón) — no se tocan.
+     Son colores de identidad del variant, no del contexto katachi.
+
+     Los ::after con efectos decorativos (sweep kaki, glaze celadón,
+     borde kintsugi) no se modifican — son efectos de identidad del variant.
      ─────────────────────────────────────────────────────────── */
 
   :host([variant="primary"]) .btn {

@@ -33,7 +33,7 @@ export class LibButton extends LitElement {
   }
 
   /**
- * @type {"primary" | "secondary" | "ghost" | "accent" | "danger" | "kintsugi" | "brutal"}
+ * @type {"primary" | "secondary" | "ghost" | "accent" | "celadon" | "danger" | "kintsugi" | "brutal"}
  */
   @property({ type: String, reflect: true })
   variant: LibButtonVariant = 'primary';

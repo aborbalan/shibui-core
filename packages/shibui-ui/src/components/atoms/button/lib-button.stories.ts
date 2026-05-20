@@ -15,7 +15,7 @@ const meta: Meta<LibButtonStoryArgs> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'ghost', 'accent', 'danger', 'kintsugi', 'brutal'],
+      options: ['primary', 'secondary', 'ghost', 'accent', 'celadon', 'danger', 'kintsugi', 'brutal'],
       description: 'Variante visual del botón',
     },
     size: {
@@ -72,6 +72,7 @@ export const AllVariants: Story = {
       <lib-button variant="secondary">Secondary</lib-button>
       <lib-button variant="ghost">Ghost</lib-button>
       <lib-button variant="accent">Accent</lib-button>
+      <lib-button variant="celadon">Celadon</lib-button>
       <lib-button variant="danger">Danger</lib-button>
       <lib-button variant="kintsugi">Kintsugi</lib-button>
       <lib-button variant="brutal">Brutal</lib-button>
@@ -98,6 +99,29 @@ export const Kintsugi: Story = {
       <lib-button variant="kintsugi" size="sm">金継ぎ</lib-button>
       <lib-button variant="kintsugi" size="md">Kintsugi</lib-button>
       <lib-button variant="kintsugi" size="lg">継ぐ</lib-button>
+    </div>
+  `,
+};
+
+/* ── Celadon ── */
+export const Celadon: Story = {
+  name: 'Celadon ◎',
+  parameters: {
+    backgrounds: { default: 'light' },
+  },
+  render: (): TemplateResult => html`
+    <div style="
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--lib-space-md);
+      align-items: center;
+      justify-content: center;
+      padding: var(--lib-space-xl);
+      background: var(--color-celadon-50, #EFF5F3);
+    ">
+      <lib-button variant="celadon" size="sm">青磁</lib-button>
+      <lib-button variant="celadon" size="md">Celadon</lib-button>
+      <lib-button variant="celadon" size="lg">磁器</lib-button>
     </div>
   `,
 };
@@ -167,6 +191,7 @@ export const Disabled: Story = {
       <lib-button variant="secondary" ?disabled=${true}>Secondary</lib-button>
       <lib-button variant="ghost"     ?disabled=${true}>Ghost</lib-button>
       <lib-button variant="accent"    ?disabled=${true}>Accent</lib-button>
+      <lib-button variant="celadon"   ?disabled=${true}>Celadon</lib-button>
       <lib-button variant="danger"    ?disabled=${true}>Danger</lib-button>
     </div>
   `,
@@ -190,6 +215,7 @@ export const GlassEffect: Story = {
       <lib-button ?glass=${true}>Paper Glass</lib-button>
       <lib-button ?glass=${true} variant="primary">Water Glass</lib-button>
       <lib-button ?glass=${true} variant="accent">Kaki Glass</lib-button>
+      <lib-button ?glass=${true} variant="celadon">Celadon Glass</lib-button>
     </div>
   `,
 };
