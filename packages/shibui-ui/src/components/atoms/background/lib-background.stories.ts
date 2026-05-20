@@ -2,6 +2,7 @@ import { html, TemplateResult } from "lit";
 import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import "./lib-background.component";
 import type { LibBackgroundVariant } from "./lib-background.types";
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 /* ── Helpers de presentación ── */
 const DEMO_LIGHT = html`
@@ -582,7 +583,7 @@ export const KatachiContexts: Story = {
             </div>
           </lib-background>
           <div style="padding:10px 12px;background:var(--bg-base);font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-            <strong style="color:var(--katachi-accent,inherit);">${k.variant}</strong>
+            <strong style="color:var(--lib-comp-fg-accent,inherit);">${k.variant}</strong>
             &nbsp;·&nbsp;${k.label}
           </div>
         </section>
@@ -591,3 +592,26 @@ export const KatachiContexts: Story = {
   `,
   parameters: { layout: 'fullscreen' },
 };
+
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-background renderiza patrones decorativos propios;
+   el contenido del slot sí hereda los tokens semánticos
+   del katachi activo (text-primary, text-muted, bg-base…).
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <lib-background variant="ink-wash" style="height:200px;display:block;max-width:420px;border-radius:4px;overflow:hidden;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:6px;">
+      <span style="font-family:var(--lib-font-display);font-size:2.5rem;font-weight:300;letter-spacing:-0.02em;color:rgba(250,247,244,.55);">渋い</span>
+      <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(250,247,244,.22);">ink-wash · katachi</span>
+    </div>
+  </lib-background>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
