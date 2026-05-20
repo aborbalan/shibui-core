@@ -4,6 +4,7 @@ import { html, TemplateResult } from 'lit';
 import './lib-button.component';
 import type { LibButton } from './lib-button.component';
 import type { UiClickEventDetail } from '../../../types';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type LibButtonStoryArgs = LibButton & { slotContent?: string | TemplateResult };
 
@@ -204,137 +205,25 @@ export const KatachiContexts: Story = {
   parameters: { layout: 'fullscreen' },
 };
 
-/* ── Katachi · Shizen — contexto estándar (base) ── */
-export const KatachiShizen: Story = {
-  name: 'Katachi · Shizen 自 · estándar',
-  render: (): TemplateResult => html`
-    <div
-      data-katachi="shizen"
-      style="
-        display: flex; flex-wrap: wrap; gap: var(--lib-space-md);
-        align-items: center; justify-content: center;
-        padding: var(--lib-space-xl);
-        background: var(--bg-base);
-      "
-    >
-      <lib-button variant="primary">Primary</lib-button>
-      <lib-button variant="secondary">Secondary</lib-button>
-      <lib-button variant="ghost">Ghost</lib-button>
-      <lib-button variant="accent">Accent</lib-button>
-      <lib-button variant="danger">Danger</lib-button>
-    </div>
-  `,
-};
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 6 historias estándar generadas con el helper
+   Cada componente debe tener estas historias como mínimo.
+   ═══════════════════════════════════════════════════════════════ */
 
-/* ── Katachi · Wabi — dark atmosférico, glass ── */
-export const KatachiWabi: Story = {
-  name: 'Katachi · Wabi 侘',
-  parameters: { backgrounds: { default: 'dark' } },
-  render: (): TemplateResult => html`
-    <div
-      data-katachi="wabi"
-      style="
-        display: flex; flex-wrap: wrap; gap: var(--lib-space-md);
-        align-items: center; justify-content: center;
-        padding: var(--lib-space-xl);
-        background: var(--bg-base);
-      "
-    >
-      <lib-button variant="primary">Primary</lib-button>
-      <lib-button variant="secondary">Secondary</lib-button>
-      <lib-button variant="ghost">Ghost</lib-button>
-      <lib-button variant="accent">Accent</lib-button>
-    </div>
-  `,
-};
-
-/* ── Katachi · Kintsugi — borde dorado fractura ── */
-export const KatachiKintsugi: Story = {
-  name: 'Katachi · Kintsugi ◈',
-  parameters: { backgrounds: { default: 'dark' } },
-  render: (): TemplateResult => html`
-    <div
-      data-katachi="kintsugi"
-      style="
-        display: flex; flex-wrap: wrap; gap: var(--lib-space-md);
-        align-items: center; justify-content: center;
-        padding: var(--lib-space-xl);
-        background: var(--bg-base);
-      "
-    >
-      <lib-button variant="primary">Primary</lib-button>
-      <lib-button variant="secondary">Secondary</lib-button>
-      <lib-button variant="ghost">Ghost</lib-button>
-      <lib-button variant="accent">Accent</lib-button>
-    </div>
-  `,
-};
-
-/* ── Katachi · Celadon — glaze shimmer sweep ── */
-export const KatachiCeladon: Story = {
-  name: 'Katachi · Celadon ◎',
-  parameters: { backgrounds: { default: 'dark' } },
-  render: (): TemplateResult => html`
-    <div
-      data-katachi="celadon"
-      style="
-        display: flex; flex-wrap: wrap; gap: var(--lib-space-md);
-        align-items: center; justify-content: center;
-        padding: var(--lib-space-xl);
-        background: var(--bg-base);
-      "
-    >
-      <lib-button variant="primary">Primary</lib-button>
-      <lib-button variant="secondary">Secondary</lib-button>
-      <lib-button variant="ghost">Ghost</lib-button>
-      <lib-button variant="accent">Accent</lib-button>
-    </div>
-  `,
-};
-
-/* ── Katachi · Sabi — brutal shadow, papel envejecido ── */
-export const KatachiSabi: Story = {
-  name: 'Katachi · Sabi ◻',
-  parameters: { backgrounds: { default: 'light' } },
-  render: (): TemplateResult => html`
-    <div
-      data-katachi="sabi"
-      style="
-        display: flex; flex-wrap: wrap; gap: var(--lib-space-lg);
-        align-items: center; justify-content: center;
-        padding: var(--lib-space-xl);
-        background: var(--bg-base);
-      "
-    >
-      <lib-button variant="primary">Primary</lib-button>
-      <lib-button variant="secondary">Secondary</lib-button>
-      <lib-button variant="ghost">Ghost</lib-button>
-      <lib-button variant="accent">Accent</lib-button>
-    </div>
-  `,
-};
-
-/* ── Katachi · Terminal — brutal celadón ── */
-export const KatachiTerminal: Story = {
-  name: 'Katachi · Terminal >_',
-  parameters: { backgrounds: { default: 'dark' } },
-  render: (): TemplateResult => html`
-    <div
-      data-katachi="terminal"
-      style="
-        display: flex; flex-wrap: wrap; gap: var(--lib-space-lg);
-        align-items: center; justify-content: center;
-        padding: var(--lib-space-xl);
-        background: var(--bg-base);
-      "
-    >
-      <lib-button variant="primary">Primary</lib-button>
-      <lib-button variant="secondary">Secondary</lib-button>
-      <lib-button variant="ghost">Ghost</lib-button>
-      <lib-button variant="accent">Accent</lib-button>
-    </div>
-  `,
-};
+export const {
+  KatachiShizen,
+  KatachiWabi,
+  KatachiKintsugi,
+  KatachiCeladon,
+  KatachiSabi,
+  KatachiTerminal,
+} = createKatachiStories<LibButtonStoryArgs>(() => html`
+  <lib-button variant="primary">Primary</lib-button>
+  <lib-button variant="secondary">Secondary</lib-button>
+  <lib-button variant="ghost">Ghost</lib-button>
+  <lib-button variant="accent">Accent</lib-button>
+  <lib-button variant="danger">Danger</lib-button>
+`);
 
 /* ═══════════════════════════════════════════════════════════════
    TESTS · Interacción y eventos
