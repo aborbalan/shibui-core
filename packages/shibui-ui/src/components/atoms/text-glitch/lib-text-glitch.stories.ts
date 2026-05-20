@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-text-glitch.component';
 import type { LibTextGlitch } from './lib-text-glitch.component';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type LibTextGlitchArgs = Pick<LibTextGlitch, 'text' | 'variant' | 'trigger' | 'active'>;
 
@@ -332,6 +333,28 @@ export const Noise: Story = {
   `,
 };
 
+
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-text-glitch usa palette tokens deliberados (kaki, celadon)
+   para sus efectos — la superficie contenedora (bg-base,
+   text-primary) adapta al katachi activo.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="padding:var(--lib-space-md);">
+    <span style="font-family:var(--lib-font-display);font-size:2.5rem;font-weight:300;letter-spacing:-0.02em;color:var(--text-primary);">
+      <lib-text-glitch text="shibui 渋い" variant="slice"></lib-text-glitch>
+    </span>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
 
 /* ══════════════════════════════════════
    CONTEXTO — nav con todas las variantes

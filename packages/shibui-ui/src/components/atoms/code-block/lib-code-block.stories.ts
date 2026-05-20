@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-code-block.component';
 import type { LibCodeBlock } from './lib-code-block.component';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type LibCodeBlockStoryArgs = Pick<
   LibCodeBlock,
@@ -170,3 +171,28 @@ export const NoCopy: Story = {
     </div>
   `,
 };
+
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-code-block default es una superficie oscura terminal
+   deliberada. La variante ghost (clara) adopta bg-elevated y
+   border-subtle, adaptándose al katachi activo.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="max-width:400px;">
+    <lib-code-block
+      variant="ghost"
+      language="ts"
+      code="import '@shibui/ui';"
+      copyable
+    ></lib-code-block>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
