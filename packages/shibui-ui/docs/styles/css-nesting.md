@@ -218,12 +218,33 @@ Los compound `:host([attrA][attrB])` siempre se mantienen planos. Los pseudo-ele
 | `atoms/tooltip/lib-tooltip.css` | ⬜ skipped | position + variant + size independientes |
 | `atoms/visually-hidden/lib-visually-hidden.css` | ⬜ skipped | regla única |
 
-## Próximo: Molecules (18 archivos)
+## Molecules (18 archivos) — Completado: skip total
 
-| Archivo | Estado |
-|---|---|
-| molecules/* | pendiente — auditoría previa |
-| organisms/* | pendiente — auditoría previa |
+Todos los archivos de molecules auditados. Ninguno tiene el patrón
+`:host([attr]) .element` repetido con múltiples estados/pseudos.
+Estructura plana eficiente — sin beneficio de nesting.
+
+## Organisms (17 archivos)
+
+| Archivo | Estado | Notas |
+|---|---|---|
+| `organisms/accordion/lib-accordion.css` | ✅ anidado | variant flush/separated/accent con ::slotted |
+| `organisms/dialog/lib-dialog.css` | ✅ anidado | dialog.dlg states + variants danger/warning/dark + layouts |
+| `organisms/timeline/lib-timeline.css` | ✅ anidado | node colors + item states + size groups |
+| `organisms/footer/lib-footer.css` | ✅ anidado | element-level hover (links, triggers, social cells) |
+| `organisms/drawer/lib-drawer.css` | ✅ anidado | 5 variant blocks; compound [variant][placement] flat |
+| `organisms/sidebar/lib-sidebar.css` | ✅ anidado | sb-link states + 3 variant blocks (light/kintsugi/glitch) |
+| `organisms/data-table/lib-data-table.css` | ✅ anidado | thead th sort states + variants + [dark] mega-block |
+| `organisms/bento-grid/lib-bento-grid.css` | ⬜ skipped | layout-only, sin estados repetidos |
+| `organisms/carousel/lib-carousel.css` | ⬜ skipped | controles independientes por estado |
+| `organisms/cursor-follower/lib-cursor-follower.css` | ⬜ skipped | wrapper efecto puro |
+| `organisms/horizontal-scroll-section/lib-horizontal-scroll-section.css` | ⬜ skipped | layout wrapper |
+| `organisms/login-form/lib-login-form.css` | ⬜ skipped | estados independientes |
+| `organisms/parallax-container/lib-parallax-container.css` | ⬜ skipped | efecto puro |
+| `organisms/parallax-text/lib-parallax-text.css` | ⬜ skipped | efecto puro |
+| `organisms/sidebar/toast-manager/lib-toast-manager.css` | ⬜ skipped | posiciones independientes |
+| `organisms/stagger/lib-stagger.css` | ⬜ skipped | wrapper mínimo |
+| `organisms/stepper/lib-stepper.css` | ⬜ skipped | step states independientes |
 
 ---
 
