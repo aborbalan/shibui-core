@@ -95,58 +95,56 @@
     white-space: nowrap;
     user-select: none;
     position: relative;
-  }
 
-  /* Sortable */
-  thead th.is-sortable {
-    cursor: pointer;
-    padding-right: var(--lib-space-lg);
-    transition: color var(--duration-fast), background var(--duration-fast);
-  }
+    &.is-sortable {
+      cursor: pointer;
+      padding-right: var(--lib-space-lg);
+      transition: color var(--duration-fast), background var(--duration-fast);
 
-  thead th.is-sortable:hover {
-    color: var(--text-primary);
-    background: var(--color-washi-200);
-  }
+      &:hover {
+        color: var(--text-primary);
+        background: var(--color-washi-200);
 
-  /* Sort indicator arrow */
-  thead th.is-sortable::after {
-    content: '';
-    position: absolute;
-    right: var(--lib-space-sm);
-    top: 50%;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    opacity: 0.3;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 5px solid currentcolor;
-    transition: opacity var(--duration-fast), transform var(--duration-base);
-  }
+        &::after {
+          opacity: 0.6;
+        }
+      }
 
-  thead th.is-sortable:hover::after {
-    opacity: 0.6;
-  }
+      &::after {
+        content: '';
+        position: absolute;
+        right: var(--lib-space-sm);
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        opacity: 0.3;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 5px solid currentcolor;
+        transition: opacity var(--duration-fast), transform var(--duration-base);
+      }
+    }
 
-  thead th.sort-asc::after {
-    opacity: 1;
-    transform: translateY(-50%) rotate(180deg);
-  }
+    &.sort-asc,
+    &.sort-desc {
+      color: var(--text-primary);
+      background: var(--color-washi-200);
+    }
 
-  thead th.sort-desc::after {
-    opacity: 1;
-    transform: translateY(-50%) rotate(0deg);
-  }
+    &.sort-asc::after {
+      opacity: 1;
+      transform: translateY(-50%) rotate(180deg);
+    }
 
-  thead th.sort-asc,
-  thead th.sort-desc {
-    color: var(--text-primary);
-    background: var(--color-washi-200);
-  }
+    &.sort-desc::after {
+      opacity: 1;
+      transform: translateY(-50%) rotate(0deg);
+    }
 
-  thead th.is-num {
-    text-align: right;
+    &.is-num {
+      text-align: right;
+    }
   }
 
   /* ── Rows ── */
@@ -182,32 +180,36 @@
   /* ─────────────────────────────────────────────────────────
      TAMAÑOS
   ───────────────────────────────────────────────────────── */
-  :host([size="sm"]) thead th {
-    padding: var(--lib-space-xs) var(--lib-space-sm);
-    font-size: 9px;
+  :host([size="sm"]) {
+    & thead th {
+      padding: var(--lib-space-xs) var(--lib-space-sm);
+      font-size: 9px;
+    }
+
+    & tbody td {
+      padding: var(--lib-space-xs) var(--lib-space-sm);
+      font-size: var(--text-xs);
+    }
+
+    & tfoot td {
+      padding: var(--lib-space-xs) var(--lib-space-sm);
+    }
   }
 
-  :host([size="sm"]) tbody td {
-    padding: var(--lib-space-xs) var(--lib-space-sm);
-    font-size: var(--text-xs);
-  }
+  :host([size="lg"]) {
+    & thead th {
+      padding: var(--lib-space-md) var(--lib-space-lg);
+      font-size: 11px;
+    }
 
-  :host([size="sm"]) tfoot td {
-    padding: var(--lib-space-xs) var(--lib-space-sm);
-  }
+    & tbody td {
+      padding: calc(var(--lib-space-md) + var(--lib-space-xs)) var(--lib-space-lg);
+      font-size: var(--text-base);
+    }
 
-  :host([size="lg"]) thead th {
-    padding: var(--lib-space-md) var(--lib-space-lg);
-    font-size: 11px;
-  }
-
-  :host([size="lg"]) tbody td {
-    padding: calc(var(--lib-space-md) + var(--lib-space-xs)) var(--lib-space-lg);
-    font-size: var(--text-base);
-  }
-
-  :host([size="lg"]) tfoot td {
-    padding: var(--lib-space-md) var(--lib-space-lg);
+    & tfoot td {
+      padding: var(--lib-space-md) var(--lib-space-lg);
+    }
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -215,54 +217,59 @@
   ───────────────────────────────────────────────────────── */
 
   /* Lines (default) */
-  :host([variant="lines"]) tbody tr:hover,
-  :host(:not([variant])) tbody tr:hover {
+  :host(:is([variant="lines"], :not([variant]))) tbody tr:hover {
     background: var(--color-washi-50);
   }
 
   /* Grid */
-  :host([variant="grid"]) thead th,
-  :host([variant="grid"]) tbody td {
-    border-right: 1px solid var(--border-subtle);
-  }
+  :host([variant="grid"]) {
+    & thead th,
+    & tbody td {
+      border-right: 1px solid var(--border-subtle);
+    }
 
-  :host([variant="grid"]) thead th:last-child,
-  :host([variant="grid"]) tbody td:last-child {
-    border-right: none;
-  }
+    & thead th:last-child,
+    & tbody td:last-child {
+      border-right: none;
+    }
 
-  :host([variant="grid"]) tbody tr:hover {
-    background: var(--color-washi-50);
+    & tbody tr:hover {
+      background: var(--color-washi-50);
+    }
   }
 
   /* Striped */
-  :host([variant="striped"]) tbody tr:nth-child(even) {
-    background: var(--bg-surface);
-  }
+  :host([variant="striped"]) {
+    & tbody tr:nth-child(even) {
+      background: var(--bg-surface);
+    }
 
-  :host([variant="striped"]) tbody tr:hover {
-    background: var(--color-washi-50);
-  }
+    & tbody tr:hover {
+      background: var(--color-washi-50);
+    }
 
-  :host([variant="striped"]) tbody tr:nth-child(even):hover {
-    background: var(--color-washi-200);
+    & tbody tr:nth-child(even):hover {
+      background: var(--color-washi-200);
+    }
   }
 
   /* Borderless */
-  :host([variant="borderless"]) thead th {
-    border-bottom: 1px solid var(--border-default);
-  }
+  :host([variant="borderless"]) {
+    & thead th {
+      border-bottom: 1px solid var(--border-default);
+    }
 
-  :host([variant="borderless"]) tbody tr {
-    border-bottom: none;
-  }
+    & tbody tr {
+      border-bottom: none;
+    }
 
-  :host([variant="borderless"]) tbody td {
-    border: none;
-  }
+    & tbody td {
+      border: none;
+    }
 
-  :host([variant="borderless"]) tbody tr:hover {
-    background: var(--bg-surface);
+    & tbody tr:hover {
+      background: var(--bg-surface);
+    }
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -439,16 +446,16 @@
     text-transform: uppercase;
     padding: 2px var(--lib-space-sm);
     white-space: nowrap;
-  }
 
-  .cell-badge::before {
-    content: '';
-    width: 5px;
-    height: 5px;
-    border-radius: var(--radius-full);
-    background: currentcolor;
-    flex-shrink: 0;
-    opacity: 0.7;
+    &::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: var(--radius-full);
+      background: currentcolor;
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
   }
 
   .cell-badge.tone-estable {
@@ -545,15 +552,15 @@
     border-radius: var(--radius-full);
     transition: background var(--duration-fast), color var(--duration-fast);
     opacity: 0;
+
+    &:hover {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+    }
   }
 
   tbody tr:hover .actions-btn {
     opacity: 1;
-  }
-
-  .actions-btn:hover {
-    background: var(--bg-surface);
-    color: var(--text-primary);
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -701,15 +708,15 @@
     outline: none;
     width: 180px;
     transition: border-color var(--duration-base), box-shadow var(--duration-base);
-  }
 
-  .tbl-toolbar-search::placeholder {
-    color: var(--text-muted);
-  }
+    &::placeholder {
+      color: var(--text-muted);
+    }
 
-  .tbl-toolbar-search:focus {
-    border-color: var(--color-washi-700);
-    box-shadow: 0 0 0 3px rgb(26, 20, 14, 0.08);
+    &:focus {
+      border-color: var(--color-washi-700);
+      box-shadow: 0 0 0 3px rgb(26, 20, 14, 0.08);
+    }
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -747,24 +754,24 @@
     border: 1px solid transparent;
     cursor: pointer;
     transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
-  }
 
-  .pag-btn:hover {
-    background: var(--bg-elevated);
-    border-color: var(--border-default);
-    color: var(--text-primary);
-  }
+    &:hover {
+      background: var(--bg-elevated);
+      border-color: var(--border-default);
+      color: var(--text-primary);
+    }
 
-  .pag-btn.is-active {
-    background: var(--color-washi-900);
-    color: var(--color-washi-50);
-    border-color: var(--color-washi-900);
-  }
+    &.is-active {
+      background: var(--color-washi-900);
+      color: var(--color-washi-50);
+      border-color: var(--color-washi-900);
+    }
 
-  .pag-btn:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-    pointer-events: none;
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
   }
 
   .pag-sep {
@@ -777,141 +784,143 @@
   /* ─────────────────────────────────────────────────────────
      DARK MODE
   ───────────────────────────────────────────────────────── */
-  :host([dark]) table {
-    background: oklch(12% 0.015 45deg);
-    color: oklch(55% 0.02 55deg);
-  }
+  :host([dark]) {
+    & table {
+      background: oklch(12% 0.015 45deg);
+      color: oklch(55% 0.02 55deg);
+    }
 
-  :host([dark]) thead th {
-    background: oklch(10% 0.015 45deg);
-    color: oklch(28% 0.02 50deg);
-    border-bottom-color: oklch(18% 0.02 45deg);
-  }
+    & thead th {
+      background: oklch(10% 0.015 45deg);
+      color: oklch(28% 0.02 50deg);
+      border-bottom-color: oklch(18% 0.02 45deg);
 
-  :host([dark]) thead th.is-sortable:hover {
-    background: oklch(16% 0.02 45deg);
-    color: oklch(65% 0.02 55deg);
-  }
+      &.is-sortable:hover {
+        background: oklch(16% 0.02 45deg);
+        color: oklch(65% 0.02 55deg);
+      }
 
-  :host([dark]) thead th.sort-asc,
-  :host([dark]) thead th.sort-desc {
-    background: oklch(16% 0.02 45deg);
-    color: oklch(70% 0.02 55deg);
-  }
+      &.sort-asc,
+      &.sort-desc {
+        background: oklch(16% 0.02 45deg);
+        color: oklch(70% 0.02 55deg);
+      }
+    }
 
-  :host([dark]) tbody tr {
-    border-bottom-color: oklch(16% 0.02 45deg);
-  }
+    & tbody tr {
+      border-bottom-color: oklch(16% 0.02 45deg);
+    }
 
-  :host([dark]) tbody td {
-    color: oklch(55% 0.02 55deg);
-  }
+    & tbody td {
+      color: oklch(55% 0.02 55deg);
+    }
 
-  :host([dark]) tbody td.cell-num {
-    color: oklch(72% 0.02 55deg);
-  }
+    & tbody td.cell-num {
+      color: oklch(72% 0.02 55deg);
+    }
 
-  :host([dark]) tbody tr:hover {
-    background: oklch(16% 0.02 45deg);
-  }
+    & tbody tr:hover {
+      background: oklch(16% 0.02 45deg);
+    }
 
-  :host([dark]) .tbl-wrap {
-    border-color: oklch(16% 0.02 45deg);
-  }
+    & tbody tr.is-selected,
+    & tbody tr.is-selected:hover {
+      background: oklch(18% 0.02 45deg);
+    }
 
-  :host([dark]) tfoot td {
-    background: oklch(10% 0.015 45deg);
-    border-top-color: oklch(18% 0.02 45deg);
-    color: oklch(30% 0.02 50deg);
-  }
+    & .tbl-wrap {
+      border-color: oklch(16% 0.02 45deg);
+    }
 
-  :host([dark]) caption {
-    background: oklch(10% 0.015 45deg);
-    color: oklch(28% 0.02 50deg);
-    border-color: oklch(16% 0.02 45deg);
-  }
+    & tfoot td {
+      background: oklch(10% 0.015 45deg);
+      border-top-color: oklch(18% 0.02 45deg);
+      color: oklch(30% 0.02 50deg);
+    }
 
-  :host([dark]) .tbl-toolbar {
-    background: oklch(10% 0.015 45deg);
-    border-color: oklch(16% 0.02 45deg);
-  }
+    & caption {
+      background: oklch(10% 0.015 45deg);
+      color: oklch(28% 0.02 50deg);
+      border-color: oklch(16% 0.02 45deg);
+    }
 
-  :host([dark]) .tbl-toolbar-title {
-    color: oklch(40% 0.02 50deg);
-  }
+    & .tbl-toolbar {
+      background: oklch(10% 0.015 45deg);
+      border-color: oklch(16% 0.02 45deg);
+    }
 
-  :host([dark]) .tbl-toolbar-count {
-    color: oklch(25% 0.02 50deg);
-  }
+    & .tbl-toolbar-title {
+      color: oklch(40% 0.02 50deg);
+    }
 
-  :host([dark]) .tbl-toolbar-search {
-    background: oklch(10% 0.015 45deg);
-    border-color: oklch(22% 0.02 45deg);
-    color: oklch(65% 0.02 55deg);
-  }
+    & .tbl-toolbar-count {
+      color: oklch(25% 0.02 50deg);
+    }
 
-  :host([dark]) .tbl-toolbar-search::placeholder {
-    color: oklch(28% 0.02 50deg);
-  }
+    & .tbl-toolbar-search {
+      background: oklch(10% 0.015 45deg);
+      border-color: oklch(22% 0.02 45deg);
+      color: oklch(65% 0.02 55deg);
 
-  :host([dark]) .tbl-pagination {
-    background: oklch(10% 0.015 45deg);
-    border-color: oklch(16% 0.02 45deg);
-  }
+      &::placeholder {
+        color: oklch(28% 0.02 50deg);
+      }
+    }
 
-  :host([dark]) .pag-btn:hover {
-    background: oklch(16% 0.02 45deg);
-    border-color: oklch(22% 0.02 45deg);
-    color: oklch(65% 0.02 55deg);
-  }
+    & .tbl-pagination {
+      background: oklch(10% 0.015 45deg);
+      border-color: oklch(16% 0.02 45deg);
+    }
 
-  :host([dark]) .avatar-circle {
-    background: oklch(20% 0.02 45deg);
-    color: oklch(45% 0.02 50deg);
-  }
+    & .pag-btn:hover {
+      background: oklch(16% 0.02 45deg);
+      border-color: oklch(22% 0.02 45deg);
+      color: oklch(65% 0.02 55deg);
+    }
 
-  :host([dark]) .avatar-name {
-    color: oklch(60% 0.02 55deg);
-  }
+    & .avatar-circle {
+      background: oklch(20% 0.02 45deg);
+      color: oklch(45% 0.02 50deg);
+    }
 
-  :host([dark]) .avatar-hint {
-    color: oklch(30% 0.02 50deg);
-  }
+    & .avatar-name {
+      color: oklch(60% 0.02 55deg);
+    }
 
-  :host([dark]) .progress-bar {
-    background: oklch(20% 0.02 45deg);
-  }
+    & .avatar-hint {
+      color: oklch(30% 0.02 50deg);
+    }
 
-  :host([dark]) .col-sticky {
-    background: oklch(12% 0.015 45deg);
-  }
+    & .progress-bar {
+      background: oklch(20% 0.02 45deg);
+    }
 
-  :host([dark]) thead .col-sticky {
-    background: oklch(10% 0.015 45deg);
-  }
+    & .col-sticky {
+      background: oklch(12% 0.015 45deg);
+    }
 
-  :host([dark]) .cell-mono {
-    color: oklch(30% 0.02 50deg);
-  }
+    & thead .col-sticky {
+      background: oklch(10% 0.015 45deg);
+    }
 
-  :host([dark]) .actions-btn:hover {
-    background: oklch(20% 0.02 45deg);
-    color: oklch(65% 0.02 55deg);
-  }
+    & .cell-mono {
+      color: oklch(30% 0.02 50deg);
+    }
 
-  :host([dark]) tbody tr.is-selected,
-  :host([dark]) tbody tr.is-selected:hover {
-    background: oklch(18% 0.02 45deg);
-  }
+    & .actions-btn:hover {
+      background: oklch(20% 0.02 45deg);
+      color: oklch(65% 0.02 55deg);
+    }
 
-  :host([dark]) .skel-line,
-  :host([dark]) .skel-avatar,
-  :host([dark]) .skel-badge {
-    background: linear-gradient(90deg,
-        oklch(18% 0.015 45deg) 25%,
-        oklch(22% 0.015 45deg) 50%,
-        oklch(18% 0.015 45deg) 75%);
-    background-size: 600px 100%;
+    & .skel-line,
+    & .skel-avatar,
+    & .skel-badge {
+      background: linear-gradient(90deg,
+          oklch(18% 0.015 45deg) 25%,
+          oklch(22% 0.015 45deg) 50%,
+          oklch(18% 0.015 45deg) 75%);
+      background-size: 600px 100%;
+    }
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────

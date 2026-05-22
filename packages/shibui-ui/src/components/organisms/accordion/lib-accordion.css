@@ -3,7 +3,7 @@
 /* ============================================================
    LIB-ACCORDION — Shibui UI
    Variantes: default · flush · separated · accent
-   
+
    Las variantes actuan sobre lib-accordion-item via su API
    de CSS custom properties usando ::slotted().
    ============================================================ */
@@ -41,14 +41,14 @@
     border: none;
     background: transparent;
     box-shadow: none;
-  }
 
-  :host([variant="flush"]) ::slotted(lib-accordion-item) {
-    --accordion-item-trigger-px:       0px;
-    --accordion-item-content-px:       0px;
-    --accordion-item-trigger-hover-bg: transparent;
-    --accordion-item-trigger-bg:       transparent;
-    --accordion-item-body-bg:          transparent;
+    & ::slotted(lib-accordion-item) {
+      --accordion-item-trigger-px:       0px;
+      --accordion-item-content-px:       0px;
+      --accordion-item-trigger-hover-bg: transparent;
+      --accordion-item-trigger-bg:       transparent;
+      --accordion-item-body-bg:          transparent;
+    }
   }
 
   /* ── Separated ───────────────────────────────────────────── */
@@ -57,22 +57,22 @@
     border: none;
     background: transparent;
     box-shadow: none;
-  }
 
-  :host([variant="separated"]) .accordion__root {
-    gap: var(--lib-space-sm);
-  }
+    & .accordion__root {
+      gap: var(--lib-space-sm);
+    }
 
-  :host([variant="separated"]) ::slotted(lib-accordion-item) {
-    border: 1px solid var(--border-subtle) !important;
-    transition:
-      box-shadow    var(--duration-slow) var(--ease-out),
-      border-color  var(--duration-slow) var(--ease-out);
-  }
+    & ::slotted(lib-accordion-item) {
+      border: 1px solid var(--border-subtle) !important;
+      transition:
+        box-shadow    var(--duration-slow) var(--ease-out),
+        border-color  var(--duration-slow) var(--ease-out);
+    }
 
-  :host([variant="separated"]) ::slotted(lib-accordion-item[open]) {
-    box-shadow:   var(--shadow-md);
-    border-color: var(--border-default) !important;
+    & ::slotted(lib-accordion-item[open]) {
+      box-shadow:   var(--shadow-md);
+      border-color: var(--border-default) !important;
+    }
   }
 
   /* ── Accent ──────────────────────────────────────────────── */
@@ -80,18 +80,18 @@
   :host([variant="accent"]) {
     border: 1px solid var(--border-subtle);
     background: var(--bg-elevated);
-  }
 
-  /* Item abierto recibe los tokens kaki via custom props */
-  :host([variant="accent"]) ::slotted(lib-accordion-item[open]) {
-    --accordion-item-accent-border:    2px solid var(--color-kaki-400);
-    --accordion-item-trigger-bg:       var(--color-kaki-50);
-    --accordion-item-trigger-hover-bg: var(--color-kaki-100);
-    --accordion-item-body-bg:          var(--color-kaki-50);
-    --accordion-item-label-color:      var(--color-kaki-600);
-    --accordion-item-icon-color:       var(--color-kaki-400);
-    --accordion-item-content-border:   var(--color-kaki-200);
-    --accordion-item-content-color:    var(--color-kaki-600);
+    /* Item abierto recibe los tokens kaki via custom props */
+    & ::slotted(lib-accordion-item[open]) {
+      --accordion-item-accent-border:    2px solid var(--color-kaki-400);
+      --accordion-item-trigger-bg:       var(--color-kaki-50);
+      --accordion-item-trigger-hover-bg: var(--color-kaki-100);
+      --accordion-item-body-bg:          var(--color-kaki-50);
+      --accordion-item-label-color:      var(--color-kaki-600);
+      --accordion-item-icon-color:       var(--color-kaki-400);
+      --accordion-item-content-border:   var(--color-kaki-200);
+      --accordion-item-content-color:    var(--color-kaki-600);
+    }
   }
 
   /* Reduccion de movimiento */
