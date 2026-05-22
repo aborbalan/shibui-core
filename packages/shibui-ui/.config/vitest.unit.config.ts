@@ -10,6 +10,13 @@
 //   pnpm test:unit -- --watch  → modo watch para TDD
 
 import { defineConfig } from 'vitest/config';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// Vitest 4 resuelve los globs de `include` desde process.cwd() (el root del
+// package), no desde el directorio del config. Usamos path.resolve para
+// anclar la ruta al directorio de este fichero (.config/) de forma robusta.
+const configDir = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   test: {
@@ -19,10 +26,17 @@ export default defineConfig({
     environment: 'node',
 
     // Incluye solo los tests de scripts/
-    include: ['../scripts/**/*.test.ts'],
+    // Ruta resuelta desde el directorio de este config para ser independiente
+    // del cwd desde el que se lance vitest.
+    // Nota: fast-glob (usado por Vitest) requiere forward slashes en Windows.
+    include: [path.resolve(configDir, '../scripts/**/*.test.ts').replace(/\\/g, '/')],
 
     // Excluye los tests de Storybook que van en src/
-    exclude: ['../src/**/*.stories.ts', 'node_modules', 'dist'],
+    exclude: [
+      path.resolve(configDir, '../src/**/*.stories.ts').replace(/\\/g, '/'),
+      'node_modules',
+      'dist',
+    ],
 
     // Cobertura opcional: actívala con --coverage
     coverage: {
