@@ -3,6 +3,7 @@ import { html, TemplateResult } from 'lit';
 import './lib-sidebar.component';
 import type { LibSidebar }      from './lib-sidebar.component';
 import type { SidebarLink }     from '../../../types';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type StoryArgs = Partial<Pick<LibSidebar,
   'logoMark' | 'brandName' | 'showSearch' | 'active' |
@@ -314,48 +315,29 @@ export const Collapsible: Story = {
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
-   ─────────────────────────────────────────────────────────────
-   lib-sidebar's "dark" default is intentionally fixed.
-   Use variant="light" explicitly inside light katachi contexts.
+   KATACHI · 形 · Las 6 historias estándar
+   lib-sidebar usa tokens semánticos de superficie y navegación
+   (bg-base, border-subtle, text-primary) — adapta al katachi.
    ═══════════════════════════════════════════════════════════════ */
 
-const katachiList = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び',      sidebarVariant: 'dark'     as const },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ', sidebarVariant: 'kintsugi' as const },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び',      sidebarVariant: 'light'    as const },
-  { id: 'terminal', kanji: '>_', label: 'terminal',          sidebarVariant: 'dark'     as const },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然',     sidebarVariant: 'light'    as const },
-  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁',    sidebarVariant: 'dark'     as const },
-] as const;
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;height:280px;border:1px solid var(--border-subtle);overflow:hidden;">
+    <lib-sidebar
+      variant="dark"
+      .links="${[
+        { id: 'dashboard', label: 'Dashboard', icon: 'home' },
+        { id: 'projects',  label: 'Proyectos', icon: 'folder' },
+        { id: 'settings',  label: 'Ajustes',   icon: 'compass' },
+      ] as SidebarLink[]}"
+      style="--lib-sidebar-width:200px;"
+    ></lib-sidebar>
+    <div style="flex:1;padding:var(--lib-space-md);background:var(--bg-base);font-family:var(--lib-font-mono);font-size:var(--text-xs);color:var(--text-muted);">content</div>
+  </div>
+`);
 
-const SAMPLE_SIDEBAR_LINKS: SidebarLink[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: '▣' },
-  { id: 'projects',  label: 'Projects',  icon: '◯' },
-  { id: 'settings',  label: 'Settings',  icon: '⚙' },
-];
-
-export const KatachiContexts: Story = {
-  name: 'Katachi · 6 contexts',
-  render: (): TemplateResult => html`
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--lib-space-xl);padding:var(--lib-space-xl);background:var(--color-washi-100);min-height:560px;">
-      ${katachiList.map(k => html`
-        <section data-katachi="${k.id}" style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
-          <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-            <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label} · variant="${k.sidebarVariant}"
-          </header>
-          <div style="display:flex;height:360px;background:var(--bg-base);">
-            <lib-sidebar
-              variant="${k.sidebarVariant}"
-              brandName="Shibui"
-              .links="${SAMPLE_SIDEBAR_LINKS}"
-              style="--lib-sidebar-width:200px;"
-            ></lib-sidebar>
-            <div style="flex:1;padding:var(--lib-space-lg);color:var(--text-secondary);font-family:var(--lib-font-mono);font-size:11px;">Content area<br/>(inherits the katachi context)</div>
-          </div>
-        </section>
-      `)}
-    </div>
-  `,
-  parameters: { layout: 'fullscreen' },
-};
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
