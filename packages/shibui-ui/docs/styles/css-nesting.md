@@ -167,18 +167,63 @@ Los compound `:host([attrA][attrB])` siempre se mantienen planos. Los pseudo-ele
 
 ---
 
-## Hoja de progreso
+## Hoja de progreso — Atoms
 
 | Archivo | Estado | Notas |
 |---|---|---|
 | `atoms/button/lib-button.css` | ✅ anidado | piloto — validado stylelint + build |
-| `atoms/background/lib-background.css` | pendiente | ~950 líneas |
-| `atoms/burger-button/lib-burger-button.css` | pendiente | ~672 líneas |
-| `atoms/tooltip/lib-tooltip.css` | pendiente | |
-| `atoms/step/lib-step.css` | pendiente | |
-| resto de atoms (38) | pendiente | |
-| molecules (18) | pendiente | |
-| organisms (16) | pendiente | |
+| `atoms/close-button/lib-close-button.css` | ✅ anidado | 7 variantes × hover + active |
+| `atoms/copy-button/lib-copy-button.css` | ✅ anidado | 5 variantes + bloque [copied] |
+| `atoms/status-dot/lib-status-dot.css` | ✅ anidado | 4 estados agrupados por status |
+| `atoms/bento-item/lib-bento-item.css` | ✅ anidado | [interactive] + hover + active |
+| `atoms/kbd/lib-kbd.css` | ✅ anidado | base + is-pressed/active por variante |
+| `atoms/switch/lib-switch.css` | ✅ anidado | [checked] + kintsugi completo |
+| `atoms/progress/lib-progress.css` | ✅ anidado | tones + square + indeterminate + sizes |
+| `atoms/reading-progress/lib-reading-progress.css` | ✅ anidado | bar ::after + kintsugi ::before/::after |
+| `atoms/accordion-item/lib-accordion-item.css` | ⬜ skipped | variantes independientes, sin estados repetidos |
+| `atoms/aspect-ratio/lib-aspect-ratio.css` | ⬜ skipped | wrapper plano, sin variantes |
+| `atoms/avatar/lib-avatar.css` | ⬜ skipped | clases independientes, sin pseudos repetidos |
+| `atoms/background/lib-background.css` | ⬜ skipped | 55 variantes únicas, estructura divergente |
+| `atoms/badge/lib-badge.css` | ⬜ skipped | variantes planas sin pseudos |
+| `atoms/burger-button/lib-burger-button.css` | ⬜ skipped | transforms únicos por variante |
+| `atoms/canvas/lib-canvas.css` | ⬜ skipped | display variants mutuamente exclusivos |
+| `atoms/card/lib-card.css` | ⬜ skipped | variantes demasiado divergentes |
+| `atoms/card/glass-card/lib-glass-card.css` | ⬜ skipped | compuestos independientes |
+| `atoms/card/spotlight-card/lib-spotlight-card.css` | ⬜ skipped | color swaps independientes |
+| `atoms/card/card-grid/lib-card-grid.css` | ⬜ skipped | layout-only, ::slotted independientes |
+| `atoms/checkbox/lib-checkbox.css` | ⬜ skipped | variantes independientes |
+| `atoms/code-block/lib-code-block.css` | ⬜ skipped | elementos únicos por variante |
+| `atoms/color-scale/lib-color-scale.css` | ⬜ skipped | hover independientes |
+| `atoms/content-pillar/content-pillar.css` | ⬜ skipped | tokens bridge, sin attrs repetidos |
+| `atoms/display-heading/lib-display-heading.css` | ⬜ skipped | @supports conflicto |
+| `atoms/divider/lib-divider.css` | ⬜ skipped | propiedades independientes por variante |
+| `atoms/eyebrow/lib-eyebrow.css` | ⬜ skipped | color variants eficientes |
+| `atoms/icon/lib-icon.css` | ⬜ skipped | clases planas, sin pseudos |
+| `atoms/label/lib-label.css` | ⬜ skipped | estructura mínima |
+| `atoms/lib-counter/lib-counter.css` | ⬜ skipped | selectores independientes |
+| `atoms/liquid-button/lib-liquid-button.css` | ⬜ skipped | color-only variants |
+| `atoms/magnetic/lib-magnetic.css` | ⬜ skipped | componente wrapper mínimo |
+| `atoms/progress-circle/lib-progress-circle.css` | ⬜ skipped | arc colors independientes |
+| `atoms/quote/lib-quote.css` | ⬜ skipped | surface variants independientes |
+| `atoms/radio/lib-radio.css` | ⬜ skipped | selectores independientes |
+| `atoms/rating/lib-rating.css` | ⬜ skipped | clip-path independiente |
+| `atoms/reading-progress/lib-reading-progress.css` | ✅ anidado | ver arriba |
+| `atoms/ripple/lib-ripple.css` | ⬜ skipped | un solo keyframe |
+| `atoms/select-option/lib-select-option.css` | ⬜ skipped | estados independientes |
+| `atoms/skeleton/lib-skeleton.css` | ⬜ skipped | animation variants simples |
+| `atoms/spinner/lib-spinner.css` | ⬜ skipped | cada variante con animación única |
+| `atoms/step/lib-step.css` | ⬜ skipped | status variants independientes |
+| `atoms/text-glitch/lib-text-glitch.css` | ⬜ skipped | pseudo-elementos únicos por variante |
+| `atoms/text-list/lib-text-list.css` | ⬜ skipped | estructura semántica compleja |
+| `atoms/tooltip/lib-tooltip.css` | ⬜ skipped | position + variant + size independientes |
+| `atoms/visually-hidden/lib-visually-hidden.css` | ⬜ skipped | regla única |
+
+## Próximo: Molecules (18 archivos)
+
+| Archivo | Estado |
+|---|---|
+| molecules/* | pendiente — auditoría previa |
+| organisms/* | pendiente — auditoría previa |
 
 ---
 
