@@ -5,6 +5,7 @@ import { html, TemplateResult } from 'lit';
 import './lib-segmented-control.component';
 import type { LibSegmentedControl } from './lib-segmented-control.component';
 import type { SegmentedOption } from './lib-segmented-control.types';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 /* ── Datos de ejemplo reutilizables ── */
 const VIEW_OPTS: SegmentedOption[] = [
@@ -328,41 +329,30 @@ export const GlitchVariant: Story = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
+   KATACHI · 形 · Las 6 historias estándar
+   lib-segmented-control usa tokens semánticos de superficie y borde
+   (bg-elevated, border-subtle, text-primary) — adapta al katachi.
    ═══════════════════════════════════════════════════════════════ */
 
-const katachiList = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び' },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ' },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び' },
-  { id: 'terminal', kanji: '>_', label: 'terminal' },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然' },
-  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁' },
-] as const;
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <lib-segmented-control
+      .options="${[
+        { value: 'a', label: 'Wabi' },
+        { value: 'b', label: 'Sabi' },
+        { value: 'c', label: 'Shizen' },
+      ]}"
+      value="a"
+    ></lib-segmented-control>
+  </div>
+`);
 
-export const KatachiContexts: Story = {
-  name: 'Katachi · 6 contexts',
-  render: (): TemplateResult => html`
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--lib-space-lg);padding:var(--lib-space-xl);background:var(--color-washi-100);">
-      ${katachiList.map(k => html`
-        <section data-katachi="${k.id}" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
-          <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-            <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label}
-          </header>
-          <lib-segmented-control
-            .options="${[
-              { value: 'a', label: 'Wabi' },
-              { value: 'b', label: 'Sabi' },
-              { value: 'c', label: 'Shizen' },
-            ]}"
-            value="a"
-          ></lib-segmented-control>
-        </section>
-      `)}
-    </div>
-  `,
-  parameters: { layout: 'fullscreen' },
-};
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
 
 /* ================================================================
    Demo Panel — segmented como tab controller
