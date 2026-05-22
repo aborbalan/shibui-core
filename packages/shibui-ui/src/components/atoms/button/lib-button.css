@@ -51,16 +51,16 @@
       border-color var(--duration-base) var(--ease-default),
       box-shadow   var(--duration-base) var(--ease-default),
       transform    var(--duration-fast) var(--ease-default);
-  }
 
-  /* Slots por encima de los pseudo-elementos */
-  .btn ::slotted(*) {
-    position: relative;
-    z-index: 1;
-  }
+    /* Slots por encima de los pseudo-elementos y del spotlight */
+    & ::slotted(*) {
+      position: relative;
+      z-index: 2;
+    }
 
-  .btn:active:not(:disabled) {
-    transform: translateY(1px);
+    &:active:not(:disabled) {
+      transform: translateY(1px);
+    }
   }
 
   /* ── Sizes ── */
@@ -92,26 +92,26 @@
   :host([variant="primary"]) .btn {
     background: var(--bg-inverse);
     color: var(--text-inverse);
-  }
 
-  /* Kaki sweep — efecto de identidad del rol primary */
-  :host([variant="primary"]) .btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--color-kaki-400);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--duration-slow) var(--ease-out);
-    z-index: 0;
-  }
+    /* Kaki sweep — efecto de identidad del rol primary */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-kaki-400);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--duration-slow) var(--ease-out);
+      z-index: 0;
+    }
 
-  :host([variant="primary"]) .btn:hover {
-    box-shadow: var(--shadow-md);
-  }
+    &:hover {
+      box-shadow: var(--shadow-md);
 
-  :host([variant="primary"]) .btn:hover::after {
-    transform: scaleX(1);
+      &::after {
+        transform: scaleX(1);
+      }
+    }
   }
 
   /* ── Secondary — acción secundaria ── */
@@ -119,34 +119,34 @@
     background: transparent;
     color: var(--text-primary);
     border-color: var(--border-strong);
-  }
 
-  :host([variant="secondary"]) .btn:hover {
-    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
-    color: var(--lib-comp-fg-inverse, var(--text-inverse));
-    border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    &:hover {
+      background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+      color: var(--lib-comp-fg-inverse, var(--text-inverse));
+      border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    }
   }
 
   /* ── Ghost — acción terciaria ── */
   :host([variant="ghost"]) .btn {
     background: transparent;
     color: var(--text-secondary);
-  }
 
-  :host([variant="ghost"]) .btn:hover {
-    color: var(--lib-comp-fg, var(--text-primary));
-    background: var(--lib-comp-bg-subtle, var(--bg-surface));
+    &:hover {
+      color: var(--lib-comp-fg, var(--text-primary));
+      background: var(--lib-comp-bg-subtle, var(--bg-surface));
+    }
   }
 
   /* ── Accent — kaki sólido ── */
   :host([variant="accent"]) .btn {
     background: var(--color-kaki-400);
     color: var(--color-white);
-  }
 
-  :host([variant="accent"]) .btn:hover {
-    background: var(--color-kaki-500);
-    box-shadow: var(--shadow-md);
+    &:hover {
+      background: var(--color-kaki-500);
+      box-shadow: var(--shadow-md);
+    }
   }
 
   /* ── Danger — acción destructiva (semántico puro) ── */
@@ -154,11 +154,11 @@
     background: transparent;
     color: var(--color-error);
     border-color: var(--color-error);
-  }
 
-  :host([variant="danger"]) .btn:hover {
-    background: var(--color-error);
-    color: var(--color-white);
+    &:hover {
+      background: var(--color-error);
+      color: var(--color-white);
+    }
   }
 
   /* ============================================================
@@ -173,39 +173,39 @@
     box-shadow: var(--lib-glass-shadow);
     color: var(--lib-glass-text);
     text-shadow: var(--lib-glass-text-shadow);
-  }
 
-  /* Reflexión de luz — ::before */
-  :host([glass]) .btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: var(--lib-glass-shine);
-    pointer-events: none;
-    z-index: 0;
-  }
+    /* Reflexión de luz — ::before */
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--lib-glass-shine);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  :host([glass]) .btn:hover {
-    box-shadow: var(--lib-glass-shadow-hover);
-    transform: translateY(-1px);
+    &:hover {
+      box-shadow: var(--lib-glass-shadow-hover);
+      transform: translateY(-1px);
+    }
   }
 
   /* Glass + Primary → variante water */
   :host([glass][variant="primary"]) .btn {
     background: var(--lib-glass-bg-water);
     border-color: oklch(100% 0 0deg / 0.25);
+
+    /* Glass anula el sweep ::after del primary */
+    &::after {
+      display: none;
+    }
   }
 
   /* Glass + Accent → variante kaki */
   :host([glass][variant="accent"]) .btn {
     background: var(--lib-glass-bg-kaki);
     border-color: oklch(45% 0.05 45deg / 0.35);
-  }
-
-  /* Glass anula el sweep ::after del primary */
-  :host([glass][variant="primary"]) .btn::after {
-    display: none;
   }
 
   /* ============================================================
@@ -216,14 +216,24 @@
     position: absolute;
     inset: 0;
     background: var(--lib-spotlight-gradient-white);
-    transition: var(--lib-spotlight-transition);
+    opacity: 0;
+    transition: opacity var(--duration-base) var(--ease-default);
     pointer-events: none;
-    z-index: 0;
+    z-index: 1;
+  }
+
+  .btn:hover .spotlight-layer {
+    opacity: 1;
+  }
+
+  /* El texto dentro de los slots (nodos de texto) queda por encima */
+  slot {
+    position: relative;
+    z-index: 2;
   }
 
   /* Sobre superficies claras → gradiente kaki */
-  :host([variant="secondary"]) .spotlight-layer,
-  :host([variant="ghost"]) .spotlight-layer {
+  :host(:is([variant="secondary"], [variant="ghost"])) .spotlight-layer {
     background: var(--lib-spotlight-gradient);
   }
 
@@ -246,33 +256,35 @@
        El kaki sweep del primary queda suprimido por esta
        regla al tener igual especificidad y mayor posición.  */
 
-    :host-context([data-katachi="kintsugi"]) .btn::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      padding: 1px;
-      background: var(--lib-kintsugi-border);
-      mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      pointer-events: none;
-      z-index: 0;
-      /* Reset explícito del sweep kaki del primary */
-      transform: none;
-      transform-origin: unset;
-      transition: none;
-    }
+    :host-context([data-katachi="kintsugi"]) .btn {
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        padding: 1px;
+        background: var(--lib-kintsugi-border);
+        mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        pointer-events: none;
+        z-index: 0;
+        /* Reset explícito del sweep kaki del primary */
+        transform: none;
+        transform-origin: unset;
+        transition: none;
+      }
 
-    /* Suprimir también el hover-sweep del primary en kintsugi */
-    :host-context([data-katachi="kintsugi"]) .btn:hover::after {
-      transform: none;
-    }
+      /* Suprimir también el hover-sweep del primary en kintsugi */
+      &:hover::after {
+        transform: none;
+      }
 
-    @media (hover: hover) {
-      :host-context([data-katachi="kintsugi"]) .btn:hover {
-        background: var(--lib-comp-bg-hover, var(--color-washi-900));
-        box-shadow: none;
+      @media (hover: hover) {
+        &:hover {
+          background: var(--lib-comp-bg-hover, var(--color-washi-900));
+          box-shadow: none;
+        }
       }
     }
 
@@ -280,20 +292,22 @@
        Sweep horizontal de vidriado cerámico en hover.
        Reemplaza el ::after del primary (igual posición/especif.). */
 
-    :host-context([data-katachi="celadon"]) .btn::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--lib-celadon-glaze);
-      transform: translateX(-100%);
-      transform-origin: unset;
-      transition: transform var(--duration-slow) var(--ease-out);
-      pointer-events: none;
-      z-index: 0;
-    }
+    :host-context([data-katachi="celadon"]) .btn {
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--lib-celadon-glaze);
+        transform: translateX(-100%);
+        transform-origin: unset;
+        transition: transform var(--duration-slow) var(--ease-out);
+        pointer-events: none;
+        z-index: 0;
+      }
 
-    :host-context([data-katachi="celadon"]) .btn:hover::after {
-      transform: translateX(100%);
+      &:hover::after {
+        transform: translateX(100%);
+      }
     }
 
     /* ── sabi · sombra brutal, papel envejecido ────────────
@@ -308,18 +322,18 @@
         transform     var(--duration-fast) var(--ease-default),
         box-shadow    var(--duration-fast) var(--ease-default),
         border-color  var(--duration-fast) var(--ease-default);
-    }
 
-    @media (hover: hover) {
-      :host-context([data-katachi="sabi"]) .btn:hover {
+      @media (hover: hover) {
+        &:hover {
+          transform: translate(4px, 4px);
+          box-shadow: none;
+        }
+      }
+
+      &:active {
         transform: translate(4px, 4px);
         box-shadow: none;
       }
-    }
-
-    :host-context([data-katachi="sabi"]) .btn:active {
-      transform: translate(4px, 4px);
-      box-shadow: none;
     }
 
     /* ── terminal · brutal con tinte celadón ──────────────
@@ -334,18 +348,18 @@
         transform     var(--duration-fast) var(--ease-default),
         box-shadow    var(--duration-fast) var(--ease-default),
         border-color  var(--duration-fast) var(--ease-default);
-    }
 
-    @media (hover: hover) {
-      :host-context([data-katachi="terminal"]) .btn:hover {
+      @media (hover: hover) {
+        &:hover {
+          transform: translate(4px, 4px);
+          box-shadow: none;
+        }
+      }
+
+      &:active {
         transform: translate(4px, 4px);
         box-shadow: none;
       }
-    }
-
-    :host-context([data-katachi="terminal"]) .btn:active {
-      transform: translate(4px, 4px);
-      box-shadow: none;
     }
 
   } /* /@supports */
