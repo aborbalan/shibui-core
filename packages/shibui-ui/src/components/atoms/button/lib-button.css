@@ -52,16 +52,16 @@
       border-color var(--duration-base) var(--ease-default),
       box-shadow   var(--duration-base) var(--ease-default),
       transform    var(--duration-fast) var(--ease-default);
-  }
 
-  /* Slots por encima del ::after sweep */
-  .btn ::slotted(*) {
-    position: relative;
-    z-index: 1;
-  }
+    /* Slots por encima del ::after sweep */
+    & ::slotted(*) {
+      position: relative;
+      z-index: 1;
+    }
 
-  .btn:active:not(:disabled) {
-    transform: translateY(1px);
+    &:active:not(:disabled) {
+      transform: translateY(1px);
+    }
   }
 
   /* ── Sizes ── */
@@ -88,23 +88,25 @@
      ============================================================ */
 
   /* ── Primary — fondo oscuro + sweep kaki al hover ── */
-  :host([variant="primary"]) .btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--color-kaki-400);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--duration-slow) var(--ease-out);
-    z-index: 0;
-  }
+  :host([variant="primary"]) .btn {
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-kaki-400);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--duration-slow) var(--ease-out);
+      z-index: 0;
+    }
 
-  :host([variant="primary"]) .btn:hover {
-    box-shadow: var(--shadow-md);
-  }
+    &:hover {
+      box-shadow: var(--shadow-md);
 
-  :host([variant="primary"]) .btn:hover::after {
-    transform: scaleX(1);
+      &::after {
+        transform: scaleX(1);
+      }
+    }
   }
 
   /* ── Secondary — borde + hover invertido ── */
@@ -112,34 +114,34 @@
     background: transparent;
     color: var(--text-primary);
     border-color: var(--border-strong);
-  }
 
-  :host([variant="secondary"]) .btn:hover {
-    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
-    color: var(--lib-comp-fg-inverse, var(--text-inverse));
-    border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    &:hover {
+      background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+      color: var(--lib-comp-fg-inverse, var(--text-inverse));
+      border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
+    }
   }
 
   /* ── Ghost — sin fondo ── */
   :host([variant="ghost"]) .btn {
     background: transparent;
     color: var(--text-secondary);
-  }
 
-  :host([variant="ghost"]) .btn:hover {
-    color: var(--lib-comp-fg, var(--text-primary));
-    background: var(--lib-comp-bg-subtle, var(--bg-surface));
+    &:hover {
+      color: var(--lib-comp-fg, var(--text-primary));
+      background: var(--lib-comp-bg-subtle, var(--bg-surface));
+    }
   }
 
   /* ── Accent — kaki sólido ── */
   :host([variant="accent"]) .btn {
     background: var(--color-kaki-400);
     color: var(--color-white);
-  }
 
-  :host([variant="accent"]) .btn:hover {
-    background: var(--color-kaki-500);
-    box-shadow: var(--shadow-md);
+    &:hover {
+      background: var(--color-kaki-500);
+      box-shadow: var(--shadow-md);
+    }
   }
 
   /* ── Danger — borde rojo ── */
@@ -147,11 +149,11 @@
     background: transparent;
     color: var(--color-error);
     border-color: var(--color-error);
-  }
 
-  :host([variant="danger"]) .btn:hover {
-    background: var(--color-error);
-    color: var(--color-white);
+    &:hover {
+      background: var(--color-error);
+      color: var(--color-white);
+    }
   }
 
   /* ============================================================
@@ -166,39 +168,39 @@
     box-shadow: var(--lib-glass-shadow);
     color: var(--lib-glass-text);
     text-shadow: var(--lib-glass-text-shadow);
-  }
 
-  /* Reflexión de luz — ::before */
-  :host([glass]) .btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: var(--lib-glass-shine);
-    pointer-events: none;
-    z-index: 0;
-  }
+    /* Reflexión de luz — ::before */
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--lib-glass-shine);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  :host([glass]) .btn:hover {
-    box-shadow: var(--lib-glass-shadow-hover);
-    transform: translateY(-1px);
+    &:hover {
+      box-shadow: var(--lib-glass-shadow-hover);
+      transform: translateY(-1px);
+    }
   }
 
   /* Glass + Primary → variante water */
   :host([glass][variant="primary"]) .btn {
     background: var(--lib-glass-bg-water);
     border-color: oklch(100% 0 0deg / 0.25);
+
+    /* Glass anula el sweep ::after del primary */
+    &::after {
+      display: none;
+    }
   }
 
   /* Glass + Accent → variante kaki */
   :host([glass][variant="accent"]) .btn {
     background: var(--lib-glass-bg-kaki);
     border-color: oklch(45% 0.05 45deg / 0.35);
-  }
-
-  /* Glass anula el sweep ::after del primary */
-  :host([glass][variant="primary"]) .btn::after {
-    display: none;
   }
 
   /* ============================================================
@@ -209,23 +211,23 @@
     background: var(--lib-comp-bg, var(--color-washi-950));
     color: var(--lib-comp-fg, var(--color-washi-50));
     border-color: transparent;
-  }
 
-  :host([variant="kintsugi"]) .btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    background: var(--lib-kintsugi-border);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
-    z-index: 0;
-  }
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      background: var(--lib-kintsugi-border);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  @media (hover: hover) {
-    :host([variant="kintsugi"]) .btn:hover {
-      background: var(--lib-comp-bg-hover, var(--color-washi-900));
+    @media (hover: hover) {
+      &:hover {
+        background: var(--lib-comp-bg-hover, var(--color-washi-900));
+      }
     }
   }
 
@@ -242,18 +244,18 @@
     transition:
       transform var(--duration-fast) var(--ease-default),
       box-shadow var(--duration-fast) var(--ease-default);
-  }
 
-  @media (hover: hover) {
-    :host([variant="brutal"]) .btn:hover {
+    @media (hover: hover) {
+      &:hover {
+        transform: translate(4px, 4px);
+        box-shadow: none;
+      }
+    }
+
+    &:active {
       transform: translate(4px, 4px);
       box-shadow: none;
     }
-  }
-
-  :host([variant="brutal"]) .btn:active {
-    transform: translate(4px, 4px);
-    box-shadow: none;
   }
 
   /* ============================================================
@@ -270,9 +272,7 @@
   }
 
   /* Sobre superficies claras → gradiente kaki */
-  :host([variant="brutal"]) .spotlight-layer,
-  :host([variant="secondary"]) .spotlight-layer,
-  :host([variant="ghost"]) .spotlight-layer {
+  :host(:is([variant="brutal"], [variant="secondary"], [variant="ghost"])) .spotlight-layer {
     background: var(--lib-spotlight-gradient);
   }
 
