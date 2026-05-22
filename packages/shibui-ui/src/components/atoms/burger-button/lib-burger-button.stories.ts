@@ -1,6 +1,7 @@
 import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-burger-button.component';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
   title: 'Actions/Burger',
@@ -264,3 +265,25 @@ export const InContext: Story = {
     </div>
   `,
 };
+
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-burger usa tokens semánticos (text-primary, text-muted)
+   para sus líneas y label — adapta al contexto katachi ambient.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="padding:var(--lib-space-xl);display:flex;align-items:center;gap:var(--lib-space-xl);flex-wrap:wrap;">
+    <lib-burger variant="ink" size="md"></lib-burger>
+    <lib-burger variant="kanji" size="md"></lib-burger>
+    <lib-burger variant="washi" size="md"></lib-burger>
+    <lib-burger variant="framed" size="md"></lib-burger>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;

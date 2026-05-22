@@ -2,6 +2,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { expect, fireEvent } from 'storybook/test';
 import './lib-select.component';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 interface SelectArgs {
   label:        string;
@@ -358,44 +359,27 @@ export const FormContext: Story = {
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
+   KATACHI · 形 · Las 6 historias estándar
+   lib-select usa tokens semánticos de borde y superficie
+   (border-default, bg-elevated, text-primary) — adapta al katachi.
    ═══════════════════════════════════════════════════════════════ */
 
-const katachiList = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び' },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ' },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び' },
-  { id: 'terminal', kanji: '>_', label: 'terminal' },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然' },
-  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁' },
-] as const;
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);min-height:200px;">
+    <lib-select label="Filosofía" placeholder="Selecciona…">
+      <lib-select-option value="a">Wabi-Sabi</lib-select-option>
+      <lib-select-option value="b">Kintsugi</lib-select-option>
+      <lib-select-option value="c">Shizen</lib-select-option>
+    </lib-select>
+  </div>
+`);
 
-const SAMPLE_OPTIONS = [
-  { value: 'a', label: 'Wabi-Sabi' },
-  { value: 'b', label: 'Kintsugi'  },
-  { value: 'c', label: 'Shizen'    },
-];
-
-export const KatachiContexts: Story = {
-  name: 'Katachi · 6 contexts',
-  render: (): TemplateResult => html`
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--lib-space-lg);padding:var(--lib-space-xl);background:var(--color-washi-100);">
-      ${katachiList.map(k => html`
-        <section data-katachi="${k.id}" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
-          <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-            <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label}
-          </header>
-          <lib-select
-            label="Filosofía"
-            placeholder="Selecciona…"
-            .options="${SAMPLE_OPTIONS}"
-          ></lib-select>
-        </section>
-      `)}
-    </div>
-  `,
-  parameters: { layout: 'fullscreen' },
-};
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
 
 /* ═══════════════════════════════════════════════════════════════
    TESTS · Selección y eventos

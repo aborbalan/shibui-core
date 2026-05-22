@@ -3,6 +3,4 @@ export type LibButtonVariant =
   | 'secondary'
   | 'ghost'
   | 'accent'
-  | 'danger'
-  | 'kintsugi'
-  | 'brutal';
+  | 'danger';

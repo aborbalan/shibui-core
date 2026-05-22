@@ -2,8 +2,9 @@
 
 /* ============================================================
    LIB-BUTTON — Shibui UI
-   Variantes: primary · secondary · ghost · accent · danger
-   Modificadores: glass · size (sm/md/lg) · disabled
+   Variantes (rol semántico): primary · secondary · ghost · accent · danger
+   Modificadores:             glass · size (sm/md/lg) · disabled · spotlight
+   Katachi ambient:           kintsugi · celadon · sabi · terminal
    ============================================================ */
 
 @layer reset {
@@ -36,8 +37,6 @@
     line-height: 1;
     padding: var(--lib-space-sm) var(--lib-space-md);
     width: 100%;
-
-    /* Borde transparente base — todos los botones tienen el mismo box-model */
     border: var(--lib-border-width) solid transparent;
     border-radius: var(--radius-none);
     background: transparent;
@@ -54,7 +53,7 @@
       transform    var(--duration-fast) var(--ease-default);
   }
 
-  /* Slots por encima del ::after sweep */
+  /* Slots por encima de los pseudo-elementos */
   .btn ::slotted(*) {
     position: relative;
     z-index: 1;
@@ -84,10 +83,18 @@
   }
 
   /* ============================================================
-     VARIANTES SÓLIDAS
+     VARIANTES — Rol semántico (prominencia de la acción).
+     Responden a los tokens semánticos del katachi ambient
+     a través de --bg-inverse/--text-inverse y --lib-comp-*.
      ============================================================ */
 
-  /* ── Primary — fondo oscuro + sweep kaki al hover ── */
+  /* ── Primary — acción principal ── */
+  :host([variant="primary"]) .btn {
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+  }
+
+  /* Kaki sweep — efecto de identidad del rol primary */
   :host([variant="primary"]) .btn::after {
     content: '';
     position: absolute;
@@ -107,7 +114,7 @@
     transform: scaleX(1);
   }
 
-  /* ── Secondary — borde + hover invertido ── */
+  /* ── Secondary — acción secundaria ── */
   :host([variant="secondary"]) .btn {
     background: transparent;
     color: var(--text-primary);
@@ -120,7 +127,7 @@
     border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
-  /* ── Ghost — sin fondo ── */
+  /* ── Ghost — acción terciaria ── */
   :host([variant="ghost"]) .btn {
     background: transparent;
     color: var(--text-secondary);
@@ -142,7 +149,7 @@
     box-shadow: var(--shadow-md);
   }
 
-  /* ── Danger — borde rojo ── */
+  /* ── Danger — acción destructiva (semántico puro) ── */
   :host([variant="danger"]) .btn {
     background: transparent;
     color: var(--color-error);
@@ -202,61 +209,6 @@
   }
 
   /* ============================================================
-     KINTSUGI — Borde dorado fractura
-     ============================================================ */
-
-  :host([variant="kintsugi"]) .btn {
-    background: var(--lib-comp-bg, var(--color-washi-950));
-    color: var(--lib-comp-fg, var(--color-washi-50));
-    border-color: transparent;
-  }
-
-  :host([variant="kintsugi"]) .btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    background: var(--lib-kintsugi-border);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  @media (hover: hover) {
-    :host([variant="kintsugi"]) .btn:hover {
-      background: var(--lib-comp-bg-hover, var(--color-washi-900));
-    }
-  }
-
-  /* ============================================================
-     BRUTAL — Sombra sólida ink, hover hunde
-     ============================================================ */
-
-  :host([variant="brutal"]) .btn {
-    background: var(--lib-comp-bg-inverse, var(--color-washi-50));
-    color: var(--lib-comp-fg-inverse, var(--color-ink-100));
-    border: 2px solid var(--lib-comp-border-strong, var(--color-ink-100));
-    box-shadow: var(--lib-shadow-brutal);
-    border-radius: 0;
-    transition:
-      transform var(--duration-fast) var(--ease-default),
-      box-shadow var(--duration-fast) var(--ease-default);
-  }
-
-  @media (hover: hover) {
-    :host([variant="brutal"]) .btn:hover {
-      transform: translate(4px, 4px);
-      box-shadow: none;
-    }
-  }
-
-  :host([variant="brutal"]) .btn:active {
-    transform: translate(4px, 4px);
-    box-shadow: none;
-  }
-
-  /* ============================================================
      SPOTLIGHT — Overlay reactivo al cursor
      ============================================================ */
 
@@ -270,28 +222,133 @@
   }
 
   /* Sobre superficies claras → gradiente kaki */
-  :host([variant="brutal"]) .spotlight-layer,
   :host([variant="secondary"]) .spotlight-layer,
   :host([variant="ghost"]) .spotlight-layer {
     background: var(--lib-spotlight-gradient);
   }
 
-  /* ─── KATACHI · ambient context ──────────────────────────────
-     primary ya consume --bg-inverse/--text-inverse (tokens semánticos),
-     por lo que responde automáticamente a cualquier katachi activo.
+  /* ============================================================
+     KATACHI · Efectos decorativos ambient por contexto
+     ────────────────────────────────────────────────────────────
+     Se activan cuando un ancestor del componente tiene
+     [data-katachi="x"]. Usa :host-context() envuelto en
+     @supports selector() → Firefox degrada a solo tokens
+     de color (semantic tokens siguen activos en todos los ctx).
 
-     secondary, ghost, kintsugi y brutal usan --lib-comp-* como valor
-     primario: cuando katachi está activo esos tokens se definen y
-     ganan; sin katachi el fallback reproduce el comportamiento original.
+     Posición al final del layer → mayor peso en la cascada
+     que las reglas de variante, sin necesidad de !important.
+     ============================================================ */
 
-     Los ::before y ::after con efectos decorativos (sweep kaki, borde
-     kintsugi) no se modifican — son efectos de identidad del variant.
-     ─────────────────────────────────────────────────────────── */
+  @supports selector(:host-context(a)) {
 
-  :host([variant="primary"]) .btn {
-    background: var(--bg-inverse);
-    color: var(--text-inverse);
-  }
+    /* ── kintsugi · borde dorado fractura ─────────────────
+       Reemplaza el ::after de cualquier variante.
+       El kaki sweep del primary queda suprimido por esta
+       regla al tener igual especificidad y mayor posición.  */
 
-  /* ─── /KATACHI ───────────────────────────────────────────── */
+    :host-context([data-katachi="kintsugi"]) .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      background: var(--lib-kintsugi-border);
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 0;
+      /* Reset explícito del sweep kaki del primary */
+      transform: none;
+      transform-origin: unset;
+      transition: none;
+    }
+
+    /* Suprimir también el hover-sweep del primary en kintsugi */
+    :host-context([data-katachi="kintsugi"]) .btn:hover::after {
+      transform: none;
+    }
+
+    @media (hover: hover) {
+      :host-context([data-katachi="kintsugi"]) .btn:hover {
+        background: var(--lib-comp-bg-hover, var(--color-washi-900));
+        box-shadow: none;
+      }
+    }
+
+    /* ── celadon · glaze shimmer sweep ────────────────────
+       Sweep horizontal de vidriado cerámico en hover.
+       Reemplaza el ::after del primary (igual posición/especif.). */
+
+    :host-context([data-katachi="celadon"]) .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--lib-celadon-glaze);
+      transform: translateX(-100%);
+      transform-origin: unset;
+      transition: transform var(--duration-slow) var(--ease-out);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    :host-context([data-katachi="celadon"]) .btn:hover::after {
+      transform: translateX(100%);
+    }
+
+    /* ── sabi · sombra brutal, papel envejecido ────────────
+       Box-shadow sólido + border prominente + hover hunde.
+       --lib-shadow-brutal redefinido por sabi a tono washi.  */
+
+    :host-context([data-katachi="sabi"]) .btn {
+      border: 2px solid var(--border-strong);
+      box-shadow: var(--lib-shadow-brutal);
+      border-radius: 0;
+      transition:
+        transform     var(--duration-fast) var(--ease-default),
+        box-shadow    var(--duration-fast) var(--ease-default),
+        border-color  var(--duration-fast) var(--ease-default);
+    }
+
+    @media (hover: hover) {
+      :host-context([data-katachi="sabi"]) .btn:hover {
+        transform: translate(4px, 4px);
+        box-shadow: none;
+      }
+    }
+
+    :host-context([data-katachi="sabi"]) .btn:active {
+      transform: translate(4px, 4px);
+      box-shadow: none;
+    }
+
+    /* ── terminal · brutal con tinte celadón ──────────────
+       Igual que sabi pero --lib-shadow-brutal en terminal
+       tiene tinte celadon-400 (definido en _katachi.css).   */
+
+    :host-context([data-katachi="terminal"]) .btn {
+      border: 2px solid var(--border-strong);
+      box-shadow: var(--lib-shadow-brutal);
+      border-radius: 0;
+      transition:
+        transform     var(--duration-fast) var(--ease-default),
+        box-shadow    var(--duration-fast) var(--ease-default),
+        border-color  var(--duration-fast) var(--ease-default);
+    }
+
+    @media (hover: hover) {
+      :host-context([data-katachi="terminal"]) .btn:hover {
+        transform: translate(4px, 4px);
+        box-shadow: none;
+      }
+    }
+
+    :host-context([data-katachi="terminal"]) .btn:active {
+      transform: translate(4px, 4px);
+      box-shadow: none;
+    }
+
+  } /* /@supports */
+
+  /* ─── /KATACHI ─────────────────────────────────────── */
 }

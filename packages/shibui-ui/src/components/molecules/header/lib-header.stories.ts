@@ -2,6 +2,7 @@ import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj }  from '@storybook/web-components-vite';
 import './lib-header.component';
 import type { NavLink, HeaderAction } from './lib-header.types';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
   title: 'Layout/Header',
@@ -359,49 +360,32 @@ export const Playground: Story = {
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
+   KATACHI · 形 · Las 6 historias estándar
+   lib-header (variant="classic") usa --lib-comp-fg / --lib-comp-fg-sec
+   para brand-name, links y actions outline. Adapta al katachi activo.
+   Variantes dark/kintsugi/glitch son superficies oscuras deliberadas.
    ═══════════════════════════════════════════════════════════════ */
 
-const katachiList = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び',     family: 'dark'  },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ', family: 'dark'  },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び',     family: 'light' },
-  { id: 'terminal', kanji: '_',  label: 'terminal · _',    family: 'dark'  },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然',   family: 'light' },
-  { id: 'celadon',  kanji: '磁', label: 'celadon · 青磁',  family: 'dark'  },
-] as const;
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-direction:column;">
+    <lib-header
+      variant="classic"
+      brand-name="Shibui"
+      login-label="Entrar"
+      .links="${[
+        { id: 'comp',  label: 'Componentes', href: '#' },
+        { id: 'tok',   label: 'Tokens',      href: '#' },
+        { id: 'docs',  label: 'Docs',        href: '#' },
+      ] as NavLink[]}"
+      .actions="${[{ label: 'Empezar', href: '#', variant: 'kaki' }] as HeaderAction[]}"
+    ></lib-header>
+    <div style="background:var(--bg-base);height:48px;border-top:1px solid var(--border-subtle);"></div>
+  </div>
+`);
 
-const SAMPLE_LINKS: NavLink[] = [
-  { id: 'p', label: 'Productos', href: '#' },
-  { id: 'f', label: 'Filosofía', href: '#' },
-  { id: 'c', label: 'Contacto',  href: '#' },
-];
-
-export const KatachiContexts: Story = {
-  name: 'Katachi · 6 contexts',
-  render: (): TemplateResult => html`
-    <div style="display:flex;flex-direction:column;gap:1px;background:var(--color-washi-300);">
-      ${katachiList.map(k => html`
-        <section data-katachi="${k.id}" style="display:flex;flex-direction:column;">
-          <div style="background:var(--bg-base); padding:4px 16px 0;">
-            <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;opacity:.45;display:inline-flex;align-items:center;gap:6px;">
-              <strong style="font-family:'Shippori Mincho',serif;font-size:1.1rem;color:var(--katachi-accent,inherit);opacity:1;">${k.kanji}</strong>
-              ${k.label}
-            </span>
-          </div>
-          <div>
-            <lib-header
-              variant="${k.family === 'dark' ? 'dark' : 'classic'}"
-              brand-name="Shibui"
-              login-label="Entrar"
-              .links="${SAMPLE_LINKS}"
-              .actions="${[{ label: k.family === 'dark' ? 'Empezar' : 'Empezar gratis', href: '#', variant: 'kaki' }]}"
-            ></lib-header>
-          </div>
-          <div style="background:var(--bg-base);height:48px;border-top:1px solid var(--border-subtle);"></div>
-        </section>
-      `)}
-    </div>
-  `,
-  parameters: { layout: 'fullscreen' },
-};
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;

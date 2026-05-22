@@ -2,6 +2,7 @@ import { html, TemplateResult } from "lit";
 import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import "./lib-background.component";
 import type { LibBackgroundVariant } from "./lib-background.types";
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 /* ── Helpers de presentación ── */
 const DEMO_LIGHT = html`
@@ -551,43 +552,26 @@ export const Paused: Story = {
   `,
 };
 
+
 /* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
+   KATACHI · 形 · Las 6 historias estándar
+   lib-background renderiza patrones decorativos propios;
+   el contenido del slot sí hereda los tokens semánticos
+   del katachi activo (text-primary, text-muted, bg-base…).
    ═══════════════════════════════════════════════════════════════ */
 
-const katachiBackgrounds: Array<{
-  id: string;
-  kanji: string;
-  label: string;
-  variant: LibBackgroundVariant;
-  dark: boolean;
-}> = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び',      variant: 'ink-wash',     dark: true  },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ', variant: 'kintsugi',     dark: true  },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び',      variant: 'washi',        dark: false },
-  { id: 'terminal', kanji: '>_', label: 'terminal',          variant: 'obsidian',     dark: true  },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然',     variant: 'tatami',       dark: false },
-  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁',    variant: 'celadon-mist', dark: true  },
-];
-
-export const KatachiContexts: Story = {
-  name: 'Katachi · 6 contexts',
-  render: (): TemplateResult => html`
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:4px;padding:0;background:#0c0c0c;">
-      ${katachiBackgrounds.map(k => html`
-        <section data-katachi="${k.id}" style="display:flex;flex-direction:column;gap:0;">
-          <lib-background variant="${k.variant}" style="height:180px;display:block;">
-            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:4px;">
-              <span style="font-family:'Shippori Mincho',serif;font-size:2rem;opacity:.6;color:${k.dark ? '#fff' : '#1a0e06'};">${k.kanji}</span>
-            </div>
-          </lib-background>
-          <div style="padding:10px 12px;background:var(--bg-base);font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-            <strong style="color:var(--katachi-accent,inherit);">${k.variant}</strong>
-            &nbsp;·&nbsp;${k.label}
-          </div>
-        </section>
-      `)}
+const _katachi = createKatachiStories<object>(() => html`
+  <lib-background variant="ink-wash" style="height:200px;display:block;max-width:420px;border-radius:4px;overflow:hidden;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:6px;">
+      <span style="font-family:var(--lib-font-display);font-size:2.5rem;font-weight:300;letter-spacing:-0.02em;color:rgba(250,247,244,.55);">渋い</span>
+      <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(250,247,244,.22);">ink-wash · katachi</span>
     </div>
-  `,
-  parameters: { layout: 'fullscreen' },
-};
+  </lib-background>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;

@@ -2,6 +2,14 @@ import type { Preview } from '@storybook/web-components-vite';
 import '../src/styles/shared/tokens.css';
 
 const preview: Preview = {
+  decorators: [
+    (story) => {
+      // Aplica el katachi estándar (shizen) al root de la preview.
+      // Las stories individuales pueden sobreescribirlo con data-katachi en su render.
+      document.documentElement.setAttribute('data-katachi', 'shizen');
+      return story();
+    },
+  ],
   parameters: {
     backgrounds: {
       values: [

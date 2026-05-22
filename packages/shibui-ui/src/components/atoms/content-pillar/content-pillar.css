@@ -9,9 +9,9 @@
     :host {
         display: block;
 
-        --pp-kanji-color: rgb(184, 90, 30, 0.35);
-        --pp-label-color: rgb(184, 90, 30, 0.5);
-        --pp-desc-color: rgb(250, 247, 244, 0.25);
+        --pp-kanji-color: var(--lib-comp-fg-accent, rgb(184, 90, 30, 0.35));
+        --pp-label-color: var(--lib-comp-fg-accent, rgb(184, 90, 30, 0.5));
+        --pp-desc-color: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.25));
         --pp-kanji-size: 2rem;
         --pp-kanji-width: 2.5rem;
         --pp-gap: 1.25rem;

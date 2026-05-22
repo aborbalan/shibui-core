@@ -2,6 +2,7 @@ import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj }  from '@storybook/web-components-vite';
 import './lib-color-scale.component';
 import type { ColorStep } from './lib-color-scale.types';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 /* ── Paletas del sistema ── */
 const WASHI: ColorStep[] = [
@@ -110,32 +111,22 @@ export const CustomHeight: Story = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
+   KATACHI · 形 · Las 3 paletas del sistema sobre cada fondo
+   El componente no cambia por contexto; las historias permiten
+   ver cómo se leen las escalas sobre paper vs dark.
    ═══════════════════════════════════════════════════════════════ */
 
-const katachiList = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び' },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ' },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び' },
-  { id: 'terminal', kanji: '>_', label: 'terminal' },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然' },
-  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁' },
-] as const;
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);width:100%;max-width:520px;">
+    <lib-color-scale name="washi"   .steps="${WASHI}"   show-labels></lib-color-scale>
+    <lib-color-scale name="kaki"    .steps="${KAKI}"    show-labels></lib-color-scale>
+    <lib-color-scale name="celadón" .steps="${CELADON}" show-labels></lib-color-scale>
+  </div>
+`);
 
-export const KatachiContexts: Story = {
-  name: 'Katachi · 6 contexts',
-  render: (): TemplateResult => html`
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--lib-space-lg);padding:var(--lib-space-xl);background:var(--color-washi-100);">
-      ${katachiList.map(k => html`
-        <section data-katachi="${k.id}" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
-          <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-            <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label}
-          </header>
-          <lib-color-scale name="celadón" .steps="${CELADON}"></lib-color-scale>
-          <lib-color-scale name="washi" .steps="${WASHI}"></lib-color-scale>
-        </section>
-      `)}
-    </div>
-  `,
-  parameters: { layout: 'fullscreen' },
-};
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;

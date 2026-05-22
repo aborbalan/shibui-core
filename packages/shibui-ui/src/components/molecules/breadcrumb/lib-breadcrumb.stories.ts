@@ -3,6 +3,7 @@ import { html, TemplateResult }            from 'lit';
 import './lib-breadcrumb.component';
 import type { LibBreadcrumb }              from './lib-breadcrumb.component';
 import type { BreadcrumbItem }             from './lib-breadcrumb.types';
+import { createKatachiStories }            from '../../../stories/katachi-stories.helper';
 
 type StoryArgs = LibBreadcrumb & { items?: BreadcrumbItem[] };
 
@@ -238,35 +239,24 @@ export const DarkSurface: Story = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
+   KATACHI · 形 · Las 6 historias estándar
+   lib-breadcrumb usa tokens semánticos de texto y fondo
+   (text-primary, bg-base, border-subtle) — adapta al katachi.
    ═══════════════════════════════════════════════════════════════ */
 
-const katachiList = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び' },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ' },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び' },
-  { id: 'terminal', kanji: '>_', label: 'terminal' },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然' },
-  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁' },
-] as const;
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="padding:var(--lib-space-md);background:var(--bg-base);border:1px solid var(--border-subtle);">
+    <lib-breadcrumb .items="${[
+      { label: 'Inicio', href: '#' },
+      { label: 'Diseño', href: '#' },
+      { label: 'Katachi' },
+    ]}"></lib-breadcrumb>
+  </div>
+`);
 
-export const KatachiContexts: Story = {
-  name: 'Katachi · 6 contexts',
-  render: (): TemplateResult => html`
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--lib-space-lg);padding:var(--lib-space-xl);background:var(--color-washi-100);">
-      ${katachiList.map(k => html`
-        <section data-katachi="${k.id}" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
-          <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-            <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label}
-          </header>
-          <lib-breadcrumb .items="${[
-            { label: 'Inicio', href: '#' },
-            { label: 'Diseño', href: '#' },
-            { label: 'Katachi' },
-          ]}"></lib-breadcrumb>
-        </section>
-      `)}
-    </div>
-  `,
-  parameters: { layout: 'fullscreen' },
-};
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;

@@ -16,10 +16,12 @@
         /* Tamaño base (md) */
         --dh-size: clamp(2.2rem, 5vw, 3.5rem);
 
-        /* Colores — light (default) */
-        --dh-color-heading: var(--color-washi-800, #3D332A);
-        --dh-color-accent: var(--color-kaki-400, #D97234);
-        --dh-color-desc: var(--color-washi-500, #9A8878);
+        /* Colores — bridge tokens (GUITV sin katachi → fallback editorial)
+           --lib-comp-fg/accent/sec son heredados desde el ancestro
+           [data-katachi] sin necesidad de :host-context(). */
+        --dh-color-heading: var(--lib-comp-fg,       var(--color-washi-800, #3D332A));
+        --dh-color-accent:  var(--lib-comp-fg-accent, var(--color-kaki-400,  #D97234));
+        --dh-color-desc:    var(--lib-comp-fg-sec,    var(--color-washi-500, #9A8878));
 
         /* Spacing */
         --dh-gap-eyebrow: var(--lib-space-md, 1rem);
@@ -161,17 +163,54 @@
     }
 
     /* ─── KATACHI · ambient context ──────────────────────────────
-       lib-display-heading usa custom properties locales (--dh-color-*)
-       que apuntan a tonos washi-800 y washi-500 deliberadamente
-       distintos de los semánticos (text-primary=washi-900, text-muted=
-       washi-400). Es una decisión editorial intencional — los display
-       headings son ligeramente menos contrastados que body text.
+       Los bridge tokens --lib-comp-* se heredan desde el ancestro
+       [data-katachi] a través del Shadow DOM sin necesitar
+       :host-context(). Son GUITV sin katachi → usan los fallbacks
+       editoriales declarados en :host arriba.
 
-       Ya soporta surface="dark" y surface="washi" via atributos
-       explícitos, complementando lo que katachi proveerá vía contexto.
+       katachi    --lib-comp-fg      --lib-comp-fg-accent  --lib-comp-fg-sec
+       ──────────────────────────────────────────────────────────────────────
+       shizen     text-primary       text-accent           text-secondary
+       wabi       washi-50           celadon-300           washi-400
+       kintsugi   washi-50/55%       kaki-400              washi-50/35%
+       celadon    celadon-90%        celadon-300           celadon-75%
+       sabi       washi-900          kaki-600              washi-600
+       terminal   celadon-300        kaki-400              celadon-65%
 
-       Sin overrides ambient — marker para discoverability.
+       Nota kintsugi: --text-primary usa 55% opacity por diseño;
+       el heading aparece ligeramente velado — coherente con la
+       estética de cerámica reparada. Aceptado intencionalmente.
        ─────────────────────────────────────────────────────────── */
+
+    /* ── Terminal · tipografía monoespaciada ──────────────────
+       Cormorant Garamond queda fuera de contexto en terminal.
+       DM Mono encaja con la estética CRT/digital.
+       El acento pierde el italic (mono no tiene itálica real)
+       — el color (kaki-400 cálido en verde frío) diferencia
+       suficientemente el fragmento de acento.
+       Usando :host-context() sobre elementos internos — funciona
+       porque no afecta custom props del :host (sin conflicto de
+       capas).                                                   */
+
+    @supports selector(:host-context(a)) {
+      :host-context([data-katachi="terminal"]) .dh-heading {
+        font-family: var(--lib-font-mono, 'DM Mono', monospace);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+      }
+
+      :host-context([data-katachi="terminal"]) .dh-accent {
+        font-style: normal;
+        font-weight: 500;
+      }
+
+      :host-context([data-katachi="terminal"]) .dh-desc {
+        font-family: var(--lib-font-mono, 'DM Mono', monospace);
+        font-size: 0.75rem;
+        letter-spacing: 0.03em;
+        line-height: 2;
+      }
+    }
 
     /* ─── /KATACHI ───────────────────────────────────────────── */
 }
