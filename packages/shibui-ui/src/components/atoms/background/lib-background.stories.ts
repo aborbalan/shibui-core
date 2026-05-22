@@ -552,46 +552,6 @@ export const Paused: Story = {
   `,
 };
 
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
-   ═══════════════════════════════════════════════════════════════ */
-
-const katachiBackgrounds: Array<{
-  id: string;
-  kanji: string;
-  label: string;
-  variant: LibBackgroundVariant;
-  dark: boolean;
-}> = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び',      variant: 'ink-wash',     dark: true  },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ', variant: 'kintsugi',     dark: true  },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び',      variant: 'washi',        dark: false },
-  { id: 'terminal', kanji: '>_', label: 'terminal',          variant: 'obsidian',     dark: true  },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然',     variant: 'tatami',       dark: false },
-  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁',    variant: 'celadon-mist', dark: true  },
-];
-
-export const KatachiContexts: Story = {
-  name: 'Katachi · 6 contexts',
-  render: (): TemplateResult => html`
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:4px;padding:0;background:#0c0c0c;">
-      ${katachiBackgrounds.map(k => html`
-        <section data-katachi="${k.id}" style="display:flex;flex-direction:column;gap:0;">
-          <lib-background variant="${k.variant}" style="height:180px;display:block;">
-            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:4px;">
-              <span style="font-family:'Shippori Mincho',serif;font-size:2rem;opacity:.6;color:${k.dark ? '#fff' : '#1a0e06'};">${k.kanji}</span>
-            </div>
-          </lib-background>
-          <div style="padding:10px 12px;background:var(--bg-base);font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-            <strong style="color:var(--lib-comp-fg-accent,inherit);">${k.variant}</strong>
-            &nbsp;·&nbsp;${k.label}
-          </div>
-        </section>
-      `)}
-    </div>
-  `,
-  parameters: { layout: 'fullscreen' },
-};
 
 /* ═══════════════════════════════════════════════════════════════
    KATACHI · 形 · Las 6 historias estándar
