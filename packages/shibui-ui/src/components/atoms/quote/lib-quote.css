@@ -12,10 +12,10 @@
         --q-font-display: var(--lib-font-display, 'Cormorant Garamond', Georgia, serif);
         --q-font-mono: var(--lib-font-mono, 'DM Mono', 'Courier New', monospace);
 
-        /* Colores dark (default) */
-        --q-text-color: rgb(250, 247, 244, 0.55);
-        --q-accent-color: var(--color-kaki-400, #D97234);
-        --q-cite-color: rgb(250, 247, 244, 0.18);
+        /* Colores dark (default) — bridge tokens para katachi */
+        --q-text-color: var(--lib-comp-fg, rgb(250, 247, 244, 0.55));
+        --q-accent-color: var(--lib-comp-fg-accent, var(--color-kaki-400, #D97234));
+        --q-cite-color: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.18));
 
         /* Tamaño base */
         --q-size: clamp(1.6rem, 3vw, 2.8rem);

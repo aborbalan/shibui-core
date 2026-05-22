@@ -581,7 +581,7 @@
   }
 
   :host([variant="default"]) .card-body {
-    color: var(--katachi-fg-muted, var(--color-washi-500));
+    color: var(--lib-comp-fg-sec, var(--color-washi-500));
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

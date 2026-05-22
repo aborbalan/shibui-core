@@ -3,6 +3,7 @@ import { html, TemplateResult } from 'lit';
 import './lib-display-heading.component';
 import '../eyebrow/lib-eyebrow.component';
 import type { LibDisplayHeading } from './lib-display-heading.component';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 /* ── Stage wrappers ── */
 const stageLight = (content: ReturnType<typeof html>):TemplateResult => html`
@@ -279,34 +280,33 @@ export const DescriptionSlot: Story = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
+   KATACHI · 形 · Las 6 historias estándar de contexto
+   El componente no recibe surface= — el contexto katachi
+   redefine --dh-color-heading/accent/desc automáticamente.
    ═══════════════════════════════════════════════════════════════ */
 
-const katachiList = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び' },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ' },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び' },
-  { id: 'terminal', kanji: '>_', label: 'terminal' },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然' },
-  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁' },
-] as const;
+const _katachi = createKatachiStories<LibDisplayHeading>((k) => html`
+  <lib-display-heading
+    line1="La belleza de"
+    accent="lo austero"
+    description="Cada componente existe porque tiene un propósito claro. Sin ornamento superfluo."
+    size="md"
+  >
+    <lib-eyebrow
+      slot="eyebrow"
+      size="sm"
+      ?color="${k.background === 'dark' ? 'dark' : ''}"
+      style="margin-bottom:var(--lib-space-md)"
+    >${k.label}</lib-eyebrow>
+  </lib-display-heading>
+`);
 
-export const KatachiContexts: Story = {
-  name: 'Katachi · 6 contexts',
-  render: (): TemplateResult => html`
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--lib-space-lg);padding:var(--lib-space-xl);background:var(--color-washi-100);">
-      ${katachiList.map(k => html`
-        <section data-katachi="${k.id}" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
-          <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-            <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label}
-          </header>
-          <lib-display-heading>Forma · 形</lib-display-heading>
-        </section>
-      `)}
-    </div>
-  `,
-  parameters: { layout: 'fullscreen' },
-};
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
 
 /* ══════════════════════════════════════════
    07 · Kintsugi hero

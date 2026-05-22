@@ -87,7 +87,7 @@
 
   :host([style-variant="dotted"]) .dv__line {
     background: none;
-    border-top: 1px dotted var(--color-washi-400);
+    border-top: 1px dotted var(--border-default);
     height: 0;
   }
 
@@ -159,13 +159,13 @@
     width: 5px;
     height: 5px;
     border-radius: var(--radius-full);
-    background: var(--color-washi-400);
+    background: var(--border-default);
   }
 
   .dv__ornament--diamond {
     width: 6px;
     height: 6px;
-    background: var(--color-washi-400);
+    background: var(--border-default);
     transform: rotate(45deg);
   }
 
@@ -202,11 +202,11 @@
     font-style: italic;
   }
 
-  /* kanji — Cormorant, washi-300, decorativo */
+  /* kanji — Cormorant, muted, decorativo */
   .dv__label--kanji {
     font-family: var(--lib-font-display);
     font-size: 1.25rem;
-    color: var(--color-washi-300);
+    color: var(--text-muted);
     line-height: 1;
     text-transform: none;
   }
@@ -217,12 +217,17 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     lib-divider tiene múltiples style-variants. Cambio surgical:
-       style-variant="heavy" línea fuerte: --color-washi-900 → --bg-inverse
-     (identical default; invierte coherentemente bajo katachi/dark).
+     La mayor parte del divider ya usa tokens semánticos que
+     heredan el katachi activo:
+       hairline/default/strong/gradient/dashed → --border-*
+       labels mono/display                     → --text-muted/secondary
+       heavy                                   → --bg-inverse
+       dotted                                  → --border-default  ← fix
+       ornaments dot/diamond                   → --border-default  ← fix
+       label kanji                             → --text-muted      ← fix
 
-     Otras variants (dotted con washi-400) usan paleta sutil
-     intencional — sin cambios.
+     color="kaki" y color="celadon" son overrides explícitos del
+     desarrollador — se mantienen fijos en su paleta intencional.
      ─────────────────────────────────────────────────────────── */
 
   :host([style-variant="heavy"]) .dv__line {

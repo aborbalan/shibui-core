@@ -3,6 +3,7 @@ import { html, TemplateResult } from 'lit';
 import './lib-accordion.component';
 import '../../atoms/accordion-item/lib-accordion-item.component';
 import type { LibAccordion } from './lib-accordion.component';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type LibAccordionStoryArgs = Pick<LibAccordion, 'variant' | 'exclusive'>;
 
@@ -189,38 +190,37 @@ export const AllVariants: Story = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
+   KATACHI · 形 · Las 6 historias estándar
+   lib-accordion usa tokens semánticos (--bg-elevated,
+   --border-subtle, --text-primary…) que adaptan al katachi activo.
+   La variante accent (paleta kaki) es un override deliberado.
    ═══════════════════════════════════════════════════════════════ */
 
-const katachiList = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び' },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ' },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び' },
-  { id: 'terminal', kanji: '>_', label: 'terminal' },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然' },
-  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁' },
-] as const;
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="width:100%;max-width:440px;">
+    <lib-accordion>
+      <lib-accordion-item label="Wabi — la imperfección serena" open>
+        <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">
+          Austeridad brumosa: fondos elevados, bordes sutiles.
+        </p>
+      </lib-accordion-item>
+      <lib-accordion-item label="Kintsugi — la rotura dorada">
+        <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">
+          Belleza en las grietas, oro sobre oscuridad profunda.
+        </p>
+      </lib-accordion-item>
+      <lib-accordion-item label="Sabi — la pátina del tiempo">
+        <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">
+          Superficies desvanecidas con dignidad silenciosa.
+        </p>
+      </lib-accordion-item>
+    </lib-accordion>
+  </div>
+`);
 
-export const KatachiContexts: Story = {
-  name: 'Katachi · 6 contexts',
-  render: (): TemplateResult => html`
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--lib-space-lg);padding:var(--lib-space-xl);background:var(--color-washi-100);">
-      ${katachiList.map(k => html`
-        <section data-katachi="${k.id}" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
-          <header style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-            <strong style="font-family:'Shippori Mincho',serif;font-size:1.3rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>&nbsp;${k.label}
-          </header>
-          <lib-accordion>
-            <lib-accordion-item label="Wabi — la imperfección serena">
-              <p style="font-size:var(--text-sm);color:var(--text-secondary);">Austeridad brumosa con glass atmosférico.</p>
-            </lib-accordion-item>
-            <lib-accordion-item label="Kintsugi — la rotura dorada">
-              <p style="font-size:var(--text-sm);color:var(--text-secondary);">Belleza en las grietas, oro sobre oscuridad.</p>
-            </lib-accordion-item>
-          </lib-accordion>
-        </section>
-      `)}
-    </div>
-  `,
-  parameters: { layout: 'fullscreen' },
-};
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;

@@ -3,6 +3,7 @@ import { html, TemplateResult } from 'lit';
 import './lib-card.component';
 import '../../atoms/button/lib-button.component';
 import './card-grid/lib-card-grid.component';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type LibCardArgs = {
   variant: 'default' | 'inverse' | 'accent' | 'featured' | 'kintsugi' | 'glitch' | 'celadon' | 'washi' | 'brutal';
@@ -356,43 +357,28 @@ export const Kintsugi: Story = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Contextos estéticos
+   KATACHI · 形 · Las 6 historias estándar
+   lib-card default usa --lib-comp-fg-sec y tokens semánticos
+   (--bg-elevated, --border-subtle) — adapta al katachi activo.
+   Las variantes kintsugi/glitch/celadon son superficies oscuras
+   deliberadas, independientes del katachi.
    ═══════════════════════════════════════════════════════════════ */
 
-const katachiList = [
-  { id: 'wabi',     kanji: '侘', label: 'wabi · 侘び',     desc: 'austero, dark + glass' },
-  { id: 'kintsugi', kanji: '金', label: 'kintsugi · 金継ぎ', desc: 'dorado, reparado' },
-  { id: 'sabi',     kanji: '寂', label: 'sabi · 寂び',     desc: 'envejecido, papel' },
-  { id: 'terminal', kanji: '>_', label: 'terminal',         desc: 'CRT, digital duro' },
-  { id: 'shizen',   kanji: '自', label: 'shizen · 自然',    desc: 'natural, sin adorno' },
-  { id: 'celadon',  kanji: '青', label: 'celadon · 青磁',   desc: 'jade, frío' },
-] as const;
+const _katachi = createKatachiStories<object>(() => html`
+  <lib-card kanji="渋" style="max-width:280px;">
+    <span slot="tag">Katachi · Default</span>
+    <h2 slot="title">Shibui Card</h2>
+    <p>Superficie que adapta fondo, borde y texto al contexto estético ambient.</p>
+    <div slot="footer"><span>Default variant</span></div>
+  </lib-card>
+`);
 
-export const KatachiContexts: Story = {
-  name: 'Katachi · 6 contexts',
-  render: (): TemplateResult => html`
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--lib-space-xl);padding:var(--lib-space-xl);background:var(--color-washi-100);">
-      ${katachiList.map(k => html`
-        <section data-katachi="${k.id}" style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);background:var(--bg-base);">
-          <header style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">
-            <strong style="font-family:'Shippori Mincho',serif;font-size:1.5rem;color:var(--katachi-accent,inherit);">${k.kanji}</strong>
-            &nbsp;data-katachi="${k.id}"
-          </header>
-          <lib-card kanji="${k.kanji}">
-            <span slot="tag">${k.label}</span>
-            <h2 slot="title">Katachi card</h2>
-            <p>${k.desc}. La kanji watermark y el body text adaptan al contexto vía <code>--katachi-accent-muted</code> y <code>--katachi-fg-muted</code>.</p>
-            <div slot="footer">
-              <span>Default variant</span>
-              <lib-button variant="ghost" size="sm">Detail</lib-button>
-            </div>
-          </lib-card>
-        </section>
-      `)}
-    </div>
-  `,
-  parameters: { layout: 'fullscreen' },
-};
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
 
 export const KatachiExplicitOverride: Story = {
   name: 'Katachi · explicit variant wins',

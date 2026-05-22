@@ -44,8 +44,11 @@
       filter var(--duration-base, 200ms) var(--ease-out, cubic-bezier(0,0,0.2,1));
   }
 
-  /* Expand el swatch activo */
-  .scale-track:has(.scale-swatch:hover) .scale-swatch {
+  /* Encoge los swatches NO hovered cuando alguno está activo.
+     :not(:hover) es imprescindible — sin él la especificidad de
+     :has() (0,4,0) supera a la regla de expand (0,3,0) y ambas
+     llegan a flex:0.7, cancelando la animación por completo. */
+  .scale-track:has(.scale-swatch:hover) .scale-swatch:not(:hover) {
     flex: 0.7;
   }
 
