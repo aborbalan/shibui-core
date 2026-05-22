@@ -18,4 +18,5 @@ We utilize the `oklch()` color function for our design tokens. This modern appro
 -   [Shared Styles](./shared/index.md): Contains global design tokens (prefixed with `--lib-`) and common utilities.
     *   [Spacing Scales](./spacing.md): Detailed explanation of the multimodal `rem` and `clamp()` spacing scales, including variable prefixes and usage guidelines.
 -   [Katachi (形) — Migration Guide](./katachi-migration.md): How to opt into the aesthetic-context system from consumer apps (React / Angular / Svelte / plain HTML).
+-   [CSS Nesting nativo](./css-nesting.md): Convenciones, patrones canónicos y hoja de progreso para la migración a CSS nesting en los componentes.
 -   `index.css`: Main entry point for styles, importing shared styles and setting up global layers.

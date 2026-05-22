@@ -131,6 +131,7 @@ export * from './components/[atoms|molecules|organisms]/lib-[nombre]/index';
 - El orden de capas es crítico — los tokens deben declararse antes de usarse
 - Los tokens `--lib-*` se usan para todos los valores visuales, nunca se hardcodean colores ni espaciados
 - Los componentes con efectos glass requieren: `overflow: hidden` + `backdrop-filter` + `::before` con `--lib-glass-shine` + `z-index` en el contenido
+- **CSS nesting nativo**: usar `&` para agrupar `:hover`, `::after`, `::before`, `@media`, `:active` dentro del bloque de variante `:host([attr]) .clase`. Los compound `:host([attrA][attrB])` se mantienen planos. Ver convenciones completas en [`docs/styles/css-nesting.md`](./docs/styles/css-nesting.md)
 
 **Eventos:**
 - Siguen el patrón `ui-lib-[acción]` con `bubbles: true, composed: true`
