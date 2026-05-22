@@ -1,44 +1,21 @@
-use sysinfo::{Disks, System};
-
-#[derive(serde::Serialize)]
-pub struct SystemInfo {
-    pub cpu_usage: f32,
-    pub ram_used_gb: f64,
-    pub ram_total_gb: f64,
-    pub disk_used_gb: f64,
-    pub disk_total_gb: f64,
-}
+use app_tauri_core::system::SystemInfo;
+use app_tauri_core::fs::FsEntry;
 
 #[tauri::command]
 fn get_system_info() -> SystemInfo {
-    let mut sys = System::new_all();
-    sys.refresh_all();
+    app_tauri_core::system::get_system_info()
+}
 
-    let cpu_usage = sys.global_cpu_usage();
-    let ram_used_gb  = sys.used_memory()  as f64 / 1_073_741_824.0;
-    let ram_total_gb = sys.total_memory() as f64 / 1_073_741_824.0;
-
-    let disks = Disks::new_with_refreshed_list();
-    let (disk_total, disk_available) = disks.iter().fold((0u64, 0u64), |(t, a), d| {
-        (t + d.total_space(), a + d.available_space())
-    });
-    let disk_total_gb = disk_total    as f64 / 1_073_741_824.0;
-    let disk_used_gb  = (disk_total.saturating_sub(disk_available)) as f64 / 1_073_741_824.0;
-
-    SystemInfo {
-        cpu_usage,
-        ram_used_gb,
-        ram_total_gb,
-        disk_used_gb,
-        disk_total_gb,
-    }
+#[tauri::command]
+fn list_dir(path: String) -> Result<Vec<FsEntry>, String> {
+    app_tauri_core::fs::list_dir(&path)
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![get_system_info])
+        .invoke_handler(tauri::generate_handler![get_system_info, list_dir])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
