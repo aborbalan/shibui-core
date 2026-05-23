@@ -221,8 +221,8 @@
   --bg-overlay:  oklch(0% 0 0deg / 0.8);
 
   --text-primary:    var(--color-celadon-300);
-  --text-secondary:  oklch(70.21% 0.057 167.31deg / 0.65);
-  --text-muted:      oklch(70.21% 0.057 167.31deg / 0.40);
+  --text-secondary:  oklch(70.21% 0.057 167.31deg / 0.82);
+  --text-muted:      oklch(70.21% 0.057 167.31deg / 0.60);
   --text-inverse:    oklch(8% 0.012 200deg);
   --text-accent:     var(--color-kaki-400);
   --text-link:       var(--color-celadon-300);
