@@ -10,10 +10,6 @@ interface SystemInfo {
   disk_total_gb: number;
 }
 
-/*
- * MetricRow construido con lib-progress + markup propio.
- * NOTE — candidato a lib-metric-bar (ver docs/components/BACKLOG.md)
- */
 function MetricRow({ label, used, total, unit }: { label: string; used: number; total: number; unit: string }) {
   const pct = total > 0 ? Math.round((used / total) * 100) : 0;
   const tone = pct > 85 ? 'error' : pct > 65 ? 'kaki' : 'celadon';
@@ -25,17 +21,12 @@ function MetricRow({ label, used, total, unit }: { label: string; used: number; 
         <span style={{
           fontFamily: 'var(--lib-font-mono, "DM Mono", monospace)',
           fontSize: '0.65rem',
-          color: 'rgba(250,247,244,0.5)',
+          color: 'var(--text-secondary)',
         }}>
           {used.toFixed(1)} / {total.toFixed(1)} {unit}
         </span>
       </div>
-      <lib-progress
-        value={used}
-        max={total}
-        size="xs"
-        tone={tone}
-      />
+      <lib-progress value={used} max={total} size="xs" tone={tone} />
     </div>
   );
 }
@@ -64,7 +55,7 @@ export function SystemMonitorGadget() {
               <span style={{
                 fontFamily: 'var(--lib-font-mono, "DM Mono", monospace)',
                 fontSize: '0.65rem',
-                color: 'rgba(250,247,244,0.5)',
+                color: 'var(--text-secondary)',
               }}>
                 {info.cpu_usage.toFixed(1)} %
               </span>
@@ -77,19 +68,8 @@ export function SystemMonitorGadget() {
             />
           </div>
 
-          <MetricRow
-            label="RAM"
-            used={info.ram_used_gb}
-            total={info.ram_total_gb}
-            unit="GB"
-          />
-
-          <MetricRow
-            label="Disco"
-            used={info.disk_used_gb}
-            total={info.disk_total_gb}
-            unit="GB"
-          />
+          <MetricRow label="RAM"   used={info.ram_used_gb}  total={info.ram_total_gb}  unit="GB" />
+          <MetricRow label="Disco" used={info.disk_used_gb} total={info.disk_total_gb} unit="GB" />
         </div>
       )}
     </GadgetFrame>

@@ -32,7 +32,7 @@ export function NotesGadget() {
           background: 'transparent',
           border: 'none',
           outline: 'none',
-          color: 'rgba(250,247,244,0.75)',
+          color: 'var(--text-primary)',
           fontFamily: 'var(--lib-font-mono, "DM Mono", monospace)',
           fontSize: '0.8rem',
           lineHeight: 1.7,
