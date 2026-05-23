@@ -1,5 +1,10 @@
 use std::fs;
 
+pub fn home_dir() -> Result<String, String> {
+    let key = if cfg!(windows) { "USERPROFILE" } else { "HOME" };
+    std::env::var(key).map_err(|e| e.to_string())
+}
+
 #[derive(serde::Serialize)]
 pub struct FsEntry {
     pub name: String,
