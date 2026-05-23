@@ -72,5 +72,5 @@ html, body, #root {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: #120e0a;
+  background: var(--bg-base, oklch(8% 0.012 200deg));
 }

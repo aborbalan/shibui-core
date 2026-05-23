@@ -1,9 +1,29 @@
-use app_tauri_core::system::SystemInfo;
+use app_tauri_core::system::{SystemInfo, CpuDetail, MemoryDetail, DiskDetail, NetworkInterface};
 use app_tauri_core::fs::FsEntry;
 
 #[tauri::command]
 fn get_system_info() -> SystemInfo {
     app_tauri_core::system::get_system_info()
+}
+
+#[tauri::command]
+fn get_cpu_detail() -> CpuDetail {
+    app_tauri_core::system::get_cpu_detail()
+}
+
+#[tauri::command]
+fn get_memory_detail() -> MemoryDetail {
+    app_tauri_core::system::get_memory_detail()
+}
+
+#[tauri::command]
+fn get_disk_detail() -> Vec<DiskDetail> {
+    app_tauri_core::system::get_disk_detail()
+}
+
+#[tauri::command]
+fn get_network_detail() -> Vec<NetworkInterface> {
+    app_tauri_core::system::get_network_detail()
 }
 
 #[tauri::command]
@@ -20,7 +40,15 @@ fn get_home_dir() -> Result<String, String> {
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![get_system_info, list_dir, get_home_dir])
+        .invoke_handler(tauri::generate_handler![
+            get_system_info,
+            get_cpu_detail,
+            get_memory_detail,
+            get_disk_detail,
+            get_network_detail,
+            list_dir,
+            get_home_dir,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

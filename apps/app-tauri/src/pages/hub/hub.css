@@ -1,0 +1,134 @@
+.hub-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  gap: 3rem;
+  background: var(--bg-base);
+}
+
+/* ── Header ───────────────────────────────────────────── */
+
+.hub-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.hub-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hub-logotype {
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--text-accent);
+}
+
+.hub-title {
+  font-family: var(--lib-font-mono, 'DM Mono', monospace);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.45em;
+  color: var(--text-primary);
+  text-transform: lowercase;
+  margin: 0;
+}
+
+.hub-subtitle {
+  font-family: var(--lib-font-mono, 'DM Mono', monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ── Card grid ────────────────────────────────────────── */
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.875rem;
+  width: 100%;
+  max-width: 520px;
+}
+
+/* ── Card ─────────────────────────────────────────────── */
+
+.hub-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+  padding: 1.625rem 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  cursor: pointer;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease;
+  text-align: left;
+  outline: none;
+  user-select: none;
+}
+
+.hub-card:hover {
+  transform: translateY(-1px);
+  background: var(--bg-elevated);
+  border-color: var(--border-default);
+}
+
+.hub-card:active {
+  transform: translateY(0);
+  border-color: var(--border-strong);
+}
+
+.hub-card:focus-visible {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 2px var(--border-subtle);
+}
+
+/* ── Card contents ────────────────────────────────────── */
+
+.hub-card-icon {
+  color: var(--text-accent);
+  opacity: 0.75;
+  transition: opacity 140ms ease;
+  display: block;
+}
+
+.hub-card:hover .hub-card-icon {
+  opacity: 1;
+}
+
+.hub-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.hub-card-label {
+  font-family: var(--lib-font-mono, 'DM Mono', monospace);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.hub-card-desc {
+  font-family: var(--lib-font-mono, 'DM Mono', monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.55;
+}
