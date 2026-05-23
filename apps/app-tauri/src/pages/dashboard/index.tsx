@@ -26,7 +26,7 @@ export function DashboardPage() {
       background: 'var(--bg-base, #120e0a)',
       position: 'relative',
     }}>
-      {import.meta.env.DEV && (
+      {(
         <button
           onClick={resetLayout}
           style={{
