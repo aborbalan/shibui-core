@@ -1,0 +1,198 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-GADGET-FRAME — Shibui UI · Dashboard Widget Container
+   Variant  : glass (default) · card
+   Controls : minimizable · closable
+   ============================================================
+
+   Estructura de capas (glass):
+     1. .gadget              → superficie (glass o card)
+     2. .gadget::before      → reflexión de luz (--lib-glass-shine)
+     3. .gadget-header       → drag handle + title + controls  (z-index: 1)
+     4. .gadget-body         → slot del contenido               (z-index: 1)
+
+   Drag: el header lleva data-drag-handle para que react-grid-layout
+         (u otro sistema) lo detecte como handle de arrastre.
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+}
+
+@layer components {
+
+  /* ── Contenedor base ─────────────────────────────────────── */
+  .gadget {
+    position:      relative;
+    display:       flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    overflow:      hidden;               /* requerido para glass + radius */
+    height:        100%;                 /* hereda del contenedor padre */
+    transition:
+      box-shadow var(--duration-slow) var(--ease-default),
+      transform  var(--duration-slow) var(--ease-default);
+  }
+
+  /* ── Header — drag handle ────────────────────────────────── */
+  .gadget-header {
+    position:     relative;
+    z-index:      1;
+    display:      flex;
+    align-items:  center;
+    gap:          var(--lib-space-xs);
+    padding:      0 var(--lib-space-sm) 0 var(--lib-space-md);
+    height:       36px;
+    flex-shrink:  0;
+    cursor:       grab;
+    user-select:  none;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  .gadget-header__lead {
+    display:     flex;
+    align-items: center;
+    gap:         var(--lib-space-xs);
+    flex:        1;
+    min-width:   0;              /* permite truncado de texto largo */
+  }
+
+  .gadget-header__title {
+    font-family:     var(--lib-font-mono);
+    font-size:       var(--text-xs);
+    letter-spacing:  var(--tracking-wide);
+    text-transform:  uppercase;
+    color:           var(--text-muted);
+    white-space:     nowrap;
+    overflow:        hidden;
+    text-overflow:   ellipsis;
+  }
+
+  .gadget-header__controls {
+    display:     flex;
+    align-items: center;
+    gap:         var(--lib-space-xs);
+    flex-shrink: 0;
+  }
+
+  /* ── Botones de control ──────────────────────────────────── */
+  .gadget-btn {
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    width:           20px;
+    height:          20px;
+    background:      transparent;
+    border:          none;
+    border-radius:   var(--radius-sm);
+    color:           var(--text-muted);
+    cursor:          pointer;
+    padding:         0;
+    transition:
+      background var(--duration-base) var(--ease-default),
+      color      var(--duration-base) var(--ease-default),
+      transform  var(--duration-fast) var(--ease-default);
+
+    &:hover {
+      background: oklch(50% 0 0deg / .08);
+      color:      var(--text-primary);
+    }
+
+    &:active {
+      transform: scale(.88);
+    }
+
+    /* ── Cierre — hover rojo ── */
+    &.gadget-btn--close {
+      &:hover {
+        background: oklch(55% 0.2 25deg / .12);
+        color:      oklch(55% 0.2 25deg);
+      }
+    }
+  }
+
+  /* ── Body — slot ─────────────────────────────────────────── */
+  .gadget-body {
+    position: relative;
+    z-index:  1;
+    flex:     1;
+    overflow: hidden;
+  }
+
+  /* ── Minimizado: oculta el body ─────────────────────────── */
+  :host([minimized]) .gadget-body {
+    display: none;
+  }
+
+  /* ============================================================
+     VARIANT · card
+     Superficie semántica: bg-elevated + border-subtle + shadow.
+     Adapta con cada katachi (semantic coverage).
+     ============================================================ */
+
+  :host([variant="card"]) .gadget {
+    background: var(--bg-elevated);
+    border:     1px solid var(--border-subtle);
+    box-shadow: var(--shadow-md);
+
+    &:hover {
+      box-shadow: var(--shadow-lg);
+    }
+  }
+
+  :host([variant="card"]) .gadget-header {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  /* ============================================================
+     VARIANT · glass (default)
+     Glassmorphism — requiere fondo oscuro en el elemento padre.
+     Compatible con los overrides de katachi en --lib-glass-*.
+     ============================================================ */
+
+  :host([variant="glass"]) .gadget {
+    background:      var(--lib-glass-bg);
+    backdrop-filter: var(--lib-glass-filter);
+    border:          var(--lib-glass-border);
+    box-shadow:      var(--lib-glass-shadow);
+
+    /* Reflexión de luz (shine layer) */
+    &::before {
+      content:        '';
+      position:       absolute;
+      inset:          0;
+      border-radius:  inherit;
+      background:     var(--lib-glass-shine);
+      pointer-events: none;
+      z-index:        0;
+    }
+
+    &:hover {
+      box-shadow: var(--lib-glass-shadow-hover);
+      transform:  translateY(-1px);
+    }
+  }
+
+  :host([variant="glass"]) .gadget-header {
+    border-bottom: 1px solid rgb(255, 255, 255, .07);
+  }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-gadget-frame consume tokens semánticos (--bg-elevated,
+     --border-subtle, --text-primary, --text-muted) en variant="card",
+     y tokens glass (--lib-glass-*) en variant="glass".
+
+     Coverage: 🟢 semantic — ambos grupos de tokens se reescriben
+     con cada contexto katachi, por lo que el componente adapta
+     su apariencia sin override propio.
+     ─────────────────────────────────────────────────────────── */
+  /* ─── /KATACHI ───────────────────────────────────────────── */
+}

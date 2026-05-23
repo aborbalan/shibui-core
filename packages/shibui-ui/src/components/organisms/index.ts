@@ -16,3 +16,5 @@ export * from './timeline/lib-timeline.component';
 export * from './timeline/lib-timeline-item.component';
 export * from './toast-manager/lib-toast-manager.component';
 export * from './login-form/lib-login-form.component';
+export * from './gadget-frame/lib-gadget-frame.component';
+export type { GadgetFrameVariant } from './gadget-frame/lib-gadget-frame.types';
