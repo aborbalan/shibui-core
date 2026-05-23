@@ -102,7 +102,7 @@
       transform  var(--duration-fast) var(--ease-default);
 
     &:hover {
-      background: oklch(50% 0 0 / .08);
+      background: oklch(50% 0 0deg / .08);
       color:      var(--text-primary);
     }
 
@@ -113,8 +113,8 @@
     /* ── Cierre — hover rojo ── */
     &.gadget-btn--close {
       &:hover {
-        background: oklch(55% 0.2 25 / .12);
-        color:      oklch(55% 0.2 25);
+        background: oklch(55% 0.2 25deg / .12);
+        color:      oklch(55% 0.2 25deg);
       }
     }
   }
@@ -182,7 +182,7 @@
   }
 
   :host([variant="glass"]) .gadget-header {
-    border-bottom: 1px solid rgba(255, 255, 255, .07);
+    border-bottom: 1px solid rgb(255, 255, 255, .07);
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
