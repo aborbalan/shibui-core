@@ -47,39 +47,59 @@
       border-color   var(--duration-base) var(--ease-default),
       color          var(--duration-base) var(--ease-default),
       transform      var(--duration-fast) var(--ease-default);
-  }
 
-  .copy-btn:disabled { opacity: 0.4;
-     pointer-events: none;
-      cursor: not-allowed; }
-  .copy-btn:active:not(:disabled) { transform: scale(0.94); }
+    &:disabled {
+      opacity: 0.4;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
 
-  .copy-btn:focus-visible {
-    box-shadow: 0 0 0 3px var(--color-ink-20);
+    &:active:not(:disabled) {
+      transform: scale(0.94);
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px var(--color-ink-20);
+    }
   }
 
   /* ── Sizes — con label ─────────────────────────────────────── */
-  :host([size="sm"]) .copy-btn { height: 28px;
-     padding: 0 var(--lib-space-sm);
-      font-size: 10px; }
+  :host([size="sm"]) .copy-btn {
+    height: 28px;
+    padding: 0 var(--lib-space-sm);
+    font-size: 10px;
+  }
 
-  :host([size="md"]) .copy-btn { height: 34px;
-     padding: 0 var(--lib-space-md);
-      font-size: var(--text-xs); }
+  :host([size="md"]) .copy-btn {
+    height: 34px;
+    padding: 0 var(--lib-space-md);
+    font-size: var(--text-xs);
+  }
 
-  :host([size="lg"]) .copy-btn { height: 40px;
-     padding: 0 var(--lib-space-lg);
-      font-size: var(--text-sm); }
+  :host([size="lg"]) .copy-btn {
+    height: 40px;
+    padding: 0 var(--lib-space-lg);
+    font-size: var(--text-sm);
+  }
 
   /* ── Sizes — icon-only (cuadrado) ──────────────────────────── */
-  :host([icon-only][size="sm"]) .copy-btn { height: 28px;
-     width: 28px; padding: 0; }
+  :host([icon-only][size="sm"]) .copy-btn {
+    height: 28px;
+    width: 28px;
+    padding: 0;
+  }
 
-  :host([icon-only][size="md"]) .copy-btn { height: 34px;
-     width: 34px; padding: 0; }
+  :host([icon-only][size="md"]) .copy-btn {
+    height: 34px;
+    width: 34px;
+    padding: 0;
+  }
 
-  :host([icon-only][size="lg"]) .copy-btn { height: 40px;
-     width: 40px; padding: 0; }
+  :host([icon-only][size="lg"]) .copy-btn {
+    height: 40px;
+    width: 40px;
+    padding: 0;
+  }
 
   /* ── Crossfade layers — idle / copied ──────────────────────── */
   .copy-btn__idle,
@@ -93,67 +113,78 @@
   }
 
   /* Idle: visible por defecto */
-  .copy-btn__idle   { opacity: 1;
-     transform: translateY(0) scale(1); }
-  /* Copied: oculto, desplazado abajo */
-  .copy-btn__copied { opacity: 0;
-     transform: translateY(6px) scale(0.8);
-      position: absolute; }
-
-  /* Al copiar: swap de capas */
-  :host([copied]) .copy-btn__idle   { opacity: 0; 
-    transform: translateY(-6px) scale(0.8); }
-
-  :host([copied]) .copy-btn__copied { opacity: 1;
-     transform: translateY(0) scale(1);
-      position: relative; }
-
-  /* Estado copiado — color celadón en variantes que usan borde */
-  :host([copied]) .copy-btn {
-    color: var(--color-celadon-600) !important;
-    border-color: var(--color-celadon-500) !important;
+  .copy-btn__idle {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 
-  /* ============================================================
-     VARIANTES
-     ============================================================ */
+  /* Copied: oculto, desplazado abajo */
+  .copy-btn__copied {
+    opacity: 0;
+    transform: translateY(6px) scale(0.8);
+    position: absolute;
+  }
 
-  /* ── Ghost ── */
+  /* Estado copiado — swap de capas + color celadón en variantes con borde */
+  :host([copied]) {
+    & .copy-btn__idle {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.8);
+    }
+
+    & .copy-btn__copied {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      position: relative;
+    }
+
+    & .copy-btn {
+      color: var(--color-celadon-600) !important;
+      border-color: var(--color-celadon-500) !important;
+    }
+
+    & .copy-btn__tooltip {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  /* ── VARIANTE — Ghost ──────────────────────────────────────── */
   :host([variant="ghost"]) .copy-btn {
     background: transparent;
     color: var(--text-muted);
     border-radius: var(--radius-sm);
+
+    &:hover {
+      background: var(--color-washi-200);
+      color: var(--text-primary);
+    }
   }
 
-  :host([variant="ghost"]) .copy-btn:hover {
-    background: var(--color-washi-200);
-    color: var(--text-primary);
-  }
-
-  /* ── Outlined ── */
+  /* ── VARIANTE — Outlined ───────────────────────────────────── */
   :host([variant="outlined"]) .copy-btn {
     background: transparent;
     color: var(--text-secondary);
     border: 1px solid var(--border-default);
     border-radius: var(--radius-sm);
+
+    &:hover {
+      background: var(--bg-surface);
+      border-color: var(--border-strong);
+      color: var(--text-primary);
+    }
   }
 
-  :host([variant="outlined"]) .copy-btn:hover {
-    background: var(--bg-surface);
-    border-color: var(--border-strong);
-    color: var(--text-primary);
-  }
-
-  /* ── Filled ── */
+  /* ── VARIANTE — Filled ─────────────────────────────────────── */
   :host([variant="filled"]) .copy-btn {
     background: var(--color-washi-900);
     color: var(--color-washi-50);
     border: 1px solid transparent;
     border-radius: var(--radius-sm);
-  }
 
-  :host([variant="filled"]) .copy-btn:hover {
-    background: var(--color-washi-800);
+    &:hover {
+      background: var(--color-washi-800);
+    }
   }
 
   /* Filled copied → fondo celadón */
@@ -163,17 +194,17 @@
     color: white !important;
   }
 
-  /* ── Subtle ── */
+  /* ── VARIANTE — Subtle ─────────────────────────────────────── */
   :host([variant="subtle"]) .copy-btn {
     background: var(--color-washi-100);
     color: var(--text-secondary);
     border: 1px solid transparent;
     border-radius: var(--radius-sm);
-  }
 
-  :host([variant="subtle"]) .copy-btn:hover {
-    background: var(--color-washi-200);
-    color: var(--text-primary);
+    &:hover {
+      background: var(--color-washi-200);
+      color: var(--text-primary);
+    }
   }
 
   /* Subtle copied → fondo celadón-100 */
@@ -181,18 +212,22 @@
     background: var(--color-celadon-100) !important;
   }
 
-  /* ── On dark ── */
+  /* ── VARIANTE — On dark ────────────────────────────────────── */
   :host([variant="on-dark"]) .copy-btn {
     background: oklch(100% 0 0deg / 0.07);
     color: oklch(100% 0 0deg / 0.45);
     border: 1px solid oklch(100% 0 0deg / 0.10);
     border-radius: var(--radius-sm);
-  }
 
-  :host([variant="on-dark"]) .copy-btn:hover {
-    background: oklch(100% 0 0deg / 0.12);
-    color: oklch(100% 0 0deg / 0.85);
-    border-color: oklch(100% 0 0deg / 0.20);
+    &:hover {
+      background: oklch(100% 0 0deg / 0.12);
+      color: oklch(100% 0 0deg / 0.85);
+      border-color: oklch(100% 0 0deg / 0.20);
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px oklch(100% 0 0deg / 0.20);
+    }
   }
 
   :host([variant="on-dark"][copied]) .copy-btn {
@@ -201,13 +236,7 @@
     background: oklch(100% 0 0deg / 0.07) !important;
   }
 
-  :host([variant="on-dark"]) .copy-btn:focus-visible {
-    box-shadow: 0 0 0 3px oklch(100% 0 0deg / 0.20);
-  }
-
-  /* ============================================================
-     TOOLTIP
-     ============================================================ */
+  /* ── TOOLTIP ───────────────────────────────────────────────── */
   .copy-btn__tooltip {
     position: absolute;
     bottom: calc(100% + 6px);
@@ -228,14 +257,7 @@
       transform var(--duration-base) var(--ease-bounce);
   }
 
-  :host([copied]) .copy-btn__tooltip {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-
-  /* ============================================================
-     REDUCCION DE MOVIMIENTO
-     ============================================================ */
+  /* ── REDUCCION DE MOVIMIENTO ───────────────────────────────── */
   @media (prefers-reduced-motion: reduce) {
     .copy-btn,
     .copy-btn__idle,

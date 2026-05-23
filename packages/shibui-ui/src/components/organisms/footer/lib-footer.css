@@ -117,10 +117,10 @@
         text-decoration: none;
         transition: color var(--ft-dur-base) var(--ft-ease-out);
         display: inline-block;
-    }
 
-    .ft-link-mono:hover {
-        color: var(--ft-link-hover);
+        &:hover {
+            color: var(--ft-link-hover);
+        }
     }
 
     /* ── Logo / brand ── */
@@ -191,19 +191,19 @@
         gap: var(--lib-space-md, 1rem);
         transition: background var(--ft-dur-base);
         text-decoration: none;
-    }
 
-    .ft-social-cell:hover {
-        background: var(--color-washi-50, #FAF7F4);
-    }
+        &:hover {
+            background: var(--color-washi-50, #FAF7F4);
+        }
 
-    .ft-social-cell.accent:hover {
-        background: var(--color-kaki-50, #FDF3EC);
-    }
+        &.accent:hover {
+            background: var(--color-kaki-50, #FDF3EC);
+        }
 
-    .ft-social-cell svg {
-        width: 22px;
-        height: 22px;
+        & svg {
+            width: 22px;
+            height: 22px;
+        }
     }
 
     .ft-social-cell-label {
@@ -273,20 +273,20 @@
         text-decoration: none;
         transition: border-color var(--ft-dur-base);
         color: rgb(250, 247, 244, 0.3);
-    }
 
-    .ft-social-mini-btn:hover {
-        border-color: rgb(255, 255, 255, 0.3);
-        color: rgb(250, 247, 244, 0.8);
-    }
+        &:hover {
+            border-color: rgb(255, 255, 255, 0.3);
+            color: rgb(250, 247, 244, 0.8);
+        }
 
-    .ft-social-mini-btn svg {
-        width: 13px;
-        height: 13px;
-        stroke: currentcolor;
-        fill: none;
-        stroke-width: 1.6;
-        stroke-linecap: round;
+        & svg {
+            width: 13px;
+            height: 13px;
+            stroke: currentcolor;
+            fill: none;
+            stroke-width: 1.6;
+            stroke-linecap: round;
+        }
     }
 
     /* Accordion items */
@@ -309,10 +309,10 @@
         text-transform: uppercase;
         color: rgb(250, 247, 244, 0.35);
         transition: color var(--ft-dur-base);
-    }
 
-    .ft-acc-trigger:hover {
-        color: rgb(250, 247, 244, 0.7);
+        &:hover {
+            color: rgb(250, 247, 244, 0.7);
+        }
     }
 
     .ft-acc-arrow {
@@ -342,19 +342,19 @@
         flex-direction: column;
         gap: var(--lib-space-sm, 0.5rem);
         padding-bottom: var(--lib-space-md, 1rem);
-    }
 
-    .ft-acc-body-inner a {
-        font-family: var(--ft-font-mono);
-        font-size: 0.5625rem;
-        letter-spacing: 0.1em;
-        color: rgb(250, 247, 244, 0.22);
-        text-decoration: none;
-        transition: color var(--ft-dur-base);
-    }
+        & a {
+            font-family: var(--ft-font-mono);
+            font-size: 0.5625rem;
+            letter-spacing: 0.1em;
+            color: rgb(250, 247, 244, 0.22);
+            text-decoration: none;
+            transition: color var(--ft-dur-base);
 
-    .ft-acc-body-inner a:hover {
-        color: var(--ft-accent);
+            &:hover {
+                color: var(--ft-accent);
+            }
+        }
     }
 
     /* ══════════════════════════════════════════
@@ -426,22 +426,22 @@
         display: flex;
         flex-direction: column;
         gap: var(--lib-space-sm, 0.5rem);
-    }
 
-    .ft-kintsugi-col-links a {
-        font-family: var(--ft-font-mono);
-        font-size: 0.5625rem;
-        letter-spacing: 0.1em;
-        color: rgb(250, 247, 244, 0.22);
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: var(--lib-space-xs, 0.25rem);
-        transition: color var(--ft-dur-base);
-    }
+        & a {
+            font-family: var(--ft-font-mono);
+            font-size: 0.5625rem;
+            letter-spacing: 0.1em;
+            color: rgb(250, 247, 244, 0.22);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--lib-space-xs, 0.25rem);
+            transition: color var(--ft-dur-base);
 
-    .ft-kintsugi-col-links a:hover {
-        color: var(--color-kaki-400, #D97234);
+            &:hover {
+                color: var(--color-kaki-400, #D97234);
+            }
+        }
     }
 
     .ft-kintsugi-arrow {
@@ -533,22 +533,22 @@
         display: flex;
         flex-direction: column;
         gap: var(--lib-space-sm, 0.5rem);
-    }
 
-    .ft-glitch-modules-links a {
-        font-family: var(--ft-font-mono);
-        font-size: 0.5625rem;
-        letter-spacing: 0.1em;
-        color: rgb(250, 247, 244, 0.22);
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: var(--lib-space-xs, 0.25rem);
-        transition: color var(--ft-dur-base);
-    }
+        & a {
+            font-family: var(--ft-font-mono);
+            font-size: 0.5625rem;
+            letter-spacing: 0.1em;
+            color: rgb(250, 247, 244, 0.22);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--lib-space-xs, 0.25rem);
+            transition: color var(--ft-dur-base);
 
-    .ft-glitch-modules-links a:hover {
-        color: var(--color-kaki-400, #D97234);
+            &:hover {
+                color: var(--color-kaki-400, #D97234);
+            }
+        }
     }
 
     .ft-glitch-runtime {

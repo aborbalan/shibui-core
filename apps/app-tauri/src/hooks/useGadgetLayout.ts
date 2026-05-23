@@ -6,6 +6,7 @@ const STORAGE_KEY = 'shibui-dashboard-layout';
 const DEFAULT_LAYOUT: Layout[] = [
   { i: 'notes',   x: 0, y: 0, w: 5, h: 6, minW: 3, minH: 4 },
   { i: 'sysmon',  x: 5, y: 0, w: 4, h: 6, minW: 3, minH: 4 },
+  { i: 'fileexp', x: 0, y: 6, w: 7, h: 8, minW: 4, minH: 5 },
 ];
 
 function loadLayout(): Layout[] {

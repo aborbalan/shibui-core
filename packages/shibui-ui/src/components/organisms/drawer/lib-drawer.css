@@ -181,7 +181,7 @@
   .dr-handle-bar {
     width: 36px;
     height: 3px;
-    background: var(--lib-comp-border, var(--color-washi-300));
+    background: var(--lib-comp-border, var(--border-default));
     border-radius: 999px;
   }
 
@@ -240,26 +240,26 @@
       border-color var(--duration-base),
       color var(--duration-base),
       background var(--duration-base);
-  }
 
-  .dr-close:hover {
-    border-color: var(--border-default);
-    background: var(--bg-surface);
-    color: var(--text-primary);
-  }
+    &:hover {
+      border-color: var(--border-default);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+    }
 
-  .dr-close:focus-visible {
-    outline: 2px solid var(--color-kaki-400);
-    outline-offset: 2px;
-  }
+    &:focus-visible {
+      outline: 2px solid var(--color-kaki-400);
+      outline-offset: 2px;
+    }
 
-  .dr-close svg {
-    width: 12px;
-    height: 12px;
-    stroke-width: 1.6;
-    stroke: currentcolor;
-    fill: none;
-    stroke-linecap: round;
+    & svg {
+      width: 12px;
+      height: 12px;
+      stroke-width: 1.6;
+      stroke: currentcolor;
+      fill: none;
+      stroke-linecap: round;
+    }
   }
 
   /* ── Body ── */
@@ -267,23 +267,23 @@
     flex: 1;
     overflow: hidden auto;
     padding: var(--lib-space-lg);
-  }
 
-  .dr-body::-webkit-scrollbar {
-    width: 4px;
-  }
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
 
-  .dr-body::-webkit-scrollbar-thumb {
-    background: var(--lib-comp-border, var(--color-washi-300));
-    border-radius: 2px;
-  }
+    &::-webkit-scrollbar-thumb {
+      background: var(--lib-comp-border, var(--color-washi-300));
+      border-radius: 2px;
 
-  .dr-body::-webkit-scrollbar-thumb:hover {
-    background: var(--lib-comp-border-strong, var(--color-washi-500));
-  }
+      &:hover {
+        background: var(--lib-comp-border-strong, var(--color-washi-500));
+      }
+    }
 
-  .dr-body::-webkit-scrollbar-track {
-    background: transparent;
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
   }
 
   /* Stagger de entrada para los hijos slotados del body */
@@ -339,98 +339,104 @@
   /* ════════════════════════════════
      DARK
      ════════════════════════════════ */
-  :host([variant="dark"]) .dr {
-    background: var(--lib-comp-bg, var(--color-washi-950));
-    border-color: rgb(255, 255, 255, .07) !important;
-  }
+  :host([variant="dark"]) {
+    & .dr {
+      background: var(--lib-comp-bg, var(--color-washi-950));
+      border-color: rgb(255, 255, 255, .07) !important;
+    }
 
-  :host([variant="dark"]) .dr-header {
-    border-bottom-color: rgb(255, 255, 255, .07);
-  }
+    & .dr-header {
+      border-bottom-color: rgb(255, 255, 255, .07);
+    }
 
-  :host([variant="dark"]) .dr-eyebrow {
-    color: rgb(250, 247, 244, .22);
-  }
+    & .dr-eyebrow {
+      color: rgb(250, 247, 244, .22);
+    }
 
-  :host([variant="dark"]) .dr-title {
-    color: rgb(250, 247, 244, .75);
-  }
+    & .dr-title {
+      color: rgb(250, 247, 244, .75);
+    }
 
-  :host([variant="dark"]) .dr-subtitle {
-    color: rgb(250, 247, 244, .28);
-  }
+    & .dr-subtitle {
+      color: rgb(250, 247, 244, .28);
+    }
 
-  :host([variant="dark"]) .dr-close {
-    border-color: rgb(255, 255, 255, .1);
-    color: rgb(250, 247, 244, .3);
-  }
+    & .dr-close {
+      border-color: rgb(255, 255, 255, .1);
+      color: rgb(250, 247, 244, .3);
 
-  :host([variant="dark"]) .dr-close:hover {
-    border-color: rgb(255, 255, 255, .2);
-    background: rgb(255, 255, 255, .05);
-    color: rgb(250, 247, 244, .7);
-  }
+      &:hover {
+        border-color: rgb(255, 255, 255, .2);
+        background: rgb(255, 255, 255, .05);
+        color: rgb(250, 247, 244, .7);
+      }
+    }
 
-  :host([variant="dark"]) .dr-right::before,
-  :host([variant="dark"]) .dr-left::before {
-    background: rgb(255, 255, 255, .08);
-  }
+    & .dr-right::before,
+    & .dr-left::before {
+      background: rgb(255, 255, 255, .08);
+    }
 
-  :host([variant="dark"]) .dr-footer {
-    border-top-color: rgb(255, 255, 255, .07);
-    background: rgb(255, 255, 255, .02);
-  }
+    & .dr-footer {
+      border-top-color: rgb(255, 255, 255, .07);
+      background: rgb(255, 255, 255, .02);
+    }
 
-  :host([variant="dark"]) .dr-handle-bar {
-    background: rgb(255, 255, 255, .12);
-  }
+    & .dr-handle-bar {
+      background: rgb(255, 255, 255, .12);
+    }
 
-  :host([variant="dark"]) .dr-body::-webkit-scrollbar-thumb {
-    background: rgb(250, 247, 244, .15);
-  }
+    & .dr-body {
+      &::-webkit-scrollbar-thumb {
+        background: rgb(250, 247, 244, .15);
 
-  :host([variant="dark"]) .dr-body::-webkit-scrollbar-thumb:hover {
-    background: rgb(250, 247, 244, .3);
+        &:hover {
+          background: rgb(250, 247, 244, .3);
+        }
+      }
+    }
   }
 
   /* ════════════════════════════════
      KINTSUGI
      ════════════════════════════════ */
-  :host([variant="kintsugi"]) .dr {
-    border-color: rgb(184, 90, 30, .3) !important;
-  }
+  :host([variant="kintsugi"]) {
+    & .dr {
+      border-color: rgb(184, 90, 30, .3) !important;
+    }
 
-  :host([variant="kintsugi"]) .dr-header {
-    border-bottom-color: rgb(184, 90, 30, .15);
-  }
+    & .dr-header {
+      border-bottom-color: rgb(184, 90, 30, .15);
+    }
 
-  :host([variant="kintsugi"]) .dr-eyebrow {
-    color: var(--color-kaki-400);
-  }
+    & .dr-eyebrow {
+      color: var(--color-kaki-400);
+    }
 
-  :host([variant="kintsugi"]) .dr-title {
-    color: var(--color-kaki-600);
-  }
+    & .dr-title {
+      color: var(--color-kaki-600);
+    }
 
-  :host([variant="kintsugi"]) .dr-close {
-    border-color: rgb(184, 90, 30, .25);
-    color: var(--color-kaki-500);
-  }
+    & .dr-close {
+      border-color: rgb(184, 90, 30, .25);
+      color: var(--color-kaki-500);
 
-  :host([variant="kintsugi"]) .dr-close:hover {
-    background: var(--color-kaki-50);
-    border-color: var(--color-kaki-400);
-  }
+      &:hover {
+        background: var(--color-kaki-50);
+        border-color: var(--color-kaki-400);
+      }
+    }
 
-  :host([variant="kintsugi"]) .dr-footer {
-    background: var(--color-kaki-50);
-    border-top-color: rgb(184, 90, 30, .12);
-  }
+    & .dr-footer {
+      background: var(--color-kaki-50);
+      border-top-color: rgb(184, 90, 30, .12);
+    }
 
-  :host([variant="kintsugi"]) .dr-body::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--color-kaki-400), #F5D08A, var(--color-kaki-600));
-    background-size: 100% 200%;
-    animation: kintsugi-seam 3s ease-in-out infinite alternate;
+    & .dr-body::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--color-kaki-400), #F5D08A, var(--color-kaki-600));
+      background-size: 100% 200%;
+      animation: kintsugi-seam 3s ease-in-out infinite alternate;
+    }
   }
 
   /* Gold seam — right */
@@ -513,50 +519,52 @@
   /* ════════════════════════════════
      KINTSUGI DARK
      ════════════════════════════════ */
-  :host([variant="kintsugi-dark"]) .dr {
-    background: var(--lib-comp-bg, var(--color-washi-950));
-    border-color: rgb(184, 90, 30, .2) !important;
-  }
+  :host([variant="kintsugi-dark"]) {
+    & .dr {
+      background: var(--lib-comp-bg, var(--color-washi-950));
+      border-color: rgb(184, 90, 30, .2) !important;
+    }
 
-  :host([variant="kintsugi-dark"]) .dr-header {
-    border-bottom-color: rgb(184, 90, 30, .15);
-  }
+    & .dr-header {
+      border-bottom-color: rgb(184, 90, 30, .15);
+    }
 
-  :host([variant="kintsugi-dark"]) .dr-eyebrow {
-    color: rgb(217, 114, 52, .5);
-  }
+    & .dr-eyebrow {
+      color: rgb(217, 114, 52, .5);
+    }
 
-  :host([variant="kintsugi-dark"]) .dr-title {
-    color: var(--color-kaki-400);
-  }
+    & .dr-title {
+      color: var(--color-kaki-400);
+    }
 
-  :host([variant="kintsugi-dark"]) .dr-subtitle {
-    color: rgb(250, 247, 244, .25);
-  }
+    & .dr-subtitle {
+      color: rgb(250, 247, 244, .25);
+    }
 
-  :host([variant="kintsugi-dark"]) .dr-close {
-    border-color: rgb(184, 90, 30, .2);
-    color: rgb(217, 114, 52, .5);
-  }
+    & .dr-close {
+      border-color: rgb(184, 90, 30, .2);
+      color: rgb(217, 114, 52, .5);
 
-  :host([variant="kintsugi-dark"]) .dr-close:hover {
-    background: rgb(184, 90, 30, .08);
-    border-color: var(--color-kaki-500);
-    color: var(--color-kaki-400);
-  }
+      &:hover {
+        background: rgb(184, 90, 30, .08);
+        border-color: var(--color-kaki-500);
+        color: var(--color-kaki-400);
+      }
+    }
 
-  :host([variant="kintsugi-dark"]) .dr-footer {
-    background: rgb(184, 90, 30, .04);
-    border-top-color: rgb(184, 90, 30, .12);
-  }
+    & .dr-footer {
+      background: rgb(184, 90, 30, .04);
+      border-top-color: rgb(184, 90, 30, .12);
+    }
 
-  :host([variant="kintsugi-dark"]) .dr-right::before,
-  :host([variant="kintsugi-dark"]) .dr-left::before {
-    background: rgb(184, 90, 30, .15);
-  }
+    & .dr-right::before,
+    & .dr-left::before {
+      background: rgb(184, 90, 30, .15);
+    }
 
-  :host([variant="kintsugi-dark"]) .dr-body::-webkit-scrollbar-thumb {
-    background: rgb(184, 90, 30, .4);
+    & .dr-body::-webkit-scrollbar-thumb {
+      background: rgb(184, 90, 30, .4);
+    }
   }
 
   :host([variant="kintsugi-dark"][placement="right"]) .dr::after {
@@ -588,8 +596,43 @@
   /* ════════════════════════════════
      GLITCH
      ════════════════════════════════ */
-  :host([variant="glitch"]) .dr {
-    animation: dr-glitch-slide 7s steps(1) infinite;
+  :host([variant="glitch"]) {
+    & .dr {
+      animation: dr-glitch-slide 7s steps(1) infinite;
+    }
+
+    & .dr-title {
+      font-family: var(--lib-font-mono);
+      font-size: 1rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    /* Scanline — override ::before del hint de drag */
+    & .dr::before {
+      content: '' !important;
+      position: absolute !important;
+      inset: 0 !important;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgb(0, 0, 0, .03) 3px, rgb(0, 0, 0, .03) 4px) !important;
+      animation: dr-scanline 7s steps(1) infinite !important;
+      pointer-events: none !important;
+      z-index: 10 !important;
+      width: auto !important;
+      height: auto !important;
+      border-radius: 0 !important;
+    }
+
+    & .dr-rgb-r {
+      background: rgb(217, 114, 52, .08);
+      animation: dr-rgb-r 7s steps(1) infinite;
+      mix-blend-mode: screen;
+    }
+
+    & .dr-rgb-b {
+      background: rgb(78, 148, 130, .06);
+      animation: dr-rgb-b 7s steps(1) infinite 60ms;
+      mix-blend-mode: screen;
+    }
   }
 
   :host([variant="glitch"][open]) .dr {
@@ -600,13 +643,6 @@
     animation:
       dr-glitch-open-r var(--duration-slow) var(--ease-out) forwards,
       dr-glitch-slide 7s steps(1) infinite 600ms;
-  }
-
-  :host([variant="glitch"]) .dr-title {
-    font-family: var(--lib-font-mono);
-    font-size: 1rem;
-    letter-spacing: .14em;
-    text-transform: uppercase;
   }
 
   /* Glitch seam */
@@ -634,20 +670,6 @@
     pointer-events: none;
   }
 
-  /* Scanline — override ::before del hint de drag */
-  :host([variant="glitch"]) .dr::before {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgb(0, 0, 0, .03) 3px, rgb(0, 0, 0, .03) 4px) !important;
-    animation: dr-scanline 7s steps(1) infinite !important;
-    pointer-events: none !important;
-    z-index: 10 !important;
-    width: auto !important;
-    height: auto !important;
-    border-radius: 0 !important;
-  }
-
   /* RGB ghost layers */
   .dr-rgb-r,
   .dr-rgb-b {
@@ -657,25 +679,79 @@
     z-index: 9;
   }
 
-  :host([variant="glitch"]) .dr-rgb-r {
-    background: rgb(217, 114, 52, .08);
-    animation: dr-rgb-r 7s steps(1) infinite;
-    mix-blend-mode: screen;
-  }
-
-  :host([variant="glitch"]) .dr-rgb-b {
-    background: rgb(78, 148, 130, .06);
-    animation: dr-rgb-b 7s steps(1) infinite 60ms;
-    mix-blend-mode: screen;
-  }
-
   /* ════════════════════════════════
      GLITCH DARK
      ════════════════════════════════ */
-  :host([variant="glitch-dark"]) .dr {
-    background: var(--lib-comp-bg, var(--color-washi-950));
-    border-color: rgb(255, 255, 255, .06) !important;
-    animation: dr-glitch-slide 6s steps(1) infinite, dr-flicker 6s steps(1) infinite;
+  :host([variant="glitch-dark"]) {
+    & .dr {
+      background: var(--lib-comp-bg, var(--color-washi-950));
+      border-color: rgb(255, 255, 255, .06) !important;
+      animation: dr-glitch-slide 6s steps(1) infinite, dr-flicker 6s steps(1) infinite;
+    }
+
+    & .dr::before {
+      content: '' !important;
+      position: absolute !important;
+      inset: 0 !important;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgb(255, 255, 255, .02) 3px, rgb(255, 255, 255, .02) 4px) !important;
+      animation: dr-scanline 6s steps(1) infinite !important;
+      pointer-events: none !important;
+      z-index: 10 !important;
+      width: auto !important;
+      height: auto !important;
+    }
+
+    & .dr-header {
+      border-bottom-color: rgb(255, 255, 255, .07);
+    }
+
+    & .dr-eyebrow {
+      color: rgb(250, 247, 244, .2);
+    }
+
+    & .dr-title {
+      color: rgb(250, 247, 244, .75);
+      font-family: var(--lib-font-mono);
+      font-size: 1rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    & .dr-subtitle {
+      color: rgb(250, 247, 244, .25);
+    }
+
+    & .dr-close {
+      border-color: rgb(255, 255, 255, .1);
+      color: rgb(250, 247, 244, .3);
+
+      &:hover {
+        background: rgb(255, 255, 255, .05);
+        border-color: rgb(255, 255, 255, .2);
+        color: rgb(250, 247, 244, .7);
+      }
+    }
+
+    & .dr-footer {
+      background: rgb(255, 255, 255, .02);
+      border-top-color: rgb(255, 255, 255, .06);
+    }
+
+    & .dr-body::-webkit-scrollbar-thumb {
+      background: rgb(250, 247, 244, .15);
+    }
+
+    & .dr-rgb-r {
+      background: rgb(217, 114, 52, .12);
+      animation: dr-rgb-r 6s steps(1) infinite;
+      mix-blend-mode: screen;
+    }
+
+    & .dr-rgb-b {
+      background: rgb(78, 148, 130, .1);
+      animation: dr-rgb-b 6s steps(1) infinite 80ms;
+      mix-blend-mode: screen;
+    }
   }
 
   :host([variant="glitch-dark"][open]) .dr {
@@ -692,70 +768,6 @@
     background: rgb(250, 247, 244, .3);
     animation: dr-seam-glitch 6s steps(1) infinite;
     pointer-events: none;
-  }
-
-  :host([variant="glitch-dark"]) .dr::before {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgb(255, 255, 255, .02) 3px, rgb(255, 255, 255, .02) 4px) !important;
-    animation: dr-scanline 6s steps(1) infinite !important;
-    pointer-events: none !important;
-    z-index: 10 !important;
-    width: auto !important;
-    height: auto !important;
-  }
-
-  :host([variant="glitch-dark"]) .dr-rgb-r {
-    background: rgb(217, 114, 52, .12);
-    animation: dr-rgb-r 6s steps(1) infinite;
-    mix-blend-mode: screen;
-  }
-
-  :host([variant="glitch-dark"]) .dr-rgb-b {
-    background: rgb(78, 148, 130, .1);
-    animation: dr-rgb-b 6s steps(1) infinite 80ms;
-    mix-blend-mode: screen;
-  }
-
-  :host([variant="glitch-dark"]) .dr-header {
-    border-bottom-color: rgb(255, 255, 255, .07);
-  }
-
-  :host([variant="glitch-dark"]) .dr-eyebrow {
-    color: rgb(250, 247, 244, .2);
-  }
-
-  :host([variant="glitch-dark"]) .dr-title {
-    color: rgb(250, 247, 244, .75);
-    font-family: var(--lib-font-mono);
-    font-size: 1rem;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-  }
-
-  :host([variant="glitch-dark"]) .dr-subtitle {
-    color: rgb(250, 247, 244, .25);
-  }
-
-  :host([variant="glitch-dark"]) .dr-close {
-    border-color: rgb(255, 255, 255, .1);
-    color: rgb(250, 247, 244, .3);
-  }
-
-  :host([variant="glitch-dark"]) .dr-close:hover {
-    background: rgb(255, 255, 255, .05);
-    border-color: rgb(255, 255, 255, .2);
-    color: rgb(250, 247, 244, .7);
-  }
-
-  :host([variant="glitch-dark"]) .dr-footer {
-    background: rgb(255, 255, 255, .02);
-    border-top-color: rgb(255, 255, 255, .06);
-  }
-
-  :host([variant="glitch-dark"]) .dr-body::-webkit-scrollbar-thumb {
-    background: rgb(250, 247, 244, .15);
   }
 
   /* ════════════════════════════════
@@ -983,10 +995,6 @@
      ::before scanlines, RGB ghost layers): sin cambios — efectos
      decorativos propios.
      ─────────────────────────────────────────────────────────── */
-
-  .dr-handle-bar {
-    background: var(--lib-comp-border, var(--border-default));
-  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

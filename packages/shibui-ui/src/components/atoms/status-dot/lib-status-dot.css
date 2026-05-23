@@ -67,17 +67,20 @@
   }
 
   /* ── SIZES ──────────────────────────────────────────────── */
-  :host([size="sm"]) .sd { 
+  :host([size="sm"]) .sd {
     width: 6px;
-      height: 6px; }
+    height: 6px;
+  }
 
-  :host([size="md"]) .sd { 
+  :host([size="md"]) .sd {
     width: 10px;
-     height: 10px; }
+    height: 10px;
+  }
 
-  :host([size="lg"]) .sd { 
+  :host([size="lg"]) .sd {
     width: 14px;
-     height: 14px; }
+    height: 14px;
+  }
 
   /* ── BORDERED — halo blanco para uso sobre avatares ─────── */
   .sd--bordered {
@@ -100,46 +103,47 @@
 
   /* 水 mizu — doble onda: ring-a y ring-b desfasados */
   @keyframes mizu-ring-a {
-    0%   { 
+    0% {
       transform: scale(1);
-         opacity: 0.5; }
+      opacity: 0.5;
+    }
 
-    100% { 
+    100% {
       transform: scale(2.8);
-       opacity: 0; }
+      opacity: 0;
+    }
   }
 
   @keyframes mizu-ring-b {
-    0%   { 
+    0% {
       transform: scale(1);
-         opacity: 0.35; }
+      opacity: 0.35;
+    }
 
-    100% { 
+    100% {
       transform: scale(2.2);
-       opacity: 0; }
+      opacity: 0;
+    }
   }
 
   /* 息 iki — respiración suave */
   @keyframes iki {
-    0%, 100% { 
+    0%, 100% {
       transform: scale(1);
-          opacity: 1; }
+      opacity: 1;
+    }
 
-    50%       { 
+    50% {
       transform: scale(1.18);
-       opacity: 0.75; }
+      opacity: 0.75;
+    }
   }
 
   /* 速い hayai — parpadeo asimétrico urgente */
   @keyframes hayai {
-    0%, 100% { 
-      opacity: 1; }
-
-    40%       { 
-      opacity: 0.3; }
-
-    60%       { 
-      opacity: 0.3; }
+    0%, 100% { opacity: 1; }
+    40%       { opacity: 0.3; }
+    60%       { opacity: 0.3; }
   }
 
   /* ============================================================
@@ -147,63 +151,57 @@
      ============================================================ */
 
   /* ── ONLINE — celadón · 水 mizu ──────────────────────────── */
-  :host([status="online"]) .sd {
-    background: var(--color-celadon-500);
-  }
+  :host([status="online"]) {
+    & .sd { background: var(--color-celadon-500); }
 
-  :host([status="online"]) .sd-wrap::before {
-    background: var(--color-celadon-400);
-    animation: mizu-ring-a 2.6s cubic-bezier(0, 0.55, 0.45, 1) infinite;
-  }
+    & .sd-wrap::before {
+      background: var(--color-celadon-400);
+      animation: mizu-ring-a 2.6s cubic-bezier(0, 0.55, 0.45, 1) infinite;
+    }
 
-  :host([status="online"]) .sd-wrap::after {
-    background: var(--color-celadon-400);
-    animation: mizu-ring-b 2.6s cubic-bezier(0, 0.55, 0.45, 1) 0.9s infinite;
-  }
+    & .sd-wrap::after {
+      background: var(--color-celadon-400);
+      animation: mizu-ring-b 2.6s cubic-bezier(0, 0.55, 0.45, 1) 0.9s infinite;
+    }
 
-  :host([status="online"]) .sd-label {
-    color: var(--color-celadon-600);
+    & .sd-label { color: var(--color-celadon-600); }
   }
 
   /* ── AWAY — kaki · 息 iki ────────────────────────────────── */
-  :host([status="away"]) .sd {
-    background: var(--color-kaki-500);
-    animation: iki 3s ease-in-out infinite;
-  }
+  :host([status="away"]) {
+    & .sd {
+      background: var(--color-kaki-500);
+      animation: iki 3s ease-in-out infinite;
+    }
 
-  :host([status="away"]) .sd-label {
-    color: var(--color-kaki-500);
+    & .sd-label { color: var(--color-kaki-500); }
   }
 
   /* ── BUSY — error · 速い hayai ───────────────────────────── */
-  :host([status="busy"]) .sd {
-    background: var(--color-error);
-    animation: hayai 1.1s ease-in-out infinite;
-  }
+  :host([status="busy"]) {
+    & .sd {
+      background: var(--color-error);
+      animation: hayai 1.1s ease-in-out infinite;
+    }
 
-  :host([status="busy"]) .sd-label {
-    color: var(--color-error);
+    & .sd-label { color: var(--color-error); }
   }
 
   /* ── OFFLINE — washi-400 · 間 ma ─────────────────────────── */
-  :host([status="offline"]) .sd {
-    background: var(--color-washi-400);
-    /* sin animación — quietud total */
-  }
-
-  :host([status="offline"]) .sd-label {
-    color: var(--text-muted);
+  :host([status="offline"]) {
+    & .sd { background: var(--color-washi-400); /* sin animación — quietud total */ }
+    & .sd-label { color: var(--text-muted); }
   }
 
   /* ── ACCESIBILIDAD ──────────────────────────────────────── */
   @media (prefers-reduced-motion: reduce) {
     .sd-wrap::before,
-    .sd-wrap::after { 
+    .sd-wrap::after {
       animation: none;
-       opacity: 0; }
+      opacity: 0;
+    }
 
-    .sd             {
-      animation: none; }
+    .sd { animation: none; }
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
