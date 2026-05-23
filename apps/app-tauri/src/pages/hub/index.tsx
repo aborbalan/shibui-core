@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { LibCard, LibIcon } from '@shibui-ui/ui/react';
 import './hub.css';
 
 const HUB_ITEMS = [
@@ -47,22 +48,16 @@ export function HubPage() {
 
       <nav className="hub-grid" aria-label="Hub navigation">
         {HUB_ITEMS.map(({ id, label, description, icon, path }) => (
-          <button
+          <LibCard
             key={id}
-            className="hub-card"
-            onClick={() => navigate(path)}
-            aria-label={label}
+            variant="glitch"
+            clickable
+            onUiLibCardClick={() => navigate(path)}
           >
-            <lib-icon
-              name={icon}
-              size="26"
-              class="hub-card-icon"
-            />
-            <div className="hub-card-body">
-              <p className="hub-card-label">{label}</p>
-              <p className="hub-card-desc">{description}</p>
-            </div>
-          </button>
+            <LibIcon slot="tag" name={icon} size="20" />
+            <span slot="title" className="hub-card-title">{label}</span>
+            <span className="hub-card-desc">{description}</span>
+          </LibCard>
         ))}
       </nav>
     </div>

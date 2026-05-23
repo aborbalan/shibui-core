@@ -59,76 +59,20 @@
   max-width: 520px;
 }
 
-/* ── Card ─────────────────────────────────────────────── */
+/* ── Card content (slotted into lib-card) ─────────────── */
 
-.hub-card {
-  display: flex;
-  flex-direction: column;
-  gap: 1.125rem;
-  padding: 1.625rem 1.5rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 4px;
-  cursor: pointer;
-  transition:
-    transform 140ms ease,
-    border-color 140ms ease,
-    background 140ms ease;
-  text-align: left;
-  outline: none;
-  user-select: none;
-}
-
-.hub-card:hover {
-  transform: translateY(-1px);
-  background: var(--bg-elevated);
-  border-color: var(--border-default);
-}
-
-.hub-card:active {
-  transform: translateY(0);
-  border-color: var(--border-strong);
-}
-
-.hub-card:focus-visible {
-  border-color: var(--border-strong);
-  box-shadow: 0 0 0 2px var(--border-subtle);
-}
-
-/* ── Card contents ────────────────────────────────────── */
-
-.hub-card-icon {
-  color: var(--text-accent);
-  opacity: 0.75;
-  transition: opacity 140ms ease;
-  display: block;
-}
-
-.hub-card:hover .hub-card-icon {
-  opacity: 1;
-}
-
-.hub-card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.hub-card-label {
+.hub-card-title {
   font-family: var(--lib-font-mono, 'DM Mono', monospace);
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.18em;
-  color: var(--text-primary);
   text-transform: uppercase;
-  margin: 0;
 }
 
 .hub-card-desc {
   font-family: var(--lib-font-mono, 'DM Mono', monospace);
   font-size: 0.65rem;
   letter-spacing: 0.05em;
-  color: var(--text-muted);
-  margin: 0;
   line-height: 1.55;
+  color: var(--text-muted);
 }
