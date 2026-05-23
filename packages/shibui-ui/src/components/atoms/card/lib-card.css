@@ -122,7 +122,7 @@
     font-family: var(--lib-font-body);
     font-size: var(--text-sm);
     line-height: var(--leading-relaxed);
-    color: var(--color-washi-500);
+    color: var(--lib-comp-fg-sec, var(--color-washi-500));
   }
 
   /* ── Footer ── */

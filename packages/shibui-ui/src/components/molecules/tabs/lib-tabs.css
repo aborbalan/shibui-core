@@ -776,6 +776,12 @@
      Hover state (washi-700) se mantiene — no hay equivalente semántico
      exacto (text-secondary es washi-600, ligeramente más claro).
 
+     .tb-badge usa washi-200/washi-600 hardcoded (light-only).
+     Mapeado a bg-surface/text-muted para adaptar a dark katachi.
+
+     .tb-label (group label en vertical) usa washi-400 hardcoded.
+     Mapeado a text-muted.
+
      Aplica a todas las variants (underline, pill, card, outline, etc.)
      porque las reglas base .tb-tab no están scoped por variant.
      Variants explícitos dark/kintsugi/glitch mantienen sus overrides.
@@ -791,6 +797,15 @@
 
   .tb-tab.is-active {
     color: var(--lib-comp-fg, var(--text-primary));
+  }
+
+  .tb-badge {
+    background: var(--lib-comp-bg-subtle, var(--bg-surface));
+    color: var(--lib-comp-fg-muted, var(--text-muted));
+  }
+
+  .tb-label {
+    color: var(--lib-comp-fg-muted, var(--text-muted));
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
