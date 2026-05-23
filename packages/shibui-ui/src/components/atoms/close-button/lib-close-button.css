@@ -38,175 +38,160 @@
       border-color var(--duration-base) var(--ease-default),
       transform    var(--duration-base) var(--ease-bounce),
       opacity      var(--duration-base);
-  }
 
-  .close-btn:disabled {
-    opacity: 0.35;
-    pointer-events: none;
-    cursor: not-allowed;
-  }
+    &:disabled {
+      opacity: 0.35;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
 
-  /* Focus ring — base */
-  .close-btn:focus-visible {
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--lib-comp-border-focus, var(--border-focus)) 30%, transparent);
+    &:focus-visible {
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--lib-comp-border-focus, var(--border-focus)) 30%, transparent);
+    }
   }
 
   /* ── Sizes ─────────────────────────────────────────────────── */
-  :host([size="sm"]) .close-btn { width: 24px;
-     height: 24px; }
+  :host([size="sm"]) .close-btn {
+    width: 24px;
+    height: 24px;
+  }
 
-  :host([size="md"]) .close-btn { width: 32px;
-     height: 32px; }
+  :host([size="md"]) .close-btn {
+    width: 32px;
+    height: 32px;
+  }
 
-  :host([size="lg"]) .close-btn { width: 40px;
-     height: 40px; }
+  :host([size="lg"]) .close-btn {
+    width: 40px;
+    height: 40px;
+  }
 
-  :host([size="xl"]) .close-btn { width: 48px;
-     height: 48px; }
+  :host([size="xl"]) .close-btn {
+    width: 48px;
+    height: 48px;
+  }
 
-  /* ============================================================
-     VARIANT — GHOST (default)
-     Invisible track, solo el icono
-     ============================================================ */
+  /* ── VARIANT — GHOST ──────────────────────────────────────── */
   :host([variant="ghost"]) .close-btn {
     color: var(--text-muted);
     border-radius: var(--radius-sm);
+
+    &:hover {
+      color: var(--text-primary);
+      background: var(--lib-comp-bg-subtle, var(--bg-surface));
+    }
+
+    &:active {
+      transform: scale(0.88);
+    }
   }
 
-  :host([variant="ghost"]) .close-btn:hover {
-    color: var(--text-primary);
-    background: var(--lib-comp-bg-subtle, var(--bg-surface));
-  }
-
-  :host([variant="ghost"]) .close-btn:active {
-    transform: scale(0.88);
-  }
-
-  /* ============================================================
-     VARIANT — SUBTLE
-     Superficie ligera, rotacion al hover
-     ============================================================ */
+  /* ── VARIANT — SUBTLE ─────────────────────────────────────── */
   :host([variant="subtle"]) .close-btn {
     color: var(--text-secondary);
     border-radius: var(--radius-full);
+
+    &:hover {
+      color: var(--text-primary);
+      background: var(--lib-comp-bg-subtle, var(--bg-surface));
+      transform: rotate(90deg);
+    }
+
+    &:active {
+      transform: rotate(90deg) scale(0.88);
+      background: var(--lib-comp-bg-hover, var(--bg-surface));
+    }
   }
 
-  :host([variant="subtle"]) .close-btn:hover {
-    color: var(--text-primary);
-    background: var(--lib-comp-bg-subtle, var(--bg-surface));
-    transform: rotate(90deg);
-  }
-
-  :host([variant="subtle"]) .close-btn:active {
-    transform: rotate(90deg) scale(0.88);
-    background: var(--lib-comp-bg-hover, var(--bg-surface));
-  }
-
-  /* ============================================================
-     VARIANT — OUTLINED
-     Borde visible en reposo
-     ============================================================ */
+  /* ── VARIANT — OUTLINED ───────────────────────────────────── */
   :host([variant="outlined"]) .close-btn {
     color: var(--text-secondary);
     border: 1px solid var(--border-default);
     border-radius: var(--radius-sm);
+
+    &:hover {
+      color: var(--text-primary);
+      background: var(--bg-surface);
+      border-color: var(--border-strong);
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
   }
 
-  :host([variant="outlined"]) .close-btn:hover {
-    color: var(--text-primary);
-    background: var(--bg-surface);
-    border-color: var(--border-strong);
-  }
-
-  :host([variant="outlined"]) .close-btn:active {
-    transform: scale(0.9);
-  }
-
-  /* ============================================================
-     VARIANT — FILLED
-     Fondo sólido, sin radius full
-     ============================================================ */
+  /* ── VARIANT — FILLED ─────────────────────────────────────── */
   :host([variant="filled"]) .close-btn {
     color: var(--lib-comp-fg-inverse, var(--text-inverse));
     background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     border-radius: var(--radius-sm);
+
+    &:hover {
+      background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
   }
 
-  :host([variant="filled"]) .close-btn:hover {
-    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
-    transform: scale(1.05);
-  }
-
-  :host([variant="filled"]) .close-btn:active {
-    transform: scale(0.9);
-  }
-
-  /* ============================================================
-     VARIANT — FILLED-ROUND
-     Fondo sólido + radius full + rotacion al hover
-     ============================================================ */
+  /* ── VARIANT — FILLED-ROUND ───────────────────────────────── */
   :host([variant="filled-round"]) .close-btn {
     color: var(--lib-comp-fg-inverse, var(--text-inverse));
     background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     border-radius: var(--radius-full);
+
+    &:hover {
+      background: var(--lib-comp-bg-inverse, var(--bg-inverse));
+      transform: rotate(90deg) scale(1.08);
+    }
+
+    &:active {
+      transform: rotate(90deg) scale(0.9);
+    }
   }
 
-  :host([variant="filled-round"]) .close-btn:hover {
-    background: var(--lib-comp-bg-inverse, var(--bg-inverse));
-    transform: rotate(90deg) scale(1.08);
-  }
-
-  :host([variant="filled-round"]) .close-btn:active {
-    transform: rotate(90deg) scale(0.9);
-  }
-
-  /* ============================================================
-     VARIANT — DANGER
-     ============================================================ */
+  /* ── VARIANT — DANGER ─────────────────────────────────────── */
   :host([variant="danger"]) .close-btn {
     color: var(--color-error);
     border-radius: var(--radius-sm);
+
+    &:hover {
+      color: var(--color-error);
+      background: oklch(35% 0.10 20deg / 0.10);
+    }
+
+    &:active {
+      transform: scale(0.88);
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px oklch(35% 0.10 20deg / 0.15);
+    }
   }
 
-  :host([variant="danger"]) .close-btn:hover {
-    color: var(--color-error);
-    background: oklch(35% 0.10 20deg / 0.10);
-  }
-
-  :host([variant="danger"]) .close-btn:active {
-    transform: scale(0.88);
-  }
-
-  :host([variant="danger"]) .close-btn:focus-visible {
-    box-shadow: 0 0 0 3px oklch(35% 0.10 20deg / 0.15);
-  }
-
-  /* ============================================================
-     VARIANT — ON-DARK
-     Para superficies oscuras: glass, banners, modales oscuros
-     ============================================================ */
+  /* ── VARIANT — ON-DARK ────────────────────────────────────── */
   :host([variant="on-dark"]) .close-btn {
     color: oklch(100% 0 0deg / 0.45);
     border-radius: var(--radius-full);
+
+    &:hover {
+      color: oklch(100% 0 0deg / 0.9);
+      background: oklch(100% 0 0deg / 0.10);
+      transform: rotate(90deg);
+    }
+
+    &:active {
+      transform: rotate(90deg) scale(0.88);
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px oklch(100% 0 0deg / 0.20);
+    }
   }
 
-  :host([variant="on-dark"]) .close-btn:hover {
-    color: oklch(100% 0 0deg / 0.9);
-    background: oklch(100% 0 0deg / 0.10);
-    transform: rotate(90deg);
-  }
-
-  :host([variant="on-dark"]) .close-btn:active {
-    transform: rotate(90deg) scale(0.88);
-  }
-
-  :host([variant="on-dark"]) .close-btn:focus-visible {
-    box-shadow: 0 0 0 3px oklch(100% 0 0deg / 0.20);
-  }
-
-  /* ============================================================
-     REDUCCION DE MOVIMIENTO
-     ============================================================ */
+  /* ── REDUCCION DE MOVIMIENTO ──────────────────────────────── */
   @media (prefers-reduced-motion: reduce) {
     .close-btn {
       transition: none;

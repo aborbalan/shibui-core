@@ -52,24 +52,16 @@
       box-shadow      var(--duration-fast) var(--ease-default),
       border-color    var(--duration-fast) var(--ease-default),
       background      var(--duration-fast) var(--ease-default);
-  }
 
-  /* ── Pressed state ─────────────────────────────────────── */
-  .kbd.is-pressed,
-  .kbd:active {
-    transform: translateY(1px);
-    border-bottom-width: 1px;
-    box-shadow:
-      0 0 0 0 transparent,
-      inset 0 1px 2px color-mix(in oklch, var(--lib-comp-border-focus, var(--border-focus)) 20%, transparent);
-    background: var(--bg-surface);
-  }
-
-  /* lg pressed needs 2px drop */
-  :host([size="lg"]) .kbd.is-pressed,
-  :host([size="lg"]) .kbd:active {
-    transform: translateY(2px);
-    border-bottom-width: 2px;
+    &.is-pressed,
+    &:active {
+      transform: translateY(1px);
+      border-bottom-width: 1px;
+      box-shadow:
+        0 0 0 0 transparent,
+        inset 0 1px 2px color-mix(in oklch, var(--lib-comp-border-focus, var(--border-focus)) 20%, transparent);
+      background: var(--bg-surface);
+    }
   }
 
   /* ── Sizes ─────────────────────────────────────────────── */
@@ -98,6 +90,7 @@
     height: 28px;
   }
 
+  /* lg pressed needs 2px drop */
   :host([size="lg"]) .kbd {
     font-size: var(--text-base);
     letter-spacing: var(--tracking-wide);
@@ -105,6 +98,12 @@
     min-width: 36px;
     height: 36px;
     border-bottom-width: 4px;
+
+    &.is-pressed,
+    &:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
   }
 
   /* ── Variant: dark ─────────────────────────────────────── */
@@ -116,12 +115,12 @@
     box-shadow:
       0 1px 0 0 var(--lib-comp-bg, var(--color-washi-950)),
       inset 0 1px 0 0 rgb(255, 255, 255, 0.08);
-  }
 
-  :host([variant="dark"]) .kbd.is-pressed,
-  :host([variant="dark"]) .kbd:active {
-    background: var(--lib-comp-bg, var(--color-washi-900));
-    box-shadow: inset 0 1px 3px rgb(0, 0, 0, 0.4);
+    &.is-pressed,
+    &:active {
+      background: var(--lib-comp-bg, var(--color-washi-900));
+      box-shadow: inset 0 1px 3px rgb(0, 0, 0, 0.4);
+    }
   }
 
   /* ── Variant: ghost ────────────────────────────────────── */
@@ -131,11 +130,11 @@
     border-color: var(--border-default);
     border-bottom-color: var(--border-strong, var(--color-washi-500));
     box-shadow: none;
-  }
 
-  :host([variant="ghost"]) .kbd.is-pressed,
-  :host([variant="ghost"]) .kbd:active {
-    background: var(--bg-surface);
+    &.is-pressed,
+    &:active {
+      background: var(--bg-surface);
+    }
   }
 
   /* ── Variant: kaki ─────────────────────────────────────── */

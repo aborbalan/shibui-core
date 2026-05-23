@@ -39,23 +39,22 @@
     z-index: var(--z-raised);
     transition: width 80ms linear;
     background: var(--rp-color);
-  }
 
-  /* Destello frontal */
-  :host([variant="bar"])::after,
-  :host(:not([variant]))::after {
-    content: '';
-    position: absolute;
-    right: -8px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 16px;
-    height: 5px;
-    border-radius: var(--radius-full);
-    background: var(--rp-glow);
-    filter: blur(3px);
-    opacity: 0;
-    transition: opacity var(--duration-slow);
+    /* Destello frontal */
+    &::after {
+      content: '';
+      position: absolute;
+      right: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 5px;
+      border-radius: var(--radius-full);
+      background: var(--rp-glow);
+      filter: blur(3px);
+      opacity: 0;
+      transition: opacity var(--duration-slow);
+    }
   }
 
   :host([variant="bar"][active])::after,
@@ -156,18 +155,19 @@
     z-index: var(--z-modal);
     pointer-events: none;
     transition: height 80ms linear;
-  }
-  /* Punto final luminoso */
-  :host([variant="vertical"])::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: -3px;
-    width: 8px;
-    height: 8px;
-    border-radius: var(--radius-full);
-    background: var(--rp-color-light);
-    box-shadow: 0 0 6px var(--rp-glow);
+
+    /* Punto final luminoso */
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: -3px;
+      width: 8px;
+      height: 8px;
+      border-radius: var(--radius-full);
+      background: var(--rp-color-light);
+      box-shadow: 0 0 6px var(--rp-glow);
+    }
   }
 
   /* ════════════════════════════════════
@@ -225,24 +225,23 @@
       var(--color-kaki-400) 100%
     );
     height: 3px; /* un pixel más — el oro merece presencia */
-  }
 
-  /* Shimmer — reflejo de luz recorriendo la vena de oro */
-  :host([tone="kintsugi"][variant="bar"])::before,
-  :host([tone="kintsugi"]:not([variant]))::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      90deg,
-      transparent                       0%,
-      oklch(92% 0.04 60deg / 0.75)        45%,
-      oklch(98% 0.01 60deg / 0.9)         50%,
-      oklch(92% 0.04 60deg / 0.75)        55%,
-      transparent                      100%
-    );
-    animation: rp-kintsugi-shimmer 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    pointer-events: none;
+    /* Shimmer — reflejo de luz recorriendo la vena de oro */
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        transparent                       0%,
+        oklch(92% 0.04 60deg / 0.75)        45%,
+        oklch(98% 0.01 60deg / 0.9)         50%,
+        oklch(92% 0.04 60deg / 0.75)        55%,
+        transparent                      100%
+      );
+      animation: rp-kintsugi-shimmer 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      pointer-events: none;
+    }
   }
 
   /* Glow tip más cálido y pronunciado */
@@ -276,26 +275,31 @@
       var(--color-kaki-500) 100%
     );
     width: 3px;
-  }
 
-  :host([tone="kintsugi"][variant="vertical"])::after {
-    width: 10px;
-    height: 10px;
-    background: var(--color-kaki-300);
-    box-shadow:
-      0 0 8px  oklch(65% 0.1 50deg / 0.7),
-      0 0 16px oklch(65% 0.1 50deg / 0.35);
+    &::after {
+      width: 10px;
+      height: 10px;
+      background: var(--color-kaki-300);
+      box-shadow:
+        0 0 8px  oklch(65% 0.1 50deg / 0.7),
+        0 0 16px oklch(65% 0.1 50deg / 0.35);
+    }
   }
 
   /* ── Shimmer keyframe ─────────────────────────────────── */
   @keyframes rp-kintsugi-shimmer {
-    0%   { transform: translateX(-120%);
-       opacity: 0;   }
-    15%  { opacity: 1;                                  }
-    85%  { opacity: 1;                                  }
+    0% {
+      transform: translateX(-120%);
+      opacity: 0;
+    }
 
-    100% { transform: translateX(120%);
-        opacity: 0;   }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+
+    100% {
+      transform: translateX(120%);
+      opacity: 0;
+    }
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────

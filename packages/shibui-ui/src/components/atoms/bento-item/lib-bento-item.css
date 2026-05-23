@@ -31,19 +31,19 @@
   :host([interactive]) .bento-item {
     cursor: pointer;
     transition:
-      transform var(--duration-slow) var(--ease-default),
-      border-color var(--duration-base) var(--ease-default),
-      box-shadow var(--duration-slow) var(--ease-default);
-  }
+      transform     var(--duration-slow) var(--ease-default),
+      border-color  var(--duration-base) var(--ease-default),
+      box-shadow    var(--duration-slow) var(--ease-default);
 
-  :host([interactive]) .bento-item:hover {
-    transform: translateY(-3px);
-    border-color: var(--border-strong);
-    box-shadow: var(--shadow-md);
-  }
+    &:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-md);
+    }
 
-  :host([interactive]) .bento-item:active {
-    transform: translateY(-1px);
+    &:active {
+      transform: translateY(-1px);
+    }
   }
 
   /* ── Contenido con padding ── */
@@ -63,10 +63,10 @@
   @media (prefers-reduced-motion: reduce) {
     :host([interactive]) .bento-item {
       transition: border-color var(--duration-base);
-    }
 
-    :host([interactive]) .bento-item:hover {
-      transform: none;
+      &:hover {
+        transform: none;
+      }
     }
   }
 

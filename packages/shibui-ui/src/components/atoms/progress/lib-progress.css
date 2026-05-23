@@ -63,23 +63,6 @@
     text-transform: uppercase;
   }
 
-  /* tone overrides on meta text */
-  :host([tone="error"]) .pb-label {
-    color: var(--color-error);
-  }
-
-  :host([tone="error"]) .pb-value {
-    color: var(--color-error);
-  }
-
-  :host([tone="error"]) .pb-sub {
-    color: var(--color-error);
-  }
-
-  :host([tone="celadon"]) .pb-value {
-    color: var(--color-celadon-600);
-  }
-
   /* ─────────────────────────────────────────────────────────
      TRACK
   ───────────────────────────────────────────────────────── */
@@ -89,48 +72,43 @@
     border-radius: var(--radius-full);
     overflow: hidden;
     position: relative;
+    height: 8px; /* default = md */
   }
 
   /* ── Sizes ── */
-  :host([size="xs"]) .pb {
-    height: 2px;
+  :host([size="xs"]) {
+    & .pb { height: 2px; }
+    & .pb-multi { height: 2px; }
   }
 
-  :host([size="sm"]) .pb {
-    height: 4px;
+  :host([size="sm"]) {
+    & .pb { height: 4px; }
+    & .pb-multi { height: 4px; }
   }
 
   :host([size="md"]) .pb,
   .pb {
-    height: 8px;
+    height: 8px; /* default */
   }
 
-  /* default */
-  :host([size="lg"]) .pb {
-    height: 12px;
+  :host([size="lg"]) {
+    & .pb { height: 12px; }
+    & .pb-multi { height: 12px; }
   }
 
-  :host([size="xl"]) .pb {
-    height: 20px;
-  }
-
-  /* ── Tones — track background ── */
-  :host([tone="kaki"]) .pb {
-    background: var(--color-kaki-100);
-  }
-
-  :host([tone="celadon"]) .pb {
-    background: var(--color-celadon-100);
-  }
-
-  :host([tone="error"]) .pb {
-    background: var(--color-error-light, #F5DDD9);
+  :host([size="xl"]) {
+    & .pb { height: 20px; }
+    & .pb-multi { height: 20px; }
   }
 
   /* ── Square ── */
-  :host([square]) .pb,
-  :host([square]) .pb-fill {
-    border-radius: var(--radius-sm);
+  :host([square]) {
+    & .pb { border-radius: var(--radius-sm); }
+    & .pb-fill { border-radius: var(--radius-sm); }
+    & .pb-multi { border-radius: var(--radius-sm); }
+    & .pb-segment:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+    & .pb-segment:last-child  { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+    & .pb-segment:only-child  { border-radius: var(--radius-sm); }
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -143,24 +121,6 @@
     transition: width 600ms var(--ease-default);
     position: relative;
     overflow: hidden;
-  }
-
-  /* square override */
-  :host([square]) .pb-fill {
-    border-radius: var(--radius-sm);
-  }
-
-  /* ── Tones — fill ── */
-  :host([tone="kaki"]) .pb-fill {
-    background: var(--color-kaki-500);
-  }
-
-  :host([tone="celadon"]) .pb-fill {
-    background: var(--color-celadon-500);
-  }
-
-  :host([tone="error"]) .pb-fill {
-    background: var(--color-error);
   }
 
   /* ── Striped ── */
@@ -188,6 +148,29 @@
   }
 
   /* ─────────────────────────────────────────────────────────
+     TONES — track + fill + meta text
+  ───────────────────────────────────────────────────────── */
+
+  :host([tone="kaki"]) {
+    & .pb      { background: var(--color-kaki-100); }
+    & .pb-fill { background: var(--color-kaki-500); }
+  }
+
+  :host([tone="celadon"]) {
+    & .pb       { background: var(--color-celadon-100); }
+    & .pb-value { color: var(--color-celadon-600); }
+    & .pb-fill  { background: var(--color-celadon-500); }
+  }
+
+  :host([tone="error"]) {
+    & .pb-label { color: var(--color-error); }
+    & .pb-value { color: var(--color-error); }
+    & .pb-sub   { color: var(--color-error); }
+    & .pb       { background: var(--color-error-light, #F5DDD9); }
+    & .pb-fill  { background: var(--color-error); }
+  }
+
+  /* ─────────────────────────────────────────────────────────
      INDETERMINATE
   ───────────────────────────────────────────────────────── */
   @keyframes pb-slide {
@@ -210,35 +193,23 @@
   :host([indeterminate]) .pb-fill {
     width: 100% !important;
     background: transparent;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 40%;
+      background: var(--color-washi-900);
+      border-radius: var(--radius-full);
+      animation: pb-slide 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
   }
 
-  :host([indeterminate]) .pb-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 40%;
-    background: var(--color-washi-900);
-    border-radius: var(--radius-full);
-    animation: pb-slide 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  :host([indeterminate][tone="kaki"]) .pb-fill::after {
-    background: var(--color-kaki-500);
-  }
-
-  :host([indeterminate][tone="celadon"]) .pb-fill::after {
-    background: var(--color-celadon-500);
-  }
-
-  :host([indeterminate][tone="error"]) .pb-fill::after {
-    background: var(--color-error);
-  }
-
-  /* square indeterminate */
-  :host([indeterminate][square]) .pb-fill::after {
-    border-radius: var(--radius-sm);
-  }
+  :host([indeterminate][tone="kaki"])    .pb-fill::after { background: var(--color-kaki-500); }
+  :host([indeterminate][tone="celadon"]) .pb-fill::after { background: var(--color-celadon-500); }
+  :host([indeterminate][tone="error"])   .pb-fill::after { background: var(--color-error); }
+  :host([indeterminate][square])         .pb-fill::after { border-radius: var(--radius-sm); }
 
   /* ─────────────────────────────────────────────────────────
      MULTI-SEGMENT
@@ -250,32 +221,7 @@
     overflow: hidden;
     gap: 2px;
     background: transparent;
-  }
-
-  /* sizes for multi (mirror .pb sizes) */
-  :host([size="xs"]) .pb-multi {
-    height: 2px;
-  }
-
-  :host([size="sm"]) .pb-multi {
-    height: 4px;
-  }
-
-  :host([size="md"]) .pb-multi,
-  .pb-multi {
-    height: 8px;
-  }
-
-  :host([size="lg"]) .pb-multi {
-    height: 12px;
-  }
-
-  :host([size="xl"]) .pb-multi {
-    height: 20px;
-  }
-
-  :host([square]) .pb-multi {
-    border-radius: var(--radius-sm);
+    height: 8px; /* default = md */
   }
 
   .pb-segment {
@@ -284,46 +230,15 @@
     flex-shrink: 0;
   }
 
-  .pb-segment:first-child {
-    border-radius: var(--radius-full) 0 0 var(--radius-full);
-  }
-
-  .pb-segment:last-child {
-    border-radius: 0 var(--radius-full) var(--radius-full) 0;
-  }
-
-  .pb-segment:only-child {
-    border-radius: var(--radius-full);
-  }
-
-  :host([square]) .pb-segment:first-child {
-    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-  }
-
-  :host([square]) .pb-segment:last-child {
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  }
-
-  :host([square]) .pb-segment:only-child {
-    border-radius: var(--radius-sm);
-  }
+  .pb-segment:first-child { border-radius: var(--radius-full) 0 0 var(--radius-full); }
+  .pb-segment:last-child  { border-radius: 0 var(--radius-full) var(--radius-full) 0; }
+  .pb-segment:only-child  { border-radius: var(--radius-full); }
 
   /* Tone classes for segments (applied via JS) */
-  .seg-default {
-    background: var(--color-washi-900);
-  }
-
-  .seg-kaki {
-    background: var(--color-kaki-500);
-  }
-
-  .seg-celadon {
-    background: var(--color-celadon-500);
-  }
-
-  .seg-error {
-    background: var(--color-error);
-  }
+  .seg-default { background: var(--color-washi-900); }
+  .seg-kaki    { background: var(--color-kaki-500); }
+  .seg-celadon { background: var(--color-celadon-500); }
+  .seg-error   { background: var(--color-error); }
 
   .seg-muted {
     background: var(--color-washi-300);
