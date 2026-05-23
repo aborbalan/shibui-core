@@ -56,3 +56,64 @@ Actualmente construida con `lib-progress` + markup propio.
 
 **Diferencia con `lib-progress`:** la etiqueta y el valor forman parte del componente,
 sin necesidad de markup externo. Pensado para listas verticales de métricas.
+
+---
+
+### `lib-editor` · Organismo
+
+**Detectado en:** `apps/app-tauri` — pendiente de implementar como `src/gadgets/TextEditorGadget/`
+
+Editor de texto plano para ficheros. Diseñado para integrarse con el sistema de ficheros nativo vía Tauri, pero utilizable de forma standalone con contenido en memoria.
+
+**Props candidatas:**
+
+| Prop | Tipo | Descripción |
+|------|------|-------------|
+| `value` | `string` | Contenido del editor |
+| `language` | `string \| null` | Extensión del fichero activo (para hint visual, sin syntax highlighting) |
+| `readonly` | `boolean` | Modo lectura |
+| `filename` | `string \| null` | Nombre del fichero mostrado en la toolbar |
+| `dirty` | `boolean` (reflect) | Indica cambios sin guardar (muestra indicador visual) |
+| `line-numbers` | `boolean` | Muestra números de línea |
+| `wrap` | `boolean` | Activa word wrap |
+
+**Eventos candidatos:** `ui-lib-editor-change` (con `detail: { value: string }`), `ui-lib-editor-save`
+
+---
+
+### `lib-editor-toolbar` · Molécula
+
+**Detectado en:** `apps/app-tauri` — pendiente de implementar como `src/gadgets/TextEditorGadget/EditorToolbar.tsx`
+
+Barra de acciones para `lib-editor`. Gestiona el ciclo de vida del fichero: nuevo, abrir, guardar.
+
+**Props candidatas:**
+
+| Prop | Tipo | Descripción |
+|------|------|-------------|
+| `filename` | `string \| null` | Nombre del fichero activo |
+| `dirty` | `boolean` | Muestra indicador de cambios sin guardar |
+| `saving` | `boolean` | Estado de guardado en curso |
+| `show-open` | `boolean` | Muestra botón "Abrir" (requiere diálogo nativo en Tauri) |
+
+**Eventos candidatos:** `ui-lib-editor-toolbar-new`, `ui-lib-editor-toolbar-open`, `ui-lib-editor-toolbar-save`
+
+---
+
+### `lib-tab-bar` · Molécula
+
+**Detectado en:** `apps/app-tauri` — pendiente de implementar como `src/gadgets/TextEditorGadget/TabBar.tsx`
+
+Barra de pestañas genérica orientada a múltiples ficheros abiertos. Diferenciada de `lib-tabs` en que las pestañas son closables individualmente y admiten estado dirty por pestaña.
+
+**Props candidatas:**
+
+| Prop | Tipo | Descripción |
+|------|------|-------------|
+| `tabs` | `EditorTab[]` | Array de `{ id, label, dirty }` |
+| `active` | `string` | ID de la pestaña activa |
+| `closable` | `boolean` | Muestra botón de cierre en cada pestaña |
+
+**Eventos candidatos:** `ui-lib-tab-bar-select` (`detail: { id }`), `ui-lib-tab-bar-close` (`detail: { id }`)
+
+**Diferencia con `lib-tabs`:** `lib-tabs` gestiona paneles de contenido inline; `lib-tab-bar` es solo la barra de navegación, agnóstica del contenido. Pensada para editores, terminales y vistas multi-documento.
