@@ -1500,6 +1500,36 @@
 
 ---
 
+### `lib-gadget-frame` · ✅
+
+> **Coverage: 🟢 semantic.** Dos variantes de superficie:
+> - `variant="card"` — consume `--bg-elevated`, `--border-subtle`, `--text-primary`, `--text-muted` (tokens semánticos).
+> - `variant="glass"` — consume `--lib-glass-bg`, `--lib-glass-filter`, `--lib-glass-shine`, `--lib-glass-border`, `--lib-glass-shadow` (tokens glass).
+> Ambos grupos se reescriben con cada katachi, por lo que el componente adapta su aspecto sin override propio.
+
+#### Superficies
+
+| Superficie | Estado | Notas |
+|------------|--------|-------|
+| light      | ✅      | `card`: bg-elevated + border-subtle |
+| dark       | ✅      | `glass`: tokens glass sobre fondo oscuro |
+| kintsugi   | ✅      | Hereda override glass desde `_katachi.css` |
+| glitch     | ✅      | Tokens semánticos terminal; glass silenciado |
+| celadón    | ✅      | Glass con tono jade vía celadon override |
+| washi      | ✅      | `card`: washi paper; `glass`: wabi refuerza blur |
+
+#### Efectos
+
+| Efecto | Superficie | Estado | Notas |
+|--------|------------|--------|-------|
+| glass  | glass      | ✅      | `variant="glass"` activa glassmorphism completo |
+| spotlight | —       | `—`    | No aplica: el frame no es interactivo de ese modo |
+| kintsugi-border | kintsugi | 🔲 | Compatible — podría decorar el borde del header |
+| shadow-brutal   | sabi   | 🔲 | `card` en sabi podría llevar shadow-brutal |
+| metal-texture   | —      | `—`  | No aplica |
+
+---
+
 ### `lib-accordion` · ✅
 
 > **CSS verificado.** Variantes estructurales: `flush` · `separated` · `accent`.
