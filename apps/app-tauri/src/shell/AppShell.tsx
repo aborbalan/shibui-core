@@ -4,6 +4,8 @@ import { DashboardLayout } from './layouts/DashboardLayout';
 import { AuthGuard } from '../core/auth/AuthGuard';
 import { LoginPage } from '../pages/login';
 
+const HubPage       = lazy(() => import('../pages/hub').then(m => ({ default: m.HubPage })));
+const FilesPage     = lazy(() => import('../pages/files').then(m => ({ default: m.FilesPage })));
 const DashboardPage = lazy(() => import('../pages/dashboard').then(m => ({ default: m.DashboardPage })));
 
 export function AppShell() {
@@ -14,7 +16,7 @@ export function AppShell() {
         {/* ── Login (sin layout) ─────────────────────────── */}
         <Route path="login" element={<LoginPage />} />
 
-        {/* ── Dashboard (protegido) ──────────────────────── */}
+        {/* ── App (protegido) ────────────────────────────── */}
         <Route
           path="/"
           element={
@@ -23,7 +25,9 @@ export function AppShell() {
             </AuthGuard>
           }
         >
-          <Route index element={<DashboardPage />} />
+          <Route index            element={<HubPage />} />
+          <Route path="files"     element={<FilesPage />} />
+          <Route path="dashboard" element={<DashboardPage />} />
         </Route>
 
         {/* ── Fallback ───────────────────────────────────── */}
