@@ -34,6 +34,10 @@ on:
         description: "Forzar pipeline API"
         type: boolean
         default: false
+      force_tauri:
+        description: "Forzar pipeline Tauri Rust Core"
+        type: boolean
+        default: false
 
 # Un único punto de cancelación para todo el ecosistema
 concurrency:
@@ -55,6 +59,7 @@ jobs:
       angular: ${{ steps.resolve.outputs.angular }}
       svelte:  ${{ steps.resolve.outputs.svelte }}
       api:     ${{ steps.resolve.outputs.api }}
+      tauri:   ${{ steps.resolve.outputs.tauri }}
     steps:
       - uses: actions/checkout@v4
 
@@ -67,6 +72,7 @@ jobs:
             angular: 'apps/app-angular/**'
             svelte:  'apps/app-svelte/**'
             api:     'apps/shibui-api/**'
+            tauri:   'apps/app-tauri/**'
 
       # OR lógico: cambio detectado ó forzado manualmente
       - name: 🎛️ Resolve outputs (auto + manual override)
@@ -77,6 +83,7 @@ jobs:
           echo "angular=$([[ '${{ steps.filter.outputs.angular }}' == 'true' || '${{ inputs.force_angular }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "svelte=$([[ '${{ steps.filter.outputs.svelte }}' == 'true' || '${{ inputs.force_svelte }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "api=$([[ '${{ steps.filter.outputs.api }}' == 'true' || '${{ inputs.force_api }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "tauri=$([[ '${{ steps.filter.outputs.tauri }}' == 'true' || '${{ inputs.force_tauri }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
 
   # ─────────────────────────────────────────
   # JOB 2 — Pipeline UI & Apps
@@ -132,6 +139,20 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.api == 'true'
     uses: ./.github/workflows/ci-api.yml
+    with:
+      ref: ${{ github.ref }}
+    secrets: inherit
+
+  # ─────────────────────────────────────────
+  # JOB 4 — Pipeline Tauri Rust Core
+  # Valida fmt, clippy y tests de la crate `core/`.
+  # No requiere system deps de Tauri (webkit2gtk etc.).
+  # ─────────────────────────────────────────
+  run-tauri-pipeline:
+    name: 🦀 Tauri Rust Core Pipeline
+    needs: detect-changes
+    if: needs.detect-changes.outputs.tauri == 'true'
+    uses: ./.github/workflows/ci-tauri.yml
     with:
       ref: ${{ github.ref }}
     secrets: inherit

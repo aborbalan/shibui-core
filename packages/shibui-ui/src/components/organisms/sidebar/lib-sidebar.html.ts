@@ -29,7 +29,7 @@ export interface SidebarTemplateProps {
   onToggleClick:  () => void;
 }
 
-/* ── SVG icons inline — no lib-icon dependency for shell elements ── */
+/* ── SVG icons inline — solo los que no tienen equivalente en componentes Shibui ── */
 const svgSearch = html`
   <svg width="11" height="11" viewBox="0 0 16 16" fill="none"
     stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
@@ -42,21 +42,6 @@ const svgLogout = html`
     <path d="M6 2H3a1 1 0 00-1 1v8a1 1 0 001 1h3"/>
     <polyline points="10,4 12,7 10,10"/>
     <line x1="4" y1="7" x2="12" y2="7"/>
-  </svg>`;
-
-const svgMenu = html`
-  <svg width="18" height="18" viewBox="0 0 16 16" fill="none"
-    stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-    <line x1="2" y1="4" x2="14" y2="4"/>
-    <line x1="2" y1="8" x2="14" y2="8"/>
-    <line x1="2" y1="12" x2="14" y2="12"/>
-  </svg>`;
-
-const svgClose = html`
-  <svg width="18" height="18" viewBox="0 0 14 14" fill="none"
-    stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-    <line x1="2" y1="2" x2="12" y2="12"/>
-    <line x1="12" y1="2" x2="2" y2="12"/>
   </svg>`;
 
 /* ── Badge ── */
@@ -203,11 +188,12 @@ export function sidebarTemplate(p: SidebarTemplateProps): TemplateResult {
       ${renderUser(p)}
     </aside>
 
-    <button
+    <lib-burger
       class="sb-toggle"
+      size="sm"
+      ?open="${p.mobileOpen}"
       aria-label="${p.mobileOpen ? 'Cerrar menú' : 'Abrir menú'}"
-      aria-expanded="${p.mobileOpen}"
-      @click="${p.onToggleClick}"
-    >${p.mobileOpen ? svgClose : svgMenu}</button>
+      @ui-lib-burger-change="${(): void => p.onToggleClick()}"
+    ></lib-burger>
   `;
 }

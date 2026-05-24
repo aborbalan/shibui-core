@@ -1,7 +1,7 @@
 import { html, TemplateResult } from 'lit';
 import type { GadgetFrameTemplateProps } from './lib-gadget-frame.types';
 
-/* ── Inline SVGs de controles ───────────────────────────── */
+/* ── Inline SVGs de controles (minimize / expand siguen inline — no hay equivalente en lib-icon) ── */
 
 const minimizeSvg = html`
   <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
@@ -15,13 +15,6 @@ const expandSvg = html`
        stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
     <line x1="1" y1="5" x2="9" y2="5"/>
     <line x1="5" y1="1" x2="5" y2="9"/>
-  </svg>
-`;
-
-const closeSvg = html`
-  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
-       stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-    <path d="M1 1l8 8M9 1L1 9"/>
   </svg>
 `;
 
@@ -66,11 +59,14 @@ export function gadgetFrameTemplate(props: GadgetFrameTemplateProps): TemplateRe
           ` : null}
 
           ${closable ? html`
-            <button
+            <lib-close-button
               class="gadget-btn gadget-btn--close"
+              size="sm"
+              variant="ghost"
               aria-label="Cerrar gadget"
-              @click="${(e: Event): void => { e.stopPropagation(); onClose(); }}"
-            >${closeSvg}</button>
+              @click="${(e: Event): void => e.stopPropagation()}"
+              @lib-close="${(): void => onClose()}"
+            ></lib-close-button>
           ` : null}
         </div>
       </div>

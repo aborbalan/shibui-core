@@ -1,5 +1,6 @@
 import { html, css, unsafeCSS, TemplateResult, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import '../../atoms/close-button/lib-close-button.component';
 import { tabsTemplate } from "./lib-tabs.html";
 import tabsCss from "./lib-tabs.css?inline";
 import sharedTokens from "../../../styles/shared/tokens.css?inline";

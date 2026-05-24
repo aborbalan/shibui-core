@@ -1,0 +1,42 @@
+name: CI — Tauri Rust Core
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: true
+
+env:
+  RUST_BACKTRACE: 1
+
+jobs:
+  rust-core:
+    name: 🦀 Rust Core Quality Gate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/app-tauri
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🦀 Setup Rust stable
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+          components: clippy, rustfmt
+
+      - name: 📦 Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/app-tauri
+
+      - name: 🎨 Format check
+        run: cargo fmt --check
+
+      - name: 📎 Clippy — app-tauri-core
+        run: cargo clippy -p app-tauri-core -- -D warnings
+
+      - name: 🧪 Tests — app-tauri-core
+        run: cargo test -p app-tauri-core

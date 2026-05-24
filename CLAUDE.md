@@ -116,7 +116,7 @@ Punto de entrada único: `.github/workflows/orchestrator.yml`
 | `packages/shibui-ui/**` | `ci-lib.yml` + `ci-apps.yml` |
 | `apps/app-react\|angular\|svelte/**` | `ci-apps.yml` |
 | `apps/shibui-api/**` | `ci-api.yml` |
-| `apps/app-tauri/**` | ⚠️ Sin pipeline CI por el momento |
+| `apps/app-tauri/**` | `ci-tauri.yml` (fmt + clippy + tests sobre crate `core/`) |
 | `main` + UI cambiada | `release.yml` (tras `ci-lib` exitoso) |
 
 Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_api`.

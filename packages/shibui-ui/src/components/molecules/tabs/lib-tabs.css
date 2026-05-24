@@ -812,17 +812,13 @@
 
   .tb-close:hover {
     opacity: 1 !important;
+  }
+
+  .tb-close::part(close-btn):hover {
     background: var(--color-washi-200);
   }
 
-  /* Close SVG — sobreescribe .tb-tab svg */
-  .tb-close svg {
-    width: 8px;
-    height: 8px;
-    stroke-width: 1.8;
-  }
-
-  :host([dark]) .tb-close:hover {
+  :host([dark]) .tb-close::part(close-btn):hover {
     background: rgb(255, 255, 255, .1);
   }
 
@@ -872,7 +868,7 @@
     background: var(--lib-comp-accent, var(--accent-primary, var(--color-kaki-500)));
   }
 
-  .tb-close:hover {
+  .tb-close::part(close-btn):hover {
     background: var(--lib-comp-bg-subtle, var(--bg-surface));
   }
 
