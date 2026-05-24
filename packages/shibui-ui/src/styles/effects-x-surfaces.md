@@ -1881,6 +1881,33 @@
 
 ---
 
+### `lib-text-editor` · ✅
+
+> **Coverage: 🟢 semantic.** Organismo que compone `lib-editor-toolbar` y `lib-tabs`.
+> Consume `--bg-base`, `--bg-elevated`, `--border-subtle`, `--text-primary`, `--text-muted`,
+> `--accent-primary`, `--font-mono`, `--radius-md` — todos tokens semánticos.
+> Los sub-componentes (`lib-editor-toolbar`, `lib-tabs`) gestionan sus propias superficies.
+> Overrides katachi propios para `terminal` (tipografía mono ajustada) y `kintsugi` (border reforzado).
+
+#### Superficies
+
+| Superficie | Estado | Notas |
+|------------|--------|-------|
+| light      | ✅      | bg-base + border-subtle, textarea sobre fondo claro |
+| dark       | ✅      | Hereda katachi del ancestro |
+| kintsugi   | ✅      | Border reforzado a border-default |
+| glitch     | ✅      | Hereda terminal vía tokens semánticos |
+| celadón    | ✅      | Hereda katachi del ancestro |
+| washi      | ✅      | Hereda katachi del ancestro |
+
+#### Efectos
+
+| Efecto | Estado | Notas |
+|--------|--------|-------|
+| todos  | `—`    | No aplica — editor es superficie funcional, no decorativa |
+
+---
+
 ## Resumen de estado global
 
 ### Efectos del sistema — conexión a tokens

@@ -1,0 +1,138 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-TEXT-EDITOR — Shibui UI
+   Contexto : app/editor · Organism
+   Coverage : 🟢 semantic — consume tokens semánticos
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  textarea {
+    all: unset;
+  }
+}
+
+@layer components {
+
+  /* ── EDITOR ROOT ─────────────────────────────────────────── */
+
+  .editor {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  /* ── TOOLBAR ─────────────────────────────────────────────── */
+
+  .editor__toolbar {
+    flex-shrink: 0;
+  }
+
+  /* ── TABS ────────────────────────────────────────────────── */
+
+  .editor__tabs {
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  /* Ocultar la sección de paneles vacíos que genera lib-tabs */
+  .editor__tabs::part(panels) {
+    display: none;
+  }
+
+  /* ── CONTENT AREA ────────────────────────────────────────── */
+
+  .editor__content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    position: relative;
+  }
+
+  /* ── TEXTAREA ────────────────────────────────────────────── */
+
+  .editor__textarea {
+    display: block;
+    flex: 1;
+    width: 100%;
+    padding: var(--lib-space-md);
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-mono, monospace);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    border: none;
+    outline: none;
+    resize: none;
+    caret-color: var(--accent-primary, var(--text-primary));
+    tab-size: 2;
+
+    &::placeholder {
+      color: var(--text-muted);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  /* ── EMPTY STATE ─────────────────────────────────────────── */
+
+  .editor__empty {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--lib-space-xl);
+  }
+
+  .editor__empty-text {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  /* ── KATACHI · semantic overrides ────────────────────────────
+     Los tokens semánticos ya se heredan del ancestro con
+     [data-katachi]. Solo ajustes visuales específicos del editor.
+     ─────────────────────────────────────────────────────────── */
+
+  :host-context([data-katachi='terminal']) {
+    .editor__textarea {
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+      line-height: 1.6;
+    }
+
+    .editor__empty-text {
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+    }
+  }
+
+  :host-context([data-katachi='kintsugi']) {
+    .editor {
+      border-color: var(--border-default);
+    }
+  }
+
+  /* ── /KATACHI ────────────────────────────────────────────── */
+}
