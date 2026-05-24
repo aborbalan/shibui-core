@@ -1,0 +1,160 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-EDITOR-TOOLBAR — Shibui UI
+   Contexto : app/editor · Molecule
+   Coverage : 🟢 semantic — tokens semánticos propios
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    width: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  button {
+    all: unset;
+    cursor: pointer;
+  }
+}
+
+@layer components {
+
+  /* ── TOOLBAR ROOT ────────────────────────────────────────── */
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-xs);
+    padding-inline: var(--lib-space-sm);
+    padding-block: var(--lib-space-xs);
+    background: var(--bg-elevated);
+    border-bottom: 1px solid var(--border-subtle);
+    min-height: 36px;
+  }
+
+  /* ── ACCIONES ────────────────────────────────────────────── */
+
+  .toolbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .toolbar__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--lib-space-xs);
+    padding-inline: var(--lib-space-sm);
+    padding-block: 5px;
+    border-radius: var(--radius-sm, 4px);
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    line-height: 1;
+    transition: background 120ms ease, color 120ms ease;
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+    }
+
+    &:active {
+      background: var(--bg-muted);
+    }
+
+    &[disabled] {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    & svg {
+      flex-shrink: 0;
+    }
+  }
+
+  .toolbar__btn--save {
+    color: var(--accent-primary, var(--text-secondary));
+
+    &:hover {
+      color: var(--accent-primary, var(--text-primary));
+    }
+  }
+
+  /* ── SPINNER DE GUARDADO ─────────────────────────────────── */
+
+  .toolbar__saving-spinner {
+    animation: toolbar-spin 900ms linear infinite;
+  }
+
+  @keyframes toolbar-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ── SEPARADOR ───────────────────────────────────────────── */
+
+  .toolbar__divider {
+    width: 1px;
+    height: 16px;
+    background: var(--border-subtle);
+    flex-shrink: 0;
+    margin-inline: var(--lib-space-xs);
+  }
+
+  /* ── FICHERO ACTIVO ──────────────────────────────────────── */
+
+  .toolbar__file-info {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .toolbar__filename {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 240px;
+  }
+
+  .toolbar__dirty-dot {
+    font-size: 1.25rem;
+    line-height: 1;
+    color: var(--accent-primary, var(--text-muted));
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  /* ── KATACHI · semantic overrides ────────────────────────────
+     Los tokens semánticos ya se heredan del ancestro con
+     [data-katachi]. Solo se ajusta lo que difiere visualmente
+     del comportamiento por defecto.
+     ─────────────────────────────────────────────────────────── */
+
+  :host-context([data-katachi='terminal']) {
+    .toolbar {
+      border-bottom-color: var(--border-default);
+    }
+
+    .toolbar__btn-label {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.7rem;
+      letter-spacing: 0.02em;
+    }
+  }
+
+  /* ── /KATACHI ────────────────────────────────────────────── */
+}

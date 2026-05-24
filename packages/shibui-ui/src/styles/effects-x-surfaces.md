@@ -1219,6 +1219,23 @@
 
 ---
 
+### `lib-editor-toolbar` · ✅
+
+> **Coverage: 🟢 semantic.** Molecule · `app/editor`.
+> Consume tokens semánticos (`--bg-elevated`, `--border-subtle`, `--text-secondary`,
+> `--text-primary`, `--accent-primary`) para la barra, los botones y el nombre del fichero.
+> Adapta su aspecto con cada katachi sin override específico salvo el contexto `terminal`
+> (fuente monoespaciada en las etiquetas de botón).
+
+#### Superficies / Efectos
+
+| | Estado | Notas |
+|-|--------|-------|
+| Superficies | ✅ | Tokens semánticos propios — adapta fondo y bordes con katachi |
+| Efectos | `—` | No aplica — sin superficie propia |
+
+---
+
 ### `lib-empty-state` · ✅
 
 > **CSS verificado.** Tones: `neutral` (default) · `kaki` · `celadon` · `error`.
