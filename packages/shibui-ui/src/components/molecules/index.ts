@@ -21,3 +21,5 @@ export * from './tree-select/lib-tree-select.component.html';
 export * from './metric-bar/lib-metric-bar.component';
 export type { MetricBarTemplateProps } from './metric-bar/lib-metric-bar.types';
 export type { ProgressTone, ProgressSize } from './metric-bar/lib-metric-bar.types';
+export * from './editor-toolbar/lib-editor-toolbar.component';
+export type { EditorToolbarTemplateProps } from './editor-toolbar/lib-editor-toolbar.types';

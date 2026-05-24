@@ -162,7 +162,7 @@ Editor de texto plano para ficheros. Diseñado para integrarse con el sistema de
 
 ---
 
-### `lib-editor-toolbar` · Molecule · `app/editor`
+### `lib-editor-toolbar` · Molecule · `app/editor` ✅ implementado
 
 **Detectado en:** `apps/app-tauri` — pendiente de implementar como `src/gadgets/TextEditorGadget/EditorToolbar.tsx`
 
