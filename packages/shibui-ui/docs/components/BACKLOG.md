@@ -5,51 +5,68 @@ No están implementados. Cuando se aborden, seguir la estructura de 5 ficheros d
 
 ---
 
-## Contexto de uso
+## Taxonomía de clasificación
 
-Shibui UI es agnóstica de plataforma, pero algunos componentes están **diseñados o son más
-viables en un contexto concreto**. Esto no impide usarlos fuera de él, pero sus defaults,
-densidad visual y patrones de interacción están optimizados para ese entorno.
+Cada componente del backlog se describe con **tres ejes ortogonales**, alineados con el
+sistema existente:
+
+```
+[nivel atómico]  ·  [contexto de plataforma]  ·  [dominio funcional]
+    Organism            app/dashboard               lib-gadget-frame
+    Molecule            app/monitor                 lib-metric-bar
+    Molecule            app/chart                   (pendiente)
+```
+
+### Eje 1 — Nivel atómico (atomic design)
+
+Ya existe en la librería. Define granularidad y composición:
+
+| Nivel | Descripción |
+|---|---|
+| `Atom` | Unidad indivisible — button, icon, input, progress… |
+| `Molecule` | Combinación funcional de átomos — metric-bar, input-group… |
+| `Organism` | Sección compleja de UI — sidebar, data-table, gadget-frame… |
+
+### Eje 2 — Contexto de plataforma
+
+Indica dónde el componente está **diseñado u optimizado**. Sus defaults, densidad visual
+y patrones de interacción están ajustados a ese entorno:
 
 | Etiqueta | Descripción |
 |---|---|
 | `web` | Optimizado para layouts web: navegación, landing, contenido editorial, formularios |
-| `app` | Optimizado para aplicaciones de escritorio, dashboards, tauri, dispositivos embebidos — alta densidad, métricas en tiempo real, paneles de control |
-| `universal` | Sin preferencia de contexto — válido en ambos entornos sin ajustes |
+| `app` | Optimizado para escritorio, dashboards, tauri, dispositivos embebidos |
+| `universal` | Sin preferencia — válido en ambos entornos sin ajustes |
 
-### Sub-categorías dentro de `app`
+### Eje 3 — Dominio funcional (solo para `app`)
 
-Dentro del contexto `app` hay dos familias con naturalezas muy distintas:
+Describe **qué problema resuelve** en contexto `app`, ortogonal al nivel atómico
+(una molécula y un organismo pueden compartir dominio):
 
-#### `app/metric`
-Componentes de **visualización de datos ligera**: barras de progreso con label, gauges,
-KPI badges, sparklines simples. Implementados como Web Components nativos con CSS puro —
-sin dependencias externas, sin canvas. Forman parte del paquete `@shibui/ui` directamente.
+| Dominio | Descripción | Implementación |
+|---|---|---|
+| `app/dashboard` | Shell de paneles — frames, contenedores de gadget, grids de dashboard | Web Components nativos |
+| `app/monitor` | Datos ligeros — métricas, KPIs, gauges, sparklines CSS | Web Components nativos, sin canvas |
+| `app/chart` | Gráficas interactivas — line, bar, pie, heatmap, series temporales | ⚠️ Requiere lib externa |
+| `app/editor` | Edición de texto/código — editores, toolbars de fichero, barras de pestañas | Web Components nativos |
 
-Ejemplos: `lib-metric-bar`, `lib-progress-circle`, futuras gauges CSS.
-
-#### `app/chart`
-Componentes de **gráficas interactivas**: line charts, bar charts, pie/donut, heatmaps,
-series temporales. Requieren una librería de renderizado externa (Chart.js, ECharts, D3…).
-
-Estrategia pendiente de definir: ¿wrappers ligeros que aceptan datos + tema shibui?,
-¿un sub-paquete `@shibui/ui-charts` con dependencias opcionales (`peerDependencies`)?,
-¿adaptadores por librería?  
-**No implementar hasta decidir la estrategia de integración.**
+> **`app/chart` — estrategia pendiente.** Requiere librería de renderizado externa
+> (Chart.js, ECharts, D3…). Decisión abierta: wrappers con tema shibui, sub-paquete
+> `@shibui/ui-charts` con `peerDependencies`, o adaptadores por librería.
+> **No implementar hasta cerrar la estrategia.**
 
 ---
 
-**A futuro:** cuando el catálogo crezca lo suficiente, se puede valorar separar los candidatos
-`app` en un sub-paquete (`@shibui/ui-app`) o en un set de stories/tokens independiente,
-sin romper la API compartida.
+**A futuro:** si el catálogo `app` crece lo suficiente, se puede separar en un sub-paquete
+(`@shibui/ui-app`) sin romper la API compartida.
 
-Cada candidato en este backlog está marcado con su etiqueta de contexto.
+Cada candidato en este backlog está marcado con sus tres ejes.
 
 ---
 
 ## Candidatos
 
-### `lib-gadget-frame` · Organismo · `app/layout` ✅ implementado
+### `lib-gadget-frame` · Organism · `app/dashboard` ✅ implementado
 
 **Detectado en:** `apps/app-tauri` — `src/gadgets/GadgetFrame.tsx`
 
@@ -75,7 +92,7 @@ Contenedor de gadget para dashboards drag & drop. Envuelve `lib-glass-card` aña
 
 ---
 
-### `lib-metric-bar` · Molécula · `app/metric`
+### `lib-metric-bar` · Molecule · `app/monitor` ✅ implementado
 
 **Detectado en:** `apps/app-tauri` — `src/gadgets/SystemMonitorGadget/index.tsx`
 
@@ -101,7 +118,7 @@ sin necesidad de markup externo. Pensado para listas verticales de métricas.
 
 ---
 
-### `lib-editor` · Organismo · `app/layout`
+### `lib-editor` · Organism · `app/editor`
 
 **Detectado en:** `apps/app-tauri` — pendiente de implementar como `src/gadgets/TextEditorGadget/`
 
@@ -123,7 +140,7 @@ Editor de texto plano para ficheros. Diseñado para integrarse con el sistema de
 
 ---
 
-### `lib-editor-toolbar` · Molécula · `app/layout`
+### `lib-editor-toolbar` · Molecule · `app/editor`
 
 **Detectado en:** `apps/app-tauri` — pendiente de implementar como `src/gadgets/TextEditorGadget/EditorToolbar.tsx`
 
@@ -142,7 +159,7 @@ Barra de acciones para `lib-editor`. Gestiona el ciclo de vida del fichero: nuev
 
 ---
 
-### `lib-tab-bar` · Molécula · `app/layout`
+### `lib-tab-bar` · Molecule · `app/editor`
 
 **Detectado en:** `apps/app-tauri` — pendiente de implementar como `src/gadgets/TextEditorGadget/TabBar.tsx`
 
