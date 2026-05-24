@@ -24,3 +24,5 @@ export * from './scatter-chart/lib-scatter-chart.component';
 export type { ScatterSeries, ScatterPoint, ScatterTooltip } from './scatter-chart/lib-scatter-chart.types';
 export * from './bar-chart/lib-bar-chart.component';
 export type { BarSeries, BarTooltip, BarChartMode } from './bar-chart/lib-bar-chart.types';
+export * from './scatter-chart-3d/lib-scatter-chart-3d.component';
+export type { ScatterSeries3d, ScatterPoint3d, ScatterTooltip3d } from './scatter-chart-3d/lib-scatter-chart-3d.types';
