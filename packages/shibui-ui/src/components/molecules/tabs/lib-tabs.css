@@ -767,6 +767,66 @@
     justify-content: center;
   }
 
+  /* ────────────────────────────────────────
+     DIRTY DOT
+     ──────────────────────────────────────── */
+  .tb-dirty {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-kaki-500);
+    flex-shrink: 0;
+    pointer-events: none;
+    transition: background var(--duration-base);
+  }
+
+  :host([dark]) .tb-dirty {
+    background: var(--color-kaki-400);
+  }
+
+
+  /* ────────────────────────────────────────
+     CLOSE BUTTON
+     ──────────────────────────────────────── */
+  .tb-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    opacity: 0;
+    cursor: pointer;
+    transition:
+      opacity var(--duration-fast),
+      background var(--duration-fast);
+  }
+
+  /* Visible on tab hover or when active */
+  .tb-tab:hover .tb-close,
+  .tb-tab.is-active .tb-close {
+    opacity: 0.45;
+  }
+
+  .tb-close:hover {
+    opacity: 1 !important;
+    background: var(--color-washi-200);
+  }
+
+  /* Close SVG — sobreescribe .tb-tab svg */
+  .tb-close svg {
+    width: 8px;
+    height: 8px;
+    stroke-width: 1.8;
+  }
+
+  :host([dark]) .tb-close:hover {
+    background: rgb(255, 255, 255, .1);
+  }
+
+
   /* ─── KATACHI · ambient context ──────────────────────────────
      .tb-tab base usa --color-washi-{400, 700, 900} hardcoded.
      Mapeo a semantic tokens:
@@ -806,6 +866,14 @@
 
   .tb-label {
     color: var(--lib-comp-fg-muted, var(--text-muted));
+  }
+
+  .tb-dirty {
+    background: var(--lib-comp-accent, var(--accent-primary, var(--color-kaki-500)));
+  }
+
+  .tb-close:hover {
+    background: var(--lib-comp-bg-subtle, var(--bg-surface));
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

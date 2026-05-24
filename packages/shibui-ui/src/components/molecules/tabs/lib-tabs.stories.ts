@@ -16,6 +16,7 @@ const meta: Meta = {
     glitch:   { control: 'boolean' },
     scroll:   { control: 'boolean' },
     full:     { control: 'boolean' },
+    closable: { control: 'boolean' },
     active:   { control: 'text' },
   },
 };
@@ -40,6 +41,7 @@ export const Playground: Story = {
     glitch:   false,
     scroll:   false,
     full:     false,
+    closable: false,
     active:   'overview',
   },
   render: (args): TemplateResult => html`
@@ -53,14 +55,16 @@ export const Playground: Story = {
         ?glitch="${args.glitch}"
         ?scroll="${args.scroll}"
         ?full="${args.full}"
+        ?closable="${args.closable}"
         active="${args.active}"
         .items="${[
           { id: 'overview', label: 'Overview' },
-          { id: 'code',     label: 'Código' },
+          { id: 'code',     label: 'Código',  dirty: true },
           { id: 'docs',     label: 'Docs' },
-          { id: 'issues',   label: 'Issues', disabled: true },
+          { id: 'issues',   label: 'Issues',  disabled: true },
         ]}"
         @ui-lib-tab-change="${(e: CustomEvent): void => console.log('change', e.detail)}"
+        @ui-lib-tab-close="${(e: CustomEvent): void => console.log('close', e.detail)}"
       >
         <div slot="overview" style="padding: 0.5rem 0; font-family: var(--lib-font-body); font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.8;">
           <strong style="color: var(--text-primary);">Overview</strong> — Contenido del primer panel.
@@ -436,6 +440,133 @@ export const Extras: Story = {
         </lib-tabs>
       </div>
 
+    </div>
+  `,
+};
+
+/* ────────────────────────────────────────────
+   Dirty — cambios sin guardar
+   ──────────────────────────────────────────── */
+export const WithDirty: Story = {
+  name: 'Dirty — cambios sin guardar',
+  render: (): TemplateResult => html`
+    <div style="padding: 2rem; display: flex; flex-direction: column; gap: 3rem;">
+
+      <div>
+        <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Underline — dot kaki en tabs modificados</p>
+        <lib-tabs variant="underline" active="d1-html"
+          .items="${[
+            { id: 'd1-html',  label: 'index.html', dirty: true  },
+            { id: 'd1-css',   label: 'styles.css', dirty: true  },
+            { id: 'd1-js',    label: 'app.js'                   },
+            { id: 'd1-json',  label: 'package.json'             },
+          ]}">
+          <div slot="d1-html"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">index.html — modificado, sin guardar.</p></div>
+          <div slot="d1-css"><p  style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">styles.css — modificado, sin guardar.</p></div>
+          <div slot="d1-js"><p   style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">app.js — sin cambios.</p></div>
+          <div slot="d1-json"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">package.json — sin cambios.</p></div>
+        </lib-tabs>
+      </div>
+
+      <div>
+        <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Card — formulario con secciones modificadas</p>
+        <lib-tabs variant="card" active="d2-general"
+          .items="${[
+            { id: 'd2-general',  label: 'General',    dirty: true  },
+            { id: 'd2-security', label: 'Seguridad'               },
+            { id: 'd2-billing',  label: 'Facturación', dirty: true  },
+            { id: 'd2-team',     label: 'Equipo'                  },
+          ]}">
+          <div slot="d2-general"><p  style="font-size: var(--text-sm); color: var(--text-secondary);">Nombre y descripción del proyecto — cambios pendientes.</p></div>
+          <div slot="d2-security"><p style="font-size: var(--text-sm); color: var(--text-secondary);">Sin cambios.</p></div>
+          <div slot="d2-billing"><p  style="font-size: var(--text-sm); color: var(--text-secondary);">Método de pago actualizado — sin guardar.</p></div>
+          <div slot="d2-team"><p     style="font-size: var(--text-sm); color: var(--text-secondary);">Sin cambios.</p></div>
+        </lib-tabs>
+      </div>
+
+    </div>
+  `,
+};
+
+/* ────────────────────────────────────────────
+   Closable — botón × por tab
+   ──────────────────────────────────────────── */
+export const Closable: Story = {
+  name: 'Closable — botón ×',
+  render: (): TemplateResult => html`
+    <div style="padding: 2rem; display: flex; flex-direction: column; gap: 3rem;">
+
+      <div>
+        <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">closable — global en el componente</p>
+        <lib-tabs variant="underline" closable active="cl1-a"
+          .items="${[
+            { id: 'cl1-a', label: 'Dashboard' },
+            { id: 'cl1-b', label: 'Reportes' },
+            { id: 'cl1-c', label: 'Usuarios' },
+            { id: 'cl1-d', label: 'Config',  closable: false },
+          ]}"
+          @ui-lib-tab-close="${(e: CustomEvent): void => console.log('close', e.detail)}">
+          <div slot="cl1-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Dashboard. Los tabs cierran con ×. "Config" tiene closable:false — no muestra botón.</p></div>
+          <div slot="cl1-b"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Reportes.</p></div>
+          <div slot="cl1-c"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Usuarios.</p></div>
+          <div slot="cl1-d"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Config — este tab no es cerrable.</p></div>
+        </lib-tabs>
+      </div>
+
+      <div>
+        <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">closable por tab — item.closable: true</p>
+        <lib-tabs variant="pill" active="cl2-a"
+          .items="${[
+            { id: 'cl2-a', label: 'Inicio',    closable: false },
+            { id: 'cl2-b', label: 'Búsqueda',  closable: true  },
+            { id: 'cl2-c', label: 'Resultado',  closable: true  },
+          ]}"
+          @ui-lib-tab-close="${(e: CustomEvent): void => console.log('close', e.detail)}">
+          <div slot="cl2-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Inicio — tab fijo, no cerrable.</p></div>
+          <div slot="cl2-b"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Búsqueda — cerrable.</p></div>
+          <div slot="cl2-c"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Resultado — cerrable.</p></div>
+        </lib-tabs>
+      </div>
+
+    </div>
+  `,
+};
+
+/* ────────────────────────────────────────────
+   Editor-like — closable + dirty
+   ──────────────────────────────────────────── */
+export const EditorLike: Story = {
+  name: 'Editor-like — closable + dirty',
+  parameters: { backgrounds: { default: 'dark' } },
+  render: (): TemplateResult => html`
+    <div style="background: var(--color-washi-950); padding: 2rem;">
+      <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">
+        Multi-documento — card dark · closable · dirty por tab
+      </p>
+      <lib-tabs variant="card" dark closable active="ed-main"
+        .items="${[
+          { id: 'ed-main',    label: 'main.ts',       dirty: true  },
+          { id: 'ed-types',   label: 'types.ts'                    },
+          { id: 'ed-styles',  label: 'styles.css',    dirty: true  },
+          { id: 'ed-config',  label: 'vite.config.ts', closable: false },
+        ]}"
+        @ui-lib-tab-change="${(e: CustomEvent): void => console.log('change', e.detail)}"
+        @ui-lib-tab-close="${(e: CustomEvent): void => console.log('close', e.detail)}"
+      >
+        <div slot="ed-main">
+          <pre style="font-family: var(--lib-font-mono); font-size: 9px; line-height: 1.9; color: rgba(250,247,244,.35);">
+import { LibTabs } from '@shibui/ui';
+
+const tabs = document.querySelector('lib-tabs');
+tabs?.addEventListener('ui-lib-tab-close', (e) => {
+  const { id } = (e as CustomEvent).detail;
+  removeTab(id);
+});</pre>
+        </div>
+        <div slot="ed-types"><p    style="font-size: var(--text-sm); color: rgba(250,247,244,.35); padding-top: 0.75rem;">Tipos e interfaces del proyecto.</p></div>
+        <div slot="ed-styles"><p   style="font-size: var(--text-sm); color: rgba(250,247,244,.35); padding-top: 0.75rem;">Estilos globales — modificados.</p></div>
+        <div slot="ed-config"><p   style="font-size: var(--text-sm); color: rgba(250,247,244,.35); padding-top: 0.75rem;">Configuración de Vite — tab fijo, no cerrable.</p></div>
+      </lib-tabs>
     </div>
   `,
 };

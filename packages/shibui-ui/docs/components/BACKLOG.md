@@ -143,6 +143,9 @@ sin necesidad de markup externo. Pensado para listas verticales de métricas.
 
 Editor de texto plano para ficheros. Diseñado para integrarse con el sistema de ficheros nativo vía Tauri, pero utilizable de forma standalone con contenido en memoria.
 
+> **Multi-documento:** para barra de pestañas con cierre y estado dirty por fichero, usar
+> `<lib-tabs closable>` con `TabItem.dirty`. No requiere componente adicional.
+
 **Props candidatas:**
 
 | Prop | Tipo | Descripción |
@@ -175,23 +178,3 @@ Barra de acciones para `lib-editor`. Gestiona el ciclo de vida del fichero: nuev
 | `show-open` | `boolean` | Muestra botón "Abrir" (requiere diálogo nativo en Tauri) |
 
 **Eventos candidatos:** `ui-lib-editor-toolbar-new`, `ui-lib-editor-toolbar-open`, `ui-lib-editor-toolbar-save`
-
----
-
-### `lib-tab-bar` · Molecule · `app/editor`
-
-**Detectado en:** `apps/app-tauri` — pendiente de implementar como `src/gadgets/TextEditorGadget/TabBar.tsx`
-
-Barra de pestañas genérica orientada a múltiples ficheros abiertos. Diferenciada de `lib-tabs` en que las pestañas son closables individualmente y admiten estado dirty por pestaña.
-
-**Props candidatas:**
-
-| Prop | Tipo | Descripción |
-|------|------|-------------|
-| `tabs` | `EditorTab[]` | Array de `{ id, label, dirty }` |
-| `active` | `string` | ID de la pestaña activa |
-| `closable` | `boolean` | Muestra botón de cierre en cada pestaña |
-
-**Eventos candidatos:** `ui-lib-tab-bar-select` (`detail: { id }`), `ui-lib-tab-bar-close` (`detail: { id }`)
-
-**Diferencia con `lib-tabs`:** `lib-tabs` gestiona paneles de contenido inline; `lib-tab-bar` es solo la barra de navegación, agnóstica del contenido. Pensada para editores, terminales y vistas multi-documento.
