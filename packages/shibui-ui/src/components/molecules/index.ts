@@ -18,3 +18,6 @@ export * from './select/lib-select.component';
 export * from './tabs/lib-tabs.component';
 export * from './tree-select/lib-tree-node.component';
 export * from './tree-select/lib-tree-select.component.html';
+export * from './metric-bar/lib-metric-bar.component';
+export type { MetricBarTemplateProps } from './metric-bar/lib-metric-bar.types';
+export type { ProgressTone, ProgressSize } from './metric-bar/lib-metric-bar.types';

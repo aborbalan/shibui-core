@@ -5,9 +5,87 @@ No están implementados. Cuando se aborden, seguir la estructura de 5 ficheros d
 
 ---
 
+## Taxonomía de clasificación
+
+Cada componente del backlog se describe con **tres ejes ortogonales**, alineados con el
+sistema existente:
+
+```
+[nivel atómico]  ·  [contexto de plataforma]  ·  [dominio funcional]
+    Organism            app/dashboard               lib-gadget-frame
+    Molecule            app/monitor                 lib-metric-bar
+    Molecule            app/chart                   (pendiente)
+```
+
+### Eje 1 — Nivel atómico (atomic design)
+
+Ya existe en la librería. Define granularidad y composición:
+
+| Nivel | Descripción |
+|---|---|
+| `Atom` | Unidad indivisible — button, icon, input, progress… |
+| `Molecule` | Combinación funcional de átomos — metric-bar, input-group… |
+| `Organism` | Sección compleja de UI — sidebar, data-table, gadget-frame… |
+
+### Eje 2 — Contexto de plataforma
+
+Indica dónde el componente está **diseñado u optimizado**. Sus defaults, densidad visual
+y patrones de interacción están ajustados a ese entorno:
+
+| Etiqueta | Descripción |
+|---|---|
+| `web` | Optimizado para layouts web: navegación, landing, contenido editorial, formularios |
+| `app` | Optimizado para escritorio, dashboards, tauri, dispositivos embebidos |
+| `universal` | Sin preferencia — válido en ambos entornos sin ajustes |
+
+### Eje 3 — Dominio funcional (solo para `app`)
+
+Describe **qué problema resuelve** en contexto `app`, ortogonal al nivel atómico
+(una molécula y un organismo pueden compartir dominio):
+
+| Dominio | Descripción | Implementación |
+|---|---|---|
+| `app/dashboard` | Shell de paneles — frames, contenedores de gadget, grids de dashboard | Web Components nativos |
+| `app/monitor` | Datos ligeros — métricas, KPIs, gauges, sparklines CSS | Web Components nativos, sin canvas |
+| `app/chart` | Gráficas interactivas — line, bar, pie, heatmap, series temporales | ⚠️ Requiere lib externa |
+| `app/editor` | Edición de texto/código — editores, toolbars de fichero, barras de pestañas | Web Components nativos |
+
+> **`app/chart` — estrategia pendiente.** Requiere librería de renderizado externa
+> (Chart.js, ECharts, D3…). Decisión abierta: wrappers con tema shibui, sub-paquete
+> `@shibui/ui-charts` con `peerDependencies`, o adaptadores por librería.
+> **No implementar hasta cerrar la estrategia.**
+
+---
+
+**A futuro:** si el catálogo `app` crece lo suficiente, se puede separar en un sub-paquete
+(`@shibui/ui-app`) sin romper la API compartida.
+
+Cada candidato en este backlog está marcado con sus tres ejes.
+
+---
+
+### TODO — Visualización 3D de la taxonomía
+
+> Crear un gráfico 3D interactivo (Three.js o similar, embebido como Storybook story o
+> página de docs standalone) que muestre los **77+ componentes de la librería** situados
+> en el espacio de los tres ejes:
+>
+> - **X** — Nivel atómico: `Atom` · `Molecule` · `Organism`
+> - **Y** — Contexto de plataforma: `web` · `universal` · `app`
+> - **Z** — Dominio funcional: `—` (universal/web) · `dashboard` · `monitor` · `chart` · `editor`
+>
+> Cada punto/nodo representa un componente. Al hover, muestra nombre + etiquetas.
+> Útil para visualizar la distribución actual del catálogo y detectar huecos de cobertura
+> (p.ej. "hay pocos organismos app/dashboard", "no hay nada en app/chart todavía").
+>
+> **Candidato natural:** implementar como un gadget dentro de Storybook Docs
+> (`/docs/taxonomy`) o como una historia standalone en `'Foundation/Taxonomy'`.
+
+---
+
 ## Candidatos
 
-### `lib-gadget-frame` · Organismo
+### `lib-gadget-frame` · Organism · `app/dashboard` ✅ implementado
 
 **Detectado en:** `apps/app-tauri` — `src/gadgets/GadgetFrame.tsx`
 
@@ -33,7 +111,7 @@ Contenedor de gadget para dashboards drag & drop. Envuelve `lib-glass-card` aña
 
 ---
 
-### `lib-metric-bar` · Molécula
+### `lib-metric-bar` · Molecule · `app/monitor` ✅ implementado
 
 **Detectado en:** `apps/app-tauri` — `src/gadgets/SystemMonitorGadget/index.tsx`
 
@@ -59,7 +137,7 @@ sin necesidad de markup externo. Pensado para listas verticales de métricas.
 
 ---
 
-### `lib-editor` · Organismo
+### `lib-editor` · Organism · `app/editor`
 
 **Detectado en:** `apps/app-tauri` — pendiente de implementar como `src/gadgets/TextEditorGadget/`
 
@@ -81,7 +159,7 @@ Editor de texto plano para ficheros. Diseñado para integrarse con el sistema de
 
 ---
 
-### `lib-editor-toolbar` · Molécula
+### `lib-editor-toolbar` · Molecule · `app/editor`
 
 **Detectado en:** `apps/app-tauri` — pendiente de implementar como `src/gadgets/TextEditorGadget/EditorToolbar.tsx`
 
@@ -100,7 +178,7 @@ Barra de acciones para `lib-editor`. Gestiona el ciclo de vida del fichero: nuev
 
 ---
 
-### `lib-tab-bar` · Molécula
+### `lib-tab-bar` · Molecule · `app/editor`
 
 **Detectado en:** `apps/app-tauri` — pendiente de implementar como `src/gadgets/TextEditorGadget/TabBar.tsx`
 
