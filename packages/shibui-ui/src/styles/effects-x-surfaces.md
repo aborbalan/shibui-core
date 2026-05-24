@@ -1219,6 +1219,23 @@
 
 ---
 
+### `lib-editor-toolbar` · ✅
+
+> **Coverage: 🟢 semantic.** Molecule · `app/editor`.
+> Consume tokens semánticos (`--bg-elevated`, `--border-subtle`, `--text-secondary`,
+> `--text-primary`, `--accent-primary`) para la barra, los botones y el nombre del fichero.
+> Adapta su aspecto con cada katachi sin override específico salvo el contexto `terminal`
+> (fuente monoespaciada en las etiquetas de botón).
+
+#### Superficies / Efectos
+
+| | Estado | Notas |
+|-|--------|-------|
+| Superficies | ✅ | Tokens semánticos propios — adapta fondo y bordes con katachi |
+| Efectos | `—` | No aplica — sin superficie propia |
+
+---
+
 ### `lib-empty-state` · ✅
 
 > **CSS verificado.** Tones: `neutral` (default) · `kaki` · `celadon` · `error`.
@@ -1861,6 +1878,33 @@
 |-|--------|
 | Superficies | `—` |
 | Efectos | `—` |
+
+---
+
+### `lib-text-editor` · ✅
+
+> **Coverage: 🟢 semantic.** Organismo que compone `lib-editor-toolbar` y `lib-tabs`.
+> Consume `--bg-base`, `--bg-elevated`, `--border-subtle`, `--text-primary`, `--text-muted`,
+> `--accent-primary`, `--font-mono`, `--radius-md` — todos tokens semánticos.
+> Los sub-componentes (`lib-editor-toolbar`, `lib-tabs`) gestionan sus propias superficies.
+> Overrides katachi propios para `terminal` (tipografía mono ajustada) y `kintsugi` (border reforzado).
+
+#### Superficies
+
+| Superficie | Estado | Notas |
+|------------|--------|-------|
+| light      | ✅      | bg-base + border-subtle, textarea sobre fondo claro |
+| dark       | ✅      | Hereda katachi del ancestro |
+| kintsugi   | ✅      | Border reforzado a border-default |
+| glitch     | ✅      | Hereda terminal vía tokens semánticos |
+| celadón    | ✅      | Hereda katachi del ancestro |
+| washi      | ✅      | Hereda katachi del ancestro |
+
+#### Efectos
+
+| Efecto | Estado | Notas |
+|--------|--------|-------|
+| todos  | `—`    | No aplica — editor es superficie funcional, no decorativa |
 
 ---
 
