@@ -2,6 +2,17 @@ import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-tabs.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
+import type { LibTabs } from './lib-tabs.component';
+import type { TabItem } from './lib-tabs.types';
+
+/* ── Handler reutilizable: cierra el tab actualizando items en el elemento ── */
+const _onTabClose = (e: Event): void => {
+  const el   = e.currentTarget as LibTabs;
+  const { id } = (e as CustomEvent<{ id: string }>).detail;
+  const next = el.items.filter((t: TabItem) => t.id !== id);
+  if (el.active === id) el.active = next[0]?.id ?? '';
+  el.items = next;
+};
 
 const meta: Meta = {
   title: 'Navigation/Tabs',
@@ -497,19 +508,19 @@ export const Closable: Story = {
     <div style="padding: 2rem; display: flex; flex-direction: column; gap: 3rem;">
 
       <div>
-        <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">closable — global en el componente</p>
+        <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">closable global — cierra el tab al pulsar ×</p>
         <lib-tabs variant="underline" closable active="cl1-a"
           .items="${[
             { id: 'cl1-a', label: 'Dashboard' },
             { id: 'cl1-b', label: 'Reportes' },
             { id: 'cl1-c', label: 'Usuarios' },
             { id: 'cl1-d', label: 'Config',  closable: false },
-          ]}"
-          @ui-lib-tab-close="${(e: CustomEvent): void => console.log('close', e.detail)}">
-          <div slot="cl1-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Dashboard. Los tabs cierran con ×. "Config" tiene closable:false — no muestra botón.</p></div>
+          ] as TabItem[]}"
+          @ui-lib-tab-close="${_onTabClose}">
+          <div slot="cl1-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Dashboard. Pulsa × para cerrar los tabs. "Config" tiene <code>closable:false</code> — tab fijo.</p></div>
           <div slot="cl1-b"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Reportes.</p></div>
           <div slot="cl1-c"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Usuarios.</p></div>
-          <div slot="cl1-d"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Config — este tab no es cerrable.</p></div>
+          <div slot="cl1-d"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Config — tab fijo, no cerrable.</p></div>
         </lib-tabs>
       </div>
 
@@ -520,8 +531,8 @@ export const Closable: Story = {
             { id: 'cl2-a', label: 'Inicio',    closable: false },
             { id: 'cl2-b', label: 'Búsqueda',  closable: true  },
             { id: 'cl2-c', label: 'Resultado',  closable: true  },
-          ]}"
-          @ui-lib-tab-close="${(e: CustomEvent): void => console.log('close', e.detail)}">
+          ] as TabItem[]}"
+          @ui-lib-tab-close="${_onTabClose}">
           <div slot="cl2-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Inicio — tab fijo, no cerrable.</p></div>
           <div slot="cl2-b"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Búsqueda — cerrable.</p></div>
           <div slot="cl2-c"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Resultado — cerrable.</p></div>
@@ -541,17 +552,16 @@ export const EditorLike: Story = {
   render: (): TemplateResult => html`
     <div style="background: var(--color-washi-950); padding: 2rem;">
       <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">
-        Multi-documento — card dark · closable · dirty por tab
+        Multi-documento — card dark · closable · dirty por tab · cierra al pulsar ×
       </p>
       <lib-tabs variant="card" dark closable active="ed-main"
         .items="${[
-          { id: 'ed-main',    label: 'main.ts',       dirty: true  },
-          { id: 'ed-types',   label: 'types.ts'                    },
-          { id: 'ed-styles',  label: 'styles.css',    dirty: true  },
+          { id: 'ed-main',    label: 'main.ts',        dirty: true   },
+          { id: 'ed-types',   label: 'types.ts'                      },
+          { id: 'ed-styles',  label: 'styles.css',     dirty: true   },
           { id: 'ed-config',  label: 'vite.config.ts', closable: false },
-        ]}"
-        @ui-lib-tab-change="${(e: CustomEvent): void => console.log('change', e.detail)}"
-        @ui-lib-tab-close="${(e: CustomEvent): void => console.log('close', e.detail)}"
+        ] as TabItem[]}"
+        @ui-lib-tab-close="${_onTabClose}"
       >
         <div slot="ed-main">
           <pre style="font-family: var(--lib-font-mono); font-size: 9px; line-height: 1.9; color: rgba(250,247,244,.35);">
