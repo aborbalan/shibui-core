@@ -7,26 +7,16 @@ import type { NavLink, DropdownItem, HeaderAction } from '../lib-header.types';
    ══════════════════════════════════════ */
 
 export function renderHamburger(ctx: LibHeader): TemplateResult {
-  const isLight = ['classic', 'centered', 'mega', 'minimal', 'shrink'].includes(ctx.variant);
-  const color   = isLight
-    ? 'var(--color-washi-600, #7A6A5C)'
-    : 'rgba(250,247,244,0.5)';
-
   return html`
-    <button
+    <lib-burger
       class="hdr-burger"
+      size="sm"
+      ?open="${ctx._mobileOpen}"
       aria-label="${ctx._mobileOpen ? 'Cerrar menú' : 'Abrir menú'}"
       aria-expanded="${ctx._mobileOpen}"
       aria-controls="hdr-mobile-drawer"
-      @click="${(): void => ctx._toggleMobile()}"
-    >
-      <svg width="20" height="14" viewBox="0 0 20 14" fill="none"
-        stroke="${color}" stroke-width="1.6" stroke-linecap="round">
-        <line class="hdr-burger-top" x1="0" y1="1"  x2="20" y2="1"/>
-        <line class="hdr-burger-mid" x1="0" y1="7"  x2="20" y2="7"/>
-        <line class="hdr-burger-bot" x1="0" y1="13" x2="20" y2="13"/>
-      </svg>
-    </button>`;
+      @ui-lib-burger-change="${(): void => ctx._toggleMobile()}"
+    ></lib-burger>`;
 }
 
 /* ══════════════════════════════════════

@@ -1205,6 +1205,17 @@
     padding: 0;
     z-index: 6;
     position: relative;
+    /* Color por defecto — variantes claras (classic, centered, mega, minimal, shrink) */
+    color: var(--color-washi-600, #7a6a5c);
+}
+
+/* Variantes oscuras — líneas claras */
+:host([variant="dark"]) .hdr-burger,
+:host([variant="kintsugi"]) .hdr-burger,
+:host([variant="glitch"]) .hdr-burger,
+:host([variant="transparent"]) .hdr-burger,
+:host([variant="app-bar"]) .hdr-burger {
+    color: rgba(250, 247, 244, 0.5);
 }
 
 /* ── Mobile backdrop ── */

@@ -1,6 +1,7 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import '../../atoms/icon/lib-icon.component';
+import '../../atoms/burger-button/lib-burger-button.component';
 import type { SidebarLink }     from '../../../types';
 import { sidebarTemplate }      from './lib-sidebar.html';
 import componentCss              from './lib-sidebar.css?inline';

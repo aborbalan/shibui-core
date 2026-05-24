@@ -1,6 +1,7 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { headerTemplate }   from './lib-header.html';
+import '../../atoms/burger-button/lib-burger-button.component';
 import headerCss             from './lib-header.css?inline';
 import sharedTokens          from '../../../styles/shared/tokens.css?inline';
 import type {
