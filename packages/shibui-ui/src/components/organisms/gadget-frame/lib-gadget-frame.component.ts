@@ -1,6 +1,7 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '../../atoms/icon/lib-icon.component';
+import '../../atoms/close-button/lib-close-button.component';
 import { gadgetFrameTemplate }    from './lib-gadget-frame.html';
 import componentCss               from './lib-gadget-frame.css?inline';
 import sharedTokens               from '../../../styles/shared/tokens.css?inline';

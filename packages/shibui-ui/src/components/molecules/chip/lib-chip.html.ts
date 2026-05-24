@@ -1,11 +1,6 @@
 import { html, TemplateResult } from 'lit';
 import type { LibChip } from './lib-chip.component';
 
-/* SVG × para el botón de eliminar */
-const removeSvg: TemplateResult = html`
-  <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
-    <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/>
-  </svg>`;
 
 /* ── Familia STATIC ── */
 function staticChip(/*ctx: LibChip*/): TemplateResult {
@@ -45,15 +40,15 @@ function inputChip(ctx: LibChip): TemplateResult {
       <slot name="avatar"></slot>
       <slot name="icon"></slot>
       <slot></slot>
-      <button
+      <lib-close-button
         class="chip-remove"
         part="remove"
-        type="button"
+        size="xs"
+        variant="ghost"
         aria-label="Eliminar ${ctx.ariaLabel || ''}"
-        @click="${(e: MouseEvent): void => ctx._handleRemove(e)}"
-      >
-        ${removeSvg}
-      </button>
+        @click="${(e: Event): void => e.stopPropagation()}"
+        @lib-close="${(e: Event): void => ctx._handleRemove(e)}"
+      ></lib-close-button>
     </span>`;
 }
 

@@ -1,12 +1,6 @@
 import { html, nothing, TemplateResult } from 'lit';
 import type { LibDrawer } from './lib-drawer.component';
 
-/* ── SVG close (X) ── */
-const iconClose: TemplateResult = html`
-  <svg viewBox="0 0 14 14" aria-hidden="true">
-    <line x1="2" y1="2" x2="12" y2="12"/>
-    <line x1="12" y1="2" x2="2" y2="12"/>
-  </svg>`;
 
 export function drawerTemplate(ctx: LibDrawer): TemplateResult {
   const isHorizontal = ctx.placement === 'right' || ctx.placement === 'left';
@@ -76,12 +70,13 @@ export function drawerTemplate(ctx: LibDrawer): TemplateResult {
           </div>
 
           <!-- Botón cerrar -->
-          <button
+          <lib-close-button
             class="dr-close"
-            part="close-btn"
+            size="md"
+            variant="${(ctx.variant === 'dark' || ctx.variant === 'kintsugi' || ctx.variant === 'kintsugi-dark' || ctx.variant === 'glitch' || ctx.variant === 'glitch-dark') ? 'on-dark' : 'ghost'}"
             aria-label="Cerrar"
-            @click="${(): void => ctx._close()}"
-          >${iconClose}</button>
+            @lib-close="${(): void => ctx._close()}"
+          ></lib-close-button>
         </div>
 
         <!-- Body — slot default -->

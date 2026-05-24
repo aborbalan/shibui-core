@@ -25,18 +25,14 @@ function renderClose(item: TabItem, context: LibTabs): TemplateResult | typeof n
   const onClose = (e: Event): void => context._handleClose(e, item.id);
 
   return html`
-    <span
+    <lib-close-button
       class="tb-close"
-      role="button"
-      tabindex="-1"
+      size="xs"
+      variant="ghost"
       aria-label="Cerrar ${item.label}"
-      @click="${onClose}"
-    >
-      <svg viewBox="0 0 10 10" aria-hidden="true">
-        <line x1="1.5" y1="1.5" x2="8.5" y2="8.5"/>
-        <line x1="8.5" y1="1.5" x2="1.5" y2="8.5"/>
-      </svg>
-    </span>
+      @click="${(e: Event): void => e.stopPropagation()}"
+      @lib-close="${onClose}"
+    ></lib-close-button>
   `;
 }
 
