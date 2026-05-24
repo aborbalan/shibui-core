@@ -10,9 +10,11 @@
 Gestionado con **pnpm workspaces** (pnpm@9.15.0, Node >=20).
 
 Workspaces declarados en `pnpm-workspace.yaml`:
-- `apps/*` — app-react, app-angular, app-svelte, shibui-api
+- `apps/*` — app-react, app-angular, app-svelte, app-tauri, shibui-api
 - `packages/*` — shibui-ui (`@shibui/ui`), api-contract ⚠️ WIP — no usable
 - `cloudflare/*` — cf-cache-worker
+
+> `app-tauri` requiere **Rust toolchain estable** (`rustup install stable`) además de Node+pnpm. Es una app de escritorio Tauri 2 + React 19 con backend Rust (`crate core/`).
 
 > `packages/api-contract` está en desarrollo activo pero no es consumible todavía. No integrarlo en sugerencias ni en imports.
 
@@ -48,7 +50,8 @@ Cada app/package gestiona las suyas.
 | `pnpm start:svelte` | Dev app Svelte |
 | `pnpm start:angular` | Dev app Angular |
 | `pnpm start:api` | Dev server NestJS |
-| `pnpm dev:all` | Las tres apps frontend en paralelo |
+| `pnpm start:tauri` | Dev app Tauri (Vite + ventana nativa) — requiere Rust |
+| `pnpm dev:all` | Las tres apps web frontend en paralelo (sin Tauri) |
 | `pnpm build:shibui` | Build de `@shibui/ui` |
 | `pnpm type-check` | `tsc --noEmit` sobre shibui-ui |
 | `pnpm lint` | ESLint sobre shibui-ui |
@@ -113,6 +116,7 @@ Punto de entrada único: `.github/workflows/orchestrator.yml`
 | `packages/shibui-ui/**` | `ci-lib.yml` + `ci-apps.yml` |
 | `apps/app-react\|angular\|svelte/**` | `ci-apps.yml` |
 | `apps/shibui-api/**` | `ci-api.yml` |
+| `apps/app-tauri/**` | ⚠️ Sin pipeline CI por el momento |
 | `main` + UI cambiada | `release.yml` (tras `ci-lib` exitoso) |
 
 Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_api`.

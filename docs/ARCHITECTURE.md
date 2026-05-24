@@ -64,3 +64,35 @@ El package.json actúa como un mapa de rutas, permitiendo importar solo lo que n
 @shibui/ui/react: Wrappers tipados para React.
 
 @shibui/ui/svelte: Definiciones de tipos para Svelte.
+
+7. Capa Desktop — app-tauri
+Además de las apps web, el ecosistema incluye una aplicación de escritorio nativa construida con Tauri 2.
+
+Stack:
+- Frontend: React 19 + TypeScript 5 + Vite 7 (consume @shibui/ui igual que las otras apps)
+- Desktop runtime: Tauri 2 (WebView nativa, sin Electron)
+- Backend: Rust 2021, crate independiente `app-tauri-core`
+
+Arquitectura en dos capas:
+
+  src-tauri/src/lib.rs   ← puente Tauri: registra y despacha comandos
+  core/src/
+    system.rs            ← métricas del sistema (CPU, RAM, disco, red) vía `sysinfo`
+    fs.rs                ← operaciones de sistema de ficheros (listado de directorios)
+
+Flujo de datos:
+
+  Frontend (React)
+    └─ invoke('get_cpu_detail')         ← @tauri-apps/api/core
+         └─ src-tauri/src/lib.rs        ← comando Tauri
+              └─ app_tauri_core::system::get_cpu_detail()
+                   └─ sysinfo::System   ← lectura del SO
+
+Principio de diseño: la crate `core/` es independiente de Tauri — contiene
+solo lógica pura de sistema, testeable con `cargo test` sin necesidad de
+levantar la app. `lib.rs` actúa únicamente como capa de serialización y
+despacho hacia el frontend.
+
+Comandos disponibles: `get_system_info`, `get_cpu_detail`, `get_memory_detail`,
+`get_disk_detail`, `get_network_detail`, `list_dir`, `get_home_dir`.
+Ver referencia completa en `apps/app-tauri/src-tauri/README.md`.
