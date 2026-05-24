@@ -1,0 +1,34 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-METRIC-BAR — Shibui UI
+   Contexto : app/metric
+   Rendering: delegado a lib-progress (thin wrapper)
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    width: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  lib-progress {
+    display: block;
+  }
+
+  /* ─── KATACHI · ambient context ─────────────────────────────
+     Los tokens semánticos (--text-primary, --text-muted,
+     --bg-inverse…) son heredados por lib-progress vía CSS
+     custom properties — no se necesita override propio.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
+}

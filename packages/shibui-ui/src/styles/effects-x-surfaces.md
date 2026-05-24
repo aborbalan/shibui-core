@@ -1334,6 +1334,24 @@
 
 ---
 
+### `lib-metric-bar` · ✅
+
+> **Coverage: 🟢 semantic (proxy).** Molécula thin-wrapper sobre `lib-progress`.
+> No tiene CSS visual propio — delega el renderizado completo a `lib-progress`.
+> Los tokens semánticos (`--text-primary`, `--text-muted`, `--bg-inverse`) se propagan
+> por herencia de CSS custom properties al shadow DOM de `lib-progress`, por lo que
+> el componente adapta su aspecto con cada katachi sin override propio.
+> Contexto de uso: `app/metric`.
+
+#### Superficies / Efectos
+
+| | Estado | Notas |
+|-|--------|-------|
+| Superficies | ✅ | Heredado de `lib-progress` vía CSS custom properties |
+| Efectos | `—` | No aplica — sin superficie propia |
+
+---
+
 ### `lib-modal` · ✅
 
 > **CSS verificado.** Sin variantes de superficie formales. Tones de ícono: `kaki` · `celadon` · `error` · `info`.
