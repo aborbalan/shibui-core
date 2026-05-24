@@ -22,3 +22,5 @@ export * from './text-editor/lib-text-editor.component';
 export type { EditorFile } from './text-editor/lib-text-editor.types';
 export * from './scatter-chart/lib-scatter-chart.component';
 export type { ScatterSeries, ScatterPoint, ScatterTooltip } from './scatter-chart/lib-scatter-chart.types';
+export * from './bar-chart/lib-bar-chart.component';
+export type { BarSeries, BarTooltip, BarChartMode } from './bar-chart/lib-bar-chart.types';
