@@ -15,4 +15,15 @@ export interface TabItem {
    * Si se define, se renderiza un div.tb-label antes del tab.
    */
   group?:   string;
+  /**
+   * Indica cambios sin guardar — muestra un dot de acento junto al label.
+   * Útil en editores multi-documento, formularios multi-step y configuraciones.
+   */
+  dirty?:   boolean;
+  /**
+   * Muestra botón de cierre (×) en este tab.
+   * Si se omite, hereda la prop `closable` del componente.
+   * Pasar `false` oculta el botón aunque el componente tenga `closable`.
+   */
+  closable?: boolean;
 }

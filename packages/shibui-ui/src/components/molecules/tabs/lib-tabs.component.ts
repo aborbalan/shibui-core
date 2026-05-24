@@ -27,7 +27,10 @@ import type {
  * Panels: cada TabItem con id="X" se muestra via <slot name="X">.
  * El usuario añade <div slot="X">contenido</div> como hijo de lib-tabs.
  *
+ * @prop {boolean} closable  — muestra botón × en todos los tabs (item.closable sobreescribe por tab)
+ *
  * @fires ui-lib-tab-change — {detail: { id: string; prev: string }}
+ * @fires ui-lib-tab-close  — {detail: { id: string }} — cuando se pulsa × en un tab
  */
 @customElement("lib-tabs")
 export class LibTabs extends LitElement {
@@ -70,6 +73,10 @@ export class LibTabs extends LitElement {
   /** aria-label para el tablist */
   @property({ type: String, attribute: "aria-label" })
   override ariaLabel = "";
+
+  /** Muestra botón × en todos los tabs (puede sobreescribirse con item.closable). */
+  @property({ type: Boolean, reflect: true })
+  closable = false;
 
   @property({ type: Array, hasChanged: () => true })
   items: TabItem[] = [];
@@ -157,6 +164,17 @@ export class LibTabs extends LitElement {
     this.dispatchEvent(
       new CustomEvent("ui-lib-tab-change", {
         detail: { id, prev },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
+  _handleClose(e: Event, id: string): void {
+    e.stopPropagation();
+    this.dispatchEvent(
+      new CustomEvent('ui-lib-tab-close', {
+        detail: { id },
         bubbles: true,
         composed: true,
       }),

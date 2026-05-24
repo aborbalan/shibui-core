@@ -10,6 +10,36 @@ function renderBadge(item: TabItem): TemplateResult | typeof nothing {
     : nothing;
 }
 
+/* ── Dirty dot ── */
+function renderDirty(item: TabItem): TemplateResult | typeof nothing {
+  return item.dirty
+    ? html`<span class="tb-dirty" aria-hidden="true"></span>`
+    : nothing;
+}
+
+/* ── Close button ── */
+function renderClose(item: TabItem, context: LibTabs): TemplateResult | typeof nothing {
+  const show = item.closable !== undefined ? item.closable : context.closable;
+  if (!show) return nothing;
+
+  const onClose = (e: Event): void => context._handleClose(e, item.id);
+
+  return html`
+    <span
+      class="tb-close"
+      role="button"
+      tabindex="-1"
+      aria-label="Cerrar ${item.label}"
+      @click="${onClose}"
+    >
+      <svg viewBox="0 0 10 10" aria-hidden="true">
+        <line x1="1.5" y1="1.5" x2="8.5" y2="8.5"/>
+        <line x1="8.5" y1="1.5" x2="1.5" y2="8.5"/>
+      </svg>
+    </span>
+  `;
+}
+
 /* ── Tab button ── */
 function renderTab(item: TabItem, context: LibTabs): TemplateResult {
   const isActive   = context.active === item.id;
@@ -34,6 +64,8 @@ function renderTab(item: TabItem, context: LibTabs): TemplateResult {
       ${item.icon ? html`${unsafeHTML(item.icon)}` : nothing}
       ${item.label}
       ${renderBadge(item)}
+      ${renderDirty(item)}
+      ${renderClose(item, context)}
     </button>
   `;
 }
