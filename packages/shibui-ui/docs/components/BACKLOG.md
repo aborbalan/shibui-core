@@ -64,6 +64,25 @@ Cada candidato en este backlog está marcado con sus tres ejes.
 
 ---
 
+### TODO — Visualización 3D de la taxonomía
+
+> Crear un gráfico 3D interactivo (Three.js o similar, embebido como Storybook story o
+> página de docs standalone) que muestre los **77+ componentes de la librería** situados
+> en el espacio de los tres ejes:
+>
+> - **X** — Nivel atómico: `Atom` · `Molecule` · `Organism`
+> - **Y** — Contexto de plataforma: `web` · `universal` · `app`
+> - **Z** — Dominio funcional: `—` (universal/web) · `dashboard` · `monitor` · `chart` · `editor`
+>
+> Cada punto/nodo representa un componente. Al hover, muestra nombre + etiquetas.
+> Útil para visualizar la distribución actual del catálogo y detectar huecos de cobertura
+> (p.ej. "hay pocos organismos app/dashboard", "no hay nada en app/chart todavía").
+>
+> **Candidato natural:** implementar como un gadget dentro de Storybook Docs
+> (`/docs/taxonomy`) o como una historia standalone en `'Foundation/Taxonomy'`.
+
+---
+
 ## Candidatos
 
 ### `lib-gadget-frame` · Organism · `app/dashboard` ✅ implementado
