@@ -20,3 +20,5 @@ export * from './gadget-frame/lib-gadget-frame.component';
 export type { GadgetFrameVariant } from './gadget-frame/lib-gadget-frame.types';
 export * from './text-editor/lib-text-editor.component';
 export type { EditorFile } from './text-editor/lib-text-editor.types';
+export * from './scatter-chart/lib-scatter-chart.component';
+export type { ScatterSeries, ScatterPoint, ScatterTooltip } from './scatter-chart/lib-scatter-chart.types';
