@@ -9,11 +9,12 @@ export type LibCloseVariant =
   | 'danger'
   | 'on-dark';
 
-export type LibCloseSize = 'sm' | 'md' | 'lg' | 'xl';
+export type LibCloseSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type LibCloseIcon = 'x' | 'x-circle' | 'x-square';
 
 /** Maps component size → lib-icon size prop */
 const ICON_SIZE: Record<LibCloseSize, string> = {
+  xs: 'xs',
   sm: 'xs',
   md: 'sm',
   lg: 'sm',
@@ -40,6 +41,7 @@ export function closeButtonTemplate(props: CloseButtonTemplateProps): TemplateRe
     <button
       type="button"
       class="close-btn"
+      part="close-btn"
       aria-label="${props.ariaLabel}"
       ?disabled="${props.disabled}"
       @click="${props.onClick}"

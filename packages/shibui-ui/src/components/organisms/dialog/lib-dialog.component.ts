@@ -1,5 +1,6 @@
 import { LitElement, css, unsafeCSS, TemplateResult, PropertyValues } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
+import '../../atoms/close-button/lib-close-button.component';
 import { dialogTemplate } from './lib-dialog.html';
 import dialogCss from './lib-dialog.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';

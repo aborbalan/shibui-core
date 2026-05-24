@@ -1,5 +1,6 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
+import '../../atoms/close-button/lib-close-button.component';
 import { chipTemplate } from './lib-chip.html';
 import chipCss from './lib-chip.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
@@ -66,7 +67,7 @@ export class LibChip extends LitElement {
   }
 
   /* ── Remove con animación de salida ── */
-  _handleRemove(e: MouseEvent): void {
+  _handleRemove(e: Event): void {
     e.stopPropagation();
     const el = this._inputEl;
     if (!el) {

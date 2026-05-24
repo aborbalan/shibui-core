@@ -1,13 +1,6 @@
 import { html, TemplateResult } from 'lit';
 import type { DialogTemplateProps } from './lib-dialog.types';
 
-/* SVG del botón de cierre — reutilizable */
-const closeSvg = html`
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
-       stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-    <path d="M1 1l10 10M11 1L1 11"/>
-  </svg>
-`;
 
 /* Icono para variante danger */
 const dangerSvg = html`
@@ -70,11 +63,13 @@ export function dialogTemplate(props: DialogTemplateProps): TemplateResult {
             <h2 class="dlg-title">${dlgTitle}</h2>
           </slot>
         </div>
-        <button
+        <lib-close-button
           class="dlg-close"
+          size="sm"
+          variant="ghost"
           aria-label="Cerrar"
-          @click="${(): void => onClose()}"
-        >${closeSvg}</button>
+          @lib-close="${(): void => onClose()}"
+        ></lib-close-button>
       </div>
 
       <!-- BODY -->

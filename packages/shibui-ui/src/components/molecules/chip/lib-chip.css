@@ -136,14 +136,9 @@
       color var(--duration-fast);
   }
 
-  .chip-remove:hover {
+  .chip-remove::part(close-btn):hover {
     background: var(--color-washi-200);
     color: var(--text-primary);
-  }
-
-  .chip-remove svg {
-    width: 10px;
-    height: 10px;
   }
 
   /* Animación de entrada */
@@ -292,7 +287,7 @@
     border-color: var(--color-kaki-100);
   }
 
-  :host([color="kaki"]) .chip-remove:hover {
+  :host([color="kaki"]) .chip-remove::part(close-btn):hover {
     background: var(--color-kaki-100);
     color: var(--color-kaki-600);
   }
@@ -322,7 +317,7 @@
     border-color: var(--color-celadon-100);
   }
 
-  :host([color="celadon"]) .chip-remove:hover {
+  :host([color="celadon"]) .chip-remove::part(close-btn):hover {
     background: var(--color-celadon-100);
     color: var(--color-celadon-600);
   }
@@ -335,7 +330,7 @@
     border-color: var(--color-error-light);
   }
 
-  :host([color="error"]) .chip-remove:hover {
+  :host([color="error"]) .chip-remove::part(close-btn):hover {
     background: #EBC5BF;
     color: var(--color-error);
   }
@@ -377,7 +372,7 @@
     border-color: var(--color-washi-700);
   }
 
-  :host([color="dark"]) .chip-remove:hover {
+  :host([color="dark"]) .chip-remove::part(close-btn):hover {
     background: var(--color-washi-700);
     color: var(--color-washi-100);
   }

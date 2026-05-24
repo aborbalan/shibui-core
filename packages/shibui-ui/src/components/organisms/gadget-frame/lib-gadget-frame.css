@@ -110,13 +110,12 @@
       transform: scale(.88);
     }
 
-    /* ── Cierre — hover rojo ── */
-    &.gadget-btn--close {
-      &:hover {
-        background: oklch(55% 0.2 25deg / .12);
-        color:      oklch(55% 0.2 25deg);
-      }
-    }
+  }
+
+  /* ── Cierre — hover rojo (penetra shadow DOM via ::part) ── */
+  .gadget-btn--close::part(close-btn):hover {
+    background: oklch(55% 0.2 25deg / .12);
+    color:      oklch(55% 0.2 25deg);
   }
 
   /* ── Body — slot ─────────────────────────────────────────── */
