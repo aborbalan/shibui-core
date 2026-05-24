@@ -63,7 +63,6 @@ function renderGrid(
   ticks:  number[],
   yMax:   number,
   innerW: number,
-  innerH: number,
   scaleY: (v: number) => number,
 ): TemplateResult {
   return svg`
@@ -323,7 +322,7 @@ export function barChartTemplate(props: BarChartTemplateProps): TemplateResult {
         role="img"
         aria-label="Bar chart"
       >
-        ${showGrid && !isEmpty ? renderGrid(ticks, yMax, innerW, innerH, scaleY) : nothing}
+        ${showGrid && !isEmpty ? renderGrid(ticks, yMax, innerW, scaleY) : nothing}
         ${renderAxes(innerW, innerH)}
         ${renderYTicks(ticks, yMax, scaleY)}
         ${renderXLabels(categories, groupW, innerH)}
