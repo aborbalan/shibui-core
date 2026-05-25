@@ -271,6 +271,70 @@ export function renderGlitch(ctx: LibFooter): TemplateResult {
 }
 
 /* ────────────────────────────────────────────────────────────
+   05 · CELADON (jade oscuro + seam jade)
+   ──────────────────────────────────────────────────────────── */
+export function renderCeladon(ctx: LibFooter): TemplateResult {
+  return html`
+    <footer style="position:relative;">
+
+      <!-- Jade seam -->
+      <div class="ft-celadon-seam" aria-hidden="true"></div>
+
+      <!-- Ceramic ring ornament -->
+      <div class="ft-celadon-ring" aria-hidden="true">
+        <div class="ft-celadon-ring-track"></div>
+        <span class="ft-celadon-symbol">青</span>
+      </div>
+
+      <div class="ft-inner" style="padding-top:var(--lib-space-xl,2rem);">
+
+        <!-- Brand centered -->
+        <div style="text-align:center;margin-bottom:var(--lib-space-lg,1.5rem);">
+          <div style="font-family:var(--ft-font-display);font-weight:300;font-size:1.75rem;
+            letter-spacing:0.15em;color:oklch(75% 0.05 180deg / .55);">
+            ${ctx.brandName} <em style="font-style:italic;color:var(--color-celadon-400,#4E9482);">${ctx.brandKanji}</em>
+          </div>
+          <span style="font-family:var(--ft-font-mono);font-size:.5rem;letter-spacing:.22em;
+            text-transform:uppercase;color:oklch(60% 0.05 180deg / .3);display:block;margin-top:.375rem;">
+            ${ctx.brandSub}
+          </span>
+        </div>
+
+        <!-- Nav columns -->
+        <div class="ft-celadon-grid">
+          ${(ctx.columns ?? []).map(col => html`
+            <div>
+              <div class="ft-celadon-col-head">${col.heading}</div>
+              <ul class="ft-celadon-col-links">
+                ${(col.links ?? []).map(link => html`
+                  <li>
+                    <a href="${link.href}">
+                      <span class="ft-celadon-arrow">›</span>
+                      ${link.label}
+                    </a>
+                  </li>
+                `)}
+              </ul>
+            </div>
+          `)}
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="ft-bottom" style="border-top-color:oklch(45.54% 0.059 173.23deg / .12);">
+          <p class="ft-copyright">青磁 · © ${ctx.year} · ${ctx.brandName.toUpperCase()} · MIT LICENSE</p>
+          <div style="display:flex;gap:var(--lib-space-md,1rem);">
+            ${(ctx.legalLinks ?? []).map(link => html`
+              <a href="${link.href}" class="ft-link-mono">${link.label}</a>
+            `)}
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  `;
+}
+
+/* ────────────────────────────────────────────────────────────
    Dispatcher — decide qué template renderizar
    ──────────────────────────────────────────────────────────── */
 export function renderFooter(ctx: LibFooter): TemplateResult {
@@ -279,6 +343,7 @@ export function renderFooter(ctx: LibFooter): TemplateResult {
     case 'accordion': return renderAccordion(ctx);
     case 'kintsugi':  return renderKintsugi(ctx);
     case 'glitch':    return renderGlitch(ctx);
+    case 'celadon':   return renderCeladon(ctx);
     default:          return renderSocial(ctx);
   }
 }

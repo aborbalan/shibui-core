@@ -12,7 +12,7 @@ const meta: Meta = {
   argTypes: {
     variant: { control: 'select', options: [
       'classic','dark','centered','transparent','kintsugi',
-      'glitch','mega','minimal','shrink','app-bar',
+      'glitch','mega','minimal','shrink','app-bar','celadon',
     ]},
   },
 };
@@ -344,6 +344,32 @@ export const AppBar: Story = {
 };
 
 /* ════════════════════════════════════════
+   11 · CELADON
+   ════════════════════════════════════════ */
+export const Celadon: Story = {
+  name: '11 · Celadon — 青 jade · seam jade',
+  render: (): TemplateResult => html`
+    <lib-header variant="celadon"
+      brand-name="shibui"
+      login-label="Entrar"
+      .links="${[
+        { id: 'gallery',    label: 'Galería',    href: '#' },
+        { id: 'collection', label: 'Colección',  href: '#' },
+        { id: 'archive',    label: 'Archivo',    href: '#' },
+        { id: 'about',      label: 'Sobre',      href: '#' },
+      ]}"
+      .actions="${[{ label: '青 Explorar', href: '#', variant: 'celadon' }]}"
+    ></lib-header>
+    <div style="background:oklch(15% 0.02 180deg);padding:var(--lib-space-xl) calc(var(--lib-space-xl)*2);min-height:300px;">
+      <div style="font-family:var(--lib-font-display);font-size:2.8rem;font-weight:300;
+        letter-spacing:-.02em;line-height:1.1;color:oklch(90% 0.04 180deg / .55);">
+        青磁<br><em style="font-style:italic;color:var(--color-celadon-400);">cerámica jade, fría y serena</em>
+      </div>
+    </div>
+  `,
+};
+
+/* ════════════════════════════════════════
    PLAYGROUND
    ════════════════════════════════════════ */
 export const Playground: Story = {
@@ -356,7 +382,7 @@ export const Playground: Story = {
       .links="${NAV_SIMPLE}"
       .actions="${ACTIONS}"
     ></lib-header>
-    ${body(args.variant === 'dark' || args.variant === 'kintsugi' || args.variant === 'glitch')}
+    ${body(args.variant === 'dark' || args.variant === 'kintsugi' || args.variant === 'glitch' || args.variant === 'celadon')}
   `,
 };
 /* ═══════════════════════════════════════════════════════════════

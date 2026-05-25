@@ -1159,6 +1159,7 @@
         :host([variant="kintsugi"]) .hdr-logo-mark::before,
         :host([variant="glitch"]) .hdr,
         :host([variant="glitch"]) .hdr::before,
+        :host([variant="celadon"]) .hdr::after,
         .hdr-action--glitch {
             animation: none !important;
         }
@@ -1166,6 +1167,104 @@
         .hdr {
             transition: none !important;
         }
+    }
+
+    /* ══════════════════════════════════════
+     11 · CELADON · jade oscuro, vidrioso
+     ══════════════════════════════════════ */
+    :host([variant="celadon"]) .hdr {
+        height: 64px;
+        background: oklch(22% 0.03 175deg / .92);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid oklch(45.54% 0.059 173.23deg / .15);
+        padding: 0 var(--lib-space-xl);
+        gap: var(--lib-space-xl);
+    }
+
+    /* Jade seam — bottom edge */
+    :host([variant="celadon"]) .hdr::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg,
+                transparent,
+                oklch(45.54% 0.059 173.23deg / .3) 20%,
+                var(--color-celadon-400) 40%,
+                oklch(75% 0.08 172deg / .9) 50%,
+                var(--color-celadon-400) 60%,
+                oklch(45.54% 0.059 173.23deg / .3) 80%,
+                transparent);
+        background-size: 200% 100%;
+        animation: hdr-celadon-seam 6s linear infinite;
+        pointer-events: none;
+    }
+
+    @keyframes hdr-celadon-seam {
+        0% {
+            background-position: -200% 0;
+        }
+
+        100% {
+            background-position: 200% 0;
+        }
+    }
+
+    /* Logo mark */
+    :host([variant="celadon"]) .hdr-logo-mark {
+        background: oklch(58.33% 0.068 171.21deg / .15);
+        border: 1px solid oklch(58.33% 0.068 171.21deg / .35);
+        color: var(--color-celadon-300);
+    }
+
+    /* Brand name */
+    :host([variant="celadon"]) .hdr-brand-name {
+        color: oklch(90% 0.04 180deg / .7);
+    }
+
+    /* Nav links */
+    :host([variant="celadon"]) .hdr-link {
+        color: oklch(75% 0.05 180deg / .45);
+    }
+
+    :host([variant="celadon"]) .hdr-link:hover {
+        opacity: 1;
+        color: var(--color-celadon-300);
+    }
+
+    /* Login */
+    :host([variant="celadon"]) .hdr-login {
+        color: oklch(75% 0.05 180deg / .28);
+    }
+
+    /* Dropdown */
+    :host([variant="celadon"]) .hdr-dd-menu {
+        background: oklch(18% 0.025 178deg);
+        border-color: oklch(45.54% 0.059 173.23deg / .25);
+    }
+
+    :host([variant="celadon"]) .hdr-dd-item {
+        color: oklch(75% 0.05 180deg / .45);
+    }
+
+    :host([variant="celadon"]) .hdr-dd-item:hover {
+        background: oklch(58.33% 0.068 171.21deg / .08);
+        color: var(--color-celadon-300);
+    }
+
+    /* CTA celadon */
+    .hdr-action--celadon {
+        background: transparent;
+        border: 1px solid oklch(45.54% 0.059 173.23deg / .45);
+        color: var(--color-celadon-400);
+    }
+
+    .hdr-action--celadon:hover {
+        border-color: var(--color-celadon-400);
+        background: oklch(58.33% 0.068 171.21deg / .10);
+        color: var(--color-celadon-300);
     }
 
     /* ─── KATACHI · ambient context ──────────────────────────────
@@ -1214,7 +1313,8 @@
 :host([variant="kintsugi"]) .hdr-burger,
 :host([variant="glitch"]) .hdr-burger,
 :host([variant="transparent"]) .hdr-burger,
-:host([variant="app-bar"]) .hdr-burger {
+:host([variant="app-bar"]) .hdr-burger,
+:host([variant="celadon"]) .hdr-burger {
     color: rgba(250, 247, 244, 0.5);
 }
 

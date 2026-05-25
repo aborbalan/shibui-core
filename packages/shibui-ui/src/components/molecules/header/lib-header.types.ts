@@ -8,7 +8,8 @@ export type HeaderVariant =
   | 'mega'         // 07 — mega-nav panel full-width
   | 'minimal'      // 08 — sin borde, sin fondo, solo texto
   | 'shrink'       // 09 — 72px → 48px al scroll
-  | 'app-bar';     // 10 — breadcrumbs, search, acciones, avatar
+  | 'app-bar'      // 10 — breadcrumbs, search, acciones, avatar
+  | 'celadon';     // 11 — jade oscuro, seam jade, spotlight water
 
 export interface NavLink {
   id: string;
