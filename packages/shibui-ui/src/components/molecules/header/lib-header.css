@@ -1315,7 +1315,7 @@
 :host([variant="transparent"]) .hdr-burger,
 :host([variant="app-bar"]) .hdr-burger,
 :host([variant="celadon"]) .hdr-burger {
-    color: rgba(250, 247, 244, 0.5);
+    color: rgb(250, 247, 244, 0.5);
 }
 
 /* ── Mobile backdrop ── */
