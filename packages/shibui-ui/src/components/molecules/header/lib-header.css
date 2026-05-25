@@ -1267,6 +1267,170 @@
         color: var(--color-celadon-300);
     }
 
+    /* ══════════════════════════════════════
+     12 · SABI · papel washi, tinta, brutal
+     ══════════════════════════════════════ */
+    :host([variant="sabi"]) .hdr {
+        height: 64px;
+        background: var(--bg-elevated, #fff);
+        border-bottom: 2px solid var(--lib-comp-fg, var(--color-washi-900));
+        padding: 0 var(--lib-space-xl);
+        gap: var(--lib-space-xl);
+    }
+
+    /* Logo mark: sello de tinta */
+    :host([variant="sabi"]) .hdr-logo-mark {
+        background: var(--lib-comp-fg, var(--color-washi-900));
+        border: none;
+        color: var(--bg-elevated, #fff);
+    }
+
+    /* Brand name */
+    :host([variant="sabi"]) .hdr-brand-name {
+        color: var(--lib-comp-fg, var(--color-washi-900));
+    }
+
+    /* Nav links — tipografía display, sin caps */
+    :host([variant="sabi"]) .hdr-link {
+        font-family: var(--lib-font-display);
+        font-size: var(--text-sm);
+        letter-spacing: .04em;
+        text-transform: none;
+        color: var(--lib-comp-fg-sec, var(--color-washi-600));
+    }
+
+    :host([variant="sabi"]) .hdr-link:hover {
+        opacity: 1;
+        color: var(--lib-comp-fg, var(--color-washi-900));
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    /* Login */
+    :host([variant="sabi"]) .hdr-login {
+        color: var(--lib-comp-fg-sec, var(--color-washi-400));
+    }
+
+    /* Dropdown: recuadro brutal */
+    :host([variant="sabi"]) .hdr-dd-menu {
+        background: var(--bg-elevated, #fff);
+        border: 2px solid var(--lib-comp-fg, var(--color-washi-900));
+        box-shadow: 3px 3px 0 var(--lib-comp-fg, var(--color-washi-900));
+    }
+
+    :host([variant="sabi"]) .hdr-dd-item {
+        font-family: var(--lib-font-display);
+        font-size: var(--text-sm);
+        letter-spacing: .02em;
+        text-transform: none;
+        color: var(--lib-comp-fg-sec, var(--color-washi-600));
+    }
+
+    :host([variant="sabi"]) .hdr-dd-item:hover {
+        background: var(--color-washi-100);
+        color: var(--lib-comp-fg, var(--color-washi-900));
+    }
+
+    /* CTA sabi — recuadro offset */
+    .hdr-action--sabi {
+        background: transparent;
+        border: 1.5px solid var(--lib-comp-fg, var(--color-washi-900));
+        color: var(--lib-comp-fg, var(--color-washi-900));
+        box-shadow: 2px 2px 0 var(--lib-comp-fg, var(--color-washi-900));
+        font-family: var(--lib-font-display);
+        letter-spacing: .06em;
+        text-transform: none;
+        transition: all var(--duration-base);
+    }
+
+    .hdr-action--sabi:hover {
+        background: var(--lib-comp-fg, var(--color-washi-900));
+        color: var(--bg-elevated, #fff);
+        box-shadow: none;
+        transform: translate(2px, 2px);
+    }
+
+    /* ══════════════════════════════════════
+     13 · SHIZEN · natural, limpio, aireado
+     ══════════════════════════════════════ */
+    :host([variant="shizen"]) .hdr {
+        height: 68px;
+        background: var(--bg-elevated);
+        border-bottom: 1px solid var(--border-subtle);
+        padding: 0 var(--lib-space-xl);
+        gap: var(--lib-space-xl);
+    }
+
+    /* Logo mark: círculo natural neutro */
+    :host([variant="shizen"]) .hdr-logo-mark {
+        background: var(--color-washi-100);
+        border: 1px solid var(--lib-comp-border, var(--color-washi-300));
+        color: var(--lib-comp-fg-sec, var(--color-washi-600));
+        border-radius: 50%;
+    }
+
+    /* Brand name */
+    :host([variant="shizen"]) .hdr-brand-name {
+        color: var(--lib-comp-fg, var(--color-washi-800));
+    }
+
+    /* Nav links — body font, sin caps */
+    :host([variant="shizen"]) .hdr-link {
+        font-family: var(--lib-font-body);
+        font-size: var(--text-sm);
+        letter-spacing: .02em;
+        text-transform: none;
+        color: var(--lib-comp-fg-sec, var(--color-washi-500));
+    }
+
+    :host([variant="shizen"]) .hdr-link:hover {
+        opacity: 1;
+        color: var(--lib-comp-fg, var(--color-washi-800));
+    }
+
+    /* Login */
+    :host([variant="shizen"]) .hdr-login {
+        font-family: var(--lib-font-body);
+        letter-spacing: 0;
+        text-transform: none;
+        color: var(--lib-comp-fg-sec, var(--color-washi-400));
+    }
+
+    /* Dropdown */
+    :host([variant="shizen"]) .hdr-dd-menu {
+        background: var(--bg-elevated);
+        border-color: var(--border-subtle);
+    }
+
+    :host([variant="shizen"]) .hdr-dd-item {
+        font-family: var(--lib-font-body);
+        font-size: var(--text-sm);
+        letter-spacing: 0;
+        text-transform: none;
+        color: var(--lib-comp-fg-sec, var(--color-washi-500));
+    }
+
+    :host([variant="shizen"]) .hdr-dd-item:hover {
+        background: var(--color-washi-50);
+        color: var(--lib-comp-fg, var(--color-washi-800));
+    }
+
+    /* CTA shizen — borde natural suave */
+    .hdr-action--shizen {
+        background: transparent;
+        border: 1px solid var(--lib-comp-border, var(--color-washi-300));
+        color: var(--lib-comp-fg-sec, var(--color-washi-700));
+        font-family: var(--lib-font-body);
+        letter-spacing: .03em;
+        text-transform: none;
+    }
+
+    .hdr-action--shizen:hover {
+        border-color: var(--lib-comp-border-strong, var(--color-washi-600));
+        color: var(--lib-comp-fg, var(--color-washi-900));
+        background: var(--color-washi-50);
+    }
+
     /* ─── KATACHI · ambient context ──────────────────────────────
        lib-header adapta a katachi vía --lib-comp-* (GUITV):
 
