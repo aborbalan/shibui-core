@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Katachi · components fixture</title>
+
+  <!--
+    Compiled artifacts from `pnpm build:shibui`.
+    - tokens.css  → propagates all katachi semantic tokens
+    - index.js    → registers all lib-* custom elements
+    Both are asserted to exist in beforeAll() of the parent spec.
+  -->
+  <link rel="stylesheet" href="../../../dist/tokens.css">
+  <script type="module" src="../../../dist/index.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    .contexts {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Each context strip: applies katachi + gives components a
+       representative dark surface to render against. */
+    .ctx {
+      padding: 24px;
+      background: var(--bg-base);
+    }
+
+    .ctx-label {
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .ctx-components {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .ctx-components > * {
+      min-width: 240px;
+      max-width: 320px;
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="contexts">
+
+    <!-- WABI ─────────────────────────────────────────────────── -->
+    <div class="ctx" data-katachi="wabi">
+      <p class="ctx-label">wabi · dark</p>
+      <div class="ctx-components">
+        <lib-input label="TU NOMBRE" placeholder="Nombre completo"></lib-input>
+      </div>
+    </div>
+
+    <!-- KINTSUGI ─────────────────────────────────────────────── -->
+    <div class="ctx" data-katachi="kintsugi">
+      <p class="ctx-label">kintsugi · dark</p>
+      <div class="ctx-components">
+        <lib-input label="TU NOMBRE" placeholder="Nombre completo"></lib-input>
+      </div>
+    </div>
+
+    <!-- TERMINAL ─────────────────────────────────────────────── -->
+    <div class="ctx" data-katachi="terminal">
+      <p class="ctx-label">terminal · dark</p>
+      <div class="ctx-components">
+        <lib-input label="TU NOMBRE" placeholder="Nombre completo"></lib-input>
+      </div>
+    </div>
+
+    <!-- CELADON ──────────────────────────────────────────────── -->
+    <div class="ctx" data-katachi="celadon">
+      <p class="ctx-label">celadon · dark</p>
+      <div class="ctx-components">
+        <lib-input label="TU NOMBRE" placeholder="Nombre completo"></lib-input>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

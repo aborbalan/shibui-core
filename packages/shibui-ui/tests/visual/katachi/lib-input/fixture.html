@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>lib-input · katachi fixture</title>
+
+  <link rel="stylesheet" href="../../../../dist/tokens.css">
+  <script type="module" src="../../../../dist/index.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: #888; /* gap color — makes slices visually separated */
+    }
+
+    /* One slice per katachi. Each is the Playwright screenshot target. */
+    .slice {
+      padding: 24px;
+      background: var(--bg-base);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-width: 0;
+    }
+
+    .slice-label {
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid">
+
+    <!-- WABI ─────────────────────────────────────── -->
+    <div data-slice="wabi" data-katachi="wabi" class="slice">
+      <span class="slice-label">wabi</span>
+      <lib-input label="TU NOMBRE" placeholder="Nombre completo"></lib-input>
+      <lib-input label="EMAIL" placeholder="correo@ejemplo.com" type="email"></lib-input>
+    </div>
+
+    <!-- KINTSUGI ─────────────────────────────────── -->
+    <div data-slice="kintsugi" data-katachi="kintsugi" class="slice">
+      <span class="slice-label">kintsugi</span>
+      <lib-input label="TU NOMBRE" placeholder="Nombre completo"></lib-input>
+      <lib-input label="EMAIL" placeholder="correo@ejemplo.com" type="email"></lib-input>
+    </div>
+
+    <!-- SABI ─────────────────────────────────────── -->
+    <div data-slice="sabi" data-katachi="sabi" class="slice">
+      <span class="slice-label">sabi</span>
+      <lib-input label="TU NOMBRE" placeholder="Nombre completo"></lib-input>
+      <lib-input label="EMAIL" placeholder="correo@ejemplo.com" type="email"></lib-input>
+    </div>
+
+    <!-- TERMINAL ─────────────────────────────────── -->
+    <div data-slice="terminal" data-katachi="terminal" class="slice">
+      <span class="slice-label">terminal</span>
+      <lib-input label="TU NOMBRE" placeholder="Nombre completo"></lib-input>
+      <lib-input label="EMAIL" placeholder="correo@ejemplo.com" type="email"></lib-input>
+    </div>
+
+    <!-- SHIZEN ───────────────────────────────────── -->
+    <div data-slice="shizen" data-katachi="shizen" class="slice">
+      <span class="slice-label">shizen</span>
+      <lib-input label="TU NOMBRE" placeholder="Nombre completo"></lib-input>
+      <lib-input label="EMAIL" placeholder="correo@ejemplo.com" type="email"></lib-input>
+    </div>
+
+    <!-- CELADON ──────────────────────────────────── -->
+    <div data-slice="celadon" data-katachi="celadon" class="slice">
+      <span class="slice-label">celadon</span>
+      <lib-input label="TU NOMBRE" placeholder="Nombre completo"></lib-input>
+      <lib-input label="EMAIL" placeholder="correo@ejemplo.com" type="email"></lib-input>
+    </div>
+
+  </div>
+
+</body>
+</html>

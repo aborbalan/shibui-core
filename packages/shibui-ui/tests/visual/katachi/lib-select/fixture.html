@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>lib-select · katachi fixture</title>
+
+  <link rel="stylesheet" href="../../../../dist/tokens.css">
+  <script type="module" src="../../../../dist/index.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: #888;
+    }
+
+    .slice {
+      padding: 24px;
+      background: var(--bg-base);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-width: 0;
+    }
+
+    .slice-label {
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid">
+
+    <!-- WABI ─────────────────────────────────────── -->
+    <div data-slice="wabi" data-katachi="wabi" class="slice">
+      <span class="slice-label">wabi</span>
+      <!-- Trigger: closed, no selection (shows placeholder) -->
+      <lib-select placeholder="Elige una opción">
+        <lib-select-option value="1">Opción uno</lib-select-option>
+        <lib-select-option value="2">Opción dos</lib-select-option>
+        <lib-select-option value="3">Opción tres</lib-select-option>
+      </lib-select>
+      <!-- Trigger: with a pre-selected value -->
+      <lib-select value="2">
+        <lib-select-option value="1">Opción uno</lib-select-option>
+        <lib-select-option value="2">Opción dos</lib-select-option>
+        <lib-select-option value="3">Opción tres</lib-select-option>
+      </lib-select>
+    </div>
+
+    <!-- KINTSUGI ─────────────────────────────────── -->
+    <div data-slice="kintsugi" data-katachi="kintsugi" class="slice">
+      <span class="slice-label">kintsugi</span>
+      <lib-select placeholder="Elige una opción">
+        <lib-select-option value="1">Opción uno</lib-select-option>
+        <lib-select-option value="2">Opción dos</lib-select-option>
+        <lib-select-option value="3">Opción tres</lib-select-option>
+      </lib-select>
+      <lib-select value="2">
+        <lib-select-option value="1">Opción uno</lib-select-option>
+        <lib-select-option value="2">Opción dos</lib-select-option>
+        <lib-select-option value="3">Opción tres</lib-select-option>
+      </lib-select>
+    </div>
+
+    <!-- SABI ─────────────────────────────────────── -->
+    <div data-slice="sabi" data-katachi="sabi" class="slice">
+      <span class="slice-label">sabi</span>
+      <lib-select placeholder="Elige una opción">
+        <lib-select-option value="1">Opción uno</lib-select-option>
+        <lib-select-option value="2">Opción dos</lib-select-option>
+        <lib-select-option value="3">Opción tres</lib-select-option>
+      </lib-select>
+      <lib-select value="2">
+        <lib-select-option value="1">Opción uno</lib-select-option>
+        <lib-select-option value="2">Opción dos</lib-select-option>
+        <lib-select-option value="3">Opción tres</lib-select-option>
+      </lib-select>
+    </div>
+
+    <!-- TERMINAL ─────────────────────────────────── -->
+    <div data-slice="terminal" data-katachi="terminal" class="slice">
+      <span class="slice-label">terminal</span>
+      <lib-select placeholder="Elige una opción">
+        <lib-select-option value="1">Opción uno</lib-select-option>
+        <lib-select-option value="2">Opción dos</lib-select-option>
+        <lib-select-option value="3">Opción tres</lib-select-option>
+      </lib-select>
+      <lib-select value="2">
+        <lib-select-option value="1">Opción uno</lib-select-option>
+        <lib-select-option value="2">Opción dos</lib-select-option>
+        <lib-select-option value="3">Opción tres</lib-select-option>
+      </lib-select>
+    </div>
+
+    <!-- SHIZEN ───────────────────────────────────── -->
+    <div data-slice="shizen" data-katachi="shizen" class="slice">
+      <span class="slice-label">shizen</span>
+      <lib-select placeholder="Elige una opción">
+        <lib-select-option value="1">Opción uno</lib-select-option>
+        <lib-select-option value="2">Opción dos</lib-select-option>
+        <lib-select-option value="3">Opción tres</lib-select-option>
+      </lib-select>
+      <lib-select value="2">
+        <lib-select-option value="1">Opción uno</lib-select-option>
+        <lib-select-option value="2">Opción dos</lib-select-option>
+        <lib-select-option value="3">Opción tres</lib-select-option>
+      </lib-select>
+    </div>
+
+    <!-- CELADON ──────────────────────────────────── -->
+    <div data-slice="celadon" data-katachi="celadon" class="slice">
+      <span class="slice-label">celadon</span>
+      <lib-select placeholder="Elige una opción">
+        <lib-select-option value="1">Opción uno</lib-select-option>
+        <lib-select-option value="2">Opción dos</lib-select-option>
+        <lib-select-option value="3">Opción tres</lib-select-option>
+      </lib-select>
+      <lib-select value="2">
+        <lib-select-option value="1">Opción uno</lib-select-option>
+        <lib-select-option value="2">Opción dos</lib-select-option>
+        <lib-select-option value="3">Opción tres</lib-select-option>
+      </lib-select>
+    </div>
+
+  </div>
+
+</body>
+</html>

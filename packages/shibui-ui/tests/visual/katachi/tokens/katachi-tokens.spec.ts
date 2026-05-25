@@ -6,8 +6,8 @@ import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const FIXTURE_PATH = resolve(__dirname, 'katachi.html');
-const TOKENS_PATH  = resolve(__dirname, '../../dist/tokens.css');
+const FIXTURE_PATH = resolve(__dirname, 'katachi-tokens.html');
+const TOKENS_PATH  = resolve(__dirname, '../../../../dist/tokens.css');
 const FIXTURE_URL  = `file://${FIXTURE_PATH.replace(/\\/g, '/')}`;
 
 const KATACHI = ['wabi', 'kintsugi', 'sabi', 'terminal', 'shizen', 'celadon'] as const;
