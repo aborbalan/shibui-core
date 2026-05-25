@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Kintsugi · text readability fixture</title>
+
+  <!--
+    Only tokens.css is needed here — no web components.
+    This fixture exists solely to give the spec a DOM node in which
+    [data-katachi="kintsugi"] is active so getComputedStyle can read
+    the resolved custom-property values.
+  -->
+  <link rel="stylesheet" href="../../../dist/tokens.css">
+
+  <style>
+    html, body { margin: 0; padding: 0; }
+
+    /* The root node that activates kintsugi token overrides.
+       Its background is set to --bg-base so visual inspection
+       during debug is meaningful. */
+    #kintsugi-root {
+      padding: 24px;
+      background: var(--bg-base);
+    }
+
+    /* Probe elements: invisible text nodes used only to expose
+       a computed color value via getComputedStyle().color.
+       They must have non-empty content so the browser resolves
+       the color; display:none prevents layout shifts. */
+    .probe {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      font-size: 16px; /* size irrelevant, just needs to exist */
+    }
+  </style>
+</head>
+<body>
+  <div id="kintsugi-root" data-katachi="kintsugi">
+
+    <!-- One probe per text token tier we want to assert on. -->
+    <span class="probe" id="probe-primary"   style="color: var(--text-primary);">x</span>
+    <span class="probe" id="probe-secondary" style="color: var(--text-secondary);">x</span>
+    <span class="probe" id="probe-muted"     style="color: var(--text-muted);">x</span>
+
+  </div>
+</body>
+</html>
