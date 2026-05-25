@@ -55,6 +55,32 @@
         --ft-link-hover: var(--lib-comp-fg, rgb(250, 247, 244, 0.85));
     }
 
+    /* Sabi surface override — papel washi, tinta */
+    :host([variant='sabi']) {
+        --ft-bg: var(--lib-comp-bg, var(--color-washi-50, #FAF7F4));
+        --ft-border: var(--lib-comp-border, var(--color-washi-900, #221C16));
+        --ft-text: var(--lib-comp-fg, var(--color-washi-900, #221C16));
+        --ft-text-muted: var(--lib-comp-fg-muted, var(--color-washi-500, #9A8878));
+        --ft-text-faint: var(--lib-comp-fg-muted, var(--color-washi-300, #D3C8BC));
+        --ft-accent: var(--color-kaki-600, #8C4115);
+        --ft-accent-hover: var(--color-kaki-700, #6B2E0A);
+        --ft-link: var(--lib-comp-fg-sec, var(--color-washi-600, #6B5C4F));
+        --ft-link-hover: var(--lib-comp-fg, var(--color-washi-900, #221C16));
+    }
+
+    /* Shizen surface override — natural, blanco, limpio */
+    :host([variant='shizen']) {
+        --ft-bg: var(--lib-comp-bg, #fff);
+        --ft-border: var(--lib-comp-border-subtle, var(--color-washi-200, #E5DDD3));
+        --ft-text: var(--lib-comp-fg, var(--color-washi-800, #3D332A));
+        --ft-text-muted: var(--lib-comp-fg-muted, var(--color-washi-400, #B8A99A));
+        --ft-text-faint: var(--lib-comp-fg-muted, var(--color-washi-200, #E5DDD3));
+        --ft-accent: var(--color-kaki-500, #B85A1E);
+        --ft-accent-hover: var(--color-kaki-600, #8C4115);
+        --ft-link: var(--lib-comp-fg-sec, var(--color-washi-400, #B8A99A));
+        --ft-link-hover: var(--lib-comp-fg, var(--color-washi-800, #3D332A));
+    }
+
     /* Celadon surface override — jade oscuro */
     :host([variant='celadon']) {
         --ft-bg: var(--lib-comp-bg, oklch(22% 0.03 175deg));
@@ -705,6 +731,169 @@
     }
 
     /* ══════════════════════════════════════════
+        VARIANTE 06 — SABI
+        ══════════════════════════════════════════ */
+
+    /* Barra de tinta en la parte superior */
+    .ft-sabi-stripe {
+        height: 4px;
+        background: var(--ft-border, var(--color-washi-900));
+    }
+
+    .ft-sabi-brand-row {
+        padding-bottom: var(--lib-space-lg, 1.5rem);
+        border-bottom: 2px solid var(--ft-border, var(--color-washi-900));
+        margin-bottom: var(--lib-space-xl, 2rem);
+    }
+
+    .ft-sabi-brand {
+        font-family: var(--ft-font-display);
+        font-size: 2rem;
+        font-weight: 300;
+        letter-spacing: 0.08em;
+        color: var(--ft-text);
+        line-height: 1;
+
+        & em {
+            font-style: italic;
+            color: var(--ft-accent);
+        }
+    }
+
+    .ft-sabi-sub {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ft-text-muted);
+        display: block;
+        margin-top: 0.375rem;
+    }
+
+    /* Grid con bordes de tinta */
+    .ft-sabi-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        border-top: 1px solid var(--ft-border);
+    }
+
+    .ft-sabi-col {
+        padding: var(--lib-space-lg, 1.5rem) var(--lib-space-xl, 2rem) var(--lib-space-lg, 1.5rem) 0;
+        border-right: 1px solid var(--ft-border);
+
+        &:last-child {
+            border-right: none;
+        }
+
+        &:not(:first-child) {
+            padding-left: var(--lib-space-xl, 2rem);
+        }
+    }
+
+    .ft-sabi-col-head {
+        font-family: var(--ft-font-display);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ft-text);
+        margin-bottom: var(--lib-space-md, 1rem);
+        padding-bottom: var(--lib-space-sm, 0.5rem);
+        border-bottom: 1px solid var(--ft-border);
+    }
+
+    .ft-sabi-col-links {
+        display: flex;
+        flex-direction: column;
+        gap: var(--lib-space-sm, 0.5rem);
+
+        & a {
+            font-family: var(--ft-font-display);
+            font-size: 0.875rem;
+            font-weight: 300;
+            color: var(--ft-link);
+            text-decoration: none;
+            transition: color var(--ft-dur-base);
+
+            &:hover {
+                color: var(--ft-accent);
+                text-decoration: underline;
+                text-underline-offset: 3px;
+            }
+        }
+    }
+
+    .ft-sabi-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: var(--lib-space-md, 1rem);
+        border-top: 2px solid var(--ft-border);
+        padding-top: var(--lib-space-lg, 1.5rem);
+        margin-top: var(--lib-space-lg, 1.5rem);
+
+        & p {
+            font-family: var(--ft-font-mono);
+            font-size: 0.5625rem;
+            letter-spacing: 0.12em;
+            color: var(--ft-text-muted);
+        }
+    }
+
+    /* ══════════════════════════════════════════
+        VARIANTE 07 — SHIZEN
+        ══════════════════════════════════════════ */
+
+    /* Símbolo botánico centrado */
+    .ft-shizen-mark {
+        display: block;
+        text-align: center;
+        font-size: 1.25rem;
+        color: var(--ft-text-faint);
+        margin-bottom: var(--lib-space-md, 1rem);
+        letter-spacing: 0.3em;
+    }
+
+    /* Grid de columnas limpio */
+    .ft-shizen-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: var(--lib-space-xl, 2rem);
+        padding: var(--lib-space-xl, 2rem) 0;
+        border-top: 1px solid var(--ft-border);
+        border-bottom: 1px solid var(--ft-border);
+        margin-bottom: var(--lib-space-lg, 1.5rem);
+    }
+
+    .ft-shizen-col-head {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ft-text-muted);
+        margin-bottom: var(--lib-space-md, 1rem);
+    }
+
+    .ft-shizen-col-links {
+        display: flex;
+        flex-direction: column;
+        gap: var(--lib-space-sm, 0.5rem);
+
+        & a {
+            font-family: var(--ft-font-body, sans-serif);
+            font-size: 0.875rem;
+            color: var(--ft-link);
+            text-decoration: none;
+            transition: color var(--ft-dur-base);
+
+            &:hover {
+                color: var(--ft-accent);
+            }
+        }
+    }
+
+    /* ══════════════════════════════════════════
         VARIANTE 05 — CELADON
         ══════════════════════════════════════════ */
     .ft-celadon-seam {
@@ -820,7 +1009,9 @@
     /* ── Responsive ── */
     @media (width <=768px) {
         .ft-kintsugi-grid,
-        .ft-celadon-grid {
+        .ft-celadon-grid,
+        .ft-sabi-grid,
+        .ft-shizen-grid {
             grid-template-columns: 1fr 1fr;
         }
 
@@ -831,11 +1022,24 @@
         .ft-social-grid {
             grid-template-columns: repeat(2, 1fr);
         }
+
+        .ft-sabi-col {
+            border-right: none;
+            padding-left: 0;
+            padding-right: 0;
+            border-bottom: 1px solid var(--ft-border);
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
     }
 
     @media (width <=480px) {
         .ft-kintsugi-grid,
         .ft-celadon-grid,
+        .ft-sabi-grid,
+        .ft-shizen-grid,
         .ft-social-grid {
             grid-template-columns: 1fr;
         }

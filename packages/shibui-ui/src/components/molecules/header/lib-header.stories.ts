@@ -12,7 +12,7 @@ const meta: Meta = {
   argTypes: {
     variant: { control: 'select', options: [
       'classic','dark','centered','transparent','kintsugi',
-      'glitch','mega','minimal','shrink','app-bar','celadon',
+      'glitch','mega','minimal','shrink','app-bar','celadon','sabi','shizen',
     ]},
   },
 };
@@ -370,6 +370,58 @@ export const Celadon: Story = {
 };
 
 /* ════════════════════════════════════════
+   12 · SABI
+   ════════════════════════════════════════ */
+export const Sabi: Story = {
+  name: '12 · Sabi — 寂 washi · tinta · brutal',
+  render: (): TemplateResult => html`
+    <lib-header variant="sabi"
+      brand-name="shibui"
+      login-label="Entrar"
+      .links="${[
+        { id: 'trabajo',  label: 'Trabajo',  href: '#' },
+        { id: 'indice',   label: 'Índice',   href: '#' },
+        { id: 'notas',    label: 'Notas',    href: '#' },
+        { id: 'sobre',    label: 'Sobre mí', href: '#' },
+      ]}"
+      .actions="${[{ label: '寂 Contacto', href: '#', variant: 'sabi' }]}"
+    ></lib-header>
+    <div style="background:var(--color-washi-50);padding:var(--lib-space-xl) calc(var(--lib-space-xl)*2);min-height:300px;">
+      <div style="font-family:var(--lib-font-display);font-size:3rem;font-weight:300;
+        letter-spacing:-.02em;line-height:1.1;color:var(--color-washi-800);">
+        寂び<br><em style="font-style:italic;color:var(--color-kaki-600);">la belleza de lo envejecido</em>
+      </div>
+    </div>
+  `,
+};
+
+/* ════════════════════════════════════════
+   13 · SHIZEN
+   ════════════════════════════════════════ */
+export const Shizen: Story = {
+  name: '13 · Shizen — 自 natural · limpio · aireado',
+  render: (): TemplateResult => html`
+    <lib-header variant="shizen"
+      brand-name="shibui"
+      login-label="Entrar"
+      .links="${[
+        { id: 'plantas',  label: 'Plantas',  href: '#' },
+        { id: 'estudio',  label: 'Estudio',  href: '#' },
+        { id: 'diario',   label: 'Diario',   href: '#' },
+        { id: 'sobre',    label: 'Sobre mí', href: '#' },
+      ]}"
+      .actions="${[{ label: 'Explorar', href: '#', variant: 'shizen' }]}"
+    ></lib-header>
+    <div style="background:#fff;padding:var(--lib-space-xl) calc(var(--lib-space-xl)*2);min-height:300px;">
+      <div style="font-family:var(--lib-font-display);font-size:3rem;font-weight:300;
+        letter-spacing:-.02em;line-height:1.1;color:var(--color-washi-700);">
+        自然<br><em style="font-style:italic;color:var(--color-kaki-500);">lo que fluye sin esfuerzo</em>
+      </div>
+    </div>
+  `,
+};
+
+/* ════════════════════════════════════════
    PLAYGROUND
    ════════════════════════════════════════ */
 export const Playground: Story = {
@@ -382,7 +434,7 @@ export const Playground: Story = {
       .links="${NAV_SIMPLE}"
       .actions="${ACTIONS}"
     ></lib-header>
-    ${body(args.variant === 'dark' || args.variant === 'kintsugi' || args.variant === 'glitch' || args.variant === 'celadon')}
+    ${body(['dark','kintsugi','glitch','celadon'].includes(args.variant as string))}
   `,
 };
 /* ═══════════════════════════════════════════════════════════════

@@ -173,6 +173,45 @@ export const Celadon: Story = {
 };
 
 /* ══════════════════════════════════════════
+   06 · Sabi
+   ══════════════════════════════════════════ */
+export const Sabi: Story = {
+  name: '06 · Sabi 寂',
+  render: () => html`
+    <lib-footer
+      variant="sabi"
+      brand-name="shibui"
+      brand-kanji="渋"
+      brand-sub="Design System · Zaragoza"
+      location="Zaragoza"
+      .columns=${DEFAULT_COLUMNS}
+      .legalLinks=${DEFAULT_LEGAL_LINKS}
+    ></lib-footer>
+  `,
+  parameters: { backgrounds: { default: 'paper' } },
+};
+
+/* ══════════════════════════════════════════
+   07 · Shizen
+   ══════════════════════════════════════════ */
+export const Shizen: Story = {
+  name: '07 · Shizen 自',
+  render: () => html`
+    <lib-footer
+      variant="shizen"
+      brand-name="shibui"
+      brand-kanji="渋"
+      brand-sub="Design System · Zaragoza"
+      location="Zaragoza"
+      .columns=${DEFAULT_COLUMNS}
+      .navLinks=${DEFAULT_NAV_LINKS}
+      .legalLinks=${DEFAULT_LEGAL_LINKS}
+    ></lib-footer>
+  `,
+  parameters: { backgrounds: { default: 'paper' } },
+};
+
+/* ══════════════════════════════════════════
    All variants
    ══════════════════════════════════════════ */
 export const AllVariants: Story = {
@@ -238,6 +277,29 @@ export const AllVariants: Story = {
         brand-sub="Design System · Zaragoza"
         location="Zaragoza"
         .columns=${DEFAULT_COLUMNS}
+        .legalLinks=${DEFAULT_LEGAL_LINKS}
+      ></lib-footer>
+
+      <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#9A8878;padding:.75rem 1rem;border-bottom:2px solid #221C16;background:#FAF7F4;">06 · Sabi 寂</p>
+      <lib-footer
+        variant="sabi"
+        brand-name="shibui"
+        brand-kanji="渋"
+        brand-sub="Design System · Zaragoza"
+        location="Zaragoza"
+        .columns=${DEFAULT_COLUMNS}
+        .legalLinks=${DEFAULT_LEGAL_LINKS}
+      ></lib-footer>
+
+      <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid #E5DDD3;background:#fff;">07 · Shizen 自</p>
+      <lib-footer
+        variant="shizen"
+        brand-name="shibui"
+        brand-kanji="渋"
+        brand-sub="Design System · Zaragoza"
+        location="Zaragoza"
+        .columns=${DEFAULT_COLUMNS}
+        .navLinks=${DEFAULT_NAV_LINKS}
         .legalLinks=${DEFAULT_LEGAL_LINKS}
       ></lib-footer>
     </div>

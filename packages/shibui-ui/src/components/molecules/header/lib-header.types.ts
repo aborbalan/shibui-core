@@ -9,7 +9,9 @@ export type HeaderVariant =
   | 'minimal'      // 08 — sin borde, sin fondo, solo texto
   | 'shrink'       // 09 — 72px → 48px al scroll
   | 'app-bar'      // 10 — breadcrumbs, search, acciones, avatar
-  | 'celadon';     // 11 — jade oscuro, seam jade, spotlight water
+  | 'celadon'      // 11 — jade oscuro, seam jade, spotlight water
+  | 'sabi'         // 12 — papel washi, tinta, sombra brutal
+  | 'shizen';      // 13 — natural, limpio, sin adorno
 
 export interface NavLink {
   id: string;

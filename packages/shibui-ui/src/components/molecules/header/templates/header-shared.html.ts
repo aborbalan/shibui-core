@@ -68,7 +68,11 @@ export function renderLogo(ctx: LibHeader): TemplateResult {
             ? html` <em style="font-style:italic;color:var(--color-kaki-400);">金</em>`
             : ctx.variant === 'celadon'
               ? html` <em style="font-style:italic;color:var(--color-celadon-400);">青</em>`
-              : nothing}
+              : ctx.variant === 'sabi'
+                ? html` <em style="font-style:italic;color:var(--color-washi-400);">寂</em>`
+                : ctx.variant === 'shizen'
+                  ? html` <em style="font-style:italic;color:var(--color-kaki-400);">自</em>`
+                  : nothing}
         </div>
         ${ctx.brandTagline && ctx.variant === 'shrink'
           ? html`<div class="hdr-tagline">${ctx.brandTagline}</div>`
@@ -140,6 +144,8 @@ const ACTION_VARIANT_MAP: Record<string, string> = {
   shrink:      'kaki',
   minimal:     '',
   celadon:     'celadon',
+  sabi:        'sabi',
+  shizen:      'shizen',
 };
 
 export function renderActions(ctx: LibHeader): TemplateResult {
