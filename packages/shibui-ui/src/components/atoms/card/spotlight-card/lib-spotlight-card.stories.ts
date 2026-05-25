@@ -193,7 +193,7 @@ export const ContextFeatureGrid: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-spotlight-card style="max-width:320px;">
+  <lib-spotlight-card style="width:320px;">
     <div style="padding:var(--lib-space-lg);">
       <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">Spotlight · Katachi</p>
       <p style="font-family:var(--lib-font-body);font-size:var(--text-sm);color:var(--text-primary);line-height:1.6;">Mueve el cursor para ver el foco reactivo en este contexto.</p>
