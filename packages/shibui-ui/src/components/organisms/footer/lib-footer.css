@@ -35,6 +35,7 @@
         /* Typography */
         --ft-font-display: var(--lib-font-display, 'Cormorant Garamond', Georgia, serif);
         --ft-font-mono: var(--lib-font-mono, 'DM Mono', 'Courier New', monospace);
+        --ft-font-body: var(--lib-font-body, system-ui, -apple-system, sans-serif);
 
         /* Animation */
         --ft-dur-base: 220ms;
@@ -42,17 +43,21 @@
         --ft-ease-out: cubic-bezier(0, 0, 0.2, 1);
     }
 
-    /* Dark surface override — katachi-aware vía --lib-comp-* */
+    /* Dark surface override — valores auto-contenidos.
+       No usan --lib-comp-* como primario porque el katachi global
+       de Storybook (data-katachi="shizen") siempre define esa
+       variable en modo claro, sobreescribiendo el fondo oscuro.
+       Las variantes explícitas son opinionadas sobre su superficie. */
     :host([variant='accordion']),
     :host([variant='kintsugi']),
     :host([variant='glitch']) {
-        --ft-bg: var(--lib-comp-bg, var(--color-washi-950, #120E0A));
-        --ft-border: var(--lib-comp-border-subtle, rgb(255, 255, 255, 0.07));
-        --ft-text: var(--lib-comp-fg, rgb(250, 247, 244, 0.85));
-        --ft-text-muted: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.35));
-        --ft-text-faint: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.12));
-        --ft-link: var(--lib-comp-fg-sec, rgb(250, 247, 244, 0.22));
-        --ft-link-hover: var(--lib-comp-fg, rgb(250, 247, 244, 0.85));
+        --ft-bg: var(--color-washi-950, #120E0A);
+        --ft-border: rgb(255, 255, 255, 0.07);
+        --ft-text: rgb(250, 247, 244, 0.85);
+        --ft-text-muted: rgb(250, 247, 244, 0.38);
+        --ft-text-faint: rgb(250, 247, 244, 0.12);
+        --ft-link: rgb(250, 247, 244, 0.50);
+        --ft-link-hover: rgb(250, 247, 244, 0.85);
     }
 
     /* Sabi surface override — papel washi, tinta */
@@ -81,17 +86,17 @@
         --ft-link-hover: var(--lib-comp-fg, var(--color-washi-800, #3D332A));
     }
 
-    /* Celadon surface override — jade oscuro */
+    /* Celadon surface override — jade oscuro, auto-contenido */
     :host([variant='celadon']) {
-        --ft-bg: var(--lib-comp-bg, oklch(22% 0.03 175deg));
-        --ft-border: var(--lib-comp-border-subtle, oklch(45.54% 0.059 173.23deg / 0.15));
-        --ft-text: var(--lib-comp-fg, oklch(90% 0.04 180deg));
-        --ft-text-muted: var(--lib-comp-fg-muted, oklch(75% 0.05 180deg / 0.7));
-        --ft-text-faint: var(--lib-comp-fg-muted, oklch(60% 0.05 180deg / 0.45));
+        --ft-bg: oklch(22% 0.03 175deg);
+        --ft-border: oklch(45.54% 0.059 173.23deg / 0.15);
+        --ft-text: oklch(90% 0.04 180deg);
+        --ft-text-muted: oklch(75% 0.05 180deg / 0.72);
+        --ft-text-faint: oklch(60% 0.05 180deg / 0.45);
         --ft-accent: var(--color-celadon-400, #4E9482);
         --ft-accent-hover: var(--color-celadon-300, #6DBAA4);
-        --ft-link: var(--lib-comp-fg-sec, oklch(60% 0.05 180deg / 0.55));
-        --ft-link-hover: var(--lib-comp-fg, oklch(90% 0.04 180deg));
+        --ft-link: oklch(75% 0.05 180deg / 0.62);
+        --ft-link-hover: oklch(90% 0.04 180deg);
     }
 }
 
@@ -417,34 +422,6 @@
         animation: kintsugi-seam 5s linear infinite;
     }
 
-    .ft-kintsugi-ring {
-        position: absolute;
-        top: -28px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 56px;
-        height: 56px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .ft-kintsugi-ring-track {
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        border: 1px solid transparent;
-        border-top-color: rgb(245, 208, 138, 0.6);
-        border-right-color: rgb(184, 90, 30, 0.3);
-        animation: kintsugi-ring 8s linear infinite;
-    }
-
-    .ft-kintsugi-symbol {
-        font-family: var(--ft-font-display);
-        font-size: 1.25rem;
-        color: rgb(250, 247, 244, 0.15);
-    }
-
     .ft-kintsugi-grid {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -457,7 +434,7 @@
         font-size: 0.5rem;
         letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: rgb(250, 247, 244, 0.15);
+        color: var(--ft-text-muted);
         margin-bottom: var(--lib-space-md, 1rem);
     }
 
@@ -470,7 +447,7 @@
             font-family: var(--ft-font-mono);
             font-size: 0.5625rem;
             letter-spacing: 0.1em;
-            color: rgb(250, 247, 244, 0.22);
+            color: var(--ft-link);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -478,7 +455,7 @@
             transition: color var(--ft-dur-base);
 
             &:hover {
-                color: var(--color-kaki-400, #D97234);
+                color: var(--ft-accent);
             }
         }
     }
@@ -648,16 +625,6 @@
         }
     }
 
-    @keyframes kintsugi-ring {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
     @keyframes glitch-border {
         0%,
         88%,
@@ -733,6 +700,11 @@
     /* ══════════════════════════════════════════
         VARIANTE 06 — SABI
         ══════════════════════════════════════════ */
+
+    /* La stripe de tinta ya actúa como borde superior — sin duplicado */
+    :host([variant='sabi']) footer {
+        border-top: none;
+    }
 
     /* Barra de tinta en la parte superior */
     .ft-sabi-stripe {
@@ -850,7 +822,7 @@
         display: block;
         text-align: center;
         font-size: 1.25rem;
-        color: var(--ft-text-faint);
+        color: var(--ft-text-muted);
         margin-bottom: var(--lib-space-md, 1rem);
         letter-spacing: 0.3em;
     }
@@ -914,37 +886,9 @@
         animation: celadon-seam 6s linear infinite;
     }
 
-    .ft-celadon-ring {
-        position: absolute;
-        top: -28px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 56px;
-        height: 56px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .ft-celadon-ring-track {
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        border: 1px solid transparent;
-        border-top-color: oklch(58.33% 0.068 171.21deg / 0.5);
-        border-right-color: oklch(45.54% 0.059 173.23deg / 0.25);
-        animation: celadon-ring 10s linear infinite;
-    }
-
-    .ft-celadon-symbol {
-        font-family: var(--ft-font-display);
-        font-size: 1.1rem;
-        color: oklch(60% 0.05 180deg / 0.2);
-    }
-
     .ft-celadon-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: var(--lib-space-xl, 2rem);
         padding-top: var(--lib-space-xl, 2rem);
     }
@@ -954,7 +898,7 @@
         font-size: 0.5rem;
         letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: oklch(60% 0.05 180deg / 0.3);
+        color: var(--ft-text-muted);
         margin-bottom: var(--lib-space-md, 1rem);
     }
 
@@ -967,7 +911,7 @@
             font-family: var(--ft-font-mono);
             font-size: 0.5625rem;
             letter-spacing: 0.1em;
-            color: oklch(75% 0.05 180deg / 0.3);
+            color: var(--ft-link);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -975,7 +919,7 @@
             transition: color var(--ft-dur-base);
 
             &:hover {
-                color: var(--color-celadon-300, #6DBAA4);
+                color: var(--ft-accent);
             }
         }
     }
@@ -993,16 +937,6 @@
 
         100% {
             background-position: 200% 0;
-        }
-    }
-
-    @keyframes celadon-ring {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
         }
     }
 
