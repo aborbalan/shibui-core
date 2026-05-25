@@ -422,34 +422,6 @@
         animation: kintsugi-seam 5s linear infinite;
     }
 
-    .ft-kintsugi-ring {
-        position: absolute;
-        top: 14px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 56px;
-        height: 56px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .ft-kintsugi-ring-track {
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        border: 1px solid transparent;
-        border-top-color: rgb(245, 208, 138, 0.6);
-        border-right-color: rgb(184, 90, 30, 0.3);
-        animation: kintsugi-ring 8s linear infinite;
-    }
-
-    .ft-kintsugi-symbol {
-        font-family: var(--ft-font-display);
-        font-size: 1.25rem;
-        color: rgb(250, 247, 244, 0.15);
-    }
-
     .ft-kintsugi-grid {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -650,16 +622,6 @@
 
         100% {
             background-position: 200% 0;
-        }
-    }
-
-    @keyframes kintsugi-ring {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
         }
     }
 
@@ -924,34 +886,6 @@
         animation: celadon-seam 6s linear infinite;
     }
 
-    .ft-celadon-ring {
-        position: absolute;
-        top: 14px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 56px;
-        height: 56px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .ft-celadon-ring-track {
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        border: 1px solid transparent;
-        border-top-color: oklch(58.33% 0.068 171.21deg / 0.5);
-        border-right-color: oklch(45.54% 0.059 173.23deg / 0.25);
-        animation: celadon-ring 10s linear infinite;
-    }
-
-    .ft-celadon-symbol {
-        font-family: var(--ft-font-display);
-        font-size: 1.1rem;
-        color: oklch(60% 0.05 180deg / 0.2);
-    }
-
     .ft-celadon-grid {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -1003,16 +937,6 @@
 
         100% {
             background-position: 200% 0;
-        }
-    }
-
-    @keyframes celadon-ring {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
         }
     }
 

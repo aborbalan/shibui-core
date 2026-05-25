@@ -132,12 +132,6 @@ export function renderKintsugi(ctx: LibFooter): TemplateResult {
       <!-- Gold seam -->
       <div class="ft-kintsugi-seam" aria-hidden="true"></div>
 
-      <!-- Ring ornament -->
-      <div class="ft-kintsugi-ring" aria-hidden="true">
-        <div class="ft-kintsugi-ring-track"></div>
-        <span class="ft-kintsugi-symbol">✦</span>
-      </div>
-
       <div class="ft-inner" style="padding-top:var(--lib-space-xl,2rem);">
 
         <!-- Brand centered -->
@@ -376,12 +370,6 @@ export function renderCeladon(ctx: LibFooter): TemplateResult {
 
       <!-- Jade seam -->
       <div class="ft-celadon-seam" aria-hidden="true"></div>
-
-      <!-- Ceramic ring ornament -->
-      <div class="ft-celadon-ring" aria-hidden="true">
-        <div class="ft-celadon-ring-track"></div>
-        <span class="ft-celadon-symbol">青</span>
-      </div>
 
       <div class="ft-inner" style="padding-top:var(--lib-space-xl,2rem);">
 
