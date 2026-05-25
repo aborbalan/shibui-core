@@ -35,6 +35,7 @@
         /* Typography */
         --ft-font-display: var(--lib-font-display, 'Cormorant Garamond', Georgia, serif);
         --ft-font-mono: var(--lib-font-mono, 'DM Mono', 'Courier New', monospace);
+        --ft-font-body: var(--lib-font-body, system-ui, -apple-system, sans-serif);
 
         /* Animation */
         --ft-dur-base: 220ms;
@@ -734,6 +735,11 @@
         VARIANTE 06 — SABI
         ══════════════════════════════════════════ */
 
+    /* La stripe de tinta ya actúa como borde superior — sin duplicado */
+    :host([variant='sabi']) footer {
+        border-top: none;
+    }
+
     /* Barra de tinta en la parte superior */
     .ft-sabi-stripe {
         height: 4px;
@@ -850,7 +856,7 @@
         display: block;
         text-align: center;
         font-size: 1.25rem;
-        color: var(--ft-text-faint);
+        color: var(--ft-text-muted);
         margin-bottom: var(--lib-space-md, 1rem);
         letter-spacing: 0.3em;
     }
@@ -944,7 +950,7 @@
 
     .ft-celadon-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: var(--lib-space-xl, 2rem);
         padding-top: var(--lib-space-xl, 2rem);
     }
