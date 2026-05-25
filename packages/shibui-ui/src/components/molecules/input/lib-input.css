@@ -35,7 +35,7 @@
     font-weight: var(--weight-regular);
     letter-spacing: var(--tracking-wider);
     text-transform: uppercase;
-    color: var(--lib-comp-fg-muted, var(--text-muted));
+    color: var(--lib-comp-fg-sec, var(--text-secondary));
     display: flex;
     align-items: center;
     gap: var(--lib-space-xs);
