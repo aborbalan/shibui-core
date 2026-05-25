@@ -70,7 +70,7 @@
 
     /* Shizen surface override — natural, blanco, limpio */
     :host([variant='shizen']) {
-        --ft-bg: var(--lib-comp-bg, #ffffff);
+        --ft-bg: var(--lib-comp-bg, #fff);
         --ft-border: var(--lib-comp-border-subtle, var(--color-washi-200, #E5DDD3));
         --ft-text: var(--lib-comp-fg, var(--color-washi-800, #3D332A));
         --ft-text-muted: var(--lib-comp-fg-muted, var(--color-washi-400, #B8A99A));
