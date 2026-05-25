@@ -271,6 +271,103 @@ export function renderGlitch(ctx: LibFooter): TemplateResult {
 }
 
 /* ────────────────────────────────────────────────────────────
+   06 · SABI (papel washi + tinta + brutal borders)
+   ──────────────────────────────────────────────────────────── */
+export function renderSabi(ctx: LibFooter): TemplateResult {
+  return html`
+    <footer>
+
+      <!-- Barra de tinta superior -->
+      <div class="ft-sabi-stripe" aria-hidden="true"></div>
+
+      <div class="ft-inner">
+
+        <!-- Brand: izquierda, gran display -->
+        <div class="ft-sabi-brand-row">
+          <div class="ft-sabi-brand">
+            ${ctx.brandKanji} <em>${ctx.brandName}</em>
+          </div>
+          <span class="ft-sabi-sub">${ctx.brandSub}</span>
+        </div>
+
+        <!-- Columnas con bordes de tinta -->
+        <div class="ft-sabi-grid">
+          ${(ctx.columns ?? []).map(col => html`
+            <div class="ft-sabi-col">
+              <div class="ft-sabi-col-head">${col.heading}</div>
+              <ul class="ft-sabi-col-links">
+                ${(col.links ?? []).map(link => html`
+                  <li><a href="${link.href}">${link.label}</a></li>
+                `)}
+              </ul>
+            </div>
+          `)}
+        </div>
+
+        <!-- Barra inferior -->
+        <div class="ft-sabi-bottom">
+          <p>© ${ctx.year} · ${ctx.brandName} · ${ctx.location} · MIT</p>
+          <div style="display:flex;gap:var(--lib-space-md,1rem);">
+            ${(ctx.legalLinks ?? []).map(link => html`
+              <a href="${link.href}" class="ft-link-mono">${link.label}</a>
+            `)}
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  `;
+}
+
+/* ────────────────────────────────────────────────────────────
+   07 · SHIZEN (natural, blanco, limpio)
+   ──────────────────────────────────────────────────────────── */
+export function renderShizen(ctx: LibFooter): TemplateResult {
+  return html`
+    <footer>
+      <div class="ft-inner">
+
+        <!-- Marca botánica + brand centrado -->
+        <div style="text-align:center;margin-bottom:var(--lib-space-xl,2rem);">
+          <span class="ft-shizen-mark">✦ 自然 ✦</span>
+          <div class="ft-brand" style="font-size:1.75rem;">
+            ${ctx.brandName} <em>${ctx.brandKanji}</em>
+          </div>
+          <span class="ft-brand-sub">${ctx.brandSub}</span>
+        </div>
+
+        <!-- Columnas limpias -->
+        <div class="ft-shizen-grid">
+          ${(ctx.columns ?? []).map(col => html`
+            <div>
+              <div class="ft-shizen-col-head">${col.heading}</div>
+              <ul class="ft-shizen-col-links">
+                ${(col.links ?? []).map(link => html`
+                  <li><a href="${link.href}">${link.label}</a></li>
+                `)}
+              </ul>
+            </div>
+          `)}
+        </div>
+
+        <!-- Nav + copyright -->
+        <div class="ft-nav-row">
+          <ul class="ft-nav-links">
+            ${(ctx.navLinks ?? []).map(link => html`
+              <li>
+                <a href="${link.href}" class="ft-link-mono">${link.label}</a>
+              </li>
+            `)}
+          </ul>
+          <p class="ft-copyright">© ${ctx.year} · ${ctx.brandName} DS · ${ctx.location}</p>
+        </div>
+
+      </div>
+    </footer>
+  `;
+}
+
+/* ────────────────────────────────────────────────────────────
    05 · CELADON (jade oscuro + seam jade)
    ──────────────────────────────────────────────────────────── */
 export function renderCeladon(ctx: LibFooter): TemplateResult {
@@ -344,6 +441,8 @@ export function renderFooter(ctx: LibFooter): TemplateResult {
     case 'kintsugi':  return renderKintsugi(ctx);
     case 'glitch':    return renderGlitch(ctx);
     case 'celadon':   return renderCeladon(ctx);
+    case 'sabi':      return renderSabi(ctx);
+    case 'shizen':    return renderShizen(ctx);
     default:          return renderSocial(ctx);
   }
 }
