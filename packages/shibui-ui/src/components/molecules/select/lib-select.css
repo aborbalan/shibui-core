@@ -123,15 +123,15 @@
   }
 
   .sel-trigger:focus-visible {
-    border-color: var(--color-washi-800);
-    box-shadow: 0 0 0 3px rgb(26, 20, 14, 0.08);
+    border-color: var(--lib-comp-border-strong, var(--border-strong));
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--lib-comp-border-focus, var(--border-focus)) 20%, transparent);
     outline: none;
   }
 
   /* open */
   :host([open]) .sel-trigger {
-    border-color: var(--color-washi-800);
-    box-shadow: 0 0 0 3px rgb(26, 20, 14, 0.08);
+    border-color: var(--lib-comp-border-strong, var(--border-strong));
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--lib-comp-border-focus, var(--border-focus)) 20%, transparent);
   }
 
   /* disabled */
@@ -383,7 +383,7 @@
   }
 
   .sel-option.is-selected {
-    background: var(--color-washi-100);
+    background: var(--katachi-accent-muted, var(--color-washi-100));
   }
 
   .sel-option.is-focused {
@@ -612,22 +612,37 @@
   /* ─── KATACHI · ambient context ──────────────────────────────
      lib-select base (variant="default") está completamente tokenizado:
      - .sel-trigger: --bg-elevated, --border-default, --text-secondary
-     - hover/focus/open: --bg-surface, --border-strong, --color-washi-800
-     - chevron + placeholder: --text-muted
+     - hover/focus/open: --lib-comp-border-strong, --lib-comp-border-focus
+     - chevron + placeholder: --lib-comp-fg-muted
+     - panel + opciones: tokens semánticos + --katachi-accent-muted
 
-     El único elemento con paleta hardcoded es el badge multi-count
-     (.sel-trigger-count) — se aplica override semántico:
-       --color-washi-900 → --bg-inverse  (badge background)
-       --color-washi-50  → --text-inverse (badge text)
-     Valores idénticos en light mode; bajo katachi/dark se invierte
-     automáticamente y mantiene contraste.
+     Overrides aplicados:
+     1. .sel-trigger-count: badge badge con paleta inversa via --bg-inverse
+        / --text-inverse. Idéntico en light; invierte bajo katachi/dark.
+     2. .sel-option.is-selected: --katachi-accent-muted como bg de selección.
+        Sin katachi activo → GUITV → washi-100 (igual al original).
+        Con katachi dark → tinte de acento semitransparente sobre panel.
+     3. .sel-option-check: SVG fill oscuro (`%23221C16`) invertido vía
+        filter en contextos katachi oscuros para que sea visible sobre
+        panel dark.
 
      Variants explícitos (filled, ghost, dark) intactos.
      ─────────────────────────────────────────────────────────── */
 
+  /* ── Trigger count badge ──────────────────────────────────── */
   .sel-trigger-count {
     background: var(--bg-inverse);
     color: var(--text-inverse);
+  }
+
+  /* ── Checkmark SVG — invertido en contextos katachi oscuros ── */
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="kintsugi"]) .sel-option-check,
+    :host-context([data-katachi="wabi"]) .sel-option-check,
+    :host-context([data-katachi="celadon"]) .sel-option-check,
+    :host-context([data-katachi="terminal"]) .sel-option-check {
+      filter: invert(1) opacity(0.75);
+    }
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
