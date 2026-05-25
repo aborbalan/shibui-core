@@ -43,17 +43,21 @@
         --ft-ease-out: cubic-bezier(0, 0, 0.2, 1);
     }
 
-    /* Dark surface override — katachi-aware vía --lib-comp-* */
+    /* Dark surface override — valores auto-contenidos.
+       No usan --lib-comp-* como primario porque el katachi global
+       de Storybook (data-katachi="shizen") siempre define esa
+       variable en modo claro, sobreescribiendo el fondo oscuro.
+       Las variantes explícitas son opinionadas sobre su superficie. */
     :host([variant='accordion']),
     :host([variant='kintsugi']),
     :host([variant='glitch']) {
-        --ft-bg: var(--lib-comp-bg, var(--color-washi-950, #120E0A));
-        --ft-border: var(--lib-comp-border-subtle, rgb(255, 255, 255, 0.07));
-        --ft-text: var(--lib-comp-fg, rgb(250, 247, 244, 0.85));
-        --ft-text-muted: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.35));
-        --ft-text-faint: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.12));
-        --ft-link: var(--lib-comp-fg-sec, rgb(250, 247, 244, 0.22));
-        --ft-link-hover: var(--lib-comp-fg, rgb(250, 247, 244, 0.85));
+        --ft-bg: var(--color-washi-950, #120E0A);
+        --ft-border: rgb(255, 255, 255, 0.07);
+        --ft-text: rgb(250, 247, 244, 0.85);
+        --ft-text-muted: rgb(250, 247, 244, 0.38);
+        --ft-text-faint: rgb(250, 247, 244, 0.12);
+        --ft-link: rgb(250, 247, 244, 0.50);
+        --ft-link-hover: rgb(250, 247, 244, 0.85);
     }
 
     /* Sabi surface override — papel washi, tinta */
@@ -82,17 +86,17 @@
         --ft-link-hover: var(--lib-comp-fg, var(--color-washi-800, #3D332A));
     }
 
-    /* Celadon surface override — jade oscuro */
+    /* Celadon surface override — jade oscuro, auto-contenido */
     :host([variant='celadon']) {
-        --ft-bg: var(--lib-comp-bg, oklch(22% 0.03 175deg));
-        --ft-border: var(--lib-comp-border-subtle, oklch(45.54% 0.059 173.23deg / 0.15));
-        --ft-text: var(--lib-comp-fg, oklch(90% 0.04 180deg));
-        --ft-text-muted: var(--lib-comp-fg-muted, oklch(75% 0.05 180deg / 0.7));
-        --ft-text-faint: var(--lib-comp-fg-muted, oklch(60% 0.05 180deg / 0.45));
+        --ft-bg: oklch(22% 0.03 175deg);
+        --ft-border: oklch(45.54% 0.059 173.23deg / 0.15);
+        --ft-text: oklch(90% 0.04 180deg);
+        --ft-text-muted: oklch(75% 0.05 180deg / 0.72);
+        --ft-text-faint: oklch(60% 0.05 180deg / 0.45);
         --ft-accent: var(--color-celadon-400, #4E9482);
         --ft-accent-hover: var(--color-celadon-300, #6DBAA4);
-        --ft-link: var(--lib-comp-fg-sec, oklch(60% 0.05 180deg / 0.55));
-        --ft-link-hover: var(--lib-comp-fg, oklch(90% 0.04 180deg));
+        --ft-link: oklch(75% 0.05 180deg / 0.62);
+        --ft-link-hover: oklch(90% 0.04 180deg);
     }
 }
 
@@ -458,7 +462,7 @@
         font-size: 0.5rem;
         letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: rgb(250, 247, 244, 0.38);
+        color: var(--ft-text-muted);
         margin-bottom: var(--lib-space-md, 1rem);
     }
 
@@ -471,7 +475,7 @@
             font-family: var(--ft-font-mono);
             font-size: 0.5625rem;
             letter-spacing: 0.1em;
-            color: rgb(250, 247, 244, 0.52);
+            color: var(--ft-link);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -479,7 +483,7 @@
             transition: color var(--ft-dur-base);
 
             &:hover {
-                color: var(--color-kaki-400, #D97234);
+                color: var(--ft-accent);
             }
         }
     }
@@ -960,7 +964,7 @@
         font-size: 0.5rem;
         letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: oklch(60% 0.05 180deg / 0.52);
+        color: var(--ft-text-muted);
         margin-bottom: var(--lib-space-md, 1rem);
     }
 
@@ -973,7 +977,7 @@
             font-family: var(--ft-font-mono);
             font-size: 0.5625rem;
             letter-spacing: 0.1em;
-            color: oklch(75% 0.05 180deg / 0.62);
+            color: var(--ft-link);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -981,7 +985,7 @@
             transition: color var(--ft-dur-base);
 
             &:hover {
-                color: var(--color-celadon-300, #6DBAA4);
+                color: var(--ft-accent);
             }
         }
     }
