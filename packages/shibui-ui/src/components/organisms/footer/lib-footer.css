@@ -54,6 +54,19 @@
         --ft-link: var(--lib-comp-fg-sec, rgb(250, 247, 244, 0.22));
         --ft-link-hover: var(--lib-comp-fg, rgb(250, 247, 244, 0.85));
     }
+
+    /* Celadon surface override — jade oscuro */
+    :host([variant='celadon']) {
+        --ft-bg: var(--lib-comp-bg, oklch(22% 0.03 175deg));
+        --ft-border: var(--lib-comp-border-subtle, oklch(45.54% 0.059 173.23deg / 0.15));
+        --ft-text: var(--lib-comp-fg, oklch(90% 0.04 180deg));
+        --ft-text-muted: var(--lib-comp-fg-muted, oklch(75% 0.05 180deg / 0.7));
+        --ft-text-faint: var(--lib-comp-fg-muted, oklch(60% 0.05 180deg / 0.45));
+        --ft-accent: var(--color-celadon-400, #4E9482);
+        --ft-accent-hover: var(--color-celadon-300, #6DBAA4);
+        --ft-link: var(--lib-comp-fg-sec, oklch(60% 0.05 180deg / 0.55));
+        --ft-link-hover: var(--lib-comp-fg, oklch(90% 0.04 180deg));
+    }
 }
 
 /* ── Reset ── */
@@ -691,9 +704,123 @@
         }
     }
 
+    /* ══════════════════════════════════════════
+        VARIANTE 05 — CELADON
+        ══════════════════════════════════════════ */
+    .ft-celadon-seam {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg,
+                transparent,
+                oklch(45.54% 0.059 173.23deg / 0.3) 15%,
+                var(--color-celadon-400, #4E9482) 35%,
+                oklch(75% 0.08 172deg / 0.9) 50%,
+                var(--color-celadon-400, #4E9482) 65%,
+                oklch(45.54% 0.059 173.23deg / 0.3) 85%,
+                transparent);
+        background-size: 200% 100%;
+        animation: celadon-seam 6s linear infinite;
+    }
+
+    .ft-celadon-ring {
+        position: absolute;
+        top: -28px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 56px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ft-celadon-ring-track {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 1px solid transparent;
+        border-top-color: oklch(58.33% 0.068 171.21deg / 0.5);
+        border-right-color: oklch(45.54% 0.059 173.23deg / 0.25);
+        animation: celadon-ring 10s linear infinite;
+    }
+
+    .ft-celadon-symbol {
+        font-family: var(--ft-font-display);
+        font-size: 1.1rem;
+        color: oklch(60% 0.05 180deg / 0.2);
+    }
+
+    .ft-celadon-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: var(--lib-space-xl, 2rem);
+        padding-top: var(--lib-space-xl, 2rem);
+    }
+
+    .ft-celadon-col-head {
+        font-family: var(--ft-font-mono);
+        font-size: 0.5rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: oklch(60% 0.05 180deg / 0.3);
+        margin-bottom: var(--lib-space-md, 1rem);
+    }
+
+    .ft-celadon-col-links {
+        display: flex;
+        flex-direction: column;
+        gap: var(--lib-space-sm, 0.5rem);
+
+        & a {
+            font-family: var(--ft-font-mono);
+            font-size: 0.5625rem;
+            letter-spacing: 0.1em;
+            color: oklch(75% 0.05 180deg / 0.3);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--lib-space-xs, 0.25rem);
+            transition: color var(--ft-dur-base);
+
+            &:hover {
+                color: var(--color-celadon-300, #6DBAA4);
+            }
+        }
+    }
+
+    .ft-celadon-arrow {
+        color: var(--color-celadon-400, #4E9482);
+        opacity: 0.5;
+        flex-shrink: 0;
+    }
+
+    @keyframes celadon-seam {
+        0% {
+            background-position: -200% 0;
+        }
+
+        100% {
+            background-position: 200% 0;
+        }
+    }
+
+    @keyframes celadon-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
     /* ── Responsive ── */
     @media (width <=768px) {
-        .ft-kintsugi-grid {
+        .ft-kintsugi-grid,
+        .ft-celadon-grid {
             grid-template-columns: 1fr 1fr;
         }
 
@@ -708,6 +835,7 @@
 
     @media (width <=480px) {
         .ft-kintsugi-grid,
+        .ft-celadon-grid,
         .ft-social-grid {
             grid-template-columns: 1fr;
         }

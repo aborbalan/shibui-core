@@ -66,7 +66,9 @@ export function renderLogo(ctx: LibHeader): TemplateResult {
         <div class="hdr-brand-name">${ctx.brandName}
           ${ctx.variant === 'kintsugi'
             ? html` <em style="font-style:italic;color:var(--color-kaki-400);">金</em>`
-            : nothing}
+            : ctx.variant === 'celadon'
+              ? html` <em style="font-style:italic;color:var(--color-celadon-400);">青</em>`
+              : nothing}
         </div>
         ${ctx.brandTagline && ctx.variant === 'shrink'
           ? html`<div class="hdr-tagline">${ctx.brandTagline}</div>`
@@ -137,6 +139,7 @@ const ACTION_VARIANT_MAP: Record<string, string> = {
   mega:        'kaki',
   shrink:      'kaki',
   minimal:     '',
+  celadon:     'celadon',
 };
 
 export function renderActions(ctx: LibHeader): TemplateResult {

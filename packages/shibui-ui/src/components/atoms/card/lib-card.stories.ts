@@ -365,7 +365,7 @@ export const Kintsugi: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-card kanji="渋" style="max-width:280px;">
+  <lib-card kanji="渋" style="width:320px;">
     <span slot="tag">Katachi · Default</span>
     <h2 slot="title">Shibui Card</h2>
     <p>Superficie que adapta fondo, borde y texto al contexto estético ambient.</p>

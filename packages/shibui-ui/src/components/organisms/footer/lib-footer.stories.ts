@@ -154,6 +154,25 @@ export const Glitch: Story = {
 };
 
 /* ══════════════════════════════════════════
+   05 · Celadon
+   ══════════════════════════════════════════ */
+export const Celadon: Story = {
+  name: '05 · Celadon 青',
+  render: () => html`
+    <lib-footer
+      variant="celadon"
+      brand-name="shibui"
+      brand-kanji="青磁"
+      brand-sub="Design System · Zaragoza"
+      location="Zaragoza"
+      .columns=${DEFAULT_COLUMNS}
+      .legalLinks=${DEFAULT_LEGAL_LINKS}
+    ></lib-footer>
+  `,
+  parameters: { backgrounds: { default: 'dark' } },
+};
+
+/* ══════════════════════════════════════════
    All variants
    ══════════════════════════════════════════ */
 export const AllVariants: Story = {
@@ -208,6 +227,17 @@ export const AllVariants: Story = {
         node-version="v22.0.0"
         .navLinks=${GLITCH_NAV_LINKS}
         .runtimeLines=${DEFAULT_RUNTIME}
+        .legalLinks=${DEFAULT_LEGAL_LINKS}
+      ></lib-footer>
+
+      <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);background:oklch(15% 0.02 180deg);">05 · Celadon 青</p>
+      <lib-footer
+        variant="celadon"
+        brand-name="shibui"
+        brand-kanji="青磁"
+        brand-sub="Design System · Zaragoza"
+        location="Zaragoza"
+        .columns=${DEFAULT_COLUMNS}
         .legalLinks=${DEFAULT_LEGAL_LINKS}
       ></lib-footer>
     </div>
