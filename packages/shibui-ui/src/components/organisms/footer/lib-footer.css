@@ -420,7 +420,7 @@
 
     .ft-kintsugi-ring {
         position: absolute;
-        top: -28px;
+        top: 14px;
         left: 50%;
         transform: translateX(-50%);
         width: 56px;
@@ -458,7 +458,7 @@
         font-size: 0.5rem;
         letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: rgb(250, 247, 244, 0.15);
+        color: rgb(250, 247, 244, 0.38);
         margin-bottom: var(--lib-space-md, 1rem);
     }
 
@@ -471,7 +471,7 @@
             font-family: var(--ft-font-mono);
             font-size: 0.5625rem;
             letter-spacing: 0.1em;
-            color: rgb(250, 247, 244, 0.22);
+            color: rgb(250, 247, 244, 0.52);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -922,7 +922,7 @@
 
     .ft-celadon-ring {
         position: absolute;
-        top: -28px;
+        top: 14px;
         left: 50%;
         transform: translateX(-50%);
         width: 56px;
@@ -960,7 +960,7 @@
         font-size: 0.5rem;
         letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: oklch(60% 0.05 180deg / 0.3);
+        color: oklch(60% 0.05 180deg / 0.52);
         margin-bottom: var(--lib-space-md, 1rem);
     }
 
@@ -973,7 +973,7 @@
             font-family: var(--ft-font-mono);
             font-size: 0.5625rem;
             letter-spacing: 0.1em;
-            color: oklch(75% 0.05 180deg / 0.3);
+            color: oklch(75% 0.05 180deg / 0.62);
             text-decoration: none;
             display: flex;
             align-items: center;
