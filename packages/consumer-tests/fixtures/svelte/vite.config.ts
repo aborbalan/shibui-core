@@ -40,14 +40,10 @@ export default defineConfig({
       },
     },
   ],
-  optimizeDeps: {
-    // @shibui-ui/ui usa preserveModules → muchos archivos pequeños.
-    // Excluirlo del pre-bundling garantiza que los side-effects (define) se ejecuten.
-    exclude: ['@shibui-ui/ui'],
-  },
-  server: {
-    // Permite servir archivos desde fuera del root del fixture
-    // (necesario para resolver @shibui-ui/ui → packages/shibui-ui/dist/).
-    fs: { strict: false },
-  },
+  // NOTA: NO se excluye @shibui-ui/ui de optimizeDeps.
+  // @shibui-ui/ui usa preserveModules:true → muchos archivos pequeños.
+  // Excluirlo del pre-bundling haría que el navegador emitiera cientos de
+  // peticiones individuales, lo que provoca timeouts en CI.
+  // El pre-bundling por defecto agrupa todo en un solo archivo con los
+  // side-effects (customElements.define) correctamente incluidos.
 });
