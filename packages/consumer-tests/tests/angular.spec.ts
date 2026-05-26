@@ -28,9 +28,15 @@ test.describe('Angular 21 × @shibui-ui/ui — consumer contract', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto(BASE);
-    // Angular tarda más en arrancar que Vite — esperamos la hidratación completa
+    // Angular tarda más en arrancar que Vite — esperamos la hidratación completa.
+    // IMPORTANTE: `customElements.get('lib-button') !== undefined` puede resolverse
+    // antes de que Angular haya completado su primer ciclo de change detection (y por
+    // tanto antes de que ngAfterViewInit registre el listener de ui-lib-modal-close).
+    // Esperamos adicionalmente a que el template esté renderizado buscando un elemento
+    // del interior del template; eso garantiza que ngAfterViewInit ya ha corrido.
     await page.waitForSelector('app-root');
     await page.waitForFunction(() => customElements.get('lib-button') !== undefined);
+    await page.waitForSelector('[data-testid="btn-open-modal"]');
   });
 
   // ── 1. Registro ────────────────────────────────────────────────────────────
