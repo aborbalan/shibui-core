@@ -46,10 +46,24 @@ export default defineConfig({
     },
 
     // ── Svelte 5 fixture ──────────────────────────────────────────────────
+    // Se usa vite build + vite preview en lugar del dev server.
+    //
+    // Por qué no funciona el dev server:
+    //   @sveltejs/vite-plugin-svelte v6 usa el nuevo Environment API de Vite 6
+    //   y deshabilita el optimizador legacy. Sin pre-bundling, @shibui-ui/ui
+    //   (preserveModules:true) + lit generan 500+ peticiones HTTP individuales.
+    //   Ninguna configuración de optimizeDeps desde el user-config puede
+    //   contrarrestar esto porque el plugin opera a nivel de Environment.
+    //
+    // Con build + preview:
+    //   Rollup bundlea @shibui-ui/ui + lit + svelte en un único chunk JS.
+    //   Una sola petición HTTP → customElements.define se llama inmediatamente.
+    //   La CSS de tokens se extrae a un <link> en el HTML antes que el JS.
     {
-      command: 'pnpm exec vite fixtures/svelte --port 5175',
+      command: 'pnpm exec vite build fixtures/svelte && pnpm exec vite preview fixtures/svelte --port 5175 --strictPort',
       port: 5175,
       reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
     },
 
     // ── Angular 21 fixture ────────────────────────────────────────────────
