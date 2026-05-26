@@ -6,6 +6,6 @@ import { AppComponent } from './app/app';
 import '@shibui-ui/ui';
 
 // Inicializa el registro de eventos capturados — leído por los tests de Playwright.
-(window as Record<string, unknown>)['__capturedEvents__'] = {};
+(window as unknown as Record<string, unknown>)['__capturedEvents__'] = {};
 
 bootstrapApplication(AppComponent).catch(err => console.error(err));
