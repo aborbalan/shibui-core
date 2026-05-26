@@ -26,6 +26,10 @@
     "storybook": "pnpm --filter @shibui-ui/ui storybook",
     "build-storybook": "pnpm --filter @shibui-ui/ui build-storybook",
     "lint": "pnpm --filter @shibui-ui/ui lint",
+    "test:consumers": "pnpm build:shibui && pnpm --filter @shibui/consumer-tests test",
+    "test:consumers:react": "pnpm --filter @shibui/consumer-tests test:react",
+    "test:consumers:svelte": "pnpm --filter @shibui/consumer-tests test:svelte",
+    "test:consumers:angular": "pnpm --filter @shibui/consumer-tests test:angular",
 "worker:cf:deploy": "pnpm --filter @shibui-api/cf-cache-worker cf:deploy",
 "worker:cf:dev": "pnpm --filter @shibui-api/cf-cache-worker dev"
   },
