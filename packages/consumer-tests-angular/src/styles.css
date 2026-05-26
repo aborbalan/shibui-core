@@ -1,0 +1,6 @@
+/* Estilos globales del fixture Angular.
+   tokens.css de @shibui-ui/ui se carga en angular.json styles[].
+   Sin esa entrada, los 6 contextos katachi no propagan sus tokens. */
+* {
+  box-sizing: border-box;
+}

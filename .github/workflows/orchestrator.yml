@@ -67,7 +67,10 @@ jobs:
         id: filter
         with:
           filters: |
-            ui:      'packages/shibui-ui/**'
+            ui:
+              - 'packages/shibui-ui/**'
+              - 'packages/consumer-tests/**'
+              - 'packages/consumer-tests-angular/**'
             react:   'apps/app-react/**'
             angular: 'apps/app-angular/**'
             svelte:  'apps/app-svelte/**'
