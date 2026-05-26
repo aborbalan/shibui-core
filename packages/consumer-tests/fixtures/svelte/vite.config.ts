@@ -12,31 +12,30 @@ const tokensAbsPath = path.resolve(__dirname, '../../../shibui-ui/dist/tokens.cs
 export default defineConfig({
   plugins: [
     svelte(),
-    // Inyecta los tokens CSS de Shibui como <style> inline en el <head>
-    // antes de que arranque cualquier script.
+    // Sirve los tokens CSS de Shibui en /shibui-tokens.css vía middleware.
     //
-    // Por qué se necesita esto (y por qué `import '@shibui-ui/ui/tokens'` en
-    // main.ts no es suficiente):
-    //   - En el dev server de Vite, un CSS importado desde JS se inyecta vía
-    //     una <style> generada por módulos HMR, que llega DESPUÉS del primer
-    //     render del árbol de componentes.
-    //   - Los tests de Playwright consultan getComputedStyle justo después de
-    //     que el custom element se define (waitForFunction). Si los tokens aún
-    //     no están en el CSSOM en ese momento, --katachi-id devuelve "".
-    //   - La inyección en transformIndexHtml coloca el <style> en el HTML
-    //     inicial, así que el navegador lo procesa antes de ejecutar ningún JS.
+    // Por qué configureServer y no transformIndexHtml:
+    //   - @sveltejs/vite-plugin-svelte + transformIndexHtml desactiva la caché
+    //     de pre-bundling de Vite (warning: "caching has been disabled").
+    //   - Sin pre-bundling, @shibui-ui/ui (preserveModules:true) genera más de
+    //     100 peticiones HTTP individuales → timeout en CI.
+    //   - configureServer añade un middleware HTTP plano que no interfiere con
+    //     el sistema de optimización de Vite ni desactiva la caché.
+    //   - El index.html referencia /shibui-tokens.css con <link rel="stylesheet">
+    //     para que los tokens estén disponibles antes de que ejecute ningún JS.
     {
-      name: 'inject-shibui-tokens',
-      transformIndexHtml: () => {
-        const css = readFileSync(tokensAbsPath, 'utf-8');
-        return [
-          {
-            tag: 'style',
-            attrs: { 'data-shibui-tokens': '' },
-            children: css,
-            injectTo: 'head-prepend',
-          },
-        ];
+      name: 'serve-shibui-tokens',
+      configureServer(server) {
+        server.middlewares.use('/shibui-tokens.css', (_req, res) => {
+          try {
+            const css = readFileSync(tokensAbsPath, 'utf-8');
+            res.setHeader('Content-Type', 'text/css');
+            res.end(css);
+          } catch {
+            res.statusCode = 404;
+            res.end('/* tokens.css not found */');
+          }
+        });
       },
     },
   ],
