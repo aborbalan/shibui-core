@@ -1,5 +1,5 @@
-use app_tauri_core::system::{SystemInfo, CpuDetail, MemoryDetail, DiskDetail, NetworkInterface};
 use app_tauri_core::fs::FsEntry;
+use app_tauri_core::system::{CpuDetail, DiskDetail, MemoryDetail, NetworkInterface, SystemInfo};
 
 #[tauri::command]
 fn get_system_info() -> SystemInfo {

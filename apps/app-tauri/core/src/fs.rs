@@ -22,7 +22,11 @@ pub fn list_dir(path: &str) -> Result<Vec<FsEntry>, String> {
         .filter_map(|entry| {
             let p = entry.path();
             let is_dir = p.is_dir();
-            let size = if is_dir { None } else { p.metadata().ok().map(|m| m.len()) };
+            let size = if is_dir {
+                None
+            } else {
+                p.metadata().ok().map(|m| m.len())
+            };
 
             Some(FsEntry {
                 name: entry.file_name().to_string_lossy().into_owned(),
