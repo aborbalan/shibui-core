@@ -10,7 +10,7 @@ type LibBadgeStoryArgs = Pick<LibBadge, 'variant' | 'size' | 'dot' | 'pill'> & {
 };
 
 const meta: Meta<LibBadgeStoryArgs> = {
-  title: 'Content/Badge',
+  title: 'Universal/Content/Badge',
   tags:['autodocs'],
   component: 'lib-badge',
 

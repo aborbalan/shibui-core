@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-empty-state.component';
 import type { LibEmptyState } from './lib-empty-state.component';
@@ -10,7 +10,7 @@ type EmptyStateArgs = Pick<
 >;
 
 const meta: Meta<EmptyStateArgs> = {
-  title: 'Feedback/Empty State',
+  title: 'Universal/Feedback/Empty State',
   tags:['autodocs'],
   component: 'lib-empty-state',
   argTypes: {

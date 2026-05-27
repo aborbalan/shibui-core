@@ -1,4 +1,4 @@
-import type { Meta, StoryObj }   from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj }   from '@storybook/web-components-vite';
 import { html }                  from 'lit';
 import './lib-scatter-chart-3d.component';
 import { createKatachiStories }  from '../../../stories/katachi-stories.helper';
@@ -57,7 +57,7 @@ const SERIES_LABELED: ScatterSeries3d = {
 
 /* ── Meta ── */
 const meta: Meta<ScatterChart3dArgs> = {
-  title:     'Charts/Scatter Chart 3D',
+  title:     'Universal/Charts/Scatter Chart 3D',
   component: 'lib-scatter-chart-3d',
   tags:      ['autodocs'],
 

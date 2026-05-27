@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-modal.component';
 import type { LibModal } from './lib-modal.component';
@@ -66,7 +66,7 @@ const footerBtns = (id: string, confirmLabel = 'Aceptar', danger = false): Templ
 
 /* ── Meta ───────────────────────────────────────────────────── */
 const meta: Meta<LibModalArgs> = {
-  title: 'Overlay/Modal',
+  title: 'Universal/Overlay/Modal',
   tags:['autodocs'],
   component: 'lib-modal',
   argTypes: {

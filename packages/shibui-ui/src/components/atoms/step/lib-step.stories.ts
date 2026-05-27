@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-step.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
@@ -14,7 +14,7 @@ interface StepArgs {
 }
 
 const meta: Meta<StepArgs> = {
-  title: 'Navigation/Step',
+  title: 'Universal/Navigation/Step',
   tags:['autodocs'],
   component: 'lib-step',
   argTypes: {

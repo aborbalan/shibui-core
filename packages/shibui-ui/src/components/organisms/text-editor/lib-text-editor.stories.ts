@@ -1,4 +1,4 @@
-import type { Meta, StoryObj }     from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj }     from '@storybook/web-components-vite';
 import { html }                    from 'lit';
 import './lib-text-editor.component';
 import { createKatachiStories }    from '../../../stories/katachi-stories.helper';
@@ -55,7 +55,7 @@ pnpm install
 
 /* ── Meta ── */
 const meta: Meta<TextEditorArgs> = {
-  title:     'Editor/Text Editor',
+  title:     'Desktop/Editor/Text Editor',
   component: 'lib-text-editor',
   tags:      ['autodocs'],
 

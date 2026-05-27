@@ -8,7 +8,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type LibSpinnerArgs = Pick<LibSpinner, 'variant' | 'size' | 'tone' | 'dark' | 'label'>;
 
 const meta: Meta<LibSpinnerArgs> = {
-  title: 'Feedback/Spinner',
+  title: 'Universal/Feedback/Spinner',
   tags:['autodocs'],
   component: 'lib-spinner',
   argTypes: {

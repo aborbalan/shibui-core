@@ -21,7 +21,7 @@ interface ProgressArgs {
 }
 
 const meta: Meta<ProgressArgs> = {
-  title: 'Feedback/Progress',
+  title: 'Universal/Feedback/Progress',
   tags:['autodocs'],
   component: 'lib-progress',
   argTypes: {

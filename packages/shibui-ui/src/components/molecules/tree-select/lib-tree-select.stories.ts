@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 
 // ✅ Side-effect import — ejecuta @customElement('lib-tree-select')
@@ -106,7 +106,7 @@ const FILTER_NODES: TreeNode[] = [
 /* ──────────────────────────────────────────────────────────── */
 
 const meta: Meta = {
-  title: 'Forms/Tree Select',
+  title: 'Universal/Forms/Tree Select',
   tags:['autodocs'],
   component: 'lib-tree-select',
   parameters: {

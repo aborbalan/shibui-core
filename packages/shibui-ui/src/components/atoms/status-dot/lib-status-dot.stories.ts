@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-status-dot.component';
 import type { LibStatusDot } from './lib-status-dot.component';
@@ -23,7 +23,7 @@ const withLabel = (label: string, content: TemplateResult): TemplateResult => ht
 `;
 
 const meta: Meta<LibStatusDotStoryArgs> = {
-  title: 'Feedback/Status Dot',
+  title: 'Universal/Feedback/Status Dot',
   component: 'lib-status-dot',
   tags:['autodocs'],
   argTypes: {

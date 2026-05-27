@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-text-glitch.component';
 import type { LibTextGlitch } from './lib-text-glitch.component';
@@ -7,7 +7,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type LibTextGlitchArgs = Pick<LibTextGlitch, 'text' | 'variant' | 'trigger' | 'active'>;
 
 const meta: Meta<LibTextGlitchArgs> = {
-  title: 'Content/Text Glitch',
+  title: 'Universal/Content/Text Glitch',
   tags:['autodocs'],
   component: 'lib-text-glitch',
   argTypes: {

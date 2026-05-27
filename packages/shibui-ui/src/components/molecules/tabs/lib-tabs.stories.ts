@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-tabs.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
@@ -15,7 +15,7 @@ const _onTabClose = (e: Event): void => {
 };
 
 const meta: Meta = {
-  title: 'Navigation/Tabs',
+  title: 'Universal/Navigation/Tabs',
   tags:['autodocs'],
   component: 'lib-tabs',
   argTypes: {

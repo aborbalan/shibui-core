@@ -1,10 +1,10 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-burger-button.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Actions/Burger',
+  title: 'Universal/Actions/Burger',
   tags:['autodocs'],
   component: 'lib-burger',
   argTypes: {

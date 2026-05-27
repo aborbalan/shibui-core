@@ -1,4 +1,4 @@
-import { Meta, StoryObj }      from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj }      from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-gadget-frame.component';
 import type { LibGadgetFrame }  from './lib-gadget-frame.component';
@@ -10,7 +10,7 @@ type StoryArgs = Partial<Pick<LibGadgetFrame,
 
 /* ── Meta ─────────────────────────────────────────────────── */
 const meta: Meta<StoryArgs> = {
-  title:     'Layout/Gadget Frame',
+  title:     'Desktop/Layout/Gadget Frame',
   tags:      ['autodocs'],
   component: 'lib-gadget-frame',
   parameters: {

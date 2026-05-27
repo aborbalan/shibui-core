@@ -1,10 +1,10 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-horizontal-scroll-section.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Motion/Horizontal Scroll Section',
+  title: 'Web/Motion/Horizontal Scroll Section',
   tags:['autodocs'],
   component: 'lib-horizontal-scroll-section',
   parameters: {

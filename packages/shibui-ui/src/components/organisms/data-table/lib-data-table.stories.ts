@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-data-table.component';
 import type { LibDataTable } from './lib-data-table.component';
@@ -60,7 +60,7 @@ type LibDataTableArgs = Pick<
 >;
 
 const meta: Meta<LibDataTableArgs> = {
-  title: 'Data/Data Table',
+  title: 'Universal/Data/Data Table',
   tags:['autodocs'],
   component: 'lib-data-table',
   argTypes: {

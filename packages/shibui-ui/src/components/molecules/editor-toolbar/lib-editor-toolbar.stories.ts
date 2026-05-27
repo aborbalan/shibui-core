@@ -1,4 +1,4 @@
-import type { Meta, StoryObj }     from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj }     from '@storybook/web-components-vite';
 import { html }                    from 'lit';
 import './lib-editor-toolbar.component';
 import { createKatachiStories }    from '../../../stories/katachi-stories.helper';
@@ -13,7 +13,7 @@ interface EditorToolbarArgs {
 
 /* ── Meta ── */
 const meta: Meta<EditorToolbarArgs> = {
-  title:     'Editor/Editor Toolbar',
+  title:     'Desktop/Editor/Editor Toolbar',
   component: 'lib-editor-toolbar',
   tags:      ['autodocs'],
 

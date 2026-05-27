@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-code-block.component';
 import type { LibCodeBlock } from './lib-code-block.component';
@@ -10,7 +10,7 @@ type LibCodeBlockStoryArgs = Pick<
 >;
 
 const meta: Meta<LibCodeBlockStoryArgs> = {
-  title: 'Content/Code Block',
+  title: 'Universal/Content/Code Block',
   tags:['autodocs'],
   component: 'lib-code-block',
 

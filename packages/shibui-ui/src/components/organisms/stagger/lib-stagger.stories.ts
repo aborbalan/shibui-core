@@ -1,10 +1,10 @@
-import { html, TemplateResult } from "lit";
+﻿import { html, TemplateResult } from "lit";
 import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import "./lib-stagger-container.component";
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: "Motion/Stagger",
+  title: "Web/Motion/Stagger",
   tags: ["autodocs"],
   component: "lib-stagger-container",
   parameters: {

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-carousel.component';
 import type { LibCarousel } from './lib-carousel.component';
@@ -7,7 +7,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type CarouselArgs = Pick<LibCarousel, 'mode' | 'peek' | 'arrows' | 'dots' | 'counter' | 'loop' | 'autoplay'>;
 
 const meta: Meta<CarouselArgs> = {
-  title: 'Motion/Carousel',
+  title: 'Web/Motion/Carousel',
   tags:['autodocs'],
   component: 'lib-carousel',
   argTypes: {

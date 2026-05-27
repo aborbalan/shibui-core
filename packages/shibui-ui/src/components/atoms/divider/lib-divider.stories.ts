@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-divider.component';
 import type { LibDivider } from './lib-divider.component';
@@ -13,7 +13,7 @@ const PREVIEW_H = 'padding:24px; background:#F2EDE6; border:1px solid #E5DDD3; d
 const PREVIEW_DARK = 'padding:24px; background:#120E0A; border:1px solid #221C16; display:flex; flex-direction:column; gap:24px;';
 
 const meta: Meta<LibDividerStoryArgs> = {
-  title: 'Foundations/Spacing/Divider',
+  title: 'Universal/Foundations/Spacing/Divider',
   component: 'lib-divider',
   tags:['autodocs'],
   argTypes: {

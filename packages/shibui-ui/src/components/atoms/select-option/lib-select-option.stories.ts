@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-select-option.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
@@ -11,7 +11,7 @@ interface SelectOptionArgs {
 }
 
 const meta: Meta<SelectOptionArgs> = {
-  title: 'Forms/Select Option',
+  title: 'Universal/Forms/Select Option',
   tags:['autodocs'],
   component: 'lib-select-option',
   argTypes: {

@@ -1,4 +1,4 @@
-import { Meta, StoryObj }      from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj }      from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-reading-progress.component';
 import type { LibReadingProgress } from './lib-reading-progress.component';
@@ -6,7 +6,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 /* ── Meta ──────────────────────────────────────────────── */
 const meta: Meta<LibReadingProgress> = {
-  title: 'Feedback/Reading Progress',
+  title: 'Universal/Feedback/Reading Progress',
   tags:['autodocs'],
   component: 'lib-reading-progress',
   parameters: { layout: 'fullscreen' },

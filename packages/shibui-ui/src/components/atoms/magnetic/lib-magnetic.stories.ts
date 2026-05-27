@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import './lib-magnetic.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 import '../button/lib-button.component'; // Asegúrate de que esta ruta sea correcta
 
 const meta: Meta = {
-  title: 'Actions/Magnetic',
+  title: 'Universal/Actions/Magnetic',
   tags:['autodocs'],
   component: 'lib-magnetic',
   argTypes: {

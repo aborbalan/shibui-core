@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-close-button.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
@@ -10,7 +10,7 @@ type LibCloseButtonStoryArgs = Pick<
 >;
 
 const meta: Meta<LibCloseButtonStoryArgs> = {
-  title: 'Actions/Close Button',
+  title: 'Universal/Actions/Close Button',
   tags:['autodocs'],
   component: 'lib-close-button',
 

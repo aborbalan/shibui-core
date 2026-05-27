@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-alert.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
@@ -12,7 +12,7 @@ interface AlertArgs {
 }
 
 const meta: Meta<AlertArgs> = {
-  title: 'Feedback/Alert',
+  title: 'Universal/Feedback/Alert',
   tags:['autodocs'],
   component: 'lib-alert',
   argTypes: {

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-glass-card.component';
 import type { LibGlassCard } from './lib-glass-card.component';
@@ -41,7 +41,7 @@ const cardContent = (label: string, title: string, body: string, tag: string): T
 `;
 
 const meta: Meta<LibGlassCardStoryArgs> = {
-  title: 'Content/Card Glass',
+  title: 'Universal/Content/Card Glass',
   component: 'lib-glass-card',
   tags:['autodocs'],
   parameters: {

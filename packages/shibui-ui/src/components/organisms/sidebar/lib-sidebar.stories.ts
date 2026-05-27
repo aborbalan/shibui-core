@@ -1,4 +1,4 @@
-import { Meta, StoryObj }      from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj }      from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-sidebar.component';
 import type { LibSidebar }      from './lib-sidebar.component';
@@ -42,7 +42,7 @@ const LINKS_GLITCH: SidebarLink[] = [
 
 /* ── Meta ── */
 const meta: Meta<StoryArgs> = {
-  title: 'Navigation/Sidebar',
+  title: 'Universal/Navigation/Sidebar',
   tags:['autodocs'],
   component: 'lib-sidebar',
   parameters: { layout: 'fullscreen' },

@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-cursor-follower.component';
 import type { LibCursorFollower } from './lib-cursor-follower.component';
@@ -19,7 +19,7 @@ const zoneBase = `
 `;
 
 const meta: Meta = {
-  title: 'Motion/Cursor Follower',
+  title: 'Web/Motion/Cursor Follower',
   tags:['autodocs'],
   component: 'lib-cursor-follower',
   parameters: {

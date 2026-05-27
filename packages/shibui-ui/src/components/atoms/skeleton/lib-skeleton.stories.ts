@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-skeleton.component';
 import type { LibSkeleton } from './lib-skeleton.component';
@@ -13,7 +13,7 @@ const preview = (bg: string, content: TemplateResult): TemplateResult => html`
 `;
 
 const meta: Meta<LibSkeletonStoryArgs> = {
-  title: 'Feedback/Skeleton',
+  title: 'Universal/Feedback/Skeleton',
   tags:['autodocs'],
   component: 'lib-skeleton',
 

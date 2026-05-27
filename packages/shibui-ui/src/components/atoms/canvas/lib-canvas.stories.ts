@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-canvas.component';
 import '../card/lib-card.component';
@@ -19,7 +19,7 @@ const KATACHI: Array<{ id: KatachiId; kanji: string; label: string; tagline: str
 ];
 
 const meta: Meta<LibCanvasStoryArgs> = {
-  title: 'Utilities/Canvas',
+  title: 'Universal/Utilities/Canvas',
   component: 'lib-canvas',
   tags: ['autodocs'],
   argTypes: {

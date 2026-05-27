@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-accordion.component';
 import '../../atoms/accordion-item/lib-accordion-item.component';
@@ -8,7 +8,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type LibAccordionStoryArgs = Pick<LibAccordion, 'variant' | 'exclusive'>;
 
 const meta: Meta<LibAccordionStoryArgs> = {
-  title: 'Layout/Accordion',
+  title: 'Universal/Layout/Accordion',
   component: 'lib-accordion',
   tags:['autodocs'],
   argTypes: {

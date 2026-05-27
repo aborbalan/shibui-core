@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-spacer.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 export default {
-  title: 'Foundations/Spacing/Spacer',
+  title: 'Universal/Foundations/Spacing/Spacer',
   tags:['autodocs'],
   component: 'lib-spacer',
   argTypes: {

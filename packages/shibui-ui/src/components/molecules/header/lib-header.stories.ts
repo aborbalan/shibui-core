@@ -1,11 +1,11 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj }  from '@storybook/web-components-vite';
 import './lib-header.component';
 import type { NavLink, HeaderAction } from './lib-header.types';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Layout/Header',
+  title: 'Universal/Layout/Header',
   tags:['autodocs'],
   component: 'lib-header',
   parameters: { layout: 'fullscreen' },

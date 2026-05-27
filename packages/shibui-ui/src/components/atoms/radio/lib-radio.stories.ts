@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-radio.component';
 import type { LibRadio } from './lib-radio.component';
@@ -10,7 +10,7 @@ type LibRadioStoryArgs = Pick<
 >;
 
 const meta: Meta<LibRadioStoryArgs> = {
-  title: 'Forms/Radio',
+  title: 'Universal/Forms/Radio',
   tags:['autodocs'],
   component: 'lib-radio',
 

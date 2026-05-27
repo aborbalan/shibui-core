@@ -8,7 +8,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type SwitchArgs = Pick<LibSwitch, 'checked' | 'disabled' | 'variant' | 'size' | 'label' | 'sub'>;
 
 const meta: Meta<SwitchArgs> = {
-  title: 'Forms/Switch',
+  title: 'Universal/Forms/Switch',
   tags:['autodocs'],
   component: 'lib-switch',
   argTypes: {

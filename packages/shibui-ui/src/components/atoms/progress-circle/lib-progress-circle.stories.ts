@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing, TemplateResult } from 'lit';
 import './lib-progress-circle.component';
 import type { LibProgressCircle } from './lib-progress-circle.component';
@@ -23,7 +23,7 @@ const withLabel = (label: string, content: TemplateResult): TemplateResult => ht
 `;
 
 const meta: Meta<LibProgressCircleStoryArgs> = {
-  title: 'Feedback/Progress Circle',
+  title: 'Universal/Feedback/Progress Circle',
   tags:['autodocs'],
   component: 'lib-progress-circle',
 
