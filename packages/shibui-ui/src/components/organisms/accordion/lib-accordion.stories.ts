@@ -8,7 +8,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type LibAccordionStoryArgs = Pick<LibAccordion, 'variant' | 'exclusive'>;
 
 const meta: Meta<LibAccordionStoryArgs> = {
-  title: 'Layout/Accordion',
+  title: 'Universal/Layout/Accordion',
   component: 'lib-accordion',
   tags:['autodocs'],
   argTypes: {
@@ -147,7 +147,6 @@ export const Exclusive: Story = {
 
 /* ── All variants ── */
 export const AllVariants: Story = {
-  name: 'All Variants .',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-direction:column; gap:32px; padding:24px; background:#F2EDE6;">
 
@@ -197,24 +196,62 @@ export const AllVariants: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="width:100%;max-width:440px;">
-    <lib-accordion>
-      <lib-accordion-item label="Wabi — la imperfección serena" open>
-        <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">
-          Austeridad brumosa: fondos elevados, bordes sutiles.
-        </p>
-      </lib-accordion-item>
-      <lib-accordion-item label="Kintsugi — la rotura dorada">
-        <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">
-          Belleza en las grietas, oro sobre oscuridad profunda.
-        </p>
-      </lib-accordion-item>
-      <lib-accordion-item label="Sabi — la pátina del tiempo">
-        <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">
-          Superficies desvanecidas con dignidad silenciosa.
-        </p>
-      </lib-accordion-item>
-    </lib-accordion>
+  <div style="width:100%;max-width:480px;display:flex;flex-direction:column;gap:var(--lib-space-lg);">
+
+    <!-- default -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">default</p>
+      <lib-accordion variant="default">
+        <lib-accordion-item label="Wabi — la imperfección serena" open>
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Austeridad brumosa: fondos elevados, bordes sutiles.</p>
+        </lib-accordion-item>
+        <lib-accordion-item label="Kintsugi — la rotura dorada">
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Belleza en las grietas, oro sobre oscuridad profunda.</p>
+        </lib-accordion-item>
+      </lib-accordion>
+    </div>
+
+    <!-- flush -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">flush</p>
+      <div style="background:var(--bg-surface);padding:var(--lib-space-sm) var(--lib-space-md);">
+        <lib-accordion variant="flush">
+          <lib-accordion-item label="Sabi — la pátina del tiempo" open>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Superficies desvanecidas con dignidad silenciosa.</p>
+          </lib-accordion-item>
+          <lib-accordion-item label="Shizen — naturaleza libre">
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Flujo orgánico sin restricciones geométricas.</p>
+          </lib-accordion-item>
+        </lib-accordion>
+      </div>
+    </div>
+
+    <!-- separated -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">separated</p>
+      <lib-accordion variant="separated">
+        <lib-accordion-item label="Celadon — la cerámica fría" open>
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Verde azulado inspirado en la cerámica coreana.</p>
+        </lib-accordion-item>
+        <lib-accordion-item label="Terminal — el código como estética">
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Mono fósforo, glitch y precisión técnica.</p>
+        </lib-accordion-item>
+      </lib-accordion>
+    </div>
+
+    <!-- accent -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">accent</p>
+      <lib-accordion variant="accent">
+        <lib-accordion-item label="Kaki — el barro terracota" open>
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Acento principal: naranja tostado de influencia japonesa.</p>
+        </lib-accordion-item>
+        <lib-accordion-item label="Washi — la escala neutra">
+          <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Del blanco roto al negro cálido en 10 tonos.</p>
+        </lib-accordion-item>
+      </lib-accordion>
+    </div>
+
   </div>
 `);
 

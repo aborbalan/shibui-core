@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-text-glitch.component';
 import type { LibTextGlitch } from './lib-text-glitch.component';
@@ -7,7 +7,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type LibTextGlitchArgs = Pick<LibTextGlitch, 'text' | 'variant' | 'trigger' | 'active'>;
 
 const meta: Meta<LibTextGlitchArgs> = {
-  title: 'Content/Text Glitch',
+  title: 'Universal/Content/Text Glitch',
   tags:['autodocs'],
   component: 'lib-text-glitch',
   argTypes: {
@@ -342,10 +342,15 @@ export const Noise: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);">
-    <span style="font-family:var(--lib-font-display);font-size:2.5rem;font-weight:300;letter-spacing:-0.02em;color:var(--text-primary);">
-      <lib-text-glitch text="shibui 渋い" variant="slice"></lib-text-glitch>
-    </span>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-lg);padding:var(--lib-space-lg);">
+    ${(['slice','scan','shift','decode','redact'] as const).map(v => html`
+      <div style="display:flex;align-items:baseline;gap:var(--lib-space-md);">
+        <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;color:var(--text-muted);text-transform:uppercase;width:48px;flex-shrink:0;">${v}</span>
+        <span style="font-family:var(--lib-font-display);font-size:2rem;font-weight:300;letter-spacing:-0.02em;color:var(--text-primary);line-height:1.1;">
+          <lib-text-glitch text="shibui 渋い" variant="${v}"></lib-text-glitch>
+        </span>
+      </div>
+    `)}
   </div>
 `);
 

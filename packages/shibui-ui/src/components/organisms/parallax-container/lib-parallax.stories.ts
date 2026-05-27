@@ -1,10 +1,10 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-parallax.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Motion/Parallax Container',
+  title: 'Web/Motion/Parallax Container',
   tags:['autodocs'],
   component: 'lib-parallax-container',
   parameters: {
@@ -274,11 +274,45 @@ export const Clamped: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-parallax-container style="height:120px;border:1px solid var(--border-subtle);overflow:hidden;background:var(--bg-elevated);">
-    <div data-parallax-factor="0.4" style="height:100%;display:flex;align-items:center;justify-content:center;">
-      <span style="font-family:'Shippori Mincho',serif;font-size:2.5rem;color:var(--katachi-accent,var(--text-primary));opacity:.7;">渋</span>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);">
+
+    <!-- Axis Y — slow background + fast foreground -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">axis y · multi-layer</p>
+      <lib-parallax-container speed="0.2" axis="y" style="height:140px;border:1px solid var(--border-subtle);overflow:hidden;background:var(--bg-elevated);position:relative;">
+        <!-- Slow background text -->
+        <div data-parallax-factor="0.3" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+          <span style="font-family:var(--lib-font-display);font-size:4rem;font-weight:300;color:var(--border-subtle);letter-spacing:-.02em;">SHIBUI</span>
+        </div>
+        <!-- Medium card -->
+        <div data-parallax-factor="1" style="position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:center;">
+          <div style="padding:var(--lib-space-sm) var(--lib-space-md);background:var(--bg-surface);border:1px solid var(--border-default);">
+            <span style="font-family:var(--lib-font-mono);font-size:var(--text-xs);color:var(--text-secondary);">factor 1.0 · base</span>
+          </div>
+        </div>
+        <!-- Fast foreground element -->
+        <div data-parallax-factor="2.5" style="position:absolute;top:20%;right:15%;z-index:3;">
+          <div style="width:36px;height:36px;background:var(--accent-primary);display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:var(--lib-font-mono);font-size:8px;color:var(--bg-base);">2.5</span>
+          </div>
+        </div>
+      </lib-parallax-container>
     </div>
-  </lib-parallax-container>
+
+    <!-- Axis X -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">axis x</p>
+      <lib-parallax-container speed="0.3" axis="x" style="height:80px;border:1px solid var(--border-subtle);overflow:hidden;background:var(--bg-surface);">
+        <div data-parallax-factor="0.5" style="position:absolute;inset:0;display:flex;align-items:center;padding:0 var(--lib-space-lg);pointer-events:none;">
+          <span style="font-family:var(--lib-font-display);font-size:3rem;font-weight:300;color:var(--border-subtle);white-space:nowrap;">水平 · horizontal</span>
+        </div>
+        <div data-parallax-factor="1.5" style="position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:var(--lib-font-mono);font-size:var(--text-xs);color:var(--text-muted);">axis="x" · speed 0.3</span>
+        </div>
+      </lib-parallax-container>
+    </div>
+
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

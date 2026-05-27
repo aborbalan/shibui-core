@@ -12,7 +12,7 @@ type LibCardArgs = {
 };
 
 const meta: Meta<LibCardArgs> = {
-  title: 'Content/Card',
+  title: 'Universal/Content/Card',
   tags:['autodocs'],
   component: 'lib-card',
   argTypes: {
@@ -59,7 +59,6 @@ export const Playground: Story = {
 
 /* ── Todas las variantes — showcase de la imagen ── */
 export const AllVariants: Story = {
-  name: 'All Variants.',
   render: (): TemplateResult => html`
     <!-- Variantes light -->
     <div style="
@@ -365,12 +364,26 @@ export const Kintsugi: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-card kanji="渋" style="width:320px;">
-    <span slot="tag">Katachi · Default</span>
-    <h2 slot="title">Shibui Card</h2>
-    <p>Superficie que adapta fondo, borde y texto al contexto estético ambient.</p>
-    <div slot="footer"><span>Default variant</span></div>
-  </lib-card>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);width:320px;">
+    <lib-card variant="default" kanji="渋">
+      <span slot="tag">default</span>
+      <h2 slot="title">Shibui Card</h2>
+      <p>Superficie que adapta fondo, borde y texto al contexto estético ambient.</p>
+      <div slot="footer"><span>Default</span></div>
+    </lib-card>
+    <lib-card variant="accent" kanji="和">
+      <span slot="tag">accent</span>
+      <h2 slot="title">Accent</h2>
+      <p>Borde kaki para elementos destacados.</p>
+      <div slot="footer"><span>Accent</span></div>
+    </lib-card>
+    <lib-card variant="washi" kanji="紙">
+      <span slot="tag">washi</span>
+      <h2 slot="title">Washi</h2>
+      <p>Paleta neutral cálida del sistema.</p>
+      <div slot="footer"><span>Washi</span></div>
+    </lib-card>
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

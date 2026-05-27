@@ -1,4 +1,4 @@
-import type { Meta, StoryObj }     from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj }     from '@storybook/web-components-vite';
 import { html }                    from 'lit';
 import './lib-text-editor.component';
 import { createKatachiStories }    from '../../../stories/katachi-stories.helper';
@@ -55,7 +55,7 @@ pnpm install
 
 /* ── Meta ── */
 const meta: Meta<TextEditorArgs> = {
-  title:     'Editor/Text Editor',
+  title:     'Desktop/Editor/Text Editor',
   component: 'lib-text-editor',
   tags:      ['autodocs'],
 
@@ -189,12 +189,55 @@ export const Readonly: Story = {
 ───────────────────────────────────────────────────────────── */
 
 const _katachi = createKatachiStories<TextEditorArgs>(() => html`
-  <div style="width: 600px; height: 340px;">
-    <lib-text-editor
-      .files="${sampleFiles}"
-      active="file-ts"
-      show-open
-    ></lib-text-editor>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);">
+
+    <!-- Multi-file — active on config (dirty tab) -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">multi-file · dirty tab · show-open</p>
+      <div style="width:640px;height:300px;">
+        <lib-text-editor
+          .files="${sampleFiles}"
+          active="file-config"
+          show-open
+        ></lib-text-editor>
+      </div>
+    </div>
+
+    <!-- Single file · saving state -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">single file · saving</p>
+      <div style="width:640px;height:220px;">
+        <lib-text-editor
+          .files="${[{ ...sampleFiles[0], dirty: true }]}"
+          active="file-ts"
+          saving
+        ></lib-text-editor>
+      </div>
+    </div>
+
+    <!-- Readonly mode -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">readonly</p>
+      <div style="width:640px;height:220px;">
+        <lib-text-editor
+          .files="${[sampleFiles[2]]}"
+          active="file-md"
+          readonly
+        ></lib-text-editor>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">empty state</p>
+      <div style="width:640px;height:160px;">
+        <lib-text-editor
+          .files="${[]}"
+          active=""
+        ></lib-text-editor>
+      </div>
+    </div>
+
   </div>
 `);
 

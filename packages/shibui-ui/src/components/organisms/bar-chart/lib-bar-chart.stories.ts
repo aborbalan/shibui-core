@@ -1,4 +1,4 @@
-import type { Meta, StoryObj }  from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj }  from '@storybook/web-components-vite';
 import { html }                 from 'lit';
 import './lib-bar-chart.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
@@ -34,7 +34,7 @@ const SERIES_STACK_C: BarSeries = { name: 'Producto C', values: [15, 20, 25, 20,
 
 /* ── Meta ── */
 const meta: Meta<BarChartArgs> = {
-  title:     'Charts/Bar Chart',
+  title:     'Universal/Charts/Bar Chart',
   component: 'lib-bar-chart',
   tags:      ['autodocs'],
 
@@ -190,24 +190,49 @@ export const NoGrid: Story = {
    KATACHI — gráfica en cada contexto estético
 ───────────────────────────────────────────────────────────── */
 const _katachi = createKatachiStories<BarChartArgs>(() => html`
-  <div
-    style="
-      width: 520px;
-      padding: var(--lib-space-lg);
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-    "
-  >
-    <lib-bar-chart
-      .series=${[SERIES_2023, SERIES_2024]}
-      .categories=${CATS_Q}
-      x-label="Trimestre"
-      y-label="Ventas (k€)"
-      show-grid
-      show-legend
-      .height=${260}
-    ></lib-bar-chart>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-lg);width:520px;padding:var(--lib-space-lg);background:var(--bg-surface);border:1px solid var(--border-subtle);">
+
+    <!-- Grouped — 2 series, 4 trimestres -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">grouped · 2 series</p>
+      <lib-bar-chart
+        .series=${[SERIES_2023, SERIES_2024]}
+        .categories=${CATS_Q}
+        x-label="Trimestre"
+        y-label="Ventas (k€)"
+        show-grid
+        show-legend
+        .height=${200}
+      ></lib-bar-chart>
+    </div>
+
+    <!-- Stacked — 3 productos por departamento -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">stacked · 3 series</p>
+      <lib-bar-chart
+        .series=${[SERIES_STACK_A, SERIES_STACK_B, SERIES_STACK_C]}
+        .categories=${CATS_DEPT}
+        x-label="Departamento"
+        y-label="Unidades"
+        mode="stacked"
+        show-grid
+        show-legend
+        .height=${200}
+      ></lib-bar-chart>
+    </div>
+
+    <!-- Sin rejilla — una serie -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">sin rejilla · 1 serie</p>
+      <lib-bar-chart
+        .series=${[SERIES_INGRESOS]}
+        .categories=${CATS_MONTH}
+        x-label="Mes"
+        y-label="Importe (k€)"
+        .height=${160}
+      ></lib-bar-chart>
+    </div>
+
   </div>
 `);
 

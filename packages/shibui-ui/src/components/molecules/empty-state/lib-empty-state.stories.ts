@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-empty-state.component';
 import type { LibEmptyState } from './lib-empty-state.component';
@@ -10,7 +10,7 @@ type EmptyStateArgs = Pick<
 >;
 
 const meta: Meta<EmptyStateArgs> = {
-  title: 'Feedback/Empty State',
+  title: 'Universal/Feedback/Empty State',
   tags:['autodocs'],
   component: 'lib-empty-state',
   argTypes: {
@@ -260,10 +260,32 @@ export const DarkSurface: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-empty-state
-    heading="Sin resultados"
-    description="No hay datos en este contexto."
-  ></lib-empty-state>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-md);background:var(--bg-surface);border:1px solid var(--border-subtle);">
+    <lib-empty-state
+      heading="Sin resultados"
+      description="No hay datos en este contexto."
+    ></lib-empty-state>
+    <lib-empty-state
+      tone="kaki"
+      size="sm"
+      heading="Empieza aquí"
+      description="Crea tu primer elemento."
+    ></lib-empty-state>
+    <lib-empty-state
+      layout="inline"
+      size="sm"
+      bordered
+      heading="Sin registros"
+      description="La tabla no contiene datos."
+    ></lib-empty-state>
+    <lib-empty-state
+      tone="error"
+      size="sm"
+      ghost
+      heading="Acceso denegado"
+      description="No tienes permisos para ver este contenido."
+    ></lib-empty-state>
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

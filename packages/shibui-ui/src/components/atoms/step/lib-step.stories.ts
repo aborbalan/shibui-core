@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-step.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
@@ -14,7 +14,7 @@ interface StepArgs {
 }
 
 const meta: Meta<StepArgs> = {
-  title: 'Navigation/Step',
+  title: 'Universal/Navigation/Step',
   tags:['autodocs'],
   component: 'lib-step',
   argTypes: {
@@ -137,10 +137,29 @@ export const States: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);display:inline-flex;">
-    <lib-step label="Inicio"     index="1" status="completed"></lib-step>
-    <lib-step label="En proceso" index="2" status="active"></lib-step>
-    <lib-step label="Pendiente"  index="3" status="pending" last></lib-step>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-xl);padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
+    <!-- default variant — 4 statuses -->
+    <div style="display:inline-flex;flex-wrap:wrap;">
+      <lib-step label="Completado" sub="Done"   index="1" status="completed" variant="default"></lib-step>
+      <lib-step label="Activo"     sub="Now"    index="2" status="active"    variant="default"></lib-step>
+      <lib-step label="Pendiente"  sub="Waiting"index="3" status="pending"   variant="default"></lib-step>
+      <lib-step label="Error"      sub="Failed" index="4" status="error"     variant="default" last></lib-step>
+    </div>
+    <!-- minimal variant -->
+    <div style="display:inline-flex;flex-wrap:wrap;">
+      <lib-step label="Step 1" index="1" status="completed" variant="minimal"></lib-step>
+      <lib-step label="Step 2" index="2" status="active"    variant="minimal"></lib-step>
+      <lib-step label="Step 3" index="3" status="pending"   variant="minimal" last></lib-step>
+    </div>
+    <!-- sizes sm · md · lg -->
+    <div style="display:flex;gap:var(--lib-space-xl);align-items:center;flex-wrap:wrap;">
+      ${(['sm','md','lg'] as const).map(size => html`
+        <div style="display:inline-flex;">
+          <lib-step label="Paso" index="1" status="active" size=${size}></lib-step>
+          <lib-step label="Paso" index="2" status="pending" size=${size} last></lib-step>
+        </div>
+      `)}
+    </div>
   </div>
 `);
 

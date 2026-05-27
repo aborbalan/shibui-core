@@ -10,7 +10,7 @@ type LibAvatarStoryArgs = Pick<LibAvatar, 'src' | 'name' | 'size' | 'shape' | 'c
 const DEMO_IMG = 'https://i.pravatar.cc/200?img=32';
 
 const meta: Meta<LibAvatarStoryArgs> = {
-  title: 'Content/Avatar',
+  title: 'Universal/Content/Avatar',
   tags:['autodocs'],
   component: 'lib-avatar',
 
@@ -172,7 +172,6 @@ export const Colors: Story = {
 
 /* ── With Status Dot ── */
 export const WithStatusDot: Story = {
-  name: 'With Status Dot.',
   render: (): TemplateResult => html`
     <div style="display:flex; align-items:center; gap:32px; padding:32px;">
       <lib-avatar size="lg" src=${DEMO_IMG} name="Ana Bel">
@@ -193,7 +192,6 @@ export const WithStatusDot: Story = {
 
 /* ── Icon fallback ── */
 export const IconFallback: Story = {
-  name: 'Icon Fallback.',
   render: (): TemplateResult => html`
     <div style="display:flex; align-items:center; gap:24px; padding:24px; background:#F2EDE6;">
       <lib-avatar size="xl" color="washi"></lib-avatar>
@@ -212,10 +210,28 @@ export const IconFallback: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
-    <lib-avatar name="Sora K" size="sm"></lib-avatar>
-    <lib-avatar name="Sora K" size="md"></lib-avatar>
-    <lib-avatar name="Sora K" size="lg"></lib-avatar>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);">
+    <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
+      <lib-avatar name="Sora K" size="xs" color="washi"></lib-avatar>
+      <lib-avatar name="Sora K" size="sm" color="washi"></lib-avatar>
+      <lib-avatar name="Sora K" size="md" color="washi"></lib-avatar>
+      <lib-avatar name="Sora K" size="lg" color="washi"></lib-avatar>
+      <lib-avatar name="Sora K" size="xl" color="washi"></lib-avatar>
+      <lib-avatar name="Sora K" size="2xl" color="washi"></lib-avatar>
+    </div>
+    <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
+      <lib-avatar name="Ana B" size="md" color="washi" shape="circle"></lib-avatar>
+      <lib-avatar name="Ana B" size="md" color="kaki" shape="squircle"></lib-avatar>
+      <lib-avatar name="Ana B" size="md" color="celadon" shape="square"></lib-avatar>
+      <lib-avatar name="Ana B" size="md" color="dark" shape="circle"></lib-avatar>
+    </div>
+    <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
+      <lib-avatar size="md" color="washi"></lib-avatar>
+      <lib-avatar size="md" color="kaki"></lib-avatar>
+      <lib-avatar size="md" color="celadon"></lib-avatar>
+      <lib-avatar size="md" color="dark"></lib-avatar>
+      <lib-avatar src=${DEMO_IMG} name="AB" size="md" shape="circle"></lib-avatar>
+    </div>
   </div>
 `);
 

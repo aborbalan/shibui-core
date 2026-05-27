@@ -1,10 +1,10 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-liquid-button.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Actions/Button Liquid',
+  title: 'Universal/Actions/Button Liquid',
   tags:['autodocs'],
   component: 'lib-button-liquid',
   argTypes: {
@@ -252,10 +252,24 @@ export const Block: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-lg);display:flex;gap:var(--lib-space-md);align-items:center;flex-wrap:wrap;">
-    <lib-button-liquid variant="ink">Acción</lib-button-liquid>
-    <lib-button-liquid variant="kaki">Kaki</lib-button-liquid>
-    <lib-button-liquid variant="ghost">Ghost</lib-button-liquid>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-lg);">
+    <div style="display:flex;gap:var(--lib-space-md);align-items:center;flex-wrap:wrap;">
+      <lib-button-liquid variant="ink" size="sm">Pequeño</lib-button-liquid>
+      <lib-button-liquid variant="ink" size="md">Default</lib-button-liquid>
+      <lib-button-liquid variant="ink" size="lg">Grande</lib-button-liquid>
+    </div>
+    <div style="display:flex;gap:var(--lib-space-md);align-items:center;flex-wrap:wrap;">
+      <lib-button-liquid variant="ink">Ink</lib-button-liquid>
+      <lib-button-liquid variant="washi">Washi</lib-button-liquid>
+      <lib-button-liquid variant="kaki">Kaki</lib-button-liquid>
+      <lib-button-liquid variant="celadon">Celadón</lib-button-liquid>
+      <lib-button-liquid variant="ghost">Ghost</lib-button-liquid>
+      <lib-button-liquid variant="danger">Danger</lib-button-liquid>
+    </div>
+    <div style="display:flex;gap:var(--lib-space-md);align-items:center;flex-wrap:wrap;">
+      <lib-button-liquid variant="ink" disabled>Disabled</lib-button-liquid>
+      <lib-button-liquid variant="ink" loading>Loading</lib-button-liquid>
+    </div>
   </div>
 `);
 

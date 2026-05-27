@@ -1,4 +1,4 @@
-import { Meta, StoryObj }      from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj }      from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-sidebar.component';
 import type { LibSidebar }      from './lib-sidebar.component';
@@ -42,7 +42,7 @@ const LINKS_GLITCH: SidebarLink[] = [
 
 /* ── Meta ── */
 const meta: Meta<StoryArgs> = {
-  title: 'Navigation/Sidebar',
+  title: 'Universal/Navigation/Sidebar',
   tags:['autodocs'],
   component: 'lib-sidebar',
   parameters: { layout: 'fullscreen' },
@@ -321,17 +321,88 @@ export const Collapsible: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;height:280px;border:1px solid var(--border-subtle);overflow:hidden;">
-    <lib-sidebar
-      variant="dark"
-      .links="${[
-        { id: 'dashboard', label: 'Dashboard', icon: 'home' },
-        { id: 'projects',  label: 'Proyectos', icon: 'folder' },
-        { id: 'settings',  label: 'Ajustes',   icon: 'compass' },
-      ] as SidebarLink[]}"
-      style="--lib-sidebar-width:200px;"
-    ></lib-sidebar>
-    <div style="flex:1;padding:var(--lib-space-md);background:var(--bg-base);font-family:var(--lib-font-mono);font-size:var(--text-xs);color:var(--text-muted);">content</div>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+
+    <!-- dark variant -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">dark</p>
+      <div style="display:flex;height:200px;border:1px solid var(--border-subtle);overflow:hidden;">
+        <lib-sidebar
+          variant="dark"
+          active="dashboard"
+          .links="${([
+            { id: 'dashboard', label: 'Dashboard', icon: 'home',       group: 'Principal' },
+            { id: 'analytics', label: 'Analíticas', icon: 'chart-line', badge: 5 },
+            { id: 'projects',  label: 'Proyectos',  icon: 'folder' },
+            { id: 'settings',  label: 'Ajustes',    icon: 'compass',   disabled: true },
+          ] as SidebarLink[])}"
+          style="--lib-sidebar-width:200px;"
+        ></lib-sidebar>
+        <div style="flex:1;padding:var(--lib-space-md);background:var(--color-washi-950);font-family:var(--lib-font-mono);font-size:9px;color:rgba(250,247,244,.2);">content area</div>
+      </div>
+    </div>
+
+    <!-- light variant -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">light</p>
+      <div style="display:flex;height:200px;border:1px solid var(--border-subtle);overflow:hidden;">
+        <lib-sidebar
+          variant="light"
+          active="analytics"
+          user-name="Shibui User"
+          user-role="Pro"
+          show-user-action
+          .links="${([
+            { id: 'dashboard', label: 'Dashboard', icon: 'home',       group: 'Principal' },
+            { id: 'analytics', label: 'Analíticas', icon: 'chart-line', badge: 12 },
+            { id: 'projects',  label: 'Proyectos',  icon: 'folder' },
+          ] as SidebarLink[])}"
+          style="--lib-sidebar-width:200px;"
+        ></lib-sidebar>
+        <div style="flex:1;padding:var(--lib-space-md);background:var(--bg-base);font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);">content area</div>
+      </div>
+    </div>
+
+    <!-- kintsugi variant -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">kintsugi</p>
+      <div style="display:flex;height:200px;border:1px solid var(--border-subtle);overflow:hidden;">
+        <lib-sidebar
+          variant="kintsugi"
+          logo-mark="渋"
+          brand-name="shibui ✦"
+          active="gallery"
+          .links="${([
+            { id: 'gallery',    label: 'Galería',   icon: 'image',   group: '金継ぎ · Sistema' },
+            { id: 'collection', label: 'Colección', icon: 'folder',  badge: 24 },
+            { id: 'history',    label: 'Historia',  icon: 'book' },
+          ] as SidebarLink[])}"
+          style="--lib-sidebar-width:200px;"
+        ></lib-sidebar>
+        <div style="flex:1;padding:var(--lib-space-md);background:var(--color-washi-950);font-family:var(--lib-font-mono);font-size:9px;color:rgba(250,247,244,.15);">content area</div>
+      </div>
+    </div>
+
+    <!-- glitch variant -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">glitch</p>
+      <div style="display:flex;height:200px;border:1px solid var(--border-subtle);overflow:hidden;">
+        <lib-sidebar
+          variant="glitch"
+          logo-mark="⌗"
+          brand-name="SHIBUI"
+          active="processes"
+          .links="${([
+            { id: 'processes', label: 'processes', icon: 'atom',       group: 'modules' },
+            { id: 'metrics',   label: 'metrics',   icon: 'chart-line' },
+            { id: 'errorlog',  label: 'error.log', icon: 'bell',       badge: 'dot' },
+          ] as SidebarLink[])}"
+          style="--lib-sidebar-width:200px;"
+        ></lib-sidebar>
+        <div style="flex:1;padding:var(--lib-space-md);background:var(--color-washi-950);font-family:var(--lib-font-mono);font-size:9px;color:rgba(250,247,244,.15);">content area</div>
+      </div>
+    </div>
+
   </div>
 `);
 

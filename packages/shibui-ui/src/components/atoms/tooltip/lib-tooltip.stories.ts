@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-tooltip.component';
 import type { LibTooltip } from './lib-tooltip.component';
@@ -41,7 +41,7 @@ const col = (inner: TemplateResult, sublabel: string, dark = false): TemplateRes
 
 
 const meta: Meta<LibTooltipArgs> = {
-  title: 'Overlay/Tooltip',
+  title: 'Universal/Overlay/Tooltip',
   tags:['autodocs'],
   component: 'lib-tooltip',
   argTypes: {
@@ -352,10 +352,25 @@ export const Context: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-xl);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;min-height:100px;">
-    <lib-tooltip content="Contexto estético activo">
-      <button style="font-family:var(--lib-font-mono);font-size:0.6875rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-secondary);background:var(--bg-elevated);border:1px solid var(--border-default);padding:0.5rem 1rem;cursor:default;">Hover</button>
-    </lib-tooltip>
+  <div style="padding:var(--lib-space-xl);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:var(--lib-space-xl);min-height:160px;">
+    <!-- Sizes -->
+    ${(['sm','md','lg'] as const).map(size => html`
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
+        <lib-tooltip position="top" size=${size} content="Tamaño ${size}">
+          <button style="font-family:var(--lib-font-mono);font-size:0.6875rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-secondary);background:var(--bg-elevated);border:1px solid var(--border-default);padding:0.5rem 1rem;cursor:default;">${size}</button>
+        </lib-tooltip>
+        <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);">${size}</span>
+      </div>
+    `)}
+    <!-- Variants -->
+    ${(['dark','light','kaki','celadon','error'] as const).map(v => html`
+      <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
+        <lib-tooltip position="top" variant=${v} content="Variante ${v}">
+          <button style="font-family:var(--lib-font-mono);font-size:0.6875rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-secondary);background:var(--bg-elevated);border:1px solid var(--border-default);padding:0.5rem 1rem;cursor:default;">${v}</button>
+        </lib-tooltip>
+        <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);">${v}</span>
+      </div>
+    `)}
   </div>
 `);
 

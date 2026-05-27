@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-alert.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
@@ -12,7 +12,7 @@ interface AlertArgs {
 }
 
 const meta: Meta<AlertArgs> = {
-  title: 'Feedback/Alert',
+  title: 'Universal/Feedback/Alert',
   tags:['autodocs'],
   component: 'lib-alert',
   argTypes: {
@@ -199,9 +199,23 @@ export const FormContext: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-alert type="default" heading="Notification">
-    La superficie y el texto se adaptan al katachi vía tokens semánticos.
-  </lib-alert>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);padding:var(--lib-space-md);">
+    <lib-alert type="default">
+      Mensaje neutro — la superficie adapta al katachi vía tokens semánticos.
+    </lib-alert>
+    <lib-alert type="info" heading="Información">
+      Componente actualizado. Revisa el changelog para más detalles.
+    </lib-alert>
+    <lib-alert type="warning" closable>
+      Esta acción puede tener efectos no deseados. Procede con cautela.
+    </lib-alert>
+    <lib-alert type="error" heading="Error" closable>
+      No se pudo completar la solicitud. Comprueba los datos e inténtalo de nuevo.
+    </lib-alert>
+    <lib-alert type="success">
+      Cambios guardados correctamente.
+    </lib-alert>
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

@@ -1,11 +1,11 @@
-import { html } from 'lit';
+﻿import { html } from 'lit';
 import { Meta, StoryObj } from '@storybook/web-components-vite'; // Importación necesaria
 import './lib-bento-item.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 // 1. Definimos la metadata del componente (Meta)
 const meta: Meta = {
-  title: 'Layout/Bento Item',
+  title: 'Universal/Layout/Bento Item',
   
   component: 'lib-bento-item',
   argTypes: {

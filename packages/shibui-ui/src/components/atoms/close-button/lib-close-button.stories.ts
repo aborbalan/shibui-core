@@ -10,7 +10,7 @@ type LibCloseButtonStoryArgs = Pick<
 >;
 
 const meta: Meta<LibCloseButtonStoryArgs> = {
-  title: 'Actions/Close Button',
+  title: 'Universal/Actions/Close Button',
   tags:['autodocs'],
   component: 'lib-close-button',
 
@@ -58,7 +58,6 @@ export const Playground: Story = {
 
 /* ── All Variants ── */
 export const AllVariants: Story = {
-  name: 'All Variants.',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-wrap:wrap; align-items:center; gap:24px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
 
@@ -231,11 +230,27 @@ export const ContextOnDark: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;gap:var(--lib-space-md);align-items:center;padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-close-button variant="ghost"    size="md"></lib-close-button>
-    <lib-close-button variant="subtle"   size="md"></lib-close-button>
-    <lib-close-button variant="outlined" size="md"></lib-close-button>
-    <lib-close-button variant="filled"   size="md"></lib-close-button>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <div style="display:flex;gap:var(--lib-space-md);align-items:center;flex-wrap:wrap;">
+      <lib-close-button variant="ghost"        size="md"></lib-close-button>
+      <lib-close-button variant="subtle"       size="md"></lib-close-button>
+      <lib-close-button variant="outlined"     size="md"></lib-close-button>
+      <lib-close-button variant="filled"       size="md"></lib-close-button>
+      <lib-close-button variant="filled-round" size="md"></lib-close-button>
+      <lib-close-button variant="danger"       size="md"></lib-close-button>
+    </div>
+    <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
+      <lib-close-button variant="ghost" size="sm"></lib-close-button>
+      <lib-close-button variant="ghost" size="md"></lib-close-button>
+      <lib-close-button variant="ghost" size="lg"></lib-close-button>
+      <lib-close-button variant="ghost" size="xl"></lib-close-button>
+    </div>
+    <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
+      <lib-close-button variant="ghost"   size="lg" icon="x"></lib-close-button>
+      <lib-close-button variant="ghost"   size="lg" icon="x-circle"></lib-close-button>
+      <lib-close-button variant="ghost"   size="lg" icon="x-square"></lib-close-button>
+      <lib-close-button variant="filled"  size="md" ?disabled=${true}></lib-close-button>
+    </div>
   </div>
 `);
 

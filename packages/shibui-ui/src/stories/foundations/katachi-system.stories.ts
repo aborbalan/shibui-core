@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import '../../components/atoms/canvas/lib-canvas.component';
 import '../../components/atoms/card/lib-card.component';
@@ -53,7 +53,7 @@ const sampleContent = (k: (typeof KATACHI)[number]): TemplateResult => html`
 `;
 
 const meta: Meta<KatachiSystemArgs> = {
-  title: 'Foundations/Katachi · System',
+  title: 'Universal/Foundations/Katachi · System',
   tags: ['autodocs'],
 };
 

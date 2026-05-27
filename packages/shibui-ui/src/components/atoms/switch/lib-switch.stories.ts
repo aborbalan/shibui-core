@@ -8,7 +8,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type SwitchArgs = Pick<LibSwitch, 'checked' | 'disabled' | 'variant' | 'size' | 'label' | 'sub'>;
 
 const meta: Meta<SwitchArgs> = {
-  title: 'Forms/Switch',
+  title: 'Universal/Forms/Switch',
   tags:['autodocs'],
   component: 'lib-switch',
   argTypes: {
@@ -104,6 +104,60 @@ export const KintsugiSizes: Story = {
   `,
 };
 
+/* ── Kintsugi: con label + sub ── */
+export const KintsugiLabel: Story = {
+  name: 'Kintsugi — Label y subtítulo',
+  render: (): TemplateResult => html`
+    <div style="padding:40px; background:var(--color-washi-950); border:1px solid oklch(16% 0.02 45); display:flex; flex-direction:column; gap:24px; max-width:480px;">
+      <lib-switch variant="kintsugi" label="Acceso premium" sub="Funciones exclusivas desbloqueadas" ?checked=${true}></lib-switch>
+      <lib-switch variant="kintsugi" label="Modo ceremonial" sub="Activa el tema kintsugi en toda la interfaz"></lib-switch>
+      <lib-switch variant="kintsugi" label="Sincronización de perfil" sub="Última actualización · hace 2 min" ?checked=${true}></lib-switch>
+      <lib-switch variant="kintsugi" label="Exportación avanzada" sub="Requiere plan Enterprise" ?disabled=${true}></lib-switch>
+    </div>
+  `,
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-switch usa tokens semánticos de superficie y texto
+   (bg-elevated, border-subtle, text-primary) — adapta al katachi.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xl);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <!-- States -->
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">states</span>
+      <lib-switch label="Desactivado" sub="Estado por defecto"></lib-switch>
+      <lib-switch label="Activado" sub="checked=true" ?checked=${true}></lib-switch>
+      <lib-switch label="Bloqueado" ?disabled=${true}></lib-switch>
+      <lib-switch label="Bloqueado activo" ?checked=${true} ?disabled=${true}></lib-switch>
+    </div>
+    <!-- Sizes -->
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">sizes</span>
+      ${(['sm','md','lg'] as const).map(size => html`
+        <div style="display:flex;align-items:center;gap:var(--lib-space-sm);">
+          <lib-switch size=${size} ?checked=${true}></lib-switch>
+          <lib-switch size=${size}></lib-switch>
+          <span style="font-family:monospace;font-size:10px;color:var(--text-muted);">${size}</span>
+        </div>
+      `)}
+    </div>
+  </div>
+`);
+
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · Interacción y eventos
+   ═══════════════════════════════════════════════════════════════ */
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
 /* ═══════════════════════════════════════════════════════════════
    TESTS · Interacción y eventos
    ═══════════════════════════════════════════════════════════════ */
@@ -140,36 +194,3 @@ export const TestDisabledSwitch: Story = {
     expect(input.disabled).toBe(true);
   },
 };
-
-/* ── Kintsugi: con label + sub ── */
-export const KintsugiLabel: Story = {
-  name: 'Kintsugi — Label y subtítulo',
-  render: (): TemplateResult => html`
-    <div style="padding:40px; background:var(--color-washi-950); border:1px solid oklch(16% 0.02 45); display:flex; flex-direction:column; gap:24px; max-width:480px;">
-      <lib-switch variant="kintsugi" label="Acceso premium" sub="Funciones exclusivas desbloqueadas" ?checked=${true}></lib-switch>
-      <lib-switch variant="kintsugi" label="Modo ceremonial" sub="Activa el tema kintsugi en toda la interfaz"></lib-switch>
-      <lib-switch variant="kintsugi" label="Sincronización de perfil" sub="Última actualización · hace 2 min" ?checked=${true}></lib-switch>
-      <lib-switch variant="kintsugi" label="Exportación avanzada" sub="Requiere plan Enterprise" ?disabled=${true}></lib-switch>
-    </div>
-  `,
-};
-
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Las 6 historias estándar
-   lib-switch usa tokens semánticos de superficie y texto
-   (bg-elevated, border-subtle, text-primary) — adapta al katachi.
-   ═══════════════════════════════════════════════════════════════ */
-
-const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-switch label="Activar función"></lib-switch>
-    <lib-switch label="Función activa" ?checked=${true}></lib-switch>
-  </div>
-`);
-
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;

@@ -5,7 +5,7 @@ import './lib-checkbox-card.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Forms/Checkbox Card',
+  title: 'Universal/Forms/Checkbox Card',
   tags:['autodocs'],
   component: 'lib-checkbox-card',
   argTypes: {
@@ -317,6 +317,36 @@ export const States: Story = {
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-checkbox-card usa tokens semánticos de borde y superficie
+   (border-subtle, bg-elevated, text-primary) — adapta al katachi.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);padding:var(--lib-space-md);">
+    <div style="display:flex;gap:var(--lib-space-sm);">
+      <lib-checkbox-card value="wabi" card-title="Wabi" desc="Austeridad serena"></lib-checkbox-card>
+      <lib-checkbox-card value="sabi" card-title="Sabi" desc="Patina del tiempo" checked></lib-checkbox-card>
+      <lib-checkbox-card value="shizen" color="celadon" card-title="Shizen" desc="Naturaleza"></lib-checkbox-card>
+    </div>
+    <lib-checkbox-card layout="horizontal" value="kintsugi" card-title="Kintsugi" desc="La belleza de las grietas reparadas con oro."></lib-checkbox-card>
+    <div style="display:flex;gap:var(--lib-space-sm);">
+      <lib-checkbox-card layout="compact" card-title="Angular" checked></lib-checkbox-card>
+      <lib-checkbox-card layout="compact" card-title="React"></lib-checkbox-card>
+      <lib-checkbox-card layout="compact" card-title="Svelte" checked></lib-checkbox-card>
+      <lib-checkbox-card layout="compact" card-title="Lit" disabled></lib-checkbox-card>
+    </div>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ═══════════════════════════════════════════════════════════════
    TESTS · Interacción y eventos
    ═══════════════════════════════════════════════════════════════ */
 
@@ -362,23 +392,3 @@ export const TestDisabledCheckboxCard: Story = {
     expect(input.disabled).toBe(true);
   },
 };
-
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Las 6 historias estándar
-   lib-checkbox-card usa tokens semánticos de borde y superficie
-   (border-subtle, bg-elevated, text-primary) — adapta al katachi.
-   ═══════════════════════════════════════════════════════════════ */
-
-const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);padding:var(--lib-space-md);">
-    <lib-checkbox-card value="wabi" card-title="Wabi" desc="Austeridad serena"></lib-checkbox-card>
-    <lib-checkbox-card value="sabi" card-title="Sabi" desc="Patina del tiempo" checked></lib-checkbox-card>
-  </div>
-`);
-
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;

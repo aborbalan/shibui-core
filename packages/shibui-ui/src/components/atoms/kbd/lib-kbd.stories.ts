@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-kbd.component';
 import type { LibKbd } from './lib-kbd.component';
@@ -7,7 +7,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type KbdArgs = Pick<LibKbd, 'size' | 'variant' | 'pressed'>;
 
 const meta: Meta<KbdArgs> = {
-  title: 'Content/Kbd',
+  title: 'Universal/Content/Kbd',
   tags:['autodocs'],
   component: 'lib-kbd',
   argTypes: {
@@ -224,11 +224,36 @@ export const InlineProse: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;">
-    <lib-kbd>⌘</lib-kbd>
-    <lib-kbd>K</lib-kbd>
-    <lib-kbd>Shift</lib-kbd>
-    <lib-kbd pressed>Esc</lib-kbd>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <!-- Sizes -->
+    <div style="display:flex;align-items:flex-end;gap:var(--lib-space-md);flex-wrap:wrap;">
+      ${(['xs','sm','md','lg'] as const).map(s => html`
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-xs);">
+          <div style="display:flex;align-items:flex-end;gap:var(--lib-space-xs);">
+            <lib-kbd size=${s}>⌘</lib-kbd>
+            <lib-kbd size=${s} pressed>K</lib-kbd>
+          </div>
+          <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;color:var(--text-muted);text-transform:uppercase;">${s}</span>
+        </div>
+      `)}
+    </div>
+    <!-- Variants -->
+    <div style="display:flex;align-items:center;gap:var(--lib-space-md);flex-wrap:wrap;">
+      ${(['default','dark','ghost','kaki','celadon'] as const).map(v => html`
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-xs);">
+          <lib-kbd size="md" variant=${v}>⌘</lib-kbd>
+          <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;color:var(--text-muted);text-transform:uppercase;">${v}</span>
+        </div>
+      `)}
+    </div>
+    <!-- Combo -->
+    <div style="display:flex;align-items:center;gap:4px;">
+      <lib-kbd size="sm">⌘</lib-kbd>
+      <span style="font-family:var(--lib-font-mono);font-size:10px;color:var(--text-muted);padding:0 2px;">+</span>
+      <lib-kbd size="sm">⇧</lib-kbd>
+      <span style="font-family:var(--lib-font-mono);font-size:10px;color:var(--text-muted);padding:0 2px;">+</span>
+      <lib-kbd size="sm">P</lib-kbd>
+    </div>
   </div>
 `);
 

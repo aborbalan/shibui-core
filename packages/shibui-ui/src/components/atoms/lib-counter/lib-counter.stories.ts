@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-counter.component';
 import type { LibCounter } from './lib-counter.component';
@@ -10,7 +10,7 @@ type CounterArgs = Pick<LibCounter,
 >;
 
 const meta: Meta<CounterArgs> = {
-  title: 'Data/Counter',
+  title: 'Universal/Data/Counter',
   tags:['autodocs'],
   component: 'lib-counter',
   argTypes: {
@@ -216,7 +216,20 @@ export const DarkSurface: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-counter value="42"></lib-counter>
+  <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-lg);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
+      <lib-counter value="8302" size="lg" tone="default" label="Usuarios" play-on-visible></lib-counter>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
+      <lib-counter value="24750" prefix="€" size="md" tone="kaki" label="Ingresos" delta="+12%" delta-dir="up" play-on-visible></lib-counter>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
+      <lib-counter value="87" suffix="%" thousands="" size="md" tone="celadon" label="Conversión" play-on-visible></lib-counter>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
+      <lib-counter value="42" size="sm" tone="muted" label="Pendientes" play-on-visible></lib-counter>
+    </div>
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

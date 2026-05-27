@@ -1,4 +1,4 @@
-import type { Meta, StoryObj }   from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj }   from '@storybook/web-components-vite';
 import { html }                  from 'lit';
 import './lib-scatter-chart-3d.component';
 import { createKatachiStories }  from '../../../stories/katachi-stories.helper';
@@ -57,7 +57,7 @@ const SERIES_LABELED: ScatterSeries3d = {
 
 /* ── Meta ── */
 const meta: Meta<ScatterChart3dArgs> = {
-  title:     'Charts/Scatter Chart 3D',
+  title:     'Universal/Charts/Scatter Chart 3D',
   component: 'lib-scatter-chart-3d',
   tags:      ['autodocs'],
 
@@ -197,24 +197,50 @@ export const NoGrid: Story = {
    KATACHI — gráfica 3D en cada contexto estético
 ───────────────────────────────────────────────────────────── */
 const _katachi = createKatachiStories<ScatterChart3dArgs>(() => html`
-  <div
-    style="
-      width: 560px;
-      padding: var(--lib-space-lg);
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-    "
-  >
-    <lib-scatter-chart-3d
-      .series=${[SERIES_A, SERIES_B]}
-      x-label="Eje X"
-      y-label="Eje Y"
-      z-label="Eje Z"
-      show-grid
-      show-legend
-      .height=${380}
-    ></lib-scatter-chart-3d>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-lg);width:560px;padding:var(--lib-space-lg);background:var(--bg-surface);border:1px solid var(--border-subtle);">
+
+    <!-- 2 series · rejilla · leyenda -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">2 series · rejilla · leyenda · arrastrar para rotar</p>
+      <lib-scatter-chart-3d
+        .series=${[SERIES_A, SERIES_B]}
+        x-label="Eje X"
+        y-label="Eje Y"
+        z-label="Eje Z"
+        show-grid
+        show-legend
+        .height=${280}
+      ></lib-scatter-chart-3d>
+    </div>
+
+    <!-- 3 series · sin rejilla -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">3 series · sin rejilla</p>
+      <lib-scatter-chart-3d
+        .series=${[SERIES_A, SERIES_B, SERIES_C]}
+        x-label="X"
+        y-label="Y"
+        z-label="Z"
+        show-legend
+        .dotRadius=${4}
+        .height=${200}
+      ></lib-scatter-chart-3d>
+    </div>
+
+    <!-- Puntos etiquetados -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">puntos etiquetados</p>
+      <lib-scatter-chart-3d
+        .series=${[SERIES_LABELED]}
+        x-label="Longitud"
+        y-label="Latitud"
+        z-label="Altitud"
+        show-grid
+        .dotRadius=${7}
+        .height=${180}
+      ></lib-scatter-chart-3d>
+    </div>
+
   </div>
 `);
 

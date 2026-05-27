@@ -1,10 +1,10 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-pagination.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Navigation/Pagination',
+  title: 'Universal/Navigation/Pagination',
   tags:['autodocs'],
   component: 'lib-pagination',
   argTypes: {
@@ -216,8 +216,15 @@ export const InTable: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
-    <lib-pagination total-items="50" current-page="3" items-per-page="10"></lib-pagination>
+  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-md);">
+    ${label('sm · default')}
+    <lib-pagination total-items="100" current-page="3" size="sm" variant="default"></lib-pagination>
+    ${label('md · outline')}
+    <lib-pagination total-items="100" current-page="5" size="md" variant="outline"></lib-pagination>
+    ${label('lg · ghost')}
+    <lib-pagination total-items="100" current-page="7" size="lg" variant="ghost"></lib-pagination>
+    ${label('show-info')}
+    <lib-pagination total-items="200" items-per-page="20" current-page="3" show-info></lib-pagination>
   </div>
 `);
 

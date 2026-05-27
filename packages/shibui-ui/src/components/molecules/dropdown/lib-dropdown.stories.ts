@@ -1,10 +1,10 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-dropdown.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Navigation/Dropdown',
+  title: 'Universal/Navigation/Dropdown',
   tags:['autodocs'],
   component: 'lib-dropdown',
   argTypes: {
@@ -314,12 +314,31 @@ export const InTableRow: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-xl);min-height:200px;background:var(--bg-base);border:1px solid var(--border-subtle);">
-    <lib-dropdown label="Opciones">
-      ${item('Wabi-Sabi')}
-      ${item('Kintsugi')}
+  <div style="padding:var(--lib-space-lg);min-height:280px;background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;gap:var(--lib-space-lg);align-items:flex-start;flex-wrap:wrap;">
+    <lib-dropdown label="Default" variant="default">
+      ${item('Wabi-Sabi', { icon: iconGear })}
+      ${item('Kintsugi',  { icon: iconGear })}
       <div class="dd-sep"></div>
-      ${item('Celadon')}
+      ${item('Celadon',   { icon: iconGear })}
+      ${item('Eliminar',  { icon: iconTrash, danger: true })}
+    </lib-dropdown>
+    <lib-dropdown label="Ghost" variant="ghost">
+      ${item('Editar',   { icon: iconPencil })}
+      ${item('Copiar',   { icon: iconCopy })}
+      <div class="dd-sep"></div>
+      ${item('Eliminar', { icon: iconTrash, danger: true })}
+    </lib-dropdown>
+    <lib-dropdown label="Filled" variant="filled">
+      ${item('Vista',      { icon: iconGear, active: true })}
+      ${item('Ajustes',    { icon: iconGear, hint: '⌘,' })}
+      <div class="dd-sep"></div>
+      ${item('Salir',      { icon: iconSignOut, danger: true })}
+    </lib-dropdown>
+    <lib-dropdown label="Kaki" variant="kaki">
+      ${item('Exportar',  { icon: iconCopy })}
+      ${item('Duplicar',  { icon: iconCopy, disabled: true })}
+      <div class="dd-sep"></div>
+      ${item('Eliminar',  { icon: iconTrash, danger: true })}
     </lib-dropdown>
   </div>
 `);

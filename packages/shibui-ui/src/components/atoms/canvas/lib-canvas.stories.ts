@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-canvas.component';
 import '../card/lib-card.component';
@@ -6,6 +6,7 @@ import '../button/lib-button.component';
 import '../badge/lib-badge.component';
 import type { LibCanvas } from './lib-canvas.component';
 import type { KatachiId } from '../../../../models/ui/common';
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type LibCanvasStoryArgs = Pick<LibCanvas, 'katachi' | 'display' | 'pad' | 'minH'>;
 
@@ -19,7 +20,7 @@ const KATACHI: Array<{ id: KatachiId; kanji: string; label: string; tagline: str
 ];
 
 const meta: Meta<LibCanvasStoryArgs> = {
-  title: 'Utilities/Canvas',
+  title: 'Universal/Utilities/Canvas',
   component: 'lib-canvas',
   tags: ['autodocs'],
   argTypes: {
@@ -187,3 +188,31 @@ export const NoKatachi: Story = {
     </lib-canvas>
   `,
 };
+
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-canvas es el wrapper de contexto katachi — propaga los
+   tokens semánticos (bg-base, text-primary…) a sus hijos sin
+   introducir estilos propios cuando display="contents".
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);max-width:360px;">
+    <lib-canvas display="block" pad="lg">
+      <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;margin:0 0 var(--lib-space-sm);color:var(--text-muted);">display="block"</p>
+      <lib-button variant="primary">Primary</lib-button>
+    </lib-canvas>
+    <lib-canvas display="flex" pad="lg" style="gap:var(--lib-space-sm);">
+      <lib-button variant="secondary">Secondary</lib-button>
+      <lib-button variant="ghost">Ghost</lib-button>
+      <lib-badge variant="default">Beta</lib-badge>
+    </lib-canvas>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;

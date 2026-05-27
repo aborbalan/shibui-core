@@ -23,7 +23,7 @@ const withLabel = (label: string, content: TemplateResult): TemplateResult => ht
 `;
 
 const meta: Meta<LibProgressCircleStoryArgs> = {
-  title: 'Feedback/Progress Circle',
+  title: 'Universal/Feedback/Progress Circle',
   tags:['autodocs'],
   component: 'lib-progress-circle',
 
@@ -102,7 +102,6 @@ export const Labels: Story = {
 
 /* ── Indeterminate ── */
 export const Indeterminate: Story = {
-  name: 'Indeterminate.',
   render: (): TemplateResult => preview('var(--bg-surface)', html`
     ${withLabel('MD · default',  html`<lib-progress-circle size="md" ?indeterminate=${true}></lib-progress-circle>`)}
     ${withLabel('MD · kaki',     html`<lib-progress-circle size="md" variant="kaki" ?indeterminate=${true}></lib-progress-circle>`)}
@@ -186,7 +185,36 @@ export const ContextHeroXL: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-progress-circle value="65"></lib-progress-circle>
+  <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xl);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);align-items:center;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
+      <lib-progress-circle value="65" size="xs"></lib-progress-circle>
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">xs</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
+      <lib-progress-circle value="65" size="sm"></lib-progress-circle>
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">sm</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
+      <lib-progress-circle value="65" size="md"></lib-progress-circle>
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">md</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
+      <lib-progress-circle value="48" size="md" variant="kaki" sub="Kaki"></lib-progress-circle>
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">kaki</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
+      <lib-progress-circle value="91" size="md" variant="celadon" sub="Celadón"></lib-progress-circle>
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">celadon</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
+      <lib-progress-circle value="100" size="md" variant="celadon" icon="check"></lib-progress-circle>
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">100% ✓</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
+      <lib-progress-circle size="sm" ?indeterminate=${true}></lib-progress-circle>
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">∞</span>
+    </div>
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

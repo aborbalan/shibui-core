@@ -1,4 +1,4 @@
-import type { Meta, StoryObj }     from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj }     from '@storybook/web-components-vite';
 import { html }                    from 'lit';
 import './lib-editor-toolbar.component';
 import { createKatachiStories }    from '../../../stories/katachi-stories.helper';
@@ -13,7 +13,7 @@ interface EditorToolbarArgs {
 
 /* ── Meta ── */
 const meta: Meta<EditorToolbarArgs> = {
-  title:     'Editor/Editor Toolbar',
+  title:     'Desktop/Editor/Editor Toolbar',
   component: 'lib-editor-toolbar',
   tags:      ['autodocs'],
 
@@ -141,21 +141,19 @@ export const LongFilename: Story = {
 ───────────────────────────────────────────────────────────── */
 
 const _katachi = createKatachiStories<EditorToolbarArgs>(() => html`
-  <div style="width: 420px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
-    <lib-editor-toolbar
-      filename="main.ts"
-      dirty
-      show-open
-    ></lib-editor-toolbar>
-    <div style="
-      padding: var(--lib-space-lg);
-      background: var(--bg-base);
-      min-height: 60px;
-      font-family: var(--font-mono, monospace);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      border-radius: 0 0 var(--radius-md) var(--radius-md);
-    ">// contenido…</div>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-md);">
+    <div style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+      <lib-editor-toolbar filename="index.html" show-open></lib-editor-toolbar>
+      <div style="padding:var(--lib-space-md);background:var(--bg-base);min-height:40px;font-family:var(--font-mono,monospace);font-size:0.8rem;color:var(--text-muted);border-radius:0 0 var(--radius-md) var(--radius-md);">// limpio</div>
+    </div>
+    <div style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+      <lib-editor-toolbar filename="main.ts" dirty show-open></lib-editor-toolbar>
+      <div style="padding:var(--lib-space-md);background:var(--bg-base);min-height:40px;font-family:var(--font-mono,monospace);font-size:0.8rem;color:var(--text-muted);border-radius:0 0 var(--radius-md) var(--radius-md);">// dirty</div>
+    </div>
+    <div style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+      <lib-editor-toolbar filename="styles.css" dirty saving></lib-editor-toolbar>
+      <div style="padding:var(--lib-space-md);background:var(--bg-base);min-height:40px;font-family:var(--font-mono,monospace);font-size:0.8rem;color:var(--text-muted);border-radius:0 0 var(--radius-md) var(--radius-md);">// saving…</div>
+    </div>
   </div>
 `);
 

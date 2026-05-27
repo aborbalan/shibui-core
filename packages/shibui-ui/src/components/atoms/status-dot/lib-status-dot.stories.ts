@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-status-dot.component';
 import type { LibStatusDot } from './lib-status-dot.component';
@@ -23,7 +23,7 @@ const withLabel = (label: string, content: TemplateResult): TemplateResult => ht
 `;
 
 const meta: Meta<LibStatusDotStoryArgs> = {
-  title: 'Feedback/Status Dot',
+  title: 'Universal/Feedback/Status Dot',
   component: 'lib-status-dot',
   tags:['autodocs'],
   argTypes: {
@@ -176,11 +176,26 @@ export const ContextUserList: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;gap:var(--lib-space-md);align-items:center;padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-status-dot status="online"></lib-status-dot>
-    <lib-status-dot status="away"></lib-status-dot>
-    <lib-status-dot status="busy"></lib-status-dot>
-    <lib-status-dot status="offline"></lib-status-dot>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <!-- All statuses, sizes sm · md · lg -->
+    ${(['sm','md','lg'] as const).map(size => html`
+      <div style="display:flex;align-items:center;gap:var(--lib-space-lg);">
+        <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;width:20px;">${size}</span>
+        <div style="display:flex;align-items:center;gap:var(--lib-space-md);">
+          <lib-status-dot status="online" size=${size}></lib-status-dot>
+          <lib-status-dot status="away" size=${size}></lib-status-dot>
+          <lib-status-dot status="busy" size=${size}></lib-status-dot>
+          <lib-status-dot status="offline" size=${size}></lib-status-dot>
+        </div>
+      </div>
+    `)}
+    <!-- With labels -->
+    <div style="display:flex;align-items:center;gap:var(--lib-space-md);flex-wrap:wrap;">
+      <lib-status-dot status="online" size="md" ?label=${true}></lib-status-dot>
+      <lib-status-dot status="away" size="md" ?label=${true}></lib-status-dot>
+      <lib-status-dot status="busy" size="md" ?label=${true}></lib-status-dot>
+      <lib-status-dot status="offline" size="md" ?label=${true}></lib-status-dot>
+    </div>
   </div>
 `);
 

@@ -13,7 +13,7 @@ const PREVIEW_H = 'padding:24px; background:#F2EDE6; border:1px solid #E5DDD3; d
 const PREVIEW_DARK = 'padding:24px; background:#120E0A; border:1px solid #221C16; display:flex; flex-direction:column; gap:24px;';
 
 const meta: Meta<LibDividerStoryArgs> = {
-  title: 'Foundations/Spacing/Divider',
+  title: 'Universal/Foundations/Spacing/Divider',
   component: 'lib-divider',
   tags:['autodocs'],
   argTypes: {
@@ -81,7 +81,6 @@ export const Playground: Story = {
 
 /* ── Styles ── */
 export const LineStyles: Story = {
-  name: 'Line Styles.',
   render: (): TemplateResult => html`
     <div style="${PREVIEW_H}">
       ${(['hairline', 'default', 'strong', 'heavy', 'dashed', 'dotted', 'gradient'] as const).map(s => html`

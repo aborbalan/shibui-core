@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 
 // ✅ side-effect import — registra el custom element
@@ -48,7 +48,7 @@ type Args = Partial<LibSegmentedControl> & {
 };
 
 const meta: Meta<Args> = {
-  title: 'Forms/Segmented Control',
+  title: 'Universal/Forms/Segmented Control',
   tags:['autodocs'],
   component: 'lib-segmented-control',
 
@@ -335,13 +335,34 @@ export const GlitchVariant: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-md);">
     <lib-segmented-control
-      .options="${[
-        { value: 'a', label: 'Wabi' },
-        { value: 'b', label: 'Sabi' },
-        { value: 'c', label: 'Shizen' },
-      ]}"
+      variant="outline"
+      size="sm"
+      .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi' }, { value: 'c', label: 'Shizen' }]}"
+      value="a"
+    ></lib-segmented-control>
+    <lib-segmented-control
+      variant="pill"
+      size="md"
+      .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi' }, { value: 'c', label: 'Shizen' }]}"
+      value="b"
+    ></lib-segmented-control>
+    <lib-segmented-control
+      variant="underline"
+      size="lg"
+      .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi' }, { value: 'c', label: 'Shizen' }]}"
+      value="c"
+    ></lib-segmented-control>
+    <lib-segmented-control
+      variant="ghost"
+      ?full="${true}"
+      .options="${[{ value: 'a', label: 'Día' }, { value: 'b', label: 'Semana' }, { value: 'c', label: 'Mes' }, { value: 'd', label: 'Año' }]}"
+      value="a"
+    ></lib-segmented-control>
+    <lib-segmented-control
+      variant="kaki"
+      .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi', disabled: true }, { value: 'c', label: 'Shizen' }]}"
       value="a"
     ></lib-segmented-control>
   </div>

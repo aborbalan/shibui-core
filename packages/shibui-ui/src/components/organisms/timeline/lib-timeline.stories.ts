@@ -10,7 +10,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type Args = Partial<LibTimeline>;
 
 const meta: Meta<Args> = {
-  title: 'Content/Timeline',
+  title: 'Universal/Content/Timeline',
   tags:['autodocs'],
   component: 'lib-timeline',
   argTypes: {
@@ -213,7 +213,6 @@ export const LineVariants: Story = {
    Collapsible
    ================================================================ */
 export const Collapsible: Story = {
-  name: 'Collapsible .',
   render: (): TemplateResult => html`
     <div style="max-width:480px;padding:var(--lib-space-xl);">
       <lib-timeline>
@@ -346,28 +345,55 @@ export const Sizes: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="width:100%;max-width:320px;">
-    <lib-timeline>
-      <lib-timeline-item
-        status="done"
-        timestamp="2024"
-        title="Wabi — inicio del proyecto"
-        body="Primeros tokens y arquitectura base."
-      ></lib-timeline-item>
-      <lib-timeline-item
-        status="active"
-        timestamp="2025"
-        title="Kintsugi — primer katachi"
-        body="Sistema de contextos estético completo."
-      ></lib-timeline-item>
-      <lib-timeline-item
-        status="pending"
-        timestamp="2026"
-        title="Celadon — cobertura completa"
-        body="77 componentes con soporte Katachi."
-        ?hide-line="${true}"
-      ></lib-timeline-item>
-    </lib-timeline>
+  <div style="display:flex;gap:var(--lib-space-xl);flex-wrap:wrap;align-items:flex-start;">
+
+    <!-- Sizes sm/md/lg + all statuses -->
+    ${(['sm', 'md', 'lg'] as const).map(s => html`
+      <div style="min-width:220px;">
+        <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-md);">size="${s}"</p>
+        <lib-timeline size="${s}">
+          <lib-timeline-item
+            status="done"
+            node-type="icon"
+            node-color="celadon"
+            icon="check-circle"
+            timestamp="2024"
+            title="Wabi — tokens base"
+            body="Arquitectura de tokens CSS."
+            ?card="${s === 'lg'}"
+          ></lib-timeline-item>
+          <lib-timeline-item
+            status="active"
+            node-color="kaki"
+            line-variant="progress"
+            line-progress="65"
+            timestamp="2025"
+            title="Kintsugi — katachi"
+            body="Seis contextos estéticos."
+            ?card="${s === 'lg'}"
+          ></lib-timeline-item>
+          <lib-timeline-item
+            status="error"
+            node-type="icon"
+            node-color="error"
+            icon="warning"
+            timestamp="Jan 2026"
+            title="Deploy fallido"
+            body="Requiere revisión."
+            ?card="${s === 'lg'}"
+          ></lib-timeline-item>
+          <lib-timeline-item
+            status="pending"
+            timestamp="2026"
+            title="Celadon — cobertura"
+            body="77 componentes completos."
+            ?hide-line="${true}"
+            ?card="${s === 'lg'}"
+          ></lib-timeline-item>
+        </lib-timeline>
+      </div>
+    `)}
+
   </div>
 `);
 

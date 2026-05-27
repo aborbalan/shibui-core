@@ -1,10 +1,10 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-parallax-text-stack.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Motion/Parallax Text Stack',
+  title: 'Web/Motion/Parallax Text Stack',
   tags:['autodocs'],
   component: 'lib-parallax-text-stack',
   argTypes: {
@@ -172,11 +172,51 @@ export const HeroLanding: Story = {
 
 const _katachi = createKatachiStories<object>(() => html`
   <div style="overflow-x:hidden;background:var(--bg-base);">
+
+    <!-- sm — default color -->
+    <div style="border-bottom:1px solid var(--border-subtle);padding:var(--lib-space-xs) var(--lib-space-md);">
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;">sm · default</span>
+    </div>
     <lib-parallax-text-stack
       .lines=${['Shibui · 渋い · Wabi · 侘 · Kintsugi · 金継ぎ · Sabi · 寂 · ']}
-      speed="0.12"
+      speed="0.1"
       size="sm"
+      color="default"
     ></lib-parallax-text-stack>
+
+    <!-- md — muted -->
+    <div style="border-bottom:1px solid var(--border-subtle);border-top:1px solid var(--border-subtle);padding:var(--lib-space-xs) var(--lib-space-md);">
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;">md · muted</span>
+    </div>
+    <lib-parallax-text-stack
+      .lines=${['Design System · 形 · Katachi · Washi · ']}
+      speed="0.12"
+      size="md"
+      color="muted"
+    ></lib-parallax-text-stack>
+
+    <!-- lg — kaki -->
+    <div style="border-bottom:1px solid var(--border-subtle);border-top:1px solid var(--border-subtle);padding:var(--lib-space-xs) var(--lib-space-md);">
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;">lg · kaki</span>
+    </div>
+    <lib-parallax-text-stack
+      .lines=${['Kaki · 柿 · Terracota · Acento · ']}
+      speed="0.15"
+      size="lg"
+      color="kaki"
+    ></lib-parallax-text-stack>
+
+    <!-- xl — celadon -->
+    <div style="border-bottom:1px solid var(--border-subtle);border-top:1px solid var(--border-subtle);padding:var(--lib-space-xs) var(--lib-space-md);">
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;">xl · celadon</span>
+    </div>
+    <lib-parallax-text-stack
+      .lines=${['Celadón · 青磁 · Celadon · 寒色 · ']}
+      speed="0.18"
+      size="xl"
+      color="celadon"
+    ></lib-parallax-text-stack>
+
   </div>
 `);
 

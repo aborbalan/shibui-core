@@ -14,7 +14,7 @@ type Args = Partial<LibFileUploader>;
    ================================================================ */
 
 const meta: Meta<Args> = {
-  title: 'Forms/File Uploader',
+  title: 'Universal/Forms/File Uploader',
   tags:['autodocs'],
   component: 'lib-file-uploader',
 
@@ -270,6 +270,47 @@ export const RestrictedTypes: Story = {
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-file-uploader usa tokens semánticos de borde y fondo
+   (border-subtle, bg-elevated, text-muted) — adapta al katachi.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-md);">
+    <lib-file-uploader
+      zone="default"
+      title="Arrastra archivos aquí"
+      hint="PDF, PNG · máx. 20 MB"
+      ?multiple="${true}"
+    ></lib-file-uploader>
+    <lib-file-uploader
+      zone="compact"
+      title="Adjuntar archivo"
+      hint="PDF · máx. 10 MB"
+    ></lib-file-uploader>
+    <lib-file-uploader
+      zone="image"
+      title="Imagen de portada"
+      hint="PNG, JPG · 16:9"
+      accept="image/*"
+    ></lib-file-uploader>
+    <lib-file-uploader
+      zone="compact"
+      title="Deshabilitado"
+      hint="No disponible"
+      ?disabled="${true}"
+    ></lib-file-uploader>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ═══════════════════════════════════════════════════════════════
    TESTS · Selección de archivos
    ═══════════════════════════════════════════════════════════════ */
 
@@ -320,22 +361,3 @@ export const TestDisabledUploader: Story = {
     expect(input.disabled).toBe(true);
   },
 };
-
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Las 6 historias estándar
-   lib-file-uploader usa tokens semánticos de borde y fondo
-   (border-subtle, bg-elevated, text-muted) — adapta al katachi.
-   ═══════════════════════════════════════════════════════════════ */
-
-const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-file-uploader title="Adjuntar archivo"></lib-file-uploader>
-  </div>
-`);
-
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;

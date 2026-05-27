@@ -1,10 +1,10 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-chip.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Actions/Chip',
+  title: 'Universal/Actions/Chip',
   tags:['autodocs'],
   component: 'lib-chip',
   argTypes: {
@@ -313,11 +313,25 @@ export const ChipField: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xs);padding:var(--lib-space-md);">
-    <lib-chip>Etiqueta</lib-chip>
-    <lib-chip kind="toggle" selected>Diseño</lib-chip>
-    <lib-chip kind="toggle">Sistema</lib-chip>
-    <lib-chip kind="input">Katachi</lib-chip>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);padding:var(--lib-space-md);">
+    <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xs);">
+      <lib-chip size="xs">XS</lib-chip>
+      <lib-chip size="sm">SM</lib-chip>
+      <lib-chip size="md">MD</lib-chip>
+      <lib-chip size="lg">LG</lib-chip>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xs);">
+      <lib-chip kind="toggle" selected>Diseño</lib-chip>
+      <lib-chip kind="toggle">Sistema</lib-chip>
+      <lib-chip kind="toggle" selected color="kaki">Kaki</lib-chip>
+      <lib-chip kind="toggle" color="celadon">Celadón</lib-chip>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xs);">
+      <lib-chip kind="input">Katachi</lib-chip>
+      <lib-chip kind="input">Wabi-Sabi</lib-chip>
+      <lib-chip dot color="kaki">Dot kaki</lib-chip>
+      <lib-chip dot color="error">Dot error</lib-chip>
+    </div>
   </div>
 `);
 

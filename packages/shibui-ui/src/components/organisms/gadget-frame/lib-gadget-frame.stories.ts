@@ -1,4 +1,4 @@
-import { Meta, StoryObj }      from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj }      from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-gadget-frame.component';
 import type { LibGadgetFrame }  from './lib-gadget-frame.component';
@@ -10,7 +10,7 @@ type StoryArgs = Partial<Pick<LibGadgetFrame,
 
 /* ── Meta ─────────────────────────────────────────────────── */
 const meta: Meta<StoryArgs> = {
-  title:     'Layout/Gadget Frame',
+  title:     'Desktop/Layout/Gadget Frame',
   tags:      ['autodocs'],
   component: 'lib-gadget-frame',
   parameters: {
@@ -415,36 +415,73 @@ export const DashboardGrid: Story = {
    y --lib-glass-* en glass — adapta en los 6 contextos.
    ════════════════════════════════════════════════════════════ */
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;gap:var(--lib-space-md);flex-wrap:wrap;align-items:flex-start;">
-    <!-- Glass -->
+  <div style="display:flex;gap:var(--lib-space-md);flex-wrap:wrap;align-items:flex-start;padding:var(--lib-space-md);background:var(--bg-base);">
+
+    <!-- Card — status metrics -->
     <lib-gadget-frame
-      gadget-title="Gadget Glass"
-      icon="cube"
-      variant="glass"
-      style="width:240px;height:160px;"
+      gadget-title="Estado"
+      icon="heartbeat"
+      variant="card"
+      style="width:220px;height:160px;"
     >
-      <div style="padding:var(--lib-space-md);font-family:var(--lib-font-mono);
-        font-size:var(--text-xs);color:var(--text-muted);line-height:2;">
-        <div>· Ítem alpha</div>
-        <div>· Ítem beta</div>
-        <div>· Ítem gamma</div>
+      <div style="padding:var(--lib-space-md);display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+        ${([
+          { l: 'API',       s: 'Online',  ok: true  },
+          { l: 'Base Datos', s: 'Online', ok: true  },
+          { l: 'Workers',   s: '2/3',     ok: false },
+        ]).map(row => html`
+          <div style="display:flex;align-items:center;gap:var(--lib-space-sm);font-family:var(--lib-font-mono);font-size:var(--text-xs);">
+            <div style="width:5px;height:5px;border-radius:50%;flex-shrink:0;background:${row.ok ? 'var(--color-celadon-400)' : 'var(--color-kaki-400)'};"></div>
+            <span style="flex:1;color:var(--text-primary);">${row.l}</span>
+            <span style="color:var(--text-muted);">${row.s}</span>
+          </div>
+        `)}
       </div>
     </lib-gadget-frame>
 
-    <!-- Card -->
+    <!-- Card — minimized state -->
     <lib-gadget-frame
-      gadget-title="Gadget Card"
-      icon="squares-four"
+      gadget-title="CPU Monitor"
+      icon="cpu"
       variant="card"
-      style="width:240px;height:160px;"
+      minimized
+      style="width:220px;"
+    ></lib-gadget-frame>
+
+    <!-- Card — progress bars -->
+    <lib-gadget-frame
+      gadget-title="Recursos"
+      icon="chart-line"
+      variant="card"
+      ?minimizable="${true}"
+      ?closable="${true}"
+      style="width:220px;height:160px;"
     >
-      <div style="padding:var(--lib-space-md);font-family:var(--lib-font-mono);
-        font-size:var(--text-xs);color:var(--text-muted);line-height:2;">
-        <div>· Ítem alpha</div>
-        <div>· Ítem beta</div>
-        <div>· Ítem gamma</div>
+      <div style="padding:var(--lib-space-md);display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+        ${(['CPU', 'RAM', 'Disco'] as const).map((label, i) => html`
+          <div style="display:flex;align-items:center;gap:var(--lib-space-sm);">
+            <span style="font-family:var(--lib-font-mono);font-size:var(--text-xs);color:var(--text-muted);width:2.5rem;text-transform:uppercase;letter-spacing:var(--tracking-wide);">${label}</span>
+            <div style="flex:1;height:4px;background:var(--border-subtle);border-radius:2px;overflow:hidden;">
+              <div style="height:100%;width:${[42, 67, 23][i]}%;background:var(--accent-primary);border-radius:2px;"></div>
+            </div>
+            <span style="font-family:var(--lib-font-mono);font-size:var(--text-xs);color:var(--text-muted);width:2rem;text-align:right;">${[42, 67, 23][i]}%</span>
+          </div>
+        `)}
       </div>
     </lib-gadget-frame>
+
+    <!-- Card — no controls -->
+    <lib-gadget-frame
+      gadget-title="Gadget fijo"
+      icon="lock"
+      variant="card"
+      minimizable="false"
+      closable="false"
+      style="width:220px;height:100px;"
+    >
+      <div style="padding:var(--lib-space-md);font-family:var(--lib-font-mono);font-size:var(--text-xs);color:var(--text-muted);">Sin minimizar · Sin cerrar</div>
+    </lib-gadget-frame>
+
   </div>
 `);
 
