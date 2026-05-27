@@ -28,7 +28,7 @@ const meta: Meta<LibSkeletonStoryArgs> = {
     },
     surface: {
       control: 'select',
-      options: ['light', 'dark', 'kaki'],
+      options: ['light', 'dark', 'kaki', 'celadon'],
     },
     width:  { control: 'text' },
     height: { control: 'text' },
@@ -275,8 +275,6 @@ export const PatternAppLayout: Story = {
 
 /* ═══════════════════════════════════════════════════════════════
    KATACHI · 形 · Las 6 historias estándar
-   lib-skeleton usa tokens semánticos de superficie y shimmer
-   (bg-elevated, bg-base) — adapta al katachi.
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
@@ -290,6 +288,177 @@ const _katachi = createKatachiStories<object>(() => html`
 export const KatachiShizen   = _katachi.KatachiShizen;
 export const KatachiWabi     = _katachi.KatachiWabi;
 export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
 export const KatachiSabi     = _katachi.KatachiSabi;
 export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ── Celadon 青磁 — historia propia extendida ────────────────── */
+export const KatachiCeladon: Story = {
+  name: 'Katachi · Celadon ◎',
+  parameters: {
+    backgrounds: { default: 'dark' },
+  },
+  render: (): TemplateResult => html`
+    <div
+      data-katachi="celadon"
+      style="
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        padding: 40px;
+        background: var(--bg-base);
+      "
+    >
+
+      <!-- ── Sección 1: Ambient auto-adapt vs surface explícito ── -->
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <span style="
+          font-family: monospace;
+          font-size: 10px;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          color: var(--color-celadon-400);
+        ">ambient auto-adapt · sin prop surface</span>
+
+        <!-- Tarjeta de artículo — skeletons sin [surface], adaptan automáticamente -->
+        <div style="
+          background: var(--bg-elevated);
+          border: 1px solid var(--border-subtle);
+          border-radius: 8px;
+          padding: 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          max-width: 480px;
+        ">
+          <lib-skeleton shape="img"   width="100%" height="120px"></lib-skeleton>
+          <lib-skeleton shape="badge" width="64px"></lib-skeleton>
+          <lib-skeleton shape="h1"    width="75%"></lib-skeleton>
+          <lib-skeleton shape="h1"    width="50%"></lib-skeleton>
+          <div style="display:flex; align-items:center; gap:12px; margin-top:4px;">
+            <lib-skeleton shape="avatar" width="32px" height="32px"></lib-skeleton>
+            <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
+              <lib-skeleton shape="line" width="110px"></lib-skeleton>
+              <lib-skeleton shape="line" width="72px" height="11px"></lib-skeleton>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <lib-skeleton shape="line" width="100%"></lib-skeleton>
+            <lib-skeleton shape="line" width="90%"></lib-skeleton>
+            <lib-skeleton shape="line" width="65%"></lib-skeleton>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Sección 2: surface="celadon" explícito · 3 animaciones ── -->
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <span style="
+          font-family: monospace;
+          font-size: 10px;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          color: var(--color-celadon-400);
+        ">surface="celadon" · shimmer · wave · pulse</span>
+
+        <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;">
+          ${(['shimmer', 'wave', 'pulse'] as const).map(anim => html`
+            <div style="
+              flex: 1;
+              min-width: 180px;
+              background: var(--bg-surface);
+              border: 1px solid var(--border-subtle);
+              border-radius: 8px;
+              padding: 20px;
+              display: flex;
+              flex-direction: column;
+              gap: 14px;
+            ">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <lib-skeleton shape="avatar" surface="celadon" animation=${anim} width="36px" height="36px"></lib-skeleton>
+                <div style="flex:1; display:flex; flex-direction:column; gap:7px;">
+                  <lib-skeleton shape="title" surface="celadon" animation=${anim} width="65%"></lib-skeleton>
+                  <lib-skeleton shape="line"  surface="celadon" animation=${anim} width="40%"></lib-skeleton>
+                </div>
+              </div>
+              <lib-skeleton shape="line" surface="celadon" animation=${anim} width="100%"></lib-skeleton>
+              <lib-skeleton shape="line" surface="celadon" animation=${anim} width="82%"></lib-skeleton>
+              <lib-skeleton shape="line" surface="celadon" animation=${anim} width="58%"></lib-skeleton>
+              <lib-skeleton shape="btn"  surface="celadon" animation=${anim} width="100%"></lib-skeleton>
+              <span style="
+                font-family: monospace;
+                font-size: 9px;
+                color: var(--color-celadon-500);
+                text-transform: uppercase;
+                letter-spacing: 0.2em;
+                margin-top: 2px;
+              ">${anim}</span>
+            </div>
+          `)}
+        </div>
+      </div>
+
+      <!-- ── Sección 3: Pattern dashboard jade ── -->
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <span style="
+          font-family: monospace;
+          font-size: 10px;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          color: var(--color-celadon-400);
+        ">pattern · dashboard jade</span>
+
+        <!-- Métricas -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+          ${[
+            { w: 58, icon: true },
+            { w: 70, icon: true },
+            { w: 52, icon: true },
+          ].map(({ w, icon }) => html`
+            <div style="
+              background: var(--bg-elevated);
+              border: 1px solid var(--border-subtle);
+              border-radius: 8px;
+              padding: 20px;
+              display: flex;
+              flex-direction: column;
+              gap: 14px;
+            ">
+              <div style="display:flex; align-items:center; justify-content:space-between;">
+                <lib-skeleton shape="line" width="${w}%" height="10px"></lib-skeleton>
+                ${icon ? html`<lib-skeleton shape="icon" width="18px" height="18px"></lib-skeleton>` : ''}
+              </div>
+              <lib-skeleton shape="h1"  width="60%"></lib-skeleton>
+              <lib-skeleton shape="pill" width="72px"></lib-skeleton>
+            </div>
+          `)}
+        </div>
+
+        <!-- Lista de actividad -->
+        <div style="
+          background: var(--bg-elevated);
+          border: 1px solid var(--border-subtle);
+          border-radius: 8px;
+          padding: 4px 0;
+        ">
+          ${([[48, 18], [62, 14], [38, 22], [55, 16]] as const).map(([a, b]) => html`
+            <div style="
+              display: flex;
+              align-items: center;
+              gap: 14px;
+              padding: 14px 20px;
+              border-bottom: 1px solid var(--border-subtle);
+            ">
+              <lib-skeleton shape="avatar" width="28px" height="28px" style="flex-shrink:0;"></lib-skeleton>
+              <lib-skeleton shape="line"   width="${a}%"></lib-skeleton>
+              <lib-skeleton shape="badge"  width="48px" style="margin-left:auto; flex-shrink:0;"></lib-skeleton>
+              <lib-skeleton shape="line"   width="${b}%" style="flex-shrink:0;"></lib-skeleton>
+            </div>
+          `)}
+          <div style="padding:14px 20px;">
+            <lib-skeleton shape="line" width="35%" height="11px"></lib-skeleton>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  `,
+};
