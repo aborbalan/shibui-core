@@ -16,7 +16,7 @@ type LibInputArgs = {
 };
 
 const meta: Meta<LibInputArgs> = {
-  title: 'Forms/Input',
+  title: 'Universal/Forms/Input',
   tags:['autodocs'],
   component: 'lib-input',
   argTypes: {

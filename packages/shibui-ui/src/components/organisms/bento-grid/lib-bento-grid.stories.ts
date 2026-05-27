@@ -1,11 +1,11 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-bento-grid.component';
 import './../../atoms/bento-item/lib-bento-item.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Layout/Bento Grid',
+  title: 'Universal/Layout/Bento Grid',
   tags:['autodocs'],
   component: 'lib-bento-grid',
   argTypes: {

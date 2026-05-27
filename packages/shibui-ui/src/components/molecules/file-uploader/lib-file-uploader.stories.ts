@@ -14,7 +14,7 @@ type Args = Partial<LibFileUploader>;
    ================================================================ */
 
 const meta: Meta<Args> = {
-  title: 'Forms/File Uploader',
+  title: 'Universal/Forms/File Uploader',
   tags:['autodocs'],
   component: 'lib-file-uploader',
 

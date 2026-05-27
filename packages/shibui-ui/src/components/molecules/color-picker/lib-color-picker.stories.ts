@@ -5,7 +5,7 @@ import './lib-color-picker.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Forms/Color Picker',
+  title: 'Universal/Forms/Color Picker',
   tags:['autodocs'],
   component: 'lib-color-picker',
   argTypes: {

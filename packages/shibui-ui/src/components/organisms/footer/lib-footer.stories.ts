@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import './lib-footer.component';
 import type { LibFooter } from './lib-footer.component';
@@ -58,7 +58,7 @@ const GLITCH_NAV_LINKS = [
 ];
 
 const meta: Meta<LibFooter> = {
-  title: 'Layout/Footer',
+  title: 'Universal/Layout/Footer',
   
   component: 'lib-footer',
   tags: ['autodocs'],

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 
 // ✅ side-effect imports
@@ -10,7 +10,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type Args = Partial<LibTimeline>;
 
 const meta: Meta<Args> = {
-  title: 'Content/Timeline',
+  title: 'Universal/Content/Timeline',
   tags:['autodocs'],
   component: 'lib-timeline',
   argTypes: {

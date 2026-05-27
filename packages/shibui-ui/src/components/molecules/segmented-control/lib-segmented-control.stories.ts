@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 
 // ✅ side-effect import — registra el custom element
@@ -48,7 +48,7 @@ type Args = Partial<LibSegmentedControl> & {
 };
 
 const meta: Meta<Args> = {
-  title: 'Forms/Segmented Control',
+  title: 'Universal/Forms/Segmented Control',
   tags:['autodocs'],
   component: 'lib-segmented-control',
 

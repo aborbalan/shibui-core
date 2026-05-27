@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/web-components-vite";
+﻿import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import { html, TemplateResult } from "lit";
 import "./lib-eyebrow.component";
 import type { LibEyebrow } from "./lib-eyebrow.component";
@@ -67,7 +67,7 @@ const stageWashi = (content: ReturnType<typeof html>): TemplateResult => html`
 
 /* ── Meta ── */
 const meta: Meta<LibEyebrow> = {
-  title: "Foundations/Typography/Eyebrow",
+  title: "Universal/Foundations/Typography/Eyebrow",
   component: "lib-eyebrow",
   tags: ["autodocs"],
   parameters: {

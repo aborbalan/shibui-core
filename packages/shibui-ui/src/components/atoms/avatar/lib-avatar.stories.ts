@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-avatar.component';
 import '../status-dot/lib-status-dot.component';
@@ -10,7 +10,7 @@ type LibAvatarStoryArgs = Pick<LibAvatar, 'src' | 'name' | 'size' | 'shape' | 'c
 const DEMO_IMG = 'https://i.pravatar.cc/200?img=32';
 
 const meta: Meta<LibAvatarStoryArgs> = {
-  title: 'Content/Avatar',
+  title: 'Universal/Content/Avatar',
   tags:['autodocs'],
   component: 'lib-avatar',
 

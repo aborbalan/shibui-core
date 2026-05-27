@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-display-heading.component';
 import '../eyebrow/lib-eyebrow.component';
@@ -26,7 +26,7 @@ const stageWashi = (content: ReturnType<typeof html>):TemplateResult => html`
 
 /* ── Meta ── */
 const meta: Meta<LibDisplayHeading> = {
-  title: 'Foundations/Typography/Display Heading',
+  title: 'Universal/Foundations/Typography/Display Heading',
   component: 'lib-display-heading',
   tags: ['autodocs'],
   parameters: {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj }   from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj }   from '@storybook/web-components-vite';
 import { html }                  from 'lit';
 import './lib-metric-bar.component';
 import { createKatachiStories }  from '../../../stories/katachi-stories.helper';
@@ -16,7 +16,7 @@ interface MetricBarArgs {
 
 /* ── Meta ── */
 const meta: Meta<MetricBarArgs> = {
-  title:     'Metrics/Metric Bar',
+  title:     'Desktop/Data/Metric Bar',
   component: 'lib-metric-bar',
   tags:      ['autodocs'],
 

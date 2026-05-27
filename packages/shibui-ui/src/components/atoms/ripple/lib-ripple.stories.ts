@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-ripple.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Motion/Ripple',
+  title: 'Web/Motion/Ripple',
   tags:['autodocs'],
   component: 'lib-ripple',
 };

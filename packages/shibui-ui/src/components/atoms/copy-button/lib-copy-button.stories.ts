@@ -11,7 +11,7 @@ type LibCopyButtonStoryArgs = Pick<
 >;
 
 const meta: Meta<LibCopyButtonStoryArgs> = {
-  title: 'Actions/Copy Button',
+  title: 'Universal/Actions/Copy Button',
   tags:['autodocs'],
   component: 'lib-copy-button',
 

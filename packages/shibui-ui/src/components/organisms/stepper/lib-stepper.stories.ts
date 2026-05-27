@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-stepper.component';
 import '../../atoms/step/lib-step.component';
@@ -15,7 +15,7 @@ const wrap = (bg: string, content: TemplateResult, pad = '40px'): TemplateResult
 `;
 
 const meta: Meta<StepperArgs> = {
-  title: 'Navigation/Stepper',
+  title: 'Universal/Navigation/Stepper',
   tags:['autodocs'],
   component: 'lib-stepper',
   argTypes: {

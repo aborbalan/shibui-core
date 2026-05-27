@@ -5,7 +5,7 @@ import './lib-rating.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Forms/Rating',
+  title: 'Universal/Forms/Rating',
   tags:['autodocs'],
   component: 'lib-rating',
   argTypes: {

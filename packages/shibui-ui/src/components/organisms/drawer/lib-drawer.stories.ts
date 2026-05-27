@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-drawer.component';
 import type { LibDrawer } from './lib-drawer.component';
@@ -10,7 +10,7 @@ function getDrawer(selector: string): LibDrawer {
 }
 
 const meta: Meta = {
-  title: 'Overlay/Drawer',
+  title: 'Universal/Overlay/Drawer',
   tags:['autodocs'],
   component: 'lib-drawer',
   argTypes: {

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 
 // ✅ side-effect import — registra el custom element
@@ -84,7 +84,7 @@ const DL_ITEMS: DlItem[] = [
 type Args = Partial<LibTextList>;
 
 const meta: Meta<Args> = {
-  title: 'Content/Text List',
+  title: 'Universal/Content/Text List',
   component: 'lib-text-list',
   tags:['autodocs'],
   argTypes: {

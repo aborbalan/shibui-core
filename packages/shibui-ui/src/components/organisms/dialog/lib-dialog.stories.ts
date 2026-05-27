@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-dialog.component';
 import type { LibDialog } from './lib-dialog.component';
@@ -16,7 +16,7 @@ type DialogStoryArgs = Pick<
 >;
 
 const meta: Meta<DialogStoryArgs> = {
-  title: 'Overlay/Dialog',
+  title: 'Universal/Overlay/Dialog',
   tags:['autodocs'],
   component: 'lib-dialog',
   argTypes: {

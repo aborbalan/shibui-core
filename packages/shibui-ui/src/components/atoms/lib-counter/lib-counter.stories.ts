@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-counter.component';
 import type { LibCounter } from './lib-counter.component';
@@ -10,7 +10,7 @@ type CounterArgs = Pick<LibCounter,
 >;
 
 const meta: Meta<CounterArgs> = {
-  title: 'Data/Counter',
+  title: 'Universal/Data/Counter',
   tags:['autodocs'],
   component: 'lib-counter',
   argTypes: {

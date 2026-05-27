@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-card.component';
 import '../../atoms/button/lib-button.component';
@@ -12,7 +12,7 @@ type LibCardArgs = {
 };
 
 const meta: Meta<LibCardArgs> = {
-  title: 'Content/Card',
+  title: 'Universal/Content/Card',
   tags:['autodocs'],
   component: 'lib-card',
   argTypes: {

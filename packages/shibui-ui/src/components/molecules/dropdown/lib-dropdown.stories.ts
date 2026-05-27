@@ -1,10 +1,10 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-dropdown.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Navigation/Dropdown',
+  title: 'Universal/Navigation/Dropdown',
   tags:['autodocs'],
   component: 'lib-dropdown',
   argTypes: {

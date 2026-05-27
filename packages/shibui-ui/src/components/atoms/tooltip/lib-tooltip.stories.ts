@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-tooltip.component';
 import type { LibTooltip } from './lib-tooltip.component';
@@ -41,7 +41,7 @@ const col = (inner: TemplateResult, sublabel: string, dark = false): TemplateRes
 
 
 const meta: Meta<LibTooltipArgs> = {
-  title: 'Overlay/Tooltip',
+  title: 'Universal/Overlay/Tooltip',
   tags:['autodocs'],
   component: 'lib-tooltip',
   argTypes: {

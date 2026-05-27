@@ -1,10 +1,10 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-liquid-button.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Actions/Button Liquid',
+  title: 'Universal/Actions/Button Liquid',
   tags:['autodocs'],
   component: 'lib-button-liquid',
   argTypes: {

@@ -1,10 +1,10 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-parallax-text-stack.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Motion/Parallax Text Stack',
+  title: 'Web/Motion/Parallax Text Stack',
   tags:['autodocs'],
   component: 'lib-parallax-text-stack',
   argTypes: {

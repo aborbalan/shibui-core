@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-label.component';
 import type { LibLabel } from './lib-label.component';
@@ -43,7 +43,7 @@ const inputEl = (id: string, placeholder = ''): TemplateResult => html`
 
 /* ── Meta ── */
 const meta: Meta<LibLabelStoryArgs> = {
-  title: 'Forms/Label',
+  title: 'Universal/Forms/Label',
   component: 'lib-label',
   tags: ['autodocs'],
   parameters: {

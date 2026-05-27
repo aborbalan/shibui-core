@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-quote.component';
 import type { LibQuote } from './lib-quote.component';
@@ -9,7 +9,7 @@ const stageLight = (c: ReturnType<typeof html>):TemplateResult => html`<div styl
 const stageWashi = (c: ReturnType<typeof html>):TemplateResult => html`<div style="padding:3rem 2.5rem;background:var(--color-washi-100,#F2EDE6);">${c}</div>`;
 
 const meta: Meta<LibQuote> = {
-  title: 'Content/Quote',
+  title: 'Universal/Content/Quote',
   component: 'lib-quote',
   tags: ['autodocs'],
   parameters: {

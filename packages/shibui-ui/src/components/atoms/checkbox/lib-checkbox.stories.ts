@@ -11,7 +11,7 @@ type LibCheckboxStoryArgs = Pick<
 >;
 
 const meta: Meta<LibCheckboxStoryArgs> = {
-  title: 'Forms/Checkbox',
+  title: 'Universal/Forms/Checkbox',
   tags:['autodocs'],
   component: 'lib-checkbox',
 

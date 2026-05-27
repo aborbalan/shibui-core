@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult }            from 'lit';
 import './lib-breadcrumb.component';
 import type { LibBreadcrumb }              from './lib-breadcrumb.component';
@@ -31,7 +31,7 @@ const ICON_ITEMS: BreadcrumbItem[] = [
 
 /* ── Meta ──────────────────────────────────────────────── */
 const meta: Meta<StoryArgs> = {
-  title: 'Navigation/Breadcrumb',
+  title: 'Universal/Navigation/Breadcrumb',
   component: 'lib-breadcrumb',
   tags:['autodocs'],
   argTypes: {

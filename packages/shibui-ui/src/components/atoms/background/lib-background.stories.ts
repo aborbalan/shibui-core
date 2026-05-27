@@ -1,4 +1,4 @@
-import { html, TemplateResult } from "lit";
+﻿import { html, TemplateResult } from "lit";
 import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import "./lib-background.component";
 import type { LibBackgroundVariant } from "./lib-background.types";
@@ -69,7 +69,7 @@ function bgGrid(
 
 /* ── Meta ── */
 const meta: Meta = {
-  title: "Utilities/Background",
+  title: "Universal/Utilities/Background",
   tags:['autodocs'],
   component: "lib-background",
   parameters: {

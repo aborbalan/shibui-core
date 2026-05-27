@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/web-components-vite";
+﻿import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import { html, TemplateResult } from "lit";
 import "./content-pillar.component";
 import type { LibContentPillar } from "./content-pillar.component";
@@ -12,7 +12,7 @@ const stageLight = (c: ReturnType<typeof html>): TemplateResult =>
   html`<div style="padding:2.5rem;background:#fff;">${c}</div>`;
 
 const meta: Meta<LibContentPillar> = {
-  title: "Content/Content Pillar",
+  title: "Universal/Content/Content Pillar",
   tags:['autodocs'],
   component: "lib-content-pillar",
   parameters: { layout: "fullscreen", backgrounds: { default: "dark" } },

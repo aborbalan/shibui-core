@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-kbd.component';
 import type { LibKbd } from './lib-kbd.component';
@@ -7,7 +7,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type KbdArgs = Pick<LibKbd, 'size' | 'variant' | 'pressed'>;
 
 const meta: Meta<KbdArgs> = {
-  title: 'Content/Kbd',
+  title: 'Universal/Content/Kbd',
   tags:['autodocs'],
   component: 'lib-kbd',
   argTypes: {

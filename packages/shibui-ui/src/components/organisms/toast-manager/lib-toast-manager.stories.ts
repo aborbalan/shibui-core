@@ -1,11 +1,11 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-toast-manager.component';
 import type { LibToastManager } from './lib-toast-manager.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Feedback/Toast Manager',
+  title: 'Universal/Feedback/Toast Manager',
   tags:['autodocs'],
   component: 'lib-toast-manager',
   parameters: {

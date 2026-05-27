@@ -1,4 +1,4 @@
-import type { Meta, StoryObj }  from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj }  from '@storybook/web-components-vite';
 import { html }                 from 'lit';
 import './lib-bar-chart.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
@@ -34,7 +34,7 @@ const SERIES_STACK_C: BarSeries = { name: 'Producto C', values: [15, 20, 25, 20,
 
 /* ── Meta ── */
 const meta: Meta<BarChartArgs> = {
-  title:     'Charts/Bar Chart',
+  title:     'Universal/Charts/Bar Chart',
   component: 'lib-bar-chart',
   tags:      ['autodocs'],
 

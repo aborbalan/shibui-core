@@ -5,7 +5,7 @@ import './lib-checkbox-card.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Forms/Checkbox Card',
+  title: 'Universal/Forms/Checkbox Card',
   tags:['autodocs'],
   component: 'lib-checkbox-card',
   argTypes: {

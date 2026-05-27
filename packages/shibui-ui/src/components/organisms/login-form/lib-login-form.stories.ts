@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-login-form.component';
 import type { LibLoginForm } from './lib-login-form.component';
@@ -7,7 +7,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type LoginFormStoryArgs = Pick<LibLoginForm, 'loading' | 'errorMessage'>;
 
 const meta: Meta<LoginFormStoryArgs> = {
-  title: 'Forms/LoginForm',
+  title: 'Universal/Forms/LoginForm',
   tags: ['autodocs'],
   component: 'lib-login-form',
   argTypes: {

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-spotlight-card.component';
 import type { LibSpotlightCard } from './lib-spotlight-card.component';
@@ -32,7 +32,7 @@ const cardInner = (label: string, title: string, body: string, code: string): Te
 `;
 
 const meta: Meta<LibSpotlightCardStoryArgs> = {
-  title: 'Content/Card Spotlight',
+  title: 'Universal/Content/Card Spotlight',
   component: 'lib-spotlight-card',
   tags:['autodocs'],
   parameters: {

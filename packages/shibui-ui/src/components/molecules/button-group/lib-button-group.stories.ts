@@ -1,11 +1,11 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-button-group.component';
 import '../../atoms/button/lib-button.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Actions/Button Group',
+  title: 'Universal/Actions/Button Group',
   tags:['autodocs'],
   component: 'lib-button-group',
   argTypes: {
