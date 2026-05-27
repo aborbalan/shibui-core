@@ -122,3 +122,21 @@ Punto de entrada único: `.github/workflows/orchestrator.yml`
 Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_api`.
 
 Secretos necesarios en GitHub repo: `FIREBASE_TOKEN`
+
+### Consumer Contract Tests — ejecución selectiva
+
+Los consumer tests (React × Svelte × Angular, ~2min) solo corren si se cumplen **dos condiciones a la vez**:
+
+**1. Qué cambió** (`ui_behavior = true`):
+- TypeScript de componentes: `packages/shibui-ui/src/**/*.ts`
+- Tokens katachi/semánticos: `src/styles/shared/tokens/_katachi.css` · `_semantic.css`
+- Ficheros de consumer-tests: `packages/consumer-tests/**` · `packages/consumer-tests-angular/**`
+- CSS scoped a Shadow DOM **excluido** — los tests no validan estilos internos.
+
+**2. Contexto de ejecución**:
+- ✅ PR hacia `develop` o `main`
+- ✅ Push directo a `develop` o `main`
+- ✅ `workflow_dispatch` manual
+- ❌ Push a `feature/**`, `fix/**`, `chore/**`
+
+Ver documentación completa en `packages/consumer-tests/CLAUDE.md`.

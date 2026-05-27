@@ -54,12 +54,13 @@ jobs:
     name: 🔍 Detect Changes
     runs-on: ubuntu-latest
     outputs:
-      ui:      ${{ steps.resolve.outputs.ui }}
-      react:   ${{ steps.resolve.outputs.react }}
-      angular: ${{ steps.resolve.outputs.angular }}
-      svelte:  ${{ steps.resolve.outputs.svelte }}
-      api:     ${{ steps.resolve.outputs.api }}
-      tauri:   ${{ steps.resolve.outputs.tauri }}
+      ui:          ${{ steps.resolve.outputs.ui }}
+      ui_behavior: ${{ steps.resolve.outputs.ui_behavior }}
+      react:       ${{ steps.resolve.outputs.react }}
+      angular:     ${{ steps.resolve.outputs.angular }}
+      svelte:      ${{ steps.resolve.outputs.svelte }}
+      api:         ${{ steps.resolve.outputs.api }}
+      tauri:       ${{ steps.resolve.outputs.tauri }}
     steps:
       - uses: actions/checkout@v4
 
@@ -69,6 +70,16 @@ jobs:
           filters: |
             ui:
               - 'packages/shibui-ui/**'
+              - 'packages/consumer-tests/**'
+              - 'packages/consumer-tests-angular/**'
+            # ui_behavior: cambios que afectan el CONTRATO observable desde fuera
+            # (TypeScript de componentes, tokens katachi/semánticos, fixtures de tests).
+            # CSS de componentes scoped a Shadow DOM queda excluido adrede:
+            # los consumer tests no validan estilos internos de componentes.
+            ui_behavior:
+              - 'packages/shibui-ui/src/**/*.ts'
+              - 'packages/shibui-ui/src/styles/shared/tokens/_katachi.css'
+              - 'packages/shibui-ui/src/styles/shared/tokens/_semantic.css'
               - 'packages/consumer-tests/**'
               - 'packages/consumer-tests-angular/**'
             react:   'apps/app-react/**'
@@ -82,6 +93,7 @@ jobs:
         id: resolve
         run: |
           echo "ui=$([[ '${{ steps.filter.outputs.ui }}' == 'true' || '${{ inputs.force_ui }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "ui_behavior=$([[ '${{ steps.filter.outputs.ui_behavior }}' == 'true' || '${{ inputs.force_ui }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "react=$([[ '${{ steps.filter.outputs.react }}' == 'true' || '${{ inputs.force_react }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "angular=$([[ '${{ steps.filter.outputs.angular }}' == 'true' || '${{ inputs.force_angular }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "svelte=$([[ '${{ steps.filter.outputs.svelte }}' == 'true' || '${{ inputs.force_svelte }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
@@ -98,8 +110,10 @@ jobs:
     if: needs.detect-changes.outputs.ui == 'true'
     uses: ./.github/workflows/ci-lib.yml
     with:
-      ui: ${{ needs.detect-changes.outputs.ui }}
-      ref: ${{ github.ref }}
+      ui:          ${{ needs.detect-changes.outputs.ui }}
+      ui_behavior: ${{ needs.detect-changes.outputs.ui_behavior }}
+      event:       ${{ github.event_name }}
+      ref:         ${{ github.ref }}
     secrets: inherit
 
   run-apps-pipeline:
