@@ -1,0 +1,28 @@
+{
+  "name": "@shibui/consumer-tests",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Consumer contract tests — verifica el contrato de integración de @shibui-ui/ui con React 19, Svelte 5 y Angular 21",
+  "scripts": {
+    "test": "playwright test",
+    "test:react": "playwright test tests/react.spec.ts",
+    "test:svelte": "playwright test tests/svelte.spec.ts",
+    "test:angular": "playwright test tests/angular.spec.ts",
+    "test:ui": "playwright test --ui",
+    "install:browsers": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.1",
+    "@shibui-ui/ui": "*",
+    "@sveltejs/vite-plugin-svelte": "^6.2.1",
+    "@types/node": "^25.3.5",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "svelte": "^5.55.7",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.2"
+  }
+}

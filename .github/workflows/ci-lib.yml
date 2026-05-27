@@ -51,6 +51,12 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: 🏗️ Build Library
         run: pnpm --filter @shibui-ui/ui build
+      - name: 📤 Upload UI Library dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-dist-${{ github.run_id }}
+          path: packages/shibui-ui/dist/
+          retention-days: 1
       - name: 🎡 Build Storybook
         run: pnpm --filter @shibui-ui/ui build-storybook
       - name: 📤 Upload Storybook artifact
@@ -79,6 +85,48 @@ jobs:
         run: pnpm --filter @shibui-ui/ui exec playwright install chromium --with-deps
       - name: 🧪 Run Story Tests
         run: pnpm --filter @shibui-ui/ui test:stories
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Consumer Contract Tests
+  # Verifica que @shibui-ui/ui se integra correctamente con React 19,
+  # Svelte 5 y Angular 21 como consumidores reales.
+  #
+  # Necesita build-ui porque los fixtures importan @shibui-ui/ui desde dist/.
+  # Corre en paralelo con test-stories (que no necesita dist/).
+  #
+  # Si falla → run-lib-pipeline.result = 'failure' → release bloqueado.
+  # ─────────────────────────────────────────────────────────────────────────
+  test-consumers:
+    name: 🌐 Consumer Contract Tests (React · Svelte · Angular)
+    runs-on: ubuntu-latest
+    needs: build-ui
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 📥 Download UI Library dist
+        uses: actions/download-artifact@v4
+        with:
+          name: ui-dist-${{ github.run_id }}
+          path: packages/shibui-ui/dist/
+      - name: 🌐 Install Playwright Chromium
+        run: pnpm --filter @shibui/consumer-tests exec playwright install chromium --with-deps
+      - name: 🧪 Run Consumer Contract Tests
+        run: pnpm --filter @shibui/consumer-tests test
+      - name: 📤 Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: consumer-test-report-${{ github.run_id }}
+          path: packages/consumer-tests/playwright-report/
+          retention-days: 7
 
   deploy-storybook:
     name: 🚀 Deploy Storybook
