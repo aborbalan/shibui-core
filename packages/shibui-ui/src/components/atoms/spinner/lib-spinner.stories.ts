@@ -320,6 +320,47 @@ export const Context: Story = {
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-spinner usa tokens semánticos de color de trazo
+   (text-primary, bg-base) — adapta al katachi.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <!-- All variants at md -->
+    <div style="display:flex;align-items:flex-end;gap:var(--lib-space-xl);flex-wrap:wrap;">
+      ${(['enso','sumi','kintsugi','shizuku'] as const).map(v => html`
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
+          <lib-spinner variant="${v}" size="md"></lib-spinner>
+          <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.15em;color:var(--text-muted);text-transform:uppercase;">${v}</span>
+        </div>
+      `)}
+    </div>
+    <!-- Sizes for enso -->
+    <div style="display:flex;align-items:flex-end;gap:var(--lib-space-lg);flex-wrap:wrap;">
+      ${(['sm','md','lg'] as const).map(s => html`
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
+          <lib-spinner variant="enso" size="${s}" tone="kaki"></lib-spinner>
+          <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.15em;color:var(--text-muted);text-transform:uppercase;">${s}</span>
+        </div>
+      `)}
+    </div>
+    <!-- Inline use -->
+    <div style="display:flex;align-items:center;gap:var(--lib-space-sm);">
+      <lib-spinner variant="enso" size="sm" label="Cargando"></lib-spinner>
+      <span style="font-family:var(--lib-font-mono);font-size:10px;color:var(--text-muted);letter-spacing:.08em;">Sincronizando…</span>
+    </div>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ═══════════════════════════════════════════════════════════════
    TESTS · ARIA y estructura
    ═══════════════════════════════════════════════════════════════ */
 
@@ -336,22 +377,3 @@ export const TestARIA: Story = {
     expect(status?.getAttribute('aria-live')).toBe('polite');
   },
 };
-
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Las 6 historias estándar
-   lib-spinner usa tokens semánticos de color de trazo
-   (text-primary, bg-base) — adapta al katachi.
-   ═══════════════════════════════════════════════════════════════ */
-
-const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-lg);display:flex;align-items:center;justify-content:center;background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-spinner></lib-spinner>
-  </div>
-`);
-
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;

@@ -498,10 +498,28 @@ export const Context: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
-    <div style="border:1px solid var(--border-default);background:var(--bg-elevated);padding:var(--lib-space-lg);">
-      <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">Modal</p>
-      <p style="font-family:var(--lib-font-display);font-size:var(--text-lg);font-weight:300;color:var(--text-primary);">Editar componente</p>
+  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-md);">
+    <!-- Simulated modal shell — default variant -->
+    <div style="border:1px solid var(--border-default);background:var(--bg-elevated);">
+      <div style="padding:var(--lib-space-md) var(--lib-space-lg);border-bottom:1px solid var(--border-subtle);display:flex;align-items:center;gap:var(--lib-space-sm);">
+        <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);">Modal · default · md</span>
+      </div>
+      <div style="padding:var(--lib-space-lg);">
+        <p style="font-family:var(--lib-font-display);font-size:var(--text-lg);font-weight:300;color:var(--text-primary);margin-bottom:var(--lib-space-sm);">Editar componente</p>
+        <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:1.8;">Contenido del cuerpo del modal. Usa el slot default para HTML libre.</p>
+      </div>
+      <div style="padding:var(--lib-space-sm) var(--lib-space-lg);border-top:1px solid var(--border-subtle);display:flex;gap:var(--lib-space-sm);justify-content:flex-end;">
+        <button style="font-family:var(--lib-font-mono);font-size:10px;padding:var(--lib-space-sm) var(--lib-space-md);background:transparent;border:1px solid var(--border-default);color:var(--text-muted);cursor:pointer;">Cancelar</button>
+        <button style="font-family:var(--lib-font-mono);font-size:10px;padding:var(--lib-space-sm) var(--lib-space-md);background:var(--color-washi-900);border:none;color:#fff;cursor:pointer;">Guardar</button>
+      </div>
+    </div>
+    <!-- Simulated modal shell — editorial variant -->
+    <div style="border:1px solid var(--border-default);background:var(--bg-elevated);">
+      <div style="padding:var(--lib-space-lg);">
+        <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">Modal · editorial · icon-tone kaki</p>
+        <p style="font-family:var(--lib-font-display);font-size:var(--text-xl);font-weight:300;color:var(--text-primary);">Shibui 0.2</p>
+        <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-top:var(--lib-space-sm);line-height:1.8;">La variante editorial elimina el separador del header.</p>
+      </div>
     </div>
   </div>
 `);

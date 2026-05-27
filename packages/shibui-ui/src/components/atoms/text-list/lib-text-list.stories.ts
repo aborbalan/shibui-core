@@ -359,15 +359,56 @@ export const Loading: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="width:100%;max-width:320px;">
-    <lib-text-list
-      family="ul"
-      .items="${[
-        { label: 'Wabi — austeridad en lo imperfecto' },
-        { label: 'Sabi — belleza en el paso del tiempo' },
-        { label: 'Shizen — naturalidad sin fuerza' },
-      ]}"
-    ></lib-text-list>
+  <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-lg);padding:var(--lib-space-lg);">
+    <!-- ul markers -->
+    <div style="min-width:180px;flex:1;">
+      <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">ul · default</p>
+      <lib-text-list
+        family="ul"
+        marker="default"
+        .items="${[
+          { label: 'Wabi — imperfección serena' },
+          { label: 'Sabi — belleza en el tiempo' },
+          { label: 'Shizen — naturalidad' },
+        ]}"
+      ></lib-text-list>
+    </div>
+    <div style="min-width:180px;flex:1;">
+      <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">ul · kaki</p>
+      <lib-text-list
+        family="ul"
+        marker="kaki"
+        .items="${[
+          { label: 'Tokens de color' },
+          { label: 'Sistema tipográfico' },
+          { label: 'Espaciado 4px base' },
+        ]}"
+      ></lib-text-list>
+    </div>
+    <div style="min-width:180px;flex:1;">
+      <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">ol · decimal</p>
+      <lib-text-list
+        family="ol"
+        counter="decimal"
+        .items="${[
+          { label: 'Explorar componentes' },
+          { label: 'Configurar tokens' },
+          { label: 'Publicar npm' },
+        ]}"
+      ></lib-text-list>
+    </div>
+    <div style="min-width:180px;flex:1;">
+      <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">ul · check</p>
+      <lib-text-list
+        family="ul"
+        marker="check"
+        .items="${[
+          { label: 'Accesibilidad WCAG AA', checked: true },
+          { label: 'CSS nativo',            checked: true },
+          { label: 'Internacionalización',  checked: false },
+        ]}"
+      ></lib-text-list>
+    </div>
   </div>
 `);
 

@@ -210,11 +210,23 @@ export const ContextDashboard: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="background:var(--bg-base);padding:var(--lib-space-lg);">
-    <lib-glass-card style="width:320px;">
-      <div style="padding:var(--lib-space-lg);">
-        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">Glass surface</p>
-        <p style="font-family:var(--lib-font-body);font-size:var(--text-sm);color:var(--text-primary);line-height:1.6;">Katachi ajusta los tokens de superficie del cristal.</p>
+  <div style="background:var(--bg-base);padding:var(--lib-space-lg);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--lib-space-sm);">
+    <lib-glass-card variant="paper" intensity="low">
+      <div style="padding:var(--lib-space-md);">
+        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">paper · low</p>
+        <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Tinte neutro.</p>
+      </div>
+    </lib-glass-card>
+    <lib-glass-card variant="water" intensity="md">
+      <div style="padding:var(--lib-space-md);">
+        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">water · md</p>
+        <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Tinte azul.</p>
+      </div>
+    </lib-glass-card>
+    <lib-glass-card variant="kaki" intensity="high">
+      <div style="padding:var(--lib-space-md);">
+        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">kaki · high</p>
+        <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Tinte cálido.</p>
       </div>
     </lib-glass-card>
   </div>

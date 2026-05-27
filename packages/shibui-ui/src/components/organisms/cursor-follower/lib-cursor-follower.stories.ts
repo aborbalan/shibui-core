@@ -225,9 +225,32 @@ export const Trail: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="position:relative;height:120px;background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;cursor:none;overflow:hidden;">
-    <lib-cursor-follower mode="ink"></lib-cursor-follower>
-    <span style="font-family:var(--lib-font-mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;pointer-events:none;">mueve el cursor aquí</span>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+
+    <!-- Zone ink -->
+    <div style="position:relative;height:80px;background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;cursor:none;overflow:hidden;">
+      <lib-cursor-follower mode="ink"></lib-cursor-follower>
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;pointer-events:none;">ink · hover here</span>
+    </div>
+
+    <!-- Zone minimal -->
+    <div style="position:relative;height:80px;background:var(--bg-surface);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;cursor:none;overflow:hidden;">
+      <lib-cursor-follower mode="minimal"></lib-cursor-follower>
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;pointer-events:none;">minimal · hover here</span>
+    </div>
+
+    <!-- Zone kaki -->
+    <div style="position:relative;height:80px;background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;cursor:none;overflow:hidden;">
+      <lib-cursor-follower mode="kaki"></lib-cursor-follower>
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;pointer-events:none;">kaki · hover here</span>
+    </div>
+
+    <!-- Zone ghost -->
+    <div style="position:relative;height:80px;background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;cursor:none;overflow:hidden;">
+      <lib-cursor-follower mode="ghost"></lib-cursor-follower>
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;pointer-events:none;">ghost · hover here</span>
+    </div>
+
   </div>
 `);
 

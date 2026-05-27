@@ -161,12 +161,25 @@ export const NoProgress: Story = {
 
 const _katachi = createKatachiStories<object>(() => html`
   <div style="overflow:hidden;border:1px solid var(--border-subtle);">
-    <lib-horizontal-scroll-section scroll-duration="2">
-      ${(['侘', '金', '寂', '自'] as const).map((kanji, i) => html`
-        <div style="width:180px;height:100px;flex-shrink:0;background:var(--bg-elevated);
-          border-right:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;">
-          <span style="font-family:'Shippori Mincho',serif;font-size:1.8rem;
-            color:var(--katachi-accent,var(--text-primary));opacity:${1 - i * 0.15};">${kanji}</span>
+    <lib-horizontal-scroll-section scroll-duration="2" show-progress>
+      ${[
+        { kanji: '侘', label: 'Wabi · imperfección',  bg: 'var(--bg-elevated)' },
+        { kanji: '金', label: 'Kintsugi · la grieta',  bg: 'var(--bg-surface)' },
+        { kanji: '寂', label: 'Sabi · pátina',         bg: 'var(--bg-elevated)' },
+        { kanji: '自', label: 'Shizen · naturaleza',   bg: 'var(--bg-base)' },
+        { kanji: '青', label: 'Celadon · cerámica',    bg: 'var(--bg-surface)' },
+        { kanji: '渋', label: 'Shibui · discreción',   bg: 'var(--bg-elevated)' },
+      ].map((s, i) => html`
+        <div style="
+          width:200px;height:120px;flex-shrink:0;
+          background:${s.bg};
+          border-right:1px solid var(--border-subtle);
+          display:flex;flex-direction:column;
+          align-items:center;justify-content:center;
+          gap:var(--lib-space-xs);
+        ">
+          <span style="font-family:'Shippori Mincho',serif;font-size:2rem;color:var(--text-primary);opacity:${1 - i * 0.1};">${s.kanji}</span>
+          <span style="font-family:var(--lib-font-mono);font-size:8px;color:var(--text-muted);letter-spacing:.1em;">${s.label}</span>
         </div>
       `)}
     </lib-horizontal-scroll-section>

@@ -316,17 +316,49 @@ export const AllVariants: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-footer
-    brand-name="Shibui"
-    brand-kanji="渋"
-    brand-sub="Design System"
-    .navLinks=${[
-      { label: 'Componentes', href: '#' },
-      { label: 'Tokens', href: '#' },
-      { label: 'MIT License', href: '#' },
-    ]}
-    .legalLinks=${[{ label: 'privacy.md', href: '#' }]}
-  ></lib-footer>
+  <div style="display:flex;flex-direction:column;">
+
+    <!-- social variant -->
+    <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;padding:var(--lib-space-xs) var(--lib-space-sm);background:var(--bg-base);border:1px solid var(--border-subtle);">01 · social</p>
+    <lib-footer
+      variant="social"
+      brand-name="shibui"
+      brand-kanji="渋"
+      brand-sub="Design System"
+      location="Zaragoza"
+      github-href="#"
+      linkedin-href="#"
+      .navLinks=${[
+        { label: 'Componentes', href: '#' },
+        { label: 'Tokens', href: '#' },
+      ]}
+      .legalLinks=${[{ label: 'privacy.md', href: '#' }]}
+    ></lib-footer>
+
+    <!-- accordion variant -->
+    <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;padding:var(--lib-space-xs) var(--lib-space-sm);background:var(--bg-base);border:1px solid var(--border-subtle);">02 · accordion</p>
+    <lib-footer
+      variant="accordion"
+      brand-name="shibui"
+      brand-kanji="渋"
+      github-href="#"
+      email="hola@shibui.dev"
+      .columns=${DEFAULT_COLUMNS}
+      .legalLinks=${DEFAULT_LEGAL_LINKS}
+    ></lib-footer>
+
+    <!-- kintsugi variant -->
+    <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;padding:var(--lib-space-xs) var(--lib-space-sm);background:var(--bg-base);border:1px solid var(--border-subtle);">03 · kintsugi</p>
+    <lib-footer
+      variant="kintsugi"
+      brand-name="shibui"
+      brand-kanji="渋い"
+      brand-sub="Design System"
+      .columns=${DEFAULT_COLUMNS}
+      .legalLinks=${DEFAULT_LEGAL_LINKS}
+    ></lib-footer>
+
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

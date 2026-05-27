@@ -445,7 +445,7 @@ export const Playground: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;flex-direction:column;">
+  <div style="display:flex;flex-direction:column;gap:0;">
     <lib-header
       variant="classic"
       brand-name="Shibui"
@@ -457,7 +457,14 @@ const _katachi = createKatachiStories<object>(() => html`
       ] as NavLink[]}"
       .actions="${[{ label: 'Empezar', href: '#', variant: 'kaki' }] as HeaderAction[]}"
     ></lib-header>
-    <div style="background:var(--bg-base);height:48px;border-top:1px solid var(--border-subtle);"></div>
+    <div style="background:var(--bg-base);padding:var(--lib-space-md) calc(var(--lib-space-xl) * 2);border-top:1px solid var(--border-subtle);">
+      <div style="font-family:var(--lib-font-display);font-size:1.8rem;font-weight:300;letter-spacing:-0.02em;color:var(--text-primary);">
+        Diseño con <em style="font-style:italic;color:var(--color-kaki-500);">quietud</em>
+      </div>
+      <p style="font-family:var(--lib-font-body);font-size:var(--text-sm);color:var(--text-secondary);margin-top:var(--lib-space-sm);line-height:1.8;">
+        Header variant classic — adapta tokens semánticos al katachi activo.
+      </p>
+    </div>
   </div>
 `);
 

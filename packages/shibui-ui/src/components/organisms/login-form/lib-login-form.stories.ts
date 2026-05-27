@@ -95,7 +95,29 @@ export const CustomHeader: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-login-form></lib-login-form>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-xl);">
+
+    <!-- Default — vacío -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">default</p>
+      <lib-login-form></lib-login-form>
+    </div>
+
+    <!-- Error state -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">error</p>
+      <lib-login-form
+        errorMessage="Correo o contraseña incorrectos. Comprueba tus datos."
+      ></lib-login-form>
+    </div>
+
+    <!-- Loading state -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">loading</p>
+      <lib-login-form loading></lib-login-form>
+    </div>
+
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

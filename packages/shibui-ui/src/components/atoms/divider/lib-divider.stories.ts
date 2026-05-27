@@ -1,4 +1,4 @@
-﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-divider.component';
 import type { LibDivider } from './lib-divider.component';
@@ -81,7 +81,6 @@ export const Playground: Story = {
 
 /* ── Styles ── */
 export const LineStyles: Story = {
-  name: 'Line Styles.',
   render: (): TemplateResult => html`
     <div style="${PREVIEW_H}">
       ${(['hairline', 'default', 'strong', 'heavy', 'dashed', 'dotted', 'gradient'] as const).map(s => html`

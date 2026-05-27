@@ -166,17 +166,19 @@ const _katachi = createKatachiStories<MetricBarArgs>(() => html`
       display: flex;
       flex-direction: column;
       gap: var(--lib-space-md);
-      width: 260px;
+      width: 280px;
       padding: var(--lib-space-lg);
       background: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
     "
   >
-    <lib-metric-bar label="CPU"   value="67"   max="100" unit="%"  size="sm" show-value></lib-metric-bar>
-    <lib-metric-bar label="RAM"   value="12.4" max="32"  unit="GB" size="sm" show-value tone="kaki"></lib-metric-bar>
-    <lib-metric-bar label="Disco" value="380"  max="512" unit="GB" size="sm" show-value></lib-metric-bar>
-    <lib-metric-bar label="Red"   value="42"   max="100" unit="MB/s" size="sm" show-value tone="celadon"></lib-metric-bar>
+    <lib-metric-bar label="CPU"    value="67"   max="100" unit="%"    size="sm" show-value></lib-metric-bar>
+    <lib-metric-bar label="RAM"    value="12.4" max="32"  unit="GB"   size="sm" show-value tone="kaki"></lib-metric-bar>
+    <lib-metric-bar label="Disco"  value="380"  max="512" unit="GB"   size="sm" show-value></lib-metric-bar>
+    <lib-metric-bar label="Red ↑"  value="42"   max="100" unit="MB/s" size="sm" show-value tone="celadon"></lib-metric-bar>
+    <lib-metric-bar label="Alerta" value="91"   max="100" unit="%"    size="xs" show-value tone="error"></lib-metric-bar>
+    <lib-metric-bar label="LG"     value="55"   max="100" unit="%"    size="lg" show-value></lib-metric-bar>
   </div>
 `);
 

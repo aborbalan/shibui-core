@@ -243,16 +243,29 @@ export const DarkCeladon: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);max-width:260px;">
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);max-width:320px;">
+    <!-- required -->
     <div style="display:flex;flex-direction:column;gap:4px;">
       <lib-label html-for="kt-email" required>Correo electrónico</lib-label>
       <input id="kt-email" placeholder="usuario@ejemplo.com"
         style="padding:7px 10px;font-size:.875rem;border:1px solid var(--border-default);border-radius:4px;outline:none;background:var(--bg-elevated);color:var(--text-primary);" />
     </div>
+    <!-- optional with sublabel annotation -->
     <div style="display:flex;flex-direction:column;gap:4px;">
-      <lib-label html-for="kt-empresa">Empresa</lib-label>
+      <lib-label html-for="kt-empresa">Empresa <span style="font-family:monospace;font-size:10px;font-weight:400;color:var(--text-muted);margin-left:4px;">(opcional)</span></lib-label>
       <input id="kt-empresa" placeholder="Shibui Labs"
         style="padding:7px 10px;font-size:.875rem;border:1px solid var(--border-default);border-radius:4px;outline:none;background:var(--bg-elevated);color:var(--text-primary);" />
+    </div>
+    <!-- password required -->
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <lib-label html-for="kt-pass" required>Contraseña</lib-label>
+      <input id="kt-pass" type="password" placeholder="••••••••"
+        style="padding:7px 10px;font-size:.875rem;border:1px solid var(--border-default);border-radius:4px;outline:none;background:var(--bg-elevated);color:var(--text-primary);" />
+    </div>
+    <!-- checkbox inline -->
+    <div style="display:flex;align-items:center;gap:var(--lib-space-sm);">
+      <input id="kt-terms" type="checkbox" style="width:16px;height:16px;accent-color:var(--color-celadon-500);" />
+      <lib-label html-for="kt-terms">Acepto los términos</lib-label>
     </div>
   </div>
 `);

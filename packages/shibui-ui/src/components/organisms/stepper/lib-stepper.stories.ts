@@ -205,12 +205,51 @@ export const Interactive: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
-    <lib-stepper current="2">
-      <lib-step label="Diseño"  sub="Tokens"></lib-step>
-      <lib-step label="Build"   sub="Componentes"></lib-step>
-      <lib-step label="Publish" sub="NPM"></lib-step>
-    </lib-stepper>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-lg);">
+
+    <!-- default variant · horizontal · sizes sm/md/lg -->
+    <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-md);">default · sm</p>
+      <lib-stepper current="2" variant="default" size="sm">
+        <lib-step label="Diseño"  sub="Tokens"></lib-step>
+        <lib-step label="Build"   sub="Componentes"></lib-step>
+        <lib-step label="Test"    sub="Playwright"></lib-step>
+        <lib-step label="Publish" sub="NPM"></lib-step>
+      </lib-stepper>
+    </div>
+
+    <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-md);">default · md · con error en paso 2</p>
+      <lib-stepper current="2" variant="default" size="md">
+        <lib-step label="Cuenta"  sub="Email"></lib-step>
+        <lib-step label="Verificación" sub="Código" status="error"></lib-step>
+        <lib-step label="Pago"    sub="Método"></lib-step>
+        <lib-step label="Listo"   sub="Confirmar"></lib-step>
+      </lib-stepper>
+    </div>
+
+    <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-md);">minimal · md · acento kaki</p>
+      <lib-stepper current="3" variant="minimal" size="md">
+        <lib-step label="Catálogo"></lib-step>
+        <lib-step label="Selección"></lib-step>
+        <lib-step label="Detalles"></lib-step>
+        <lib-step label="Resumen"></lib-step>
+        <lib-step label="Enviar"></lib-step>
+      </lib-stepper>
+    </div>
+
+    <!-- vertical orientation -->
+    <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-md);">vertical · current 3</p>
+      <lib-stepper current="3" orientation="vertical" style="max-width:320px;">
+        <lib-step label="Cuenta"   sub="Registro completado.">Email verificado con éxito.</lib-step>
+        <lib-step label="Perfil"   sub="Preferencias guardadas.">Nombre y avatar configurados.</lib-step>
+        <lib-step label="Plan"     sub="En curso.">Selecciona el plan adecuado.</lib-step>
+        <lib-step label="Proyecto" sub="Pendiente."></lib-step>
+      </lib-stepper>
+    </div>
+
   </div>
 `);
 

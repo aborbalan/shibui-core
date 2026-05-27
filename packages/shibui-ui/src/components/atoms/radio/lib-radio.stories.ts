@@ -207,10 +207,28 @@ export const GroupKaki: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-radio name="katachi-r" value="a" label="Opción A"></lib-radio>
-    <lib-radio name="katachi-r" value="b" label="Opción B" checked></lib-radio>
-    <lib-radio name="katachi-r" value="c" label="Opción C" disabled></lib-radio>
+  <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xl);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <!-- Sizes -->
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">sizes</span>
+      <lib-radio name="kt-size" value="sm" size="sm" label="Small" sublabel="sm"></lib-radio>
+      <lib-radio name="kt-size" value="md" size="md" label="Medium" sublabel="md" checked></lib-radio>
+      <lib-radio name="kt-size" value="lg" size="lg" label="Large" sublabel="lg"></lib-radio>
+    </div>
+    <!-- States -->
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">states</span>
+      <lib-radio name="kt-state" value="a" label="Unselected"></lib-radio>
+      <lib-radio name="kt-state2" value="b" label="Selected" checked></lib-radio>
+      <lib-radio name="kt-state3" value="c" label="Disabled" disabled></lib-radio>
+      <lib-radio name="kt-state4" value="d" label="Error" variant="error"></lib-radio>
+    </div>
+    <!-- Variants -->
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">variants</span>
+      <lib-radio name="kt-var1" value="d" variant="default" label="Default" checked></lib-radio>
+      <lib-radio name="kt-var2" value="k" variant="kaki" label="Kaki" checked></lib-radio>
+    </div>
   </div>
 `);
 

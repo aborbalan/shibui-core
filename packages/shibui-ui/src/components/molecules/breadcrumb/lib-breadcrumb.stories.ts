@@ -245,8 +245,18 @@ export const DarkSurface: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);background:var(--bg-base);border:1px solid var(--border-subtle);">
-    <lib-breadcrumb .items="${[
+  <div style="padding:var(--lib-space-md);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-md);">
+    <lib-breadcrumb separator="slash" size="sm" .items="${[
+      { label: 'Inicio', href: '#' },
+      { label: 'Diseño', href: '#' },
+      { label: 'Katachi' },
+    ]}"></lib-breadcrumb>
+    <lib-breadcrumb separator="chevron" size="md" surface="filled" .items="${[
+      { label: 'Inicio', href: '#' },
+      { label: 'Diseño', href: '#' },
+      { label: 'Katachi' },
+    ]}"></lib-breadcrumb>
+    <lib-breadcrumb separator="dot" size="lg" surface="pill" accent="kaki" .items="${[
       { label: 'Inicio', href: '#' },
       { label: 'Diseño', href: '#' },
       { label: 'Katachi' },

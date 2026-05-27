@@ -1,4 +1,4 @@
-﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { expect, userEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-copy-button.component';
@@ -119,7 +119,6 @@ export const Sizes: Story = {
 
 /* ── Tooltip ── */
 export const WithTooltip: Story = {
-  name: 'With Tooltip.',
   render: (): TemplateResult => html`
     <div style="display:flex; align-items:center; gap:16px; padding:40px 24px 24px; background:#FFFFFF; border:1px solid #E5DDD3;">
       <lib-copy-button variant="ghost"    value="ghost"    icon-only tooltip size="sm"></lib-copy-button>
@@ -205,6 +204,40 @@ export const ContextCodeBlock: Story = {
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-copy-button usa tokens semánticos (bg-elevated,
+   border-subtle, text-primary, font-mono) — adapta al katachi.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);max-width:400px;">
+    <div style="display:flex;align-items:center;gap:var(--lib-space-sm);padding:var(--lib-space-sm) var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);font-family:var(--lib-font-mono);font-size:12px;color:var(--text-primary);">
+      <span style="flex:1;">npm install @shibui/ui</span>
+      <lib-copy-button value="npm install @shibui/ui" icon-only size="sm"></lib-copy-button>
+    </div>
+    <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;align-items:center;">
+      <lib-copy-button variant="ghost"    value="ghost"    label="Ghost"    size="sm"></lib-copy-button>
+      <lib-copy-button variant="outlined" value="outlined" label="Outlined" size="sm"></lib-copy-button>
+      <lib-copy-button variant="filled"   value="filled"   label="Filled"   size="sm"></lib-copy-button>
+      <lib-copy-button variant="subtle"   value="subtle"   label="Subtle"   size="sm"></lib-copy-button>
+    </div>
+    <div style="display:flex;gap:var(--lib-space-sm);align-items:center;">
+      <lib-copy-button variant="outlined" value="sm" label="Small"  size="sm"></lib-copy-button>
+      <lib-copy-button variant="outlined" value="md" label="Medium" size="md"></lib-copy-button>
+      <lib-copy-button variant="outlined" value="lg" label="Large"  size="lg"></lib-copy-button>
+      <lib-copy-button variant="ghost" value="icon" icon-only size="md" tooltip></lib-copy-button>
+    </div>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ═══════════════════════════════════════════════════════════════
    TESTS · Interacción y eventos
    ═══════════════════════════════════════════════════════════════ */
 
@@ -235,23 +268,3 @@ export const TestCopyEvent: Story = {
     expect(detail!.value).toBe('test-copy-value');
   },
 };
-
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Las 6 historias estándar
-   lib-copy-button usa tokens semánticos (bg-elevated,
-   border-subtle, text-primary, font-mono) — adapta al katachi.
-   ═══════════════════════════════════════════════════════════════ */
-
-const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;align-items:center;gap:var(--lib-space-sm);padding:var(--lib-space-sm) var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);font-family:var(--lib-font-mono);font-size:12px;color:var(--text-primary);">
-    <span style="flex:1;">npm install @shibui/ui</span>
-    <lib-copy-button value="npm install @shibui/ui" icon-only size="sm"></lib-copy-button>
-  </div>
-`);
-
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;

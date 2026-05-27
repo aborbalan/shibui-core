@@ -348,8 +348,74 @@ export const Sizes: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;min-height:80px;">
-    <lib-button size="sm" variant="secondary">Abrir diálogo</lib-button>
+  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-md);">
+
+    <!-- Variant badges showing the available variants -->
+    <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;">
+      ${(['default', 'danger', 'warning', 'dark'] as const).map(v => html`
+        <div style="
+          padding:var(--lib-space-xs) var(--lib-space-sm);
+          border:1px solid var(--border-default);
+          background:var(--bg-elevated);
+          font-family:var(--lib-font-mono);
+          font-size:9px;
+          letter-spacing:.12em;
+          text-transform:uppercase;
+          color:var(--text-secondary);
+        ">${v}</div>
+      `)}
+    </div>
+
+    <!-- Size badges -->
+    <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;">
+      ${(['sm', 'md', 'lg', 'xl', 'full'] as const).map(s => html`
+        <div style="
+          padding:var(--lib-space-xs) var(--lib-space-sm);
+          border:1px solid var(--border-subtle);
+          background:var(--bg-surface);
+          font-family:var(--lib-font-mono);
+          font-size:9px;
+          letter-spacing:.12em;
+          text-transform:uppercase;
+          color:var(--text-muted);
+        ">size: ${s}</div>
+      `)}
+    </div>
+
+    <!-- Layout badges -->
+    <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;">
+      ${(['dialog', 'drawer-right', 'drawer-bottom', 'alert'] as const).map(l => html`
+        <div style="
+          padding:var(--lib-space-xs) var(--lib-space-sm);
+          border:1px solid var(--border-subtle);
+          background:var(--bg-elevated);
+          font-family:var(--lib-font-mono);
+          font-size:9px;
+          letter-spacing:.12em;
+          text-transform:uppercase;
+          color:var(--text-muted);
+        ">${l}</div>
+      `)}
+    </div>
+
+    <!-- Dialog structure preview (header/body/footer) -->
+    <div style="border:1px solid var(--border-default);background:var(--bg-elevated);">
+      <div style="padding:var(--lib-space-md);border-bottom:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:2px;">Confirmación</div>
+          <div style="font-family:var(--lib-font-display);font-size:var(--text-lg);font-weight:300;color:var(--text-primary);">Guardar cambios</div>
+        </div>
+        <div style="width:20px;height:20px;border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;font-family:var(--lib-font-mono);font-size:10px;color:var(--text-muted);">✕</div>
+      </div>
+      <div style="padding:var(--lib-space-md);">
+        <p style="font-family:var(--lib-font-body);font-size:var(--text-sm);color:var(--text-secondary);line-height:1.7;margin:0;">Los cambios realizados se guardarán permanentemente. Esta acción no puede deshacerse.</p>
+      </div>
+      <div style="padding:var(--lib-space-sm) var(--lib-space-md);border-top:1px solid var(--border-subtle);display:flex;justify-content:flex-end;gap:var(--lib-space-sm);">
+        <div style="padding:var(--lib-space-xs) var(--lib-space-md);border:1px solid var(--border-default);font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);">Cancelar</div>
+        <div style="padding:var(--lib-space-xs) var(--lib-space-md);background:var(--accent-primary);font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--bg-base);">Guardar</div>
+      </div>
+    </div>
+
   </div>
 `);
 

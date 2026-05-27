@@ -365,12 +365,33 @@ export const FormContext: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);min-height:200px;">
-    <lib-select label="Filosofía" placeholder="Selecciona…">
-      <lib-select-option value="a">Wabi-Sabi</lib-select-option>
-      <lib-select-option value="b">Kintsugi</lib-select-option>
-      <lib-select-option value="c">Shizen</lib-select-option>
-    </lib-select>
+  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);min-height:240px;display:flex;flex-direction:column;gap:var(--lib-space-md);">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--lib-space-md);">
+      <lib-select label="Default" size="md" placeholder="Selecciona…">
+        <lib-select-option value="a">Wabi-Sabi</lib-select-option>
+        <lib-select-option value="b">Kintsugi</lib-select-option>
+        <lib-select-option value="c">Shizen</lib-select-option>
+      </lib-select>
+      <lib-select label="Filled" variant="filled" size="md" placeholder="Selecciona…">
+        <lib-select-option value="a">Wabi-Sabi</lib-select-option>
+        <lib-select-option value="b">Kintsugi</lib-select-option>
+        <lib-select-option value="c">Shizen</lib-select-option>
+      </lib-select>
+      <lib-select label="Ghost" variant="ghost" size="md" placeholder="Selecciona…">
+        <lib-select-option value="a">Wabi-Sabi</lib-select-option>
+        <lib-select-option value="b">Kintsugi</lib-select-option>
+        <lib-select-option value="c">Shizen</lib-select-option>
+      </lib-select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--lib-space-md);">
+      <lib-select label="SM" size="sm" value="a">
+        <lib-select-option value="a">Wabi-Sabi</lib-select-option>
+        <lib-select-option value="b">Kintsugi</lib-select-option>
+      </lib-select>
+      <lib-select label="Disabled" disabled value="a" hint="No disponible">
+        <lib-select-option value="a">Wabi-Sabi</lib-select-option>
+      </lib-select>
+    </div>
   </div>
 `);
 
