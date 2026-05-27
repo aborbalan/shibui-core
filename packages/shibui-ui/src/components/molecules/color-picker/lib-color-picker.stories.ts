@@ -275,6 +275,30 @@ export const InContext: Story = {
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-color-picker usa tokens semánticos de superficie y borde
+   (bg-elevated, border-subtle, text-muted) — adapta al katachi.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-lg);">
+    <lib-color-picker variant="inline" value="#4E9482"></lib-color-picker>
+    <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
+      <lib-color-picker variant="trigger" value="#B85A1E"></lib-color-picker>
+      <lib-color-picker variant="trigger" value="#4E9482"></lib-color-picker>
+      <lib-color-picker variant="trigger" value="#221C16" show-alpha></lib-color-picker>
+    </div>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ═══════════════════════════════════════════════════════════════
    TESTS · Eventos de cambio de color
    ═══════════════════════════════════════════════════════════════ */
 
@@ -330,22 +354,3 @@ export const TestSwatchClick: Story = {
     expect(typeof detail!.value).toBe('string');
   },
 };
-
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Las 6 historias estándar
-   lib-color-picker usa tokens semánticos de superficie y borde
-   (bg-elevated, border-subtle, text-muted) — adapta al katachi.
-   ═══════════════════════════════════════════════════════════════ */
-
-const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-color-picker variant="inline" value="#4E9482"></lib-color-picker>
-  </div>
-`);
-
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;

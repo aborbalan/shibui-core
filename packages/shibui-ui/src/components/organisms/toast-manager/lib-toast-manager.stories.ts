@@ -1,4 +1,4 @@
-﻿import { html, TemplateResult } from 'lit';
+import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-toast-manager.component';
 import type { LibToastManager } from './lib-toast-manager.component';
@@ -39,7 +39,6 @@ function getManager(): LibToastManager | null {
    PLAYGROUND
 ───────────────────────────────────────────────────────── */
 export const Playground: Story = {
-  name: 'Playground .',
   render: (): TemplateResult => html`
     <div style="
       padding: 48px 40px;
@@ -166,14 +165,24 @@ export const HeadingOverride: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);min-height:80px;">
+  <div style="position:relative;padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);min-height:280px;">
     <lib-toast-manager></lib-toast-manager>
   </div>
 `);
 
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;
+const katachiPlay = async ({ canvasElement }: { canvasElement: HTMLElement }): Promise<void> => {
+  await new Promise(r => setTimeout(r, 80));
+  const manager = canvasElement.querySelector('lib-toast-manager') as LibToastManager | null;
+  if (!manager) return;
+  manager.add({ type: 'info',    message: 'Componente actualizado. Revisa el changelog.',  duration: 0 });
+  manager.add({ type: 'success', message: 'Cambios guardados correctamente.',              duration: 0 });
+  manager.add({ type: 'warning', message: 'Esta acción puede tener efectos secundarios.',  duration: 0 });
+  manager.add({ type: 'error',   message: 'No se pudo completar la operación.',            duration: 0 });
+};
+
+export const KatachiShizen   = { ..._katachi.KatachiShizen,   play: katachiPlay };
+export const KatachiWabi     = { ..._katachi.KatachiWabi,     play: katachiPlay };
+export const KatachiKintsugi = { ..._katachi.KatachiKintsugi, play: katachiPlay };
+export const KatachiCeladon  = { ..._katachi.KatachiCeladon,  play: katachiPlay };
+export const KatachiSabi     = { ..._katachi.KatachiSabi,     play: katachiPlay };
+export const KatachiTerminal = { ..._katachi.KatachiTerminal,  play: katachiPlay };

@@ -1,4 +1,4 @@
-﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { expect } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-badge.component';
@@ -65,7 +65,6 @@ export const Playground: Story = {
 };
 
 export const AllVariants: Story = {
-  name: 'All Variants.',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; padding:24px;">
       <lib-badge variant="default">Default</lib-badge>
@@ -80,7 +79,6 @@ export const AllVariants: Story = {
 };
 
 export const WithDot: Story = {
-  name: 'With Dot.',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; padding:24px;">
       <lib-badge variant="default" dot>Pendiente</lib-badge>
@@ -113,7 +111,6 @@ export const Sizes: Story = {
 };
 
 export const InContext: Story = {
-  name: 'In Context.',
   render: (): TemplateResult => html`
     <div style="
       display: flex;
@@ -156,10 +153,28 @@ export const InContext: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-sm);">
-    <lib-badge variant="default">Default</lib-badge>
-    <lib-badge variant="default" dot>Live</lib-badge>
-    <lib-badge variant="default" pill>Pill</lib-badge>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+    <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-sm);">
+      <lib-badge variant="default">Default</lib-badge>
+      <lib-badge variant="accent">Accent</lib-badge>
+      <lib-badge variant="celadon">Celadon</lib-badge>
+      <lib-badge variant="dark">Dark</lib-badge>
+      <lib-badge variant="error">Error</lib-badge>
+      <lib-badge variant="success">Success</lib-badge>
+      <lib-badge variant="warning">Warning</lib-badge>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-sm);">
+      <lib-badge variant="default" dot size="sm">sm</lib-badge>
+      <lib-badge variant="accent" dot size="sm">sm</lib-badge>
+      <lib-badge variant="success" dot size="md">md</lib-badge>
+      <lib-badge variant="error" dot size="md">md</lib-badge>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-sm);">
+      <lib-badge variant="accent" pill>Nuevo</lib-badge>
+      <lib-badge variant="success" pill dot>Online</lib-badge>
+      <lib-badge variant="dark" pill>v1.2.0</lib-badge>
+      <lib-badge variant="celadon" pill>Beta</lib-badge>
+    </div>
   </div>
 `);
 

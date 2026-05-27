@@ -207,17 +207,56 @@ export const AutoplayLoop: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-carousel dots>
-    ${[
-      { label: '侘び · Wabi',   bg: 'oklch(15% 0.01 50deg)' },
-      { label: '寂び · Sabi',   bg: 'oklch(92% 0.02 50deg)' },
-      { label: '自然 · Shizen', bg: 'oklch(88% 0.04 130deg)' },
-    ].map(s => html`
-      <div style="aspect-ratio:16/6;display:flex;align-items:center;justify-content:center;background:${s.bg};">
-        <span style="font-family:'Shippori Mincho',serif;font-size:1.1rem;color:var(--text-primary);">${s.label}</span>
-      </div>
-    `)}
-  </lib-carousel>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-lg);max-width:560px;">
+
+    <!-- Slide mode — arrows + dots + counter -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">slide · arrows · dots · counter</p>
+      <lib-carousel dots counter>
+        ${[
+          { label: '侘び · Wabi',   bg: 'var(--bg-elevated)' },
+          { label: '寂び · Sabi',   bg: 'var(--bg-surface)' },
+          { label: '自然 · Shizen', bg: 'var(--bg-elevated)' },
+          { label: '青磁 · Celadon', bg: 'var(--bg-base)' },
+        ].map(s => html`
+          <div style="aspect-ratio:16/6;display:flex;align-items:center;justify-content:center;background:${s.bg};border:1px solid var(--border-subtle);">
+            <span style="font-family:var(--lib-font-display);font-size:1.1rem;font-weight:300;color:var(--text-primary);letter-spacing:-.02em;">${s.label}</span>
+          </div>
+        `)}
+      </lib-carousel>
+    </div>
+
+    <!-- Fade mode — dots only -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">fade · dots only</p>
+      <lib-carousel mode="fade" ?arrows=${false} dots>
+        ${[
+          { label: '金継ぎ · Kintsugi', note: 'Belleza en las grietas' },
+          { label: '渋い · Shibui',    note: 'Elegancia discreta' },
+          { label: '間 · Ma',          note: 'El espacio entre' },
+        ].map(s => html`
+          <div style="padding:var(--lib-space-xl);background:var(--bg-surface);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-xs);min-height:100px;">
+            <div style="font-family:var(--lib-font-display);font-size:var(--text-lg);font-weight:300;color:var(--text-primary);">${s.label}</div>
+            <div style="font-family:var(--lib-font-mono);font-size:var(--text-xs);color:var(--text-muted);">${s.note}</div>
+          </div>
+        `)}
+      </lib-carousel>
+    </div>
+
+    <!-- Peek 3 — cards -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">peek 3 · cards</p>
+      <lib-carousel peek="3" counter>
+        ${(['Atoms', 'Molecules', 'Organisms', 'Tokens', 'Katachi'] as const).map(c => html`
+          <div style="border:1px solid var(--border-subtle);background:var(--bg-elevated);padding:var(--lib-space-md);">
+            <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">${c}</p>
+            <div style="font-family:var(--lib-font-display);font-size:var(--text-sm);font-weight:300;color:var(--text-primary);">Shibui DS</div>
+          </div>
+        `)}
+      </lib-carousel>
+    </div>
+
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

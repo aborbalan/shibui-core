@@ -409,14 +409,29 @@ export const InContext: Story = {
 
 const _katachi = createKatachiStories<object>(() => html`
   <div style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);align-items:flex-start;">
-    <lib-button-group shape="rounded">
+    <lib-button-group shape="flat">
       <lib-button variant="secondary">Anterior</lib-button>
       <lib-button variant="secondary">Siguiente</lib-button>
     </lib-button-group>
-    <lib-button-group shape="rounded" toggle>
+    <lib-button-group shape="rounded">
+      <lib-button variant="secondary">Copiar</lib-button>
+      <lib-button variant="secondary">Cortar</lib-button>
+      <lib-button variant="secondary">Pegar</lib-button>
+    </lib-button-group>
+    <lib-button-group shape="pill" toggle>
       <lib-button variant="secondary" active>Grid</lib-button>
       <lib-button variant="secondary">Lista</lib-button>
       <lib-button variant="secondary">Chart</lib-button>
+    </lib-button-group>
+    <lib-button-group shape="rounded" toggle multi size="sm">
+      <lib-button variant="secondary" active>Bold</lib-button>
+      <lib-button variant="secondary">Italic</lib-button>
+      <lib-button variant="secondary">Under</lib-button>
+    </lib-button-group>
+    <lib-button-group orientation="vertical" shape="rounded" toggle>
+      <lib-button variant="secondary" active>Día</lib-button>
+      <lib-button variant="secondary">Semana</lib-button>
+      <lib-button variant="secondary">Mes</lib-button>
     </lib-button-group>
   </div>
 `);

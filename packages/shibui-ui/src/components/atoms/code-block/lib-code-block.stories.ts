@@ -180,12 +180,25 @@ export const NoCopy: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="max-width:400px;">
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);max-width:480px;">
+    <lib-code-block
+      variant="default"
+      language="bash"
+      code="npm install @shibui-ui/ui lit"
+      copyable
+    ></lib-code-block>
     <lib-code-block
       variant="ghost"
       language="ts"
-      code="import '@shibui/ui';"
+      filename="main.ts"
+      code="import '@shibui-ui/ui';"
       copyable
+    ></lib-code-block>
+    <lib-code-block
+      variant="default"
+      language="json"
+      filename="package.json"
+      code='{ "version": "1.0.0" }'
     ></lib-code-block>
   </div>
 `);

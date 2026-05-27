@@ -287,6 +287,29 @@ export const MultiSegment: Story = {
   },
 };
 /* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-progress usa tokens semánticos de relleno y superficie
+   (bg-elevated, text-primary) — adapta al katachi.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);max-width:400px;">
+    <lib-progress value="72" label="Default" show-value></lib-progress>
+    <lib-progress value="48" tone="kaki" size="sm" label="Kaki"></lib-progress>
+    <lib-progress value="88" tone="celadon" size="sm" label="Celadón"></lib-progress>
+    <lib-progress tone="error" size="xs" indeterminate></lib-progress>
+    <lib-progress value="67" size="lg" striped label="Striped LG" show-value></lib-progress>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ═══════════════════════════════════════════════════════════════
    TESTS · ARIA y accesibilidad
    ═══════════════════════════════════════════════════════════════ */
 
@@ -322,22 +345,3 @@ export const TestIndeterminateNoValueNow: Story = {
     expect(bar?.hasAttribute('aria-valuenow')).toBe(false);
   },
 };
-
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Las 6 historias estándar
-   lib-progress usa tokens semánticos de relleno y superficie
-   (bg-elevated, text-primary) — adapta al katachi.
-   ═══════════════════════════════════════════════════════════════ */
-
-const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);max-width:320px;">
-    <lib-progress value="60"></lib-progress>
-  </div>
-`);
-
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;

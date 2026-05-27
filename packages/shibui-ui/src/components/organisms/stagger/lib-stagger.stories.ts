@@ -312,12 +312,44 @@ export const Repeat: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-stagger-container delay="80" direction="up">
-    ${['Wabi · Imperfección', 'Ma · El espacio', 'Shibui · Discreción'].map(txt => html`
-      <div style="padding:10px 12px;background:var(--bg-elevated);border:1px solid var(--border-subtle);
-        font-family:var(--lib-font-body);font-size:.875rem;color:var(--text-primary);">${txt}</div>
-    `)}
-  </lib-stagger-container>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-lg);">
+
+    <!-- direction up · delay 80 -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">direction up · delay 80</p>
+      <lib-stagger-container delay="80" direction="up">
+        ${['Wabi · Imperfección serena', 'Ma · El espacio entre', 'Shibui · Elegancia discreta', 'Kintsugi · La rotura dorada', 'Sabi · La pátina del tiempo'].map(txt => html`
+          <div style="padding:var(--lib-space-sm) var(--lib-space-md);margin-bottom:var(--lib-space-xs);background:var(--bg-elevated);border:1px solid var(--border-subtle);font-family:var(--lib-font-body);font-size:var(--text-sm);color:var(--text-primary);">${txt}</div>
+        `)}
+      </lib-stagger-container>
+    </div>
+
+    <!-- direction left · cards grid -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">direction left · cards</p>
+      <lib-stagger-container delay="100" direction="left" easing="bounce">
+        <div style="display:flex;gap:var(--lib-space-md);">
+          ${(['渋い', '形', '侘び', '寂び'] as const).map((k, i) => html`
+            <div style="flex:1;padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);text-align:center;">
+              <div style="font-family:var(--lib-font-display);font-size:var(--text-xl);font-weight:300;color:var(--text-primary);margin-bottom:var(--lib-space-xs);">${k}</div>
+              <div style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);">0${i + 1}</div>
+            </div>
+          `)}
+        </div>
+      </lib-stagger-container>
+    </div>
+
+    <!-- direction fade -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">direction fade · delay 150</p>
+      <lib-stagger-container delay="150" direction="fade">
+        ${['Design System · @shibui/ui', 'Lit · Web Components · TypeScript', 'Katachi · 6 aesthetic contexts'].map(txt => html`
+          <div style="height:48px;margin-bottom:var(--lib-space-xs);display:flex;align-items:center;padding:0 var(--lib-space-md);background:var(--bg-surface);border:1px solid var(--border-subtle);font-family:var(--lib-font-mono);font-size:var(--text-xs);color:var(--text-secondary);">${txt}</div>
+        `)}
+      </lib-stagger-container>
+    </div>
+
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

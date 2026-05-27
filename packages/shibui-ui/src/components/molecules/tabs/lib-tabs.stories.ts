@@ -588,16 +588,46 @@ tabs?.addEventListener('ui-lib-tab-close', (e) => {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
-    <lib-tabs active="t1"
+  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-xl);">
+    <lib-tabs variant="underline" active="t1"
       .items="${[
         { id: 't1', label: 'Diseño' },
         { id: 't2', label: 'Tokens' },
-        { id: 't3', label: 'Código' },
+        { id: 't3', label: 'Código', dirty: true },
+        { id: 't4', label: 'Issues', disabled: true },
       ]}">
       <div slot="t1" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Sistema de diseño.</div>
       <div slot="t2" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Tokens semánticos.</div>
       <div slot="t3" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Implementación Lit.</div>
+      <div slot="t4"></div>
+    </lib-tabs>
+    <lib-tabs variant="pill" active="p1"
+      .items="${[
+        { id: 'p1', label: 'Día' },
+        { id: 'p2', label: 'Semana' },
+        { id: 'p3', label: 'Mes' },
+        { id: 'p4', label: 'Año' },
+      ]}">
+      <div slot="p1" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Vista diaria.</div>
+      <div slot="p2"></div><div slot="p3"></div><div slot="p4"></div>
+    </lib-tabs>
+    <lib-tabs variant="card" active="c1"
+      .items="${[
+        { id: 'c1', label: 'HTML' },
+        { id: 'c2', label: 'CSS' },
+        { id: 'c3', label: 'JS' },
+      ]}">
+      <div slot="c1" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Estructura HTML.</div>
+      <div slot="c2"></div><div slot="c3"></div>
+    </lib-tabs>
+    <lib-tabs variant="outline" full active="o1"
+      .items="${[
+        { id: 'o1', label: 'Vista' },
+        { id: 'o2', label: 'Editar' },
+        { id: 'o3', label: 'Historial' },
+      ]}">
+      <div slot="o1" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Panel de vista.</div>
+      <div slot="o2"></div><div slot="o3"></div>
     </lib-tabs>
   </div>
 `);

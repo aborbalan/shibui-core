@@ -56,11 +56,22 @@ export const InheritanceDemo: StoryObj = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="position:relative;padding:40px 24px;background:var(--bg-elevated);border:1px solid var(--border-subtle);cursor:pointer;overflow:hidden;text-align:center;user-select:none;">
-    <span style="font-family:var(--lib-font-mono);font-size:11px;letter-spacing:.15em;color:var(--text-muted);">
-      PULSA PARA ONDAS
-    </span>
-    <lib-ripple></lib-ripple>
+  <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-md);padding:var(--lib-space-lg);">
+    <!-- Default — hereda color de texto -->
+    <div style="position:relative;padding:var(--lib-space-lg) var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);cursor:pointer;overflow:hidden;text-align:center;user-select:none;flex:1;min-width:120px;">
+      <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;color:var(--text-muted);">DEFAULT</span>
+      <lib-ripple></lib-ripple>
+    </div>
+    <!-- Kaki accent -->
+    <div style="position:relative;padding:var(--lib-space-lg) var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);cursor:pointer;overflow:hidden;text-align:center;user-select:none;flex:1;min-width:120px;">
+      <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;color:var(--color-kaki-500);">KAKI</span>
+      <lib-ripple style="--lib-ripple-color:var(--color-kaki-400)"></lib-ripple>
+    </div>
+    <!-- Celadon accent -->
+    <div style="position:relative;padding:var(--lib-space-lg) var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);cursor:pointer;overflow:hidden;text-align:center;user-select:none;flex:1;min-width:120px;">
+      <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;color:var(--color-celadon-500);">CELADÓN</span>
+      <lib-ripple style="--lib-ripple-color:var(--color-celadon-400)"></lib-ripple>
+    </div>
   </div>
 `);
 

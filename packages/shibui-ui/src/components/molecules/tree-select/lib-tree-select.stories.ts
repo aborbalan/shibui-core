@@ -1,4 +1,4 @@
-﻿import { html, TemplateResult } from 'lit';
+import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 
 // ✅ Side-effect import — ejecuta @customElement('lib-tree-select')
@@ -143,7 +143,6 @@ type Story = StoryObj;
    PLAYGROUND
 ───────────────────────────────────────────────────────────── */
 export const Playground: Story = {
-  name: 'Playground .',
   args: {
     multi:       true,
     inline:      false,
@@ -362,16 +361,55 @@ export const ProgrammaticControl: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-tree-select
-      .nodes="${[
-        { id: '1', label: 'Wabi-Sabi', children: [
-          { id: '1.1', label: 'Wabi' },
-          { id: '1.2', label: 'Sabi' },
-        ]},
-        { id: '2', label: 'Kintsugi' },
-      ]}"
-    ></lib-tree-select>
+  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;gap:var(--lib-space-lg);align-items:flex-start;flex-wrap:wrap;">
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
+      <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);">Single dropdown</span>
+      <lib-tree-select
+        style="width:220px;"
+        placeholder="Seleccionar…"
+        .nodes="${[
+          { id: '1', label: 'Wabi-Sabi', children: [
+            { id: '1.1', label: 'Wabi' },
+            { id: '1.2', label: 'Sabi' },
+          ]},
+          { id: '2', label: 'Kintsugi' },
+          { id: '3', label: 'Shizen', children: [
+            { id: '3.1', label: 'Naturaleza' },
+            { id: '3.2', label: 'Fluir' },
+          ]},
+        ]}"
+      ></lib-tree-select>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
+      <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);">Multi inline</span>
+      <lib-tree-select
+        style="width:220px;"
+        multi
+        inline
+        placeholder="Filtrar…"
+        .nodes="${[
+          { id: 'c', label: 'Color', children: [
+            { id: 'washi',   label: 'Washi' },
+            { id: 'kaki',    label: 'Kaki' },
+            { id: 'celadon', label: 'Celadón' },
+          ]},
+          { id: 't', label: 'Tipografía', children: [
+            { id: 'display', label: 'Display' },
+            { id: 'body',    label: 'Body' },
+          ]},
+        ]}"
+      ></lib-tree-select>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
+      <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);">Disabled</span>
+      <lib-tree-select
+        style="width:180px;"
+        multi
+        disabled
+        placeholder="Deshabilitado"
+        .nodes="${[{ id: '1', label: 'Wabi-Sabi' }]}"
+      ></lib-tree-select>
+    </div>
   </div>
 `);
 

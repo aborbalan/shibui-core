@@ -278,10 +278,31 @@ export const PatternAppLayout: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-skeleton width="80%" height="14px"></lib-skeleton>
-    <lib-skeleton width="60%" height="14px"></lib-skeleton>
-    <lib-skeleton width="40%" height="14px"></lib-skeleton>
+  <div style="display:flex;gap:var(--lib-space-lg);padding:var(--lib-space-lg);flex-wrap:wrap;align-items:flex-start;">
+    <!-- Article card skeleton -->
+    <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);padding:var(--lib-space-md);display:flex;flex-direction:column;gap:var(--lib-space-sm);max-width:240px;flex:1;min-width:180px;">
+      <lib-skeleton shape="img" width="100%" height="80px"></lib-skeleton>
+      <lib-skeleton shape="badge" width="56px"></lib-skeleton>
+      <lib-skeleton shape="title" width="80%"></lib-skeleton>
+      <lib-skeleton shape="line" width="100%"></lib-skeleton>
+      <lib-skeleton shape="line" width="70%"></lib-skeleton>
+      <lib-skeleton shape="btn" width="100%"></lib-skeleton>
+    </div>
+    <!-- Primitives -->
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);flex:1;min-width:160px;">
+      <lib-skeleton shape="h1" width="70%"></lib-skeleton>
+      <lib-skeleton shape="title" width="55%"></lib-skeleton>
+      <lib-skeleton shape="line" width="100%"></lib-skeleton>
+      <lib-skeleton shape="line" width="85%"></lib-skeleton>
+      <div style="display:flex;gap:var(--lib-space-sm);align-items:center;margin-top:var(--lib-space-xs);">
+        <lib-skeleton shape="avatar" width="32px" height="32px"></lib-skeleton>
+        <lib-skeleton shape="avatar" width="40px" height="40px"></lib-skeleton>
+        <lib-skeleton shape="icon" width="20px" height="20px"></lib-skeleton>
+        <lib-skeleton shape="badge" width="48px"></lib-skeleton>
+        <lib-skeleton shape="pill" width="64px"></lib-skeleton>
+      </div>
+      <lib-skeleton shape="btn" width="96px"></lib-skeleton>
+    </div>
   </div>
 `);
 

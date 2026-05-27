@@ -188,23 +188,47 @@ export const NoGrid: Story = {
    KATACHI — gráfica en cada contexto estético
 ───────────────────────────────────────────────────────────── */
 const _katachi = createKatachiStories<ScatterChartArgs>(() => html`
-  <div
-    style="
-      width: 520px;
-      padding: var(--lib-space-lg);
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-    "
-  >
-    <lib-scatter-chart
-      .series=${[SERIES_A, SERIES_B]}
-      x-label="Eje X"
-      y-label="Eje Y"
-      show-grid
-      show-legend
-      .height=${280}
-    ></lib-scatter-chart>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-lg);width:520px;padding:var(--lib-space-lg);background:var(--bg-surface);border:1px solid var(--border-subtle);">
+
+    <!-- 2 series · con rejilla + leyenda -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">2 series · rejilla · leyenda</p>
+      <lib-scatter-chart
+        .series=${[SERIES_A, SERIES_B]}
+        x-label="Variable X"
+        y-label="Variable Y"
+        show-grid
+        show-legend
+        .height=${220}
+      ></lib-scatter-chart>
+    </div>
+
+    <!-- 3 series · sin rejilla -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">3 series · sin rejilla</p>
+      <lib-scatter-chart
+        .series=${[SERIES_A, SERIES_B, SERIES_C]}
+        x-label="Eje X"
+        y-label="Eje Y"
+        show-legend
+        .dotRadius=${4}
+        .height=${180}
+      ></lib-scatter-chart>
+    </div>
+
+    <!-- Etiquetas por punto -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">puntos etiquetados</p>
+      <lib-scatter-chart
+        .series=${[SERIES_LABELED]}
+        x-label="Longitud"
+        y-label="Latitud"
+        show-grid
+        .dotRadius=${7}
+        .height=${160}
+      ></lib-scatter-chart>
+    </div>
+
   </div>
 `);
 

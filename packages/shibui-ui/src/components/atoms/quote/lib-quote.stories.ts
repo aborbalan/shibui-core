@@ -184,11 +184,22 @@ export const InContext: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="max-width:480px;">
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-xl);padding:var(--lib-space-lg);">
     <lib-quote
+      size="sm"
       text="Lo bello no se anuncia."
       accent="Se descubre con pausa."
       cite="— Principio Shibui · 渋い"
+    ></lib-quote>
+    <lib-quote
+      size="md"
+      text="La imperfección como virtud."
+      cite="— Wabi-sabi"
+    ></lib-quote>
+    <lib-quote
+      size="lg"
+      text="El silencio entre notas."
+      accent="El espacio no es ausencia — es presencia."
     ></lib-quote>
   </div>
 `);

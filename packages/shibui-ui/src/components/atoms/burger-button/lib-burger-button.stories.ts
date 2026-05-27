@@ -273,11 +273,26 @@ export const InContext: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-xl);display:flex;align-items:center;gap:var(--lib-space-xl);flex-wrap:wrap;">
-    <lib-burger variant="ink" size="md"></lib-burger>
-    <lib-burger variant="kanji" size="md"></lib-burger>
-    <lib-burger variant="washi" size="md"></lib-burger>
-    <lib-burger variant="framed" size="md"></lib-burger>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);">
+    <div style="display:flex;align-items:center;gap:var(--lib-space-lg);flex-wrap:wrap;">
+      <lib-burger variant="ink"     size="md"></lib-burger>
+      <lib-burger variant="kanji"   size="md"></lib-burger>
+      <lib-burger variant="washi"   size="md"></lib-burger>
+      <lib-burger variant="framed"  size="md"></lib-burger>
+      <lib-burger variant="glitch"  size="md"></lib-burger>
+    </div>
+    <div style="display:flex;align-items:center;gap:var(--lib-space-lg);flex-wrap:wrap;">
+      <lib-burger variant="ink"     size="md" open></lib-burger>
+      <lib-burger variant="kanji"   size="md" open></lib-burger>
+      <lib-burger variant="washi"   size="md" open></lib-burger>
+      <lib-burger variant="framed"  size="md" open></lib-burger>
+      <lib-burger variant="glitch"  size="md" open></lib-burger>
+    </div>
+    <div style="display:flex;align-items:center;gap:var(--lib-space-lg);">
+      <lib-burger variant="ink" size="sm"></lib-burger>
+      <lib-burger variant="ink" size="md"></lib-burger>
+      <lib-burger variant="ink" size="lg"></lib-burger>
+    </div>
   </div>
 `);
 

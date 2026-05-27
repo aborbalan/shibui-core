@@ -209,9 +209,121 @@ Para garantizar IntelliSense correcto en las apps consumidoras:
 
 ## Storybook
 
+### Configuración base
+
 - `.storybook/preview.ts` inyecta los tokens globales
 - Mapeo de componentes mediante **Args** para pruebas de estado dinámicas (variant, size, disabled)
 - Fondo de las stories configurado con gradiente oscuro para que los efectos glass sean visibles
+
+---
+
+### Taxonomía macro — tres nodos raíz
+
+El sidebar de Storybook se organiza en tres nodos de primer nivel que reflejan en qué plataforma(s) aplica cada componente. El `title` de cada story file sigue el patrón `<Plataforma>/<Categoría>/<Componente>`.
+
+#### `Universal/` — componentes compartidos por web y escritorio
+
+| Categoría | Ejemplos |
+|---|---|
+| `Foundations/` | Color Palette, Typography, Spacing, Katachi · System |
+| `Actions/` | Button, Button Liquid, Burger, Close Button, Copy Button, Magnetic, Chip |
+| `Content/` | Card, Avatar, Badge, Icon, Code Block, Quote, Text List, Timeline… |
+| `Forms/` | Input, Select, Checkbox, Radio, Switch, Rating, Color Picker, File Uploader… |
+| `Feedback/` | Spinner, Skeleton, Toast Manager, Progress, Status Dot, Alert, Empty State… |
+| `Navigation/` | Sidebar, Tabs, Breadcrumb, Dropdown, Stepper, Pagination… |
+| `Layout/` | Accordion, Bento Grid, Aspect Ratio, Header, Footer… |
+| `Data/` | Counter, Data Table |
+| `Charts/` | Bar Chart, Scatter Chart, Scatter Chart 3D |
+| `Overlay/` | Dialog, Drawer, Modal, Tooltip |
+| `Utilities/` | Background, Canvas, Visually Hidden |
+
+#### `Web/` — comportamiento exclusivo de browser
+
+| Categoría | Componentes |
+|---|---|
+| `Motion/` | Carousel, Cursor Follower, Horizontal Scroll Section, Parallax Container, Parallax Text Stack, Ripple, Stagger |
+
+Estos componentes dependen de APIs de browser (IntersectionObserver, scroll-linked animations, cursor tracking) que no tienen sentido en un gadget de escritorio nativo.
+
+#### `Desktop/` — exclusivos de la app Tauri
+
+| Categoría | Componentes |
+|---|---|
+| `Layout/` | Gadget Frame |
+| `Editor/` | Editor Toolbar, Text Editor |
+| `Data/` | Metric Bar |
+
+---
+
+### Estructura canónica de cada story file
+
+Todos los archivos `lib-[nombre].stories.ts` siguen **obligatoriamente** este orden de cuatro secciones:
+
+```
+/* ── 1. Playground ──────────────────────────────────────── */
+// Siempre primero. Todos los props controlables via args/controls.
+// Defaults sensatos. Sin render() propio — usa el render del meta.
+export const Playground: Story = { args: { … } };
+
+/* ── 2. API stories ──────────────────────────────────────── */
+// Una story por dimensión de la API del componente:
+//   Variants   — grid de todas las variantes semánticas
+//   Sizes      — si el componente tiene prop size
+//   States     — disabled, error, loading, indeterminate…
+//   Composition — uso de slots, composición con otros componentes
+//   [Efecto]   — GlassEffect, SpotlightEffect, etc. si aplica
+// Usar tokens para todos los valores en inline styles:
+//   gap/padding → var(--lib-space-xs/sm/md/lg/xl)
+//   colores     → var(--text-primary), var(--bg-elevated), etc.
+export const Variants: Story = { render: () => html`…` };
+export const Sizes:    Story = { render: () => html`…` };
+// …
+
+/* ── 3. Katachi · 形 ──────────────────────────────────────── */
+// Las 6 stories estándar generadas con el helper.
+// El renderContent DEBE mostrar el espectro completo del componente:
+// todos los variants principales + tamaños + estados relevantes.
+// No mostrar solo una instancia mínima — estas stories son el
+// baseline de regresión visual para los 6 contextos estéticos.
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
+
+const _katachi = createKatachiStories<MyArgs>(() => html`
+  // ← contenido completo: todos los variants, no solo el default
+`);
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ── 4. Tests ────────────────────────────────────────────── */
+// Nombre: 'Test · [qué se verifica]'
+// Siempre con tags: ['test'] y play: async function.
+export const TestAlgo: Story = {
+  name: 'Test · descripción de lo que se verifica',
+  tags: ['test'],
+  play: async ({ canvasElement }): Promise<void> => { … },
+};
+```
+
+#### Reglas de naming en stories
+
+- El `export const` es la fuente de verdad del nombre visible — Storybook lo convierte automáticamente (`AllVariants` → "All Variants"). Añadir `name:` solo cuando el nombre legible DIFIERE del que generaría el export (e.g., `name: 'Glass — Efecto Agua'` en `export const GlassEffect`).
+- No usar puntos finales en los nombres (`'All Variants.'` → `'All Variants'`).
+- Los Tests usan siempre el prefijo `Test ·` en el `name:`.
+
+#### Espaciado en inline styles de stories
+
+Usar siempre tokens en lugar de valores px:
+
+| Valor | Token |
+|---|---|
+| 4px | `var(--lib-space-xs)` |
+| 8px | `var(--lib-space-sm)` |
+| 16px | `var(--lib-space-md)` |
+| 24px | `var(--lib-space-lg)` |
+| 32px | `var(--lib-space-xl)` |
 
 ---
 
@@ -220,7 +332,9 @@ Para garantizar IntelliSense correcto en las apps consumidoras:
 - Cuando se pida un componente nuevo, seguir siempre la estructura de 5 ficheros
 - Pedir el fichero del componente antes de proponer cambios sobre uno existente
 - Usar los tokens `--lib-*` para todos los valores visuales, nunca hardcodear colores ni espaciados
-- Proponer siempre la Storybook story junto al componente
+- Proponer siempre la Storybook story junto al componente siguiendo la estructura canónica de cuatro secciones (Playground → API → Katachi → Tests)
+- Asignar el `title` correcto según la plataforma: `Universal/<Cat>/<Nombre>`, `Web/Motion/<Nombre>` o `Desktop/<Cat>/<Nombre>`
+- El katachi `renderContent` debe mostrar el espectro completo del componente (todos los variants + tamaños + estados), no una instancia mínima
 - Los efectos glass y spotlight son opcionales — no añadirlos salvo que se pida explícitamente
 - Los tipos siempre desde `src/models/`, nunca inline
 - **Katachi-aware**: si un componente nuevo es `semantic` (depende del look), consume tokens semánticos (`--bg-elevated`, `--text-primary`, `--accent-primary`…) en vez de la paleta primitiva. Añadirlo a `styles/effects-x-surfaces.md` con su coverage

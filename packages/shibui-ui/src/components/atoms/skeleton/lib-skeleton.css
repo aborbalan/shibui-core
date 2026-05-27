@@ -222,7 +222,7 @@
      elecciones explícitas del consumidor.
      ─────────────────────────────────────────────────────────── */
 
-  :host-context([data-katachi="celadon"]):not([surface="dark"]):not([surface="kaki"]):not([surface="celadon"]) .sk {
+  :host-context([data-katachi="celadon"]):not([surface="dark"], [surface="kaki"], [surface="celadon"]) .sk {
     background: linear-gradient(
       90deg,
       oklch(22% 0.030 175deg) 25%,
@@ -233,18 +233,18 @@
     animation: sk-shimmer 1.8s ease-in-out infinite;
   }
 
-  :host-context([data-katachi="celadon"]):not([surface="dark"]):not([surface="kaki"]):not([surface="celadon"])[animation="wave"] .sk {
+  :host-context([data-katachi="celadon"]):not([surface="dark"], [surface="kaki"], [surface="celadon"])[animation="wave"] .sk {
     animation-duration: 2.4s;
     animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
   }
 
-  :host-context([data-katachi="celadon"]):not([surface="dark"]):not([surface="kaki"]):not([surface="celadon"])[animation="pulse"] .sk {
+  :host-context([data-katachi="celadon"]):not([surface="dark"], [surface="kaki"], [surface="celadon"])[animation="pulse"] .sk {
     background: oklch(22% 0.030 175deg);
     animation: sk-pulse 1.8s ease-in-out infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :host-context([data-katachi="celadon"]):not([surface="dark"]):not([surface="kaki"]):not([surface="celadon"]) .sk {
+    :host-context([data-katachi="celadon"]):not([surface="dark"], [surface="kaki"], [surface="celadon"]) .sk {
       background: oklch(22% 0.030 175deg);
       background-size: unset;
     }

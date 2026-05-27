@@ -458,11 +458,33 @@ export const KintsugiDark: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-reading-progress
-    tone="celadon"
-    variant="bar"
-    style="position:static;width:100%;height:4px;"
-  ></lib-reading-progress>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <!-- Bar — kaki -->
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">bar · kaki · 65%</span>
+      <div style="position:relative;overflow:hidden;height:3px;background:var(--bg-surface);width:100%;">
+        <lib-reading-progress variant="bar" tone="kaki" style="position:absolute;bottom:0;left:0;width:65%;"></lib-reading-progress>
+      </div>
+    </div>
+    <!-- Bar — celadon -->
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">bar · celadon · 40%</span>
+      <div style="position:relative;overflow:hidden;height:3px;background:var(--bg-surface);width:100%;">
+        <lib-reading-progress variant="bar" tone="celadon" style="position:absolute;bottom:0;left:0;width:40%;"></lib-reading-progress>
+      </div>
+    </div>
+    <!-- Dots + Ring -->
+    <div style="display:flex;align-items:center;gap:var(--lib-space-lg);flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:var(--lib-space-sm);">
+        <lib-reading-progress variant="dots" tone="kaki" dots-count="7" style="--rp-progress:65%"></lib-reading-progress>
+        <span style="font-family:monospace;font-size:10px;color:var(--text-muted);">dots · 65%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:var(--lib-space-sm);">
+        <lib-reading-progress variant="ring" tone="kaki" ring-size="32" style="--rp-progress:65%"></lib-reading-progress>
+        <span style="font-family:monospace;font-size:10px;color:var(--text-muted);">ring · 65%</span>
+      </div>
+    </div>
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

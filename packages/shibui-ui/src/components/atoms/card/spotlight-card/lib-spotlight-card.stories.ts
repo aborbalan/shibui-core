@@ -1,4 +1,4 @@
-﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-spotlight-card.component';
 import type { LibSpotlightCard } from './lib-spotlight-card.component';
@@ -79,7 +79,6 @@ export const Playground: Story = {
 
 /* ── Las tres variantes de spotlight ── */
 export const SpotlightVariants: Story = {
-  name: 'Spotlight Variants .',
   render: (): TemplateResult => stage(3, html`
     <lib-spotlight-card spotlight="kaki">
       ${cardInner(
@@ -193,12 +192,26 @@ export const ContextFeatureGrid: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-spotlight-card style="width:320px;">
-    <div style="padding:var(--lib-space-lg);">
-      <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">Spotlight · Katachi</p>
-      <p style="font-family:var(--lib-font-body);font-size:var(--text-sm);color:var(--text-primary);line-height:1.6;">Mueve el cursor para ver el foco reactivo en este contexto.</p>
-    </div>
-  </lib-spotlight-card>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--lib-space-sm);max-width:600px;">
+    <lib-spotlight-card spotlight="kaki">
+      <div style="padding:var(--lib-space-md);">
+        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">kaki</p>
+        <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Foco cálido orgánico.</p>
+      </div>
+    </lib-spotlight-card>
+    <lib-spotlight-card spotlight="water">
+      <div style="padding:var(--lib-space-md);">
+        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">water</p>
+        <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Foco azul sereno.</p>
+      </div>
+    </lib-spotlight-card>
+    <lib-spotlight-card spotlight="white" kintsugi>
+      <div style="padding:var(--lib-space-md);">
+        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">white · kintsugi</p>
+        <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Foco neutro + hilo de oro.</p>
+      </div>
+    </lib-spotlight-card>
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

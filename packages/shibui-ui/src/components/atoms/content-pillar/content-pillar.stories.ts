@@ -129,11 +129,21 @@ export const RichContent: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="max-width:360px;">
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-lg);max-width:360px;">
     <lib-content-pillar
-      kanji="渋"
-      label="Shibui · Katachi"
-      description="Adaptación al contexto estético ambient sin CSS adicional."
+      kanji="侘"
+      label="Wabi · Imperfección"
+      description="La belleza en lo incompleto e impermanente. Los componentes embracen el estado de transición."
+    ></lib-content-pillar>
+    <lib-content-pillar
+      kanji="金"
+      label="Kintsugi · Cicatrices de oro"
+      description="Reparar con oro en lugar de ocultar. La variante kintsugi convierte los bordes en el elemento más bello."
+    ></lib-content-pillar>
+    <lib-content-pillar
+      kanji="間"
+      label="Ma · El espacio"
+      description="El espacio vacío no es ausencia — es presencia. Tokens calibrados para respiración visual intencional."
     ></lib-content-pillar>
   </div>
 `);
