@@ -19,18 +19,22 @@ pub fn list_dir(path: &str) -> Result<Vec<FsEntry>, String> {
 
     let mut entries: Vec<FsEntry> = read
         .filter_map(|e| e.ok())
-        .filter_map(|entry| {
+        .map(|entry| {
             let p = entry.path();
             let is_dir = p.is_dir();
-            let size = if is_dir { None } else { p.metadata().ok().map(|m| m.len()) };
+            let size = if is_dir {
+                None
+            } else {
+                p.metadata().ok().map(|m| m.len())
+            };
 
-            Some(FsEntry {
+            FsEntry {
                 name: entry.file_name().to_string_lossy().into_owned(),
                 path: p.to_string_lossy().into_owned(),
                 is_dir,
                 extension: p.extension().map(|e| e.to_string_lossy().into_owned()),
                 size,
-            })
+            }
         })
         .collect();
 

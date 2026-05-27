@@ -60,9 +60,12 @@ export class LibSkeleton extends LitElement {
 
   /**
    * Superficie de color.
-   * - light : washi-200 → washi-100 (default)
-   * - dark  : washi-800 → washi-700
-   * - kaki  : kaki-200  → kaki-100
+   * - light   : washi-200 → washi-100 (default)
+   * - dark    : washi-800 → washi-700
+   * - kaki    : kaki-200  → kaki-100
+   * - celadon : jade oscuro  oklch(22%→32% / 175deg)
+   *   También se activa automáticamente cuando el ancestro tiene
+   *   data-katachi="celadon" sin necesidad de pasar este prop.
    */
   @property({ type: String, reflect: true })
   surface: LibSkeletonSurface = 'light';
