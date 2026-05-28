@@ -1,5 +1,27 @@
 :host, :root {
   /* ======================================================
+     EFFECT ACTIVATION TOKENS
+     ──────────────────────────────────────────────────────
+     Defaults globales: todos los efectos están apagados.
+     Cada katachi en _katachi.css activa los que le corresponden.
+     Los componentes leen estos tokens via var() en su CSS
+     interno — sin necesitar variant props palette-named.
+
+     Cadena de herencia:
+       _effects.css (:root)  → default global apagado
+       _katachi.css ([data-katachi="X"]) → activa los del katachi
+       Shadow DOM interno     → hereda el valor del ancestro
+       component::before/after → animation-play-state/opacity
+     ====================================================== */
+  --lib-effect-seam-play:     paused; /* @keyframes kintsugi-seam */
+  --lib-effect-seam-opacity:  0;      /* opacidad del seam overlay */
+  --lib-effect-glitch-play:   paused; /* @keyframes glitch-drift   */
+  --lib-effect-scanlines:     0;      /* opacidad de scanlines CRT */
+  --lib-effect-crt-vignette:  0;      /* intensidad del vignette   */
+  --lib-effect-brutal-shadow: none;   /* valor del offset shadow   */
+  --lib-effect-glass-blur:    0px;    /* backdrop-filter blur      */
+
+  /* ======================================================
      GLASS SYSTEM (Efecto Enso)
      ====================================================== */
 
