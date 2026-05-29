@@ -132,6 +132,8 @@ export * from './components/[atoms|molecules|organisms]/lib-[nombre]/index';
 - Los tokens `--lib-*` se usan para todos los valores visuales, nunca se hardcodean colores ni espaciados
 - Los componentes con efectos glass requieren: `overflow: hidden` + `backdrop-filter` + `::before` con `--lib-glass-shine` + `z-index` en el contenido
 - **CSS nesting nativo**: usar `&` para agrupar `:hover`, `::after`, `::before`, `@media`, `:active` dentro del bloque de variante `:host([attr]) .clase`. Los compound `:host([attrA][attrB])` se mantienen planos. Ver convenciones completas en [`docs/styles/css-nesting.md`](./docs/styles/css-nesting.md)
+- **Efectos katachi**: siempre declarados en el componente pero silenciados por default. Los pseudo-elementos leen `--lib-effect-*` vía `var()` y se activan solo cuando el katachi ancestro los enciende (`animation-play-state: var(--lib-effect-seam-play, paused)`; `opacity: var(--lib-effect-topbar-opacity, 0)`)
+- **Tokens de token**: los ficheros `_*.css` usan únicamente `:root { }` — NUNCA `:host, :root { }`. El selector `:host` en un `adoptedStyleSheet` bloquea la herencia desde `[data-katachi]` al fijar valores directamente en el shadow host
 
 **Eventos:**
 - Siguen el patrón `ui-lib-[acción]` con `bubbles: true, composed: true`
@@ -164,27 +166,31 @@ Paleta washi, kaki, celadón. Escala tipográfica, espaciado 4pt, sombras, radio
 
 ---
 
-## Sistema Katachi (形)
+## Sistema Katachi (形) — identidades selladas
 
-Seis contextos estéticos que reescriben los tokens semánticos manteniendo los nombres. Se activan poniendo `data-katachi="<id>"` en cualquier ancestro:
+Seis identidades visuales selladas. Los efectos se activan **automáticamente** por contexto
+(`data-katachi="x"` en cualquier ancestro) sin necesidad de props adicionales en los componentes.
 
-| ID | Estética | Coverage |
-|---|---|---|
-| `wabi` | Imperfección serena — washi, ink, espacios amplios | tokens semánticos |
-| `kintsugi` | Dark + acento dorado en grietas | tokens semánticos + efecto kintsugi-border |
-| `sabi` | Patina envejecida, sombras brutales | tokens semánticos |
-| `terminal` | Mono + glitch + verde fósforo | tokens semánticos + lib-text-glitch |
-| `shizen` | Naturaleza — verdes botánicos, formas orgánicas | tokens semánticos |
-| `celadon` | Cerámica coreana — celadón frío, vidrioso | tokens semánticos |
+| ID | Familia | Concepto | Efecto signature |
+|---|---|---|---|
+| `shizen` | light | Natural, base, zero-point | ninguno |
+| `celadon` | light | Jade pálido, frío (≠ dark — es la alternativa cool a shizen) | glaze cerámico sutil |
+| `sabi` | light | Papel envejecido, handcraft | brutal offset shadow |
+| `kintsugi` | dark | Reparado con oro (único dark-first) | seam dorada animada + anillo |
+| `wabi` | dark | Kuroi · oscuridad pura, el anti-kintsugi | ninguno (silencio) |
+| `terminal` | dark | CRT retro, phosphor verde | scanlines + glitch-drift |
+
+**Mecanismo**: los tokens `--lib-effect-*` en `_effects.css` tienen defaults apagados en `:root`.
+Cada bloque `[data-katachi="x"]` en `_katachi.css` activa los que le corresponden.
+Las CSS custom properties atraviesan Shadow DOM por herencia — solo funciona si los ficheros
+de tokens NO usan `:host, :root { }` (solo `:root { }`).
+
+**Wrapper DX**: `<lib-canvas katachi="kintsugi">…</lib-canvas>` aplica el atributo con tipado TS.
 
 **Taxonomía de cobertura** (en `styles/effects-x-surfaces.md`):
-- 🟢 **semantic** (~23 comp.) — consume tokens semánticos, cambia visualmente con cada katachi
-- 🔵 **marker** (~50 comp.) — neutral estructural, no necesita override
-- ⚪ **effect** (~4 comp.) — efectos puros (parallax, stagger, cursor-follower), agnósticos
-
-**Wrapper DX**: `<lib-canvas katachi="kintsugi">…</lib-canvas>` aplica el atributo + un fondo de fondo apropiado. Útil en Storybook y previews.
-
-Verificación visual de las 6 propagaciones: kitchen-sink en cada app consumidora (`/admin/kitchen-sink` en React/Angular/Svelte).
+- 🟢 **semantic** — consume tokens semánticos, cambia visualmente con cada katachi
+- 🔵 **marker** — neutral estructural; hereda pero no necesita override explícito
+- ⚪ **effect** — efectos puros (parallax, cursor-follower), agnósticos
 
 ---
 
@@ -337,6 +343,9 @@ Usar siempre tokens en lugar de valores px:
 - El katachi `renderContent` debe mostrar el espectro completo del componente (todos los variants + tamaños + estados), no una instancia mínima
 - Los efectos glass y spotlight son opcionales — no añadirlos salvo que se pida explícitamente
 - Los tipos siempre desde `src/models/`, nunca inline
-- **Katachi-aware**: si un componente nuevo es `semantic` (depende del look), consume tokens semánticos (`--bg-elevated`, `--text-primary`, `--accent-primary`…) en vez de la paleta primitiva. Añadirlo a `styles/effects-x-surfaces.md` con su coverage
-- Si añades un componente nuevo, actualizar también los `catalog.ts` de los kitchen-sinks (React/Angular/Svelte) con su slug + coverage
+- **Katachi-aware**: si un componente nuevo es `semantic`, consumir tokens semánticos (`--bg-elevated`, `--text-primary`…) en vez de la paleta primitiva. Los efectos de katachi se activan automáticamente via `--lib-effect-*` — no hace falta leer `--katachi-id`
+- **Sin variantes palette-named**: los componentes no tienen `variant="kintsugi"`, `variant="glitch"`, `color="celadon"`, etc. Solo roles semánticos (`default`, `inverse`, `accent`, `featured`, `info`, `strong`…). Si te piden añadir una variante con nombre de paleta o katachi, proponer el equivalente semántico
+- **Efectos katachi en componentes nuevos**: declarar los pseudo-elementos siempre, controlados por `--lib-effect-*` (ver patrón en `lib-card.css`). No activar efectos por ID de katachi
+- **Selectors de token files**: solo `:root { }`, nunca `:host, :root { }` — rompe la herencia de custom properties a través de Shadow DOM
+- Si añades un componente nuevo, actualizar también los `catalog.ts` de los kitchen-sinks (React/Angular/Svelte) con su slug + coverage, y `styles/effects-x-surfaces.md` con la coverage real
 - Si hay duda sobre convenciones, preguntar antes de asumir
