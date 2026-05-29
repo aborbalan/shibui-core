@@ -20,7 +20,7 @@ import type {
  * @prop input-type   — 'checkbox' | 'radio'
  * @prop name         — Nombre del grupo (requerido en radio)
  * @prop value        — Valor del input
- * @prop color        — 'kaki' | 'celadon'
+ * @prop color        — 'accent' | 'info'
  * @prop layout       — 'vertical' | 'horizontal' | 'compact'
  * @prop card-title   — Título (alternativa a slot)
  * @prop desc         — Descripción (alternativa a slot)
@@ -62,7 +62,7 @@ export class LibCheckboxCard extends LitElement {
   value = '';
 
   @property({ type: String, reflect: true })
-  color: CheckboxCardColor = 'kaki';
+  color: CheckboxCardColor = 'accent';
 
   @property({ type: String, reflect: true })
   layout: CheckboxCardLayout = 'vertical';
