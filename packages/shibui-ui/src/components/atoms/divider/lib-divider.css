@@ -129,14 +129,14 @@
   }
 
   /* ============================================================
-     COLORES — kaki · celadon
+     COLORES — accent · info
      ============================================================ */
-  :host([color="kaki"]) .dv__line {
+  :host([color="accent"]) .dv__line {
     background: var(--color-kaki-500);
     height: 2px;
   }
 
-  :host([color="celadon"]) .dv__line {
+  :host([color="info"]) .dv__line {
     background: var(--color-celadon-500);
     height: 2px;
   }
@@ -170,8 +170,8 @@
   }
 
   /* Ornamentos heredan color del modificador */
-  :host([color="kaki"])    .dv__ornament { background: var(--color-kaki-500); }
-  :host([color="celadon"]) .dv__ornament { background: var(--color-celadon-500); }
+  :host([color="accent"])    .dv__ornament { background: var(--color-kaki-500); }
+  :host([color="info"]) .dv__ornament { background: var(--color-celadon-500); }
 
   /* ============================================================
      LABELS
@@ -211,8 +211,8 @@
     text-transform: none;
   }
 
-  /* Label hereda acento kaki cuando color="kaki" */
-  :host([color="kaki"]) .dv__label--mono {
+  /* Label hereda acento kaki cuando color="accent" */
+  :host([color="accent"]) .dv__label--mono {
     color: var(--color-kaki-500);
   }
 
@@ -226,7 +226,7 @@
        ornaments dot/diamond                   → --border-default  ← fix
        label kanji                             → --text-muted      ← fix
 
-     color="kaki" y color="celadon" son overrides explícitos del
+     color="accent" y color="info" son overrides explícitos del
      desarrollador — se mantienen fijos en su paleta intencional.
      ─────────────────────────────────────────────────────────── */
 

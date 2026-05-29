@@ -30,8 +30,8 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * @example — con ornamento diamond y gradiente
  * <lib-divider style-variant="gradient" ornament="diamond"></lib-divider>
  *
- * @example — kaki con dot
- * <lib-divider color="kaki" ornament="dot"></lib-divider>
+ * @example — accent con dot
+ * <lib-divider color="accent" ornament="dot"></lib-divider>
  *
  * @example — vertical en nav
  * <lib-divider orientation="vertical" style="height:14px"></lib-divider>

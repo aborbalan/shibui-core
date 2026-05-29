@@ -18,7 +18,7 @@ import type { ProgressSize, ProgressTone, ProgressSegment } from './lib-progress
  * @attr value          — Valor actual (0–max). Default 0.
  * @attr max            — Valor máximo. Default 100.
  * @attr size           — xs · sm · md · lg · xl. Default md.
- * @attr tone           — default · kaki · celadon · error. Default default.
+ * @attr tone           — default · accent · info · error. Default default.
  * @attr indeterminate  — Duración desconocida; animación continua.
  * @attr striped        — Relleno con diagonales sutiles.
  * @attr square         — Bordes rectos (radius-sm) en lugar de full.

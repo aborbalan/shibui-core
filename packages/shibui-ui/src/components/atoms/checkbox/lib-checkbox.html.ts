@@ -1,7 +1,7 @@
 import { html, nothing, TemplateResult } from 'lit';
 
 export type LibCheckboxSize    = 'sm' | 'md' | 'lg';
-export type LibCheckboxVariant = 'default' | 'kaki' | 'error';
+export type LibCheckboxVariant = 'default' | 'accent' | 'error';
 
 export interface CheckboxTemplateProps {
   checked: boolean;

@@ -27,7 +27,7 @@ const meta: Meta<LibRadioStoryArgs> = {
     },
     variant: {
       control: 'select',
-      options: ['default', 'kaki', 'error'],
+      options: ['default', 'accent', 'error'],
     },
   },
 
@@ -118,7 +118,7 @@ export const Variants: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
       <lib-radio variant="default" name="v-default" label="Default" sublabel="Fondo washi-900" checked></lib-radio>
-      <lib-radio variant="kaki"    name="v-kaki"    label="Kaki"    sublabel="Fondo kaki-500"  checked></lib-radio>
+      <lib-radio variant="accent"    name="v-accent"  label="Accent"  sublabel="Fondo kaki-500"  checked></lib-radio>
       <lib-radio variant="error"   name="v-error"   label="Error"   sublabel="Borde y label en color-error"></lib-radio>
     </div>
   `,
@@ -179,19 +179,19 @@ export const GroupKaki: Story = {
   render: (): TemplateResult => html`
     <div style="padding:24px; background:#FFFFFF; border:1px solid #E5DDD3; max-width:400px;">
       <p style="font-family:monospace; font-size:11px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:16px;">
-        Variante kaki
+        Variante accent
       </p>
       <div style="display:flex; flex-direction:column; gap:16px;">
-        <lib-radio variant="kaki" name="plan-kaki" value="starter"
+        <lib-radio variant="accent" name="plan-kaki" value="starter"
           label="Starter"
           sublabel="Hasta 3 proyectos activos">
         </lib-radio>
-        <lib-radio variant="kaki" name="plan-kaki" value="pro"
+        <lib-radio variant="accent" name="plan-kaki" value="pro"
           label="Pro"
           sublabel="Proyectos ilimitados"
           checked>
         </lib-radio>
-        <lib-radio variant="kaki" name="plan-kaki" value="enterprise"
+        <lib-radio variant="accent" name="plan-kaki" value="enterprise"
           label="Enterprise"
           sublabel="SSO, SLA garantizado">
         </lib-radio>
@@ -227,7 +227,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
       <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">variants</span>
       <lib-radio name="kt-var1" value="d" variant="default" label="Default" checked></lib-radio>
-      <lib-radio name="kt-var2" value="k" variant="kaki" label="Kaki" checked></lib-radio>
+      <lib-radio name="kt-var2" value="k" variant="accent" label="Accent" checked></lib-radio>
     </div>
   </div>
 `);
