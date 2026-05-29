@@ -1,6 +1,7 @@
 node_modules/
 dist/
 build/
+_katachi-legacy/
 *.d.ts
 commitlint.config.cjs
 !src/**/*.ts

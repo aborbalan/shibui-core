@@ -16,7 +16,7 @@ import type { ChipKind, ChipSize, ChipColor } from './lib-chip.types';
  *
  * @prop kind       — 'static' | 'toggle' | 'input'
  * @prop size       — 'xs' | 'sm' | 'md' | 'lg'
- * @prop color      — 'default' | 'kaki' | 'celadon' | 'error' | 'info' | 'dark'
+ * @prop color      — 'default' | 'accent' | 'info' | 'error' | 'strong'
  * @prop selected   — Estado seleccionado (solo kind=toggle)
  * @prop dot        — Dot de color antes del texto
  * @prop aria-label — Texto accesible del chip

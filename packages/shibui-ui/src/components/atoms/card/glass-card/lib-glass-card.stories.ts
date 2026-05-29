@@ -51,8 +51,8 @@ const meta: Meta<LibGlassCardStoryArgs> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['paper', 'water', 'kaki'],
-      description: 'Tinte de color del cristal',
+      options: ['neutral', 'cool', 'warm'],
+      description: 'Tinte estructural del cristal (neutral=default, cool=blue, warm=organic)',
     },
     intensity: {
       control: 'select',
@@ -74,7 +74,7 @@ type Story = StoryObj<LibGlassCardStoryArgs>;
 /* ── Playground ── */
 export const Playground: Story = {
   args: {
-    variant: 'paper',
+    variant: 'neutral',
     intensity: 'md',
   },
 };
@@ -83,16 +83,16 @@ export const Playground: Story = {
 export const Variants: Story = {
   name: 'Color Variants',
   render: (): TemplateResult => stage(html`
-    <lib-glass-card variant="paper">
-      ${cardContent('--lib-glass-bg', 'Paper Glass', 'Variante neutra. Surface paper al 15% sobre cualquier fondo oscuro.', 'opacity · 0.15')}
+    <lib-glass-card variant="neutral">
+      ${cardContent('--lib-glass-bg', 'Neutral Glass', 'Variante neutra. Surface paper al 15% sobre cualquier fondo oscuro.', 'opacity · 0.15')}
     </lib-glass-card>
 
-    <lib-glass-card variant="water">
-      ${cardContent('--lib-glass-bg-water', 'Water Glass', 'Tinte azul sereno. Para componentes primary o acciones de confirmación.', 'oklch 55% 0.06 210')}
+    <lib-glass-card variant="cool">
+      ${cardContent('--lib-glass-bg-water', 'Cool Glass', 'Tinte azul sereno. Para componentes primary o acciones de confirmación.', 'oklch 55% 0.06 210')}
     </lib-glass-card>
 
-    <lib-glass-card variant="kaki">
-      ${cardContent('--lib-glass-bg-kaki', 'Kaki Glass', 'Tinte orgánico cálido. Para acciones de acento o estados destacados.', 'oklch 45% 0.05 45')}
+    <lib-glass-card variant="warm">
+      ${cardContent('--lib-glass-bg-kaki', 'Warm Glass', 'Tinte orgánico cálido. Para acciones de acento o estados destacados.', 'oklch 45% 0.05 45')}
     </lib-glass-card>
   `),
 };
@@ -117,7 +117,7 @@ export const Intensities: Story = {
 /* ── Combinaciones variant × intensity ── */
 export const Matrix: Story = {
   render: (): TemplateResult => stage(html`
-    ${(['paper', 'water', 'kaki'] as const).flatMap(v =>
+    ${(['neutral', 'cool', 'warm'] as const).flatMap(v =>
       (['low', 'md', 'high'] as const).map(i => html`
         <lib-glass-card variant=${v} intensity=${i}>
           <div style="padding:16px;">
@@ -192,7 +192,7 @@ export const ContextDashboard: Story = {
         </div>
       </lib-glass-card>
 
-      <lib-glass-card variant="kaki" intensity="md">
+      <lib-glass-card variant="warm" intensity="md">
         <div style="padding:20px;">
           <p style="font-family:monospace; font-size:9px; color:oklch(70% 0 0 / 0.5); text-transform:uppercase; letter-spacing:0.25em; margin-bottom:8px;">En progreso</p>
           <p style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300; color:oklch(95% 0.01 60); line-height:1;">4</p>
@@ -211,22 +211,22 @@ export const ContextDashboard: Story = {
 
 const _katachi = createKatachiStories<object>(() => html`
   <div style="background:var(--bg-base);padding:var(--lib-space-lg);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--lib-space-sm);">
-    <lib-glass-card variant="paper" intensity="low">
+    <lib-glass-card variant="neutral" intensity="low">
       <div style="padding:var(--lib-space-md);">
-        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">paper · low</p>
+        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">neutral · low</p>
         <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Tinte neutro.</p>
       </div>
     </lib-glass-card>
-    <lib-glass-card variant="water" intensity="md">
+    <lib-glass-card variant="cool" intensity="md">
       <div style="padding:var(--lib-space-md);">
-        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">water · md</p>
-        <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Tinte azul.</p>
+        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">cool · md</p>
+        <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Tinte azul sereno.</p>
       </div>
     </lib-glass-card>
-    <lib-glass-card variant="kaki" intensity="high">
+    <lib-glass-card variant="warm" intensity="high">
       <div style="padding:var(--lib-space-md);">
-        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">kaki · high</p>
-        <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Tinte cálido.</p>
+        <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">warm · high</p>
+        <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Tinte cálido orgánico.</p>
       </div>
     </lib-glass-card>
   </div>
