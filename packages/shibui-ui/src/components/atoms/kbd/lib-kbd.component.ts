@@ -5,7 +5,7 @@ import kbdCss from './lib-kbd.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
 export type LibKbdSize    = 'xs' | 'sm' | 'md' | 'lg';
-export type LibKbdVariant = 'default' | 'dark' | 'ghost' | 'kaki' | 'celadon';
+export type LibKbdVariant = 'default' | 'inverse' | 'ghost' | 'accent' | 'subtle';
 
 /**
  * @element lib-kbd
