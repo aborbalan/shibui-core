@@ -8,7 +8,7 @@ const meta: Meta = {
   tags:['autodocs'],
   component: 'lib-burger',
   argTypes: {
-    variant:   { control: 'select', options: ['ink', 'kanji', 'washi', 'framed', 'kintsugi', 'glitch'] },
+    variant:   { control: 'select', options: ['ink', 'kanji', 'washi', 'framed', 'inverse', 'glitch'] },
     size:      { control: 'select', options: ['sm', 'md', 'lg'] },
     open:      { control: 'boolean' },
     label:     { control: 'text' },
@@ -85,13 +85,13 @@ export const Kintsugi: Story = {
       display:flex;align-items:center;gap:3rem;flex-wrap:wrap;">
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="kintsugi"></lib-burger>
+        <lib-burger variant="inverse"></lib-burger>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;
-          text-transform:uppercase;color:var(--color-washi-700);">kintsugi</span>
+          text-transform:uppercase;color:var(--color-washi-700);">inverse</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="kintsugi" label="menú" label-open="cerrar"></lib-burger>
+        <lib-burger variant="inverse" label="menú" label-open="cerrar"></lib-burger>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;
           text-transform:uppercase;color:var(--color-washi-700);">con label</span>
       </div>
@@ -202,9 +202,9 @@ export const OpenState: Story = {
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;
         background:var(--color-washi-950);padding:1rem;">
-        <lib-burger variant="kintsugi" open></lib-burger>
+        <lib-burger variant="inverse" open></lib-burger>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;
-          text-transform:uppercase;color:var(--color-washi-700);">kintsugi open</span>
+          text-transform:uppercase;color:var(--color-washi-700);">inverse open</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
