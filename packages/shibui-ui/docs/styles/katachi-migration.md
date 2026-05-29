@@ -1,27 +1,44 @@
 # Migración a Katachi (形) — guía para apps consumidoras
 
-> **TL;DR** — No hay nada que migrar. Katachi es aditivo: tu app sigue funcionando
-> idéntica sin tocar una línea. Esta guía documenta cómo empezar a aprovecharlo
-> cuando estés listo.
+> **TL;DR (Fase 2+)** — Los componentes de primera oleada (lib-card, lib-badge, lib-eyebrow,
+> lib-chip, lib-spinner, lib-sidebar, lib-header) han eliminado las variantes con nombres de
+> paleta (`kintsugi`, `glitch`, `celadon` como valor de `variant`, etc.). Si usas esas variantes
+> en tu app, revisa la sección "Breaking changes" más abajo.
 
 ---
 
 ## ¿Qué cambia para mí?
 
-**Nada** — si no usas `data-katachi="x"` o `<lib-canvas>` en tu HTML, tu app
-renderiza exactamente igual que antes. El sistema es un **opt-in puro**.
+### Si no usas variantes con nombres de paleta
 
-Lo que tu app gana automáticamente al actualizar a la versión con katachi:
+**Nada** — si no usas `variant="kintsugi"`, `variant="glitch"`, `variant="celadon"`
+(como valor, no como katachi ID), etc., tu app renderiza igual. Katachi es un
+opt-in vía `data-katachi="x"` en HTML.
 
-- 39 componentes con bloque `KATACHI · ambient context` documentado
-- 18 de ellos con overrides que consumen tokens semánticos (`--bg-surface`,
-  `--bg-inverse`, `--text-primary`…) en sus estados clave (active, selected,
-  checked, etc.)
-- Tipo `KatachiId` exportado desde `@shibui/ui` para autocompletar en TS
+### Breaking changes (componentes Fase 2)
 
-Si tienes `variant="kintsugi"` o cualquier `variant=""` explícito en tu app,
-**sigue funcionando exactamente igual** y siempre gana sobre el contexto
-ambient.
+Los siguientes valores de `variant` / `color` / `tone` han cambiado o desaparecido:
+
+| Componente | Prop/valor eliminado | Reemplazado por |
+|---|---|---|
+| `lib-card` | `variant="kintsugi"` | Efecto automático en `[data-katachi="kintsugi"]` |
+| `lib-card` | `variant="glitch"` | Efecto automático en `[data-katachi="terminal"]` |
+| `lib-card` | `variant="celadon"`, `"washi"`, `"brutal"` | `variant="default"` + contexto katachi |
+| `lib-badge` | `variant="celadon"` | `variant="info"` |
+| `lib-badge` | `variant="dark"` | `variant="strong"` |
+| `lib-eyebrow` | `color="kaki"` | `tone="accent"` |
+| `lib-eyebrow` | `color="celadon"`, `"white"`, `"dark"`, `"muted"`, `"washi"` | `tone="neutral"/"inverse"/"muted"` |
+| `lib-header` | `variant="kintsugi"`, `"glitch"` | Efecto automático por contexto katachi |
+
+**TypeScript**: usar un valor eliminado lanza un error de tipo en compilación.
+No hay deprecation warnings en runtime — la migración es forzada por TS.
+
+### Lo que gana tu app automáticamente
+
+- 6 identidades visuales completas activables con un único atributo HTML
+- Los efectos (seam dorada, scanlines CRT, brutal shadow) se activan solos
+- Tipos `KatachiId` exportados para autocompletar en TS
+- Los componentes migrados se adaptan automáticamente al katachi del ancestro
 
 ---
 
@@ -128,28 +145,34 @@ Katachi y `data-theme="dark"` son ortogonales:
 </body>
 ```
 
-Cada katachi define su propia familia (`light`/`dark`) — algunos son
-intrínsecamente oscuros (wabi, kintsugi, terminal, celadon) y otros claros
-(sabi, shizen). Si combinas un katachi dark con `data-theme="dark"`, el
-katachi gana en los tokens que define.
+Cada katachi define su propia familia (`light`/`dark`):
+- **Dark**: kintsugi, wabi, terminal
+- **Light**: shizen, celadon (jade pálido ≠ dark), sabi
+
+Si combinas un katachi dark con `data-theme="dark"`, el katachi gana en los tokens
+que define.
 
 ---
 
 ## Mis componentes con `variant="kintsugi"`, ¿siguen funcionando?
 
-Sí. Los selectores `:host([variant="kintsugi"])` (override explícito) y
-`:host(:not([variant]))` (ambient katachi) son **mutuamente exclusivos por
-construcción**, no por especificidad:
+**No, en los componentes de Fase 2** — `variant="kintsugi"` ha sido eliminado de
+`lib-card`, `lib-header`, `lib-sidebar`. Usar ese valor lanzará un error TypeScript.
+
+La forma correcta es usar el contexto katachi:
 
 ```html
-<section data-katachi="terminal">
-  <lib-card>terminal (ambient)</lib-card>
-  <lib-card variant="kintsugi">kintsugi (el variant explícito gana)</lib-card>
-  <lib-card variant="washi">washi (gana también)</lib-card>
+<!-- Antes (Fase 1 — ya no compila en Fase 2) -->
+<lib-card variant="kintsugi">…</lib-card>
+
+<!-- Después (Fase 2+) -->
+<section data-katachi="kintsugi">
+  <lib-card>…</lib-card>  <!-- hereda el efecto automáticamente -->
 </section>
 ```
 
-No hay riesgo de pisado accidental. Puedes mezclar libremente.
+Para los componentes **no migrados aún** (Fase 3 pendiente), los selectores de variante
+siguen funcionando durante la transición.
 
 ---
 

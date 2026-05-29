@@ -7,7 +7,8 @@
    Los efectos katachi se activan AUTOMÁTICAMENTE por contexto.
    Ningún variant prop es necesario para la identidad visual:
 
-     [data-katachi="kintsugi"] → seam de oro animado (::before)
+     [data-katachi="kintsugi"] → seam dorado animado + glow cálido (::before)
+                                 corchetes dorados en las 4 esquinas (::after)
      [data-katachi="terminal"] → barra phosphor (::before) + scanlines (::after)
      [data-katachi="sabi"]     → brutal offset shadow (.card)
      resto                     → sin efectos (tokens en default apagado)
@@ -113,10 +114,12 @@
 
   /* ── Top bar (::before) ───────────────────────────────── */
   /* Dual purpose:
-       kintsugi → gradiente dorado animado (kintsugi-seam)
+       kintsugi → gradiente dorado animado (kintsugi-seam) + glow cálido
        terminal → barra phosphor sólida (--lib-effect-topbar-bg sobreescrito)
      Invisible por defecto: opacity = var(--lib-effect-topbar-opacity, 0).
-     La animación sólo corre cuando --lib-effect-seam-play = running (kintsugi). */
+     La animación sólo corre cuando --lib-effect-seam-play = running (kintsugi).
+     El box-shadow crea un glow hacia el interior de la card proporcional a
+     topbar-opacity (calc * 0.6): kintsugi → oro difuso, resto → transparent. */
 
   .card::before {
     content: '';
@@ -143,27 +146,75 @@
     animation: kintsugi-seam 5s linear infinite;
     animation-play-state: var(--lib-effect-seam-play, paused);
     opacity: var(--lib-effect-topbar-opacity, 0);
+    /* Glow difuso hacia abajo — permanece dentro de overflow:hidden */
+    box-shadow: 0 4px 16px 2px oklch(61.85% 0.149 48.72deg / calc(var(--lib-effect-topbar-opacity, 0) * 0.55));
     transition: opacity var(--duration-slow) var(--ease-out);
   }
 
-  /* ── Scanlines overlay (::after) ─────────────────────── */
-  /* Visible sólo en [data-katachi="terminal"].
-     --lib-effect-scanlines controla la opacidad del stripe directamente
-     (no la del elemento) — evita doble-multiplicación de opacidad.
-     En shizen/celadon/sabi/kintsugi/wabi el token = 0 → stripes transparentes.
-     En terminal = 0.10 → líneas blancas al 10% sobre fondo oscuro. */
+  /* ── Ornamentos de esquina + scanlines (::after) ─────── */
+  /* Capa multi-propósito (background layers en orden de z):
+       1. Corchetes dorados en las 4 esquinas (8 gradientes sólidos)
+          — kintsugi: --lib-effect-seam-opacity = 1 → visibles
+          — resto:    token = 0 → color alpha = 0 → invisibles
+          Cada corchete = brazo horizontal (14 × 1.5px) + brazo vertical (1.5 × 14px)
+       2. Terminal scanlines (repeating-linear-gradient)
+          — terminal: --lib-effect-scanlines = 0.10 → líneas al 10%
+          — resto:    token = 0 → stripes transparentes
+     Sin element-level opacity — evita doble-multiplicación (bug anterior). */
 
   .card::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 3px,
-      oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 3px,
-      oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 4px
-    );
+    background:
+      /* ── Esquina TL — brazo horizontal */
+      linear-gradient(
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
+      ) top 0 left 0 / 14px 1.5px no-repeat,
+      /* ── Esquina TL — brazo vertical */
+      linear-gradient(
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
+      ) top 0 left 0 / 1.5px 14px no-repeat,
+      /* ── Esquina TR — brazo horizontal */
+      linear-gradient(
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
+      ) top 0 right 0 / 14px 1.5px no-repeat,
+      /* ── Esquina TR — brazo vertical */
+      linear-gradient(
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
+      ) top 0 right 0 / 1.5px 14px no-repeat,
+      /* ── Esquina BL — brazo horizontal */
+      linear-gradient(
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
+      ) bottom 0 left 0 / 14px 1.5px no-repeat,
+      /* ── Esquina BL — brazo vertical */
+      linear-gradient(
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
+      ) bottom 0 left 0 / 1.5px 14px no-repeat,
+      /* ── Esquina BR — brazo horizontal */
+      linear-gradient(
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
+      ) bottom 0 right 0 / 14px 1.5px no-repeat,
+      /* ── Esquina BR — brazo vertical */
+      linear-gradient(
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
+        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
+      ) bottom 0 right 0 / 1.5px 14px no-repeat,
+      /* ── Terminal scanlines */
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 3px,
+        oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 4px
+      );
     pointer-events: none;
     z-index: 1;
   }

@@ -2,8 +2,9 @@
 
 > Registro de implementación real. Se actualiza componente a componente en orden alfabético.
 > La compatibilidad teórica de la matriz global está en `shibui-surfaces-x-effects.html`.
-> Última auditoría: 2026-05-16 — átomos, moléculas y organismos verificados sobre CSS real.
-> Sistema Katachi (形) completado al 100% (77/77 componentes con bloque KATACHI).
+> Última auditoría: 2026-05-16 (base) + 2026-05-29 (Fase 2 — identidades selladas).
+> **Modelo actual**: efectos activados por `--lib-effect-*` tokens heredados del ancestro katachi.
+> Componentes migrados (Fase 2): lib-card, lib-badge, lib-eyebrow, lib-chip, lib-header, lib-sidebar, lib-spinner.
 
 ---
 
@@ -157,11 +158,11 @@
 
 ---
 
-### `lib-badge` · ✅
+### `lib-badge` · ✅ (Fase 2 — renombrado semántico)
 
-> **CSS verificado.** Las variantes (`default` · `accent` · `celadon` · `dark` · `error` · `success` · `warning`)
-> son paletas semánticas de color, no variantes del sistema de superficies.
-> `variant="dark"` cubre el uso en fondos oscuros pero no es una adaptación de superficie formal.
+> **CSS verificado. Migrado a variantes semánticas (2026-05-29).**
+> Variantes: `default` · `accent` · `info` · `strong` · `error` · `success` · `warning`.
+> **Cambios**: `celadon` → `info` (informativo jade); `dark` → `strong` (contraste máximo).
 > Sin efectos implementados.
 
 #### Superficies
@@ -273,32 +274,41 @@
 
 ---
 
-### `lib-card` · ✅
+### `lib-card` · ✅ (Fase 2 — modelo sellado)
 
-> **CSS verificado.** Las 8 variantes están completamente implementadas y cubren
-> todas las superficies del sistema. Los efectos son baked-in — la seam kintsugi
-> usa `linear-gradient` propio animado (no `--lib-kintsugi-border`), el RGB split
-> del glitch usa `box-shadow` con offset (no tokens del sistema). Sin glass ni spotlight.
+> **CSS verificado. Migrado a identidades selladas (2026-05-29).**
+> 4 variantes semánticas: `default` · `inverse` · `accent` · `featured`.
+> Las variantes palette-named anteriores (`kintsugi`, `glitch`, `celadon`, `washi`, `brutal`)
+> han sido eliminadas — los efectos se activan automáticamente vía `--lib-effect-*` tokens
+> heredados del contexto katachi ancestro.
 
-#### Superficies
+#### Variantes semánticas actuales
 
-| Superficie | Estado | Variante | Notas |
-|------------|--------|----------|-------|
-| light | ✅ | `default` · `accent` | `bg-elevated`, `border-subtle` |
-| dark | ✅ | `inverse` · `featured` | `washi-900` / gradient kaki |
-| kintsugi | ✅ | `kintsugi` | `washi-950`, seam animada `::before`, gradiente dorado en título |
-| glitch | ✅ | `glitch` | `washi-950`, barra celadón, scanlines `::after`, `glitch-drift`, RGB split en hover |
-| celadón | ✅ | `celadon` | `washi-950`, barra celadón superior, hover glow verde |
-| washi | ✅ | `washi` | `washi-50`, `washi-200`, barra `washi-400` superior |
+| Variante | Descripción |
+|---|---|
+| `default` | Fondo `--bg-elevated`, borde `--border-subtle` |
+| `inverse` | Fondo `--bg-inverse` (contrasta con la página) |
+| `accent` | Borde izquierdo 3px con `--card-accent-color` |
+| `featured` | Gradiente cálido + título grande; ocupa 2 columnas |
 
-#### Efectos
+#### Efectos katachi automáticos (via `--lib-effect-*`)
+
+| Katachi | Efecto | Mecanismo |
+|---|---|---|
+| `kintsugi` | Barra dorada animada 3px + anillo de oro permanente | `::before` opacity + animation-play-state; `box-shadow` via `--lib-effect-brutal-shadow` |
+| `terminal` | Scanlines CRT horizontales (0.10 opacity) + glitch-drift | `::after` repeating-gradient alpha; `glitch-drift` animation |
+| `sabi` | Offset brutal shadow 4px | `box-shadow` via `--lib-effect-brutal-shadow` |
+| `kintsugi` (hover) | Gold ring reforzado + sombra profunda | `--shadow-lg` con anillo `kaki-400/0.28` |
+| `wabi` / `shizen` / `celadon` | Sin efectos adicionales | Defaults `:root` apagados |
+
+#### Estado de efectos del sistema
 
 | Efecto | Superficie | Estado | Notas |
 |--------|------------|--------|-------|
-| glass | — | `—` | No implementado — `lib-glass-card` lo cubre como componente separado |
-| spotlight | dark / kintsugi | 🔲 | No implementado — `lib-spotlight-card` lo cubre, posible convergencia futura |
-| kintsugi-border | kintsugi | `—` | Variante `kintsugi` tiene seam propia (`linear-gradient` animado), no usa `--lib-kintsugi-border` |
-| shadow-brutal | light / washi | 🔲 | Tiene `shadow-lg` difusa en hover; `--lib-shadow-brutal` (4px sólida) no implementada |
+| glass | — | `—` | `lib-glass-card` lo cubre como componente separado |
+| spotlight | dark / kintsugi | 🔲 | `lib-spotlight-card` lo cubre |
+| kintsugi-border | kintsugi | ✅ | Barra top + anillo via `--lib-effect-*` tokens (no `--lib-kintsugi-border`) |
+| shadow-brutal | sabi | ✅ | Via `--lib-effect-brutal-shadow: 4px 4px 0px 0px var(--color-washi-900)` |
 | metal-texture | — | `—` | No implementado |
 
 ---
@@ -522,16 +532,19 @@
 
 ---
 
-### `lib-eyebrow`
+### `lib-eyebrow` · ✅ (Fase 2 — prop renombrado)
 
-> **Nota:** Elemento tipográfico de apoyo. Neutro.
+> **Migrado (2026-05-29).** Prop `color` con valores palette-named reemplazado por
+> `tone` con valores semánticos: `accent` · `neutral` · `inverse` · `muted`.
+> El efecto de glitch-drift (antes controlado por `[effect="glitch"]`) se activa
+> automáticamente vía `--lib-effect-glitch-play` en contexto terminal.
 
 #### Superficies / Efectos
 
-| | Estado |
-|-|--------|
-| Superficies | `—` |
-| Efectos | `—` |
+| | Estado | Notas |
+|-|--------|-------|
+| Superficies | `—` | Elemento tipográfico — adapta color via `tone` prop |
+| Glitch drift | ✅ | Automático en `[data-katachi="terminal"]` via `--lib-effect-glitch-play` |
 
 ---
 
@@ -1274,11 +1287,13 @@
 
 ---
 
-### `lib-header` · ✅
+### `lib-header` · ✅ (Fase 2 — modelo sellado)
 
-> **CSS verificado.** Cobertura completa de superficies: `classic` (light) · `dark` · `centered` (light) ·
-> `transparent` · `kintsugi` (seam animada `::after`, bg `washi-950`) · `glitch` (scanlines, glitch keyframe) ·
-> `mega` · `minimal` · `shrink` · `app-bar`. Sin efectos del sistema (kintsugi y glitch son baked-in).
+> **CSS verificado. Migrado a identidades selladas (2026-05-29).**
+> Variantes: `classic` · `dark` · `centered` · `transparent` · `mega` · `minimal` · `shrink` · `app-bar` · `celadon` · `sabi` · `shizen`.
+> **Eliminadas**: `kintsugi` y `glitch` — los efectos equivalentes se activan automáticamente
+> vía `data-katachi="kintsugi"` o `data-katachi="terminal"` en el ancestro.
+> Sin efectos del sistema (katachi propaga los tokens de efecto automáticamente).
 
 #### Superficies
 
