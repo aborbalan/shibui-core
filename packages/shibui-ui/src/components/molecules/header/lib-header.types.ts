@@ -37,7 +37,7 @@ export interface DropdownItem {
 export interface HeaderAction {
   label: string;
   href?: string;
-  /** 'kaki' | 'outline' | 'ghost' */
+  /** 'accent' | 'secondary' | 'ghost' */
   variant?: string;
 }
 

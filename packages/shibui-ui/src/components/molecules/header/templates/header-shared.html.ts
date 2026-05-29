@@ -117,12 +117,12 @@ export function renderLinks(ctx: LibHeader, links: NavLink[]): TemplateResult {
    ══════════════════════════════════════ */
 
 const ACTION_VARIANT_MAP: Record<string, string> = {
-  classic:     'kaki',
+  classic:     'accent',
   centered:    'outline',
-  dark:        'kaki',
-  transparent: 'kaki',
-  mega:        'kaki',
-  shrink:      'kaki',
+  dark:        'accent',
+  transparent: 'accent',
+  mega:        'accent',
+  shrink:      'accent',
   minimal:     '',
   celadon:     'celadon',
   sabi:        'sabi',
@@ -139,7 +139,7 @@ export function renderActions(ctx: LibHeader): TemplateResult {
       ${ctx.actions.map((action: HeaderAction) => {
         const cls = action.variant
           ? `hdr-action--${action.variant}`
-          : `hdr-action--${ACTION_VARIANT_MAP[ctx.variant] || 'kaki'}`;
+          : `hdr-action--${ACTION_VARIANT_MAP[ctx.variant] || 'accent'}`;
         return html`
           <a href="${action.href || '#'}"
             class="hdr-action ${cls}"

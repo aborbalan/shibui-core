@@ -170,7 +170,7 @@ export const Surfaces: Story = {
           description="El sistema abraza las restricciones como características, no como limitaciones."
           surface="neutral"
         >
-          <lib-eyebrow slot="eyebrow" color="washi" size="sm" style="margin-bottom:1rem">Neutral surface</lib-eyebrow>
+          <lib-eyebrow slot="eyebrow" tone="neutral" size="sm" style="margin-bottom:1rem">Neutral surface</lib-eyebrow>
         </lib-display-heading>
       `)}
 
