@@ -15,10 +15,10 @@ import type {
  * lib-tabs — Componente de pestañas Shibui (SG-60)
  *
  * @prop variant  — 'underline' | 'pill' | 'card' | 'outline' | 'vertical'
- * @prop color    — 'kaki' | 'celadon'
+ * @prop color    — 'accent' | 'info'
  * @prop size     — 'sm' | 'md' | 'lg'
  * @prop dark     — surface oscura
- * @prop kintsugi — ink bar animada dorada
+ * @prop gold     — ink bar animada dorada (era kintsugi)
  * @prop glitch   — efecto RGB split en tab activo
  * @prop scroll   — overflow-x scroll en la lista
  * @prop full     — tabs en grid de columnas iguales
@@ -57,7 +57,7 @@ export class LibTabs extends LitElement {
   dark = false;
 
   @property({ type: Boolean, reflect: true })
-  kintsugi = false;
+  gold = false;
 
   @property({ type: Boolean, reflect: true })
   glitch = false;
