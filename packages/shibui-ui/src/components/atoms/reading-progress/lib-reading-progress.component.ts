@@ -5,7 +5,7 @@ import componentCss                                         from './lib-reading-
 import sharedTokens                                         from '../../../styles/shared/tokens.css?inline';
 
 export type ReadingProgressVariant = 'bar' | 'line' | 'dots' | 'ring' | 'vertical';
-export type ReadingProgressTone    = 'kaki' | 'celadon' | 'ink' | 'kintsugi';
+export type ReadingProgressTone    = 'accent' | 'info' | 'filled' | 'gold';
 
 
 /**
@@ -30,7 +30,7 @@ export type ReadingProgressTone    = 'kaki' | 'celadon' | 'ink' | 'kintsugi';
  *            Se posiciona sola con position:fixed.
  *
  * @attr {ReadingProgressVariant} variant    — bar · line · dots · ring · vertical
- * @attr {ReadingProgressTone}    tone       — kaki · celadon · ink
+ * @attr {ReadingProgressTone}    tone       — accent · info · filled · gold
  * @attr {string}                 target     — selector CSS del contenedor scrollable.
  *                                             Si se omite, trackea window.
  * @attr {number}                 dots-count — número de puntos (variant=dots, default: 5)
@@ -49,7 +49,7 @@ export class LibReadingProgress extends LitElement {
   variant: ReadingProgressVariant = 'bar';
 
   @property({ type: String, reflect: true })
-  tone: ReadingProgressTone = 'kaki';
+  tone: ReadingProgressTone = 'accent';
 
   /** Selector CSS del elemento scrollable que se quiere observar.
    *  Si está vacío, escucha el scroll de window. */
