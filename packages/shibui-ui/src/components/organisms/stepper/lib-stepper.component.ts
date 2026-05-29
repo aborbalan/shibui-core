@@ -43,8 +43,8 @@ import type { LibStep } from '../../atoms/step/lib-step.component';
  * @example — minimal kaki
  * <lib-stepper variant="minimal" current="3">...</lib-stepper>
  *
- * @example — kintsugi oscuro
- * <lib-stepper variant="kintsugi" current="2">...</lib-stepper>
+ * @example — inverse oscuro
+ * <lib-stepper variant="inverse" current="2">...</lib-stepper>
  */
 @customElement('lib-stepper')
 export class LibStepper extends LitElement {
@@ -72,7 +72,7 @@ export class LibStepper extends LitElement {
    * Variante visual. Se propaga a todos los lib-step hijos.
    * - default  : nodo circular washi
    * - minimal  : nodo cuadrado, acento kaki
-   * - kintsugi : venas doradas, pensado para superficies oscuras
+   * - inverse : venas doradas, pensado para superficies oscuras
    */
   @property({ type: String, reflect: true })
   variant: LibStepperVariant = 'default';

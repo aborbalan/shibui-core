@@ -83,7 +83,7 @@ export class LibStep extends LitElement {
    * Variante visual. Inyectada por lib-stepper.
    * - default  : nodo circular washi
    * - minimal  : nodo cuadrado kaki
-   * - kintsugi : venas doradas sobre superficie oscura
+   * - inverse  : venas doradas sobre superficie oscura (era kintsugi)
    */
   @property({ type: String, reflect: true })
   variant: LibStepVariant = 'default';
