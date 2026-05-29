@@ -176,9 +176,7 @@
     padding: 1px;
     background: var(--lib-effect-after-bg, transparent);
     mask: var(--lib-effect-after-mask, none);
-    -webkit-mask: var(--lib-effect-after-mask, none);
     mask-composite: exclude;
-    -webkit-mask-composite: destination-out;
     pointer-events: none;
     z-index: 2;
   }
