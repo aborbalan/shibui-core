@@ -58,7 +58,7 @@ export const Playground: Story = {
 export const Modes: Story = {
   name: 'Modos — Ink · Minimal · Kaki · Ghost',
   render: (): TemplateResult => {
-    const modes: CursorMode[] = ['ink', 'minimal', 'kaki', 'ghost'];
+    const modes: CursorMode[] = ['filled', 'minimal', 'accent', 'ghost'];
 
     const switchMode = (mode: CursorMode): void => {
       const cf = document.querySelector('lib-cursor-follower') as LibCursorFollower;
@@ -87,8 +87,8 @@ export const Modes: Story = {
               font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.08em;
               text-transform: uppercase; padding: 0.5rem 1rem;
               border: 1px solid var(--border-default);
-              background: ${m === 'ink' ? 'var(--color-washi-900)' : 'var(--bg-elevated)'};
-              color: ${m === 'ink' ? 'var(--color-washi-100)' : 'var(--text-secondary)'};
+              background: ${m === 'filled' ? 'var(--color-washi-900)' : 'var(--bg-elevated)'};
+              color: ${m === 'filled' ? 'var(--color-washi-100)' : 'var(--text-secondary)'};
               cursor: none; transition: background 150ms, color 150ms;
             "
           >${m}</button>
@@ -239,10 +239,10 @@ const _katachi = createKatachiStories<object>(() => html`
       <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;pointer-events:none;">minimal · hover here</span>
     </div>
 
-    <!-- Zone kaki -->
+    <!-- Zone accent -->
     <div style="position:relative;height:80px;background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;cursor:none;overflow:hidden;">
-      <lib-cursor-follower mode="kaki"></lib-cursor-follower>
-      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;pointer-events:none;">kaki · hover here</span>
+      <lib-cursor-follower mode="accent"></lib-cursor-follower>
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;pointer-events:none;">accent · hover here</span>
     </div>
 
     <!-- Zone ghost -->

@@ -11,7 +11,7 @@ import type { RatingSize, RatingColor, RatingIcon } from './lib-rating.types';
  * @prop value       — Valor actual (0–max). Soporta decimales en readonly para half-star.
  * @prop max         — Máximo de items (default 5)
  * @prop size        — 'xs' | 'sm' | 'md'(default) | 'lg' | 'xl'
- * @prop color       — 'gold'(default) | 'kaki' | 'washi' | 'celadon'
+ * @prop color       — 'gold'(default) | 'accent' | 'neutral' | 'info'
  * @prop icon        — 'star'(default) | 'heart' | 'diamond'
  * @prop readonly    — Solo display, sin interacción
  * @prop disabled    — Opacity 0.4, sin interacción

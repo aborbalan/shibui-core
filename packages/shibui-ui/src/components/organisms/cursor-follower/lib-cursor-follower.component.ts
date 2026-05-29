@@ -14,7 +14,7 @@ import type { CursorMode, CursorState } from './lib-cursor-follower.types';
  * Coloca el componente una sola vez al inicio del <body>. Se encarga de ocultar
  * el cursor nativo del documento.
  *
- * @prop {CursorMode} mode    — ink · minimal · kaki · ghost (default: 'ink')
+ * @prop {CursorMode} mode    — filled · minimal · accent · ghost (default: 'filled')
  * @prop {number}     lerp    — Factor de interpolación del ring 0–1 (override del modo)
  * @prop {boolean}    trail   — Activa la cola de tinta al mover rápido
  *
@@ -35,7 +35,7 @@ export class LibCursorFollower extends LitElement {
   /* ── Props ── */
 
   @property({ type: String, reflect: true })
-  mode: CursorMode = 'ink';
+  mode: CursorMode = 'filled';
 
   @property({ type: Number })
   lerp = 0;                 // 0 = usar el del modo

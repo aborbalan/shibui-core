@@ -45,7 +45,7 @@ const TEAM_COLS: TableColumn[] = [
   { key: 'name',       header: 'Miembro',     type: 'avatar', hintKey: 'email', sortable: true },
   { key: 'role',       header: 'Rol',         type: 'mono' },
   { key: 'status',     header: 'Estado',      type: 'badge', toneKey: 'status' },
-  { key: 'components', header: 'Componentes', type: 'progress', progressTone: 'kaki', sortable: true },
+  { key: 'components', header: 'Componentes', type: 'progress', progressTone: 'accent', sortable: true },
   { key: 'commits',    header: 'Commits',     type: 'num', sortable: true },
   { key: '_actions',   header: '',            type: 'actions' },
 ];
