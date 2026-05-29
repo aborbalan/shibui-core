@@ -249,9 +249,10 @@
   --text-link:       var(--color-kaki-300);
   --text-link-hover: var(--color-kaki-200);
 
-  --border-subtle:  oklch(45% 0.05 45deg / 0.12);
-  --border-default: oklch(45% 0.05 45deg / 0.25);
-  --border-strong:  oklch(45% 0.05 45deg / 0.40);
+  /* Usar kaki-400 real (L=61.85% C=0.149) — visible sobre oscuro */
+  --border-subtle:  oklch(61.85% 0.149 48.72deg / 0.20);
+  --border-default: oklch(61.85% 0.149 48.72deg / 0.35);
+  --border-strong:  oklch(61.85% 0.149 48.72deg / 0.58);
 
   /* ── Glass: OFF (lava el hilo dorado, conflicto) ─────── */
   --lib-glass-blur-amount:    0px;
@@ -262,26 +263,43 @@
   --lib-spotlight-opacity: 0.18;
   --lib-spotlight-feather: 50%;
 
-  /* ── Kintsugi border: oro más intenso ─────────────────── */
+  /* ── Kintsugi border: oro kaki-400 saturado ───────────── */
   --lib-kintsugi-border:
     linear-gradient(
       135deg,
-      oklch(45% 0.05 45deg / 0.80) 0%,
-      oklch(45% 0.05 45deg / 0.10) 40%,
-      oklch(45% 0.05 45deg / 0.10) 60%,
-      oklch(45% 0.05 45deg / 0.50) 100%
+      oklch(61.85% 0.149 48.72deg / 0.80) 0%,
+      oklch(61.85% 0.149 48.72deg / 0.10) 40%,
+      oklch(61.85% 0.149 48.72deg / 0.10) 60%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 100%
     );
+
+  /* ── Shadows: oscuros con anillo dorado ──────────────── */
+  --shadow-sm:
+    0 1px 4px oklch(0% 0 0deg / 0.55);
+  --shadow-md:
+    0 2px 10px oklch(0% 0 0deg / 0.45),
+    0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.18);
+  --shadow-lg:
+    0 8px 28px oklch(0% 0 0deg / 0.55),
+    0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.28),
+    0 0 32px oklch(61.85% 0.149 48.72deg / 0.08);
+  --shadow-xl:
+    0 20px 48px oklch(0% 0 0deg / 0.65),
+    0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.30);
 
   /* ── Kanji: toque dorado ─────────────────────────────── */
   --lib-comp-kanji-color: oklch(51.65% 0.134 46.13deg / 0.06);
 
-  /* ── Effect activation: seam animado activo ──────────── */
+  /* ── Effect activation: seam animado + anillo oro permanente */
   --lib-effect-seam-play:      running;
   --lib-effect-seam-opacity:   1;
   --lib-effect-glitch-play:    paused;
   --lib-effect-scanlines:      0;
   --lib-effect-crt-vignette:   0;
-  --lib-effect-brutal-shadow:  none;
+  /* Anillo dorado + sombra profunda — reemplaza brutal-shadow */
+  --lib-effect-brutal-shadow:
+    0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.22),
+    0 4px 20px oklch(0% 0 0deg / 0.40);
   --lib-effect-glass-blur:     0px;
   /* Top bar: seam gradient (default in card CSS) — just open it */
   --lib-effect-topbar-opacity: 1;
@@ -421,7 +439,7 @@
   --lib-effect-seam-play:      paused;
   --lib-effect-seam-opacity:   0;
   --lib-effect-glitch-play:    running;
-  --lib-effect-scanlines:      0.05;
+  --lib-effect-scanlines:      0.10; /* opacidad del stripe — 0.05 era invisible */
   --lib-effect-crt-vignette:   0.50;
   --lib-effect-brutal-shadow:  none;
   --lib-effect-glass-blur:     0px;

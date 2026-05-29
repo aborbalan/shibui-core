@@ -124,7 +124,7 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 2px;
+    height: 3px;
     pointer-events: none;
     z-index: 3;
     background: var(--lib-effect-topbar-bg,
@@ -147,8 +147,11 @@
   }
 
   /* ── Scanlines overlay (::after) ─────────────────────── */
-  /* Visible sólo en [data-katachi="terminal"]:
-       opacity = var(--lib-effect-scanlines, 0) = 0.05 */
+  /* Visible sólo en [data-katachi="terminal"].
+     --lib-effect-scanlines controla la opacidad del stripe directamente
+     (no la del elemento) — evita doble-multiplicación de opacidad.
+     En shizen/celadon/sabi/kintsugi/wabi el token = 0 → stripes transparentes.
+     En terminal = 0.10 → líneas blancas al 10% sobre fondo oscuro. */
 
   .card::after {
     content: '';
@@ -158,13 +161,11 @@
       0deg,
       transparent,
       transparent 3px,
-      oklch(100% 0 0deg / 0.014) 3px,
-      oklch(100% 0 0deg / 0.014) 4px
+      oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 3px,
+      oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 4px
     );
     pointer-events: none;
     z-index: 1;
-    opacity: var(--lib-effect-scanlines, 0);
-    transition: opacity var(--duration-slow) var(--ease-out);
   }
 
   /* ── Kanji watermark ──────────────────────────────────── */
