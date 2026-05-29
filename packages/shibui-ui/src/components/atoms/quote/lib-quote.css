@@ -28,8 +28,8 @@
         --q-cite-color: var(--color-washi-400, #B8A99A);
     }
 
-    /* Superficie washi */
-    :host([surface='washi']) {
+    /* Superficie neutral */
+    :host([surface='neutral']) {
         --q-text-color: var(--color-washi-800, #3D332A);
         --q-accent-color: var(--color-kaki-500, #B85A1E);
         --q-cite-color: var(--color-washi-500, #9A8878);
@@ -109,7 +109,7 @@
     }
 
     /* ─── KATACHI · ambient context ──────────────────────────────
-       lib-quote ya soporta superficies light/dark/washi via atributo
+       lib-quote ya soporta superficies light/dark/neutral via atributo
        surface="..." con custom properties locales (--q-text-color,
        --q-cite-color). Decisión editorial: los tonos son levemente
        distintos a los semánticos para reflejar la elegancia

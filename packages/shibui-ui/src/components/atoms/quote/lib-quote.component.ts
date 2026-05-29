@@ -7,7 +7,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
 /**
  * `<lib-quote>` — Cita display editorial.
  *
- * Blockquote en Cormorant Garamond con acento itálico en kaki y
+ * Blockquote en Cormorant Garamond con acento itálico en tono accent y
  * atribución en DM Mono. Patrón recurrente en hero sections, CTAs
  * y secciones de filosofía del sistema Shibui.
  *
@@ -16,7 +16,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * @attr {string}                  text    - Primera línea de la cita (alternativa al slot).
  * @attr {string}                  accent  - Segunda línea en itálica kaki.
  * @attr {string}                  cite    - Atribución (ej: "— Principio Shibui · 渋い").
- * @attr {'dark'|'light'|'washi'}  surface - Superficie de fondo. Default: `dark`.
+ * @attr {'dark'|'light'|'neutral'}  surface - Superficie de fondo. Default: `dark`.
  * @attr {'sm'|'md'|'lg'}          size    - Tamaño tipográfico fluido. Default: `md`.
  *
  * @slot - Primera línea de la cita como rich content (alternativa al atributo `text`).
@@ -56,7 +56,7 @@ export class LibQuote extends LitElement {
   @property({ type: String })
   text = '';
 
-  /** Segunda línea en itálica kaki */
+  /** Segunda línea en itálica accent */
   @property({ type: String })
   accent = '';
 
@@ -66,7 +66,7 @@ export class LibQuote extends LitElement {
 
   /** Superficie de fondo */
   @property({ type: String, reflect: true })
-  surface: 'dark' | 'light' | 'washi' = 'dark';
+  surface: 'dark' | 'light' | 'neutral' = 'dark';
 
   /** Tamaño tipográfico fluido */
   @property({ type: String, reflect: true })
