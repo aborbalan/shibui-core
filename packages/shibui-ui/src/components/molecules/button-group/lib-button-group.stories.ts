@@ -14,7 +14,7 @@ const meta: Meta = {
     toggle:      { control: 'boolean' },
     multi:       { control: 'boolean' },
     dark:        { control: 'boolean' },
-    kintsugi:    { control: 'boolean' },
+    gold:    { control: 'boolean' },
     block:       { control: 'boolean' },
     size:        { control: 'select', options: ['', 'sm', 'md', 'lg'] },
   },
@@ -30,7 +30,7 @@ export const Playground: Story = {
     toggle:      true,
     multi:       false,
     dark:        false,
-    kintsugi:    false,
+    gold:    false,
     block:       false,
     size:        '',
   },
@@ -42,7 +42,7 @@ export const Playground: Story = {
         ?toggle="${args.toggle}"
         ?multi="${args.multi}"
         ?dark="${args.dark}"
-        ?kintsugi="${args.kintsugi}"
+        ?gold="${args.gold}"
         ?block="${args.block}"
         size="${args.size}"
         @ui-lib-group-change="${(e: CustomEvent): void => console.log('change', e.detail)}"
@@ -172,8 +172,8 @@ export const ToggleSingle: Story = {
       </div>
 
       <div>
-        <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">kaki · kintsugi · rango temporal</p>
-        <lib-button-group shape="rounded" toggle kintsugi>
+        <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">kaki · gold · rango temporal</p>
+        <lib-button-group shape="rounded" toggle gold>
           <lib-button variant="accent" active>Día</lib-button>
           <lib-button variant="accent">Semana</lib-button>
           <lib-button variant="accent">Mes</lib-button>
@@ -332,8 +332,8 @@ export const Dark: Story = {
       </div>
 
       <div>
-        <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,0.2); margin-bottom: 0.75rem;">kaki · kintsugi · sobre dark</p>
-        <lib-button-group shape="rounded" toggle kintsugi>
+        <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,0.2); margin-bottom: 0.75rem;">kaki · gold · sobre dark</p>
+        <lib-button-group shape="rounded" toggle gold>
           <lib-button variant="accent" active>1d</lib-button>
           <lib-button variant="accent">7d</lib-button>
           <lib-button variant="accent">30d</lib-button>

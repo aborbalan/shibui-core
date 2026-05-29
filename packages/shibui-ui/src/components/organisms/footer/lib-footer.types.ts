@@ -1,7 +1,7 @@
 export type FooterVariant =
   | 'social'
   | 'accordion'
-  | 'kintsugi'
+  | 'inverse'
   | 'glitch'
   | 'celadon'
   | 'sabi'

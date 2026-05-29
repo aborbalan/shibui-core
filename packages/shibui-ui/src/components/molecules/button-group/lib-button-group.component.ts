@@ -15,7 +15,7 @@ import '../../atoms/button/lib-button.component';
    ══════════════════════════════════════════════════════════════
    Wrapper que agrupa lib-button en una unidad visual:
    · Colapsa bordes internos (margin-left: -1px)
-   · Propaga shape, size, dark, kintsugi a cada hijo
+   · Propaga shape, size, dark, gold a cada hijo
    · Toggle single / multi con estado [active]
    · Separadores lib-button-sep reconocidos automáticamente
 
@@ -52,9 +52,9 @@ export class LibButtonGroup extends LitElement {
   @property({ type: Boolean, reflect: true })
   dark = false;
 
-  /** Propaga kintsugi a botones accent/kaki adyacentes */
+  /** Propaga gold (borde dorado fractura) a botones accent adyacentes */
   @property({ type: Boolean, reflect: true })
-  kintsugi = false;
+  gold = false;
 
   /** Tamaño propagado a todos los hijos */
   @property({ type: String, reflect: true })
@@ -137,11 +137,11 @@ export class LibButtonGroup extends LitElement {
         btn.setAttribute('size', this.size);
       }
 
-      /* Kintsugi — solo middle y last */
-      if (this.kintsugi && i > 0) {
-        btn.setAttribute('kintsugi', '');
+      /* Gold — solo middle y last */
+      if (this.gold && i > 0) {
+        btn.setAttribute('gold', '');
       } else {
-        btn.removeAttribute('kintsugi');
+        btn.removeAttribute('gold');
       }
     });
   }
