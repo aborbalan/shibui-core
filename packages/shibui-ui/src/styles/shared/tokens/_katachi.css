@@ -439,7 +439,7 @@
   --lib-effect-seam-play:      paused;
   --lib-effect-seam-opacity:   0;
   --lib-effect-glitch-play:    running;
-  --lib-effect-scanlines:      0.10; /* opacidad del stripe — 0.05 era invisible */
+  --lib-effect-scanlines:      0.06; /* opacidad del stripe — sutil pero visible */
   --lib-effect-crt-vignette:   0.50;
   --lib-effect-brutal-shadow:  none;
   --lib-effect-glass-blur:     0px;
