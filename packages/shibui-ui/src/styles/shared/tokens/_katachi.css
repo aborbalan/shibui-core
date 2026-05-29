@@ -77,13 +77,13 @@
   --lib-spotlight-opacity: 0;
 
   /* ── Effect activation: todo en silencio (zero-point) ── */
-  --lib-effect-seam-play:     paused;
-  --lib-effect-seam-opacity:  0;
-  --lib-effect-glitch-play:   paused;
-  --lib-effect-scanlines:     0;
-  --lib-effect-crt-vignette:  0;
-  --lib-effect-brutal-shadow: none;
-  --lib-effect-glass-blur:    0px;
+  --lib-effect-seam-play:      paused;
+  --lib-effect-glitch-play:    paused;
+  --lib-effect-scanlines:      0;
+  --lib-effect-crt-vignette:   0;
+  --lib-effect-brutal-shadow:  none;
+  --lib-effect-glass-blur:     0px;
+  --lib-effect-topbar-opacity: 0;
 }
 
 
@@ -151,13 +151,13 @@
     );
 
   /* ── Effect activation: glaze sólo, sin animaciones ──── */
-  --lib-effect-seam-play:     paused;
-  --lib-effect-seam-opacity:  0;
-  --lib-effect-glitch-play:   paused;
-  --lib-effect-scanlines:     0;
-  --lib-effect-crt-vignette:  0;
-  --lib-effect-brutal-shadow: none;
-  --lib-effect-glass-blur:    0px;
+  --lib-effect-seam-play:      paused;
+  --lib-effect-glitch-play:    paused;
+  --lib-effect-scanlines:      0;
+  --lib-effect-crt-vignette:   0;
+  --lib-effect-brutal-shadow:  none;
+  --lib-effect-glass-blur:     0px;
+  --lib-effect-topbar-opacity: 0;
 }
 
 
@@ -205,13 +205,13 @@
   --lib-spotlight-opacity: 0;
 
   /* ── Effect activation: sólo el brutal shadow ────────── */
-  --lib-effect-seam-play:     paused;
-  --lib-effect-seam-opacity:  0;
-  --lib-effect-glitch-play:   paused;
-  --lib-effect-scanlines:     0;
-  --lib-effect-crt-vignette:  0;
-  --lib-effect-brutal-shadow: 4px 4px 0px 0px var(--color-washi-900);
-  --lib-effect-glass-blur:    0px;
+  --lib-effect-seam-play:      paused;
+  --lib-effect-glitch-play:    paused;
+  --lib-effect-scanlines:      0;
+  --lib-effect-crt-vignette:   0;
+  --lib-effect-brutal-shadow:  4px 4px 0px 0px var(--color-washi-900);
+  --lib-effect-glass-blur:     0px;
+  --lib-effect-topbar-opacity: 0;
 }
 
 
@@ -269,14 +269,18 @@
       oklch(45% 0.05 45deg / 0.50) 100%
     );
 
+  /* ── Kanji: toque dorado ─────────────────────────────── */
+  --lib-comp-kanji-color: oklch(51.65% 0.134 46.13deg / 0.06);
+
   /* ── Effect activation: seam animado activo ──────────── */
-  --lib-effect-seam-play:     running;
-  --lib-effect-seam-opacity:  1;
-  --lib-effect-glitch-play:   paused;
-  --lib-effect-scanlines:     0;
-  --lib-effect-crt-vignette:  0;
-  --lib-effect-brutal-shadow: none;
-  --lib-effect-glass-blur:    0px;
+  --lib-effect-seam-play:      running;
+  --lib-effect-glitch-play:    paused;
+  --lib-effect-scanlines:      0;
+  --lib-effect-crt-vignette:   0;
+  --lib-effect-brutal-shadow:  none;
+  --lib-effect-glass-blur:     0px;
+  /* Top bar: seam gradient (default in card CSS) — just open it */
+  --lib-effect-topbar-opacity: 1;
 }
 
 
@@ -335,14 +339,17 @@
   /* ── Spotlight: OFF (silencio total) ─────────────────── */
   --lib-spotlight-opacity: 0;
 
+  /* ── Kanji: blanco puro al 4% (oscuridad total) ─────── */
+  --lib-comp-kanji-color: oklch(100% 0 0deg / 0.04);
+
   /* ── Effect activation: todo en silencio ─────────────── */
-  --lib-effect-seam-play:     paused;
-  --lib-effect-seam-opacity:  0;
-  --lib-effect-glitch-play:   paused;
-  --lib-effect-scanlines:     0;
-  --lib-effect-crt-vignette:  0;
-  --lib-effect-brutal-shadow: none;
-  --lib-effect-glass-blur:    0px;
+  --lib-effect-seam-play:      paused;
+  --lib-effect-glitch-play:    paused;
+  --lib-effect-scanlines:      0;
+  --lib-effect-crt-vignette:   0;
+  --lib-effect-brutal-shadow:  none;
+  --lib-effect-glass-blur:     0px;
+  --lib-effect-topbar-opacity: 0;
 }
 
 
@@ -402,14 +409,19 @@
   /* ── Spotlight: OFF ───────────────────────────────────── */
   --lib-spotlight-opacity: 0;
 
+  /* ── Kanji: tinte phosphor al 6% ─────────────────────── */
+  --lib-comp-kanji-color: oklch(68% 0.14 155deg / 0.06);
+
   /* ── Effect activation: glitch + scanlines CRT ───────── */
-  --lib-effect-seam-play:     paused;
-  --lib-effect-seam-opacity:  0;
-  --lib-effect-glitch-play:   running;
-  --lib-effect-scanlines:     0.05;
-  --lib-effect-crt-vignette:  0.50;
-  --lib-effect-brutal-shadow: none;
-  --lib-effect-glass-blur:    0px;
+  --lib-effect-seam-play:      paused;
+  --lib-effect-glitch-play:    running;
+  --lib-effect-scanlines:      0.05;
+  --lib-effect-crt-vignette:   0.50;
+  --lib-effect-brutal-shadow:  none;
+  --lib-effect-glass-blur:     0px;
+  /* Top bar: barra de phosphor sólida (sin animación seam) */
+  --lib-effect-topbar-opacity: 1;
+  --lib-effect-topbar-bg:      oklch(68% 0.14 155deg);
 }
 
 
@@ -453,4 +465,9 @@
   --lib-comp-border-subtle: var(--border-subtle);
   --lib-comp-border-strong: var(--border-strong);
   --lib-comp-border-focus:  var(--border-focus);
+
+  /* ── Kanji watermark (marca de agua decorativa) ──────── */
+  /* Light katachis: tinta oscura al 4%.
+     Override por dark katachis y los que tienen acento especial. */
+  --lib-comp-kanji-color:   oklch(0% 0 0deg / 0.04);
 }
