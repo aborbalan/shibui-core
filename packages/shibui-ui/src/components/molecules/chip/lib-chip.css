@@ -4,7 +4,7 @@
    LIB-CHIP — Shibui UI · SG-26
    Familias : static · toggle · input
    Tamaños  : xs · sm · md · lg
-   Colores  : default · kaki · celadon · error · info · dark
+   Colores  : default · accent · info · error · strong
    ============================================================ */
 
 @layer reset {
@@ -257,67 +257,67 @@
   }
 
   /* ────────────────────────────────────────
-     COLORES — kaki
+     COLORES — accent (era kaki)
      ──────────────────────────────────────── */
-  :host([color="kaki"]) .chip {
+  :host([color="accent"]) .chip {
     background: var(--color-kaki-50);
     color: var(--color-kaki-600);
     border-color: var(--color-kaki-100);
   }
 
-  :host([color="kaki"]) .chip-toggle:not(.chip-toggle-selected) {
+  :host([color="accent"]) .chip-toggle:not(.chip-toggle-selected) {
     background: var(--color-kaki-50);
     color: var(--color-kaki-600);
     border-color: var(--color-kaki-100);
   }
 
-  :host([color="kaki"]) .chip-toggle:hover:not([selected]) {
+  :host([color="accent"]) .chip-toggle:hover:not([selected]) {
     border-color: var(--color-kaki-400);
   }
 
-  :host([color="kaki"][selected]) .chip-toggle {
+  :host([color="accent"][selected]) .chip-toggle {
     background: var(--color-kaki-500);
     border-color: var(--color-kaki-500);
     color: #fff;
   }
 
-  :host([color="kaki"]) .chip-input {
+  :host([color="accent"]) .chip-input {
     background: var(--color-kaki-50);
     color: var(--color-kaki-600);
     border-color: var(--color-kaki-100);
   }
 
-  :host([color="kaki"]) .chip-remove::part(close-btn):hover {
+  :host([color="accent"]) .chip-remove::part(close-btn):hover {
     background: var(--color-kaki-100);
     color: var(--color-kaki-600);
   }
 
-  /* ── celadon ── */
-  :host([color="celadon"]) .chip {
+  /* ── info (era celadon) ── */
+  :host([color="info"]) .chip {
     background: var(--color-celadon-100);
     color: var(--color-celadon-600);
     border-color: var(--color-celadon-100);
   }
 
-  :host([color="celadon"]) .chip-toggle {
+  :host([color="info"]) .chip-toggle {
     background: var(--color-celadon-50);
     color: var(--color-celadon-600);
     border-color: var(--color-celadon-100);
   }
 
-  :host([color="celadon"][selected]) .chip-toggle {
+  :host([color="info"][selected]) .chip-toggle {
     background: var(--color-celadon-500);
     border-color: var(--color-celadon-500);
     color: #fff;
   }
 
-  :host([color="celadon"]) .chip-input {
+  :host([color="info"]) .chip-input {
     background: var(--color-celadon-50);
     color: var(--color-celadon-600);
     border-color: var(--color-celadon-100);
   }
 
-  :host([color="celadon"]) .chip-remove::part(close-btn):hover {
+  :host([color="info"]) .chip-remove::part(close-btn):hover {
     background: var(--color-celadon-100);
     color: var(--color-celadon-600);
   }
@@ -335,44 +335,37 @@
     color: var(--color-error);
   }
 
-  /* ── info ── */
-  :host([color="info"]) .chip {
-    background: var(--color-info-light, #D6E8F5);
-    color: var(--color-info, #1A4A6E);
-    border-color: var(--color-info-light, #D6E8F5);
+  /* ── strong (era dark) — contraste máximo, fondo inverso ── */
+  :host([color="strong"]) .chip {
+    background: var(--lib-comp-bg-inverse, var(--color-washi-900));
+    color: var(--lib-comp-fg-sec, var(--color-washi-300));
+    border-color: var(--lib-comp-border, var(--color-washi-800));
   }
 
-  /* ── dark ── */
-  :host([color="dark"]) .chip {
-    background: var(--color-washi-900);
-    color: var(--color-washi-300);
-    border-color: var(--color-washi-800);
-  }
-
-  :host([color="dark"]) .chip-toggle {
+  :host([color="strong"]) .chip-toggle {
     background: var(--color-washi-800);
     color: var(--color-washi-300);
     border-color: var(--color-washi-700);
   }
 
-  :host([color="dark"]) .chip-toggle:hover {
+  :host([color="strong"]) .chip-toggle:hover {
     border-color: var(--color-washi-500);
     color: var(--color-washi-100);
   }
 
-  :host([color="dark"][selected]) .chip-toggle {
+  :host([color="strong"][selected]) .chip-toggle {
     background: var(--color-washi-50);
     border-color: var(--color-washi-50);
     color: var(--color-washi-950);
   }
 
-  :host([color="dark"]) .chip-input {
+  :host([color="strong"]) .chip-input {
     background: var(--color-washi-800);
     color: var(--color-washi-300);
     border-color: var(--color-washi-700);
   }
 
-  :host([color="dark"]) .chip-remove::part(close-btn):hover {
+  :host([color="strong"]) .chip-remove::part(close-btn):hover {
     background: var(--color-washi-700);
     color: var(--color-washi-100);
   }

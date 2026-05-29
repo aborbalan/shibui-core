@@ -18,14 +18,14 @@ type StrokeConfig = {
 
 function ensoStroke(tone: SpinnerTone, dark: boolean): StrokeConfig {
   if (dark) {
-    if (tone === 'kaki') {
+    if (tone === 'accent') {
       return { blur: 'oklch(70% 0.14 60)', main: 'oklch(68% 0.13 60)', bopacity: 0.30 };
     }
-    /* ink / celadon → paper on dark */
+    /* ink / cool → paper on dark */
     return { blur: 'oklch(88% 0.01 60)', main: 'oklch(88% 0.01 60)', bopacity: 0.20 };
   }
-  if (tone === 'kaki')    return { blur: 'oklch(55% 0.08 45)', main: 'oklch(50% 0.07 45)', bopacity: 0.25 };
-  if (tone === 'celadon') return { blur: 'oklch(50% 0.06 180)', main: 'oklch(48% 0.06 180)', bopacity: 0.25 };
+  if (tone === 'accent') return { blur: 'oklch(55% 0.08 45)', main: 'oklch(50% 0.07 45)', bopacity: 0.25 };
+  if (tone === 'cool')   return { blur: 'oklch(50% 0.06 180)', main: 'oklch(48% 0.06 180)', bopacity: 0.25 };
   /* default: ink */
   return { blur: 'oklch(25% 0.02 45)', main: 'oklch(25% 0.02 45)', bopacity: 0.25 };
 }
@@ -87,8 +87,8 @@ function sumiTemplate(): TemplateResult {
   `;
 }
 
-/* ── Kintsugi ───────────────────────────────────────────────── */
-function kintsugiTemplate(): TemplateResult {
+/* ── Kin (金) — anillo dorado ───────────────────────────────── */
+function kinTemplate(): TemplateResult {
   return html`<div class="sp-kintsugi"></div>`;
 }
 
@@ -106,9 +106,9 @@ function shizukuTemplate(size: SpinnerSize): TemplateResult {
 /* ── Root ───────────────────────────────────────────────────── */
 export function spinnerTemplate(props: SpinnerTemplateProps): TemplateResult {
   const inner: TemplateResult =
-    props.variant === 'sumi'     ? sumiTemplate() :
-    props.variant === 'kintsugi' ? kintsugiTemplate() :
-    props.variant === 'shizuku'  ? shizukuTemplate(props.size) :
+    props.variant === 'sumi'    ? sumiTemplate() :
+    props.variant === 'kin'     ? kinTemplate() :
+    props.variant === 'shizuku' ? shizukuTemplate(props.size) :
     ensoTemplate(props);
 
   return html`

@@ -5,7 +5,7 @@ import { renderHamburger, renderMobileDrawer }    from './header-mobile.html';
 
 /**
  * Template compartido por las variantes de layout simple:
- * classic · dark · transparent · kintsugi · glitch · minimal · shrink
+ * classic · dark · transparent · minimal · shrink
  *
  * Estructura: logo | nav | actions | hamburger (móvil)
  */

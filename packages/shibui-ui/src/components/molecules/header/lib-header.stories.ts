@@ -11,8 +11,8 @@ const meta: Meta = {
   parameters: { layout: 'fullscreen' },
   argTypes: {
     variant: { control: 'select', options: [
-      'classic','dark','centered','transparent','kintsugi',
-      'glitch','mega','minimal','shrink','app-bar','celadon','sabi','shizen',
+      'classic','dark','centered','transparent',
+      'mega','minimal','shrink','app-bar','celadon','sabi','shizen',
     ]},
   },
 };
@@ -152,60 +152,10 @@ export const Transparent: Story = {
 };
 
 /* ════════════════════════════════════════
-   05 · KINTSUGI
-   ════════════════════════════════════════ */
-export const Kintsugi: Story = {
-  name: '05 · Kintsugi — ✦ seam inferior animada',
-  render: (): TemplateResult => html`
-    <lib-header variant="kintsugi"
-      brand-name="shibui" login-label="Entrar"
-      .links="${[
-        { id: 'gallery',    label: 'Galería',    href: '#' },
-        { id: 'collection', label: 'Colección',  href: '#' },
-        { id: 'history',    label: 'Historia',   href: '#' },
-        { id: 'philosophy', label: 'Filosofía',  href: '#' },
-      ]}"
-      .actions="${[{ label: '✦ Adquirir', href: '#', variant: 'kintsugi' }]}"
-    ></lib-header>
-    <div style="background:var(--color-washi-950);padding:var(--lib-space-xl) calc(var(--lib-space-xl)*2);min-height:300px;">
-      <div style="font-family:var(--lib-font-display);font-size:2.8rem;font-weight:300;
-        letter-spacing:-.02em;line-height:1.1;color:rgba(250,247,244,.6);">
-        金継ぎ<br><em style="font-style:italic;color:var(--color-kaki-400);">el arte de la cicatriz de oro</em>
-      </div>
-    </div>
-  `,
-};
-
-/* ════════════════════════════════════════
-   06 · GLITCH
-   ════════════════════════════════════════ */
-export const Glitch: Story = {
-  name: '06 · Glitch — ⌗ RGB drift · scanlines',
-  render: (): TemplateResult => html`
-    <lib-header variant="glitch"
-      logo-mark="⌗" brand-name="SHIBUI"
-      .links="${[
-        { id: 'processes', label: 'processes', href: '#' },
-        { id: 'metrics',   label: 'metrics',   href: '#' },
-        { id: 'logs',      label: 'logs',      href: '#' },
-        { id: 'deploy',    label: 'deploy',    href: '#' },
-      ]}"
-      .actions="${[{ label: '⌗ connect', href: '#', variant: 'glitch' }]}"
-    ></lib-header>
-    <div style="background:var(--color-washi-950);padding:var(--lib-space-xl) calc(var(--lib-space-xl)*2);min-height:300px;
-      font-family:var(--lib-font-mono);font-size:9px;color:rgba(250,247,244,.2);line-height:2.2;">
-      <div><span style="color:rgba(78,148,130,.7);">✔</span>&nbsp; node server.js · PID 4821</div>
-      <div><span style="color:var(--color-kaki-400);">⚠</span>&nbsp; webpack · 412MB · high memory</div>
-      <div><span style="color:rgba(192,57,43,.6);">✖</span>&nbsp; redis · offline</div>
-    </div>
-  `,
-};
-
-/* ════════════════════════════════════════
-   07 · MEGA-NAV
+   05 · MEGA-NAV
    ════════════════════════════════════════ */
 export const Mega: Story = {
-  name: '07 · Mega-nav — panel full-width',
+  name: '05 · Mega-nav — panel full-width',
   render: (): TemplateResult => html`
     <lib-header variant="mega"
       brand-name="shibui" login-label="Entrar"
@@ -245,10 +195,10 @@ export const Mega: Story = {
 };
 
 /* ════════════════════════════════════════
-   08 · MINIMAL
+   06 · MINIMAL
    ════════════════════════════════════════ */
 export const Minimal: Story = {
-  name: '08 · Minimal — sin borde · solo texto',
+  name: '06 · Minimal — sin borde · solo texto',
   render: (): TemplateResult => html`
     <div style="background:var(--color-washi-100);">
       <lib-header variant="minimal"
@@ -276,10 +226,10 @@ export const Minimal: Story = {
 };
 
 /* ════════════════════════════════════════
-   09 · SHRINK ON SCROLL
+   07 · SHRINK ON SCROLL
    ════════════════════════════════════════ */
 export const Shrink: Story = {
-  name: '09 · Shrink — 72px → 48px al scroll',
+  name: '07 · Shrink — 72px → 48px al scroll',
   render: (): TemplateResult => html`
     <lib-header variant="shrink"
       brand-name="shibui" brand-tagline="Design System"
@@ -296,10 +246,10 @@ export const Shrink: Story = {
 };
 
 /* ════════════════════════════════════════
-   10 · APP-BAR
+   08 · APP-BAR
    ════════════════════════════════════════ */
 export const AppBar: Story = {
-  name: '10 · App-bar — breadcrumbs · search · acciones',
+  name: '08 · App-bar — breadcrumbs · search · acciones',
   render: (): TemplateResult => html`
     <!-- Default 56px light -->
     <lib-header variant="app-bar"
@@ -344,10 +294,10 @@ export const AppBar: Story = {
 };
 
 /* ════════════════════════════════════════
-   11 · CELADON
+   09 · CELADON
    ════════════════════════════════════════ */
 export const Celadon: Story = {
-  name: '11 · Celadon — 青 jade · seam jade',
+  name: '09 · Celadon — 青 jade · seam jade',
   render: (): TemplateResult => html`
     <lib-header variant="celadon"
       brand-name="shibui"
@@ -370,10 +320,10 @@ export const Celadon: Story = {
 };
 
 /* ════════════════════════════════════════
-   12 · SABI
+   10 · SABI
    ════════════════════════════════════════ */
 export const Sabi: Story = {
-  name: '12 · Sabi — 寂 washi · tinta · brutal',
+  name: '10 · Sabi — 寂 washi · tinta · brutal',
   render: (): TemplateResult => html`
     <lib-header variant="sabi"
       brand-name="shibui"
@@ -396,10 +346,10 @@ export const Sabi: Story = {
 };
 
 /* ════════════════════════════════════════
-   13 · SHIZEN
+   11 · SHIZEN
    ════════════════════════════════════════ */
 export const Shizen: Story = {
-  name: '13 · Shizen — 自 natural · limpio · aireado',
+  name: '11 · Shizen — 自 natural · limpio · aireado',
   render: (): TemplateResult => html`
     <lib-header variant="shizen"
       brand-name="shibui"
@@ -434,14 +384,15 @@ export const Playground: Story = {
       .links="${NAV_SIMPLE}"
       .actions="${ACTIONS}"
     ></lib-header>
-    ${body(['dark','kintsugi','glitch','celadon'].includes(args.variant as string))}
+    ${body(['dark','celadon'].includes(args.variant as string))}
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
    KATACHI · 形 · Las 6 historias estándar
-   lib-header (variant="classic") usa --lib-comp-fg / --lib-comp-fg-sec
-   para brand-name, links y actions outline. Adapta al katachi activo.
-   Variantes dark/kintsugi/glitch son superficies oscuras deliberadas.
+   lib-header (variant="classic") consume tokens semánticos y adapta
+   al katachi activo. Los efectos de katachi (seam dorado en kintsugi,
+   scanlines en terminal) se activan automáticamente vía --lib-effect-*
+   tokens sin prop adicional en el componente.
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`

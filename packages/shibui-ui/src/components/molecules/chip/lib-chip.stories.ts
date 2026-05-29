@@ -10,7 +10,7 @@ const meta: Meta = {
   argTypes: {
     kind:     { control: 'select', options: ['static', 'toggle', 'input'] },
     size:     { control: 'select', options: ['xs', 'sm', 'md', 'lg'] },
-    color:    { control: 'select', options: ['default', 'kaki', 'celadon', 'error', 'info', 'dark'] },
+    color:    { control: 'select', options: ['default', 'accent', 'info', 'error', 'strong'] },
     selected: { control: 'boolean' },
     dot:      { control: 'boolean' },
   },
@@ -24,7 +24,7 @@ const group = (children: TemplateResult): TemplateResult => html`
 
 /* ── Playground ── */
 export const Playground: Story = {
-  args: { kind: 'static', size: 'md', color: 'default', selected: false, dot: false },
+  args: { kind: 'static', size: 'md', color: 'default' as const, selected: false, dot: false },
   render: (args): TemplateResult => html`
     <div style="padding:3rem;">
       <lib-chip
@@ -122,11 +122,11 @@ export const Sizes: Story = {
 
 /* ── Colores ── */
 export const Colors: Story = {
-  name: 'Colores — todos los tokens',
+  name: 'Colores — roles semánticos',
   render: (): TemplateResult => html`
     <div style="padding:2rem;display:flex;flex-direction:column;gap:1.5rem;">
 
-      ${(['default','kaki','celadon','error','info'] as const).map(c => html`
+      ${(['default','accent','info','error'] as const).map(c => html`
         <div style="display:flex;align-items:center;gap:1rem;">
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.25em;
             text-transform:uppercase;color:var(--text-muted);width:72px;flex-shrink:0;">${c}</span>
@@ -139,15 +139,15 @@ export const Colors: Story = {
         </div>
       `)}
 
-      <!-- Dark — sobre fondo oscuro -->
+      <!-- Strong — sobre fondo oscuro -->
       <div style="background:var(--color-washi-950);padding:1rem;display:flex;align-items:center;gap:1rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.25em;
-          text-transform:uppercase;color:var(--color-washi-700);width:72px;flex-shrink:0;">dark</span>
+          text-transform:uppercase;color:var(--color-washi-700);width:72px;flex-shrink:0;">strong</span>
         ${group(html`
-          <lib-chip color="dark">Static</lib-chip>
-          <lib-chip kind="toggle" color="dark">Toggle</lib-chip>
-          <lib-chip kind="toggle" color="dark" selected>Selected</lib-chip>
-          <lib-chip kind="input"  color="dark">Input</lib-chip>
+          <lib-chip color="strong">Static</lib-chip>
+          <lib-chip kind="toggle" color="strong">Toggle</lib-chip>
+          <lib-chip kind="toggle" color="strong" selected>Selected</lib-chip>
+          <lib-chip kind="input"  color="strong">Input</lib-chip>
         `)}
       </div>
 
@@ -165,8 +165,8 @@ export const Enriched: Story = {
         <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.25em;
           text-transform:uppercase;color:var(--text-muted);margin-bottom:.75rem;">Dot</p>
         ${group(html`
-          <lib-chip dot color="kaki">Kaki</lib-chip>
-          <lib-chip dot color="celadon">Celadon</lib-chip>
+          <lib-chip dot color="accent">Accent</lib-chip>
+          <lib-chip dot color="info">Info</lib-chip>
           <lib-chip dot color="error">Error</lib-chip>
           <lib-chip kind="toggle" dot selected>Seleccionado</lib-chip>
         `)}
@@ -239,12 +239,12 @@ export const FilterBar: Story = {
 
       <div>
         <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.25em;
-          text-transform:uppercase;color:var(--text-muted);margin-bottom:.5rem;">Kaki seleccionado</p>
+          text-transform:uppercase;color:var(--text-muted);margin-bottom:.5rem;">Accent seleccionado</p>
         <div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;">
-          <lib-chip kind="toggle" color="kaki" selected>Diseño</lib-chip>
-          <lib-chip kind="toggle" color="kaki">Tipografía</lib-chip>
-          <lib-chip kind="toggle" color="kaki">Tokens</lib-chip>
-          <lib-chip kind="toggle" color="kaki" selected>Grid</lib-chip>
+          <lib-chip kind="toggle" color="accent" selected>Diseño</lib-chip>
+          <lib-chip kind="toggle" color="accent">Tipografía</lib-chip>
+          <lib-chip kind="toggle" color="accent">Tokens</lib-chip>
+          <lib-chip kind="toggle" color="accent" selected>Grid</lib-chip>
         </div>
       </div>
 
@@ -277,7 +277,7 @@ export const ChipField: Story = {
           @ui-lib-chip-remove="${(e: Event): void => (e.target as HTMLElement).remove()}">
           Lit
         </lib-chip>
-        <lib-chip kind="input" color="kaki"
+        <lib-chip kind="input" color="accent"
           @ui-lib-chip-remove="${(e: Event): void => (e.target as HTMLElement).remove()}">
           TypeScript
         </lib-chip>
@@ -323,13 +323,13 @@ const _katachi = createKatachiStories<object>(() => html`
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xs);">
       <lib-chip kind="toggle" selected>Diseño</lib-chip>
       <lib-chip kind="toggle">Sistema</lib-chip>
-      <lib-chip kind="toggle" selected color="kaki">Kaki</lib-chip>
-      <lib-chip kind="toggle" color="celadon">Celadón</lib-chip>
+      <lib-chip kind="toggle" selected color="accent">Accent</lib-chip>
+      <lib-chip kind="toggle" color="info">Info</lib-chip>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xs);">
       <lib-chip kind="input">Katachi</lib-chip>
       <lib-chip kind="input">Wabi-Sabi</lib-chip>
-      <lib-chip dot color="kaki">Dot kaki</lib-chip>
+      <lib-chip dot color="accent">Dot accent</lib-chip>
       <lib-chip dot color="error">Dot error</lib-chip>
     </div>
   </div>

@@ -30,12 +30,6 @@ export const svgBell = html`
    ══════════════════════════════════════ */
 
 export function renderLogoMark(ctx: LibHeader): TemplateResult {
-  if (ctx.variant === 'kintsugi') {
-    return html`
-      <div class="hdr-logo-mark">
-        <span class="hdr-logo-mark-text">${ctx.logoMark}</span>
-      </div>`;
-  }
   return html`<div class="hdr-logo-mark">${ctx.logoMark}</div>`;
 }
 
@@ -44,14 +38,6 @@ export function renderLogoMark(ctx: LibHeader): TemplateResult {
    ══════════════════════════════════════ */
 
 export function renderLogo(ctx: LibHeader): TemplateResult {
-  if (ctx.variant === 'glitch') {
-    return html`
-      <a href="${ctx.logoHref}" class="hdr-logo-glitch">
-        ⌗ ${ctx.brandName.toUpperCase()}
-        <span class="hdr-logo-glitch-badge">SYS</span>
-      </a>`;
-  }
-
   if (ctx.variant === 'minimal') {
     return html`
       <a href="${ctx.logoHref}" class="hdr-logo">
@@ -64,15 +50,13 @@ export function renderLogo(ctx: LibHeader): TemplateResult {
       ${renderLogoMark(ctx)}
       <div>
         <div class="hdr-brand-name">${ctx.brandName}
-          ${ctx.variant === 'kintsugi'
-            ? html` <em style="font-style:italic;color:var(--color-kaki-400);">金</em>`
-            : ctx.variant === 'celadon'
-              ? html` <em style="font-style:italic;color:var(--color-celadon-400);">青</em>`
-              : ctx.variant === 'sabi'
-                ? html` <em style="font-style:italic;color:var(--color-washi-400);">寂</em>`
-                : ctx.variant === 'shizen'
-                  ? html` <em style="font-style:italic;color:var(--color-kaki-400);">自</em>`
-                  : nothing}
+          ${ctx.variant === 'celadon'
+            ? html` <em style="font-style:italic;color:var(--color-celadon-400);">青</em>`
+            : ctx.variant === 'sabi'
+              ? html` <em style="font-style:italic;color:var(--color-washi-400);">寂</em>`
+              : ctx.variant === 'shizen'
+                ? html` <em style="font-style:italic;color:var(--color-kaki-400);">自</em>`
+                : nothing}
         </div>
         ${ctx.brandTagline && ctx.variant === 'shrink'
           ? html`<div class="hdr-tagline">${ctx.brandTagline}</div>`
@@ -123,7 +107,6 @@ export function renderLinks(ctx: LibHeader, links: NavLink[]): TemplateResult {
                 ctx._onLinkClick(link.id);
               }}"
             >
-              ${ctx.variant === 'glitch' ? html`<span>&gt;</span>` : nothing}
               ${link.label}
             </a>`
     )}`;
@@ -138,8 +121,6 @@ const ACTION_VARIANT_MAP: Record<string, string> = {
   centered:    'outline',
   dark:        'kaki',
   transparent: 'kaki',
-  kintsugi:    'kintsugi',
-  glitch:      'glitch',
   mega:        'kaki',
   shrink:      'kaki',
   minimal:     '',
@@ -168,10 +149,6 @@ export function renderActions(ctx: LibHeader): TemplateResult {
             }}"
           >${action.label}</a>`;
       })}
-
-      ${ctx.variant === 'glitch' ? html`
-        <div class="hdr-online">● online</div>
-      ` : nothing}
 
       ${ctx.variant === 'minimal' && ctx.contactLabel ? html`
         <a href="${ctx.contactHref || '#'}" class="hdr-contact">${ctx.contactLabel} →</a>

@@ -21,9 +21,8 @@ export interface MegaCta {
 /**
  * lib-header — Shibui UI · SG-66
  *
- * 13 variantes: classic · dark · centered · transparent · kintsugi ·
- *               glitch · mega · minimal · shrink · app-bar ·
- *               celadon · sabi · shizen
+ * 11 variantes: classic · dark · centered · transparent · mega ·
+ *               minimal · shrink · app-bar · celadon · sabi · shizen
  *
  * Mobile: breakpoint 640px — drawer vertical compartido por todas las variantes.
  */

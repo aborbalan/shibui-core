@@ -7,16 +7,17 @@ Variantes
 ──────────
 enso     (禅の円)  SVG doble capa con halo de tinta — 2.2s ease
 sumi     (墨)      conic-gradient tinta en agua — 1.6s linear
-kintsugi (金継ぎ)  anillo dorado con drop-shadow — 2s ease
+kin      (金)      anillo dorado con drop-shadow — 2s ease      era 'kintsugi'
 shizuku  (雫)      6 gotas en órbita decreciente — 1.8s linear
 
 Props
 ──────────
-variant  enso | sumi | kintsugi | shizuku   (default: enso)
+variant  enso | sumi | kin | shizuku        (default: enso)
 size     sm | md | lg                        (default: md)
-tone     ink | kaki | celadon               (default: ink)
+tone     ink | accent | cool                 (default: ink)
+         accent era 'kaki', cool era 'celadon'
 → afecta enso y sumi en modo claro
-→ en shizuku, tone=kaki activa las gotas doradas
+→ en shizuku, tone=accent activa las gotas doradas
 dark     boolean — optimiza colores para fondos oscuros
 ============================================================ */
 
@@ -118,8 +119,8 @@ dark     boolean — optimiza colores para fondos oscuros
     mask: radial-gradient(circle at center, transparent 56%, black 57%);
   }
 
-  /* ── Tono celadón ── */
-  :host([variant="sumi"][tone="celadon"]) .sp-sumi {
+  /* ── Tono cool (celadón) ── */
+  :host([variant="sumi"][tone="cool"]) .sp-sumi {
     background: conic-gradient(from 0deg,
         oklch(55% 0.06 180deg / 0) 0deg,
         oklch(55% 0.06 180deg / 0.08) 30deg,
@@ -145,8 +146,8 @@ dark     boolean — optimiza colores para fondos oscuros
     mask: radial-gradient(circle at center, transparent 56%, black 57%);
   }
 
-  /* ── Dark + kaki ── */
-  :host([variant="sumi"][dark][tone="kaki"]) .sp-sumi {
+  /* ── Dark + accent (kaki) ── */
+  :host([variant="sumi"][dark][tone="accent"]) .sp-sumi {
     background: conic-gradient(from 0deg,
         oklch(65% 0.12 60deg / 0) 0deg,
         oklch(65% 0.12 60deg / 0.10) 30deg,
@@ -201,7 +202,7 @@ dark     boolean — optimiza colores para fondos oscuros
   }
 
   /* ── Dark — oro más vivo ── */
-  :host([variant="kintsugi"][dark]) .sp-kintsugi {
+  :host([variant="kin"][dark]) .sp-kintsugi {
     background: conic-gradient(from 0deg,
         oklch(45% 0.05 45deg / 0) 0deg,
         oklch(55% 0.08 50deg / 0.20) 30deg,
@@ -214,19 +215,19 @@ dark     boolean — optimiza colores para fondos oscuros
   }
 
   /* ── Tamaños kintsugi ── */
-  :host([variant="kintsugi"][size="sm"]) .sp-kintsugi {
+  :host([variant="kin"][size="sm"]) .sp-kintsugi {
     width: 24px;
     height: 24px;
     mask: radial-gradient(circle at center, transparent 52%, black 53%);
   }
 
-  :host([variant="kintsugi"]:not([size])) .sp-kintsugi,
-  :host([variant="kintsugi"][size="md"]) .sp-kintsugi {
+  :host([variant="kin"]:not([size])) .sp-kintsugi,
+  :host([variant="kin"][size="md"]) .sp-kintsugi {
     width: 48px;
     height: 48px;
   }
 
-  :host([variant="kintsugi"][size="lg"]) .sp-kintsugi {
+  :host([variant="kin"][size="lg"]) .sp-kintsugi {
     width: 72px;
     height: 72px;
     mask: radial-gradient(circle at center, transparent 58%, black 59%);
@@ -257,8 +258,8 @@ dark     boolean — optimiza colores para fondos oscuros
     transform-origin: 0 0;
   }
 
-  /* ── Tono kaki (también activo en dark) ── */
-  :host([variant="shizuku"][tone="kaki"]) .sp-shizuku span,
+  /* ── Tono accent/kaki (también activo en dark) ── */
+  :host([variant="shizuku"][tone="accent"]) .sp-shizuku span,
   :host([variant="shizuku"][dark]) .sp-shizuku span {
     background: oklch(65% 0.12 60deg);
   }
@@ -431,11 +432,11 @@ dark     boolean — optimiza colores para fondos oscuros
 
   /* ─── KATACHI · ambient context ──────────────────────────────
      lib-spinner es un primitivo de loading state con 4 variants
-     (enso · sumi · kintsugi · shizuku) y 3 tones (ink · kaki ·
-     celadon) + dark attribute. Cada variant tiene su propia
-     paleta hardcoded en OKLCH — son identidades visuales
-     deliberadas (la tinta sumi negra, el oro kintsugi cálido,
-     etc.) que no deben adaptarse al katachi del ancestro.
+     (enso · sumi · kin · shizuku) y 3 tones (ink · accent · cool)
+     + dark attribute. Cada variant tiene su propia paleta hardcoded
+     en OKLCH — son identidades visuales deliberadas (la tinta sumi
+     negra, el oro kin cálido, etc.) que no deben adaptarse al
+     katachi del ancestro.
 
      Si necesitas un spinner que invierta bajo dark katachi,
      usa el atributo [dark] explícito (existente).
