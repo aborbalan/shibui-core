@@ -31,7 +31,7 @@
    Los defaults de --lib-effect-* viven en _effects.css (:root).
    ============================================================ */
 
-:host, :root {
+:root {
   /* ── Bridge tokens (sin valor por defecto) ────────────────
      Estos tokens existen sólo cuando un ancestro con
      [data-katachi] los define. Los componentes pueden leerlos

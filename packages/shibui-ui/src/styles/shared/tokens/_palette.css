@@ -1,4 +1,4 @@
-:host, :root {
+:root {
   /* --- WASHI: Tonos de papel neutros --- */
   --color-washi-50:  oklch(97.77% 0.003 68.35deg);  /* #FAF7F4 */
   --color-washi-100: oklch(94.29% 0.007 72.91deg);  /* #F2EDE6 */

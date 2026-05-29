@@ -1,4 +1,4 @@
-:host, :root {
+:root {
   /* --- Colores semánticos de estado --- */
   --color-error:   oklch(36.16% 0.106 28.52deg);  /* #8C2A1A */
   --color-warning: oklch(47.53% 0.088 77.58deg);  /* #8C6A1A */

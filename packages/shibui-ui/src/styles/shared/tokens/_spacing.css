@@ -1,4 +1,4 @@
-:host, :root {
+:root {
   /* --- Escala de aire (armonía 4px) --- */
   --lib-spacing-unit: 0.25rem;
   --lib-space-xs:  var(--lib-spacing-unit);             /*  4px */

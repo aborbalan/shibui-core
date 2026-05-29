@@ -1,4 +1,4 @@
-:host, :root {
+:root {
   /* --- Identidad Shibui --- */
   --lib-shibui-water: var(--color-celadon-500);
   --lib-shibui-kaki:  var(--color-kaki-500);
