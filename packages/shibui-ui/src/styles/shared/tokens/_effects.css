@@ -23,6 +23,9 @@
   /* Top accent bar — kintsugi (animated seam) and terminal (solid phosphor bar) */
   --lib-effect-topbar-opacity: 0;           /* visibility of the 2px top accent bar  */
   --lib-effect-topbar-bg:      transparent; /* background color/gradient             */
+  /* ::after overlay — mask-composite border (kintsugi) or scanlines (terminal) */
+  --lib-effect-after-bg:       transparent; /* background for ::after layer          */
+  --lib-effect-after-mask:     none;        /* mask (none = no mask, full render)    */
 
   /* ======================================================
      GLASS SYSTEM (Efecto Enso)

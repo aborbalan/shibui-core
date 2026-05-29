@@ -7,8 +7,8 @@
    Los efectos katachi se activan AUTOMÁTICAMENTE por contexto.
    Ningún variant prop es necesario para la identidad visual:
 
-     [data-katachi="kintsugi"] → seam dorado animado + glow cálido (::before)
-                                 corchetes dorados en las 4 esquinas (::after)
+     [data-katachi="kintsugi"] → seam animado + glow cálido (::before)
+                                 borde gradiente dorado vía mask-composite (::after)
      [data-katachi="terminal"] → barra phosphor (::before) + scanlines (::after)
      [data-katachi="sabi"]     → brutal offset shadow (.card)
      resto                     → sin efectos (tokens en default apagado)
@@ -151,72 +151,34 @@
     transition: opacity var(--duration-slow) var(--ease-out);
   }
 
-  /* ── Ornamentos de esquina + scanlines (::after) ─────── */
-  /* Capa multi-propósito (background layers en orden de z):
-       1. Corchetes dorados en las 4 esquinas (8 gradientes sólidos)
-          — kintsugi: --lib-effect-seam-opacity = 1 → visibles
-          — resto:    token = 0 → color alpha = 0 → invisibles
-          Cada corchete = brazo horizontal (14 × 1.5px) + brazo vertical (1.5 × 14px)
-       2. Terminal scanlines (repeating-linear-gradient)
-          — terminal: --lib-effect-scanlines = 0.10 → líneas al 10%
-          — resto:    token = 0 → stripes transparentes
-     Sin element-level opacity — evita doble-multiplicación (bug anterior). */
+  /* ── Border overlay (::after) ────────────────────────── */
+  /* Técnica mask-composite: exclude (igual que en la legacy).
+     padding: 1px crea el área de borde de 1px de ancho.
+     La máscara recorta el background al ring exterior (borde)
+     excluyendo el interior (content-box). Resultado: el
+     gradiente sólo es visible en los 1px de borde de la card.
+
+     Tokens que controlan el comportamiento:
+       --lib-effect-after-bg   → background value
+       --lib-effect-after-mask → mask value (none = sin máscara)
+
+     kintsugi  → gradiente 135deg kaki-400 + mask → borde dorado
+     terminal  → scanlines repeating-gradient + mask none → líneas CRT
+     resto     → transparent + mask none → invisible
+
+     Nota: cuando mask = none el mask-composite no tiene efecto
+     y el background (transparent / scanlines) se renderiza normal. */
 
   .card::after {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-      /* ── Esquina TL — brazo horizontal */
-      linear-gradient(
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
-      ) top 0 left 0 / 14px 1.5px no-repeat,
-      /* ── Esquina TL — brazo vertical */
-      linear-gradient(
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
-      ) top 0 left 0 / 1.5px 14px no-repeat,
-      /* ── Esquina TR — brazo horizontal */
-      linear-gradient(
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
-      ) top 0 right 0 / 14px 1.5px no-repeat,
-      /* ── Esquina TR — brazo vertical */
-      linear-gradient(
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
-      ) top 0 right 0 / 1.5px 14px no-repeat,
-      /* ── Esquina BL — brazo horizontal */
-      linear-gradient(
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
-      ) bottom 0 left 0 / 14px 1.5px no-repeat,
-      /* ── Esquina BL — brazo vertical */
-      linear-gradient(
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
-      ) bottom 0 left 0 / 1.5px 14px no-repeat,
-      /* ── Esquina BR — brazo horizontal */
-      linear-gradient(
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
-      ) bottom 0 right 0 / 14px 1.5px no-repeat,
-      /* ── Esquina BR — brazo vertical */
-      linear-gradient(
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0)),
-        oklch(61.85% 0.149 48.72deg / var(--lib-effect-seam-opacity, 0))
-      ) bottom 0 right 0 / 1.5px 14px no-repeat,
-      /* ── Terminal scanlines */
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 3px,
-        oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 3px,
-        oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 4px
-      );
+    padding: 1px;
+    background: var(--lib-effect-after-bg, transparent);
+    mask: var(--lib-effect-after-mask, none);
+    mask-composite: exclude;
     pointer-events: none;
-    z-index: 1;
+    z-index: 2;
   }
 
   /* ── Kanji watermark ──────────────────────────────────── */

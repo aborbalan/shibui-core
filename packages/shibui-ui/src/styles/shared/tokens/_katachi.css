@@ -85,6 +85,8 @@
   --lib-effect-brutal-shadow:  none;
   --lib-effect-glass-blur:     0px;
   --lib-effect-topbar-opacity: 0;
+  --lib-effect-after-bg:       transparent;
+  --lib-effect-after-mask:     none;
 }
 
 
@@ -160,6 +162,8 @@
   --lib-effect-brutal-shadow:  none;
   --lib-effect-glass-blur:     0px;
   --lib-effect-topbar-opacity: 0;
+  --lib-effect-after-bg:       transparent;
+  --lib-effect-after-mask:     none;
 }
 
 
@@ -215,6 +219,8 @@
   --lib-effect-brutal-shadow:  4px 4px 0px 0px var(--color-washi-900);
   --lib-effect-glass-blur:     0px;
   --lib-effect-topbar-opacity: 0;
+  --lib-effect-after-bg:       transparent;
+  --lib-effect-after-mask:     none;
 }
 
 
@@ -290,19 +296,32 @@
   /* ── Kanji: toque dorado ─────────────────────────────── */
   --lib-comp-kanji-color: oklch(51.65% 0.134 46.13deg / 0.06);
 
-  /* ── Effect activation: seam animado + anillo oro permanente */
+  /* ── Effect activation: seam animado + borde gradiente dorado */
   --lib-effect-seam-play:      running;
   --lib-effect-seam-opacity:   1;
   --lib-effect-glitch-play:    paused;
   --lib-effect-scanlines:      0;
   --lib-effect-crt-vignette:   0;
-  /* Anillo dorado + sombra profunda — reemplaza brutal-shadow */
-  --lib-effect-brutal-shadow:
-    0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.22),
-    0 4px 20px oklch(0% 0 0deg / 0.40);
+  /* Sombra profunda sin anillo outer — el borde viene del ::after mask */
+  --lib-effect-brutal-shadow:  0 4px 20px oklch(0% 0 0deg / 0.40);
   --lib-effect-glass-blur:     0px;
-  /* Top bar: seam gradient (default in card CSS) — just open it */
+  /* Top bar: seam gradient (default en card CSS) — sólo abrirlo */
   --lib-effect-topbar-opacity: 1;
+  /* ::after — borde gradiente dorado vía mask-composite: exclude
+     background = gradiente 135deg kaki-400 saturado
+     mask       = 1px ring (content-box excluido del border-box) */
+  --lib-effect-after-bg:
+    linear-gradient(
+      135deg,
+      oklch(61.85% 0.149 48.72deg / 0.85) 0%,
+      oklch(61.85% 0.149 48.72deg / 0.20) 35%,
+      oklch(78% 0.06 75deg / 0.55)        50%,
+      oklch(61.85% 0.149 48.72deg / 0.20) 65%,
+      oklch(61.85% 0.149 48.72deg / 0.70) 100%
+    );
+  --lib-effect-after-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
 }
 
 
@@ -373,6 +392,8 @@
   --lib-effect-brutal-shadow:  none;
   --lib-effect-glass-blur:     0px;
   --lib-effect-topbar-opacity: 0;
+  --lib-effect-after-bg:       transparent;
+  --lib-effect-after-mask:     none;
 }
 
 
@@ -446,6 +467,16 @@
   /* Top bar: barra de phosphor sólida (sin animación seam) */
   --lib-effect-topbar-opacity: 1;
   --lib-effect-topbar-bg:      oklch(68% 0.14 155deg);
+  /* ::after — scanlines directo, sin máscara */
+  --lib-effect-after-bg:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 3px,
+      oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 4px
+    );
+  --lib-effect-after-mask: none;
 }
 
 
