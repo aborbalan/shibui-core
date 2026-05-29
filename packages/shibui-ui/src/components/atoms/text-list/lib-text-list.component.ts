@@ -23,7 +23,7 @@ import type {
  * Sistema de listas con tres familias:
  *
  * **Content list** (`family="ul" | "ol"`) — listas tipográficas para prosa.
- * Marcadores: default · kaki · dash · check.
+ * Marcadores: default · accent · dash · check.
  * Contadores (ol): decimal · roman · alpha.
  *
  * **UI list** (`family="ui"`) — filas de interfaz con icono, avatar,
