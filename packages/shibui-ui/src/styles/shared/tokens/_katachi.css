@@ -78,6 +78,7 @@
 
   /* ── Effect activation: todo en silencio (zero-point) ── */
   --lib-effect-seam-play:      paused;
+  --lib-effect-seam-opacity:   0;
   --lib-effect-glitch-play:    paused;
   --lib-effect-scanlines:      0;
   --lib-effect-crt-vignette:   0;
@@ -152,6 +153,7 @@
 
   /* ── Effect activation: glaze sólo, sin animaciones ──── */
   --lib-effect-seam-play:      paused;
+  --lib-effect-seam-opacity:   0;
   --lib-effect-glitch-play:    paused;
   --lib-effect-scanlines:      0;
   --lib-effect-crt-vignette:   0;
@@ -206,6 +208,7 @@
 
   /* ── Effect activation: sólo el brutal shadow ────────── */
   --lib-effect-seam-play:      paused;
+  --lib-effect-seam-opacity:   0;
   --lib-effect-glitch-play:    paused;
   --lib-effect-scanlines:      0;
   --lib-effect-crt-vignette:   0;
@@ -274,6 +277,7 @@
 
   /* ── Effect activation: seam animado activo ──────────── */
   --lib-effect-seam-play:      running;
+  --lib-effect-seam-opacity:   1;
   --lib-effect-glitch-play:    paused;
   --lib-effect-scanlines:      0;
   --lib-effect-crt-vignette:   0;
@@ -344,6 +348,7 @@
 
   /* ── Effect activation: todo en silencio ─────────────── */
   --lib-effect-seam-play:      paused;
+  --lib-effect-seam-opacity:   0;
   --lib-effect-glitch-play:    paused;
   --lib-effect-scanlines:      0;
   --lib-effect-crt-vignette:   0;
@@ -414,6 +419,7 @@
 
   /* ── Effect activation: glitch + scanlines CRT ───────── */
   --lib-effect-seam-play:      paused;
+  --lib-effect-seam-opacity:   0;
   --lib-effect-glitch-play:    running;
   --lib-effect-scanlines:      0.05;
   --lib-effect-crt-vignette:   0.50;

@@ -14,6 +14,7 @@
        component::before/after → animation-play-state/opacity
      ====================================================== */
   --lib-effect-seam-play:      paused;      /* @keyframes kintsugi-seam              */
+  --lib-effect-seam-opacity:   0;           /* seam pseudo-element visibility        */
   --lib-effect-glitch-play:    paused;      /* @keyframes glitch-drift               */
   --lib-effect-scanlines:      0;           /* CRT scan line opacity                 */
   --lib-effect-crt-vignette:   0;           /* CRT edge vignette opacity             */
