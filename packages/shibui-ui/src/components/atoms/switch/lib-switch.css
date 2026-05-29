@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-SWITCH — Shibui UI
-   Variant : default · kintsugi
+   Variant : default · inverse
    Size    : sm · md (default) · lg
    Props   : checked · disabled · label · sub
 
@@ -196,7 +196,7 @@
     50%       { box-shadow: 0 0 14px 3px rgb(190,150,50,0.55); }
   }
 
-  :host([variant="kintsugi"]) {
+  :host([variant="inverse"]) {
     /* Gold palette local (mirrors styleguide tokens) */
     --gold-bright: oklch(80% 0.09 78deg);
     --gold-mid:    oklch(72% 0.06 68deg);
@@ -238,7 +238,7 @@
     }
   }
 
-  :host([variant="kintsugi"][checked]) {
+  :host([variant="inverse"][checked]) {
     /* Track ON — deep gold wash */
     & .sw-track { background: oklch(18% 0.04 60deg); }
     & .sw-track::before { animation: kin-pulse-on 2.4s ease-in-out infinite; }
@@ -257,9 +257,9 @@
     .sw-thumb,
     .sw-track { transition: none; }
 
-    :host([variant="kintsugi"]) .sw-track::before,
-    :host([variant="kintsugi"][checked]) .sw-track::before,
-    :host([variant="kintsugi"][checked]) .sw-thumb { animation: none; }
+    :host([variant="inverse"]) .sw-track::before,
+    :host([variant="inverse"][checked]) .sw-track::before,
+    :host([variant="inverse"][checked]) .sw-thumb { animation: none; }
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
@@ -270,7 +270,7 @@
      Valores idénticos en light mode; bajo katachi/dark el track
      adapta al contexto manteniendo contraste con el thumb.
 
-     Variants explícitos (kintsugi, etc.) sin cambios.
+     Variants explícitos (inverse, etc.) sin cambios.
      ─────────────────────────────────────────────────────────── */
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

@@ -53,7 +53,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  *   size="lg"
  *   description="66 componentes sin dependencias."
  * >
- *   <lib-eyebrow slot="eyebrow" effect="kintsugi" size="lg">
+ *   <lib-eyebrow slot="eyebrow" size="lg">
  *     Design System · v0.1.0
  *   </lib-eyebrow>
  * </lib-display-heading>

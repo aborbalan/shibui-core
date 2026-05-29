@@ -1,6 +1,6 @@
 import { html, nothing, TemplateResult } from 'lit';
 
-export type LibSwitchVariant = 'default' | 'kintsugi';
+export type LibSwitchVariant = 'default' | 'inverse';
 export type LibSwitchSize    = 'sm' | 'md' | 'lg';
 
 export interface SwitchTemplateProps {
