@@ -34,6 +34,31 @@ dark     boolean — optimiza colores para fondos oscuros
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    /* enso usa currentColor; sumi usa --_sp-color.
+       Ambos caen sobre --text-primary para adaptarse al katachi activo. */
+    color: var(--text-primary, oklch(25% 0.02 45deg));
+    --_sp-color: var(--text-primary, oklch(25% 0.02 45deg));
+  }
+
+  /* ── Color overrides por tone / dark ── */
+  :host([tone="accent"]) {
+    color: var(--text-accent, oklch(55% 0.08 45deg));
+    --_sp-color: var(--text-accent, oklch(55% 0.08 45deg));
+  }
+
+  :host([tone="cool"]) {
+    color: oklch(48% 0.06 180deg);
+    --_sp-color: oklch(55% 0.06 180deg);
+  }
+
+  :host([dark]) {
+    color: oklch(88% 0.01 60deg);
+    --_sp-color: oklch(88% 0.01 60deg);
+  }
+
+  :host([dark][tone="accent"]) {
+    color: oklch(70% 0.14 60deg);
+    --_sp-color: oklch(65% 0.12 60deg);
   }
 
   /* ════════════════════════════════════════
@@ -102,60 +127,48 @@ dark     boolean — optimiza colores para fondos oscuros
   }
 
 
-  /* ── Tono ink (default) ── */
+  /* ── Tono ink (default) — color vía --_sp-color → se adapta al katachi ── */
   .sp-sumi {
     border-radius: 50%;
     filter: blur(0.6px);
     animation: sp-rotate 1.6s linear infinite;
     background: conic-gradient(from 0deg,
-        oklch(25% 0.02 45deg / 0) 0deg,
-        oklch(25% 0.02 45deg / 0.08) 30deg,
-        oklch(25% 0.02 45deg / 0.25) 90deg,
-        oklch(25% 0.02 45deg / 0.65) 180deg,
-        oklch(25% 0.02 45deg / 0.92) 270deg,
-        oklch(25% 0.02 45deg / 1) 310deg,
-        oklch(25% 0.02 45deg / 0.20) 345deg,
-        oklch(25% 0.02 45deg / 0) 360deg);
+        color-mix(in oklch, var(--_sp-color), transparent 100%) 0deg,
+        color-mix(in oklch, var(--_sp-color), transparent 92%)  30deg,
+        color-mix(in oklch, var(--_sp-color), transparent 75%)  90deg,
+        color-mix(in oklch, var(--_sp-color), transparent 35%)  180deg,
+        color-mix(in oklch, var(--_sp-color), transparent 8%)   270deg,
+        color-mix(in oklch, var(--_sp-color), transparent 0%)   310deg,
+        color-mix(in oklch, var(--_sp-color), transparent 80%)  345deg,
+        color-mix(in oklch, var(--_sp-color), transparent 100%) 360deg);
     mask: radial-gradient(circle at center, transparent 56%, black 57%);
   }
 
-  /* ── Tono cool (celadón) ── */
+  /* ── Tono cool — posiciones de stop distintas ── */
   :host([variant="sumi"][tone="cool"]) .sp-sumi {
     background: conic-gradient(from 0deg,
-        oklch(55% 0.06 180deg / 0) 0deg,
-        oklch(55% 0.06 180deg / 0.08) 30deg,
-        oklch(55% 0.06 180deg / 0.30) 100deg,
-        oklch(55% 0.06 180deg / 0.70) 200deg,
-        oklch(55% 0.06 180deg / 1) 300deg,
-        oklch(55% 0.06 180deg / 0.15) 350deg,
-        oklch(55% 0.06 180deg / 0) 360deg);
+        color-mix(in oklch, var(--_sp-color), transparent 100%) 0deg,
+        color-mix(in oklch, var(--_sp-color), transparent 92%)  30deg,
+        color-mix(in oklch, var(--_sp-color), transparent 70%)  100deg,
+        color-mix(in oklch, var(--_sp-color), transparent 30%)  200deg,
+        color-mix(in oklch, var(--_sp-color), transparent 0%)   300deg,
+        color-mix(in oklch, var(--_sp-color), transparent 85%)  350deg,
+        color-mix(in oklch, var(--_sp-color), transparent 100%) 360deg);
     mask: radial-gradient(circle at center, transparent 56%, black 57%);
   }
 
-  /* ── Modo dark — papel claro ── */
-  :host([variant="sumi"][dark]) .sp-sumi {
-    background: conic-gradient(from 0deg,
-        oklch(98% 0.01 60deg / 0) 0deg,
-        oklch(98% 0.01 60deg / 0.08) 30deg,
-        oklch(98% 0.01 60deg / 0.25) 90deg,
-        oklch(98% 0.01 60deg / 0.65) 180deg,
-        oklch(98% 0.01 60deg / 0.92) 270deg,
-        oklch(98% 0.01 60deg / 1) 310deg,
-        oklch(98% 0.01 60deg / 0.20) 345deg,
-        oklch(98% 0.01 60deg / 0) 360deg);
-    mask: radial-gradient(circle at center, transparent 56%, black 57%);
-  }
+  /* ── Dark — --_sp-color ya es claro (ver :host([dark])); mismo gradiente ── */
 
-  /* ── Dark + accent (kaki) ── */
+  /* ── Dark + accent — posiciones de stop distintas + glow ── */
   :host([variant="sumi"][dark][tone="accent"]) .sp-sumi {
     background: conic-gradient(from 0deg,
-        oklch(65% 0.12 60deg / 0) 0deg,
-        oklch(65% 0.12 60deg / 0.10) 30deg,
-        oklch(65% 0.12 60deg / 0.30) 100deg,
-        oklch(65% 0.12 60deg / 0.75) 200deg,
-        oklch(65% 0.12 60deg / 1) 300deg,
-        oklch(65% 0.12 60deg / 0.15) 350deg,
-        oklch(65% 0.12 60deg / 0) 360deg);
+        color-mix(in oklch, var(--_sp-color), transparent 100%) 0deg,
+        color-mix(in oklch, var(--_sp-color), transparent 90%)  30deg,
+        color-mix(in oklch, var(--_sp-color), transparent 70%)  100deg,
+        color-mix(in oklch, var(--_sp-color), transparent 25%)  200deg,
+        color-mix(in oklch, var(--_sp-color), transparent 0%)   300deg,
+        color-mix(in oklch, var(--_sp-color), transparent 85%)  350deg,
+        color-mix(in oklch, var(--_sp-color), transparent 100%) 360deg);
     filter: blur(0.5px) drop-shadow(0 0 4px oklch(65% 0.12 60deg / 0.4));
     mask: radial-gradient(circle at center, transparent 56%, black 57%);
   }
@@ -251,8 +264,8 @@ dark     boolean — optimiza colores para fondos oscuros
   .sp-shizuku span {
     position: absolute;
     border-radius: 50%;
-    background: oklch(25% 0.02 45deg);
-    /* ink — default */
+    background: var(--text-primary, oklch(25% 0.02 45deg));
+    /* ink — default; hereda --text-primary del katachi activo */
     top: 50%;
     left: 50%;
     transform-origin: 0 0;
@@ -431,17 +444,16 @@ dark     boolean — optimiza colores para fondos oscuros
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     lib-spinner es un primitivo de loading state con 4 variants
-     (enso · sumi · kin · shizuku) y 3 tones (ink · accent · cool)
-     + dark attribute. Cada variant tiene su propia paleta hardcoded
-     en OKLCH — son identidades visuales deliberadas (la tinta sumi
-     negra, el oro kin cálido, etc.) que no deben adaptarse al
-     katachi del ancestro.
+     enso  → stroke="currentColor"; `color` en :host usa --text-primary
+     sumi  → conic-gradient con color-mix(in oklch, var(--_sp-color), ...)
+             --_sp-color hereda --text-primary del katachi activo
+     shizuku → background: var(--text-primary, ...)
+     kin   → identidad dorada deliberada; no se adapta al contexto
 
-     Si necesitas un spinner que invierta bajo dark katachi,
-     usa el atributo [dark] explícito (existente).
-
-     Bloque marcador para discoverability.
+     Resultado: los tres variantes de tinta son visibles en todos
+     los katachis sin necesidad de [dark] explícito. [dark] sigue
+     funcionando como override manual cuando se necesita garantía
+     de contraste independientemente del contexto.
      ─────────────────────────────────────────────────────────── */
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
