@@ -14,7 +14,7 @@ const meta: Meta<EmptyStateArgs> = {
   tags:['autodocs'],
   component: 'lib-empty-state',
   argTypes: {
-    tone:    { control: 'select', options: ['neutral', 'kaki', 'celadon', 'error'] },
+    tone:    { control: 'select', options: ['neutral', 'accent', 'info', 'error'] },
     layout:  { control: 'select', options: ['default', 'inline'] },
     size:    { control: 'select', options: ['md', 'sm'] },
     bordered: { control: 'boolean' },
@@ -175,14 +175,14 @@ export const Tones: Story = {
       </div>
 
       <div style="flex:1; min-width:180px; max-width:220px;">
-        <lib-empty-state size="sm" tone="kaki" heading="Empieza aquí" description="Crea tu primer proyecto.">
+        <lib-empty-state size="sm" tone="accent" heading="Empieza aquí" description="Crea tu primer proyecto.">
           <ph-sparkle slot="illustration" weight="regular"></ph-sparkle>
           <lib-button slot="actions" variant="accent">Crear proyecto</lib-button>
         </lib-empty-state>
       </div>
 
       <div style="flex:1; min-width:180px; max-width:220px;">
-        <lib-empty-state size="sm" tone="celadon" heading="Todo completado" description="No quedan tareas pendientes.">
+        <lib-empty-state size="sm" tone="info" heading="Todo completado" description="No quedan tareas pendientes.">
           <ph-check-circle slot="illustration" weight="regular"></ph-check-circle>
         </lib-empty-state>
       </div>
@@ -266,7 +266,7 @@ const _katachi = createKatachiStories<object>(() => html`
       description="No hay datos en este contexto."
     ></lib-empty-state>
     <lib-empty-state
-      tone="kaki"
+      tone="accent"
       size="sm"
       heading="Empieza aquí"
       description="Crea tu primer elemento."

@@ -16,7 +16,7 @@ import type {
  * Ítem de timeline. Debe usarse dentro de `<lib-timeline>`.
  *
  * @prop {TimelineNodeType}    node-type     — Tipo de nodo: dot · icon · avatar (default: 'dot')
- * @prop {TimelineNodeColor}   node-color    — Color del nodo: default · kaki · celadon · error · muted
+ * @prop {TimelineNodeColor}   node-color    — Color del nodo: default · accent · info · error · muted
  * @prop {string}              icon          — Nombre de icono Phosphor (node-type='icon')
  * @prop {string}              avatar        — Iniciales (node-type='avatar')
  * @prop {TimelineItemStatus}  status        — Estado: default · active · done · error · pending

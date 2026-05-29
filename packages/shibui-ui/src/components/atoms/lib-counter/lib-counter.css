@@ -4,7 +4,7 @@
    LIB-COUNTER — Shibui UI
    Mecanismo : digit flip (columna 0-9, translateY)
    Sizes     : sm (2rem) · md (3.5rem) · lg (5rem) · xl (7rem)
-   Tones     : default · kaki · celadon · error · muted · on-dark
+   Tones     : default · accent · info · error · muted · on-dark
    Slots     : ninguno — todo se construye internamente
    Props     : value · prefix · suffix · thousands · decimals
                size · tone · label · delta · delta-dir · animate
@@ -100,8 +100,8 @@
   :host([size="xl"])  .cnt-suffix { font-size: 1.8rem; }
 
   /* ── TONES ─────────────────────────────────────────────── */
-  :host([tone="kaki"])     .cnt-row { color: var(--color-kaki-500); }
-  :host([tone="celadon"])  .cnt-row { color: var(--color-celadon-500); }
+  :host([tone="accent"])     .cnt-row { color: var(--color-kaki-500); }
+  :host([tone="info"])  .cnt-row { color: var(--color-celadon-500); }
   :host([tone="error"])    .cnt-row { color: var(--color-error); }
   :host([tone="muted"])    .cnt-row { color: var(--text-muted); }
 
@@ -159,7 +159,7 @@
   /* ─── KATACHI · ambient context ──────────────────────────────
      lib-counter ya consume tokens semánticos en sus rows default
      (--text-primary, --text-muted). Los tones explícitos
-     (kaki · celadon · error · muted · on-dark) son una dimensión
+     (accent · info · error · muted · on-dark) son una dimensión
      ortogonal: paleta deliberada para destacar la métrica.
 
      El default adapta superficie por katachi automáticamente. Los

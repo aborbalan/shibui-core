@@ -1,6 +1,6 @@
 import { html, nothing, TemplateResult } from 'lit';
 
-export type LibEmptyStateTone   = 'neutral' | 'kaki' | 'celadon' | 'error';
+export type LibEmptyStateTone   = 'neutral' | 'accent' | 'info' | 'error';
 export type LibEmptyStateLayout = 'default' | 'inline';
 export type LibEmptyStateSize   = 'sm' | 'md';
 

@@ -28,7 +28,7 @@ export type { LibEmptyStateTone, LibEmptyStateLayout, LibEmptyStateSize };
  * </lib-empty-state>
  *
  * @example — inline con tone
- * <lib-empty-state layout="inline" tone="kaki" heading="Empieza aquí" size="sm">
+ * <lib-empty-state layout="inline" tone="accent" heading="Empieza aquí" size="sm">
  *   <ph-sparkle slot="illustration" weight="regular"></ph-sparkle>
  *   <lib-button slot="actions" variant="accent">Crear</lib-button>
  * </lib-empty-state>
@@ -66,8 +66,8 @@ export class LibEmptyState extends LitElement {
   /**
    * Tono cromático del icono.
    * - neutral (default): washi
-   * - kaki: cálido, primer uso, atención
-   * - celadon: completado, éxito
+   * - accent: cálido, primer uso, atención
+   * - info: completado, éxito
    * - error: fallo, acceso denegado
    */
   @property({ type: String, reflect: true })

@@ -28,7 +28,7 @@ const meta: Meta<LibSkeletonStoryArgs> = {
     },
     surface: {
       control: 'select',
-      options: ['light', 'dark', 'kaki', 'celadon'],
+      options: ['light', 'dark', 'accent', 'info'],
     },
     width:  { control: 'text' },
     height: { control: 'text' },
@@ -119,9 +119,9 @@ export const Animations: Story = {
   `),
 };
 
-/* ── Superficies dark y kaki ── */
+/* ── Superficies dark y accent ── */
 export const Surfaces: Story = {
-  name: 'Surfaces — dark · kaki',
+  name: 'Surfaces — dark · accent',
   render: (): TemplateResult => html`
     <div style="display:flex; gap:24px; flex-wrap:wrap;">
 
@@ -140,14 +140,14 @@ export const Surfaces: Story = {
         <span style="font-family:monospace; font-size:10px; color:var(--color-washi-600); text-transform:uppercase; letter-spacing:0.25em; margin-top:4px;">Dark</span>
       </div>
 
-      <!-- kaki -->
+      <!-- accent -->
       <div style="flex:1; min-width:220px; background:var(--color-kaki-50); border:1px solid var(--color-kaki-200); padding:24px; display:flex; flex-direction:column; gap:16px;">
-        <lib-skeleton shape="img"   surface="kaki" width="100%"></lib-skeleton>
-        <lib-skeleton shape="title" surface="kaki" width="65%"></lib-skeleton>
-        <lib-skeleton shape="line"  surface="kaki" width="100%"></lib-skeleton>
-        <lib-skeleton shape="line"  surface="kaki" width="75%"></lib-skeleton>
-        <lib-skeleton shape="btn"   surface="kaki" width="96px"></lib-skeleton>
-        <span style="font-family:monospace; font-size:10px; color:var(--color-kaki-500); text-transform:uppercase; letter-spacing:0.25em; margin-top:4px;">Kaki</span>
+        <lib-skeleton shape="img"   surface="accent" width="100%"></lib-skeleton>
+        <lib-skeleton shape="title" surface="accent" width="65%"></lib-skeleton>
+        <lib-skeleton shape="line"  surface="accent" width="100%"></lib-skeleton>
+        <lib-skeleton shape="line"  surface="accent" width="75%"></lib-skeleton>
+        <lib-skeleton shape="btn"   surface="accent" width="96px"></lib-skeleton>
+        <span style="font-family:monospace; font-size:10px; color:var(--color-kaki-500); text-transform:uppercase; letter-spacing:0.25em; margin-top:4px;">Accent</span>
       </div>
 
     </div>
@@ -370,7 +370,7 @@ export const KatachiCeladon: Story = {
         </div>
       </div>
 
-      <!-- ── Sección 2: surface="celadon" explícito · 3 animaciones ── -->
+      <!-- ── Sección 2: surface="info" explícito · 3 animaciones ── -->
       <div style="display:flex; flex-direction:column; gap:12px;">
         <span style="
           font-family: monospace;
@@ -378,7 +378,7 @@ export const KatachiCeladon: Story = {
           letter-spacing: 0.25em;
           text-transform: uppercase;
           color: var(--color-celadon-400);
-        ">surface="celadon" · shimmer · wave · pulse</span>
+        ">surface="info" · shimmer · wave · pulse</span>
 
         <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;">
           ${(['shimmer', 'wave', 'pulse'] as const).map(anim => html`
@@ -394,16 +394,16 @@ export const KatachiCeladon: Story = {
               gap: 14px;
             ">
               <div style="display:flex; align-items:center; gap:10px;">
-                <lib-skeleton shape="avatar" surface="celadon" animation=${anim} width="36px" height="36px"></lib-skeleton>
+                <lib-skeleton shape="avatar" surface="info" animation=${anim} width="36px" height="36px"></lib-skeleton>
                 <div style="flex:1; display:flex; flex-direction:column; gap:7px;">
-                  <lib-skeleton shape="title" surface="celadon" animation=${anim} width="65%"></lib-skeleton>
-                  <lib-skeleton shape="line"  surface="celadon" animation=${anim} width="40%"></lib-skeleton>
+                  <lib-skeleton shape="title" surface="info" animation=${anim} width="65%"></lib-skeleton>
+                  <lib-skeleton shape="line"  surface="info" animation=${anim} width="40%"></lib-skeleton>
                 </div>
               </div>
-              <lib-skeleton shape="line" surface="celadon" animation=${anim} width="100%"></lib-skeleton>
-              <lib-skeleton shape="line" surface="celadon" animation=${anim} width="82%"></lib-skeleton>
-              <lib-skeleton shape="line" surface="celadon" animation=${anim} width="58%"></lib-skeleton>
-              <lib-skeleton shape="btn"  surface="celadon" animation=${anim} width="100%"></lib-skeleton>
+              <lib-skeleton shape="line" surface="info" animation=${anim} width="100%"></lib-skeleton>
+              <lib-skeleton shape="line" surface="info" animation=${anim} width="82%"></lib-skeleton>
+              <lib-skeleton shape="line" surface="info" animation=${anim} width="58%"></lib-skeleton>
+              <lib-skeleton shape="btn"  surface="info" animation=${anim} width="100%"></lib-skeleton>
               <span style="
                 font-family: monospace;
                 font-size: 9px;

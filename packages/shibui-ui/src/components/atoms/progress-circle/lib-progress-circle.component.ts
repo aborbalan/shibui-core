@@ -15,13 +15,13 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * <lib-progress-circle value="72"></lib-progress-circle>
  *
  * @example — kaki con subtítulo
- * <lib-progress-circle value="61" variant="kaki" sub="61 GB"></lib-progress-circle>
+ * <lib-progress-circle value="61" variant="accent" sub="61 GB"></lib-progress-circle>
  *
  * @example — celadon completado con icono
- * <lib-progress-circle value="100" variant="celadon" icon="check" size="lg"></lib-progress-circle>
+ * <lib-progress-circle value="100" variant="info" icon="check" size="lg"></lib-progress-circle>
  *
  * @example — indeterminate
- * <lib-progress-circle indeterminate variant="kaki"></lib-progress-circle>
+ * <lib-progress-circle indeterminate variant="accent"></lib-progress-circle>
  *
  * @example — sin label (bare)
  * <lib-progress-circle value="38" size="xs" bare></lib-progress-circle>
@@ -64,8 +64,8 @@ export class LibProgressCircle extends LitElement {
    * Paleta de color del arco.
    * El track toma automáticamente el tono -100 de cada variante.
    * - default : washi-900 (tinta)
-   * - kaki    : persimmon orgánico
-   * - celadon : jade sereno
+   * - accent  : persimmon orgánico (kaki)
+   * - info    : jade sereno (celadon)
    * - error   : estado crítico
    */
   @property({ type: String, reflect: true })

@@ -20,7 +20,7 @@ const meta: Meta<CounterArgs> = {
     thousands:      { control: 'text' },
     decimals:       { control: 'number' },
     size:           { control: 'select', options: ['sm', 'md', 'lg', 'xl'] },
-    tone:           { control: 'select', options: ['default', 'kaki', 'celadon', 'error', 'muted', 'on-dark'] },
+    tone:           { control: 'select', options: ['default', 'accent', 'info', 'error', 'muted', 'on-dark'] },
     label:          { control: 'text' },
     delta:          { control: 'text' },
     deltaDir:       { control: 'select', options: ['up', 'down', 'flat'] },
@@ -122,11 +122,11 @@ export const Formats: Story = {
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Sin formato</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <lib-counter value="24750" prefix="€" size="md" tone="kaki" play-on-visible></lib-counter>
+        <lib-counter value="24750" prefix="€" size="md" tone="accent" play-on-visible></lib-counter>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Moneda</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <lib-counter value="87" suffix="%" thousands="" size="md" tone="celadon" play-on-visible></lib-counter>
+        <lib-counter value="87" suffix="%" thousands="" size="md" tone="info" play-on-visible></lib-counter>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Porcentaje</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
@@ -143,7 +143,7 @@ export const WithDelta: Story = {
   render: (): TemplateResult => html`
     <div style=${stage}>
       <lib-counter
-        value="184200" prefix="€" size="md" tone="kaki"
+        value="184200" prefix="€" size="md" tone="accent"
         label="Ingresos" delta="+14,7%" delta-dir="up" play-on-visible>
       </lib-counter>
       <lib-counter
@@ -170,11 +170,11 @@ export const StatCards: Story = {
         </div>
         <div style="border:1px solid var(--border-subtle);background:var(--bg-elevated);padding:24px;display:flex;flex-direction:column;gap:16px;">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Ingresos</p>
-          <lib-counter value="18540" prefix="€" size="md" tone="kaki" label="vs mes anterior" delta="+14,7%" delta-dir="up" play-on-visible></lib-counter>
+          <lib-counter value="18540" prefix="€" size="md" tone="accent" label="vs mes anterior" delta="+14,7%" delta-dir="up" play-on-visible></lib-counter>
         </div>
         <div style="border:1px solid var(--border-subtle);background:var(--bg-elevated);padding:24px;display:flex;flex-direction:column;gap:16px;">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Conversión</p>
-          <lib-counter value="7" suffix="%" thousands="" size="md" tone="celadon" label="vs mes anterior" delta="+0,1%" delta-dir="flat" play-on-visible></lib-counter>
+          <lib-counter value="7" suffix="%" thousands="" size="md" tone="info" label="vs mes anterior" delta="+0,1%" delta-dir="flat" play-on-visible></lib-counter>
         </div>
         <div style="border:1px solid var(--border-subtle);background:var(--bg-elevated);padding:24px;display:flex;flex-direction:column;gap:16px;">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Churn</p>
@@ -221,10 +221,10 @@ const _katachi = createKatachiStories<object>(() => html`
       <lib-counter value="8302" size="lg" tone="default" label="Usuarios" play-on-visible></lib-counter>
     </div>
     <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
-      <lib-counter value="24750" prefix="€" size="md" tone="kaki" label="Ingresos" delta="+12%" delta-dir="up" play-on-visible></lib-counter>
+      <lib-counter value="24750" prefix="€" size="md" tone="accent" label="Ingresos" delta="+12%" delta-dir="up" play-on-visible></lib-counter>
     </div>
     <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
-      <lib-counter value="87" suffix="%" thousands="" size="md" tone="celadon" label="Conversión" play-on-visible></lib-counter>
+      <lib-counter value="87" suffix="%" thousands="" size="md" tone="info" label="Conversión" play-on-visible></lib-counter>
     </div>
     <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
       <lib-counter value="42" size="sm" tone="muted" label="Pendientes" play-on-visible></lib-counter>

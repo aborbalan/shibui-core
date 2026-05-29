@@ -10,4 +10,4 @@ export interface BreadcrumbItem {
 export type BreadcrumbSeparator = 'slash' | 'chevron' | 'dot' | 'line';
 export type BreadcrumbSize      = 'sm' | 'md' | 'lg';
 export type BreadcrumbSurface   = 'default' | 'filled' | 'pill';
-export type BreadcrumbAccent    = 'none' | 'kaki' | 'celadon' | 'bold';
+export type BreadcrumbAccent    = 'none' | 'accent' | 'info' | 'bold';
