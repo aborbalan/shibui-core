@@ -186,5 +186,15 @@
      checked usa --lib-comp-bg-inverse en el selector base.
      Focus ring usa --lib-comp-border-focus y border-strong.
      Variants kaki/error mantienen su paleta (mayor especificidad).
+
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → ring+halo dorado en .radio__circle (box-shadow)
+     • sabi     → ring brutal-mini en .radio__circle (box-shadow)
+     El focus-ring (:focus-visible ~ .radio__circle) tiene mayor
+     especificidad y sobreescribe el ring katachi al enfocar.
      ─────────────────────────────────────────────────────────── */
+
+  .radio__circle {
+    box-shadow: var(--lib-effect-ring, none);
+  }
 }

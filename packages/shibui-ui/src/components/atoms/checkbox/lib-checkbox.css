@@ -228,5 +228,15 @@
      el fallback --bg-inverse reproduce el comportamiento original.
      Focus ring usa --lib-comp-border-focus y border-strong.
      Variants kaki/error mantienen su paleta (mayor especificidad).
+
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → ring+halo dorado en .checkbox__box (box-shadow)
+     • sabi     → ring brutal-mini en .checkbox__box (box-shadow)
+     El focus-ring (:focus-visible ~ .checkbox__box) tiene mayor
+     especificidad y sobreescribe el ring katachi al enfocar.
      ─────────────────────────────────────────────────────────── */
+
+  .checkbox__box {
+    box-shadow: var(--lib-effect-ring, none);
+  }
 }
