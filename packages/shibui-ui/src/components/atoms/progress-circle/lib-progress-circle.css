@@ -179,6 +179,13 @@
      • sabi     → ring brutal-mini en .pc (box-shadow)
      Se añade border-radius: 50% al .pc wrapper para que el box-shadow
      siga la forma circular del SVG (el wrapper es cuadrado por defecto).
+
+     TODO: el ring via box-shadow sobre div con border-radius:50% produce
+     aliasing visible en el borde del círculo — el efecto metálico queda
+     pixelado. Solución correcta: añadir un <circle> SVG extra en
+     lib-progress-circle.html.ts como capa de ring (stroke dorado sobre
+     el track exterior, r ligeramente mayor que el track). Esto renderiza
+     con antialiasing SVG nativo y queda perfectamente suave.
      ─────────────────────────────────────────────────────────── */
 
   .pc {
