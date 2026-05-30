@@ -236,7 +236,7 @@
   --katachi-surface:      kintsugi;
   --katachi-accent:       var(--color-kaki-400);
   --katachi-accent-muted: oklch(61.85% 0.149 48.72deg / 0.35);
-  --katachi-fg:           oklch(97.77% 0.003 68.35deg / 0.55);
+  --katachi-fg:           oklch(97.77% 0.003 68.35deg / 0.65);
   --katachi-fg-muted:     oklch(97.77% 0.003 68.35deg / 0.25);
   --katachi-border:       oklch(45% 0.05 45deg / 0.25);
 
@@ -247,7 +247,7 @@
   --bg-inverse:  var(--color-washi-50);
   --bg-overlay:  oklch(0% 0 0deg / 0.7);
 
-  --text-primary:    oklch(97.77% 0.003 68.35deg / 0.55);
+  --text-primary:    oklch(97.77% 0.003 68.35deg / 0.65);
   --text-secondary:  oklch(97.77% 0.003 68.35deg / 0.35);
   --text-muted:      oklch(97.77% 0.003 68.35deg / 0.20);
   --text-inverse:    var(--color-washi-900);
