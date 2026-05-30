@@ -281,6 +281,43 @@
 
        La fuente ya es --lib-font-mono por defecto → terminal encaja
        sin cambios adicionales.
+
+       Kintsugi extra: el color ya es kaki-400 vía --lib-comp-fg-accent,
+       pero la diferencia de tono es imperceptible en deuteranopia.
+       Se añaden dos efectos perceptibles por forma/brillo, no por color:
+       • Shimmer animado en la línea lateral (::before) — movimiento
+       • Text-shadow glow en el texto — diferencia de luminosidad
        ─────────────────────────────────────────────────────────── */
+
+    @keyframes eb-line-shimmer {
+        from { background-position: 200% center; }
+        to   { background-position: -200% center; }
+    }
+
+    @supports selector(:host-context(a)) {
+
+        /* Shimmer en la línea lateral — movimiento perceptible */
+        :host-context([data-katachi="kintsugi"]) .eb::before,
+        :host([line="both"]):host-context([data-katachi="kintsugi"]) .eb::after {
+            background: linear-gradient(
+                90deg,
+                transparent            0%,
+                var(--color-kaki-600) 10%,
+                var(--color-kaki-300) 50%,
+                var(--color-kaki-400) 75%,
+                transparent           100%
+            );
+            background-size: 200% 100%;
+            animation:
+                eb-line-shimmer 3s linear infinite;
+            animation-play-state: var(--lib-effect-seam-play, paused);
+        }
+
+        /* Glow en el texto — diferencia de luminosidad, no de color */
+        :host-context([data-katachi="kintsugi"]) .eb {
+            text-shadow: 0 0 12px oklch(61.85% 0.149 48.72deg / 0.35);
+        }
+
+    }
 
 }
