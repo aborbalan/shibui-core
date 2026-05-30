@@ -174,8 +174,17 @@
      el track washi-200. Para variar paleta, usar [variant]
      explícito.
 
-     Bloque marcador para discoverability.
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → ring+halo dorado en .pc (box-shadow)
+     • sabi     → ring brutal-mini en .pc (box-shadow)
+     Se añade border-radius: 50% al .pc wrapper para que el box-shadow
+     siga la forma circular del SVG (el wrapper es cuadrado por defecto).
      ─────────────────────────────────────────────────────────── */
+
+  .pc {
+    border-radius: 50%;
+    box-shadow: var(--lib-effect-ring, none);
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

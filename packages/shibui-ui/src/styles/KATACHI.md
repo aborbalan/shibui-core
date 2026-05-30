@@ -448,6 +448,64 @@ pnpm type-check && pnpm lint
 
 ---
 
+## Patrones de decoración expresiva · Kintsugi
+
+Más allá del seam top genérico (2px barra animada) y del ring (box-shadow dorado),
+algunos componentes justifican un tratamiento kintsugi con mayor carácter.
+
+### Patrón: vena de oro irregular (reading-progress)
+
+**Componente de referencia**: `lib-reading-progress` → `variant="bar"` / `tone="gold"`
+
+El gradiente flat de color sólido no evoca el kintsugi — el oro real en cerámica
+es **irregular**, con variaciones de intensidad a lo largo de la vena. La técnica:
+
+```css
+/* Gradiente diagonal con transición desigual — evoca el hilo de oro real */
+background: linear-gradient(
+  90deg,
+  var(--color-kaki-600)  0%,   /* oscuro en el arranque */
+  var(--color-kaki-500) 30%,
+  var(--color-kaki-300) 65%,   /* brightest — punto de fusión */
+  var(--color-kaki-400) 100%
+);
+
+/* Shimmer: reflejo de luz recorriendo la vena en bucle lento */
+&::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent                    0%,
+    oklch(92% 0.04 60deg / 0.75)  45%,
+    oklch(98% 0.01 60deg / 0.90)  50%,   /* destello central */
+    oklch(92% 0.04 60deg / 0.75)  55%,
+    transparent                   100%
+  );
+  animation: gold-shimmer 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Glow tip: halo en el extremo activo del arco/barra */
+&[active]::after {
+  width: 24px;
+  height: 8px;
+  background: oklch(65% 0.1 50deg / 0.65);
+  filter: blur(5px);
+}
+```
+
+**Cuándo usar este patrón** en lugar del seam genérico:
+- El componente es una barra de progreso o indicador lineal/radial
+- El "avance" del componente tiene sentido semántico como "vena que se extiende"
+- Hay espacio suficiente para que el shimmer sea legible (≥ 3px de altura)
+
+**Componentes candidatos** donde aplicar esta lógica en el futuro:
+`lib-progress` (bar variant) · `lib-reading-progress` (ya implementado) ·
+`lib-progress-circle` (versión radial del gradiente) · `lib-metric-bar` (barra interna)
+
+---
+
 ## Referencias
 
 - Plan completo de implementación: `~/.claude/plans/pure-watching-biscuit.md`
