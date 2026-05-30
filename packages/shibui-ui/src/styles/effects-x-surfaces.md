@@ -158,23 +158,24 @@
 
 ---
 
-### `lib-badge` · ✅ (Fase 2 — renombrado semántico)
+### `lib-badge` · ✅ (Fase 3 — efectos katachi implementados)
 
-> **CSS verificado. Migrado a variantes semánticas (2026-05-29).**
+> **CSS verificado. Migrado a variantes semánticas (2026-05-29). Efectos katachi añadidos (2026-05-30).**
 > Variantes: `default` · `accent` · `info` · `strong` · `error` · `success` · `warning`.
-> **Cambios**: `celadon` → `info` (informativo jade); `dark` → `strong` (contraste máximo).
-> Sin efectos implementados.
+> **Cambios**: `celadon` → `info`; `dark` → `strong`.
+> `::before` lleva la seam dorada animada; `box-shadow` lleva el brutal shadow.
+> Ambos efectos controlados por `--lib-effect-*` — se activan automáticamente por contexto ancestro.
 
 #### Superficies
 
 | Superficie | Estado | Notas |
 |------------|--------|-------|
-| light | `—` | `default` / `accent` / `celadon` cubren el uso en light |
-| dark | `—` | `variant="dark"` cubre el uso visual; no es surface adaptation |
-| kintsugi | 🔲 | Sin implementar — borde dorado pendiente |
-| glitch | 🔲 | Sin implementar |
-| celadón | `—` | `variant="celadon"` cubre el caso de uso |
-| washi | `—` | `variant="default"` es washi por naturaleza |
+| light | ✅ | `default` / `accent` / `info` / etc. — tokens semánticos |
+| dark | ✅ | `variant="strong"` cubre el uso en fondos oscuros |
+| kintsugi | ✅ | `::before` seam dorada animada vía `--lib-effect-seam-play: running` |
+| sabi | ✅ | `box-shadow` brutal vía `--lib-effect-brutal-shadow` |
+| wabi / terminal | ✅ | Tokens semánticos se adaptan; efectos desactivados por defecto |
+| celadon / shizen | ✅ | Adaptación semántica automática |
 
 #### Efectos
 
@@ -182,8 +183,8 @@
 |--------|------------|--------|-------|
 | glass | — | `—` | No aplica: tamaño insuficiente |
 | spotlight | — | `—` | No aplica: tamaño insuficiente |
-| kintsugi-border | kintsugi | 🔲 | Borde dorado fino en variante kintsugi |
-| shadow-brutal | light / washi | 🔲 | Sombra sólida 2px reducida — natural para shape definido |
+| kintsugi-seam | kintsugi | ✅ | `::before` gradiente dorado animado — `animation-play-state: var(--lib-effect-seam-play, paused)` |
+| shadow-brutal | sabi | ✅ | `box-shadow: var(--lib-effect-brutal-shadow, none)` |
 | metal-texture | — | `—` | No aplica |
 
 ---
@@ -889,30 +890,31 @@
 
 ---
 
-### `lib-spinner` · ✅
+### `lib-spinner` · ✅ (Fase 3 — katachi-aware)
 
-> **CSS verificado.** 4 variantes con personalidad propia: `enso` (trazo zen SVG) · `sumi` (tinta en agua,
-> conic-gradient) · `kintsugi` (anillo dorado, conic-gradient dorado + drop-shadow) · `shizuku` (gotas en órbita).
-> Modificador `[dark]` activa paletas para fondos oscuros.
-> La variante `kintsugi` ES el efecto kintsugi del spinner — usa conic-gradient y drop-shadow propios,
-> no el token `--lib-kintsugi-border`.
+> **CSS verificado. Adaptación katachi implementada (2026-05-30).**
+> 4 variantes estructurales: `enso` (trazo zen SVG) · `sumi` (tinta en agua, conic-gradient) ·
+> `kin` (anillo dorado) · `shizuku` (gotas en órbita).
+> **Color completamente contextual**: SVG usa `stroke="currentColor"`; sumi usa
+> `color-mix(in oklch, var(--_sp-color), transparent N%)`. El CSS del `:host` fija `color` y
+> `--_sp-color` según `[tone]` y `[dark]`, heredando `--text-primary` del katachi ancestro.
+> Modificador `[dark]` sigue disponible para uso manual fuera de un katachi oscuro.
 
 #### Superficies
 
-| Superficie | Estado | Variante | Notas |
-|------------|--------|----------|-------|
-| light | ✅ | `enso` · `sumi` · `shizuku` | Paleta ink por defecto — legible sobre fondos claros |
-| dark | ✅ | Todas con `[dark]` | `dark` activa paletas OKLCH para fondos oscuros |
-| kintsugi | ✅ | `kintsugi` | Anillo dorado con glow — implementación propia |
-| glitch | `—` | — | No aplica |
-| celadón | `—` | — | No aplica |
-| washi | `—` | — | Light cubre el uso en washi |
+| Superficie | Estado | Notas |
+|------------|--------|-------|
+| light (shizen/celadon/sabi) | ✅ | `color: var(--text-primary)` — se adapta al tono del contexto |
+| dark (kintsugi/wabi/terminal) | ✅ | `--text-primary` del katachi provee el color; `[dark]` como override manual |
+| kintsugi | ✅ | Color cálido dorado heredado vía `--text-primary`; variante `kin` para el anillo explícito |
+| terminal | ✅ | Color phosphor verde heredado vía `--text-primary` |
+| wabi | ✅ | Color muted warm-white heredado vía `--text-primary` |
 
 #### Efectos
 
 | Efecto | Estado | Notas |
 |--------|--------|-------|
-| todos | `—` | El componente ES el efecto — no aplica capa adicional |
+| todos | `—` | El componente ES el efecto visual — no aplica capa adicional de `--lib-effect-*` |
 
 ---
 
@@ -1170,27 +1172,33 @@
 
 ---
 
-### `lib-chip` · ✅
+### `lib-chip` · ✅ (Fase 3 — efectos katachi implementados)
 
-> **CSS verificado.** Colores: `default` · `kaki` · `celadon` · `error` · `info` · `dark`.
-> `dark` es adaptación para fondos oscuros. Sin kintsugi, sin glitch. Sin efectos del sistema.
+> **CSS verificado. Migrado a variantes semánticas + efectos katachi añadidos (2026-05-30).**
+> Colores: `default` · `accent` · `info` · `error` · `strong`.
+> **Cambios**: `kaki` → `accent`; `celadon` → `info`; `dark` → `strong`.
+> `::after` lleva la seam dorada animada (se usa `::after` porque `::before` está reservado para el
+> modificador `[dot]`); `box-shadow` lleva el brutal shadow. Misma arquitectura que `lib-badge`.
 
 #### Superficies
 
 | Superficie | Estado | Notas |
 |------------|--------|-------|
-| light | ✅ | `default` / `kaki` / `celadon` / `error` / `info` |
-| dark | ✅ | `color="dark"` — fondo washi-900, texto washi-100 |
-| kintsugi | `—` | No aplica |
-| glitch | `—` | No aplica |
-| celadón | `—` | `color="celadon"` cubre el caso de uso |
-| washi | `—` | Default cubre el uso en washi |
+| light (shizen/celadon/sabi) | ✅ | `default` / `accent` / `info` / `error` — tokens semánticos |
+| dark (kintsugi/wabi/terminal) | ✅ | `color="strong"` para chips sobre fondos oscuros |
+| kintsugi | ✅ | `::after` seam dorada animada vía `--lib-effect-seam-play: running` |
+| sabi | ✅ | `box-shadow` brutal vía `--lib-effect-brutal-shadow` |
+| wabi / terminal | ✅ | Tokens semánticos adaptados; efectos desactivados por defecto |
 
 #### Efectos
 
-| Efecto | Estado | Notas |
-|--------|--------|-------|
-| todos | `—` | No aplica — tamaño insuficiente |
+| Efecto | Superficie | Estado | Notas |
+|--------|------------|--------|-------|
+| glass | — | `—` | No aplica: tamaño insuficiente |
+| spotlight | — | `—` | No aplica: tamaño insuficiente |
+| kintsugi-seam | kintsugi | ✅ | `::after` (no `::before` — reservado para `[dot]`) — `animation-play-state: var(--lib-effect-seam-play, paused)` |
+| shadow-brutal | sabi | ✅ | `box-shadow: var(--lib-effect-brutal-shadow, none)` |
+| metal-texture | — | `—` | No aplica |
 
 ---
 
