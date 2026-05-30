@@ -388,16 +388,37 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     lib-step ya consume --lib-kintsugi-border en su variant kintsugi —
-     conectado al sistema de tokens efecto. La estructura base usa
-     una mezcla de palette refs y tokens semánticos para los nodes,
-     connectors y status states (pending/active/completed/error).
+     lib-step ya consume --lib-kintsugi-border en su variant="inverse"
+     (no "kintsugi" — renombrado a "inverse" en Phase 3).
+     La estructura base usa tokens semánticos para nodes, connectors
+     y status states que heredan el katachi activo.
 
      Status states tienen paleta semántica deliberada. Variants
      inverse/brutal sin cambios.
 
-     Bloque marcador para discoverability.
+     variant="inverse" ya tiene tratamiento kintsugi completo
+     (mask-composite border pulsante via --lib-kintsugi-border,
+     igual que lib-switch variant="inverse").
+
+     Efectos automáticos en contexto ambiental (sin variant="inverse"):
+     • kintsugi → ring+halo dorado en .step-node (box-shadow)
+       Pending: ring visible. Active/completed: sus selectores de
+       mayor especificidad absorben el box-shadow con su propio valor.
+     • sabi → ring brutal-mini en .step-node
+     • connector completado → kaki-400 sólido en kintsugi
      ─────────────────────────────────────────────────────────── */
+
+  /* ── Ring en step-node (estado pending / base) ──────────── */
+  .step-node {
+    box-shadow: var(--lib-effect-ring, none);
+  }
+
+  /* ── Connector completado → gold vívido en kintsugi ─────── */
+  @supports selector(:host-context(a)) {
+    :host([status="completed"]):host-context([data-katachi="kintsugi"]) .step-connector {
+      background: var(--color-kaki-400);
+    }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }
