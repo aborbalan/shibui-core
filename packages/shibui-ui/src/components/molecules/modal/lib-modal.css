@@ -25,7 +25,7 @@
 
    Modificadores de .mo-header-icon
    ──────────────────────────────────────────────────────────
-   .is-kaki / .is-celadon / .is-error / .is-info  → tono de ícono
+   .is-accent / .is-secondary / .is-error / .is-info  → tono de ícono
    ============================================================ */
 
 @layer reset {
@@ -175,11 +175,11 @@
     color: var(--text-muted);
   }
 
-  .mo-header-icon.is-kaki    { background: var(--color-kaki-50);
+  .mo-header-icon.is-accent    { background: var(--color-kaki-50);
         border-color: var(--color-kaki-100);
             color: var(--color-kaki-500); }
 
-  .mo-header-icon.is-celadon { background: var(--color-celadon-50);
+  .mo-header-icon.is-secondary { background: var(--color-celadon-50);
      border-color: var(--color-celadon-100); color: var(--color-celadon-500); }
 
   .mo-header-icon.is-error   { background: #F5DDD9;

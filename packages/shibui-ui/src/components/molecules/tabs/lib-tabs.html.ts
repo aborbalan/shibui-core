@@ -85,7 +85,7 @@ function renderPanel(item: TabItem, context: LibTabs): TemplateResult {
 export function tabsTemplate(context: LibTabs): TemplateResult {
   const tabs = (context.items ?? []) as TabItem[];
 
-  /* La ink bar solo aplica en underline (y sus modificadores kintsugi/glitch) */
+  /* La ink bar solo aplica en underline (y sus modificadores gold/glitch) */
   const showInk = !(['pill', 'card', 'outline', 'vertical'] as TabsVariant[]).includes(context.variant);
 
   return html`

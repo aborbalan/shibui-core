@@ -6,7 +6,7 @@
 
    1. CONTENT LIST — listas tipográficas para prosa
       variant: 'ul' | 'ol'
-      marker:  'default' | 'kaki' | 'dash' | 'check'
+      marker:  'default' | 'accent' | 'dash' | 'check'
       counter: 'decimal' | 'roman' | 'alpha'  (solo ol)
       size:    'sm' | 'md' | 'lg'
       items:   ContentItem[]
@@ -28,7 +28,7 @@
 export type ListFamily = 'ul' | 'ol' | 'ui' | 'dl';
 
 /* ── Marcadores de contenido ── */
-export type ContentMarker  = 'default' | 'kaki' | 'dash' | 'check';
+export type ContentMarker  = 'default' | 'accent' | 'dash' | 'check';
 export type OrderedCounter = 'decimal' | 'roman' | 'alpha';
 
 /* ── Tamaños ── */
@@ -38,10 +38,10 @@ export type ListSize = 'sm' | 'md' | 'lg';
 export type DlLayout = 'inline' | 'wide' | 'stack';
 
 /* ── Variantes de icono en UI list ── */
-export type RowIconVariant = 'default' | 'kaki' | 'celadon' | 'error' | 'info' | 'plain' | 'round';
+export type RowIconVariant = 'default' | 'accent' | 'secondary' | 'error' | 'info' | 'plain' | 'round';
 
 /* ── Variantes de badge en UI list ── */
-export type RowBadgeVariant = 'default' | 'kaki' | 'celadon' | 'error';
+export type RowBadgeVariant = 'default' | 'accent' | 'info' | 'error';
 
 /* ──────────────────────────────────────
    ITEMS — Content List

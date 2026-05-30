@@ -19,7 +19,7 @@ export type ModalVariant = 'default' | 'editorial' | 'danger';
 export type ModalAnimate = 'scale' | 'slide-up' | 'slide-down';
 
 /** Tono de color del ícono del header. */
-export type ModalIconTone = 'default' | 'kaki' | 'celadon' | 'error' | 'info';
+export type ModalIconTone = 'default' | 'accent' | 'secondary' | 'error' | 'info';
 
 /** Detalle del evento de cierre. */
 export interface ModalCloseEventDetail {

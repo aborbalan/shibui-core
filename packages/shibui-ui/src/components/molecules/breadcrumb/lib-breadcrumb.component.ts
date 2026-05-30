@@ -24,7 +24,7 @@ export interface UiNavigateEventDetail {
  * @attr {BreadcrumbSeparator} separator - Tipo de separador: slash · chevron · dot · line
  * @attr {BreadcrumbSize}      size      - Tamaño: sm · md · lg
  * @attr {BreadcrumbSurface}   surface   - Superficie: default · filled · pill
- * @attr {BreadcrumbAccent}    accent    - Acento en ítem activo: none · kaki · celadon · bold
+ * @attr {BreadcrumbAccent}    accent    - Acento en ítem activo: none · accent · info · bold
  * @attr {boolean}             dark      - Modo superficie oscura
  * @attr {number}              max-visible - Si > 0, colapsa ítems intermedios cuando items.length > N
  */

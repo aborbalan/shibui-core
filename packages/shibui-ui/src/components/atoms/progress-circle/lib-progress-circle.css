@@ -3,7 +3,7 @@
 /* ============================================================
    LIB-PROGRESS-CIRCLE — Shibui UI · 円形
    Size    : xs · sm · md · lg · xl
-   Variant : default · kaki · celadon · error
+   Variant : default · accent · info · error
    States  : indeterminate · bare · sub · icon (check)
 
    Fórmula del arco (calculada en JS):
@@ -66,11 +66,11 @@
   }
 
   /* ── VARIANTES DE COLOR ─────────────────────────────────── */
-  :host([variant="kaki"]) .pc__arc   { stroke: var(--color-kaki-500); }
-  :host([variant="kaki"]) .pc__track { stroke: var(--color-kaki-100); }
+  :host([variant="accent"]) .pc__arc   { stroke: var(--color-kaki-500); }
+  :host([variant="accent"]) .pc__track { stroke: var(--color-kaki-100); }
 
-  :host([variant="celadon"]) .pc__arc   { stroke: var(--color-celadon-500); }
-  :host([variant="celadon"]) .pc__track { stroke: var(--color-celadon-100); }
+  :host([variant="info"]) .pc__arc   { stroke: var(--color-celadon-500); }
+  :host([variant="info"]) .pc__track { stroke: var(--color-celadon-100); }
 
   :host([variant="error"]) .pc__arc   { stroke: var(--color-error); }
   :host([variant="error"]) .pc__track { stroke: #F5DDD9; }
@@ -124,8 +124,8 @@
   :host([size="xl"]) .pc__sub   { font-size: var(--text-xs); }
 
   /* ── Color del valor según variante ─────────────────────── */
-  :host([variant="kaki"])    .pc__value { color: var(--color-kaki-600); }
-  :host([variant="celadon"]) .pc__value { color: var(--color-celadon-600); }
+  :host([variant="accent"])    .pc__value { color: var(--color-kaki-600); }
+  :host([variant="info"]) .pc__value { color: var(--color-celadon-600); }
   :host([variant="error"])   .pc__value { color: var(--color-error); }
 
   /* ── Icono check ─────────────────────────────────────────── */
@@ -133,7 +133,7 @@
     stroke: var(--color-celadon-500);
   }
 
-  :host([variant="kaki"]) .pc__check polyline {
+  :host([variant="accent"]) .pc__check polyline {
     stroke: var(--color-kaki-500);
   }
 

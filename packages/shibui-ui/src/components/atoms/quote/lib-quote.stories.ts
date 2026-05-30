@@ -20,7 +20,7 @@ const meta: Meta<LibQuote> = {
         component: `
 **\`<lib-quote>\`** — Cita display editorial en Cormorant Garamond.
 
-Blockquote con primera línea normal, segunda línea en itálica kaki
+Blockquote con primera línea normal, segunda línea en itálica accent
 y atribución en DM Mono. Patrón recurrente en hero sections, CTAs
 y secciones de filosofía.
 
@@ -29,16 +29,16 @@ y secciones de filosofía.
 | Atributo | Tipo | Default | Descripción |
 |---|---|---|---|
 | \`text\`    | \`string\` | \`''\` | Primera línea (o usa el slot) |
-| \`accent\`  | \`string\` | \`''\` | Segunda línea itálica kaki |
+| \`accent\`  | \`string\` | \`''\` | Segunda línea itálica accent |
 | \`cite\`    | \`string\` | \`''\` | Atribución |
-| \`surface\` | \`'dark'\\|'light'\\|'washi'\` | \`'dark'\` | Superficie |
+| \`surface\` | \`'dark'\\|'light'\\|'neutral'\` | \`'dark'\` | Superficie |
 | \`size\`    | \`'sm'\\|'md'\\|'lg'\` | \`'md'\` | Tamaño fluido |
         `,
       },
     },
   },
   argTypes: {
-    surface: { control: 'select', options: ['dark', 'light', 'washi'] },
+    surface: { control: 'select', options: ['dark', 'light', 'neutral'] },
     size:    { control: 'select', options: ['sm', 'md', 'lg'] },
   },
 };
@@ -57,7 +57,7 @@ export const Playground: Story = {
     size:    'md',
   },
   render: (args) => html`
-    <div style="padding:3rem 2.5rem;background:${args.surface === 'dark' ? 'var(--color-washi-950,#120E0A)' : args.surface === 'washi' ? 'var(--color-washi-100,#F2EDE6)' : '#fff'}">
+    <div style="padding:3rem 2.5rem;background:${args.surface === 'dark' ? 'var(--color-washi-950,#120E0A)' : args.surface === 'neutral' ? 'var(--color-washi-100,#F2EDE6)' : '#fff'}">
       <lib-quote
         text=${args.text}
         accent=${args.accent}
@@ -95,7 +95,7 @@ export const Surfaces: Story = {
           text="Lo bello no se anuncia."
           accent="Se descubre con pausa."
           cite="— Principio Shibui · 渋い"
-          surface="washi"
+          surface="neutral"
         ></lib-quote>
       `)}
     </div>

@@ -84,10 +84,9 @@ Unifica los patrones \`.sg-section-label\`, \`.hero-eyebrow\` y \`.section-label
 
 | Atributo | Tipo | Default | Descripción |
 |---|---|---|---|
-| \`color\` | \`'kaki'\\|'washi'\\|'celadon'\\|'white'\\|'muted'\\|'dark'\` | \`'kaki'\` | Color del texto y línea |
+| \`tone\` | \`'accent'\\|'neutral'\\|'inverse'\\|'muted'\` | \`'accent'\` | Rol semántico del color |
 | \`line\` | \`'left'\\|'right'\\|'both'\\|'none'\` | \`'left'\` | Posición de la línea decorativa |
 | \`size\` | \`'sm'\\|'md'\\|'lg'\` | \`'md'\` | Tamaño tipográfico |
-| \`effect\` | \`'none'\\|'kintsugi'\\|'glitch'\` | \`'none'\` | Animación especial |
 | \`dot\` | \`boolean\` | \`false\` | Sustituye la línea por un punto |
 | \`num\` | \`string\` | \`''\` | Badge numérico sufijo |
 

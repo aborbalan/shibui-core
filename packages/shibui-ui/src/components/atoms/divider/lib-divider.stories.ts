@@ -28,7 +28,7 @@ const meta: Meta<LibDividerStoryArgs> = {
     },
     color: {
       control: 'select',
-      options: ['default', 'kaki', 'celadon'],
+      options: ['default', 'accent', 'info'],
     },
     align: {
       control: 'select',
@@ -125,14 +125,14 @@ export const Colors: Story = {
   render: (): TemplateResult => html`
     <div style="${PREVIEW_H}">
       <p style="font-family:monospace; font-size:10px; color:#9A8878; text-transform:uppercase; letter-spacing:0.25em;">Kaki</p>
-      <lib-divider color="kaki"></lib-divider>
-      <lib-divider color="kaki" ornament="dot"></lib-divider>
-      <lib-divider color="kaki" ornament="diamond"></lib-divider>
-      <lib-divider color="kaki">Nueva sección</lib-divider>
+      <lib-divider color="accent"></lib-divider>
+      <lib-divider color="accent" ornament="dot"></lib-divider>
+      <lib-divider color="accent" ornament="diamond"></lib-divider>
+      <lib-divider color="accent">Nueva sección</lib-divider>
 
       <p style="font-family:monospace; font-size:10px; color:#9A8878; text-transform:uppercase; letter-spacing:0.25em; margin-top:8px;">Celadón</p>
-      <lib-divider color="celadon"></lib-divider>
-      <lib-divider color="celadon" ornament="diamond"></lib-divider>
+      <lib-divider color="info"></lib-divider>
+      <lib-divider color="info" ornament="diamond"></lib-divider>
     </div>
   `,
 };

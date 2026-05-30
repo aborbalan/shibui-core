@@ -116,11 +116,11 @@ export const Accordion: Story = {
 /* ══════════════════════════════════════════
    03 · Kintsugi
    ══════════════════════════════════════════ */
-export const Kintsugi: Story = {
-  name: '03 · Kintsugi ✦',
+export const Inverse: Story = {
+  name: '03 · Inverse ✦',
   render: () => html`
     <lib-footer
-      variant="kintsugi"
+      variant="inverse"
       brand-name="shibui"
       brand-kanji="渋い"
       brand-sub="Design System · Zaragoza"
@@ -245,9 +245,9 @@ export const AllVariants: Story = {
         .legalLinks=${DEFAULT_LEGAL_LINKS}
       ></lib-footer>
 
-      <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);background:#120E0A;">03 · Kintsugi ✦</p>
+      <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);background:#120E0A;">03 · Inverse ✦</p>
       <lib-footer
-        variant="kintsugi"
+        variant="inverse"
         brand-name="shibui"
         brand-kanji="渋い"
         brand-sub="Design System · Zaragoza"
@@ -311,7 +311,7 @@ export const AllVariants: Story = {
    KATACHI · 形 · Las 6 historias estándar
    lib-footer define tokens internos (--ft-*) envueltos con
    --lib-comp-* (GUITV) — adapta su superficie al katachi activo
-   sin CSS adicional. Variantes kintsugi/glitch/accordion son
+   sin CSS adicional. Variantes inverse/glitch/accordion son
    superficies oscuras deliberadas, independientes del katachi.
    ═══════════════════════════════════════════════════════════════ */
 
@@ -347,10 +347,10 @@ const _katachi = createKatachiStories<object>(() => html`
       .legalLinks=${DEFAULT_LEGAL_LINKS}
     ></lib-footer>
 
-    <!-- kintsugi variant -->
-    <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;padding:var(--lib-space-xs) var(--lib-space-sm);background:var(--bg-base);border:1px solid var(--border-subtle);">03 · kintsugi</p>
+    <!-- inverse variant -->
+    <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;padding:var(--lib-space-xs) var(--lib-space-sm);background:var(--bg-base);border:1px solid var(--border-subtle);">03 · inverse</p>
     <lib-footer
-      variant="kintsugi"
+      variant="inverse"
       brand-name="shibui"
       brand-kanji="渋い"
       brand-sub="Design System"

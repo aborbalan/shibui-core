@@ -9,7 +9,7 @@ interface StepArgs {
   index:       number;
   status:      'pending' | 'active' | 'completed' | 'error';
   orientation: 'horizontal' | 'vertical';
-  variant:     'default' | 'minimal' | 'kintsugi' | 'brutal';
+  variant:     'default' | 'minimal' | 'inverse' | 'brutal';
   size:        'sm' | 'md' | 'lg';
 }
 
@@ -20,7 +20,7 @@ const meta: Meta<StepArgs> = {
   argTypes: {
     status:      { control: 'select', options: ['pending', 'active', 'completed', 'error'] },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
-    variant:     { control: 'select', options: ['default', 'minimal', 'kintsugi', 'brutal'] },
+    variant:     { control: 'select', options: ['default', 'minimal', 'inverse', 'brutal'] },
     size:        { control: 'select', options: ['sm', 'md', 'lg'] },
     label:       { control: 'text' },
     sub:         { control: 'text' },
@@ -66,7 +66,7 @@ export const Kintsugi: Story = {
         { status: 'pending',   index: 3, label: '完成',   desc: '待機' },
       ] as const).map(({ status, index, label, desc }) => html`
         <lib-step
-          variant="kintsugi"
+          variant="inverse"
           status=${status}
           index=${index}
           label=${label}

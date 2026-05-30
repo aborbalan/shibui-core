@@ -130,7 +130,7 @@ export function renderKintsugi(ctx: LibFooter): TemplateResult {
     <footer style="position:relative;">
 
       <!-- Gold seam -->
-      <div class="ft-kintsugi-seam" aria-hidden="true"></div>
+      <div class="ft-gold-seam" aria-hidden="true"></div>
 
       <div class="ft-inner" style="padding-top:var(--lib-space-xl,2rem);">
 
@@ -145,15 +145,15 @@ export function renderKintsugi(ctx: LibFooter): TemplateResult {
         </div>
 
         <!-- Nav columns -->
-        <div class="ft-kintsugi-grid">
+        <div class="ft-inverse-grid">
           ${(ctx.columns ?? []).map(col => html`
             <div>
-              <div class="ft-kintsugi-col-head">${col.heading}</div>
-              <ul class="ft-kintsugi-col-links">
+              <div class="ft-inverse-col-head">${col.heading}</div>
+              <ul class="ft-inverse-col-links">
                 ${(col.links ?? []).map(link => html`
                   <li>
                     <a href="${link.href}">
-                      <span class="ft-kintsugi-arrow">›</span>
+                      <span class="ft-inverse-arrow">›</span>
                       ${link.label}
                     </a>
                   </li>
@@ -426,7 +426,7 @@ export function renderFooter(ctx: LibFooter): TemplateResult {
   switch (ctx.variant) {
     case 'social':    return renderSocial(ctx);
     case 'accordion': return renderAccordion(ctx);
-    case 'kintsugi':  return renderKintsugi(ctx);
+    case 'inverse':   return renderKintsugi(ctx);
     case 'glitch':    return renderGlitch(ctx);
     case 'celadon':   return renderCeladon(ctx);
     case 'sabi':      return renderSabi(ctx);

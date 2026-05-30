@@ -8,7 +8,7 @@ const meta: Meta = {
   tags:['autodocs'],
   component: 'lib-dropdown',
   argTypes: {
-    variant: { control: 'select', options: ['default', 'ghost', 'filled', 'kaki'] },
+    variant: { control: 'select', options: ['default', 'ghost', 'filled', 'accent'] },
     align:   { control: 'select', options: ['left', 'right'] },
     open:    { control: 'boolean' },
     dark:    { control: 'boolean' },
@@ -96,7 +96,7 @@ export const Base: Story = {
 
 /* ── Triggers ── */
 export const Triggers: Story = {
-  name: 'Triggers — default · ghost · filled · kaki',
+  name: 'Triggers — default · ghost · filled · accent',
   render: (): TemplateResult => html`
     <div style="padding:2rem;min-height:280px;display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap;background:var(--bg-surface);">
 
@@ -121,7 +121,7 @@ export const Triggers: Story = {
         ${item('Eliminar',  { icon: iconTrash, danger: true })}
       </lib-dropdown>
 
-      <lib-dropdown label="Kaki" variant="kaki">
+      <lib-dropdown label="Kaki" variant="accent">
         ${item('Editar',    { icon: iconPencil })}
         ${item('Duplicar',  { icon: iconCopy })}
         ${sep()}
@@ -334,7 +334,7 @@ const _katachi = createKatachiStories<object>(() => html`
       <div class="dd-sep"></div>
       ${item('Salir',      { icon: iconSignOut, danger: true })}
     </lib-dropdown>
-    <lib-dropdown label="Kaki" variant="kaki">
+    <lib-dropdown label="Kaki" variant="accent">
       ${item('Exportar',  { icon: iconCopy })}
       ${item('Duplicar',  { icon: iconCopy, disabled: true })}
       <div class="dd-sep"></div>

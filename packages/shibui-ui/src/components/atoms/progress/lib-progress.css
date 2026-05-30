@@ -3,7 +3,7 @@
 /* ============================================================
    LIB-PROGRESS — Shibui UI
    Tamaños   : xs · sm · md (default) · lg · xl
-   Tonos     : default · kaki · celadon · error
+   Tonos     : default · accent · info · error
    Variantes : striped · indeterminate · square
    Modos     : barra simple · con label/meta · multi-segmento
    ============================================================ */
@@ -151,12 +151,12 @@
      TONES — track + fill + meta text
   ───────────────────────────────────────────────────────── */
 
-  :host([tone="kaki"]) {
+  :host([tone="accent"]) {
     & .pb      { background: var(--color-kaki-100); }
     & .pb-fill { background: var(--color-kaki-500); }
   }
 
-  :host([tone="celadon"]) {
+  :host([tone="info"]) {
     & .pb       { background: var(--color-celadon-100); }
     & .pb-value { color: var(--color-celadon-600); }
     & .pb-fill  { background: var(--color-celadon-500); }
@@ -206,8 +206,8 @@
     }
   }
 
-  :host([indeterminate][tone="kaki"])    .pb-fill::after { background: var(--color-kaki-500); }
-  :host([indeterminate][tone="celadon"]) .pb-fill::after { background: var(--color-celadon-500); }
+  :host([indeterminate][tone="accent"])    .pb-fill::after { background: var(--color-kaki-500); }
+  :host([indeterminate][tone="info"]) .pb-fill::after { background: var(--color-celadon-500); }
   :host([indeterminate][tone="error"])   .pb-fill::after { background: var(--color-error); }
   :host([indeterminate][square])         .pb-fill::after { border-radius: var(--radius-sm); }
 
@@ -236,8 +236,8 @@
 
   /* Tone classes for segments (applied via JS) */
   .seg-default { background: var(--color-washi-900); }
-  .seg-kaki    { background: var(--color-kaki-500); }
-  .seg-celadon { background: var(--color-celadon-500); }
+  .seg-accent    { background: var(--color-kaki-500); }
+  .seg-info { background: var(--color-celadon-500); }
   .seg-error   { background: var(--color-error); }
 
   .seg-muted {

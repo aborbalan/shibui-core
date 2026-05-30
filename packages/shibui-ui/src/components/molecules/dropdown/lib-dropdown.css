@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-DROPDOWN — Shibui UI · SG-25
-   Trigger   : default · ghost · filled · kaki
+   Trigger   : default · ghost · filled · accent
    Align     : left · right
    Menu theme: light · dark
    ============================================================ */
@@ -133,18 +133,18 @@
   }
 
   /* Kaki */
-  :host([variant="kaki"]) .dd-trigger {
+  :host([variant="accent"]) .dd-trigger {
     background: var(--color-kaki-500);
     border-color: var(--color-kaki-500);
     color: #fff;
   }
 
-  :host([variant="kaki"]) .dd-trigger:hover {
+  :host([variant="accent"]) .dd-trigger:hover {
     background: var(--color-kaki-600);
     border-color: var(--color-kaki-600);
   }
 
-  :host([variant="kaki"]) .dd-chevron {
+  :host([variant="accent"]) .dd-chevron {
     color: rgb(255, 255, 255, .6);
   }
 
@@ -340,7 +340,7 @@
      La variant explícita "filled" usa --color-washi-900/50 hardcoded
      como decisión deliberada — variant invertida intencional. Sin cambios.
 
-     Variants kaki, ghost, dark mantienen su paleta.
+     Variants accent, ghost, dark mantienen su paleta.
 
      Bloque marcador para discoverability.
      ─────────────────────────────────────────────────────────── */

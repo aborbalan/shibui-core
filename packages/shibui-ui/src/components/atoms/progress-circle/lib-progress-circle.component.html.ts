@@ -1,7 +1,7 @@
 import { html, svg, nothing, TemplateResult } from 'lit';
 
 export type LibProgressCircleSize    = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type LibProgressCircleVariant = 'default' | 'kaki' | 'celadon' | 'error';
+export type LibProgressCircleVariant = 'default' | 'accent' | 'info' | 'error';
 
 /** Dimensiones canónicas por tamaño */
 const SIZE_MAP: Record<LibProgressCircleSize, { px: number; stroke: number }> = {

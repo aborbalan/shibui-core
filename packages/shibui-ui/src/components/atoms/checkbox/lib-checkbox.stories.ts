@@ -28,7 +28,7 @@ const meta: Meta<LibCheckboxStoryArgs> = {
     },
     variant: {
       control: 'select',
-      options: ['default', 'kaki', 'error'],
+      options: ['default', 'accent', 'error'],
     },
   },
 
@@ -119,7 +119,7 @@ export const Variants: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
       <lib-checkbox variant="default" label="Default" sublabel="Fondo washi-900" checked></lib-checkbox>
-      <lib-checkbox variant="kaki"    label="Kaki" sublabel="Fondo kaki-500" checked></lib-checkbox>
+      <lib-checkbox variant="accent"    label="Kaki" sublabel="Fondo kaki-500" checked></lib-checkbox>
       <lib-checkbox variant="error"   label="Error" sublabel="Borde y label en color-error"></lib-checkbox>
     </div>
   `,
@@ -189,7 +189,7 @@ const _katachi = createKatachiStories<object>(() => html`
     </div>
     <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
       <lib-checkbox variant="default" label="Default" checked></lib-checkbox>
-      <lib-checkbox variant="kaki"    label="Kaki" checked></lib-checkbox>
+      <lib-checkbox variant="accent"    label="Kaki" checked></lib-checkbox>
       <lib-checkbox variant="error"   label="Error"></lib-checkbox>
     </div>
   </div>

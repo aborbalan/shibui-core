@@ -95,7 +95,7 @@
   }
 
   /* ── NODE COLORS ── */
-  .nd-kaki {
+  .nd-accent {
     &.tl-node-dot { border-color: var(--color-kaki-500); }
 
     &.tl-node-dot::after { background: var(--color-kaki-500); }
@@ -113,7 +113,7 @@
     }
   }
 
-  .nd-celadon {
+  .nd-info {
     &.tl-node-dot { border-color: var(--color-celadon-500); }
 
     &.tl-node-dot::after { background: var(--color-celadon-500); }
@@ -159,7 +159,7 @@
 
   /* ── ITEM STATES ── */
 
-  /* Active — pulse kaki */
+  /* Active — pulse accent */
   @keyframes tl-pulse {
     0% {
       box-shadow: 0 0 0 0 rgb(184, 90, 30, 0.35);
@@ -413,13 +413,13 @@
     border: 1px solid var(--border-subtle);
   }
 
-  .tl-badge-kaki {
+  .tl-badge-accent {
     color: var(--color-kaki-500);
     background: var(--color-kaki-50);
     border: 1px solid var(--color-kaki-100);
   }
 
-  .tl-badge-celadon {
+  .tl-badge-info {
     color: var(--color-celadon-500);
     background: var(--color-celadon-50);
     border: 1px solid var(--color-celadon-100);

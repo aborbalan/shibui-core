@@ -21,7 +21,7 @@ const meta: Meta<StepperArgs> = {
   argTypes: {
     current:     { control: { type: 'number', min: 1, max: 4 } },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
-    variant:     { control: 'select', options: ['default', 'minimal', 'kintsugi'] },
+    variant:     { control: 'select', options: ['default', 'minimal', 'inverse'] },
     size:        { control: 'select', options: ['sm', 'md', 'lg'] },
   },
   render: (args): TemplateResult => wrap('var(--bg-surface)', html`
@@ -127,7 +127,7 @@ export const Kintsugi: Story = {
   parameters: { backgrounds: { default: 'dark' } },
   render: (): TemplateResult => html`
     <div style="padding:48px 40px; background:var(--color-washi-950); border:none;">
-      <lib-stepper variant="kintsugi" current="3">
+      <lib-stepper variant="inverse" current="3">
         <lib-step label="Origen"></lib-step>
         <lib-step label="Proceso"></lib-step>
         <lib-step label="Refinado" sub="En curso"></lib-step>

@@ -179,19 +179,19 @@
      font-size: var(--text-md); }
 
   /* ============================================================
-     VARIANT: kaki
+     VARIANT: accent
      ============================================================ */
-  :host([variant="kaki"][checked]) .checkbox__box,
-  :host([variant="kaki"][indeterminate]) .checkbox__box {
+  :host([variant="accent"][checked]) .checkbox__box,
+  :host([variant="accent"][indeterminate]) .checkbox__box {
     background: var(--color-kaki-500);
     border-color: var(--color-kaki-500);
   }
 
-  :host([variant="kaki"]) .checkbox:hover .checkbox__box {
+  :host([variant="accent"]) .checkbox:hover .checkbox__box {
     border-color: var(--color-kaki-400);
   }
 
-  :host([variant="kaki"]) .checkbox:focus-within .checkbox__box {
+  :host([variant="accent"]) .checkbox:focus-within .checkbox__box {
     box-shadow: 0 0 0 3px oklch(45% 0.05 45deg / 0.12);
     border-color: var(--color-kaki-500);
   }

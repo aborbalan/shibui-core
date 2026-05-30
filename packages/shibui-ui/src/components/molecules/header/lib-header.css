@@ -841,14 +841,14 @@
         cursor: pointer;
     }
 
-    /* kaki */
-    .hdr-action--kaki {
+    /* accent */
+    .hdr-action--accent {
         background: var(--color-kaki-500);
         color: #fff;
         border: 1px solid var(--color-kaki-500);
     }
 
-    .hdr-action--kaki:hover {
+    .hdr-action--accent:hover {
         background: var(--color-kaki-600);
     }
 

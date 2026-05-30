@@ -4,8 +4,8 @@
    LIB-TABS — Shibui UI · SG-60
    ============================================================
    Variantes de lista : underline · pill · card · outline · vertical
-   Colores            : (default kaki) · celadon
-   Modificadores      : dark · kintsugi · glitch · scroll · full
+   Colores            : (default accent) · info
+   Modificadores      : dark · gold · glitch · scroll · full
    Tamaños            : sm · (base) · lg
    ============================================================ */
 
@@ -217,15 +217,15 @@
   }
 
   /* Celadon underline */
-  :host([variant="underline"][color="celadon"]) .tb-tab.is-active {
+  :host([variant="underline"][color="info"]) .tb-tab.is-active {
     color: var(--color-celadon-500);
   }
 
-  :host([variant="underline"][color="celadon"]) .tb-ink {
+  :host([variant="underline"][color="info"]) .tb-ink {
     background: var(--color-celadon-500);
   }
 
-  :host([variant="underline"][color="celadon"]) .tb-tab.is-active .tb-badge {
+  :host([variant="underline"][color="info"]) .tb-tab.is-active .tb-badge {
     background: var(--color-celadon-500);
   }
 
@@ -261,19 +261,19 @@
     display: none;
   }
 
-  /* Pill kaki */
-  :host([variant="pill"][color="kaki"]) .tb-tab.is-active {
+  /* Pill accent */
+  :host([variant="pill"][color="accent"]) .tb-tab.is-active {
     background: var(--color-kaki-500);
     color: #fff;
   }
 
-  :host([variant="pill"][color="kaki"]) .tb-tab.is-active .tb-badge {
+  :host([variant="pill"][color="accent"]) .tb-tab.is-active .tb-badge {
     background: rgb(255, 255, 255, .3);
     color: #fff;
   }
 
-  /* Pill celadon */
-  :host([variant="pill"][color="celadon"]) .tb-tab.is-active {
+  /* Pill info */
+  :host([variant="pill"][color="info"]) .tb-tab.is-active {
     background: var(--color-celadon-500);
     color: #fff;
   }
@@ -496,7 +496,7 @@
     box-shadow: 0 1px 4px rgb(0, 0, 0, .3);
   }
 
-  :host([dark][variant="pill"][color="kaki"]) .tb-tab.is-active {
+  :host([dark][variant="pill"][color="accent"]) .tb-tab.is-active {
     background: var(--color-kaki-500);
     color: #fff;
   }
@@ -534,7 +534,7 @@
   /* ════════════════════════════════
      KINTSUGI
      ════════════════════════════════ */
-  @keyframes kintsugi-ink {
+  @keyframes gold-ink {
     0% {
       background-position: 0% 0;
     }
@@ -544,7 +544,7 @@
     }
   }
 
-  :host([kintsugi][variant="underline"]) .tb-ink {
+  :host([gold][variant="underline"]) .tb-ink {
     background: linear-gradient(90deg,
         var(--color-kaki-600) 0%,
         var(--color-kaki-400) 25%,
@@ -552,30 +552,30 @@
         var(--color-kaki-400) 75%,
         var(--color-kaki-600) 100%);
     background-size: 200% 100%;
-    animation: kintsugi-ink 3s linear infinite;
+    animation: gold-ink 3s linear infinite;
   }
 
-  :host([kintsugi]) .tb-tab.is-active {
+  :host([gold]) .tb-tab.is-active {
     color: var(--color-kaki-600);
   }
 
-  :host([kintsugi]) .tb-tab.is-active .tb-badge {
+  :host([gold]) .tb-tab.is-active .tb-badge {
     background: var(--color-kaki-500);
     color: #fff;
   }
 
   /* Kintsugi pill */
-  :host([kintsugi][variant="pill"]) .tb-tab.is-active {
+  :host([gold][variant="pill"]) .tb-tab.is-active {
     background: linear-gradient(90deg,
         var(--color-kaki-600), var(--color-kaki-400), #F5D08A,
         var(--color-kaki-400), var(--color-kaki-600));
     background-size: 200% 100%;
-    animation: kintsugi-ink 3s linear infinite;
+    animation: gold-ink 3s linear infinite;
     color: #fff;
   }
 
   /* Kintsugi dark */
-  :host([kintsugi][dark][variant="underline"]) .tb-ink {
+  :host([gold][dark][variant="underline"]) .tb-ink {
     background: linear-gradient(90deg,
         rgb(184, 90, 30, .4) 0%,
         rgb(217, 114, 52, .7) 25%,
@@ -583,10 +583,10 @@
         rgb(217, 114, 52, .7) 75%,
         rgb(184, 90, 30, .4) 100%);
     background-size: 200% 100%;
-    animation: kintsugi-ink 3.5s linear infinite;
+    animation: gold-ink 3.5s linear infinite;
   }
 
-  :host([kintsugi][dark]) .tb-tab.is-active {
+  :host([gold][dark]) .tb-tab.is-active {
     color: var(--color-kaki-400);
   }
 
@@ -840,7 +840,7 @@
 
      Aplica a todas las variants (underline, pill, card, outline, etc.)
      porque las reglas base .tb-tab no están scoped por variant.
-     Variants explícitos dark/kintsugi/glitch mantienen sus overrides.
+     Variants explícitos dark/gold/glitch mantienen sus overrides.
      ─────────────────────────────────────────────────────────── */
 
   .tb-tab {

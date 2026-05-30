@@ -132,8 +132,10 @@ export * from './components/[atoms|molecules|organisms]/lib-[nombre]/index';
 - Los tokens `--lib-*` se usan para todos los valores visuales, nunca se hardcodean colores ni espaciados
 - Los componentes con efectos glass requieren: `overflow: hidden` + `backdrop-filter` + `::before` con `--lib-glass-shine` + `z-index` en el contenido
 - **CSS nesting nativo**: usar `&` para agrupar `:hover`, `::after`, `::before`, `@media`, `:active` dentro del bloque de variante `:host([attr]) .clase`. Los compound `:host([attrA][attrB])` se mantienen planos. Ver convenciones completas en [`docs/styles/css-nesting.md`](./docs/styles/css-nesting.md)
-- **Efectos katachi**: siempre declarados en el componente pero silenciados por default. Los pseudo-elementos leen `--lib-effect-*` vía `var()` y se activan solo cuando el katachi ancestro los enciende (`animation-play-state: var(--lib-effect-seam-play, paused)`; `opacity: var(--lib-effect-topbar-opacity, 0)`)
+- **Efectos katachi**: siempre declarados en el componente pero silenciados por default. Los pseudo-elementos leen `--lib-effect-*` vía `var()` y se activan solo cuando el katachi ancestro los enciende (`animation-play-state: var(--lib-effect-seam-play, paused)`; `opacity: var(--lib-effect-seam-opacity, 0)`). Patrón de referencia: `lib-card.styles.css`, `lib-badge.css`, `lib-chip.css`
 - **Tokens de token**: los ficheros `_*.css` usan únicamente `:root { }` — NUNCA `:host, :root { }`. El selector `:host` en un `adoptedStyleSheet` bloquea la herencia desde `[data-katachi]` al fijar valores directamente en el shadow host
+- **SVG color vía `currentColor`**: los SVG inline usan `stroke="currentColor"` y `fill="currentColor"`, nunca colores hardcodeados. El CSS del host controla el `color` (con variantes de `tone` / `dark`) y el SVG hereda automáticamente en todos los katachis. Referencia: `lib-spinner.html.ts`
+- **Gradientes dinámicos con opacidad contextual**: para gradientes que necesitan variar la opacidad sobre un color de contexto, declarar una custom property interna en `:host` (p.ej. `--_sp-color: var(--text-primary, fallback)`) y usarla con `color-mix()` en el gradiente: `color-mix(in oklch, var(--_sp-color), transparent 35%)`. Esto evita oklch hardcodeados que no se adaptan al katachi. Referencia: `.sp-sumi` en `lib-spinner.css`
 
 **Eventos:**
 - Siguen el patrón `ui-lib-[acción]` con `bubbles: true, composed: true`
@@ -186,6 +188,27 @@ Las CSS custom properties atraviesan Shadow DOM por herencia — solo funciona s
 de tokens NO usan `:host, :root { }` (solo `:root { }`).
 
 **Wrapper DX**: `<lib-canvas katachi="kintsugi">…</lib-canvas>` aplica el atributo con tipado TS.
+
+### Mapa de renombrado semántico (Phase 3 — completado)
+
+Los valores de props que nombraban paletas han sido migrados a roles semánticos:
+
+| Nombre de paleta (obsoleto) | Rol semántico (actual) | Aplica a |
+|---|---|---|
+| `kaki` | `accent` | `color`, `tone`, `variant` props |
+| `celadon` | `info` | `color`, `tone`, `variant` props |
+| `washi` | `neutral` | `color`, `surface` props |
+| `ink` | `filled` | `mode` (cursor-follower, burger-button) |
+| `dark` | `strong` | `variant` (badge, kbd) |
+
+**Excepciones — NO renombrar:**
+
+| Qué | Por qué |
+|---|---|
+| CSS custom properties `--color-kaki-*`, `--color-celadon-*`, `--color-washi-*` | Primitivos de paleta; solo los consume CSS, nunca son props de componente |
+| Selectores de contexto `[data-katachi="celadon"]`, `[data-katachi="kintsugi"]`, … | Identificadores de identidad sellada, no valores de prop |
+| `variant="celadon"` / `"sabi"` / `"shizen"` en `lib-header` / `lib-footer` | Art-direction — controlan la plantilla de layout, no el color |
+| `texture="washi"` / `"celadon-wash"` / `"kintsugi"` en `lib-background` | Identificadores de recurso gráfico, no roles semánticos |
 
 **Taxonomía de cobertura** (en `styles/effects-x-surfaces.md`):
 - 🟢 **semantic** — consume tokens semánticos, cambia visualmente con cada katachi
@@ -344,8 +367,8 @@ Usar siempre tokens en lugar de valores px:
 - Los efectos glass y spotlight son opcionales — no añadirlos salvo que se pida explícitamente
 - Los tipos siempre desde `src/models/`, nunca inline
 - **Katachi-aware**: si un componente nuevo es `semantic`, consumir tokens semánticos (`--bg-elevated`, `--text-primary`…) en vez de la paleta primitiva. Los efectos de katachi se activan automáticamente via `--lib-effect-*` — no hace falta leer `--katachi-id`
-- **Sin variantes palette-named**: los componentes no tienen `variant="kintsugi"`, `variant="glitch"`, `color="celadon"`, etc. Solo roles semánticos (`default`, `inverse`, `accent`, `featured`, `info`, `strong`…). Si te piden añadir una variante con nombre de paleta o katachi, proponer el equivalente semántico
-- **Efectos katachi en componentes nuevos**: declarar los pseudo-elementos siempre, controlados por `--lib-effect-*` (ver patrón en `lib-card.css`). No activar efectos por ID de katachi
+- **Sin variantes palette-named**: los componentes no tienen `variant="kintsugi"`, `variant="glitch"`, `color="celadon"`, `color="kaki"`, etc. Solo roles semánticos (`default`, `inverse`, `accent`, `info`, `neutral`, `filled`, `strong`…). Mapa de equivalencias: `kaki`→`accent`, `celadon`→`info`, `washi`→`neutral`, `ink`→`filled`, `dark`→`strong`. Si te piden añadir una variante con nombre de paleta o katachi, proponer el equivalente semántico. **Excepciones intocables**: CSS custom properties `--color-kaki-*`/`--color-celadon-*`, selectores `[data-katachi="*"]`, variantes art-direction en header/footer (`celadon`/`sabi`/`shizen`), texturas de `lib-background`
+- **Efectos katachi en componentes nuevos**: declarar los pseudo-elementos siempre, controlados por `--lib-effect-*` (ver patrón en `lib-card.css`, `lib-badge.css`, `lib-chip.css`). No activar efectos por ID de katachi. Para SVG internos usar `stroke="currentColor"` — nunca colores hardcodeados. Para gradientes con opacidad, usar `color-mix(in oklch, var(--_prop-interna), transparent N%)` en lugar de oklch con alpha hardcodeado
 - **Selectors de token files**: solo `:root { }`, nunca `:host, :root { }` — rompe la herencia de custom properties a través de Shadow DOM
 - Si añades un componente nuevo, actualizar también los `catalog.ts` de los kitchen-sinks (React/Angular/Svelte) con su slug + coverage, y `styles/effects-x-surfaces.md` con la coverage real
 - Si hay duda sobre convenciones, preguntar antes de asumir

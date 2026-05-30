@@ -9,7 +9,7 @@ export type TimelineSize = 'sm' | 'md' | 'lg';
 export type TimelineNodeType = 'dot' | 'icon' | 'avatar';
 
 /** Color del nodo */
-export type TimelineNodeColor = 'default' | 'kaki' | 'celadon' | 'error' | 'muted';
+export type TimelineNodeColor = 'default' | 'accent' | 'info' | 'error' | 'muted';
 
 /** Estado del ítem — afecta nodo + contenido + card */
 export type TimelineItemStatus = 'default' | 'active' | 'done' | 'error' | 'pending';

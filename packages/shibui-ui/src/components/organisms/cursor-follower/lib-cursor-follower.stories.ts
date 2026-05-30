@@ -33,7 +33,7 @@ type Story = StoryObj;
 /* ── Playground ── */
 export const Playground: Story = {
   render: (): TemplateResult => html`
-    <lib-cursor-follower mode="ink" .trail="${false}"></lib-cursor-follower>
+    <lib-cursor-follower mode="filled" .trail="${false}"></lib-cursor-follower>
 
     <div style="${zoneBase} background: var(--bg-elevated); flex-direction: column; gap: 1rem;">
       <span style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted);">
@@ -58,7 +58,7 @@ export const Playground: Story = {
 export const Modes: Story = {
   name: 'Modos — Ink · Minimal · Kaki · Ghost',
   render: (): TemplateResult => {
-    const modes: CursorMode[] = ['ink', 'minimal', 'kaki', 'ghost'];
+    const modes: CursorMode[] = ['filled', 'minimal', 'accent', 'ghost'];
 
     const switchMode = (mode: CursorMode): void => {
       const cf = document.querySelector('lib-cursor-follower') as LibCursorFollower;
@@ -74,7 +74,7 @@ export const Modes: Story = {
     };
 
     return html`
-      <lib-cursor-follower mode="ink"></lib-cursor-follower>
+      <lib-cursor-follower mode="filled"></lib-cursor-follower>
 
       <!-- Mode switcher -->
       <div style="display: flex; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap;">
@@ -87,8 +87,8 @@ export const Modes: Story = {
               font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.08em;
               text-transform: uppercase; padding: 0.5rem 1rem;
               border: 1px solid var(--border-default);
-              background: ${m === 'ink' ? 'var(--color-washi-900)' : 'var(--bg-elevated)'};
-              color: ${m === 'ink' ? 'var(--color-washi-100)' : 'var(--text-secondary)'};
+              background: ${m === 'filled' ? 'var(--color-washi-900)' : 'var(--bg-elevated)'};
+              color: ${m === 'filled' ? 'var(--color-washi-100)' : 'var(--text-secondary)'};
               cursor: none; transition: background 150ms, color 150ms;
             "
           >${m}</button>
@@ -114,7 +114,7 @@ export const Modes: Story = {
 export const ContextualZones: Story = {
   name: 'Zonas — Texto · Botones · Oscuro · Label',
   render: (): TemplateResult => html`
-    <lib-cursor-follower mode="ink"></lib-cursor-follower>
+    <lib-cursor-follower mode="filled"></lib-cursor-follower>
 
     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
 
@@ -190,7 +190,7 @@ export const ContextualZones: Story = {
 export const Trail: Story = {
   name: 'Trail — cola de tinta',
   render: (): TemplateResult => html`
-    <lib-cursor-follower mode="ink" id="cf-trail"></lib-cursor-follower>
+    <lib-cursor-follower mode="filled" id="cf-trail"></lib-cursor-follower>
 
     <div style="${zoneBase} background: var(--color-washi-950); border-color: oklch(16% 0.02 45); flex-direction: column; gap: 2rem; min-height: 300px;">
       <p style="font-family: var(--lib-font-display); font-size: 1.8rem; font-weight: 300; color: rgba(250,247,244,0.75); letter-spacing: -0.02em; text-align: center;">
@@ -229,7 +229,7 @@ const _katachi = createKatachiStories<object>(() => html`
 
     <!-- Zone ink -->
     <div style="position:relative;height:80px;background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;cursor:none;overflow:hidden;">
-      <lib-cursor-follower mode="ink"></lib-cursor-follower>
+      <lib-cursor-follower mode="filled"></lib-cursor-follower>
       <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;pointer-events:none;">ink · hover here</span>
     </div>
 
@@ -239,10 +239,10 @@ const _katachi = createKatachiStories<object>(() => html`
       <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;pointer-events:none;">minimal · hover here</span>
     </div>
 
-    <!-- Zone kaki -->
+    <!-- Zone accent -->
     <div style="position:relative;height:80px;background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;cursor:none;overflow:hidden;">
-      <lib-cursor-follower mode="kaki"></lib-cursor-follower>
-      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;pointer-events:none;">kaki · hover here</span>
+      <lib-cursor-follower mode="accent"></lib-cursor-follower>
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;pointer-events:none;">accent · hover here</span>
     </div>
 
     <!-- Zone ghost -->

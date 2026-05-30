@@ -12,7 +12,7 @@ const meta: Meta<KbdArgs> = {
   component: 'lib-kbd',
   argTypes: {
     size:    { control: 'select', options: ['xs', 'sm', 'md', 'lg'] },
-    variant: { control: 'select', options: ['default', 'dark', 'ghost', 'kaki', 'celadon'] },
+    variant: { control: 'select', options: ['default', 'inverse', 'ghost', 'accent', 'subtle'] },
     pressed: { control: 'boolean' },
   },
 };
@@ -69,10 +69,10 @@ export const ModifierSymbols: Story = {
 
 /* ── Variants ── */
 export const Variants: Story = {
-  name: 'Variants — Default · Dark · Ghost · Kaki · Celadón',
+  name: 'Variants — Default · Inverse · Ghost · Accent · Subtle',
   render: (): TemplateResult => html`
     <div style=${stage}>
-      ${(['default','dark','ghost','kaki','celadon'] as const).map(v => html`
+      ${(['default','inverse','ghost','accent','subtle'] as const).map(v => html`
         <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
           <div style="display:flex;align-items:center;gap:4px;">
             <lib-kbd size="md" variant=${v}>⌘</lib-kbd>
@@ -87,15 +87,15 @@ export const Variants: Story = {
 
 /* ── Dark surface ── */
 export const DarkSurface: Story = {
-  name: 'Dark — sobre superficie oscura',
+  name: 'Inverse — sobre superficie oscura',
   parameters: { backgrounds: { default: 'dark' } },
   render: (): TemplateResult => html`
     <div style=${stageDk}>
-      <lib-kbd size="md" variant="dark">⌘</lib-kbd>
-      <lib-kbd size="md" variant="dark">⇧</lib-kbd>
-      <lib-kbd size="md" variant="dark">P</lib-kbd>
-      <lib-kbd size="md" variant="dark" pressed>Esc</lib-kbd>
-      <lib-kbd size="md" variant="dark">Space</lib-kbd>
+      <lib-kbd size="md" variant="inverse">⌘</lib-kbd>
+      <lib-kbd size="md" variant="inverse">⇧</lib-kbd>
+      <lib-kbd size="md" variant="inverse">P</lib-kbd>
+      <lib-kbd size="md" variant="inverse" pressed>Esc</lib-kbd>
+      <lib-kbd size="md" variant="inverse">Space</lib-kbd>
     </div>
   `,
 };
@@ -239,7 +239,7 @@ const _katachi = createKatachiStories<object>(() => html`
     </div>
     <!-- Variants -->
     <div style="display:flex;align-items:center;gap:var(--lib-space-md);flex-wrap:wrap;">
-      ${(['default','dark','ghost','kaki','celadon'] as const).map(v => html`
+      ${(['default','inverse','ghost','accent','subtle'] as const).map(v => html`
         <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-xs);">
           <lib-kbd size="md" variant=${v}>⌘</lib-kbd>
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;color:var(--text-muted);text-transform:uppercase;">${v}</span>

@@ -4,8 +4,8 @@ import type { ProgressTemplateProps, ProgressSegment, ProgressSegmentTone } from
 /* ── Tone → CSS class for segments ── */
 const SEGMENT_TONE_CLASS: Record<ProgressSegmentTone, string> = {
   default: 'seg-default',
-  kaki:    'seg-kaki',
-  celadon: 'seg-celadon',
+  accent:  'seg-accent',
+  info:    'seg-info',
   error:   'seg-error',
   muted:   'seg-muted',
 };
@@ -13,8 +13,8 @@ const SEGMENT_TONE_CLASS: Record<ProgressSegmentTone, string> = {
 /* ── Tone → CSS variable for legend dot ── */
 const SEGMENT_TONE_VAR: Record<ProgressSegmentTone, string> = {
   default: 'var(--color-washi-900)',
-  kaki:    'var(--color-kaki-500)',
-  celadon: 'var(--color-celadon-500)',
+  accent:  'var(--color-kaki-500)',
+  info:    'var(--color-celadon-500)',
   error:   'var(--color-error)',
   muted:   'var(--color-washi-300)',
 };

@@ -5,7 +5,7 @@ import sliderCss from './lib-range-slider.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
 export type RsSize = 'sm' | 'md' | 'lg';
-export type RsTone = 'default' | 'kaki' | 'celadon' | 'error' | 'washi' | 'dark';
+export type RsTone = 'default' | 'accent' | 'info' | 'error' | 'neutral' | 'inverse';
 
 export interface RsMark {
   /** Posición 0–100 sobre el track */
@@ -36,11 +36,11 @@ export interface RsMark {
  *
  * @example dual
  * <lib-range-slider dual label="Precio" value-min="120" value-max="480"
- *   unit="€" show-limits limit-min="0 €" limit-max="500 €" tone="kaki">
+ *   unit="€" show-limits limit-min="0 €" limit-max="500 €" tone="accent">
  * </lib-range-slider>
  *
  * @example vertical
- * <lib-range-slider vertical tone="kaki" value="80" label="Bajo"
+ * <lib-range-slider vertical tone="accent" value="80" label="Bajo"
  *   style="height:220px"></lib-range-slider>
  */
 @customElement('lib-range-slider')

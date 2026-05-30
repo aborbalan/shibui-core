@@ -231,7 +231,7 @@ class WaterPhysics {
 /**
  * Botón con física de agua en canvas.
  *
- * @prop variant  — 'ink' | 'washi' | 'kaki' | 'celadon' | 'ghost' | 'danger'
+ * @prop variant  — 'filled' | 'outlined' | 'accent' | 'info' | 'ghost' | 'danger'
  * @prop size     — 'sm' | 'md' | 'lg'
  * @prop disabled — bloquea interacción y detiene el canvas
  * @prop loading  — muestra spinner, bloquea interacción
@@ -249,7 +249,7 @@ export class LibButtonLiquid extends LitElement {
   ];
 
   @property({ type: String, reflect: true })
-  variant: LiquidVariant = 'ink';
+  variant: LiquidVariant = 'filled';
 
   @property({ type: String, reflect: true })
   size: LiquidSize = 'md';

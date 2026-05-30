@@ -4,7 +4,7 @@
    LIB-STEP — Shibui UI · 段階 (paso individual)
    Status      : pending · active · completed · error
    Orientation : horizontal (default) · vertical
-   Variant     : default · minimal · kintsugi
+   Variant     : default · minimal · inverse
    Size        : sm · md (default) · lg
    ============================================================ */
 
@@ -190,13 +190,13 @@
      VARIANT — KINTSUGI (venas doradas, superficie oscura)
      ============================================================ */
 
-  :host([variant="kintsugi"][status="completed"]) .step-node {
+  :host([variant="inverse"][status="completed"]) .step-node {
     background: var(--lib-comp-bg, var(--color-washi-900));
     border: none;
     color: var(--lib-comp-fg-sec, var(--text-secondary));
   }
 
-  :host([variant="kintsugi"][status="completed"]) .step-node::after {
+  :host([variant="inverse"][status="completed"]) .step-node::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -210,14 +210,14 @@
     pointer-events: none;
   }
 
-  :host([variant="kintsugi"][status="active"]) .step-node {
+  :host([variant="inverse"][status="active"]) .step-node {
     background: var(--lib-comp-bg, var(--color-washi-950));
     border: none;
     color: var(--lib-comp-fg-sec, var(--text-secondary));
     box-shadow: 0 0 0 4px oklch(45% 0.05 45deg / 0.1); /* glow kintsugi, sin token equivalente */
   }
 
-  :host([variant="kintsugi"][status="active"]) .step-node::after {
+  :host([variant="inverse"][status="active"]) .step-node::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -229,28 +229,28 @@
     mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
-    animation: kintsugi-pulse 2.5s ease-in-out infinite;
+    animation: step-gold-pulse 2.5s ease-in-out infinite;
   }
 
-  @keyframes kintsugi-pulse {
+  @keyframes step-gold-pulse {
     0%, 100% { opacity: 0.7; }
     50%       { opacity: 1; }
   }
 
-  :host([variant="kintsugi"][status="completed"]) .step-connector {
+  :host([variant="inverse"][status="completed"]) .step-connector {
     background: linear-gradient(90deg, oklch(45% 0.04 60deg / 0.5), oklch(55% 0.05 65deg / 0.3));
   }
 
-  :host([variant="kintsugi"]) .step-label { color: var(--lib-comp-fg-muted, var(--text-muted)); }
-  :host([variant="kintsugi"][status="active"]) .step-label    { color: var(--lib-comp-fg, var(--text-primary)); }
-  :host([variant="kintsugi"][status="completed"]) .step-label { color: var(--lib-comp-fg-sec, var(--text-secondary)); }
+  :host([variant="inverse"]) .step-label { color: var(--lib-comp-fg-muted, var(--text-muted)); }
+  :host([variant="inverse"][status="active"]) .step-label    { color: var(--lib-comp-fg, var(--text-primary)); }
+  :host([variant="inverse"][status="completed"]) .step-label { color: var(--lib-comp-fg-sec, var(--text-secondary)); }
 
-  :host([variant="kintsugi"]) .step-node {
+  :host([variant="inverse"]) .step-node {
     background: var(--lib-comp-bg, var(--color-washi-950));
     border-color: var(--lib-comp-border, var(--border-default));
     color: var(--lib-comp-fg-muted, var(--text-muted));
   }
-  :host([variant="kintsugi"]) .step-connector { background: var(--lib-comp-border, var(--border-default)); }
+  :host([variant="inverse"]) .step-connector { background: var(--lib-comp-border, var(--border-default)); }
 
   /* ============================================================
      ORIENTATION — VERTICAL
@@ -383,7 +383,7 @@
     .step-connector,
     .step-label { transition: none; }
 
-    :host([variant="kintsugi"][status="active"]) .step-node::after {
+    :host([variant="inverse"][status="active"]) .step-node::after {
       animation: none; }
   }
 
@@ -394,7 +394,7 @@
      connectors y status states (pending/active/completed/error).
 
      Status states tienen paleta semántica deliberada. Variants
-     kintsugi/glitch sin cambios.
+     inverse/brutal sin cambios.
 
      Bloque marcador para discoverability.
      ─────────────────────────────────────────────────────────── */

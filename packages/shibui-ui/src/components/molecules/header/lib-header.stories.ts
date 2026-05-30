@@ -36,7 +36,7 @@ const NAV_SIMPLE: NavLink[] = [
 ];
 
 const ACTIONS: HeaderAction[] = [
-  { label: 'Empezar gratis', href: '#', variant: 'kaki' },
+  { label: 'Empezar gratis', href: '#', variant: 'accent' },
 ];
 
 /* ── Fake page body ── */
@@ -82,7 +82,7 @@ export const Dark: Story = {
     <lib-header variant="dark"
       brand-name="shibui" version="v0.1" login-label="Entrar"
       .links="${NAV_SIMPLE}"
-      .actions="${[{ label: 'Empezar', href: '#', variant: 'kaki' }]}"
+      .actions="${[{ label: 'Empezar', href: '#', variant: 'accent' }]}"
     ></lib-header>
     ${body(true, 'Sistema <em style="font-style:italic;color:var(--color-kaki-400);">nocturno</em>')}
   `,
@@ -130,7 +130,7 @@ export const Transparent: Story = {
         <lib-header variant="transparent"
           brand-name="shibui" login-label="Entrar"
           .links="${NAV_SIMPLE}"
-          .actions="${[{ label: 'Ver componentes', href: '#', variant: 'kaki' }]}"
+          .actions="${[{ label: 'Ver componentes', href: '#', variant: 'accent' }]}"
         ></lib-header>
         <div style="padding:var(--lib-space-xl) calc(var(--lib-space-xl)*2);color:rgba(250,247,244,.75);">
           <div style="font-family:var(--lib-font-display);font-size:3rem;font-weight:300;
@@ -262,7 +262,7 @@ export const AppBar: Story = {
       ]}"
       .actions="${[
         { label: 'Exportar', variant: 'outline' },
-        { label: 'Publicar', variant: 'kaki' },
+        { label: 'Publicar', variant: 'accent' },
       ]}"
     ></lib-header>
 
@@ -308,7 +308,7 @@ export const Celadon: Story = {
         { id: 'archive',    label: 'Archivo',    href: '#' },
         { id: 'about',      label: 'Sobre',      href: '#' },
       ]}"
-      .actions="${[{ label: '青 Explorar', href: '#', variant: 'celadon' }]}"
+      .actions="${[{ label: '青 Explorar', href: '#', variant: 'accent' }]}"
     ></lib-header>
     <div style="background:oklch(15% 0.02 180deg);padding:var(--lib-space-xl) calc(var(--lib-space-xl)*2);min-height:300px;">
       <div style="font-family:var(--lib-font-display);font-size:2.8rem;font-weight:300;
@@ -406,7 +406,7 @@ const _katachi = createKatachiStories<object>(() => html`
         { id: 'tok',   label: 'Tokens',      href: '#' },
         { id: 'docs',  label: 'Docs',        href: '#' },
       ] as NavLink[]}"
-      .actions="${[{ label: 'Empezar', href: '#', variant: 'kaki' }] as HeaderAction[]}"
+      .actions="${[{ label: 'Empezar', href: '#', variant: 'accent' }] as HeaderAction[]}"
     ></lib-header>
     <div style="background:var(--bg-base);padding:var(--lib-space-md) calc(var(--lib-space-xl) * 2);border-top:1px solid var(--border-subtle);">
       <div style="font-family:var(--lib-font-display);font-size:1.8rem;font-weight:300;letter-spacing:-0.02em;color:var(--text-primary);">

@@ -2,8 +2,8 @@
 
 /* ============================================================
    LIB-SPOTLIGHT-CARD — Shibui UI · Kintsugi Digital
-   Spotlight : kaki (default) · water · white
-   Kintsugi  : boolean — activa el hilo de oro en el borde
+   Spotlight : accent (default) · water · white
+   Gold      : boolean — activa el hilo de oro en el borde (era kintsugi)
 
    Arquitectura de capas:
      1. .spotlight__layer  → gradiente radial reactivo al cursor   z-index: 1
@@ -46,13 +46,13 @@
   }
 
   /* ── Kintsugi background — fondo cálido cuando activo ──────── */
-  :host([kintsugi]) .spotlight {
+  :host([gold]) .spotlight {
     background: oklch(18% 0.02 45deg / 1);
   }
 
   /* ── Kintsugi border — hilo de oro en las grietas ──────────── */
   /* Técnica: padding: 1px + mask-composite para aislar el borde  */
-  :host([kintsugi]) .spotlight::after {
+  :host([gold]) .spotlight::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -97,7 +97,7 @@
     background: var(--lib-spotlight-gradient-white);
   }
 
-  /* kintsugi siempre usa kaki — no se sobreescribe */
+  /* gold siempre usa accent — no se sobreescribe */
 
   /* ============================================================
      SLOT — encima de ambas capas

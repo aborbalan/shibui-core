@@ -17,7 +17,7 @@ const meta: Meta = {
     open:      { control: 'boolean' },
     placement: { control: 'select', options: ['right', 'left', 'top', 'bottom'] },
     size:      { control: 'select', options: ['sm', 'md', 'lg', 'xl', 'full'] },
-    variant:   { control: 'select', options: ['default', 'dark', 'kintsugi', 'kintsugi-dark', 'glitch', 'glitch-dark'] },
+    variant:   { control: 'select', options: ['default', 'dark', 'inverse', 'inverse-dark', 'glitch', 'glitch-dark'] },
     label:     { control: 'text' },
     eyebrow:   { control: 'text' },
     subtitle:  { control: 'text' },
@@ -371,7 +371,7 @@ export const BottomSheet: Story = {
    Variantes
    ────────────────────────────────────────────── */
 export const Variants: Story = {
-  name: 'Variantes — dark · kintsugi · glitch',
+  name: 'Variantes — dark · inverse · inverse-dark · glitch',
   render: (): TemplateResult => html`
     <div style="padding:3rem; background:var(--bg-surface); min-height:300px;
       display:flex; align-items:center; justify-content:center; gap:var(--lib-space-md); flex-wrap:wrap;">
@@ -379,8 +379,8 @@ export const Variants: Story = {
       ${([
         { id: 'default',      label: 'Default',        eyebrow: 'Variant', accent: false },
         { id: 'dark',         label: 'Dark',           eyebrow: 'Variant', accent: false },
-        { id: 'kintsugi',     label: 'Kintsugi',       eyebrow: '金継ぎ',   accent: true  },
-        { id: 'kintsugi-dark',label: 'Kintsugi Dark',  eyebrow: '金継ぎ',   accent: true  },
+        { id: 'inverse',     label: 'Inverse',       eyebrow: '金継ぎ',   accent: true  },
+        { id: 'inverse-dark',label: 'Inverse Dark',  eyebrow: '金継ぎ',   accent: true  },
         { id: 'glitch',       label: 'Glitch',         eyebrow: 'Variant', accent: false },
         { id: 'glitch-dark',  label: 'Glitch Dark',    eyebrow: 'Variant', accent: false },
       ] as const).map(v => html`
@@ -418,7 +418,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <div>
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">variants</p>
       <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;">
-        ${(['default', 'dark', 'kintsugi', 'kintsugi-dark', 'glitch', 'glitch-dark'] as const).map(v => html`
+        ${(['default', 'dark', 'inverse', 'inverse-dark', 'glitch', 'glitch-dark'] as const).map(v => html`
           <div style="padding:var(--lib-space-xs) var(--lib-space-sm);border:1px solid var(--border-default);background:var(--bg-elevated);font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);">${v}</div>
         `)}
       </div>

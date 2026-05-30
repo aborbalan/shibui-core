@@ -87,7 +87,7 @@
   }
 
   /* ── Kaki bullet ── */
-  ul.lst.lst-kaki .lst-item::before {
+  ul.lst.lst-accent .lst-item::before {
     background: var(--color-kaki-400);
   }
 
@@ -265,13 +265,13 @@
   }
 
   /* Icon variants */
-  .lst-row-icon.icon-kaki {
+  .lst-row-icon.icon-accent {
     background: var(--color-kaki-50);
     border-color: var(--color-kaki-100);
     color: var(--color-kaki-500);
   }
 
-  .lst-row-icon.icon-celadon {
+  .lst-row-icon.icon-secondary {
     background: var(--color-celadon-50);
     border-color: var(--color-celadon-100);
     color: var(--color-celadon-500);
@@ -410,13 +410,13 @@
     border: 1px solid var(--border-subtle);
   }
 
-  .lst-badge-kaki {
+  .lst-badge-accent {
     background: var(--color-kaki-50);
     color: var(--color-kaki-500);
     border: 1px solid var(--color-kaki-100);
   }
 
-  .lst-badge-celadon {
+  .lst-badge-info {
     background: var(--color-celadon-50);
     color: var(--color-celadon-500);
     border: 1px solid var(--color-celadon-100);

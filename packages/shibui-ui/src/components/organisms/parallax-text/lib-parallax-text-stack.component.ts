@@ -15,7 +15,7 @@ import type { ParallaxTextSize, ParallaxTextColor } from './lib-parallax-text-st
  * @prop lines  — Array de strings, una por capa
  * @prop speed  — Factor de velocidad (default 0.15)
  * @prop size   — 'sm' | 'md' | 'lg'(default) | 'xl' | '2xl'
- * @prop color  — 'default' | 'muted' | 'kaki' | 'celadon'
+ * @prop color  — 'default' | 'muted' | 'accent' | 'info'
  *
  * IMPORTANTE: el padre debe llevar overflow-x:hidden.
  * El componente NO lo aplica en :host — si lo hiciera, el

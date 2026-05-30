@@ -73,7 +73,7 @@ export function drawerTemplate(ctx: LibDrawer): TemplateResult {
           <lib-close-button
             class="dr-close"
             size="md"
-            variant="${(ctx.variant === 'dark' || ctx.variant === 'kintsugi' || ctx.variant === 'kintsugi-dark' || ctx.variant === 'glitch' || ctx.variant === 'glitch-dark') ? 'on-dark' : 'ghost'}"
+            variant="${(ctx.variant === 'dark' || ctx.variant === 'inverse' || ctx.variant === 'inverse-dark' || ctx.variant === 'glitch' || ctx.variant === 'glitch-dark') ? 'on-dark' : 'ghost'}"
             aria-label="Cerrar"
             @lib-close="${(): void => ctx._close()}"
           ></lib-close-button>

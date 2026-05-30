@@ -10,7 +10,7 @@
      → efecto de pulsación real
 
    Sizes    : xs (18px) · sm (22px) · md (28px, default) · lg (36px)
-   Variants : default · dark · ghost · kaki · celadon
+   Variants : default · inverse · ghost · accent · subtle
    ============================================================ */
 
 @layer reset {
@@ -106,8 +106,8 @@
     }
   }
 
-  /* ── Variant: dark ─────────────────────────────────────── */
-  :host([variant="dark"]) .kbd {
+  /* ── Variant: inverse ──────────────────────────────────── */
+  :host([variant="inverse"]) .kbd {
     background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     color: var(--lib-comp-fg-inverse, var(--text-inverse));
     border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
@@ -137,8 +137,8 @@
     }
   }
 
-  /* ── Variant: kaki ─────────────────────────────────────── */
-  :host([variant="kaki"]) .kbd {
+  /* ── Variant: accent ───────────────────────────────────── */
+  :host([variant="accent"]) .kbd {
     background: var(--color-kaki-50);
     color: var(--color-kaki-600);
     border-color: var(--color-kaki-400);
@@ -148,8 +148,8 @@
       inset 0 1px 0 0 rgb(255, 255, 255, 0.6);
   }
 
-  /* ── Variant: celadon ──────────────────────────────────── */
-  :host([variant="celadon"]) .kbd {
+  /* ── Variant: subtle ───────────────────────────────────── */
+  :host([variant="subtle"]) .kbd {
     background: var(--color-celadon-100);
     color: var(--color-celadon-600);
     border-color: var(--color-celadon-500);
