@@ -210,6 +210,16 @@
         letter-spacing: 0.03em;
         line-height: 2;
       }
+
+      /* ── Kintsugi: glow dorado en heading + accent más vívido ── */
+      :host-context([data-katachi="kintsugi"]) .dh-heading {
+        text-shadow: 0 0 24px oklch(61.85% 0.149 48.72deg / 0.25);
+      }
+
+      :host-context([data-katachi="kintsugi"]) .dh-accent {
+        color: var(--color-kaki-300);
+        text-shadow: 0 0 16px oklch(61.85% 0.149 48.72deg / 0.40);
+      }
     }
 
     /* ─── /KATACHI ───────────────────────────────────────────── */

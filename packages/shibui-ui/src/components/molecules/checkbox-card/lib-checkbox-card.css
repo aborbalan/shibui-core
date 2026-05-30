@@ -613,8 +613,18 @@
        ortogonal (sin relación con katachi); se mantiene para
        backward compat.
 
-       Bloque marcador para discoverability.
+       Efectos automáticos vía --lib-effect-*:
+       • kintsugi → ring+halo dorado en .cc-body (box-shadow)
+         .cc-body ya tiene box-shadow en transition — el ring anima
+         suavemente al entrar/salir del contexto.
+       • sabi → ring brutal-mini en .cc-body
+       Nota: ::before (shine diagonal) y ::after (kintsugi bottom line)
+       ya están usados — el ring via box-shadow es el ornamento correcto.
        ─────────────────────────────────────────────────────────── */
+
+    .cc-body {
+      box-shadow: var(--lib-effect-ring, none);
+    }
 
     /* ─── /KATACHI ───────────────────────────────────────────── */
 }
