@@ -192,6 +192,13 @@
      Coverage: 🟢 semantic — ambos grupos de tokens se reescriben
      con cada contexto katachi, por lo que el componente adapta
      su apariencia sin override propio.
+
+     ⚠️  EXCLUSIÓN DELIBERADA — decoraciones kintsugi pendientes
+     lib-gadget-frame es exclusivo de la app Desktop (Tauri).
+     En esta fase solo se diseña para data-katachi="terminal"
+     (el katachi natural de un gadget de escritorio).
+     Los efectos kintsugi (seam dorada, ring) NO se implementan
+     hasta que el diseño visual del gadget en kintsugi esté definido.
      ─────────────────────────────────────────────────────────── */
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }
