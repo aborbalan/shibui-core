@@ -311,8 +311,44 @@
 
      Variant explícita dark (.mo-dark) mantiene su paleta.
 
-     Bloque marcador para discoverability.
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → seam dorada animada en .mo-panel::before
+     • terminal → seam phosphor sólida en .mo-panel::before
      ─────────────────────────────────────────────────────────── */
+
+  /* ── Kintsugi / terminal seam ── */
+  .mo-panel {
+    position: relative;
+  }
+
+  .mo-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    pointer-events: none;
+    z-index: 10;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 20%,
+      var(--color-kaki-400) 50%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 80%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: modal-seam 3s linear infinite;
+    animation-play-state: var(--lib-effect-seam-play, paused);
+    opacity: var(--lib-effect-seam-opacity, 0);
+    transition: opacity var(--duration-slow, 400ms) var(--ease-out, ease-out);
+  }
+
+  @keyframes modal-seam {
+    from { background-position: 200% center; }
+    to   { background-position: -200% center; }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

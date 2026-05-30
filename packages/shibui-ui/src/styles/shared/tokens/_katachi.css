@@ -83,6 +83,7 @@
   --lib-effect-scanlines:      0;
   --lib-effect-crt-vignette:   0;
   --lib-effect-brutal-shadow:  none;
+  --lib-effect-ring:           none;
   --lib-effect-glass-blur:     0px;
   --lib-effect-topbar-opacity: 0;
   --lib-effect-after-bg:       transparent;
@@ -160,6 +161,7 @@
   --lib-effect-scanlines:      0;
   --lib-effect-crt-vignette:   0;
   --lib-effect-brutal-shadow:  none;
+  --lib-effect-ring:           none;
   --lib-effect-glass-blur:     0px;
   --lib-effect-topbar-opacity: 0;
   --lib-effect-after-bg:       transparent;
@@ -217,6 +219,8 @@
   --lib-effect-scanlines:      0;
   --lib-effect-crt-vignette:   0;
   --lib-effect-brutal-shadow:  4px 4px 0px 0px var(--color-washi-900);
+  /* Ring pill/indicator — brutal shadow reducido a escala pequeña */
+  --lib-effect-ring:           2px 2px 0px 0px var(--color-washi-900);
   --lib-effect-glass-blur:     0px;
   --lib-effect-topbar-opacity: 0;
   --lib-effect-after-bg:       transparent;
@@ -304,6 +308,10 @@
   --lib-effect-crt-vignette:   0;
   /* Sombra profunda sin anillo outer — el borde viene del ::after mask */
   --lib-effect-brutal-shadow:  0 4px 20px oklch(0% 0 0deg / 0.40);
+  /* Ring + halo para pill/indicator — anillo dorado + destello */
+  --lib-effect-ring:
+    0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.45),
+    0 0 8px oklch(61.85% 0.149 48.72deg / 0.15);
   --lib-effect-glass-blur:     0px;
   /* Top bar: seam gradient (default en card CSS) — sólo abrirlo */
   --lib-effect-topbar-opacity: 1;
@@ -390,6 +398,7 @@
   --lib-effect-scanlines:      0;
   --lib-effect-crt-vignette:   0;
   --lib-effect-brutal-shadow:  none;
+  --lib-effect-ring:           none;
   --lib-effect-glass-blur:     0px;
   --lib-effect-topbar-opacity: 0;
   --lib-effect-after-bg:       transparent;
@@ -463,6 +472,7 @@
   --lib-effect-scanlines:      0.06; /* opacidad del stripe — sutil pero visible */
   --lib-effect-crt-vignette:   0.50;
   --lib-effect-brutal-shadow:  none;
+  --lib-effect-ring:           none;
   --lib-effect-glass-blur:     0px;
   /* Top bar: barra de phosphor sólida (sin animación seam) */
   --lib-effect-topbar-opacity: 1;

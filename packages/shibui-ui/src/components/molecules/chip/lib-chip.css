@@ -49,48 +49,14 @@
     border-radius: 9999px;
     position: relative;
     overflow: hidden;
-    /* sabi brutal shadow — activado por [data-katachi="sabi"] */
-    box-shadow: var(--lib-effect-brutal-shadow, none);
+    /* kintsugi ring+halo · sabi brutal-mini — activados por [data-katachi] */
+    box-shadow: var(--lib-effect-ring, none);
     transition:
       background var(--duration-base) var(--ease-out),
       border-color var(--duration-base) var(--ease-out),
       color var(--duration-base) var(--ease-out),
       box-shadow var(--duration-base) var(--ease-out),
       transform var(--duration-fast);
-  }
-
-  /* ── Kintsugi seam — barra dorada superior (::after) ── */
-  /* ::before lo usa el modificador [dot]; se usa ::after para el efecto.
-     Invisible por defecto; activa cuando --lib-effect-seam-play = running */
-  .chip::after,
-  .chip-toggle::after,
-  .chip-input::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    pointer-events: none;
-    z-index: 1;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      oklch(61.85% 0.149 48.72deg / 0.55) 20%,
-      var(--color-kaki-400) 50%,
-      oklch(61.85% 0.149 48.72deg / 0.55) 80%,
-      transparent 100%
-    );
-    background-size: 200% 100%;
-    animation: chip-seam 3s linear infinite;
-    animation-play-state: var(--lib-effect-seam-play, paused);
-    opacity: var(--lib-effect-seam-opacity, 0);
-    transition: opacity var(--duration-slow, 400ms) var(--ease-out, ease-out);
-  }
-
-  @keyframes chip-seam {
-    from { background-position: 200% center; }
-    to   { background-position: -200% center; }
   }
 
   /* ────────────────────────────────────────
@@ -462,8 +428,9 @@
      2. :host([selected]) .chip-toggle: bg/border → --bg-inverse; color → --text-inverse
 
      Efectos automáticos vía --lib-effect-* (heredados del ancestro):
-     • kintsugi → --lib-effect-seam-play:running  → ::after visible (barra dorada)
-     • sabi     → --lib-effect-brutal-shadow:4px…  → box-shadow en .chip/.chip-toggle
+     • kintsugi → --lib-effect-ring: ring+halo dorado  → box-shadow en .chip/.chip-toggle
+     • sabi     → --lib-effect-ring: brutal-mini 2px   → box-shadow en .chip/.chip-toggle
+     Nota: seam top eliminado (inapropiado en pill <28px — ver taxonomía KATACHI.md)
      ─────────────────────────────────────────────────────────── */
 
   .chip {
