@@ -165,8 +165,18 @@
      El default adapta superficie por katachi automáticamente. Los
      tones explícitos siguen ganando como deben.
 
-     Bloque marcador para discoverability.
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → text-shadow glow en .cnt-row (solo tone default)
+       Los tones explícitos tienen mayor especificidad y no se ven
+       afectados. El glow es perceptible independientemente del tono
+       de color (diferencia de luminosidad, no de matiz).
      ─────────────────────────────────────────────────────────── */
+
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="kintsugi"]) .cnt-row {
+      text-shadow: 0 0 32px oklch(61.85% 0.149 48.72deg / 0.20);
+    }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }
