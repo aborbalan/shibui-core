@@ -1,4 +1,5 @@
 use app_tauri_core::fs::FsEntry;
+use app_tauri_core::git::GitCommit;
 use app_tauri_core::system::{CpuDetail, DiskDetail, MemoryDetail, NetworkInterface, SystemInfo};
 
 #[tauri::command]
@@ -36,6 +37,11 @@ fn get_home_dir() -> Result<String, String> {
     app_tauri_core::fs::home_dir()
 }
 
+#[tauri::command]
+fn get_git_log(path: String, max_count: Option<u32>) -> Result<Vec<GitCommit>, String> {
+    app_tauri_core::git::get_git_log(&path, max_count)
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -48,6 +54,7 @@ pub fn run() {
             get_network_detail,
             list_dir,
             get_home_dir,
+            get_git_log,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
