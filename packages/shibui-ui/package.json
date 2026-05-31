@@ -77,8 +77,13 @@
   ],
   "author": "",
   "license": "MIT",
+  "sideEffects": ["*.css", "dist/index.js"],
   "peerDependencies": {
-    "lit": "^3.0.0"
+    "lit": "^3.0.0",
+    "react": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true }
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",
