@@ -2,12 +2,12 @@ use std::process::Command;
 
 #[derive(serde::Serialize, Clone)]
 pub struct GitCommit {
-    pub hash:    String,
+    pub hash: String,
     pub message: String,
-    pub author:  String,
-    pub date:    String,
+    pub author: String,
+    pub date: String,
     pub parents: Vec<String>,
-    pub refs:    Vec<String>,
+    pub refs: Vec<String>,
 }
 
 /// Ejecuta `git log` en el directorio indicado y devuelve commits en orden
@@ -19,7 +19,7 @@ pub fn get_git_log(path: &str, max_count: Option<u32>) -> Result<Vec<GitCommit>,
     // \x1f = ASCII Unit Separator: delimitador de campo que no aparece en
     // mensajes, autores ni refs normales.
     let format = "--pretty=tformat:%h\x1f%s\x1f%an\x1f%aI\x1f%p\x1f%D";
-    let limit   = format!("--max-count={}", max_count.unwrap_or(200));
+    let limit = format!("--max-count={}", max_count.unwrap_or(200));
 
     let output = Command::new("git")
         .args(["-C", path, "log", "--all", "--topo-order", &limit, format])
@@ -47,10 +47,10 @@ fn parse_line(line: &str) -> Option<GitCommit> {
         return None;
     }
 
-    let hash    = parts[0].trim().to_string();
+    let hash = parts[0].trim().to_string();
     let message = parts[1].trim().to_string();
-    let author  = parts[2].trim().to_string();
-    let date    = parts[3].trim().to_string();
+    let author = parts[2].trim().to_string();
+    let date = parts[3].trim().to_string();
 
     // %p da hashes cortos separados por espacio (raíz → vacío)
     let parents: Vec<String> = parts[4]
@@ -70,5 +70,12 @@ fn parse_line(line: &str) -> Option<GitCommit> {
         return None;
     }
 
-    Some(GitCommit { hash, message, author, date, parents, refs })
+    Some(GitCommit {
+        hash,
+        message,
+        author,
+        date,
+        parents,
+        refs,
+    })
 }
