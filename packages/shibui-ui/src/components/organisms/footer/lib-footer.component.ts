@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import  { FooterColumn, FooterLink, FooterVariant } from './lib-footer.types';
 import { renderFooter } from './lib-footer.html';
 import componentCss from './lib-footer.css?inline';
+import celadonDecorations from '../../../styles/shared/celadon-decorations.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
 /**
@@ -35,6 +36,7 @@ export class LibFooter extends LitElement {
 
   static override styles = [
     css`${unsafeCSS(sharedTokens)}`,
+    css`${unsafeCSS(celadonDecorations)}`,
     css`${unsafeCSS(componentCss)}`,
   ];
 
@@ -42,6 +44,13 @@ export class LibFooter extends LitElement {
 
   @property({ type: String })
   variant: FooterVariant = 'social';
+
+  /**
+   * Decoraciones celadon opt-in (Bar), separadas por espacio
+   * (ej: "tide condensation depth"). Sólo en `variant="celadon"`.
+   */
+  @property({ type: String })
+  decoration = '';
 
   @property({ type: String, attribute: 'brand-name' })
   brandName = 'shibui';

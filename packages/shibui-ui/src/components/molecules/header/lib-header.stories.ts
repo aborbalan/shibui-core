@@ -319,6 +319,31 @@ export const Celadon: Story = {
   `,
 };
 
+export const CeladonDecorated: Story = {
+  name: '09b · Celadon — decoraciones (marea + condensación)',
+  parameters: { backgrounds: { default: 'dark' } },
+  render: (): TemplateResult => html`
+    <div data-katachi="celadon" style="background:var(--bg-base);padding:var(--lib-space-xl);">
+      <lib-header variant="dark"
+        decoration="tide condensation depth"
+        brand-name="shibui"
+        login-label="Entrar"
+        .links="${[
+          { id: 'gallery',    label: 'Galería',    href: '#' },
+          { id: 'collection', label: 'Colección',  href: '#' },
+          { id: 'archive',    label: 'Archivo',    href: '#' },
+        ]}"
+        .actions="${[{ label: '青 Explorar', href: '#', variant: 'accent' }]}"
+      ></lib-header>
+      <p style="margin-top:var(--lib-space-lg);color:var(--text-muted);font-size:var(--text-sm);">
+        Bar con <code>decoration="tide condensation depth"</code> bajo
+        <code>data-katachi="celadon"</code>. Las capas viven en un wrapper a
+        z-index:-1, detrás del logo y la navegación.
+      </p>
+    </div>
+  `,
+};
+
 /* ════════════════════════════════════════
    10 · SABI
    ════════════════════════════════════════ */

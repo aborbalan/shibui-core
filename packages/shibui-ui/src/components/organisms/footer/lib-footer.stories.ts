@@ -172,6 +172,23 @@ export const Celadon: Story = {
   parameters: { backgrounds: { default: 'dark' } },
 };
 
+export const CeladonDecorated: Story = {
+  name: '05b · Celadon — decoraciones (marea + condensación)',
+  render: () => html`
+    <lib-footer
+      variant="celadon"
+      decoration="tide condensation depth"
+      brand-name="shibui"
+      brand-kanji="青磁"
+      brand-sub="Design System · Zaragoza"
+      location="Zaragoza"
+      .columns=${DEFAULT_COLUMNS}
+      .legalLinks=${DEFAULT_LEGAL_LINKS}
+    ></lib-footer>
+  `,
+  parameters: { backgrounds: { default: 'dark' } },
+};
+
 /* ══════════════════════════════════════════
    06 · Sabi
    ══════════════════════════════════════════ */

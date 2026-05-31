@@ -278,3 +278,18 @@ Filosóficamente compatibles con celadon; el gap es de implementación.
 
 *Auditoría actualizada: 2026-05-27 · CSS real de 94 componentes · Sistema Katachi completo*
 *Anterior: 2026-05-18 (77 entradas)*
+
+---
+
+## Decoraciones celadon — integración (Fase 3)
+
+El katachi celadon pasó a contexto **oscuro** (cerámica jade, `family: dark`) y se añadió
+la capa de 10 decoraciones (ver `effects-x-surfaces.md` § Decoraciones Celadon y el spec
+`celadon-effects-spec.md`).
+
+- **Ambiental** (todos los componentes bajo `data-katachi="celadon"`): tema oscuro + sombra jade.
+- **Pilotos con decoración opt-in**: `lib-card`, `lib-header` (Bar), `lib-footer` (Bar), `lib-button`, `lib-chip`, `lib-status-dot`.
+- **Gate**: capas `.fx-*` sólo bajo celadon (`--lib-celadon-fx-display`, fallback `none`).
+- **Pendiente**: baselines de regresión visual (deliberado).
+
+*Decoraciones añadidas: 2026-05-31*

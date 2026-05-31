@@ -95,6 +95,24 @@
         100% { background-position: 200% 0; }
     }
 
+    /* ── Decoraciones celadon (Bar) ───────────────────────────
+       Las capas .fx-* (marea, condensación, profundidad) van en un
+       wrapper a z-index:-1 detrás del contenido. El :has() activa
+       clip + stacking context sólo cuando hay decoración, sin tocar
+       el overflow:visible que necesitan mega/dropdown. */
+    .hdr:has(> .hdr-fx) {
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    .hdr-fx {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
     /* ══════════════════════════════════════
      01 · CLASSIC LIGHT
      ══════════════════════════════════════ */

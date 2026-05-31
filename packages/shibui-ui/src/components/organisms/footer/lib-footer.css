@@ -868,6 +868,28 @@
     /* ══════════════════════════════════════════
         VARIANTE 05 — CELADON
         ══════════════════════════════════════════ */
+
+    /* Decoraciones celadon (Bar) opt-in via prop `decoration`.
+       La variante celadon ES un contexto celadon en sí misma, así que
+       habilita el gate localmente (independiente de data-katachi). Las
+       capas van en un wrapper a z-index:-1, detrás del contenido. */
+    :host([variant="celadon"]) {
+        --lib-celadon-fx-display: block;
+    }
+
+    footer.ft-decorated {
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    .ft-fx {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
     .ft-celadon-seam {
         position: absolute;
         top: 0;
