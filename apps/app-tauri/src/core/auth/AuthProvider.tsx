@@ -1,17 +1,32 @@
-import { useState } from 'react';
-import type { ReactNode } from 'react';
+import { useState, useEffect, type ReactNode } from 'react';
 import { AuthContext } from './AuthContext';
 
-const ADMIN_PASSWORD = 'shibui-dev';
+const AUTH_KEY = 'admin_auth';
+const PASSWORD = 'shibui-dev';
 
+/**
+ * Auth en localStorage (no sessionStorage) para que el estado de sesión se
+ * comparta entre todas las ventanas del macro entorno. El listener `storage`
+ * propaga login/logout hecho en una ventana al resto en vivo.
+ */
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    () => sessionStorage.getItem('admin_auth') === 'true'
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return localStorage.getItem(AUTH_KEY) === 'true';
+  });
+
+  useEffect(() => {
+    const sync = (e: StorageEvent) => {
+      if (e.key === AUTH_KEY) {
+        setIsAuthenticated(e.newValue === 'true');
+      }
+    };
+    window.addEventListener('storage', sync);
+    return () => window.removeEventListener('storage', sync);
+  }, []);
 
   const login = (password: string): boolean => {
-    if (password === ADMIN_PASSWORD) {
-      sessionStorage.setItem('admin_auth', 'true');
+    if (password === PASSWORD) {
+      localStorage.setItem(AUTH_KEY, 'true');
       setIsAuthenticated(true);
       return true;
     }
@@ -19,7 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = () => {
-    sessionStorage.removeItem('admin_auth');
+    localStorage.removeItem(AUTH_KEY);
     setIsAuthenticated(false);
   };
 
