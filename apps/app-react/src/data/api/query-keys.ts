@@ -46,4 +46,11 @@ export const queryKeys = {
       ["tokens", "category", category] as const,
     detail: (id: string) => ["tokens", "detail", id] as const,
   },
+
+  // ── Git ───────────────────────────────────────────────
+  git: {
+    all: ["git"] as const,
+    log: (path?: string, maxCount?: number) =>
+      ["git", "log", path ?? "default", maxCount ?? 200] as const,
+  },
 } as const;
