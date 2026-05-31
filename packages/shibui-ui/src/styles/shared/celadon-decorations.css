@@ -1,0 +1,327 @@
+/* ============================================================
+   CELADON · DECORACIONES — capa estructural
+   ────────────────────────────────────────────────────────────
+   Reglas .fx-* que materializan las decoraciones celadon sobre los
+   componentes piloto. NO entra en el bundle global (tokens.css); se
+   importa por ?inline SÓLO en los componentes que decoran, y se añade
+   a su array `styles` junto a sharedTokens y su propia hoja.
+
+   Contexto OSCURO (cerámica jade del katachi celadon). Craquelé y
+   condensación son SVG generativos inyectados por celadon-generative.ts
+   (alta fidelidad al prototipo); el resto son shapes/gradientes CSS con
+   tokens. Cada .fx-* es un overlay absolute dentro del componente, que
+   debe ser position:relative; overflow:hidden; isolation:isolate (para
+   contener mix-blend-mode). El contenido del componente queda encima.
+   ============================================================ */
+
+:host {
+  /* Máscara radial que despeja el centro (el contenido respira). */
+  --lib-celadon-center-clear:
+    radial-gradient(ellipse 82% 82% at 50% 46%, transparent 0, transparent 22%, #000 70%);
+
+  /* Máscaras de onda (un periodo, sin color → el agua la pone var()).
+     El cuerpo de agua rellena hasta abajo; la cresta la traza un
+     drop-shadow. Marea (§2.4): frente claro/rápido + fondo oscuro/lento. */
+  --lib-celadon-wave:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 16' preserveAspectRatio='none'%3E%3Cpath d='M0 8 C18 3 37 3 55 8 C73 13 92 13 110 8 L110 16 L0 16 Z' fill='black'/%3E%3C/svg%3E");
+  --lib-celadon-wave-back:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 16' preserveAspectRatio='none'%3E%3Cpath d='M0 9 C18 5 37 5 55 9 C73 13 92 13 110 9 L110 16 L0 16 Z' fill='black'/%3E%3C/svg%3E");
+}
+
+/* ── Capa base ──────────────────────────────────────────────── */
+/* `display` gateado: sólo se renderizan bajo data-katachi="celadon"
+   (que pone --lib-celadon-fx-display: block); fuera, el fallback `none`
+   las oculta. Evita que las capas jade se pinten en otros katachis. */
+.fx-craquelure,
+.fx-condensation,
+.fx-mist,
+.fx-depth,
+.fx-iridescence,
+.fx-reflejo,
+.fx-tide,
+.fx-meniscus {
+  display: var(--lib-celadon-fx-display, none);
+}
+
+.fx-craquelure,
+.fx-condensation,
+.fx-mist,
+.fx-depth,
+.fx-iridescence {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ── 01 · Craquelure (estática, SVG generativo) ─────────────── */
+/* La red (fisura hundida + borde que capta luz) la genera
+   celadon-generative.ts. Aquí sólo se posiciona y se despeja el
+   centro para no competir con el contenido. */
+.fx-craquelure {
+  z-index: 1;
+  mask: var(--lib-celadon-center-clear);
+}
+
+.fx-craquelure svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.44;
+}
+
+/* ── 02 · Condensación (estática, SVG generativo) ───────────── */
+.fx-condensation {
+  z-index: 1;
+}
+
+.fx-condensation svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+/* ── 03 · Profundidad (estática) ────────────────────────────── */
+.fx-depth {
+  z-index: 2;
+  background: var(--lib-celadon-depth);
+}
+
+/* ── 04 · Niebla (animada) ──────────────────────────────────── */
+/* Tres capas de bruma DISTINTAS (§2.6): blobs radiales borrosos que
+   ACLARAN con screen y derivan horizontal/vertical a 9/12/15s con
+   delays negativos. Posiciones/colores del catálogo del prototipo. */
+.fx-mist {
+  z-index: 1;
+}
+
+.fx-mist .m1,
+.fx-mist .m2,
+.fx-mist .m3 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(11px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.fx-mist .m1 {
+  left: -22%;
+  bottom: -34%;
+  width: 92%;
+  height: 74%;
+  background: radial-gradient(ellipse 60% 58% at 50% 62%,
+    oklch(56% 0.062 174deg / 0.75) 0%, transparent 70%);
+  animation: cel-mist-a 9s ease-in-out infinite;
+}
+
+.fx-mist .m2 {
+  right: -22%;
+  bottom: -38%;
+  width: 84%;
+  height: 66%;
+  background: radial-gradient(ellipse 58% 56% at 50% 62%,
+    oklch(48% 0.056 177deg / 0.65) 0%, transparent 72%);
+  animation: cel-mist-b 12s ease-in-out infinite;
+  animation-delay: -4s;
+}
+
+.fx-mist .m3 {
+  left: 12%;
+  bottom: -30%;
+  width: 72%;
+  height: 58%;
+  background: radial-gradient(ellipse 55% 54% at 50% 62%,
+    oklch(62% 0.05 171deg / 0.55) 0%, transparent 74%);
+  animation: cel-mist-a 15s ease-in-out infinite;
+  animation-delay: -8s;
+}
+
+/* ── 05 · Reflejo (animada) ─────────────────────────────────── */
+/* Banda de luz difusa que barre la superficie del vidriado. */
+.fx-reflejo {
+  position: absolute;
+  top: -25%;
+  left: -20%;
+  width: 42%;
+  height: 150%;
+  pointer-events: none;
+  z-index: 4;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    oklch(85% 0.022 178deg / 0.03) 30%,
+    oklch(92% 0.018 175deg / 0.09) 50%,
+    oklch(85% 0.022 178deg / 0.03) 70%,
+    transparent 100%
+  );
+  filter: blur(7px);
+  animation: cel-glaze-sweep 9s ease-in-out infinite;
+}
+
+/* ── 06 · Iridescencia (hover) ──────────────────────────────── */
+.fx-iridescence {
+  z-index: 4;
+  background: var(--lib-celadon-iridescence);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+:host(:hover) .fx-iridescence {
+  opacity: 1;
+}
+
+/* ── 07 · Marea (animada) ───────────────────────────────────── */
+/* Oleaje que VIAJA (§2.4): dos ondas en paralaje vía máscara de onda
+   que repite (repeat-x) y se desplaza un periodo completo (loop sin
+   costura). Frente claro/rápido (+ cresta vía drop-shadow) sobre fondo
+   oscuro/lento. Tokens de agua → color; máscara → forma. */
+.fx-tide {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 16px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.fx-tide::before,
+.fx-tide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  mask-repeat: repeat-x;
+  mask-position: 0 0;
+}
+/* Fondo: agua honda, onda lenta, mayor tile (paralaje) */
+.fx-tide::before {
+  background: var(--celadon-water-deep);
+  opacity: 0.85;
+  mask-image: var(--lib-celadon-wave-back);
+  mask-size: 140px 100%;
+  animation: cel-tide-back 8s linear infinite;
+}
+/* Frente: agua clara, onda rápida, cresta que capta luz (drop-shadow) */
+.fx-tide::after {
+  background: var(--celadon-water);
+  mask-image: var(--lib-celadon-wave);
+  mask-size: 110px 100%;
+  filter: drop-shadow(0 -1px 0 var(--color-celadon-200));
+  animation: cel-tide-front 4.5s linear infinite;
+}
+
+/* ── 08 · Menisco (estática, shimmer leve) ──────────────────── */
+/* Curva cóncava de tensión superficial: agua al pie con borde que
+   sube en los lados (máscara radial) + glow capilar superior. */
+.fx-meniscus {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 16px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+}
+/* Cuerpo: jade claro (celadon-500→400, §2.10). La máscara radial
+   carva el centro → superficie cóncava (el agua sube en los bordes).
+   La línea capilar la traza un drop-shadow que sigue la curva. */
+.fx-meniscus::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 14px;
+  background: linear-gradient(to top, var(--color-celadon-500) 0%, var(--color-celadon-400) 70%, transparent 100%);
+  mask: radial-gradient(140% 22px at 50% -7px, transparent 0 60%, #000 61%);
+  filter: drop-shadow(0 -1px 0 var(--color-celadon-100));
+  animation: cel-meniscus-pulse 5.5s ease-in-out infinite;
+}
+
+/* ── Keyframes ──────────────────────────────────────────────── */
+@keyframes cel-mist-a {
+  0% {
+    transform: translate(-12%, 4%);
+    opacity: 0.12;
+  }
+
+  50% {
+    transform: translate(12%, -5%);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translate(-12%, 4%);
+    opacity: 0.12;
+  }
+}
+
+@keyframes cel-mist-b {
+  0% {
+    transform: translate(14%, 3%);
+    opacity: 0.08;
+  }
+
+  50% {
+    transform: translate(-12%, -4%);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: translate(14%, 3%);
+    opacity: 0.08;
+  }
+}
+
+@keyframes cel-glaze-sweep {
+  0% {
+    transform: translateX(-70%) skewX(-14deg);
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  82% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(330%) skewX(-14deg);
+    opacity: 0;
+  }
+}
+/* Traslación de un tile completo → loop sin costura (oleaje que viaja). */
+@keyframes cel-tide-front {
+  from { mask-position: 0 0; }
+  to   { mask-position: -110px 0; }
+}
+
+@keyframes cel-tide-back {
+  from { mask-position: 0 0; }
+  to   { mask-position: -140px 0; }
+}
+
+@keyframes cel-meniscus-pulse {
+  0%, 100% { opacity: 0.82; }
+  50%      { opacity: 1; }
+}
+
+/* ── Accesibilidad: reduced-motion desactiva las animadas ───── */
+@media (prefers-reduced-motion: reduce) {
+  .fx-mist .m1,
+  .fx-mist .m2,
+  .fx-mist .m3,
+  .fx-reflejo,
+  .fx-tide::before,
+  .fx-tide::after,
+  .fx-meniscus::before {
+    animation: none;
+  }
+  .fx-mist { opacity: 0.4; }
+  .fx-reflejo { opacity: 0; }
+}

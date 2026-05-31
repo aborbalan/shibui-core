@@ -176,6 +176,11 @@
     :host-context([data-katachi="kintsugi"]) .cnt-row {
       text-shadow: 0 0 32px oklch(61.85% 0.149 48.72deg / 0.20);
     }
+
+    /* Celadon: glow jade frío en los dígitos */
+    :host-context([data-katachi="celadon"]) .cnt-row {
+      text-shadow: 0 0 32px oklch(58.33% 0.068 171.21deg / 0.20);
+    }
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

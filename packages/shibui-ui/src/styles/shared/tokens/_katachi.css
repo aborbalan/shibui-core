@@ -92,67 +92,84 @@
 
 
 /* ════════════════════════════════════════════════════════════
-   CELADON · 青磁 · jade pálido, frío, alternativa cool a shizen
+   CELADON · 青磁 · cerámica jade OSCURA, fría (familia dark)
+   ────────────────────────────────────────────────────────────
+   Contexto de cerámica celadon oscura: la superficie es jade hondo
+   y frío, el texto jade pálido. Es el lienzo sobre el que viven las
+   10 decoraciones celadon (craquelé, niebla, marea…). Colores del
+   prototipo celadon-taxonomy.html.
    ════════════════════════════════════════════════════════════ */
 
 [data-katachi="celadon"],
 :host([data-katachi="celadon"]) {
   /* ── Bridge ──────────────────────────────────────────── */
   --katachi-id:           celadon;
-  --katachi-family:       light;
+  --katachi-family:       dark;
   --katachi-surface:      celadon;
-  --katachi-accent:       var(--color-celadon-500);
-  --katachi-accent-muted: oklch(43.98% 0.079 173.33deg / 0.20);
-  --katachi-fg:           oklch(18% 0.025 175deg);
-  --katachi-fg-muted:     oklch(40% 0.03 175deg);
-  --katachi-border:       oklch(80% 0.03 175deg);
+  --katachi-accent:       var(--color-celadon-400);
+  --katachi-accent-muted: oklch(58.33% 0.068 171.21deg / 0.20);
+  --katachi-fg:           oklch(92% 0.040 180deg);
+  --katachi-fg-muted:     oklch(58% 0.036 176deg);
+  --katachi-border:       oklch(27% 0.032 178deg);
 
-  /* ── Semánticos (light, jade pálido) ─────────────────── */
-  --bg-base:     oklch(97% 0.012 175deg);
-  --bg-surface:  oklch(98% 0.008 175deg);
-  --bg-elevated: oklch(99% 0.006 175deg);
-  --bg-inverse:  oklch(18% 0.025 175deg);
-  --bg-overlay:  oklch(18% 0.025 175deg / 0.60);
+  /* ── Semánticos (dark, cerámica jade) ────────────────── */
+  --bg-base:     oklch(13.5% 0.022 180deg);
+  --bg-surface:  oklch(18.5% 0.026 178deg);
+  --bg-elevated: oklch(23%   0.030 178deg);
+  --bg-inverse:  oklch(92%   0.040 180deg);
+  --bg-overlay:  oklch(8%    0.030 180deg / 0.62);
 
-  --text-primary:    oklch(18% 0.025 175deg);
-  --text-secondary:  oklch(35% 0.035 175deg);
-  --text-muted:      oklch(55% 0.03 175deg);
-  --text-inverse:    oklch(97% 0.012 175deg);
-  --text-accent:     var(--color-celadon-500);
-  --text-link:       var(--color-celadon-500);
-  --text-link-hover: oklch(38% 0.085 173deg);
+  --text-primary:    oklch(92% 0.040 180deg);
+  --text-secondary:  oklch(70% 0.038 177deg);
+  --text-muted:      oklch(58% 0.036 176deg);
+  --text-inverse:    oklch(13.5% 0.022 180deg);
+  --text-accent:     var(--color-celadon-400);
+  --text-link:       var(--color-celadon-300);
+  --text-link-hover: var(--color-celadon-200);
 
-  --border-subtle:  oklch(88% 0.025 175deg);
-  --border-default: oklch(80% 0.03 175deg);
-  --border-strong:  oklch(60% 0.05 175deg);
+  --border-subtle:  oklch(21% 0.025 178deg);
+  --border-default: oklch(27% 0.032 178deg);
+  --border-strong:  oklch(34% 0.036 177deg);
   --border-focus:   var(--color-celadon-400);
 
-  /* ── Shadows: jade-tinted (más ligeros que ink) ──────── */
-  --shadow-sm: 0 1px 2px oklch(18% 0.025 175deg / 0.08);
+  /* ── Sombra jade (Decoración · sistémica) ─────────────────
+     Sombra teñida en jade frío y honda (no negro puro), del
+     prototipo. Es la única decoración celadon ambiental: entra
+     vía override de --shadow-* y alcanza a todo componente. */
+  --shadow-sm: 0 1px 2px oklch(5% 0.040 178deg / 0.60);
   --shadow-md:
-    0 2px 8px oklch(18% 0.025 175deg / 0.10),
-    0 1px 2px oklch(18% 0.025 175deg / 0.06);
+    0 2px 8px  oklch(5% 0.042 178deg / 0.62),
+    0 1px 2px  oklch(7% 0.050 172deg / 0.50);
   --shadow-lg:
-    0 8px 24px oklch(18% 0.025 175deg / 0.12),
-    0 2px 4px  oklch(18% 0.025 175deg / 0.06);
-  --shadow-xl: 0 20px 48px oklch(18% 0.025 175deg / 0.14);
+    0 4px 12px oklch(5% 0.042 178deg / 0.72),
+    0 10px 32px oklch(7% 0.052 172deg / 0.48);
+  --shadow-xl:
+    0 12px 28px oklch(5% 0.045 178deg / 0.78),
+    0 24px 60px oklch(7% 0.055 172deg / 0.55);
 
-  /* ── Glass: OFF (fondo claro, blur no aporta) ────────── */
+  /* ── Glass: ambiental OFF (la translucencia es opt-in en chip) ── */
   --lib-glass-blur-amount:    0px;
   --lib-glass-bg-opacity:     0;
   --lib-glass-border-opacity: 0;
 
-  /* ── Spotlight: OFF (fondo claro, no aplica) ─────────── */
+  /* ── Spotlight: OFF ambiental (opt-in en spotlight-card) ── */
   --lib-spotlight-opacity: 0;
 
-  /* ── Glaze: shimmer cerámico en superficies elevadas ──── */
+  /* ── Glaze / Reflejo: banda de luz que barre el vidriado ── */
   --lib-celadon-glaze:
     linear-gradient(
       105deg,
       transparent 25%,
-      oklch(92% 0.015 172deg / 0.15) 50%,
+      oklch(92% 0.018 175deg / 0.06) 45%,
+      oklch(96% 0.012 172deg / 0.12) 50%,
+      oklch(92% 0.018 175deg / 0.06) 55%,
       transparent 75%
     );
+
+  /* ── Gate de decoraciones: las capas .fx-* sólo se renderizan
+     bajo celadon (fuera, el fallback `none` las oculta). Hereda al
+     Shadow DOM, así que es cross-browser sin :host-context ni JS. ── */
+  --lib-celadon-fx-display: block;
 
   /* ── Effect activation: glaze sólo, sin animaciones ──── */
   --lib-effect-seam-play:      paused;

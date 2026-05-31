@@ -422,6 +422,21 @@
         0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.45),
         0 0 8px oklch(61.85% 0.149 48.72deg / 0.20);
     }
+
+    /* Celadon: thumb con anillo + glow jade */
+    :host-context([data-katachi="celadon"]) .rs input[type="range"]::-webkit-slider-thumb {
+      box-shadow:
+        var(--shadow-sm),
+        0 0 0 1px oklch(58.33% 0.068 171.21deg / 0.45),
+        0 0 8px oklch(58.33% 0.068 171.21deg / 0.20);
+    }
+
+    :host-context([data-katachi="celadon"]) .rs input[type="range"]::-moz-range-thumb {
+      box-shadow:
+        var(--shadow-sm),
+        0 0 0 1px oklch(58.33% 0.068 171.21deg / 0.45),
+        0 0 8px oklch(58.33% 0.068 171.21deg / 0.20);
+    }
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

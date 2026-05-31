@@ -216,5 +216,23 @@
     box-shadow: var(--lib-effect-ring, none);
   }
 
+  /* ── celadon · iridescencia en hover ──────────────────────
+     El punto desplaza su tono hacia el azul frío opalescente,
+     como la luz incidiendo en otro ángulo sobre el esmalte. */
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="celadon"]) .sd {
+      transition:
+        background var(--duration-base) var(--ease-out),
+        filter var(--duration-base) var(--ease-out);
+    }
+
+    @media (hover: hover) {
+      :host-context([data-katachi="celadon"]) .sd:hover {
+        background: var(--color-celadon-opal);
+        filter: brightness(1.2);
+      }
+    }
+  }
+
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

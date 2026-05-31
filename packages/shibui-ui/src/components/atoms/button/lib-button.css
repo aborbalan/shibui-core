@@ -293,6 +293,7 @@
        Reemplaza el ::after del primary (igual posición/especif.). */
 
     :host-context([data-katachi="celadon"]) .btn {
+      /* Reflejo: banda de vidriado que barre en hover (::after) */
       &::after {
         content: '';
         position: absolute;
@@ -307,6 +308,28 @@
 
       &:hover::after {
         transform: translateX(100%);
+      }
+
+      /* Iridescencia: overlay diagonal opalescente (hue-shift) en hover */
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--lib-celadon-iridescence);
+        opacity: 0;
+        transition: opacity var(--duration-slow) var(--ease-out);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      @media (hover: hover) {
+        &:hover::before {
+          opacity: 1;
+        }
+
+        &:hover {
+          border-color: var(--color-celadon-opal);
+        }
       }
     }
 

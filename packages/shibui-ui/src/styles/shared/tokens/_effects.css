@@ -135,12 +135,55 @@
       oklch(45% 0.05 45deg / 0.3) 100%
     );
 
-  /* --- Glaze celadón (shimmer de vidriado cerámico, sweep en hover) --- */
+  /* --- Glaze celadón (Reflejo · shimmer de vidriado, sweep en hover) ---
+     Enriquecido con un núcleo brillante (glint) para leer mejor sobre el
+     fondo jade pálido del katachi celadon. */
   --lib-celadon-glaze:
     linear-gradient(
       105deg,
-      transparent 30%,
-      oklch(92% 0.015 172deg / 0.22) 50%,
-      transparent 70%
+      transparent 25%,
+      oklch(92% 0.015 172deg / 0.20) 45%,
+      oklch(98% 0.012 172deg / 0.45) 50%,
+      oklch(92% 0.015 172deg / 0.20) 55%,
+      transparent 75%
+    );
+
+  /* ======================================================
+     DECORACIONES CELADÓN (paints reutilizables)
+     ──────────────────────────────────────────────────────
+     Reinterpretadas para fondo CLARO. Sólo los gradientes
+     ligeros viven aquí (entran en el bundle global); los SVG
+     pesados (craquelé, condensación, marea, menisco) viven en
+     styles/shared/celadon-decorations.css, que sólo importan
+     los componentes piloto.
+     ====================================================== */
+
+  /* Profundidad — masa de agua oscura hundida en la base (ambiental) */
+  --lib-celadon-depth:
+    linear-gradient(
+      to top,
+      oklch(9% 0.03 178deg / 0.85) 0%,
+      oklch(14% 0.026 178deg / 0.35) 45%,
+      transparent 75%
+    );
+
+  /* Niebla — cuerpo radial de bruma jade (el blend screen lo aplica el módulo) */
+  --lib-celadon-mist:
+    radial-gradient(
+      ellipse 72% 62% at 45% 75%,
+      var(--color-celadon-500) 0%,
+      var(--color-celadon-600) 32%,
+      transparent 68%
+    );
+
+  /* Iridescencia — overlay diagonal opalescente (hue-shift en hover).
+     Valores del prototipo (chip): alpha .10/.08 — sutil por diseño. */
+  --lib-celadon-iridescence:
+    linear-gradient(
+      115deg,
+      transparent 15%,
+      oklch(62% 0.08 196deg / 0.10) 40%,
+      oklch(66% 0.07 162deg / 0.08) 60%,
+      transparent 85%
     );
 }

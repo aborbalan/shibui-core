@@ -443,5 +443,32 @@
     color: var(--text-inverse);
   }
 
+  /* ── celadon · iridescencia opalescente en hover ──────────
+     Overlay diagonal con hue-shift que aparece en hover sobre la
+     pill estática. Translucencia sutil vía borde jade frío. */
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="celadon"]) .chip {
+      border-color: oklch(58% 0.04 175deg / 0.30);
+
+      /* ::after (::before lo usa el indicador [dot]) */
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: var(--lib-celadon-iridescence);
+        opacity: 0;
+        transition: opacity var(--duration-slow) var(--ease-out);
+        pointer-events: none;
+      }
+
+      @media (hover: hover) {
+        &:hover::after {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

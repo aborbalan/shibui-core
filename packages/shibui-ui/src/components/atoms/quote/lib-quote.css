@@ -138,6 +138,23 @@
         color: var(--color-kaki-300);
         text-shadow: 0 0 12px oklch(61.85% 0.149 48.72deg / 0.30);
       }
+
+      /* Celadon — vena jade en el borde + acento luminoso */
+      :host-context([data-katachi="celadon"]) blockquote {
+        border-left: 2px solid;
+        border-image: linear-gradient(
+          to bottom,
+          var(--color-celadon-600)  0%,
+          var(--color-celadon-300) 45%,
+          var(--color-celadon-400) 100%
+        ) 1;
+        padding-left: var(--lib-space-md);
+      }
+
+      :host-context([data-katachi="celadon"]) .quote-accent {
+        color: var(--color-celadon-300);
+        text-shadow: 0 0 12px oklch(58.33% 0.068 171.21deg / 0.30);
+      }
     }
 
     /* ─── /KATACHI ───────────────────────────────────────────── */

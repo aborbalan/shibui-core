@@ -903,6 +903,22 @@
     :host([variant="underline"]):host-context([data-katachi="kintsugi"]) .tb-list {
       border-bottom-color: var(--border-subtle);
     }
+
+    /* Celadon: ink bar → vena jade + glow frío */
+    :host-context([data-katachi="celadon"]) .tb-ink {
+      background: linear-gradient(
+        90deg,
+        var(--color-celadon-600)  0%,
+        var(--color-celadon-400) 40%,
+        var(--color-celadon-300) 65%,
+        var(--color-celadon-400) 100%
+      );
+      box-shadow: 0 0 8px oklch(58.33% 0.068 171.21deg / 0.45);
+    }
+
+    :host([variant="underline"]):host-context([data-katachi="celadon"]) .tb-list {
+      border-bottom-color: var(--border-subtle);
+    }
   }
 
   .tb-tab {
