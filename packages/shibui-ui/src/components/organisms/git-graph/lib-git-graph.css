@@ -1,0 +1,137 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-GIT-GRAPH — Shibui UI
+   Contexto  : app/data-viz
+   Coverage  : semantic — consume tokens semánticos, katachi-aware
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .git-graph-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .git-graph-scroll {
+    overflow: auto;
+  }
+
+  .git-graph-svg {
+    display: block;
+  }
+
+  /* ─── Nodos ──────────────────────────────────────────── */
+
+  .git-node {
+    cursor: pointer;
+    transition: filter 120ms ease;
+
+    &:hover {
+      filter: brightness(1.18);
+    }
+  }
+
+  /* ─── Texto ──────────────────────────────────────────── */
+
+  .commit-message {
+    font-family: inherit;
+    font-size:   12px;
+    fill:        var(--text-primary);
+    dominant-baseline: auto;
+  }
+
+  .commit-meta {
+    font-family: ui-monospace, monospace;
+    font-size:   10px;
+    fill:        var(--text-muted);
+  }
+
+  .ref-text {
+    font-family: ui-monospace, monospace;
+    font-size:   10px;
+    dominant-baseline: auto;
+  }
+
+  /* ─── Estado vacío ───────────────────────────────────── */
+
+  .git-graph-empty {
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    font-size:       14px;
+    font-style:      italic;
+    color:           var(--text-muted);
+  }
+
+  /* ─── Tooltip ────────────────────────────────────────── */
+
+  .git-tooltip {
+    position:       absolute;
+    transform:      translate(-50%, calc(-100% - 10px));
+    background:     var(--bg-elevated);
+    border:         1px solid var(--border-default);
+    border-radius:  4px;
+    padding:        var(--lib-space-xs) var(--lib-space-sm);
+    pointer-events: none;
+    box-shadow:     var(--shadow-md);
+    display:        flex;
+    align-items:    flex-start;
+    gap:            var(--lib-space-xs);
+    z-index:        10;
+    max-width:      280px;
+  }
+
+  .tooltip-swatch {
+    flex-shrink:   0;
+    width:         8px;
+    height:        8px;
+    border-radius: 50%;
+    margin-top:    3px;
+  }
+
+  .tooltip-body {
+    display:        flex;
+    flex-direction: column;
+    gap:            2px;
+  }
+
+  .tooltip-hash {
+    font-family: ui-monospace, monospace;
+    font-size:   11px;
+    color:       var(--text-muted);
+  }
+
+  .tooltip-msg {
+    font-size:     12px;
+    color:         var(--text-primary);
+    overflow-wrap: break-word;
+  }
+
+  .tooltip-meta {
+    font-size: 11px;
+    color:     var(--text-muted);
+  }
+
+  /* ─── KATACHI · ambient context ──────────────────────
+     Los tokens semánticos (--text-primary, --text-muted,
+     --border-default, --bg-elevated, --bg-surface,
+     --shadow-md) se heredan del ancestro data-katachi
+     sin override propio necesario.
+     ────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ──────────────────────────────────────── */
+}
