@@ -28,8 +28,8 @@
         --q-cite-color: var(--color-washi-400, #B8A99A);
     }
 
-    /* Superficie washi */
-    :host([surface='washi']) {
+    /* Superficie neutral */
+    :host([surface='neutral']) {
         --q-text-color: var(--color-washi-800, #3D332A);
         --q-accent-color: var(--color-kaki-500, #B85A1E);
         --q-cite-color: var(--color-washi-500, #9A8878);
@@ -109,14 +109,36 @@
     }
 
     /* ─── KATACHI · ambient context ──────────────────────────────
-       lib-quote ya soporta superficies light/dark/washi via atributo
+       lib-quote ya soporta superficies light/dark/neutral via atributo
        surface="..." con custom properties locales (--q-text-color,
        --q-cite-color). Decisión editorial: los tonos son levemente
        distintos a los semánticos para reflejar la elegancia
        tipográfica de la cita (Cormorant Garamond italic).
 
-       Sin overrides ambient. Marker para discoverability.
+       Kintsugi: la cita recibe la vena dorada como borde izquierdo
+       (structural vein) + el acento itálico en kaki-300 luminoso.
        ─────────────────────────────────────────────────────────── */
+
+    @supports selector(:host-context(a)) {
+
+      /* Vena dorada — borde izquierdo de la cita */
+      :host-context([data-katachi="kintsugi"]) blockquote {
+        border-left: 2px solid;
+        border-image: linear-gradient(
+          to bottom,
+          var(--color-kaki-600)  0%,
+          var(--color-kaki-300) 45%,
+          var(--color-kaki-400) 100%
+        ) 1;
+        padding-left: var(--lib-space-md);
+      }
+
+      /* Acento itálico → kaki luminoso */
+      :host-context([data-katachi="kintsugi"]) .quote-accent {
+        color: var(--color-kaki-300);
+        text-shadow: 0 0 12px oklch(61.85% 0.149 48.72deg / 0.30);
+      }
+    }
 
     /* ─── /KATACHI ───────────────────────────────────────────── */
 }

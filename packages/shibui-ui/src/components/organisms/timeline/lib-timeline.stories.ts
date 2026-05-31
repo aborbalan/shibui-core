@@ -37,12 +37,12 @@ export const Playground: Story = {
           body="El cliente ha recibido el paquete satisfactoriamente."
           ?card="${true}"
         >
-          <span slot="meta" class="tl-badge tl-badge-celadon">Finalizado</span>
+          <span slot="meta" class="tl-badge tl-badge-info">Finalizado</span>
         </lib-timeline-item>
 
         <lib-timeline-item
           status="active"
-          node-color="kaki"
+          node-color="accent"
           timestamp="Ayer · 14:00"
           title="En tránsito"
           body="El envío ha salido de la delegación de Madrid."
@@ -50,7 +50,7 @@ export const Playground: Story = {
           line-variant="progress"
           line-progress="60"
         >
-          <span slot="meta" class="tl-badge tl-badge-kaki">En curso</span>
+          <span slot="meta" class="tl-badge tl-badge-accent">En curso</span>
         </lib-timeline-item>
 
         <lib-timeline-item
@@ -80,17 +80,17 @@ export const NodeTypes: Story = {
 
         <lib-timeline-item
           node-type="dot"
-          node-color="kaki"
-          timestamp="Dot · kaki"
-          title="Nodo punto con color kaki"
+          node-color="accent"
+          timestamp="Dot · accent"
+          title="Nodo punto con color accent"
           body="El nodo más simple del sistema."
         ></lib-timeline-item>
 
         <lib-timeline-item
           node-type="icon"
-          node-color="celadon"
+          node-color="info"
           icon="check-circle"
-          timestamp="Icon · celadon"
+          timestamp="Icon · info"
           title="Nodo con icono Phosphor"
           body="Acepta cualquier nombre de icono de la librería."
         ></lib-timeline-item>
@@ -138,8 +138,8 @@ export const States: Story = {
         <lib-timeline-item
           status="active"
           timestamp="En progreso"
-          title="is-active — pulso kaki animado"
-          body="El nodo pulsa en kaki con una animación de ring infinita."
+          title="is-active — pulso accent animado"
+          body="El nodo pulsa en accent con una animación de ring infinita."
           ?card="${true}"
         ></lib-timeline-item>
 
@@ -225,7 +225,7 @@ export const Collapsible: Story = {
           ?card="${true}"
           ?collapsible="${true}"
         >
-          <span slot="meta" class="tl-badge tl-badge-celadon">Completado</span>
+          <span slot="meta" class="tl-badge tl-badge-info">Completado</span>
         </lib-timeline-item>
 
         <lib-timeline-item
@@ -237,7 +237,7 @@ export const Collapsible: Story = {
           ?collapsible="${true}"
           ?hide-line="${true}"
         >
-          <span slot="meta" class="tl-badge tl-badge-kaki">En curso</span>
+          <span slot="meta" class="tl-badge tl-badge-accent">En curso</span>
         </lib-timeline-item>
 
       </lib-timeline>
@@ -261,7 +261,7 @@ export const WithMetaAndMedia: Story = {
           title="Pull request aprobado"
           ?card="${true}"
         >
-          <span slot="meta" class="tl-badge tl-badge-celadon">Aprobado</span>
+          <span slot="meta" class="tl-badge tl-badge-info">Aprobado</span>
           <span slot="meta" class="tl-badge tl-badge-default">feature/lib-modal</span>
           <span slot="meta">
             <span class="tl-avatar">JR</span>
@@ -271,7 +271,7 @@ export const WithMetaAndMedia: Story = {
 
         <lib-timeline-item
           node-type="icon"
-          node-color="kaki"
+          node-color="accent"
           icon="image-square"
           timestamp="Ayer · 16:45"
           title="Assets actualizados"
@@ -279,7 +279,7 @@ export const WithMetaAndMedia: Story = {
           ?card="${true}"
           ?hide-line="${true}"
         >
-          <span slot="meta" class="tl-badge tl-badge-kaki">Diseño</span>
+          <span slot="meta" class="tl-badge tl-badge-accent">Diseño</span>
           <div slot="media" class="tl-media">
             <div class="tl-media-thumb">
               <lib-icon name="image" size="md"></lib-icon>
@@ -341,7 +341,7 @@ export const Sizes: Story = {
    KATACHI · 形 · Las 6 historias estándar
    lib-timeline usa tokens semánticos (--bg-elevated, --border-subtle,
    --text-primary) — hereda katachi directamente sin CSS extra.
-   Los nodos kaki/celadon son acentos semánticos independientes.
+   Los nodos accent/info son acentos semánticos independientes.
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
@@ -355,7 +355,7 @@ const _katachi = createKatachiStories<object>(() => html`
           <lib-timeline-item
             status="done"
             node-type="icon"
-            node-color="celadon"
+            node-color="info"
             icon="check-circle"
             timestamp="2024"
             title="Wabi — tokens base"
@@ -364,7 +364,7 @@ const _katachi = createKatachiStories<object>(() => html`
           ></lib-timeline-item>
           <lib-timeline-item
             status="active"
-            node-color="kaki"
+            node-color="accent"
             line-variant="progress"
             line-progress="65"
             timestamp="2025"

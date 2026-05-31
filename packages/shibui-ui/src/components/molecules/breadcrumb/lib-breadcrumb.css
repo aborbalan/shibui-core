@@ -5,7 +5,7 @@
    Separadores : slash · chevron · dot · line
    Tamaños     : sm · md (default) · lg
    Superficies : default · filled · pill
-   Acentos     : kaki · celadon · bold
+   Acentos     : accent · info · bold
    Modificador : dark
    Truncado    : .bc-item.bc-hidden → oculto / bc-revealed → visible
    ============================================================ */
@@ -165,10 +165,10 @@
   .bc-pill .bc-sep { padding: 0 var(--lib-space-sm); }
 
   /* ── Acentos en ítem activo ────────────────────────────── */
-  .bc-kaki    .bc-current          { color: var(--color-kaki-500); }
-  .bc-kaki    .bc-link:hover       { color: var(--color-kaki-500); }
-  .bc-celadon .bc-current          { color: var(--color-celadon-500); }
-  .bc-celadon .bc-link:hover       { color: var(--color-celadon-500); }
+  .bc-accent    .bc-current          { color: var(--color-kaki-500); }
+  .bc-accent    .bc-link:hover       { color: var(--color-kaki-500); }
+  .bc-info .bc-current          { color: var(--color-celadon-500); }
+  .bc-info .bc-link:hover       { color: var(--color-celadon-500); }
 
   .bc-bold    .bc-current          { color: var(--text-primary);
      font-weight: 600; }
@@ -295,7 +295,7 @@
      hardcoded — mapean limpiamente a --bg-inverse / --text-inverse
      (valores idénticos en light mode; invierten bajo katachi/dark).
 
-     Variants bc-kaki, bc-celadon, bc-bold, bc-dark sin cambios
+     Variants bc-accent, bc-info, bc-bold, bc-dark sin cambios
      (mayor especificidad por la clase de variant).
      ─────────────────────────────────────────────────────────── */
 

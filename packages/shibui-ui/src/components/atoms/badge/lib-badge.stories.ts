@@ -17,8 +17,8 @@ const meta: Meta<LibBadgeStoryArgs> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'accent', 'celadon', 'dark', 'error', 'success', 'warning'],
-      description: 'Variante semantica del badge',
+      options: ['default', 'accent', 'info', 'strong', 'error', 'success', 'warning'],
+      description: 'Variante semántica del badge',
     },
     size: {
       control: 'select',
@@ -69,8 +69,8 @@ export const AllVariants: Story = {
     <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; padding:24px;">
       <lib-badge variant="default">Default</lib-badge>
       <lib-badge variant="accent">Accent</lib-badge>
-      <lib-badge variant="celadon">Celadon</lib-badge>
-      <lib-badge variant="dark">Dark</lib-badge>
+      <lib-badge variant="info">Info</lib-badge>
+      <lib-badge variant="strong">Strong</lib-badge>
       <lib-badge variant="error">Error</lib-badge>
       <lib-badge variant="success">Success</lib-badge>
       <lib-badge variant="warning">Warning</lib-badge>
@@ -85,7 +85,7 @@ export const WithDot: Story = {
       <lib-badge variant="success" dot>Activo</lib-badge>
       <lib-badge variant="error"   dot>Critico</lib-badge>
       <lib-badge variant="warning" dot>Atencion</lib-badge>
-      <lib-badge variant="celadon" dot>Info</lib-badge>
+      <lib-badge variant="info"    dot>Info</lib-badge>
     </div>
   `,
 };
@@ -95,8 +95,8 @@ export const Pill: Story = {
     <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; padding:24px;">
       <lib-badge variant="accent"  pill>Nuevo</lib-badge>
       <lib-badge variant="success" pill dot>Online</lib-badge>
-      <lib-badge variant="dark"    pill>v1.2.0</lib-badge>
-      <lib-badge variant="celadon" pill>Beta</lib-badge>
+      <lib-badge variant="strong"  pill>v1.2.0</lib-badge>
+      <lib-badge variant="info"    pill>Beta</lib-badge>
     </div>
   `,
 };
@@ -122,7 +122,7 @@ export const InContext: Story = {
     ">
       <div style="display:flex; align-items:center; gap:var(--lib-space-sm);">
         <span style="font-size:var(--text-base); color:var(--text-primary);">Componente lib-badge</span>
-        <lib-badge variant="celadon" size="sm">Nuevo</lib-badge>
+        <lib-badge variant="info" size="sm">Nuevo</lib-badge>
       </div>
       <div style="display:flex; flex-direction:column; gap:var(--lib-space-sm);">
         <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--lib-space-sm) 0; border-bottom:1px solid var(--border-subtle);">
@@ -157,8 +157,8 @@ const _katachi = createKatachiStories<object>(() => html`
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-sm);">
       <lib-badge variant="default">Default</lib-badge>
       <lib-badge variant="accent">Accent</lib-badge>
-      <lib-badge variant="celadon">Celadon</lib-badge>
-      <lib-badge variant="dark">Dark</lib-badge>
+      <lib-badge variant="info">Info</lib-badge>
+      <lib-badge variant="strong">Strong</lib-badge>
       <lib-badge variant="error">Error</lib-badge>
       <lib-badge variant="success">Success</lib-badge>
       <lib-badge variant="warning">Warning</lib-badge>
@@ -172,8 +172,8 @@ const _katachi = createKatachiStories<object>(() => html`
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-sm);">
       <lib-badge variant="accent" pill>Nuevo</lib-badge>
       <lib-badge variant="success" pill dot>Online</lib-badge>
-      <lib-badge variant="dark" pill>v1.2.0</lib-badge>
-      <lib-badge variant="celadon" pill>Beta</lib-badge>
+      <lib-badge variant="strong" pill>v1.2.0</lib-badge>
+      <lib-badge variant="info" pill>Beta</lib-badge>
     </div>
   </div>
 `);
@@ -205,7 +205,7 @@ export const KatachiExplicitOverride: Story = {
         </header>
         <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;">
           <lib-badge variant="accent">Accent</lib-badge>
-          <lib-badge variant="celadon">Celadon</lib-badge>
+          <lib-badge variant="info">Info</lib-badge>
           <lib-badge variant="success">Success</lib-badge>
           <lib-badge variant="error">Error</lib-badge>
         </div>

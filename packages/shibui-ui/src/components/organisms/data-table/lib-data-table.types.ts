@@ -33,7 +33,7 @@
      initialsKey?: string; /* 2 letras; si no se da, primeras 2 del value */
    
      /* Progress: tono del relleno */
-     progressTone?: 'kaki' | 'celadon' | '';
+     progressTone?: 'accent' | 'info' | '';
    }
    
    /* ── Eventos ── */

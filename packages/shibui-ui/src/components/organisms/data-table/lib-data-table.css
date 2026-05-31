@@ -512,11 +512,11 @@
     transition: width var(--duration-slow) var(--ease-out);
   }
 
-  .progress-fill.tone-kaki {
+  .progress-fill.tone-accent {
     background: var(--color-kaki-500);
   }
 
-  .progress-fill.tone-celadon {
+  .progress-fill.tone-info {
     background: var(--color-celadon-500);
   }
 

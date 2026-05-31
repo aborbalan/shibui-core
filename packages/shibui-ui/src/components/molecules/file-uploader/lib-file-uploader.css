@@ -576,7 +576,23 @@
      directamente (--bg-elevated, --bg-surface, --border-subtle,
      --text-primary, --text-secondary, --text-muted) y se adapta
      por herencia.
+
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → ring+halo dorado en .fu-zone / .fu-zone-sm
+       El dashed border ya es dorado via --border-default en kintsugi;
+       el ring añade un halo exterior que refuerza la zona de drop.
+     • sabi     → ring brutal-mini
      ─────────────────────────────────────────────────────────── */
+
+  .fu-zone,
+  .fu-zone-sm {
+    box-shadow: var(--lib-effect-ring, none);
+    transition:
+      border-color var(--duration-base) var(--ease-out),
+      background   var(--duration-base) var(--ease-out),
+      box-shadow   var(--duration-base) var(--ease-out),
+      transform    var(--duration-fast);
+  }
 
   .fu-summary-btn {
     background: var(--bg-inverse);

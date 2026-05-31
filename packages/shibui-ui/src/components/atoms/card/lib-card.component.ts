@@ -10,26 +10,36 @@ export type { LibCardVariant } from "./lib-card.types";
 /**
  * @element lib-card
  *
- * @attr {'default'|'inverse'|'accent'|'featured'|'kintsugi'|'glitch'|'celadon'|'washi'|'brutal'} variant
- *   - default   → superficie elevada neutra
- *   - inverse   → fondo washi-900 oscuro
- *   - accent    → borde izquierdo de color (`accent-color`)
- *   - featured  → fondo kaki degradado, título grande — pensado para 2 columnas en grid
- *   - kintsugi  → seam de oro animado en borde superior + hilo kintsugi-border en borde
- *   - glitch    → estética terminal CRT, scanlines, fuente mono
- *   - celadon   → acento verde-gris japonés para estados de éxito / énfasis secundario
- *   - washi     → paleta neutra cálida, superficie washi-50/100
- *   - brutal    → superficie clara, borde sólido ink, --lib-shadow-brutal; hover hunde el elemento en su sombra
+ * @description
+ * Superficie de contenido con identidad visual sellada por katachi.
+ * Los efectos (seam dorado, scanlines CRT, brutal shadow) se activan
+ * automáticamente cuando la card está dentro de un ancestro con
+ * `data-katachi="kintsugi|terminal|sabi"` — sin ningún prop adicional.
  *
- * @attr {string}  accent-color - Color del borde (solo variante `accent`).
- * @attr {string}  kanji        - Carácter kanji decorativo de fondo (ej: "渋", "金", "間").
+ * @attr {'default'|'inverse'|'accent'|'featured'} variant
+ *   - default  → superficie elevada neutra; adapta completamente al katachi activo
+ *   - inverse  → fondo invertido respecto al base de página (--bg-inverse)
+ *   - accent   → borde izquierdo de énfasis; color vía `accent-color`
+ *   - featured → fondo con gradiente cálido sutil, título grande; para 2 cols en grid
  *
- * @attr {boolean} clickable    - Si está presente, la card emite `ui-lib-card-click` al hacer clic
- * @slot tag    - Etiqueta o metadata en el header.
+ * @attr {string}  accent-color - Color del borde izquierdo (solo variante `accent`).
+ * @attr {string}  kanji        - Kanji decorativo de fondo (ej: "渋", "金", "間").
+ * @attr {boolean} clickable    - Emite `ui-lib-card-click` al hacer clic.
+ *
+ * @slot tag    - Etiqueta o metadata en el header (fuente mono, uppercase).
  * @slot title  - Título principal de la card.
  * @slot        - Cuerpo de la card (default slot).
  * @slot footer - Acciones o información en el footer.
- * @fires ui-lib-card-click - { variant, kanji, originalEvent } — solo cuando `clickable` es true.
+ *
+ * @fires ui-lib-card-click - { variant, kanji, originalEvent } — solo si `clickable`.
+ *
+ * @example
+ * <!-- En contexto kintsugi: seam dorado automático -->
+ * <div data-katachi="kintsugi">
+ *   <lib-card kanji="金">
+ *     <span slot="title">Reparado en oro</span>
+ *   </lib-card>
+ * </div>
  */
 @customElement("lib-card")
 export class LibCard extends LitElement {

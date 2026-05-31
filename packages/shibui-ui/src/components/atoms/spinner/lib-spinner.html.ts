@@ -10,24 +10,17 @@ export interface SpinnerTemplateProps {
 }
 
 /* ── Stroke configs per tone+dark ──────────────────────────── */
+/* Color is now driven by CSS `color` / `--_sp-color` tokens so
+   the enso adapts automatically to any katachi context.
+   Only bopacity (blur-halo opacity) stays TS-computed.         */
 type StrokeConfig = {
-  blur:  string;  /* blur circle stroke color */
-  main:  string;  /* main circle stroke color */
-  bopacity: number; /* blur circle opacity */
+  bopacity: number; /* blur halo opacity */
 };
 
 function ensoStroke(tone: SpinnerTone, dark: boolean): StrokeConfig {
-  if (dark) {
-    if (tone === 'kaki') {
-      return { blur: 'oklch(70% 0.14 60)', main: 'oklch(68% 0.13 60)', bopacity: 0.30 };
-    }
-    /* ink / celadon → paper on dark */
-    return { blur: 'oklch(88% 0.01 60)', main: 'oklch(88% 0.01 60)', bopacity: 0.20 };
-  }
-  if (tone === 'kaki')    return { blur: 'oklch(55% 0.08 45)', main: 'oklch(50% 0.07 45)', bopacity: 0.25 };
-  if (tone === 'celadon') return { blur: 'oklch(50% 0.06 180)', main: 'oklch(48% 0.06 180)', bopacity: 0.25 };
-  /* default: ink */
-  return { blur: 'oklch(25% 0.02 45)', main: 'oklch(25% 0.02 45)', bopacity: 0.25 };
+  if (dark && tone === 'accent') return { bopacity: 0.30 };
+  if (dark)                      return { bopacity: 0.20 };
+  return                         { bopacity: 0.25 };
 }
 
 type StrokeWidth = { blur: number; main: number; feStd: number; };
@@ -53,10 +46,10 @@ function ensoTemplate(props: SpinnerTemplateProps): TemplateResult {
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
         </defs>
-        <!-- blur halo layer -->
+        <!-- blur halo layer — color via CSS currentColor -->
         <circle
           cx="24" cy="24" r="18"
-          stroke="${stroke.blur}"
+          stroke="currentColor"
           stroke-width="${w.blur}"
           stroke-linecap="round"
           stroke-dasharray="95 18"
@@ -67,7 +60,7 @@ function ensoTemplate(props: SpinnerTemplateProps): TemplateResult {
         <!-- crisp layer -->
         <circle
           cx="24" cy="24" r="18"
-          stroke="${stroke.main}"
+          stroke="currentColor"
           stroke-width="${w.main}"
           stroke-linecap="round"
           stroke-dasharray="95 18"
@@ -87,8 +80,8 @@ function sumiTemplate(): TemplateResult {
   `;
 }
 
-/* ── Kintsugi ───────────────────────────────────────────────── */
-function kintsugiTemplate(): TemplateResult {
+/* ── Kin (金) — anillo dorado ───────────────────────────────── */
+function kinTemplate(): TemplateResult {
   return html`<div class="sp-kintsugi"></div>`;
 }
 
@@ -106,9 +99,9 @@ function shizukuTemplate(size: SpinnerSize): TemplateResult {
 /* ── Root ───────────────────────────────────────────────────── */
 export function spinnerTemplate(props: SpinnerTemplateProps): TemplateResult {
   const inner: TemplateResult =
-    props.variant === 'sumi'     ? sumiTemplate() :
-    props.variant === 'kintsugi' ? kintsugiTemplate() :
-    props.variant === 'shizuku'  ? shizukuTemplate(props.size) :
+    props.variant === 'sumi'    ? sumiTemplate() :
+    props.variant === 'kin'     ? kinTemplate() :
+    props.variant === 'shizuku' ? shizukuTemplate(props.size) :
     ensoTemplate(props);
 
   return html`

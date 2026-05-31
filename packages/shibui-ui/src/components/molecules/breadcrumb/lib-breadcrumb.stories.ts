@@ -49,7 +49,7 @@ const meta: Meta<StoryArgs> = {
     },
     accent: {
       control: 'select',
-      options: ['none', 'kaki', 'celadon', 'bold'],
+      options: ['none', 'accent', 'info', 'bold'],
     },
     dark: { control: 'boolean' },
     maxVisible: { control: 'number' },
@@ -146,12 +146,12 @@ export const Surfaces: Story = {
 
 /* ── Acentos ───────────────────────────────────────────── */
 export const Accents: Story = {
-  name: 'Acentos en ítem activo — kaki · celadón · bold',
+  name: 'Acentos en ítem activo — accent · info · bold',
   render: (): TemplateResult => html`
     <div style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
       ${([
-        { accent: 'kaki',    label: '.bc-kaki' },
-        { accent: 'celadon', label: '.bc-celadon' },
+        { accent: 'accent',    label: '.bc-accent' },
+        { accent: 'info', label: '.bc-info' },
         { accent: 'bold',    label: '.bc-bold' },
       ] as const).map(({ accent, label }) => html`
         <div style="display: grid; grid-template-columns: 100px 1fr; align-items: center; gap: 16px;">
@@ -194,11 +194,11 @@ export const Collapsed: Story = {
         <lib-breadcrumb
           separator="chevron"
           surface="filled"
-          accent="kaki"
+          accent="accent"
           max-visible="2"
           .items="${DEEP_ITEMS}"
         ></lib-breadcrumb>
-        <span style="font-family: var(--lib-font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.25em; text-transform: uppercase;">Filled · kaki · chevron · max-visible=2</span>
+        <span style="font-family: var(--lib-font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.25em; text-transform: uppercase;">Filled · accent · chevron · max-visible=2</span>
       </div>
     </div>
   `,
@@ -222,7 +222,7 @@ export const DarkSurface: Story = {
           separator="dot"
           size="sm"
           dark
-          accent="kaki"
+          accent="accent"
           .items="${[
             { label: 'Dashboard',       href: '/' },
             { label: 'Configuración',   href: '/settings' },
@@ -256,7 +256,7 @@ const _katachi = createKatachiStories<object>(() => html`
       { label: 'Diseño', href: '#' },
       { label: 'Katachi' },
     ]}"></lib-breadcrumb>
-    <lib-breadcrumb separator="dot" size="lg" surface="pill" accent="kaki" .items="${[
+    <lib-breadcrumb separator="dot" size="lg" surface="pill" accent="accent" .items="${[
       { label: 'Inicio', href: '#' },
       { label: 'Diseño', href: '#' },
       { label: 'Katachi' },

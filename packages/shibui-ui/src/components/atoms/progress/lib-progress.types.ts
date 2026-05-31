@@ -3,7 +3,7 @@
    ============================================================ */
 
    export type ProgressSize         = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-   export type ProgressTone         = 'default' | 'kaki' | 'celadon' | 'error';
+   export type ProgressTone         = 'default' | 'accent' | 'info' | 'error';
    export type ProgressSegmentTone  = ProgressTone | 'muted';
    
    /**

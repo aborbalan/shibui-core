@@ -47,14 +47,14 @@ const CHECK_ITEMS: ContentItem[] = [
 
 const UI_ITEMS_BASIC: UiItem[] = [
   { key: 'profile',  label: 'Mi perfil',     desc: 'Actualiza tus datos', icon: 'user',         iconVariant: 'default', chevron: true },
-  { key: 'notif',   label: 'Notificaciones', desc: 'Configura alertas',   icon: 'bell',          iconVariant: 'kaki',    badge: { label: '3', variant: 'kaki' }, chevron: true },
-  { key: 'privacy', label: 'Privacidad',     desc: 'Permisos y acceso',   icon: 'shield-check',  iconVariant: 'celadon', chevron: true },
+  { key: 'notif',   label: 'Notificaciones', desc: 'Configura alertas',   icon: 'bell',          iconVariant: 'accent',    badge: { label: '3', variant: 'accent' }, chevron: true },
+  { key: 'privacy', label: 'Privacidad',     desc: 'Permisos y acceso',   icon: 'shield-check',  iconVariant: 'secondary', chevron: true },
 ];
 
 const UI_ITEMS_GROUPED: UiItem[] = [
   { type: 'header', label: 'Cuenta' },
   { key: 'profile',  label: 'Mi perfil',  icon: 'user',    iconVariant: 'default', chevron: true },
-  { key: 'plan',     label: 'Plan actual', icon: 'crown',  iconVariant: 'kaki',    meta: 'Pro', chevron: true },
+  { key: 'plan',     label: 'Plan actual', icon: 'crown',  iconVariant: 'accent',    meta: 'Pro', chevron: true },
   { type: 'separator' },
   { type: 'header', label: 'Preferencias' },
   { key: 'dark',    label: 'Modo oscuro',  icon: 'moon',   iconVariant: 'default', toggle: false },
@@ -95,7 +95,7 @@ const meta: Meta<Args> = {
     },
     marker: {
       control: 'select',
-      options: ['default', 'kaki', 'dash', 'check'],
+      options: ['default', 'accent', 'dash', 'check'],
       description: 'Viñeta (solo ul)',
     },
     counter: {
@@ -148,7 +148,7 @@ export const ContentBullets: Story = {
   name: 'Content — Viñetas',
   render: (): TemplateResult => html`
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xl);padding:var(--lib-space-xl);">
-      ${(['default', 'kaki', 'dash'] as const).map(m => html`
+      ${(['default', 'accent', 'dash'] as const).map(m => html`
         <div style="min-width:200px;">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm)">${m}</p>
           <lib-text-list
@@ -355,7 +355,7 @@ export const Loading: Story = {
    KATACHI · 形 · Las 6 historias estándar
    lib-text-list usa tokens semánticos (--text-primary,
    --text-secondary, --border-subtle) — hereda katachi sin
-   CSS adicional. Bullet kaki y marcadores de viñeta adaptan.
+   CSS adicional. Bullet accent y marcadores de viñeta adaptan.
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
@@ -374,10 +374,10 @@ const _katachi = createKatachiStories<object>(() => html`
       ></lib-text-list>
     </div>
     <div style="min-width:180px;flex:1;">
-      <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">ul · kaki</p>
+      <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">ul · accent</p>
       <lib-text-list
         family="ul"
-        marker="kaki"
+        marker="accent"
         .items="${[
           { label: 'Tokens de color' },
           { label: 'Sistema tipográfico' },

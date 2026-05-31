@@ -20,10 +20,10 @@ const meta: Meta = {
   component: 'lib-tabs',
   argTypes: {
     variant:  { control: 'select', options: ['underline', 'pill', 'card', 'outline', 'vertical'] },
-    color:    { control: 'select', options: ['', 'kaki', 'celadon'] },
+    color:    { control: 'select', options: ['', 'accent', 'info'] },
     size:     { control: 'select', options: ['', 'sm', 'lg'] },
     dark:     { control: 'boolean' },
-    kintsugi: { control: 'boolean' },
+    gold: { control: 'boolean' },
     glitch:   { control: 'boolean' },
     scroll:   { control: 'boolean' },
     full:     { control: 'boolean' },
@@ -48,7 +48,7 @@ export const Playground: Story = {
     color:    '',
     size:     '',
     dark:     false,
-    kintsugi: false,
+    gold: false,
     glitch:   false,
     scroll:   false,
     full:     false,
@@ -62,7 +62,7 @@ export const Playground: Story = {
         color="${args.color}"
         size="${args.size}"
         ?dark="${args.dark}"
-        ?kintsugi="${args.kintsugi}"
+        ?gold="${args.gold}"
         ?glitch="${args.glitch}"
         ?scroll="${args.scroll}"
         ?full="${args.full}"
@@ -116,7 +116,7 @@ export const Underline: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Celadon</p>
-        <lib-tabs variant="underline" color="celadon" active="u2-general"
+        <lib-tabs variant="underline" color="info" active="u2-general"
           .items="${[
             { id: 'u2-general',  label: 'General' },
             { id: 'u2-security', label: 'Seguridad' },
@@ -183,7 +183,7 @@ export const Pill: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Kaki</p>
-        <lib-tabs variant="pill" color="kaki" active="p2-a"
+        <lib-tabs variant="pill" color="accent" active="p2-a"
           .items="${[{ id: 'p2-a', label: 'Grid' }, { id: 'p2-b', label: 'Lista' }, { id: 'p2-c', label: 'Mosaic' }]}">
           <div slot="p2-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Vista grid.</p></div>
           <div slot="p2-b"></div><div slot="p2-c"></div>
@@ -192,7 +192,7 @@ export const Pill: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Celadon</p>
-        <lib-tabs variant="pill" color="celadon" active="p3-a"
+        <lib-tabs variant="pill" color="info" active="p3-a"
           .items="${[{ id: 'p3-a', label: 'Componentes' }, { id: 'p3-b', label: 'Tokens' }, { id: 'p3-c', label: 'Motion' }]}">
           <div slot="p3-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Componentes.</p></div>
           <div slot="p3-b"></div><div slot="p3-c"></div>
@@ -316,7 +316,7 @@ export const Dark: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">Pill dark · kaki</p>
-        <lib-tabs variant="pill" color="kaki" dark active="dk2-live"
+        <lib-tabs variant="pill" color="accent" dark active="dk2-live"
           .items="${[{ id: 'dk2-live', label: 'Live' }, { id: 'dk2-staging', label: 'Staging' }, { id: 'dk2-preview', label: 'Preview' }]}">
           <div slot="dk2-live"><p    style="padding-top: 1rem; font-size: var(--text-sm); color: rgba(250,247,244,.4);">Entorno live.</p></div>
           <div slot="dk2-staging"></div><div slot="dk2-preview"></div>
@@ -347,7 +347,7 @@ export const Kintsugi: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Underline · light</p>
-        <lib-tabs variant="underline" kintsugi active="ki1-wabi"
+        <lib-tabs variant="underline" gold active="ki1-wabi"
           .items="${[
             { id: 'ki1-wabi', label: 'Wabi' },
             { id: 'ki1-sabi', label: 'Sabi' },
@@ -363,7 +363,7 @@ export const Kintsugi: Story = {
 
       <div style="background: var(--color-washi-950); padding: 1.5rem;">
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">Underline · dark</p>
-        <lib-tabs variant="underline" kintsugi dark active="ki2-edo"
+        <lib-tabs variant="underline" gold dark active="ki2-edo"
           .items="${[{ id: 'ki2-edo', label: 'Edo' }, { id: 'ki2-meiji', label: 'Meiji' }, { id: 'ki2-showa', label: 'Shōwa' }]}">
           <div slot="ki2-edo"><p   style="padding-top: 1rem; font-size: var(--text-sm); color: rgba(250,247,244,.4);">Era Edo — 1603–1868.</p></div>
           <div slot="ki2-meiji"><p style="padding-top: 1rem; font-size: var(--text-sm); color: rgba(250,247,244,.4);">Era Meiji — 1868–1912.</p></div>

@@ -2,8 +2,11 @@
 
 /* ============================================================
    LIB-HEADER — Shibui UI · SG-66
-   Variantes : classic · dark · centered · transparent ·
-               kintsugi · glitch · mega · minimal · shrink · app-bar
+   Variantes : classic · dark · centered · transparent · mega ·
+               minimal · shrink · app-bar · celadon · sabi · shizen
+   Efectos    : --lib-effect-seam-play    → seam dorado (::after)
+                --lib-effect-seam-opacity → opacidad del seam
+                --lib-effect-scanlines    → CRT overlay (::before)
    ============================================================ */
 
 @layer reset {
@@ -48,6 +51,48 @@
             border-color var(--duration-slow) var(--ease-out),
             backdrop-filter var(--duration-slow) var(--ease-out),
             box-shadow var(--duration-slow) var(--ease-out);
+    }
+
+    /* Kintsugi seam — bottom edge, activado por --lib-effect-seam-* */
+    .hdr::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg,
+            transparent,
+            rgb(184, 90, 30, .4) 10%,
+            var(--color-kaki-400) 30%,
+            #F5D08A 50%,
+            var(--color-kaki-400) 70%,
+            rgb(184, 90, 30, .4) 90%,
+            transparent);
+        background-size: 200% 100%;
+        animation: hdr-kintsugi-seam 5s linear infinite;
+        animation-play-state: var(--lib-effect-seam-play, paused);
+        opacity: var(--lib-effect-seam-opacity, 0);
+        pointer-events: none;
+        transition: opacity var(--duration-base);
+    }
+
+    /* CRT scanlines — activado por --lib-effect-scanlines */
+    .hdr::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(0deg,
+            transparent, transparent 3px,
+            rgb(255, 255, 255, .012) 3px, rgb(255, 255, 255, .012) 4px);
+        pointer-events: none;
+        z-index: 5;
+        opacity: var(--lib-effect-scanlines, 0);
+    }
+
+    @keyframes hdr-kintsugi-seam {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
     }
 
     /* ══════════════════════════════════════
@@ -128,120 +173,7 @@
     }
 
     /* ══════════════════════════════════════
-     05 · KINTSUGI
-     ══════════════════════════════════════ */
-    :host([variant="kintsugi"]) .hdr {
-        height: 64px;
-        background: var(--lib-comp-bg, var(--color-washi-950));
-        border-bottom: none;
-        padding: 0 var(--lib-space-xl);
-        gap: var(--lib-space-xl);
-    }
-
-    /* Animated gold seam — bottom edge */
-    :host([variant="kintsugi"]) .hdr::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg,
-                transparent,
-                rgb(184, 90, 30, .4) 10%,
-                var(--color-kaki-400) 30%,
-                #F5D08A 50%,
-                var(--color-kaki-400) 70%,
-                rgb(184, 90, 30, .4) 90%,
-                transparent);
-        background-size: 200% 100%;
-        animation: hdr-kintsugi-seam 5s linear infinite;
-        pointer-events: none;
-    }
-
-    @keyframes hdr-kintsugi-seam {
-        0% {
-            background-position: -200% 0;
-        }
-
-        100% {
-            background-position: 200% 0;
-        }
-    }
-
-    /* ══════════════════════════════════════
-     06 · GLITCH
-     ══════════════════════════════════════ */
-    :host([variant="glitch"]) .hdr {
-        height: 56px;
-        background: var(--lib-comp-bg, var(--color-washi-950));
-        border-bottom: 1px solid rgb(255, 255, 255, .06);
-        padding: 0 var(--lib-space-lg);
-        gap: var(--lib-space-xl);
-        position: relative;
-        overflow: hidden;
-        animation: hdr-glitch 7s steps(1) infinite;
-    }
-
-    /* Scanline overlay */
-    :host([variant="glitch"]) .hdr::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: repeating-linear-gradient(0deg,
-                transparent, transparent 3px,
-                rgb(255, 255, 255, .012) 3px, rgb(255, 255, 255, .012) 4px);
-        pointer-events: none;
-        z-index: 5;
-        animation: hdr-scanline-shift 7s steps(1) infinite;
-    }
-
-    @keyframes hdr-glitch {
-        0%,
-        88%,
-        100% {
-            transform: none;
-        }
-
-        89% {
-            transform: translateX(-2px);
-        }
-
-        90% {
-            transform: translateX(2px);
-        }
-
-        91% {
-            transform: none;
-        }
-    }
-
-    @keyframes hdr-scanline-shift {
-        0%,
-        88%,
-        100% {
-            opacity: 1;
-            transform: none;
-        }
-
-        89% {
-            transform: translateY(-3px);
-            opacity: .7;
-        }
-
-        90% {
-            transform: translateY(2px);
-            opacity: .9;
-        }
-
-        91% {
-            transform: none;
-            opacity: 1;
-        }
-    }
-
-    /* ══════════════════════════════════════
-     07 · MEGA-NAV
+     05 · MEGA-NAV
      ══════════════════════════════════════ */
     :host([variant="mega"]) .hdr {
         height: 64px;
@@ -675,44 +607,6 @@
         color: rgb(250, 247, 244, .8);
     }
 
-    /* Kintsugi: rotating ring */
-    :host([variant="kintsugi"]) .hdr-logo-mark {
-        position: relative;
-        background: transparent;
-        border: none;
-        border-radius: 50%;
-        overflow: visible;
-    }
-
-    :host([variant="kintsugi"]) .hdr-logo-mark::before {
-        content: '';
-        position: absolute;
-        inset: -2px;
-        border-radius: 50%;
-        background: conic-gradient(var(--color-kaki-600), #F5D08A, var(--color-kaki-400), #F5D08A, var(--color-kaki-600));
-        animation: hdr-logo-ring 4s linear infinite;
-    }
-
-    :host([variant="kintsugi"]) .hdr-logo-mark::after {
-        content: '';
-        position: absolute;
-        inset: 1px;
-        border-radius: 50%;
-        background: var(--color-washi-950);
-    }
-
-    :host([variant="kintsugi"]) .hdr-logo-mark-text {
-        position: relative;
-        z-index: 2;
-        color: var(--color-kaki-400);
-    }
-
-    @keyframes hdr-logo-ring {
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
     .hdr-brand-name {
         font-family: var(--lib-font-display);
         font-size: 1.2rem;
@@ -741,10 +635,6 @@
         color: rgb(250, 247, 244, .65);
     }
 
-    :host([variant="kintsugi"]) .hdr-brand-name {
-        color: rgb(250, 247, 244, .5);
-    }
-
     :host([variant="centered"]) .hdr-brand-name {
         color: var(--lib-comp-fg, var(--color-washi-900));
         font-size: 1.35rem;
@@ -768,30 +658,6 @@
         border: 1px solid rgb(184, 90, 30, .2);
         padding: 1px 5px;
         margin-left: 2px;
-    }
-
-    /* Glitch logo */
-    .hdr-logo-glitch {
-        font-family: var(--lib-font-mono);
-        font-size: .8rem;
-        letter-spacing: .2em;
-        color: var(--color-kaki-400);
-        display: flex;
-        align-items: center;
-        gap: var(--lib-space-xs);
-        text-decoration: none;
-        position: relative;
-        z-index: 6;
-        flex-shrink: 0;
-    }
-
-    .hdr-logo-glitch-badge {
-        font-family: var(--lib-font-mono);
-        font-size: 7px;
-        letter-spacing: .14em;
-        color: rgb(250, 247, 244, .15);
-        border: 1px solid rgb(255, 255, 255, .08);
-        padding: 1px 4px;
     }
 
     /* ══════════════════════════════════════
@@ -847,32 +713,6 @@
 
     :host([variant="transparent"][scrolled]) .hdr-link {
         color: rgb(250, 247, 244, .45);
-    }
-
-    /* Kintsugi */
-    :host([variant="kintsugi"]) .hdr-link {
-        color: rgb(250, 247, 244, .28);
-    }
-
-    :host([variant="kintsugi"]) .hdr-link:hover {
-        opacity: 1;
-        color: var(--color-kaki-400);
-    }
-
-    /* Glitch */
-    :host([variant="glitch"]) .hdr-link {
-        font-family: var(--lib-font-mono);
-        font-size: 9px;
-        letter-spacing: .12em;
-        text-transform: none;
-        color: rgb(250, 247, 244, .22);
-        position: relative;
-        z-index: 6;
-    }
-
-    :host([variant="glitch"]) .hdr-link:hover {
-        opacity: 1;
-        color: var(--color-kaki-400);
     }
 
     /* Minimal */
@@ -1001,14 +841,14 @@
         cursor: pointer;
     }
 
-    /* kaki */
-    .hdr-action--kaki {
+    /* accent */
+    .hdr-action--accent {
         background: var(--color-kaki-500);
         color: #fff;
         border: 1px solid var(--color-kaki-500);
     }
 
-    .hdr-action--kaki:hover {
+    .hdr-action--accent:hover {
         background: var(--color-kaki-600);
     }
 
@@ -1036,52 +876,6 @@
         color: rgb(250, 247, 244, .85);
     }
 
-    /* kintsugi CTA */
-    .hdr-action--kintsugi {
-        background: transparent;
-        border: 1px solid rgb(184, 90, 30, .35);
-        color: var(--color-kaki-400);
-    }
-
-    .hdr-action--kintsugi:hover {
-        border-color: var(--color-kaki-400);
-        background: rgb(184, 90, 30, .08);
-    }
-
-    /* glitch CTA */
-    .hdr-action--glitch {
-        background: transparent;
-        border: 1px solid rgb(255, 255, 255, .1);
-        color: rgb(250, 247, 244, .35);
-        animation: hdr-glitch-cta 7s steps(1) infinite;
-        height: 30px;
-    }
-
-    .hdr-action--glitch:hover {
-        border-color: var(--color-kaki-400);
-        color: var(--color-kaki-400);
-    }
-
-    @keyframes hdr-glitch-cta {
-        0%,
-        88%,
-        100% {
-            box-shadow: none;
-        }
-
-        89% {
-            box-shadow: -2px 0 0 rgb(217, 114, 52, .35), 2px 0 0 rgb(78, 148, 130, .25);
-        }
-
-        90% {
-            box-shadow: 2px 0 0 rgb(217, 114, 52, .3), -2px 0 0 rgb(78, 148, 130, .2);
-        }
-
-        91% {
-            box-shadow: none;
-        }
-    }
-
     /* Login link (no button) */
     .hdr-login {
         font-family: var(--lib-font-mono);
@@ -1106,10 +900,6 @@
     :host([variant="transparent"]) .hdr-login {
         color: rgb(250, 247, 244, .4);
         transition: color var(--duration-slow);
-    }
-
-    :host([variant="kintsugi"]) .hdr-login {
-        color: rgb(250, 247, 244, .2);
     }
 
     .hdr-login:hover {
@@ -1155,12 +945,9 @@
 
     /* ── prefers-reduced-motion ── */
     @media (prefers-reduced-motion: reduce) {
-        :host([variant="kintsugi"]) .hdr::after,
-        :host([variant="kintsugi"]) .hdr-logo-mark::before,
-        :host([variant="glitch"]) .hdr,
-        :host([variant="glitch"]) .hdr::before,
-        :host([variant="celadon"]) .hdr::after,
-        .hdr-action--glitch {
+        .hdr::after,
+        .hdr::before,
+        :host([variant="celadon"]) .hdr::after {
             animation: none !important;
         }
 
@@ -1200,6 +987,7 @@
         background-size: 200% 100%;
         animation: hdr-celadon-seam 6s linear infinite;
         pointer-events: none;
+        opacity: 1;
     }
 
     @keyframes hdr-celadon-seam {
@@ -1438,14 +1226,14 @@
        envueltos con --lib-comp-fg / --lib-comp-fg-sec.
        minimal: brand-name, links, hover, active + underline
        envueltos con --lib-comp-fg / --lib-comp-fg-sec.
-       kintsugi/glitch: .hdr bg envuelto con --lib-comp-bg.
        mega-link, hdr-dd-item, action--outline, breadcrumb,
        search-kbd: border/color envueltos con --lib-comp-*.
 
-       Pseudo-elementos animados (::after kintsugi-seam, ::before
-       glitch scanlines, logo-mark::before/::after ring) y variants
-       con rgb() hardcoded (dark, transparent, kintsugi-links,
-       glitch-links): deliberados — sin cambios.
+       Efectos de katachi actúan sobre pseudo-elementos del .hdr:
+       • kintsugi → --lib-effect-seam-play:running + seam-opacity:1
+                    anima .hdr::after (seam dorado en el borde inferior)
+       • terminal → --lib-effect-scanlines:0.05
+                    opacidad de .hdr::before (overlay CRT)
        ─────────────────────────────────────────────────────────── */
 
     /* ─── /KATACHI ───────────────────────────────────────────── */
@@ -1474,8 +1262,6 @@
 
 /* Variantes oscuras — líneas claras */
 :host([variant="dark"]) .hdr-burger,
-:host([variant="kintsugi"]) .hdr-burger,
-:host([variant="glitch"]) .hdr-burger,
 :host([variant="transparent"]) .hdr-burger,
 :host([variant="app-bar"]) .hdr-burger,
 :host([variant="celadon"]) .hdr-burger {

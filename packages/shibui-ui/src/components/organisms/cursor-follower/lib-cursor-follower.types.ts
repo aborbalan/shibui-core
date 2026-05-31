@@ -1,5 +1,5 @@
 /** Cuatro modos visuales del cursor */
-export type CursorMode = 'ink' | 'minimal' | 'kaki' | 'ghost';
+export type CursorMode = 'filled' | 'minimal' | 'accent' | 'ghost';
 
 /** Estados contextuales detectados automáticamente */
 export type CursorState = 'default' | 'hover' | 'text' | 'press' | 'hidden';
@@ -16,7 +16,7 @@ export interface CursorModeConfig {
 }
 
 export const CURSOR_MODES: Record<CursorMode, CursorModeConfig> = {
-  ink: {
+  filled: {
     dotBg:      'var(--color-washi-900)',
     dotSize:    '6px',
     ringBorder: '1px solid var(--color-washi-400)',
@@ -34,7 +34,7 @@ export const CURSOR_MODES: Record<CursorMode, CursorModeConfig> = {
     ringMix:    'normal',
     lerpFactor: 0.2,
   },
-  kaki: {
+  accent: {
     dotBg:      'var(--color-kaki-500)',
     dotSize:    '8px',
     ringBorder: '1.5px solid var(--color-kaki-200, #F4C099)',

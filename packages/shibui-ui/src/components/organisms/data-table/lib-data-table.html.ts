@@ -49,7 +49,7 @@ function renderBadge(value: unknown, tone: string): TemplateResult {
   return html`<span class="cell-badge tone-${tone}">${label}</span>`;
 }
 
-function renderProgress(value: unknown, tone: 'kaki' | 'celadon' | ''): TemplateResult {
+function renderProgress(value: unknown, tone: 'accent' | 'info' | ''): TemplateResult {
   const pct = Math.min(100, Math.max(0, Number(value) || 0));
   const toneClass = tone ? `tone-${tone}` : '';
   return html`

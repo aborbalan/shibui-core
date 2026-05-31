@@ -1,17 +1,21 @@
+/**
+ * Variante estructural del header (layout + superficie, no paleta).
+ *
+ * Los efectos de katachi (seam dorado, scanlines) se activan
+ * automáticamente vía --lib-effect-* tokens del contexto data-katachi.
+ */
 export type HeaderVariant =
   | 'classic'      // 01 — light, dropdown
   | 'dark'         // 02 — washi-950, blur
   | 'centered'     // 03 — logo central, nav dividida
   | 'transparent'  // 04 — sobre hero, blur al scroll
-  | 'kintsugi'     // 05 — seam animada inferior
-  | 'glitch'       // 06 — scanlines, RGB drift
-  | 'mega'         // 07 — mega-nav panel full-width
-  | 'minimal'      // 08 — sin borde, sin fondo, solo texto
-  | 'shrink'       // 09 — 72px → 48px al scroll
-  | 'app-bar'      // 10 — breadcrumbs, search, acciones, avatar
-  | 'celadon'      // 11 — jade oscuro, seam jade, spotlight water
-  | 'sabi'         // 12 — papel washi, tinta, sombra brutal
-  | 'shizen';      // 13 — natural, limpio, sin adorno
+  | 'mega'         // 05 — mega-nav panel full-width
+  | 'minimal'      // 06 — sin borde, sin fondo, solo texto
+  | 'shrink'       // 07 — 72px → 48px al scroll
+  | 'app-bar'      // 08 — breadcrumbs, search, acciones, avatar
+  | 'celadon'      // 09 — jade oscuro, seam jade, spotlight water
+  | 'sabi'         // 10 — papel washi, tinta, sombra brutal
+  | 'shizen';      // 11 — natural, limpio, sin adorno
 
 export interface NavLink {
   id: string;
@@ -33,7 +37,7 @@ export interface DropdownItem {
 export interface HeaderAction {
   label: string;
   href?: string;
-  /** 'kaki' | 'outline' | 'ghost' */
+  /** 'accent' | 'secondary' | 'ghost' */
   variant?: string;
 }
 

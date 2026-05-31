@@ -14,8 +14,7 @@ import { renderAppBar   } from './templates/header-app-bar.html';
  *
  * Variantes → fichero
  * ───────────────────────────────────────────────────────────
- * classic · dark · transparent · kintsugi
- * glitch · minimal · shrink              → header-classic.html.ts
+ * classic · dark · transparent · minimal · shrink  → header-classic.html.ts
  * centered                               → header-centered.html.ts
  * mega                                   → header-mega.html.ts
  * app-bar                                → header-app-bar.html.ts

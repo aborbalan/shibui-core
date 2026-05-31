@@ -114,7 +114,7 @@ export const MultiLanguage: Story = {
         language="html"
         filename="index.html"
         code='<lib-button variant="primary">Click me</lib-button>
-<lib-badge variant="celadon" dot>Activo</lib-badge>'
+<lib-badge variant="info" dot>Activo</lib-badge>'
       ></lib-code-block>
 
       <lib-code-block

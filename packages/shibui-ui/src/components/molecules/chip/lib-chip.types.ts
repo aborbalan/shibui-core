@@ -6,4 +6,13 @@
  */
 export type ChipKind  = 'static' | 'toggle' | 'input';
 export type ChipSize  = 'xs' | 'sm' | 'md' | 'lg';
-export type ChipColor = 'default' | 'kaki' | 'celadon' | 'error' | 'info' | 'dark';
+
+/**
+ * Rol semántico del color:
+ * - default → neutro adaptativo (katachi-aware)
+ * - accent  → énfasis cálido (kaki/persimón)    — era 'kaki'
+ * - info    → informativo jade/celadon           — era 'celadon'
+ * - error   → estado de error
+ * - strong  → contraste máximo (inverso)         — era 'dark'
+ */
+export type ChipColor = 'default' | 'accent' | 'info' | 'error' | 'strong';

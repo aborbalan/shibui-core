@@ -14,17 +14,22 @@ import sharedTokens from '../../../../styles/shared/tokens.css?inline';
  *
  * @slot - Contenido de la card (eyebrow, título, body, footer...).
  *
- * @example — uso básico
+ * @example — uso básico (neutro, sin tinte)
  * <lib-glass-card>
- *   <h3>Paper Glass</h3>
+ *   <h3>Neutral Glass</h3>
  *   <p>Variante neutra sobre fondo oscuro.</p>
  * </lib-glass-card>
  *
- * @example — variante water con intensidad alta
- * <lib-glass-card variant="water" intensity="high">...</lib-glass-card>
+ * @example — tinte frío con intensidad alta
+ * <lib-glass-card variant="cool" intensity="high">...</lib-glass-card>
  *
- * @example — variante kaki
- * <lib-glass-card variant="kaki">...</lib-glass-card>
+ * @example — tinte cálido
+ * <lib-glass-card variant="warm">...</lib-glass-card>
+ *
+ * @example — dentro de un contexto katachi (el tinte lo decide el katachi)
+ * <div data-katachi="wabi">
+ *   <lib-glass-card>...</lib-glass-card>
+ * </div>
  */
 @customElement('lib-glass-card')
 export class LibGlassCard extends LitElement {
@@ -34,13 +39,14 @@ export class LibGlassCard extends LitElement {
   ];
 
   /**
-   * Tinte de color del cristal.
-   * - paper : neutro paper al 15% (default)
-   * - water : azul sereno oklch(55% 0.06 210)
-   * - kaki  : orgánico cálido oklch(45% 0.05 45)
+   * Tinte estructural del cristal.
+   * - neutral : neutro paper (default)
+   * - cool    : tinte azul sereno — oklch(55% 0.06 210)
+   * - warm    : tinte cálido orgánico — oklch(45% 0.05 45)
+   * Dentro de un katachi el tinte es sobreescrito por el contexto.
    */
   @property({ type: String, reflect: true })
-  variant: LibGlassVariant = 'paper';
+  variant: LibGlassVariant = 'neutral';
 
   /**
    * Intensidad del efecto (blur + opacidad).

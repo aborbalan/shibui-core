@@ -135,8 +135,8 @@ export function breadcrumbTemplate(p: BreadcrumbTemplateProps): TemplateResult {
     'bc-lg':         p.size === 'lg',
     'bc-filled':     p.surface === 'filled',
     'bc-pill':       p.surface === 'pill',
-    'bc-kaki':       p.accent === 'kaki',
-    'bc-celadon':    p.accent === 'celadon',
+    'bc-accent':     p.accent === 'accent',
+    'bc-info':       p.accent === 'info',
     'bc-bold':       p.accent === 'bold',
     'bc-dark':       p.dark,
   };

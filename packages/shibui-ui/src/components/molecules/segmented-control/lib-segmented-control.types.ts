@@ -4,19 +4,19 @@
 
 /**
  * Variantes de superficie del control.
- * Light: outline · underline · pill · ghost · kaki · celadon
- * Dark:  dark-outline · dark-pill · dark-kaki · dark-underline
+ * Light: outline · underline · pill · ghost · accent · info
+ * Dark:  dark-outline · dark-pill · dark-accent · dark-underline
  */
 export type SegmentedVariant =
   | 'outline'
   | 'underline'
   | 'pill'
   | 'ghost'
-  | 'kaki'
-  | 'celadon'
+  | 'accent'
+  | 'info'
   | 'dark-outline'
   | 'dark-pill'
-  | 'dark-kaki'
+  | 'dark-accent'
   | 'dark-underline';
 
 /** Tamaños */

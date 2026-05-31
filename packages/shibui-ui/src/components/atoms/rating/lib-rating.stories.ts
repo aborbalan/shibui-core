@@ -12,7 +12,7 @@ const meta: Meta = {
     value:     { control: { type: 'number', min: 0, max: 10, step: 0.5 } },
     max:       { control: { type: 'number', min: 1, max: 10 } },
     size:      { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-    color:     { control: 'select', options: ['gold', 'kaki', 'washi', 'celadon'] },
+    color:     { control: 'select', options: ['gold', 'accent', 'neutral', 'info'] },
     icon:      { control: 'select', options: ['star', 'heart', 'diamond'] },
     readonly:  { control: 'boolean' },
     disabled:  { control: 'boolean' },
@@ -100,21 +100,21 @@ export const Icons: Story = {
   name: 'Icons — star · heart · diamond',
   render: (): TemplateResult => wrap('var(--bg-surface)', html`
     ${row('ph-star — valoración genérica',   html`<lib-rating icon="star"    value="4" size="lg"></lib-rating>`)}
-    ${row('ph-heart — favoritos · kaki',     html`<lib-rating icon="heart"   value="3" size="lg" color="kaki"></lib-rating>`)}
-    ${row('ph-diamond — calidad · washi',    html`<lib-rating icon="diamond" value="5" size="lg" color="washi"></lib-rating>`)}
+    ${row('ph-heart — favoritos · accent',   html`<lib-rating icon="heart"   value="3" size="lg" color="accent"></lib-rating>`)}
+    ${row('ph-diamond — calidad · neutral',  html`<lib-rating icon="diamond" value="5" size="lg" color="neutral"></lib-rating>`)}
   `),
 };
 
 /* ──────────────────────────────────────────────
-   Colors — gold · kaki · washi · celadon
+   Colors — gold · accent · neutral · info
    ────────────────────────────────────────────── */
 export const Colors: Story = {
-  name: 'Colors — gold · kaki · washi · celadon',
+  name: 'Colors — gold · accent · neutral · info',
   render: (): TemplateResult => wrap('var(--bg-surface)', html`
     ${row('Gold (default)',    html`<lib-rating color="gold"    value="4"></lib-rating>`)}
-    ${row('Kaki',             html`<lib-rating color="kaki"    value="4"></lib-rating>`)}
-    ${row('Washi (mono)',     html`<lib-rating color="washi"   value="4"></lib-rating>`)}
-    ${row('Celadón',          html`<lib-rating color="celadon" value="4"></lib-rating>`)}
+    ${row('Accent',           html`<lib-rating color="accent"  value="4"></lib-rating>`)}
+    ${row('Neutral (mono)',   html`<lib-rating color="neutral" value="4"></lib-rating>`)}
+    ${row('Info',             html`<lib-rating color="info"    value="4"></lib-rating>`)}
   `),
 };
 
@@ -277,9 +277,9 @@ const _katachi = createKatachiStories<object>(() => html`
     <!-- Colors -->
     <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
       <lib-rating color="gold"    value="4" size="sm" readonly show-count count="214"></lib-rating>
-      <lib-rating color="kaki"    value="4" size="sm" icon="heart" readonly></lib-rating>
-      <lib-rating color="washi"   value="4" size="sm" icon="diamond" readonly></lib-rating>
-      <lib-rating color="celadon" value="4" size="sm" readonly></lib-rating>
+      <lib-rating color="accent"    value="4" size="sm" icon="heart" readonly></lib-rating>
+      <lib-rating color="neutral"   value="4" size="sm" icon="diamond" readonly></lib-rating>
+      <lib-rating color="info" value="4" size="sm" readonly></lib-rating>
     </div>
     <!-- States -->
     <div style="display:flex;gap:var(--lib-space-lg);align-items:center;flex-wrap:wrap;">

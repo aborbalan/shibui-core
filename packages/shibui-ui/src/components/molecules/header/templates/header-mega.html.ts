@@ -59,7 +59,7 @@ export function renderMega(ctx: LibHeader): TemplateResult {
             <div class="hdr-mega-cta-title">${ctx.megaCta.title}</div>
             <div class="hdr-mega-cta-desc">${ctx.megaCta.desc}</div>
             <a href="${ctx.megaCta.href || '#'}"
-              class="hdr-action hdr-action--kaki"
+              class="hdr-action hdr-action--accent"
               style="height:32px;font-size:8px;"
             >${ctx.megaCta.cta}</a>
           </div>

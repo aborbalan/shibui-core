@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-GLASS-CARD — Shibui UI · Efecto Agua
-   Variant   : paper (default) · water · kaki
+   Variant   : neutral (default) · cool · warm
    Intensity : low · md (default) · high
    ============================================================
 
@@ -64,16 +64,18 @@
   }
 
   /* ============================================================
-     VARIANTES DE COLOR
+     VARIANTES DE COLOR (roles estructurales)
      ============================================================ */
 
-  /* paper — ya aplicado en base */
+  /* neutral — ya aplicado en base (usa --lib-glass-bg) */
 
-  :host([variant="water"]) .glass-card {
+  /* cool — tinte azul sereno (era 'water') */
+  :host([variant="cool"]) .glass-card {
     background: var(--lib-glass-bg-water);
   }
 
-  :host([variant="kaki"]) .glass-card {
+  /* warm — tinte cálido orgánico (era 'kaki') */
+  :host([variant="warm"]) .glass-card {
     background: var(--lib-glass-bg-kaki);
   }
 
@@ -96,19 +98,19 @@
   }
 
   /* Combinaciones variant + intensity — mantienen el tinte correcto */
-  :host([variant="water"][intensity="low"]) .glass-card {
+  :host([variant="cool"][intensity="low"]) .glass-card {
     background: oklch(55% 0.06 210deg / var(--lib-glass-opacity-low));
   }
 
-  :host([variant="water"][intensity="high"]) .glass-card {
+  :host([variant="cool"][intensity="high"]) .glass-card {
     background: oklch(55% 0.06 210deg / var(--lib-glass-opacity-high));
   }
 
-  :host([variant="kaki"][intensity="low"]) .glass-card {
+  :host([variant="warm"][intensity="low"]) .glass-card {
     background: oklch(45% 0.05 45deg / var(--lib-glass-opacity-low));
   }
 
-  :host([variant="kaki"][intensity="high"]) .glass-card {
+  :host([variant="warm"][intensity="high"]) .glass-card {
     background: oklch(45% 0.05 45deg / var(--lib-glass-opacity-high));
   }
 

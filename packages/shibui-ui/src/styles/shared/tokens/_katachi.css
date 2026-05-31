@@ -1,34 +1,37 @@
 /* ============================================================
-   KATACHI · 形 · Sistema de contextos estéticos — Shibui UI
+   KATACHI · 形 · Identidades estéticas selladas — Shibui UI
    ────────────────────────────────────────────────────────────
    "Katachi" (形) significa forma/configuración. Cada katachi
-   es una personalidad visual nombrada que agrupa:
-     · una superficie base
-     · efectos permitidos/recomendados
-     · una temperatura de color
-     · ajustes de los primitivos de efecto
+   es una identidad visual COMPLETA y SELLADA:
+     · superficie base (bg, text, border, shadow)
+     · efectos automáticos activados sin variant props
+     · temperatura de color
+     · tokens de activación (--lib-effect-*) para componentes
 
-   Se activa colocando data-katachi="…" en cualquier ancestro
-   (HTML element o custom element). Las custom properties
-   atraviesan Shadow DOM por inheritance, propagando el
-   contexto a todos los componentes hijos.
+   Los efectos se activan automáticamente por contexto.
+   Los componentes no necesitan variants palette-named:
+   sólo leen --lib-effect-* via var() en su CSS interno.
 
-   Los seis katachi:
-     · wabi      侘び  · dark   + glass            · austero, brumoso
-     · kintsugi  金継ぎ · kintsugi + kintsugi-border · dorado, reparado
-     · sabi      寂び  · washi  + shadow-brutal    · envejecido, papel
-     · terminal  ----  · glitch + shadow-brutal    · digital, CRT
-     · shizen    自然  · light  (sin efectos)      · natural, limpio
-     · celadon   青磁  · celadón + spotlight-water · jade, frío, foco
+   Se activa colocando data-katachi="…" en cualquier ancestro.
+   Las custom properties atraviesan Shadow DOM por inheritance.
+
+   Los seis katachi (todos light excepto kintsugi y wabi):
+     · shizen    自然  · light · natural, base (default)
+     · celadon   青磁  · light · jade pálido, frío, ceramico
+     · sabi      寂び  · light · papel envejecido, brutal
+     · kintsugi  金継ぎ · dark  · reparado en oro, seam animado
+     · wabi      侘び  · dark  · kuroi · oscuridad pura, silencio
+     · terminal  ----  · dark  · CRT retro, phosphor, scanlines
 
    Patrón de selector dual:
      [data-katachi="x"]         → funciona en cualquier elemento HTML
      :host([data-katachi="x"])  → funciona si se aplica directo al host
 
    Aditivo: sin data-katachi en el HTML, este archivo es invisible.
+   Los defaults de --lib-effect-* viven en _effects.css (:root).
    ============================================================ */
 
-:host, :root {
+:root {
   /* ── Bridge tokens (sin valor por defecto) ────────────────
      Estos tokens existen sólo cuando un ancestro con
      [data-katachi] los define. Los componentes pueden leerlos
@@ -37,7 +40,7 @@
 
   /* --katachi-id          → nombre del katachi activo */
   /* --katachi-family      → "dark" | "light" */
-  /* --katachi-surface     → variant que mejor matchea */
+  /* --katachi-surface     → superficie del katachi */
   /* --katachi-accent      → color de acento del katachi */
   /* --katachi-accent-muted→ acento desaturado (fondos sutiles) */
   /* --katachi-fg          → color primer plano */
@@ -47,110 +50,127 @@
 
 
 /* ════════════════════════════════════════════════════════════
-   WABI · 侘び  · lo austero, dark + glass atmosférico
-   ════════════════════════════════════════════════════════════ */
+   SHIZEN · 自然 · natural, limpio, el default
+   ════════════════════════════════════════════════════════════
+   Es el estado base/reset. Mantiene los defaults de _semantic
+   y de _effects, sólo expone los bridge tokens para que
+   componentes shizen-aware sepan que están en este contexto.
+   Sin data-katachi en el DOM = comportamiento equivalente. */
 
-[data-katachi="wabi"],
-:host([data-katachi="wabi"]) {
+[data-katachi="shizen"],
+:host([data-katachi="shizen"]) {
   /* ── Bridge ──────────────────────────────────────────── */
-  --katachi-id:           wabi;
-  --katachi-family:       dark;
-  --katachi-surface:      dark;
-  --katachi-accent:       var(--color-celadon-400);
-  --katachi-accent-muted: oklch(58.33% 0.068 171.21deg / 0.35);
-  --katachi-fg:           var(--color-washi-50);
-  --katachi-fg-muted:     oklch(97.77% 0.003 68.35deg / 0.45);
-  --katachi-border:       oklch(100% 0 0deg / 0.08);
+  --katachi-id:           shizen;
+  --katachi-family:       light;
+  --katachi-surface:      light;
+  --katachi-accent:       var(--color-kaki-500);
+  --katachi-accent-muted: oklch(51.65% 0.134 46.13deg / 0.25);
+  --katachi-fg:           var(--color-washi-900);
+  --katachi-fg-muted:     var(--color-washi-500);
+  --katachi-border:       var(--color-washi-200);
 
-  /* ── Semánticos (clon del dark mode) ─────────────────── */
-  --bg-base:     var(--color-washi-950);
-  --bg-surface:  var(--color-washi-900);
-  --bg-elevated: var(--color-washi-800);
-  --bg-inverse:  var(--color-washi-50);
-  --bg-overlay:  oklch(0% 0 0deg / 0.7);
+  /* ── Semánticos: defaults de light (sin overrides) ───── */
+  /* Los tokens semánticos heredan sus valores por defecto
+     de _semantic.css. Shizen es el katachi "vacío". */
 
-  --text-primary:    var(--color-washi-50);
-  --text-secondary:  var(--color-washi-400);
-  --text-muted:      var(--color-washi-600);
-  --text-inverse:    var(--color-washi-900);
-  --text-accent:     var(--color-celadon-300);
-  --text-link:       var(--color-celadon-300);
-  --text-link-hover: var(--color-celadon-200);
-
-  --border-subtle:  var(--color-washi-800);
-  --border-default: var(--color-washi-700);
-  --border-strong:  var(--color-washi-500);
-
-  /* ── Glass: reforzado (más blur, más atmósfera) ──────── */
-  --lib-glass-blur-amount:     20px;
-  --lib-glass-saturate-amount: 140%;
-  --lib-glass-bg-opacity:      0.10;
-  --lib-glass-border-opacity:  0.15;
-  --lib-glass-shadow-opacity:  0.50;
-
-  /* ── Spotlight: OFF (no encaja con la quietud wabi) ─── */
+  /* ── Spotlight: OFF ───────────────────────────────────── */
   --lib-spotlight-opacity: 0;
+
+  /* ── Effect activation: todo en silencio (zero-point) ── */
+  --lib-effect-seam-play:      paused;
+  --lib-effect-seam-opacity:   0;
+  --lib-effect-glitch-play:    paused;
+  --lib-effect-scanlines:      0;
+  --lib-effect-crt-vignette:   0;
+  --lib-effect-brutal-shadow:  none;
+  --lib-effect-ring:           none;
+  --lib-effect-glass-blur:     0px;
+  --lib-effect-topbar-opacity: 0;
+  --lib-effect-after-bg:       transparent;
+  --lib-effect-after-mask:     none;
 }
 
 
 /* ════════════════════════════════════════════════════════════
-   KINTSUGI · 金継ぎ · reparación con oro
+   CELADON · 青磁 · jade pálido, frío, alternativa cool a shizen
    ════════════════════════════════════════════════════════════ */
 
-[data-katachi="kintsugi"],
-:host([data-katachi="kintsugi"]) {
+[data-katachi="celadon"],
+:host([data-katachi="celadon"]) {
   /* ── Bridge ──────────────────────────────────────────── */
-  --katachi-id:           kintsugi;
-  --katachi-family:       dark;
-  --katachi-surface:      kintsugi;
-  --katachi-accent:       var(--color-kaki-400);
-  --katachi-accent-muted: oklch(61.85% 0.149 48.72deg / 0.35);
-  --katachi-fg:           oklch(97.77% 0.003 68.35deg / 0.55);
-  --katachi-fg-muted:     oklch(97.77% 0.003 68.35deg / 0.25);
-  --katachi-border:       oklch(45% 0.05 45deg / 0.25);
+  --katachi-id:           celadon;
+  --katachi-family:       light;
+  --katachi-surface:      celadon;
+  --katachi-accent:       var(--color-celadon-500);
+  --katachi-accent-muted: oklch(43.98% 0.079 173.33deg / 0.20);
+  --katachi-fg:           oklch(18% 0.025 175deg);
+  --katachi-fg-muted:     oklch(40% 0.03 175deg);
+  --katachi-border:       oklch(80% 0.03 175deg);
 
-  /* ── Semánticos (dark + acentos kaki) ────────────────── */
-  --bg-base:     var(--color-washi-950);
-  --bg-surface:  oklch(11.39% 0.009 84.7deg);
-  --bg-elevated: oklch(14% 0.01 60deg);
-  --bg-inverse:  var(--color-washi-50);
-  --bg-overlay:  oklch(0% 0 0deg / 0.7);
+  /* ── Semánticos (light, jade pálido) ─────────────────── */
+  --bg-base:     oklch(97% 0.012 175deg);
+  --bg-surface:  oklch(98% 0.008 175deg);
+  --bg-elevated: oklch(99% 0.006 175deg);
+  --bg-inverse:  oklch(18% 0.025 175deg);
+  --bg-overlay:  oklch(18% 0.025 175deg / 0.60);
 
-  --text-primary:    oklch(97.77% 0.003 68.35deg / 0.55);
-  --text-secondary:  oklch(97.77% 0.003 68.35deg / 0.35);
-  --text-muted:      oklch(97.77% 0.003 68.35deg / 0.20);
-  --text-inverse:    var(--color-washi-900);
-  --text-accent:     var(--color-kaki-400);
-  --text-link:       var(--color-kaki-300);
-  --text-link-hover: var(--color-kaki-200);
+  --text-primary:    oklch(18% 0.025 175deg);
+  --text-secondary:  oklch(35% 0.035 175deg);
+  --text-muted:      oklch(55% 0.03 175deg);
+  --text-inverse:    oklch(97% 0.012 175deg);
+  --text-accent:     var(--color-celadon-500);
+  --text-link:       var(--color-celadon-500);
+  --text-link-hover: oklch(38% 0.085 173deg);
 
-  --border-subtle:  oklch(45% 0.05 45deg / 0.12);
-  --border-default: oklch(45% 0.05 45deg / 0.25);
-  --border-strong:  oklch(45% 0.05 45deg / 0.40);
+  --border-subtle:  oklch(88% 0.025 175deg);
+  --border-default: oklch(80% 0.03 175deg);
+  --border-strong:  oklch(60% 0.05 175deg);
+  --border-focus:   var(--color-celadon-400);
 
-  /* ── Glass: OFF (lava el hilo dorado, conflicto) ─────── */
-  --lib-glass-blur-amount:     0px;
-  --lib-glass-bg-opacity:      0;
-  --lib-glass-border-opacity:  0;
+  /* ── Shadows: jade-tinted (más ligeros que ink) ──────── */
+  --shadow-sm: 0 1px 2px oklch(18% 0.025 175deg / 0.08);
+  --shadow-md:
+    0 2px 8px oklch(18% 0.025 175deg / 0.10),
+    0 1px 2px oklch(18% 0.025 175deg / 0.06);
+  --shadow-lg:
+    0 8px 24px oklch(18% 0.025 175deg / 0.12),
+    0 2px 4px  oklch(18% 0.025 175deg / 0.06);
+  --shadow-xl: 0 20px 48px oklch(18% 0.025 175deg / 0.14);
 
-  /* ── Spotlight: reforzado ─────────────────────────────── */
-  --lib-spotlight-opacity: 0.18;
-  --lib-spotlight-feather: 50%;
+  /* ── Glass: OFF (fondo claro, blur no aporta) ────────── */
+  --lib-glass-blur-amount:    0px;
+  --lib-glass-bg-opacity:     0;
+  --lib-glass-border-opacity: 0;
 
-  /* ── Kintsugi border: oro más intenso ─────────────────── */
-  --lib-kintsugi-border:
+  /* ── Spotlight: OFF (fondo claro, no aplica) ─────────── */
+  --lib-spotlight-opacity: 0;
+
+  /* ── Glaze: shimmer cerámico en superficies elevadas ──── */
+  --lib-celadon-glaze:
     linear-gradient(
-      135deg,
-      oklch(45% 0.05 45deg / 0.80) 0%,
-      oklch(45% 0.05 45deg / 0.10) 40%,
-      oklch(45% 0.05 45deg / 0.10) 60%,
-      oklch(45% 0.05 45deg / 0.50) 100%
+      105deg,
+      transparent 25%,
+      oklch(92% 0.015 172deg / 0.15) 50%,
+      transparent 75%
     );
+
+  /* ── Effect activation: glaze sólo, sin animaciones ──── */
+  --lib-effect-seam-play:      paused;
+  --lib-effect-seam-opacity:   0;
+  --lib-effect-glitch-play:    paused;
+  --lib-effect-scanlines:      0;
+  --lib-effect-crt-vignette:   0;
+  --lib-effect-brutal-shadow:  none;
+  --lib-effect-ring:           none;
+  --lib-effect-glass-blur:     0px;
+  --lib-effect-topbar-opacity: 0;
+  --lib-effect-after-bg:       transparent;
+  --lib-effect-after-mask:     none;
 }
 
 
 /* ════════════════════════════════════════════════════════════
-   SABI · 寂び · belleza envejecida, papel washi + tinta
+   SABI · 寂び · belleza envejecida, papel washi + brutal shadow
    ════════════════════════════════════════════════════════════ */
 
 [data-katachi="sabi"],
@@ -184,21 +204,210 @@
   --border-default: var(--color-washi-300);
   --border-strong:  var(--color-washi-700);
 
-  /* ── Shadow brutal: el efecto definitorio ────────────── */
-  --lib-shadow-brutal: 4px 4px 0px 0px var(--color-washi-900);
-
   /* ── Glass: OFF (incompatible con papel/handmade) ────── */
-  --lib-glass-blur-amount:     0px;
-  --lib-glass-bg-opacity:      0;
-  --lib-glass-border-opacity:  0;
+  --lib-glass-blur-amount:    0px;
+  --lib-glass-bg-opacity:     0;
+  --lib-glass-border-opacity: 0;
 
   /* ── Spotlight: OFF ───────────────────────────────────── */
   --lib-spotlight-opacity: 0;
+
+  /* ── Effect activation: sólo el brutal shadow ────────── */
+  --lib-effect-seam-play:      paused;
+  --lib-effect-seam-opacity:   0;
+  --lib-effect-glitch-play:    paused;
+  --lib-effect-scanlines:      0;
+  --lib-effect-crt-vignette:   0;
+  --lib-effect-brutal-shadow:  4px 4px 0px 0px var(--color-washi-900);
+  /* Ring pill/indicator — brutal shadow reducido a escala pequeña */
+  --lib-effect-ring:           2px 2px 0px 0px var(--color-washi-900);
+  --lib-effect-glass-blur:     0px;
+  --lib-effect-topbar-opacity: 0;
+  --lib-effect-after-bg:       transparent;
+  --lib-effect-after-mask:     none;
 }
 
 
 /* ════════════════════════════════════════════════════════════
-   TERMINAL · CRT digital duro, glitch + scanlines
+   KINTSUGI · 金継ぎ · reparación con oro · el único dark-default
+   ════════════════════════════════════════════════════════════ */
+
+[data-katachi="kintsugi"],
+:host([data-katachi="kintsugi"]) {
+  /* ── Bridge ──────────────────────────────────────────── */
+  --katachi-id:           kintsugi;
+  --katachi-family:       dark;
+  --katachi-surface:      kintsugi;
+  --katachi-accent:       var(--color-kaki-400);
+  --katachi-accent-muted: oklch(61.85% 0.149 48.72deg / 0.35);
+  --katachi-fg:           oklch(97.77% 0.003 68.35deg / 0.65);
+  --katachi-fg-muted:     oklch(97.77% 0.003 68.35deg / 0.25);
+  --katachi-border:       oklch(45% 0.05 45deg / 0.25);
+
+  /* ── Semánticos (dark + acentos kaki/oro) ────────────── */
+  --bg-base:     var(--color-washi-950);
+  --bg-surface:  oklch(11.39% 0.009 84.7deg);
+  --bg-elevated: oklch(14% 0.01 60deg);
+  --bg-inverse:  var(--color-washi-50);
+  --bg-overlay:  oklch(0% 0 0deg / 0.7);
+
+  --text-primary:    oklch(97.77% 0.003 68.35deg / 0.65);
+  --text-secondary:  oklch(97.77% 0.003 68.35deg / 0.35);
+  --text-muted:      oklch(97.77% 0.003 68.35deg / 0.20);
+  --text-inverse:    var(--color-washi-900);
+  --text-accent:     var(--color-kaki-400);
+  --text-link:       var(--color-kaki-300);
+  --text-link-hover: var(--color-kaki-200);
+
+  /* Usar kaki-400 real (L=61.85% C=0.149) — visible sobre oscuro */
+  --border-subtle:  oklch(61.85% 0.149 48.72deg / 0.20);
+  --border-default: oklch(61.85% 0.149 48.72deg / 0.35);
+  --border-strong:  oklch(61.85% 0.149 48.72deg / 0.58);
+
+  /* ── Glass: OFF (lava el hilo dorado, conflicto) ─────── */
+  --lib-glass-blur-amount:    0px;
+  --lib-glass-bg-opacity:     0;
+  --lib-glass-border-opacity: 0;
+
+  /* ── Spotlight: reforzado ─────────────────────────────── */
+  --lib-spotlight-opacity: 0.18;
+  --lib-spotlight-feather: 50%;
+
+  /* ── Kintsugi border: oro kaki-400 saturado ───────────── */
+  --lib-kintsugi-border:
+    linear-gradient(
+      135deg,
+      oklch(61.85% 0.149 48.72deg / 0.80) 0%,
+      oklch(61.85% 0.149 48.72deg / 0.10) 40%,
+      oklch(61.85% 0.149 48.72deg / 0.10) 60%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 100%
+    );
+
+  /* ── Shadows: oscuros con anillo dorado ──────────────── */
+  --shadow-sm:
+    0 1px 4px oklch(0% 0 0deg / 0.55);
+  --shadow-md:
+    0 2px 10px oklch(0% 0 0deg / 0.45),
+    0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.18);
+  --shadow-lg:
+    0 8px 28px oklch(0% 0 0deg / 0.55),
+    0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.28),
+    0 0 32px oklch(61.85% 0.149 48.72deg / 0.08);
+  --shadow-xl:
+    0 20px 48px oklch(0% 0 0deg / 0.65),
+    0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.30);
+
+  /* ── Kanji: toque dorado ─────────────────────────────── */
+  --lib-comp-kanji-color: oklch(51.65% 0.134 46.13deg / 0.06);
+
+  /* ── Effect activation: seam animado + borde gradiente dorado */
+  --lib-effect-seam-play:      running;
+  --lib-effect-seam-opacity:   1;
+  --lib-effect-glitch-play:    paused;
+  --lib-effect-scanlines:      0;
+  --lib-effect-crt-vignette:   0;
+  /* Sombra profunda sin anillo outer — el borde viene del ::after mask */
+  --lib-effect-brutal-shadow:  0 4px 20px oklch(0% 0 0deg / 0.40);
+  /* Ring + halo para pill/indicator — anillo dorado + destello */
+  --lib-effect-ring:
+    0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.45),
+    0 0 8px oklch(61.85% 0.149 48.72deg / 0.15);
+  --lib-effect-glass-blur:     0px;
+  /* Top bar: seam gradient (default en card CSS) — sólo abrirlo */
+  --lib-effect-topbar-opacity: 1;
+  /* ::after — borde gradiente dorado vía mask-composite: exclude
+     background = gradiente 135deg kaki-400 saturado
+     mask       = 1px ring (content-box excluido del border-box) */
+  --lib-effect-after-bg:
+    linear-gradient(
+      135deg,
+      oklch(61.85% 0.149 48.72deg / 0.85) 0%,
+      oklch(61.85% 0.149 48.72deg / 0.20) 35%,
+      oklch(78% 0.06 75deg / 0.55)        50%,
+      oklch(61.85% 0.149 48.72deg / 0.20) 65%,
+      oklch(61.85% 0.149 48.72deg / 0.70) 100%
+    );
+  --lib-effect-after-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   WABI · 侘び · kuroi · oscuridad pura, el anti-kintsugi
+   ════════════════════════════════════════════════════════════
+   Sin oro, sin animaciones, sin efectos. La belleza del silencio.
+   Se distingue de kintsugi en que nada llama la atención. */
+
+[data-katachi="wabi"],
+:host([data-katachi="wabi"]) {
+  /* ── Bridge ──────────────────────────────────────────── */
+  --katachi-id:           wabi;
+  --katachi-family:       dark;
+  --katachi-surface:      dark;
+  --katachi-accent:       oklch(55% 0.015 68deg);
+  --katachi-accent-muted: oklch(55% 0.015 68deg / 0.20);
+  --katachi-fg:           oklch(75% 0.005 68deg / 0.65);
+  --katachi-fg-muted:     oklch(75% 0.005 68deg / 0.35);
+  --katachi-border:       oklch(100% 0 0deg / 0.06);
+
+  /* ── Semánticos (near-black, fractalmente cálido) ────── */
+  --bg-base:     oklch(9% 0.003 45deg);
+  --bg-surface:  oklch(11% 0.004 45deg);
+  --bg-elevated: oklch(13% 0.004 45deg);
+  --bg-inverse:  oklch(92% 0.003 68deg);
+  --bg-overlay:  oklch(0% 0 0deg / 0.75);
+
+  --text-primary:    oklch(75% 0.005 68deg / 0.65);
+  --text-secondary:  oklch(75% 0.005 68deg / 0.45);
+  --text-muted:      oklch(75% 0.005 68deg / 0.25);
+  --text-inverse:    oklch(9% 0.003 45deg);
+  --text-accent:     oklch(55% 0.015 68deg);
+  --text-link:       oklch(65% 0.015 68deg);
+  --text-link-hover: oklch(75% 0.015 68deg);
+
+  --border-subtle:  oklch(100% 0 0deg / 0.04);
+  --border-default: oklch(100% 0 0deg / 0.06);
+  --border-strong:  oklch(100% 0 0deg / 0.12);
+
+  /* ── Shadows: apenas perceptibles ────────────────────── */
+  --shadow-sm: 0 1px 2px oklch(0% 0 0deg / 0.40);
+  --shadow-md:
+    0 2px 8px oklch(0% 0 0deg / 0.40),
+    0 1px 2px oklch(0% 0 0deg / 0.30);
+  --shadow-lg:
+    0 8px 24px oklch(0% 0 0deg / 0.50),
+    0 2px 4px  oklch(0% 0 0deg / 0.30);
+  --shadow-xl: 0 20px 48px oklch(0% 0 0deg / 0.60);
+
+  /* ── Glass: OFF ──────────────────────────────────────── */
+  --lib-glass-blur-amount:    0px;
+  --lib-glass-bg-opacity:     0;
+  --lib-glass-border-opacity: 0;
+
+  /* ── Spotlight: OFF (silencio total) ─────────────────── */
+  --lib-spotlight-opacity: 0;
+
+  /* ── Kanji: blanco puro al 4% (oscuridad total) ─────── */
+  --lib-comp-kanji-color: oklch(100% 0 0deg / 0.04);
+
+  /* ── Effect activation: todo en silencio ─────────────── */
+  --lib-effect-seam-play:      paused;
+  --lib-effect-seam-opacity:   0;
+  --lib-effect-glitch-play:    paused;
+  --lib-effect-scanlines:      0;
+  --lib-effect-crt-vignette:   0;
+  --lib-effect-brutal-shadow:  none;
+  --lib-effect-ring:           none;
+  --lib-effect-glass-blur:     0px;
+  --lib-effect-topbar-opacity: 0;
+  --lib-effect-after-bg:       transparent;
+  --lib-effect-after-mask:     none;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   TERMINAL · >_ · CRT retro hacker, phosphor, scanlines
    ════════════════════════════════════════════════════════════ */
 
 [data-katachi="terminal"],
@@ -207,124 +416,77 @@
   --katachi-id:           terminal;
   --katachi-family:       dark;
   --katachi-surface:      glitch;
-  --katachi-accent:       var(--color-celadon-400);
-  --katachi-accent-muted: oklch(58.33% 0.068 171.21deg / 0.30);
+  --katachi-accent:       oklch(68% 0.14 155deg);
+  --katachi-accent-muted: oklch(68% 0.14 155deg / 0.30);
   --katachi-fg:           var(--color-celadon-300);
   --katachi-fg-muted:     oklch(70.21% 0.057 167.31deg / 0.40);
   --katachi-border:       oklch(58.33% 0.068 171.21deg / 0.30);
 
-  /* ── Semánticos (very dark + celadon) ────────────────── */
-  --bg-base:     oklch(8% 0.012 200deg);
-  --bg-surface:  oklch(11% 0.012 200deg);
-  --bg-elevated: oklch(14% 0.012 200deg);
+  /* ── Semánticos (near-black con tinte verde phosphor) ── */
+  --bg-base:     oklch(7% 0.008 150deg);
+  --bg-surface:  oklch(10% 0.010 150deg);
+  --bg-elevated: oklch(13% 0.010 150deg);
   --bg-inverse:  var(--color-celadon-300);
-  --bg-overlay:  oklch(0% 0 0deg / 0.8);
+  --bg-overlay:  oklch(0% 0 0deg / 0.80);
 
   --text-primary:    var(--color-celadon-300);
   --text-secondary:  oklch(70.21% 0.057 167.31deg / 0.82);
   --text-muted:      oklch(70.21% 0.057 167.31deg / 0.60);
-  --text-inverse:    oklch(8% 0.012 200deg);
-  --text-accent:     var(--color-kaki-400);
+  --text-inverse:    oklch(7% 0.008 150deg);
+  --text-accent:     oklch(68% 0.14 155deg);
   --text-link:       var(--color-celadon-300);
   --text-link-hover: var(--color-celadon-200);
 
   --border-subtle:  oklch(58.33% 0.068 171.21deg / 0.15);
   --border-default: oklch(58.33% 0.068 171.21deg / 0.30);
-  --border-strong:  var(--color-celadon-400);
+  --border-strong:  oklch(68% 0.14 155deg);
 
-  /* ── Shadow brutal: con tinte celadón ────────────────── */
-  --lib-shadow-brutal: 4px 4px 0px 0px var(--color-celadon-400);
+  /* ── Shadows: tinte phosphor ─────────────────────────── */
+  --shadow-sm: 0 1px 2px oklch(0% 0 0deg / 0.50);
+  --shadow-md:
+    0 2px 8px oklch(0% 0 0deg / 0.50),
+    0 1px 2px oklch(0% 0 0deg / 0.40);
+  --shadow-lg:
+    0 8px 24px oklch(0% 0 0deg / 0.60),
+    0 2px 4px  oklch(0% 0 0deg / 0.40);
+  --shadow-xl: 0 20px 48px oklch(0% 0 0deg / 0.70);
+
+  /* ── Shadow brutal: tinte celadón ────────────────────── */
+  --lib-shadow-brutal: 4px 4px 0px 0px oklch(68% 0.14 155deg);
 
   /* ── Glass: OFF (conceptualmente opuesto al CRT) ─────── */
-  --lib-glass-blur-amount:     0px;
-  --lib-glass-bg-opacity:      0;
-  --lib-glass-border-opacity:  0;
+  --lib-glass-blur-amount:    0px;
+  --lib-glass-bg-opacity:     0;
+  --lib-glass-border-opacity: 0;
 
   /* ── Spotlight: OFF ───────────────────────────────────── */
   --lib-spotlight-opacity: 0;
-}
 
+  /* ── Kanji: tinte phosphor al 6% ─────────────────────── */
+  --lib-comp-kanji-color: oklch(68% 0.14 155deg / 0.06);
 
-/* ════════════════════════════════════════════════════════════
-   SHIZEN · 自然 · natural, limpio, sin adorno
-   ════════════════════════════════════════════════════════════
-   Es el estado base/reset. Mantiene los defaults de _semantic
-   y de _effects, sólo expone los bridge tokens para que
-   componentes shizen-aware sepan que están en este contexto. */
-
-[data-katachi="shizen"],
-:host([data-katachi="shizen"]) {
-  /* ── Bridge ──────────────────────────────────────────── */
-  --katachi-id:           shizen;
-  --katachi-family:       light;
-  --katachi-surface:      light;
-  --katachi-accent:       var(--color-kaki-500);
-  --katachi-accent-muted: oklch(51.65% 0.134 46.13deg / 0.25);
-  --katachi-fg:           var(--color-washi-900);
-  --katachi-fg-muted:     var(--color-washi-500);
-  --katachi-border:       var(--color-washi-200);
-
-  /* ── Semánticos: defaults de light (no overrides) ────── */
-  /* Los tokens semánticos heredan sus valores por defecto
-     de _semantic.css. Shizen es el katachi "vacío". */
-
-  /* ── Spotlight: OFF (limpio, sin foco reactivo) ──────── */
-  --lib-spotlight-opacity: 0;
-}
-
-
-/* ════════════════════════════════════════════════════════════
-   CELADON · 青磁 · cerámica jade, frío sereno + spotlight water
-   ════════════════════════════════════════════════════════════ */
-
-[data-katachi="celadon"],
-:host([data-katachi="celadon"]) {
-  /* ── Bridge ──────────────────────────────────────────── */
-  --katachi-id:           celadon;
-  --katachi-family:       dark;
-  --katachi-surface:      celadon;
-  --katachi-accent:       var(--color-celadon-400);
-  --katachi-accent-muted: oklch(58.33% 0.068 171.21deg / 0.35);
-  --katachi-fg:           oklch(90% 0.04 180deg);
-  --katachi-fg-muted:     oklch(75% 0.05 180deg);
-  --katachi-border:       oklch(45.54% 0.059 173.23deg / 0.30);
-
-  /* ── Semánticos (dark con tinte jade) ────────────────── */
-  --bg-base:     oklch(15% 0.02 180deg);
-  --bg-surface:  oklch(18% 0.025 178deg);
-  --bg-elevated: oklch(22% 0.03 175deg);
-  --bg-inverse:  oklch(90% 0.04 180deg);
-  --bg-overlay:  oklch(0% 0 0deg / 0.7);
-
-  --text-primary:    oklch(90% 0.04 180deg);
-  --text-secondary:  oklch(75% 0.05 180deg);
-  --text-muted:      oklch(60% 0.05 180deg);
-  --text-inverse:    oklch(15% 0.02 180deg);
-  --text-accent:     var(--color-celadon-300);
-  --text-link:       var(--color-celadon-300);
-  --text-link-hover: var(--color-celadon-200);
-
-  --border-subtle:  oklch(45.54% 0.059 173.23deg / 0.15);
-  --border-default: oklch(45.54% 0.059 173.23deg / 0.30);
-  --border-strong:  var(--color-celadon-400);
-
-  /* ── Spotlight: reforzado, variante water (jade) ─────── */
-  --lib-spotlight-opacity: 0.16;
-  --lib-spotlight-feather: 55%;
-  --lib-spotlight-gradient: var(--lib-spotlight-gradient-water);
-
-  /* ── Glass: compatible (tonos fríos casan bien) ──────── */
-  --lib-glass-bg: var(--lib-glass-bg-water);
-  --lib-glass-blur-amount: 14px;
-
-  /* ── Glaze: más luminoso en contexto celadón nativo ──── */
-  --lib-celadon-glaze:
-    linear-gradient(
-      105deg,
-      transparent 25%,
-      oklch(92% 0.015 172deg / 0.30) 50%,
-      transparent 75%
+  /* ── Effect activation: glitch + scanlines CRT ───────── */
+  --lib-effect-seam-play:      paused;
+  --lib-effect-seam-opacity:   0;
+  --lib-effect-glitch-play:    running;
+  --lib-effect-scanlines:      0.06; /* opacidad del stripe — sutil pero visible */
+  --lib-effect-crt-vignette:   0.50;
+  --lib-effect-brutal-shadow:  none;
+  --lib-effect-ring:           none;
+  --lib-effect-glass-blur:     0px;
+  /* Top bar: barra de phosphor sólida (sin animación seam) */
+  --lib-effect-topbar-opacity: 1;
+  --lib-effect-topbar-bg:      oklch(68% 0.14 155deg);
+  /* ::after — scanlines directo, sin máscara */
+  --lib-effect-after-bg:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 3px,
+      oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 4px
     );
+  --lib-effect-after-mask: none;
 }
 
 
@@ -338,7 +500,7 @@
      background: var(--lib-comp-bg, <fallback-sin-katachi>)
 
    Con katachi activo  → --lib-comp-bg resuelve al valor del
-                         contexto → katachi prevalece sobre variant
+                         contexto → katachi prevalece
    Sin katachi activo  → --lib-comp-bg es GUITV → usa el fallback
                          → variant funciona sin cambios
 
@@ -368,4 +530,9 @@
   --lib-comp-border-subtle: var(--border-subtle);
   --lib-comp-border-strong: var(--border-strong);
   --lib-comp-border-focus:  var(--border-focus);
+
+  /* ── Kanji watermark (marca de agua decorativa) ──────── */
+  /* Light katachis: tinta oscura al 4%.
+     Override por dark katachis y los que tienen acento especial. */
+  --lib-comp-kanji-color:   oklch(0% 0 0deg / 0.04);
 }

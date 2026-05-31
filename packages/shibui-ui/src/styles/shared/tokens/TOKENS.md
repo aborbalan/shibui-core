@@ -1,7 +1,7 @@
 # Design Tokens — `@shibui/ui`
 
 Referencia completa de todos los tokens del sistema de diseño.  
-Todos están definidos como CSS custom properties en `:host, :root` y se importan automáticamente cuando se usa `tokens.css?inline`.
+Todos están definidos como CSS custom properties en `:root` (no `:host, :root`) y se importan automáticamente cuando se usa `tokens.css?inline`.
 
 ---
 
@@ -28,7 +28,8 @@ Los **componentes siempre consumen tokens semánticos**. Los primitivos solo exi
 | [`_motion.css`](./_motion.css) | Duraciones, curvas de Bézier, transiciones compuestas |
 | [`_state.css`](./_state.css) | Colores de estado (error, warning, success, info, disabled) |
 | [`_semantic.css`](./_semantic.css) | Tokens de superficie (bg, text, border, shadows) + dark mode |
-| [`_effects.css`](./_effects.css) | Glass system, Spotlight system, Kintsugi, textura metal |
+| [`_effects.css`](./_effects.css) | Glass system, Spotlight system, Kintsugi, textura metal, **effect-activation tokens** |
+| [`_katachi.css`](../tokens/_katachi.css) | 6 identidades selladas — overrides semánticos + activación de efectos por contexto |
 
 ---
 
@@ -524,6 +525,57 @@ Los tokens semánticos de `_semantic.css` se sobreescriben automáticamente cuan
 ```
 
 Los tokens que cambian en dark mode son: `--bg-*`, `--text-*`, `--border-*` y `--shadow-*`. Los tokens primitivos de paleta y los tokens de efectos no cambian.
+
+---
+
+## Tokens de activación de efectos — `_effects.css`
+
+Añadidos en mayo 2026 para el modelo de identidades selladas. Son los "interruptores"
+que los bloques `[data-katachi="x"]` en `_katachi.css` usan para activar efectos
+en los componentes sin necesidad de variantes con nombres de paleta.
+
+**Regla crítica**: estos tokens (y todos los demás) están definidos en `:root { }` — nunca
+en `:host, :root { }`. El selector `:host` en un `adoptedStyleSheet` de Shadow DOM fija
+el valor directamente en el shadow host, bloqueando la herencia desde el ancestro
+`[data-katachi]` en el light DOM.
+
+### Tabla de effect-activation tokens
+
+| Token | Default (`:root`) | Controla | Quién lo activa |
+|---|---|---|---|
+| `--lib-effect-seam-play` | `paused` | `animation-play-state` del seam `::before` | kintsugi |
+| `--lib-effect-seam-opacity` | `0` | `opacity` del seam pseudo-element | kintsugi |
+| `--lib-effect-glitch-play` | `paused` | `animation-play-state` del glitch-drift | terminal |
+| `--lib-effect-scanlines` | `0` | Alpha del stripe color en repeating-gradient | terminal (0.10) |
+| `--lib-effect-crt-vignette` | `0` | Opacidad del vignette inset | terminal (0.50) |
+| `--lib-effect-brutal-shadow` | `none` | `box-shadow` del elemento raíz | sabi (brutal) · kintsugi (gold ring) |
+| `--lib-effect-glass-blur` | `0px` | `--lib-glass-blur-amount` en contexto glass | — (ningún katachi actual) |
+| `--lib-effect-topbar-opacity` | `0` | `opacity` de la barra top 3px `::before` | kintsugi · terminal |
+| `--lib-effect-topbar-bg` | `transparent` | `background` de la barra top | terminal (phosphor sólido) |
+
+**Patrón de uso en componentes:**
+
+```css
+/* Siempre declarado; visible solo con el katachi correcto */
+.card::before {
+  animation-play-state: var(--lib-effect-seam-play, paused);
+  opacity: var(--lib-effect-topbar-opacity, 0);
+}
+
+.card::after {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent, transparent 3px,
+    /* --lib-effect-scanlines como alpha del COLOR, no del elemento */
+    oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 3px,
+    oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 4px
+  );
+}
+
+.card {
+  box-shadow: var(--lib-effect-brutal-shadow, none);
+}
+```
 
 ---
 

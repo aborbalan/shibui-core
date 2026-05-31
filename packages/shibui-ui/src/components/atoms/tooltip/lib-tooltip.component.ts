@@ -20,14 +20,14 @@ export type TooltipPosition =
 
 /**
  * Variante de color.
- * - `dark`    — washi-900, máximo contraste (default).
- * - `light`   — fondo blanco con borde, para superficies oscuras
- *               o cuando el contenido necesita estructura visible.
- * - `kaki`    — acento naranja terracota.
- * - `celadon` — estado positivo / informativo.
- * - `error`   — validación fallida o acción destructiva.
+ * - `dark`   — washi-900, máximo contraste (default).
+ * - `light`  — fondo blanco con borde, para superficies oscuras
+ *              o cuando el contenido necesita estructura visible.
+ * - `accent` — acento naranja terracota (era `kaki`).
+ * - `info`   — estado positivo / informativo (era `celadon`).
+ * - `error`  — validación fallida o acción destructiva.
  */
-export type TooltipVariant = 'dark' | 'light' | 'kaki' | 'celadon' | 'error';
+export type TooltipVariant = 'dark' | 'light' | 'accent' | 'info' | 'error';
 
 /** Tamaño de la burbuja. */
 export type TooltipSize = 'sm' | 'md' | 'lg';

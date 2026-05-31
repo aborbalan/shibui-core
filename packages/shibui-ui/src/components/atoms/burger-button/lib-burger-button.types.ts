@@ -1,2 +1,2 @@
-export type BurgerVariant = 'ink' | 'kanji' | 'washi' | 'framed' | 'kintsugi' | 'glitch';
+export type BurgerVariant = 'filled' | 'kanji' | 'neutral' | 'framed' | 'inverse' | 'glitch';
 export type BurgerSize    = 'sm' | 'md' | 'lg';

@@ -2,8 +2,20 @@
 
 /* ============================================================
    LIB-CARD — Shibui UI
-   Variantes: default · inverse · accent · featured · kintsugi
-              glitch · celadon · washi
+   Variantes semánticas: default · inverse · accent · featured
+
+   Los efectos katachi se activan AUTOMÁTICAMENTE por contexto.
+   Ningún variant prop es necesario para la identidad visual:
+
+     [data-katachi="kintsugi"] → seam animado + glow cálido (::before)
+                                 borde gradiente dorado vía mask-composite (::after)
+     [data-katachi="terminal"] → barra phosphor (::before) + scanlines (::after)
+     [data-katachi="sabi"]     → brutal offset shadow (.card)
+     resto                     → sin efectos (tokens en default apagado)
+
+   Mecanismo: CSS custom properties heredan a través del Shadow DOM.
+   Los pseudo-elementos leen --lib-effect-* vía var() y activan
+   su animación/opacidad sólo cuando el katachi ancestro los enciende.
    ============================================================ */
 
 @layer reset {
@@ -21,197 +33,8 @@
 
 @layer components {
 
-  /* ── Base ── */
-  .card {
-    display: flex;
-    flex-direction: column;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-subtle);
-    padding: var(--lib-space-lg);
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    transition:
-      box-shadow var(--duration-slow) var(--ease-out),
-      transform var(--duration-slow) var(--ease-out),
-      border-color var(--duration-slow) var(--ease-out);
-  }
+  /* ── Animaciones ──────────────────────────────────────── */
 
-  @media (hover: hover) {
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--border-default);
-    }
-  }
-
-  /* ── Kanji watermark ── */
-  .card-kanji {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
-    font-size: 5rem;
-    font-weight: 300;
-    line-height: 1;
-    color: rgb(0, 0, 0, 0.04);
-    user-select: none;
-    pointer-events: none;
-    z-index: 0;
-    /* El contenido de la card se pone por encima */
-  }
-
-  /* Kanji en superficies oscuras */
-  :host([variant="inverse"]) .card-kanji,
-  :host([variant="featured"]) .card-kanji,
-  :host([variant="kintsugi"]) .card-kanji,
-  :host([variant="glitch"]) .card-kanji,
-  :host([variant="celadon"]) .card-kanji {
-    color: rgb(255, 255, 255, 0.04);
-  }
-
-  /* El kanji kintsugi tiene un toque dorado */
-  :host([variant="kintsugi"]) .card-kanji {
-    color: rgb(184, 90, 30, 0.08);
-  }
-
-  /* Asegurar que header/content/footer estén encima del kanji */
-  .card-header,
-  .card-content,
-  .card-footer {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ── Header (tag slot) ── */
-  .card-header {
-    margin-bottom: var(--lib-space-md);
-    display: flex;
-    align-items: center;
-    gap: var(--lib-space-sm);
-    min-height: var(--lib-space-md);
-  }
-
-  ::slotted([slot="tag"]) {
-    font-family: var(--lib-font-mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-widest);
-    color: var(--text-muted);
-  }
-
-  /* ── Content (title + body) ── */
-  .card-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--lib-space-sm);
-  }
-
-  ::slotted([slot="title"]) {
-    margin: 0;
-    font-family: var(--lib-font-display);
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-light);
-    line-height: var(--leading-snug);
-    letter-spacing: var(--tracking-tight);
-    color: var(--text-secondary);
-  }
-
-  .card-body {
-    font-family: var(--lib-font-body);
-    font-size: var(--text-sm);
-    line-height: var(--leading-relaxed);
-    color: var(--lib-comp-fg-sec, var(--color-washi-500));
-  }
-
-  /* ── Footer ── */
-  .card-footer {
-    margin-top: var(--lib-space-lg);
-    padding-top: var(--lib-space-md);
-    border-top: 1px solid var(--border-subtle);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: var(--lib-font-mono);
-    font-size: 10px;
-    letter-spacing: var(--tracking-wider);
-    color: var(--text-muted);
-    min-height: var(--lib-space-lg);
-  }
-
-  ::slotted([slot="footer"]) {
-    display: contents;
-  }
-
-  /* ============================================================
-     VARIANTES EXISTENTES — sin cambios
-     ============================================================ */
-
-  /* ── Inverse ── */
-  :host([variant="inverse"]) .card {
-    background: var(--lib-comp-bg-inverse, var(--color-washi-900));
-    border-color: var(--lib-comp-border, var(--color-washi-800));
-  }
-
-  :host([variant="inverse"]) ::slotted([slot="title"]) {
-    color: var(--lib-comp-fg-inverse, var(--color-washi-50));
-  }
-
-  :host([variant="inverse"]) .card-body {
-    color: var(--lib-comp-fg-sec, var(--color-washi-400));
-  }
-
-  :host([variant="inverse"]) .card-footer {
-    border-top-color: var(--lib-comp-border, var(--color-washi-800));
-    color: var(--lib-comp-fg-muted, var(--color-washi-600));
-  }
-
-  :host([variant="inverse"]) ::slotted([slot="tag"]) {
-    color: var(--lib-comp-fg-muted, var(--color-washi-500));
-  }
-
-  /* ── Accent ── */
-  :host([variant="accent"]) .card {
-    border-left: 3px solid var(--card-accent-color, var(--color-kaki-400));
-    padding-left: calc(var(--lib-space-lg) - 3px);
-  }
-
-  /* ── Featured ── */
-  :host([variant="featured"]) .card {
-    background: linear-gradient(135deg,
-        rgb(184, 90, 30, 0.08),
-        rgb(184, 90, 30, 0.02));
-    border-color: transparent;
-    border-left: 2px solid var(--color-kaki-500, #B85A1E);
-  }
-
-  :host([variant="featured"]) .card::before {
-    display: none;
-  }
-
-  :host([variant="featured"]) ::slotted([slot="tag"]) {
-    color: rgb(184, 90, 30, 0.3);
-  }
-
-  :host([variant="featured"]) ::slotted([slot="title"]) {
-    font-size: var(--text-3xl);
-    color: var(--color-kaki-400, #D97234);
-    line-height: 1.1;
-  }
-
-  :host([variant="featured"]) .card-body {
-    color: rgb(250, 247, 244, 0.3);
-    font-size: var(--text-base);
-  }
-
-  :host([variant="featured"]) .card-footer {
-    border-top-color: rgb(255, 255, 255, 0.06);
-    color: rgb(250, 247, 244, 0.2);
-    margin-top: var(--lib-space-xl);
-  }
-
-  /* ── Kintsugi ── */
   @keyframes kintsugi-seam {
     0% {
       background-position: -200% 0;
@@ -232,86 +55,7 @@
     }
   }
 
-  :host([variant="kintsugi"]) .card {
-    background: var(--lib-comp-bg, var(--color-washi-950, #120E0A));
-    border-color: transparent;
-  }
-
-  /* Hilo de oro en el borde — misma técnica mask-composite que spotlight-card */
-  :host([variant="kintsugi"]) .card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    background: var(--lib-kintsugi-border);
-    mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  :host([variant="kintsugi"]) .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg,
-        transparent,
-        rgb(184, 90, 30, 0.4) 15%,
-        var(--color-kaki-400, #D97234) 35%,
-        #F5D08A 50%,
-        var(--color-kaki-400, #D97234) 65%,
-        rgb(184, 90, 30, 0.4) 85%,
-        transparent);
-    background-size: 200% 100%;
-    animation: kintsugi-seam 5s linear infinite;
-    pointer-events: none;
-  }
-
-  :host([variant="kintsugi"]) ::slotted([slot="title"]) {
-    background: linear-gradient(90deg,
-        var(--color-kaki-600, #8C4115),
-        #F5D08A,
-        var(--color-kaki-400, #D97234),
-        #F5D08A,
-        var(--color-kaki-600, #8C4115));
-    background-size: 200% 100%;
-    animation: kintsugi-gold 4s linear infinite;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-  }
-
-  :host([variant="kintsugi"]) ::slotted([slot="tag"]) {
-    color: var(--lib-comp-fg-muted, rgb(184, 90, 30, 0.35));
-  }
-
-  :host([variant="kintsugi"]) .card-body {
-    color: var(--lib-comp-fg-sec, rgb(250, 247, 244, 0.25));
-  }
-
-  :host([variant="kintsugi"]) .card-footer {
-    border-top-color: var(--lib-comp-border-subtle, rgb(255, 255, 255, 0.06));
-    color: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.18));
-  }
-
-  @media (hover: hover) {
-    :host([variant="kintsugi"]) .card:hover {
-      transform: none;
-      box-shadow: 0 0 32px rgb(184, 90, 30, 0.12);
-      border-color: rgb(184, 90, 30, 0.25);
-    }
-  }
-
-  /* ============================================================
-     VARIANTES NUEVAS
-     ============================================================ */
-
-  /* ── Glitch ── */
+  /* Electromagnetic drift — steps para simular interferencia analógica */
   @keyframes glitch-drift {
     0%,
     88%,
@@ -336,253 +80,280 @@
     }
   }
 
-  :host([variant="glitch"]) .card {
-    background: var(--lib-comp-bg, var(--color-washi-950, #120E0A));
-    border-color: var(--lib-comp-border-subtle, rgb(255, 255, 255, 0.06));
+  /* ── Base ─────────────────────────────────────────────── */
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    padding: var(--lib-space-lg);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+
+    /* Glitch drift: siempre definido, activo sólo en [data-katachi="terminal"] */
     animation: glitch-drift 7s steps(1) infinite;
-  }
+    animation-play-state: var(--lib-effect-glitch-play, paused);
 
-  /* Barra superior celadón */
-  :host([variant="glitch"]) .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--color-celadon-400, #4E9482);
-    pointer-events: none;
-  }
-
-  /* Scanlines */
-  :host([variant="glitch"]) .card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(0deg,
-        transparent,
-        transparent 3px,
-        rgb(250, 247, 244, 0.012) 3px,
-        rgb(250, 247, 244, 0.012) 4px);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  :host([variant="glitch"]) ::slotted([slot="tag"]) {
-    font-family: var(--lib-font-mono);
-    color: var(--color-celadon-400, #4E9482);
-    letter-spacing: 0.18em;
-  }
-
-  :host([variant="glitch"]) ::slotted([slot="title"]) {
-    font-family: var(--lib-font-mono);
-    font-size: var(--text-base);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-kaki-400, #D97234);
-  }
-
-  :host([variant="glitch"]) .card-body {
-    font-family: var(--lib-font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    color: var(--lib-comp-fg-sec, rgb(250, 247, 244, 0.2));
-    line-height: 1.9;
-  }
-
-  :host([variant="glitch"]) .card-footer {
-    border-top-color: var(--lib-comp-border-subtle, rgb(255, 255, 255, 0.06));
-    color: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.15));
-  }
-
-  :host([variant="glitch"]) .card-kanji {
-    color: rgb(78, 148, 130, 0.06);
-  }
-
-  @media (hover: hover) {
-    :host([variant="glitch"]) .card:hover {
-      transform: none;
-      box-shadow: -2px 0 0 rgb(217, 114, 52, 0.2), 2px 0 0 rgb(78, 148, 130, 0.15);
-    }
-  }
-
-  /* ── Celadon ── */
-  :host([variant="celadon"]) .card {
-    background: var(--lib-comp-bg, var(--color-washi-950, #120E0A));
-    border-color: var(--lib-comp-border-subtle, rgb(78, 148, 130, 0.15));
-  }
-
-  /* Barra superior celadón */
-  :host([variant="celadon"]) .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--color-celadon-400, #4E9482);
-    pointer-events: none;
-  }
-
-  :host([variant="celadon"]) ::slotted([slot="tag"]) {
-    color: rgb(78, 148, 130, 0.5);
-  }
-
-  :host([variant="celadon"]) ::slotted([slot="title"]) {
-    color: var(--color-celadon-400, #4E9482);
-  }
-
-  :host([variant="celadon"]) .card-body {
-    color: var(--lib-comp-fg-sec, rgb(250, 247, 244, 0.25));
-  }
-
-  :host([variant="celadon"]) .card-footer {
-    border-top-color: var(--lib-comp-border-subtle, rgb(255, 255, 255, 0.06));
-    color: var(--lib-comp-fg-muted, rgb(250, 247, 244, 0.18));
-  }
-
-  :host([variant="celadon"]) .card-kanji {
-    color: rgb(78, 148, 130, 0.06);
-  }
-
-  @media (hover: hover) {
-    :host([variant="celadon"]) .card:hover {
-      transform: none;
-      box-shadow: 0 0 28px rgb(78, 148, 130, 0.1);
-      border-color: rgb(78, 148, 130, 0.3);
-    }
-  }
-
-  /* ── Washi ── */
-  :host([variant="washi"]) .card {
-    background: var(--lib-comp-bg-inverse, var(--color-washi-50, #FAF7F4));
-    border-color: var(--lib-comp-border-subtle, var(--color-washi-200, #E5DDD3));
-  }
-
-  /* Barra superior washi */
-  :host([variant="washi"]) .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--color-washi-400, #B8A99A);
-    pointer-events: none;
-  }
-
-  :host([variant="washi"]) ::slotted([slot="tag"]) {
-    color: var(--color-washi-500, #9A8878);
-  }
-
-  :host([variant="washi"]) ::slotted([slot="title"]) {
-    color: var(--lib-comp-fg, var(--color-washi-800, #3D332A));
-  }
-
-  :host([variant="washi"]) .card-body {
-    color: var(--lib-comp-fg-sec, var(--color-washi-600, #7A6A5C));
-  }
-
-  :host([variant="washi"]) .card-footer {
-    border-top-color: var(--lib-comp-border-subtle, var(--color-washi-200, #E5DDD3));
-    color: var(--lib-comp-fg-muted, var(--color-washi-400, #B8A99A));
-  }
-
-  :host([variant="washi"]) .card-kanji {
-    color: rgb(0, 0, 0, 0.05);
-  }
-
-  @media (hover: hover) {
-    :host([variant="washi"]) .card:hover {
-      border-color: var(--color-washi-300, #D3C8BC);
-      box-shadow: var(--shadow-md);
-    }
-  }
-
-  /* ── Brutal ── */
-  :host([variant="brutal"]) .card {
-    background: var(--lib-comp-bg-inverse, var(--color-washi-50));
-    border: 2px solid var(--lib-comp-border-strong, var(--color-ink-100));
-    box-shadow: var(--lib-shadow-brutal);
+    /* Brutal shadow: definido, visible sólo en [data-katachi="sabi"] */
+    box-shadow: var(--lib-effect-brutal-shadow, none);
     transition:
-      transform var(--duration-fast) var(--ease-default),
-      box-shadow var(--duration-fast) var(--ease-default);
+      box-shadow   var(--duration-slow) var(--ease-out),
+      transform    var(--duration-slow) var(--ease-out),
+      border-color var(--duration-slow) var(--ease-out);
   }
 
-  /* Barra superior celadón — el único acento de color */
-  :host([variant="brutal"]) .card::before {
+  @media (hover: hover) {
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border-default);
+    }
+  }
+
+  /* ── Top bar (::before) ───────────────────────────────── */
+  /* Dual purpose:
+       kintsugi → gradiente dorado animado (kintsugi-seam) + glow cálido
+       terminal → barra phosphor sólida (--lib-effect-topbar-bg sobreescrito)
+     Invisible por defecto: opacity = var(--lib-effect-topbar-opacity, 0).
+     La animación sólo corre cuando --lib-effect-seam-play = running (kintsugi).
+     El box-shadow crea un glow hacia el interior de la card proporcional a
+     topbar-opacity (calc * 0.6): kintsugi → oro difuso, resto → transparent. */
+
+  .card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--color-celadon-400);
     pointer-events: none;
+    z-index: 3;
+    background: var(--lib-effect-topbar-bg,
+      linear-gradient(
+        90deg,
+        transparent,
+        oklch(51.65% 0.134 46.13deg / 0.40) 15%,
+        var(--color-kaki-400)                35%,
+        oklch(95% 0.03 80deg)               50%,
+        var(--color-kaki-400)                65%,
+        oklch(51.65% 0.134 46.13deg / 0.40) 85%,
+        transparent
+      )
+    );
+    background-size: 200% 100%;
+    animation: kintsugi-seam 5s linear infinite;
+    animation-play-state: var(--lib-effect-seam-play, paused);
+    opacity: var(--lib-effect-topbar-opacity, 0);
+    /* Glow difuso hacia abajo — permanece dentro de overflow:hidden */
+    box-shadow: 0 4px 16px 2px oklch(61.85% 0.149 48.72deg / calc(var(--lib-effect-topbar-opacity, 0) * 0.55));
+    transition: opacity var(--duration-slow) var(--ease-out);
   }
 
-  :host([variant="brutal"]) ::slotted([slot="tag"]) {
-    font-family: var(--lib-font-mono);
-    color: var(--color-washi-500);
-    letter-spacing: var(--tracking-widest);
+  /* ── Border overlay (::after) ────────────────────────── */
+  /* Técnica mask-composite: exclude (igual que en la legacy).
+     padding: 1px crea el área de borde de 1px de ancho.
+     La máscara recorta el background al ring exterior (borde)
+     excluyendo el interior (content-box). Resultado: el
+     gradiente sólo es visible en los 1px de borde de la card.
+
+     Tokens que controlan el comportamiento:
+       --lib-effect-after-bg   → background value
+       --lib-effect-after-mask → mask value (none = sin máscara)
+
+     kintsugi  → gradiente 135deg kaki-400 + mask → borde dorado
+     terminal  → scanlines repeating-gradient + mask none → líneas CRT
+     resto     → transparent + mask none → invisible
+
+     Nota: cuando mask = none el mask-composite no tiene efecto
+     y el background (transparent / scanlines) se renderiza normal. */
+
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: var(--lib-effect-after-bg, transparent);
+    mask: var(--lib-effect-after-mask, none);
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 2;
   }
 
-  :host([variant="brutal"]) ::slotted([slot="title"]) {
+  /* ── Kanji watermark ──────────────────────────────────── */
+  /* Color definido per-katachi en _katachi.css:
+       light katachis → tinta oscura al 4%
+       kintsugi       → kaki dorado al 6%
+       wabi / terminal → blanco / phosphor al 4-6% */
+
+  .card-kanji {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
+    font-size: 5rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--lib-comp-kanji-color, oklch(0% 0 0deg / 0.04));
+    user-select: none;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Asegurar z-index sobre kanji y efectos ───────────── */
+
+  .card-header,
+  .card-content,
+  .card-footer {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── Header (tag slot) ────────────────────────────────── */
+
+  .card-header {
+    margin-bottom: var(--lib-space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-sm);
+    min-height: var(--lib-space-md);
+  }
+
+  ::slotted([slot="tag"]) {
     font-family: var(--lib-font-mono);
-    font-size: var(--text-xl);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-tight);
-    color: var(--lib-comp-fg, var(--color-ink-100));
+    font-size: 10px;
     text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--text-muted);
   }
 
-  :host([variant="brutal"]) .card-body {
-    font-family: var(--lib-font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: 0.04em;
+  /* ── Content (title + body) ───────────────────────────── */
+
+  .card-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--lib-space-sm);
+  }
+
+  ::slotted([slot="title"]) {
+    margin: 0;
+    font-family: var(--lib-font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-secondary);
+  }
+
+  .card-body {
+    font-family: var(--lib-font-body);
+    font-size: var(--text-sm);
     line-height: var(--leading-relaxed);
-    color: var(--lib-comp-fg-sec, var(--color-washi-600));
+    color: var(--text-secondary);
   }
 
-  :host([variant="brutal"]) .card-footer {
-    border-top-color: var(--lib-comp-border, var(--color-washi-300));
-    color: var(--lib-comp-fg-muted, var(--color-washi-500));
+  /* ── Footer ───────────────────────────────────────────── */
+
+  .card-footer {
+    margin-top: var(--lib-space-lg);
+    padding-top: var(--lib-space-md);
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--lib-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wider);
+    color: var(--text-muted);
+    min-height: var(--lib-space-lg);
   }
 
-  /* Hover clásico brutalista: el elemento se hunde en su propia sombra */
-  @media (hover: hover) {
-    :host([variant="brutal"]) .card:hover {
-      transform: translate(4px, 4px);
-      box-shadow: none;
-    }
+  ::slotted([slot="footer"]) {
+    display: contents;
   }
 
-  /* ─── KATACHI · ambient context ──────────────────────────────
-     Cuando variant="default" (default reflejado por Lit), extiende
-     la sensibilidad a katachi a los elementos que NO consumen
-     tokens semánticos por sí solos.
+  /* ============================================================
+     VARIANTES SEMÁNTICAS
+     Cuatro roles estructurales, independientes de cualquier katachi.
+     Cada uno usa tokens semánticos que el katachi activo ya ha
+     sobreescrito — no hay hardcoding de paleta aquí.
+     ============================================================ */
 
-     Ya-adaptivos sin override aquí:
-     - .card (usa --bg-elevated, --border-subtle, --shadow-lg)
-     - .card-footer (usa --text-muted, --border-subtle)
-     - ::slotted([slot="tag"]) (usa --text-muted)
-     - ::slotted([slot="title"]) (usa --text-secondary)
+  /* ── Inverse ── */
+  /* Fondo invertido: siempre contrasta con el base de la página */
 
-     Override solo donde había color hardcoded. Fallback a valor
-     actual para garantizar cero regresión sin [data-katachi] ancestor.
-
-     Selector :host([variant="default"]) es mutuamente excluyente
-     con :host([variant="kintsugi"]), etc. — los variants explícitos
-     no se ven afectados.
-     ─────────────────────────────────────────────────────────── */
-
-  :host([variant="default"]) .card-kanji {
-    color: var(--katachi-accent-muted, rgb(0, 0, 0, 0.04));
+  :host([variant="inverse"]) .card {
+    background: var(--bg-inverse);
+    border-color: var(--border-default);
   }
 
-  :host([variant="default"]) .card-body {
-    color: var(--lib-comp-fg-sec, var(--color-washi-500));
+  :host([variant="inverse"]) ::slotted([slot="title"]) {
+    color: var(--text-inverse);
   }
 
-  /* ─── /KATACHI ───────────────────────────────────────────── */
+  :host([variant="inverse"]) .card-body {
+    color: var(--text-inverse);
+    opacity: 0.7;
+  }
+
+  :host([variant="inverse"]) .card-footer {
+    border-top-color: var(--border-default);
+    color: var(--text-muted);
+  }
+
+  :host([variant="inverse"]) ::slotted([slot="tag"]) {
+    color: var(--text-muted);
+  }
+
+  /* ── Accent ── */
+  /* Borde izquierdo de énfasis — el color viene de la prop accent-color
+     o del acento activo del katachi */
+
+  :host([variant="accent"]) .card {
+    border-left: 3px solid var(--card-accent-color, var(--color-kaki-400));
+    padding-left: calc(var(--lib-space-lg) - 3px);
+  }
+
+  /* ── Featured ── */
+  /* Card destacada: fondo con gradiente cálido sutil + título grande.
+     Pensada para ocupar 2 columnas en grid.
+     El top bar (::before) se suprime para no competir con el borde izq. */
+
+  :host([variant="featured"]) .card {
+    background: linear-gradient(
+      135deg,
+      oklch(51.65% 0.134 46.13deg / 0.08),
+      oklch(51.65% 0.134 46.13deg / 0.02)
+    );
+    border-color: transparent;
+    border-left: 2px solid var(--color-kaki-500);
+  }
+
+  :host([variant="featured"]) .card::before {
+    display: none;
+  }
+
+  :host([variant="featured"]) ::slotted([slot="tag"]) {
+    color: oklch(51.65% 0.134 46.13deg / 0.30);
+  }
+
+  :host([variant="featured"]) ::slotted([slot="title"]) {
+    font-size: var(--text-3xl);
+    color: var(--text-accent);
+    line-height: 1.1;
+  }
+
+  :host([variant="featured"]) .card-body {
+    color: var(--text-secondary);
+    font-size: var(--text-base);
+  }
+
+  :host([variant="featured"]) .card-footer {
+    border-top-color: var(--border-subtle);
+    color: var(--text-muted);
+    margin-top: var(--lib-space-xl);
+  }
+
 }

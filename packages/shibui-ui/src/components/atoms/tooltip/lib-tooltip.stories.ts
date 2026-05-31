@@ -52,7 +52,7 @@ const meta: Meta<LibTooltipArgs> = {
     },
     variant: {
       control: 'select',
-      options: ['dark','light','kaki','celadon','error'],
+      options: ['dark','light','accent','info','error'],
       description: 'Variante de color',
     },
     size: {
@@ -168,14 +168,14 @@ export const PositionsEdge: Story = {
    VARIANTES
    ══════════════════════════════════════ */
 export const Variants: Story = {
-  name: 'Variants — dark · light · kaki · celadón · error',
+  name: 'Variants — dark · light · accent · info · error',
   render: (): TemplateResult => html`
     <!-- Light bg -->
     ${stage(false, html`
       ${col(html`<lib-tooltip position="top" variant="dark" content="washi-900 · default">${btnLight('Dark')}</lib-tooltip>`, 'default')}
       ${col(html`<lib-tooltip position="top" variant="light" content="Fondo blanco con borde">${btnLight('Light')}</lib-tooltip>`, '.tip-light')}
-      ${col(html`<lib-tooltip position="top" variant="kaki" content="Acento naranja terracota">${btnLight('Kaki')}</lib-tooltip>`, '.tip-kaki')}
-      ${col(html`<lib-tooltip position="top" variant="celadon" content="Estado positivo confirmado">${btnLight('Celadón')}</lib-tooltip>`, '.tip-celadon')}
+      ${col(html`<lib-tooltip position="top" variant="accent" content="Acento naranja terracota">${btnLight('Accent')}</lib-tooltip>`, '.tip-accent')}
+      ${col(html`<lib-tooltip position="top" variant="info" content="Estado positivo confirmado">${btnLight('Info')}</lib-tooltip>`, '.tip-info')}
       ${col(html`<lib-tooltip position="top" variant="error" content="Acción destructiva">${btnLight('Error')}</lib-tooltip>`, '.tip-error')}
     `)}
     <!-- Dark bg — light variant -->
@@ -363,7 +363,7 @@ const _katachi = createKatachiStories<object>(() => html`
       </div>
     `)}
     <!-- Variants -->
-    ${(['dark','light','kaki','celadon','error'] as const).map(v => html`
+    ${(['dark','light','accent','info','error'] as const).map(v => html`
       <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
         <lib-tooltip position="top" variant=${v} content="Variante ${v}">
           <button style="font-family:var(--lib-font-mono);font-size:0.6875rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-secondary);background:var(--bg-elevated);border:1px solid var(--border-default);padding:0.5rem 1rem;cursor:default;">${v}</button>

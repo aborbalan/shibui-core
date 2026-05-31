@@ -14,7 +14,7 @@
               Display inline-flex — coloca junto al brand.
    vertical → barra fija en el margen izquierdo de la ventana.
 
-   Tonos : kaki (default) · celadon · ink · kintsugi
+   Tonos : accent (default) · info · filled · gold
    ============================================================ */
 
 @layer reset {
@@ -176,21 +176,21 @@
 
   /* Kaki (default) */
   :host,
-  :host([tone="kaki"]) {
+  :host([tone="accent"]) {
     --rp-color:       var(--color-kaki-500);
     --rp-color-light: var(--color-kaki-400);
     --rp-glow:        rgb(217, 114, 52, 0.25);
   }
 
   /* Celadón */
-  :host([tone="celadon"]) {
+  :host([tone="info"]) {
     --rp-color:       var(--color-celadon-500);
     --rp-color-light: var(--color-celadon-400);
     --rp-glow:        rgb(53, 113, 100, 0.25);
   }
 
   /* Ink */
-  :host([tone="ink"]) {
+  :host([tone="filled"]) {
     --rp-color:       var(--color-washi-800);
     --rp-color-light: var(--color-washi-700);
     --rp-glow:        rgb(61, 51, 42, 0.2);
@@ -201,22 +201,22 @@
      ════════════════════════════════════════════════════════
 
      En lugar de un color plano, la barra usa el gradiente
-     diagonal del sistema kintsugi: transición desigual de
+     diagonal del sistema gold: transición desigual de
      kaki-600 a kaki-300 que evoca el hilo de oro irregular
      que sella las grietas de la cerámica.
 
      Shimmer: un reflejo de luz (::before) recorre la barra
      en bucle lento — luz resbalando sobre la vena de oro.
      ════════════════════════════════════════════════════════ */
-  :host([tone="kintsugi"]) {
+  :host([tone="gold"]) {
     --rp-color:       var(--color-kaki-500);
     --rp-color-light: var(--color-kaki-300);
     --rp-glow:        oklch(65% 0.1 50deg / 0.55);
   }
 
   /* ── Gradiente kintsugi en bar ────────────────────────── */
-  :host([tone="kintsugi"][variant="bar"]),
-  :host([tone="kintsugi"]:not([variant])) {
+  :host([tone="gold"][variant="bar"]),
+  :host([tone="gold"]:not([variant])) {
     background: linear-gradient(
       90deg,
       var(--color-kaki-600)  0%,
@@ -239,14 +239,14 @@
         oklch(92% 0.04 60deg / 0.75)        55%,
         transparent                      100%
       );
-      animation: rp-kintsugi-shimmer 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      animation: rp-gold-shimmer 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
       pointer-events: none;
     }
   }
 
   /* Glow tip más cálido y pronunciado */
-  :host([tone="kintsugi"][variant="bar"][active])::after,
-  :host([tone="kintsugi"]:not([variant])[active])::after {
+  :host([tone="gold"][variant="bar"][active])::after,
+  :host([tone="gold"]:not([variant])[active])::after {
     width: 24px;
     height: 8px;
     background: oklch(65% 0.1 50deg / 0.65);
@@ -254,7 +254,7 @@
   }
 
   /* ── Gradiente kintsugi en line ───────────────────────── */
-  :host([tone="kintsugi"][variant="line"]) {
+  :host([tone="gold"][variant="line"]) {
     background: linear-gradient(
       90deg,
       var(--color-kaki-600) 0%,
@@ -266,7 +266,7 @@
   }
 
   /* ── Gradiente kintsugi en vertical ──────────────────── */
-  :host([tone="kintsugi"][variant="vertical"]) {
+  :host([tone="gold"][variant="vertical"]) {
     background: linear-gradient(
       to bottom,
       var(--color-kaki-600) 0%,
@@ -287,7 +287,7 @@
   }
 
   /* ── Shimmer keyframe ─────────────────────────────────── */
-  @keyframes rp-kintsugi-shimmer {
+  @keyframes rp-gold-shimmer {
     0% {
       transform: translateX(-120%);
       opacity: 0;
@@ -304,8 +304,8 @@
 
   /* ─── KATACHI · ambient context ──────────────────────────────
      lib-reading-progress tiene 4 tones explícitos
-     (kaki · celadon · ink · kintsugi) — paletas deliberadas
-     que definen la identidad de la barra. El tone kintsugi
+     (accent · info · filled · gold) — paletas deliberadas
+     que definen la identidad de la barra. El tone gold
      incluso lleva su propio shimmer animado.
 
      No se aplica semantic override: estos tonos son la API

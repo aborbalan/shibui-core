@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════════════════════
    lib-footer.css
    Shibui UI · Web Component Footer
-   Variantes: social · accordion · kintsugi · glitch
+   Variantes: social · accordion · inverse · glitch · celadon · sabi · shizen
    ══════════════════════════════════════════════════════════════ */
 
 @layer tokens, reset, components;
@@ -49,7 +49,7 @@
        variable en modo claro, sobreescribiendo el fondo oscuro.
        Las variantes explícitas son opinionadas sobre su superficie. */
     :host([variant='accordion']),
-    :host([variant='kintsugi']),
+    :host([variant='inverse']),
     :host([variant='glitch']) {
         --ft-bg: var(--color-washi-950, #120E0A);
         --ft-border: rgb(255, 255, 255, 0.07);
@@ -402,9 +402,9 @@
     }
 
     /* ══════════════════════════════════════════
-        VARIANTE 03 — KINTSUGI
+        VARIANTE 03 — INVERSE (dark gold seam)
         ══════════════════════════════════════════ */
-    .ft-kintsugi-seam {
+    .ft-gold-seam {
         position: absolute;
         top: 0;
         left: 0;
@@ -419,17 +419,17 @@
                 var(--ft-gold-end) 85%,
                 transparent);
         background-size: 200% 100%;
-        animation: kintsugi-seam 5s linear infinite;
+        animation: footer-gold-seam 5s linear infinite;
     }
 
-    .ft-kintsugi-grid {
+    .ft-inverse-grid {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         gap: var(--lib-space-xl, 2rem);
         padding-top: var(--lib-space-xl, 2rem);
     }
 
-    .ft-kintsugi-col-head {
+    .ft-inverse-col-head {
         font-family: var(--ft-font-mono);
         font-size: 0.5rem;
         letter-spacing: 0.18em;
@@ -438,7 +438,7 @@
         margin-bottom: var(--lib-space-md, 1rem);
     }
 
-    .ft-kintsugi-col-links {
+    .ft-inverse-col-links {
         display: flex;
         flex-direction: column;
         gap: var(--lib-space-sm, 0.5rem);
@@ -460,7 +460,7 @@
         }
     }
 
-    .ft-kintsugi-arrow {
+    .ft-inverse-arrow {
         color: var(--ft-accent);
         opacity: 0.6;
         flex-shrink: 0;
@@ -615,7 +615,7 @@
     }
 
     /* ── Animations ── */
-    @keyframes kintsugi-seam {
+    @keyframes footer-gold-seam {
         0% {
             background-position: -200% 0;
         }
@@ -942,7 +942,7 @@
 
     /* ── Responsive ── */
     @media (width <=768px) {
-        .ft-kintsugi-grid,
+        .ft-inverse-grid,
         .ft-celadon-grid,
         .ft-sabi-grid,
         .ft-shizen-grid {
@@ -970,7 +970,7 @@
     }
 
     @media (width <=480px) {
-        .ft-kintsugi-grid,
+        .ft-inverse-grid,
         .ft-celadon-grid,
         .ft-sabi-grid,
         .ft-shizen-grid,
@@ -987,15 +987,54 @@
        --lib-comp-* (GUITV) — sin katachi idéntico al original;
        con katachi activo, adaptan al contexto.
 
-       Dark surface override (accordion/kintsugi/glitch): misma
+       Dark surface override (accordion/inverse/glitch): misma
        estrategia — los fallbacks mantienen los valores oscuros
        originales sin katachi.
 
        .ft-brand: color directo envuelto con --lib-comp-fg.
 
-       Animaciones kintsugi-seam, glitch-border, scanlines, cursors:
+       Animaciones footer-gold-seam, glitch-border, scanlines, cursors:
        sin cambios — efectos decorativos propios de cada variante.
+
+       Efectos automáticos vía --lib-effect-*:
+       • kintsugi → seam dorada animada en footer::before
+       • terminal → seam phosphor sólida en footer::before
        ─────────────────────────────────────────────────────────── */
+
+    /* ── Kintsugi / terminal seam — barra superior animada ── */
+    footer {
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      pointer-events: none;
+      z-index: 1;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        oklch(61.85% 0.149 48.72deg / 0.55) 20%,
+        var(--color-kaki-400) 50%,
+        oklch(61.85% 0.149 48.72deg / 0.55) 80%,
+        transparent 100%
+      );
+      background-size: 200% 100%;
+      animation: footer-seam 3s linear infinite;
+      animation-play-state: var(--lib-effect-seam-play, paused);
+      opacity: var(--lib-effect-seam-opacity, 0);
+      transition: opacity var(--duration-slow, 400ms) var(--ease-out, ease-out);
+    }
+
+    @keyframes footer-seam {
+      from { background-position: 200% center; }
+      to   { background-position: -200% center; }
+    }
 
     /* ─── /KATACHI ───────────────────────────────────────────── */
 }
