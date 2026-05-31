@@ -151,7 +151,18 @@
      Para que el avatar se adapte automáticamente al contexto del
      entorno, usar simplemente el tone adecuado (e.g. `inverse` en
      fondos oscuros) sin necesidad de `data-katachi`.
+
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → ring+halo dorado en .avatar__face (box-shadow)
+       La pieza de cerámica reparada — el anillo dorado alrededor
+       de la cara circular es la expresión más literal del kintsugi.
+     • sabi → ring brutal-mini en .avatar__face
+     .avatar__face ya tiene border-radius: full — el ring sigue la forma circular.
      ─────────────────────────────────────────────────────────── */
+
+  .avatar__face {
+    box-shadow: var(--lib-effect-ring, none);
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

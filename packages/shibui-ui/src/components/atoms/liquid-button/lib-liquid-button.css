@@ -176,11 +176,20 @@
      paletas deliberadas — no se tocan.
 
      Especificidad equivalente al selector original.
+
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → ring+halo dorado en .btn (box-shadow)
+     • sabi     → ring brutal-mini en .btn (box-shadow)
+     .btn ya tiene box-shadow en transition — el ring anima suavemente.
      ─────────────────────────────────────────────────────────── */
 
   :host([variant="filled"]) .btn {
     background: var(--bg-inverse);
     color: var(--text-inverse);
+  }
+
+  .btn {
+    box-shadow: var(--lib-effect-ring, none);
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

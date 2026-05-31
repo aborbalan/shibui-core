@@ -221,17 +221,106 @@
      heredan el katachi activo:
        hairline/default/strong/gradient/dashed → --border-*
        labels mono/display                     → --text-muted/secondary
-       heavy                                   → --bg-inverse
-       dotted                                  → --border-default  ← fix
-       ornaments dot/diamond                   → --border-default  ← fix
-       label kanji                             → --text-muted      ← fix
+       dotted                                  → --border-default
+       ornaments dot/diamond                   → --border-default
+       label kanji                             → --text-muted
 
      color="accent" y color="info" son overrides explícitos del
      desarrollador — se mantienen fijos en su paleta intencional.
+
+     Kintsugi: los tokens semánticos dan oro al 20-35% — demasiado
+     apagado para una línea. Se aplica la vena de oro irregular
+     (gradiente kaki-600→300→400 + shimmer) directamente, siguiendo
+     el patrón de lib-reading-progress tone="gold".
+     El shimmer usa --lib-effect-seam-play para sincronizarse con el
+     sistema de efectos katachi (running en kintsugi, paused en el resto).
      ─────────────────────────────────────────────────────────── */
 
   :host([style-variant="heavy"]) .dv__line {
     background: var(--bg-inverse);
+  }
+
+  /* ── Kintsugi: vena de oro en el divider ──────────────────── */
+  @keyframes divider-gold-shimmer {
+    from { background-position: -200% center; }
+    to   { background-position:  200% center; }
+  }
+
+  @supports selector(:host-context(a)) {
+
+    /* Línea base horizontal — todos los style-variants por defecto */
+    :host-context([data-katachi="kintsugi"]) .dv__line {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(
+        90deg,
+        var(--color-kaki-600)  0%,
+        var(--color-kaki-500) 30%,
+        var(--color-kaki-300) 65%,
+        var(--color-kaki-400) 100%
+      );
+      height: 2px;
+    }
+
+    /* Shimmer — reflejo de luz recorriendo la vena */
+    :host-context([data-katachi="kintsugi"]) .dv__line::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        transparent                    0%,
+        oklch(98% 0.01 60deg / 0.85)  50%,
+        transparent                   100%
+      );
+      background-size: 200% 100%;
+      animation: divider-gold-shimmer 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      animation-play-state: var(--lib-effect-seam-play, paused);
+      pointer-events: none;
+    }
+
+    /* Vertical — gradiente top→bottom + ancho */
+    :host([orientation="vertical"]):host-context([data-katachi="kintsugi"]) .dv__line {
+      background: linear-gradient(
+        to bottom,
+        var(--color-kaki-600)  0%,
+        var(--color-kaki-500) 30%,
+        var(--color-kaki-300) 65%,
+        var(--color-kaki-400) 100%
+      );
+      height: auto;
+      width: 2px;
+    }
+
+    /* Gradient variant — fade kaki simétrico */
+    :host([style-variant="gradient"]):host-context([data-katachi="kintsugi"]) .dv__line {
+      background: linear-gradient(
+        to right,
+        transparent           0%,
+        var(--color-kaki-500) 20%,
+        var(--color-kaki-300) 50%,
+        var(--color-kaki-500) 80%,
+        transparent           100%
+      );
+    }
+
+    /* Heavy — barra de oro sólida más gruesa */
+    :host([style-variant="heavy"]):host-context([data-katachi="kintsugi"]) .dv__line {
+      background: var(--color-kaki-400);
+      height: 3px;
+    }
+
+    /* Ornamentos → kaki-400 sólido */
+    :host-context([data-katachi="kintsugi"]) .dv__ornament--dot,
+    :host-context([data-katachi="kintsugi"]) .dv__ornament--diamond {
+      background: var(--color-kaki-400);
+    }
+
+    /* Label mono → tinte dorado */
+    :host-context([data-katachi="kintsugi"]) .dv__label--mono {
+      color: oklch(61.85% 0.149 48.72deg / 0.80);
+    }
+
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

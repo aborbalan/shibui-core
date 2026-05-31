@@ -343,6 +343,54 @@ element hosts). Katachi extiende este patrón añadiendo soporte light-DOM via
 
 ---
 
+## Taxonomía de decoraciones · Kintsugi
+
+Marco de referencia para decidir qué ornamento aplica a cada escala de componente.
+Sirve de guía al implementar efectos en componentes nuevos o al refinar los existentes.
+
+### Clases de componentes por escala y forma
+
+| Clase | Ejemplos | Características |
+|---|---|---|
+| **Surface** | `lib-card`, `lib-glass-card`, `lib-modal`, `lib-dialog`, `lib-drawer`, `lib-sidebar` | Rectangular grande; área suficiente para efectos complejos |
+| **Bar/strip** | `lib-header`, `lib-footer`, `lib-progress`, `lib-metric-bar` | Horizontal, ancho completo o casi; alto reducido |
+| **Interactive medium** | `lib-button`, `lib-input`, `lib-select`, `lib-segmented-control`, `lib-tabs` | ~36–48px alto; claramente accionable |
+| **Pill/tag** | `lib-badge`, `lib-chip` | ~20–28px alto; pill-shaped; denso en información |
+| **Indicator** | `lib-status-dot`, `lib-avatar` (sm), `lib-progress-circle` | ≤24px; puntual; semántico |
+| **Typography** | `lib-eyebrow`, `lib-display-heading`, `lib-kbd`, `lib-label` | Texto puro o casi puro; sin forma contenedora propia |
+| **Structural** | `lib-divider`, `lib-background`, `lib-canvas` | Layout; sin contenido propio |
+
+### Catálogo de decoraciones kintsugi
+
+| Decoración | Mecanismo CSS | Escala mínima | Notas |
+|---|---|---|---|
+| **Seam top** | `::before` barra animada 2–3px full-width | Surface / Bar | Ilegible en pills (<28px alto) — no usar en Pill/tag ni Indicator |
+| **Ring** | `box-shadow: 0 0 0 1px oklch(kaki-400 / 0.40)` | Cualquiera | Forma cerrada con `border-radius`; no strips sin borde |
+| **Halo** | Ring + `0 0 Npx oklch(kaki-400 / 0.10)` blur | Pill/tag · Indicator · Interactive | Complementa o sustituye seam en formatos pequeños |
+| **Vein** | `border-left` o `border-bottom` en gold | Surface · Interactive medium | Direccional; evoca fisura diagonal en cerámica real |
+| **Warmth bg** | `background: color-mix(in oklch, var(--bg-elevated), var(--color-kaki-400) 4–6%)` | Cualquiera con fondo sólido | Sutil; no requiere pseudo-elemento |
+| **Warmth text** | `color: color-mix(in oklch, var(--text-primary), var(--color-kaki-400) 15–20%)` | Typography · Pill/tag | Invisible a primera vista; crea coherencia contextual |
+| **Shadow depth** | `box-shadow` oscuro + anillo kaki (`0 0 0 1px kaki/0.25, 0 4px 20px ink/0.40`) | Surface · Interactive medium | Ya implementado en `--shadow-md/lg/xl` de kintsugi |
+| **Pulse** | Opacity animation en ring o halo | Indicator | Reservar para estado activo/vivo, no decorativo puro |
+| **Corner accent** | `::after` trazo diagonal en esquina | Surface · Interactive medium | Literal con el concepto de fisura; evitar en pills |
+| **Animated dash** | `::before` trazo corto (~35% ancho) desplazándose | Pill/tag · Bar | Alternativa al seam full-width cuando el espacio es reducido |
+
+### Matriz de compatibilidad
+
+| | Seam top | Ring | Halo | Vein | Warmth bg | Warmth text | Shadow depth | Pulse | Corner | Animated dash |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Surface** | ✅ | ✅ | — | ✅ | ✅ | — | ✅ | — | ✅ | — |
+| **Bar/strip** | ✅ | — | — | ✅ | ✅ | — | — | — | — | — |
+| **Interactive medium** | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — | ✅ | — |
+| **Pill/tag** | ❌ | ✅ | ✅ | — | ✅ | ✅ | — | — | — | ✅ |
+| **Indicator** | ❌ | ✅ | ✅ | — | ✅ | — | — | ✅ | — | — |
+| **Typography** | — | — | — | — | — | ✅ | — | — | — | — |
+| **Structural** | — | — | — | ✅ | ✅ | — | — | — | — | — |
+
+`✅` natural · `⚠️` posible pero vigilar legibilidad · `❌` inapropiado · `—` no aplica
+
+---
+
 ## Contrato katachi × componente
 
 ### Tokens de contexto `--lib-comp-*`
@@ -397,6 +445,64 @@ pnpm exec playwright test --update-snapshots --project=katachi
 # 4. Type-check y lint
 pnpm type-check && pnpm lint
 ```
+
+---
+
+## Patrones de decoración expresiva · Kintsugi
+
+Más allá del seam top genérico (2px barra animada) y del ring (box-shadow dorado),
+algunos componentes justifican un tratamiento kintsugi con mayor carácter.
+
+### Patrón: vena de oro irregular (reading-progress)
+
+**Componente de referencia**: `lib-reading-progress` → `variant="bar"` / `tone="gold"`
+
+El gradiente flat de color sólido no evoca el kintsugi — el oro real en cerámica
+es **irregular**, con variaciones de intensidad a lo largo de la vena. La técnica:
+
+```css
+/* Gradiente diagonal con transición desigual — evoca el hilo de oro real */
+background: linear-gradient(
+  90deg,
+  var(--color-kaki-600)  0%,   /* oscuro en el arranque */
+  var(--color-kaki-500) 30%,
+  var(--color-kaki-300) 65%,   /* brightest — punto de fusión */
+  var(--color-kaki-400) 100%
+);
+
+/* Shimmer: reflejo de luz recorriendo la vena en bucle lento */
+&::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent                    0%,
+    oklch(92% 0.04 60deg / 0.75)  45%,
+    oklch(98% 0.01 60deg / 0.90)  50%,   /* destello central */
+    oklch(92% 0.04 60deg / 0.75)  55%,
+    transparent                   100%
+  );
+  animation: gold-shimmer 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Glow tip: halo en el extremo activo del arco/barra */
+&[active]::after {
+  width: 24px;
+  height: 8px;
+  background: oklch(65% 0.1 50deg / 0.65);
+  filter: blur(5px);
+}
+```
+
+**Cuándo usar este patrón** en lugar del seam genérico:
+- El componente es una barra de progreso o indicador lineal/radial
+- El "avance" del componente tiene sentido semántico como "vena que se extiende"
+- Hay espacio suficiente para que el shimmer sea legible (≥ 3px de altura)
+
+**Componentes candidatos** donde aplicar esta lógica en el futuro:
+`lib-progress` (bar variant) · `lib-reading-progress` (ya implementado) ·
+`lib-progress-circle` (versión radial del gradiente) · `lib-metric-bar` (barra interna)
 
 ---
 

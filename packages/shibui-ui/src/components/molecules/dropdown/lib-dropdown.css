@@ -342,8 +342,16 @@
 
      Variants accent, ghost, dark mantienen su paleta.
 
-     Bloque marcador para discoverability.
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → ring+halo dorado en .dd-trigger (box-shadow)
+     • sabi     → ring brutal-mini en .dd-trigger (box-shadow)
+     Focus usa outline — sin conflicto con box-shadow.
      ─────────────────────────────────────────────────────────── */
+
+  /* ── Ring katachi — kintsugi ring+halo · sabi brutal-mini ── */
+  .dd-trigger {
+    box-shadow: var(--lib-effect-ring, none);
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

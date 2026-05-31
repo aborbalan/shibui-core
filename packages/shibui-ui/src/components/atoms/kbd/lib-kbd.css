@@ -172,8 +172,25 @@
 
      Variants explícitos (dark, ghost) sin cambios.
 
-     Bloque marcador para discoverability.
+     Efecto kintsugi: el box-shadow del kbd es compuesto (ring dorado
+     externo + key-depth + inset highlight). No se puede usar
+     --lib-effect-ring directamente porque sobreescribiría el key-depth.
+     Se usa :host-context para componer todo en un solo shadow:
+       1. ring dorado 1px (externo)
+       2. halo difuso dorado
+       3. key-depth dorado (reemplaza el bottom wall washi-300)
+       4. inset: tinte dorado muy sutil (reemplaza el highlight blanco)
      ─────────────────────────────────────────────────────────── */
+
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="kintsugi"]) .kbd {
+      box-shadow:
+        0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.45),
+        0 0 8px oklch(61.85% 0.149 48.72deg / 0.12),
+        0 1px 0 0 oklch(61.85% 0.149 48.72deg / 0.60),
+        inset 0 1px 0 0 oklch(61.85% 0.149 48.72deg / 0.10);
+    }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

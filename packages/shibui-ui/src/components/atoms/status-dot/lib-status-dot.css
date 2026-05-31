@@ -212,6 +212,8 @@
 
   .sd {
     background: var(--text-muted);
+    /* kintsugi ring+halo · sabi brutal-mini — activados por [data-katachi] */
+    box-shadow: var(--lib-effect-ring, none);
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

@@ -995,7 +995,46 @@
 
        Animaciones footer-gold-seam, glitch-border, scanlines, cursors:
        sin cambios — efectos decorativos propios de cada variante.
+
+       Efectos automáticos vía --lib-effect-*:
+       • kintsugi → seam dorada animada en footer::before
+       • terminal → seam phosphor sólida en footer::before
        ─────────────────────────────────────────────────────────── */
+
+    /* ── Kintsugi / terminal seam — barra superior animada ── */
+    footer {
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      pointer-events: none;
+      z-index: 1;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        oklch(61.85% 0.149 48.72deg / 0.55) 20%,
+        var(--color-kaki-400) 50%,
+        oklch(61.85% 0.149 48.72deg / 0.55) 80%,
+        transparent 100%
+      );
+      background-size: 200% 100%;
+      animation: footer-seam 3s linear infinite;
+      animation-play-state: var(--lib-effect-seam-play, paused);
+      opacity: var(--lib-effect-seam-opacity, 0);
+      transition: opacity var(--duration-slow, 400ms) var(--ease-out, ease-out);
+    }
+
+    @keyframes footer-seam {
+      from { background-position: 200% center; }
+      to   { background-position: -200% center; }
+    }
 
     /* ─── /KATACHI ───────────────────────────────────────────── */
 }

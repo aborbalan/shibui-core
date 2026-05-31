@@ -841,7 +841,69 @@
      Aplica a todas las variants (underline, pill, card, outline, etc.)
      porque las reglas base .tb-tab no están scoped por variant.
      Variants explícitos dark/gold/glitch mantienen sus overrides.
+
+     Efectos kintsugi:
+     • Seam top en .tb-list via --lib-effect-* (token-based)
+     • .tb-ink (underline) → gradiente kaki irregular + glow
+     • border-bottom underline: washi-200 hardcoded → --border-subtle
      ─────────────────────────────────────────────────────────── */
+
+  /* ── Seam top (bar/strip) — token-based ────────────────── */
+  .tb-list {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tb-list::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    pointer-events: none;
+    z-index: 2;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 20%,
+      var(--color-kaki-400) 50%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 80%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: tabs-seam 3s linear infinite;
+    animation-play-state: var(--lib-effect-seam-play, paused);
+    opacity: var(--lib-effect-seam-opacity, 0);
+    transition: opacity var(--duration-slow, 400ms) var(--ease-out, ease-out);
+  }
+
+  @keyframes tabs-seam {
+    from { background-position: 200% center; }
+    to   { background-position: -200% center; }
+  }
+
+  /* ── Kintsugi: ink bar + underline fix ─────────────────── */
+  @supports selector(:host-context(a)) {
+
+    /* Ink bar → vena dorada irregular + glow */
+    :host-context([data-katachi="kintsugi"]) .tb-ink {
+      background: linear-gradient(
+        90deg,
+        var(--color-kaki-600)  0%,
+        var(--color-kaki-400) 40%,
+        var(--color-kaki-300) 65%,
+        var(--color-kaki-400) 100%
+      );
+      box-shadow: 0 0 8px oklch(61.85% 0.149 48.72deg / 0.45);
+    }
+
+    /* Underline border-bottom: washi-200 hardcoded → --border-subtle
+       (en kintsugi = oklch(kaki-400 / 0.20), dorado sutil) */
+    :host([variant="underline"]):host-context([data-katachi="kintsugi"]) .tb-list {
+      border-bottom-color: var(--border-subtle);
+    }
+  }
 
   .tb-tab {
     color: var(--lib-comp-fg-muted, var(--text-muted));

@@ -403,5 +403,26 @@
     border-top-color: var(--bg-inverse);
   }
 
+  /* ── Kintsugi: ring dorado en el thumb ────────────────────
+     Los pseudo-elementos de input nativo no consumen CSS custom
+     properties, por lo que se usa :host-context con valor literal.
+     El box-shadow compone el shadow base (--shadow-sm) + ring kaki.
+     ─────────────────────────────────────────────────────────── */
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="kintsugi"]) .rs input[type="range"]::-webkit-slider-thumb {
+      box-shadow:
+        var(--shadow-sm),
+        0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.45),
+        0 0 8px oklch(61.85% 0.149 48.72deg / 0.20);
+    }
+
+    :host-context([data-katachi="kintsugi"]) .rs input[type="range"]::-moz-range-thumb {
+      box-shadow:
+        var(--shadow-sm),
+        0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.45),
+        0 0 8px oklch(61.85% 0.149 48.72deg / 0.20);
+    }
+  }
+
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

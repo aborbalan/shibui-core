@@ -994,7 +994,43 @@
      Pseudo-elementos con efectos inverse/glitch (::after gold seam,
      ::before scanlines, RGB ghost layers): sin cambios — efectos
      decorativos propios.
+
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → seam dorada animada en .dr::after (top 2px horizontal)
+       Nota: variant="inverse" ya usa ::after para seam vertical dorado
+       y tiene mayor especificidad — gana cuando ambos coexisten.
+     • terminal → seam phosphor en .dr::after
      ─────────────────────────────────────────────────────────── */
+
+  /* ── Kintsugi / terminal seam ── */
+  .dr::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    pointer-events: none;
+    z-index: 10;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 20%,
+      var(--color-kaki-400) 50%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 80%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: drawer-katachi-seam 3s linear infinite;
+    animation-play-state: var(--lib-effect-seam-play, paused);
+    opacity: var(--lib-effect-seam-opacity, 0);
+    transition: opacity var(--duration-slow, 400ms) var(--ease-out, ease-out);
+  }
+
+  @keyframes drawer-katachi-seam {
+    from { background-position: 200% center; }
+    to   { background-position: -200% center; }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

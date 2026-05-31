@@ -631,7 +631,15 @@
      invierte y mantiene contraste con el track.
 
      Variants explícitos underline/pill sin cambios.
+
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → ring+halo dorado en .seg (box-shadow)
+     • sabi     → ring brutal-mini en .seg (box-shadow)
      ─────────────────────────────────────────────────────────── */
+
+  .seg {
+    box-shadow: var(--lib-effect-ring, none);
+  }
 
   :host([variant="outline"]) .seg-thumb {
     background: var(--lib-comp-bg-inverse, var(--bg-inverse));

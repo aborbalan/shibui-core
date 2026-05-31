@@ -629,6 +629,11 @@
      Variants explícitos (filled, ghost, dark) intactos.
      ─────────────────────────────────────────────────────────── */
 
+  /* ── Ring katachi — kintsugi ring+halo · sabi brutal-mini ── */
+  .sel-trigger {
+    box-shadow: var(--lib-effect-ring, none);
+  }
+
   /* ── Trigger count badge ──────────────────────────────────── */
   .sel-trigger-count {
     background: var(--bg-inverse);

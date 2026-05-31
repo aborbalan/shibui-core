@@ -271,7 +271,19 @@
      adapta al contexto manteniendo contraste con el thumb.
 
      Variants explícitos (inverse, etc.) sin cambios.
+     variant="inverse" ya tiene tratamiento kintsugi propio
+     (mask-composite border pulsante + thumb dorado animado).
+
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → ring+halo dorado en .sw-track (box-shadow)
+     • sabi     → ring brutal-mini en .sw-track (box-shadow)
+     Focus usa outline — sin conflicto con box-shadow.
      ─────────────────────────────────────────────────────────── */
+
+  /* ── Ring katachi — kintsugi ring+halo · sabi brutal-mini ── */
+  .sw-track {
+    box-shadow: var(--lib-effect-ring, none);
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }
