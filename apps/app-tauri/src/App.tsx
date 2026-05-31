@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { BrowserRouter, useNavigate } from 'react-router-dom';
+import { MemoryRouter, useNavigate } from 'react-router-dom';
 import { getCurrentWindow } from '@tauri-apps/api/window';
+import { AppShell } from './shell/AppShell';
 import { AuthProvider } from './core/auth/AuthProvider';
 import { useAuth } from './core/hooks/useAuth';
-import { AppShell } from './shell/AppShell';
+import { LibCanvas } from '@shibui-ui/ui/react';
 
 /** Ruta inicial por ventana del macro entorno, según su `label` de Tauri. */
 const WINDOW_ROUTES: Record<string, string> = {
@@ -41,13 +42,17 @@ function WindowInitializer() {
   return null;
 }
 
-export function App() {
+function App() {
   return (
-    <BrowserRouter>
+    <MemoryRouter>
       <AuthProvider>
-        <WindowInitializer />
-        <AppShell />
+        <LibCanvas katachi="terminal">
+          <WindowInitializer />
+          <AppShell />
+        </LibCanvas>
       </AuthProvider>
-    </BrowserRouter>
+    </MemoryRouter>
   );
 }
+
+export default App;

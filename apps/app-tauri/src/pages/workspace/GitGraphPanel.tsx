@@ -17,7 +17,7 @@ interface GitCommit {
  * apuntar a cualquier repositorio escribiendo su ruta (por defecto, el HOME).
  */
 export function GitGraphPanel() {
-  const graphRef = useRef<any>(null);
+  const graphRef = useRef<HTMLElement>(null);
   const [repoPath, setRepoPath] = useState<string>('');
   const [draftPath, setDraftPath] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +28,9 @@ export function GitGraphPanel() {
     setError(null);
     try {
       const commits = await invoke<GitCommit[]>('get_git_log', { path, maxCount: 80 });
-      if (graphRef.current) graphRef.current.commits = commits;
+      // Los arrays se asignan como propiedad JS, no como atributo HTML.
+      const el = graphRef.current as (HTMLElement & { commits?: GitCommit[] }) | null;
+      if (el) el.commits = commits;
       if (commits.length === 0) setError('Sin commits (¿es un repositorio git?).');
     } catch (e) {
       setError(String(e));
