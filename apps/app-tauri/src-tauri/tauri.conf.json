@@ -12,11 +12,22 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "Shibui",
         "width": 1280,
         "height": 800,
         "minWidth": 900,
         "minHeight": 600
+      },
+      {
+        "label": "secondary",
+        "title": "Shibui — Ventana 2",
+        "width": 900,
+        "height": 700,
+        "minWidth": 600,
+        "minHeight": 400,
+        "x": 200,
+        "y": 200
       }
     ],
     "security": {
