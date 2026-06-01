@@ -1550,6 +1550,34 @@
 
 ---
 
+### `lib-file-browser` · ✅
+
+> **Coverage: 🟢 semantic.** Explorador de ficheros de escritorio (datos puros).
+> Nombres de carpeta consumen `--text-primary` (contraste alto), ficheros `--text-secondary`,
+> iconos de carpeta `--text-accent` y ficheros `--text-muted`. Barra de navegación y filas
+> usan `--bg-elevated` (hover/focus) y `--border-subtle`/`--border-default`. Todos los tokens
+> se reescriben con cada katachi — sin override propio. Sin efectos glass/spotlight.
+
+#### Superficies
+
+| Superficie | Estado | Notas |
+|------------|--------|-------|
+| light      | ✅      | text-primary/secondary sobre bg claro |
+| dark       | ✅      | nombres legibles sobre bg oscuro (fix de contraste) |
+| kintsugi   | ✅      | hereda tokens semánticos del override |
+| glitch     | ✅      | terminal: phosphor sobre fondo oscuro |
+| celadón    | ✅      | tono jade vía override |
+| washi      | ✅      | papel envejecido vía override |
+
+#### Efectos
+
+| Efecto | Superficie | Estado | Notas |
+|--------|------------|--------|-------|
+| glass  | —          | `—`    | No aplica: contenedor de lista plano |
+| spotlight | —       | `—`    | No aplica |
+
+---
+
 ### `lib-gadget-frame` · ✅
 
 > **Coverage: 🟢 semantic.** Dos variantes de superficie:

@@ -28,3 +28,5 @@ export * from './scatter-chart-3d/lib-scatter-chart-3d.component';
 export type { ScatterSeries3d, ScatterPoint3d, ScatterTooltip3d } from './scatter-chart-3d/lib-scatter-chart-3d.types';
 export * from './git-graph/lib-git-graph.component';
 export type { GitCommit, CommitLayout } from './git-graph/lib-git-graph.types';
+export * from './file-browser/lib-file-browser.component';
+export type { FsEntry, FileBrowserRowSize, FileRow } from './file-browser/lib-file-browser.types';
