@@ -121,14 +121,19 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    /* Contraste alto: nombre siempre legible (fix del problema reportado). */
-    color: var(--text-primary);
+    /* Ficheros: secondary (legible, ligeramente atenuado vs. carpetas). */
+    color: var(--text-secondary);
   }
 
-  /* Los ficheros se atenúan ligeramente frente a las carpetas,
-     pero manteniendo legibilidad (secondary, no muted). */
-  .fb-row[data-dir="false"] .fb-row-name {
-    color: var(--text-secondary);
+  /* Carpetas: token de ACENTO, no --text-primary.
+     Motivo: en contextos donde el katachi no alcanza el subárbol (p.ej.
+     light DOM del consumidor), --text-primary cae al default claro
+     (washi-900, casi negro) y las carpetas quedan invisibles sobre fondo
+     oscuro. --text-accent y --text-secondary son valores literales por
+     katachi y siempre se ven. Además distingue carpeta de fichero. */
+  .fb-row[data-dir="true"] .fb-row-name {
+    color: var(--text-accent);
+    font-weight: 500;
   }
 
   .fb-row-size {
