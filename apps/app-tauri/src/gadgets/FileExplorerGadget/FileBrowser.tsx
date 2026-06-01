@@ -177,7 +177,15 @@ export function FileBrowser({ rowSize = 'default' }: FileBrowserProps) {
                 <span style={{
                   fontFamily: 'var(--lib-font-mono, "DM Mono", monospace)',
                   fontSize,
-                  color: entry.is_dir ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  // Las carpetas se resaltan con el token de acento (verde phosphor en
+                  // katachi terminal). NO usar --text-primary: en el light DOM de React
+                  // ese token puede caer al default claro (washi-900, casi negro) y las
+                  // carpetas quedan invisibles sobre el fondo oscuro. --text-accent y
+                  // --text-secondary son valores literales por katachi y siempre se ven.
+                  color: entry.is_dir
+                    ? 'var(--text-accent, #4E9482)'
+                    : 'var(--text-secondary, #9aa0a6)',
+                  fontWeight: entry.is_dir ? 500 : 400,
                   flex: 1,
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
