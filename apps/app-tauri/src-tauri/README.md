@@ -2,6 +2,10 @@
 
 El backend se divide en dos piezas: `src-tauri/src/lib.rs` (puente de comandos Tauri) y la crate `core/` (lógica del sistema, reutilizable e independiente de Tauri).
 
+> ⚠️ **App de uso personal (single-user).** Los comandos exponen información del sistema y de ficheros sin capas de permisos por rol porque la app la usa una sola persona en su propia máquina. No añadir aquí lógica pensada para terceros.
+
+> Documentación relacionada: permisos de ventana en [`capabilities/README.md`](capabilities/README.md) · lógica del sistema en [`../core/README.md`](../core/README.md).
+
 ---
 
 ## Estructura
