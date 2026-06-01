@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LibBackground, LibButton } from '@shibui-ui/ui/react';
 import { useAuth } from '../../core/hooks/useAuth';
+import { isMainWindow, openSecondaryWindow } from '../../core/windows';
 
 export function LoginPage() {
   const { login } = useAuth();
@@ -16,6 +17,11 @@ export function LoginPage() {
   const handleSubmit = () => {
     const ok = login(password);
     if (ok) {
+      // Solo la ventana principal lanza la 2ª ventana del macro entorno,
+      // y solo tras autenticarse (así nunca aparece antes del login).
+      if (isMainWindow()) {
+        void openSecondaryWindow();
+      }
       navigate(from, { replace: true });
     } else {
       setError(true);
