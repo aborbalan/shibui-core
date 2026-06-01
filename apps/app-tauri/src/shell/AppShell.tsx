@@ -8,6 +8,7 @@ import { SectionPlaceholder } from '../pages/section-placeholder';
 const HubPage       = lazy(() => import('../pages/hub').then(m => ({ default: m.HubPage })));
 const FilesPage     = lazy(() => import('../pages/files').then(m => ({ default: m.FilesPage })));
 const DashboardPage = lazy(() => import('../pages/dashboard').then(m => ({ default: m.DashboardPage })));
+const WorkspacePage = lazy(() => import('../pages/workspace').then(m => ({ default: m.WorkspacePage })));
 
 export function AppShell() {
   return (
@@ -23,6 +24,16 @@ export function AppShell() {
           element={
             <AuthGuard>
               <HubPage />
+            </AuthGuard>
+          }
+        />
+
+        {/* ── Workspace — tabs (Files/Git), standalone, para 2ª ventana ─ */}
+        <Route
+          path="workspace"
+          element={
+            <AuthGuard>
+              <WorkspacePage />
             </AuthGuard>
           }
         />

@@ -1,4 +1,4 @@
-# @shibui/ui 🎌
+# @shibui-ui/ui 🎌
 
 Librería de componentes UI agnóstica construida con **Web Components** y **Lit**.  
 Inspirada en el concepto japonés *shibui* (渋い) — belleza simple, sutil y duradera.
@@ -27,13 +27,13 @@ Arquitectura Senior ejecutada en etapas Junior-friendly.
 
 ```bash
 # npm
-npm install @shibui/ui lit
+npm install @shibui-ui/ui lit
 
 # yarn
-yarn add @shibui/ui lit
+yarn add @shibui-ui/ui lit
 
 # pnpm
-pnpm add @shibui/ui lit
+pnpm add @shibui-ui/ui lit
 ```
 
 ## 🎨 Configuración de estilos
@@ -41,21 +41,21 @@ pnpm add @shibui/ui lit
 Importa los tokens globales en tu punto de entrada:
 
 ```ts
-import '@shibui/ui/styles';
+import '@shibui-ui/ui/styles';
 // o solo los tokens CSS
-import '@shibui/ui/tokens';
+import '@shibui-ui/ui/tokens';
 ```
 
 ## 🚀 Uso básico
 
 ```ts
 // Web Components estándar
-import '@shibui/ui';
+import '@shibui-ui/ui';
 
 // Wrappers por framework
-import { LibButton } from '@shibui/ui/react';
-import { LibButton } from '@shibui/ui/angular';
-// Svelte — los tipos se cargan automáticamente desde @shibui/ui/svelte
+import { LibButton } from '@shibui-ui/ui/react';
+import { LibButton } from '@shibui-ui/ui/angular';
+// Svelte — los tipos se cargan automáticamente desde @shibui-ui/ui/svelte
 ```
 
 ```html
@@ -66,12 +66,12 @@ import { LibButton } from '@shibui/ui/angular';
 
 | Import | Descripción |
 |---|---|
-| `@shibui/ui` | Web Components estándar |
-| `@shibui/ui/react` | Wrappers tipados para React |
-| `@shibui/ui/angular` | Wrappers para Angular |
-| `@shibui/ui/svelte` | Definiciones de tipos para Svelte |
-| `@shibui/ui/tokens` | Solo tokens CSS (`--lib-*`) |
-| `@shibui/ui/styles` | Estilos globales completos |
+| `@shibui-ui/ui` | Web Components estándar |
+| `@shibui-ui/ui/react` | Wrappers tipados para React |
+| `@shibui-ui/ui/angular` | Wrappers para Angular |
+| `@shibui-ui/ui/svelte` | Definiciones de tipos para Svelte |
+| `@shibui-ui/ui/tokens` | Solo tokens CSS (`--lib-*`) |
+| `@shibui-ui/ui/styles` | Estilos globales completos |
 
 ## 📖 Documentación
 
@@ -79,27 +79,27 @@ Storybook desplegado en Firebase Hosting — disponible en cada PR vía CI/CD.
 
 
 # Shibui UI — Components Registry
-> Referencia de agente · `@shibui/ui` · Auto-uso en proyectos consumidores
+> Referencia de agente · `@shibui-ui/ui` · Auto-uso en proyectos consumidores
 
 Versión del registro: `1.0.0` — Sincronizado con `packages/shibui-ui/src/index.ts`
 
 ## Cómo usar este fichero
 
-Este fichero está pensado para que agentes Claude que trabajen en **proyectos que consumen** `@shibui/ui` (app-react, app-angular, app-svelte, proyectos externos) puedan conocer de un vistazo todos los componentes disponibles, su nombre de importación, tag HTML y variantes principales.
+Este fichero está pensado para que agentes Claude que trabajen en **proyectos que consumen** `@shibui-ui/ui` (app-react, app-angular, app-svelte, proyectos externos) puedan conocer de un vistazo todos los componentes disponibles, su nombre de importación, tag HTML y variantes principales.
 
 ### Notación de importación
 
 ```ts
 // Web Component estándar (Lit, Angular, Svelte, Vanilla)
-import '@shibui/ui';
+import '@shibui-ui/ui';
 // → usa el tag HTML: <lib-button variant="primary">
 
 // React wrapper (PascalCase)
-import { LibButton } from '@shibui/ui/react';
+import { LibButton } from '@shibui-ui/ui/react';
 // → usa JSX: <LibButton variant="primary" />
 
 // Solo tokens CSS
-import '@shibui/ui/tokens';
+import '@shibui-ui/ui/tokens';
 ```
 
 ### Binding de props en React
@@ -122,7 +122,7 @@ import '@shibui/ui/tokens';
 
 ## Tokens de diseño (CSS custom properties)
 
-> Importar con `@shibui/ui/tokens` o `import '@shibui/ui/tokens'`
+> Importar con `@shibui-ui/ui/tokens` o `import '@shibui-ui/ui/tokens'`
 
 ### Colores primitivos
 | Token | Valor | Uso |
@@ -1018,7 +1018,7 @@ import type {
   LibVariant,       // 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'accent'
   LibSemanticColor, // 'primary' | 'danger' | 'text' | 'inherit'
   UiClickEventDetail, // { originalEvent: Event, timestamp: number }
-} from '@shibui/ui';
+} from '@shibui-ui/ui';
 ```
 
 ---
@@ -1059,7 +1059,7 @@ document.documentElement.dataset.theme = 'dark';
 ```tsx
 // Los tokens NO están en :root por defecto en algunos entornos.
 // Importar explícitamente:
-import '@shibui/ui/tokens';
+import '@shibui-ui/ui/tokens';
 
 // O referenciar con fallback:
 style={{ color: 'var(--text-accent, #B85A1E)' }}
@@ -1070,10 +1070,10 @@ style={{ color: 'var(--text-accent, #B85A1E)' }}
 ## Notas para agentes Claude
 
 1. **Siempre usar PascalCase** en ficheros `.tsx` (`LibButton`, no `lib-button`).
-2. **Siempre importar desde `@shibui/ui/react`** en React — nunca el tag HTML directo.
+2. **Siempre importar desde `@shibui-ui/ui/react`** en React — nunca el tag HTML directo.
 3. **Eventos** siempre con tipo `CustomEvent` explícito — nunca `any`.
 4. **Array props** se pasan directamente sin `.prop=` — el wrapper lo gestiona.
-5. **Los tokens `--lib-*`** deben estar disponibles. Si no hay estilos, verificar que se importa `@shibui/ui/tokens`.
+5. **Los tokens `--lib-*`** deben estar disponibles. Si no hay estilos, verificar que se importa `@shibui-ui/ui/tokens`.
 6. **`lib-text-glitch`** tiene un typo en el barrel (`text-glich`). Si hay error de importación, importar directamente desde la ruta del componente.
 7. **No existe `lib-multiselect` como componente independiente** — usar `lib-select` con la prop `multiple`.
 8. **`lib-modal`** necesita `open` booleano explícito para mostrarse. No tiene estado interno de visibilidad.

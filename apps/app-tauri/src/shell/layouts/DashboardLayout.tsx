@@ -4,12 +4,13 @@ import type { SidebarLink } from '@shibui-ui/ui';
 import { useAuth } from '../../core/hooks/useAuth';
 
 const SIDEBAR_LINKS: SidebarLink[] = [
-  { id: '',         label: 'Hub',      icon: 'house-simple', group: 'Workspace' },
-  { id: 'code',     label: 'Code',     icon: 'code',         group: 'Workspace' },
-  { id: 'files',    label: 'Files',    icon: 'folder-open',  group: 'Workspace' },
-  { id: 'security', label: 'Security', icon: 'shield-check', group: 'Workspace' },
-  { id: 'settings', label: 'Settings', icon: 'gear-six',     group: 'Workspace' },
-  { id: 'logout',   label: 'Salir',    icon: 'sign-out',     group: 'Sesión' },
+  { id: '',          label: 'Hub',       icon: 'house-simple', group: 'Workspace' },
+  { id: 'workspace', label: 'Workspace', icon: 'squares-four', group: 'Workspace' },
+  { id: 'code',      label: 'Code',      icon: 'code',         group: 'Workspace' },
+  { id: 'files',     label: 'Files',     icon: 'folder-open',  group: 'Workspace' },
+  { id: 'security',  label: 'Security',  icon: 'shield-check', group: 'Workspace' },
+  { id: 'settings',  label: 'Settings',  icon: 'gear-six',     group: 'Workspace' },
+  { id: 'logout',    label: 'Salir',     icon: 'sign-out',     group: 'Sesión' },
 ];
 
 export function DashboardLayout() {
