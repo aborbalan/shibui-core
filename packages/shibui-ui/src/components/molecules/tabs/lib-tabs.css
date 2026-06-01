@@ -823,6 +823,59 @@
   }
 
 
+  /* ────────────────────────────────────────
+     EXTRAS IDE (opt-in)
+     ──────────────────────────────────────── */
+
+  /* Botón "+" de nueva pestaña */
+  .tb-new {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    margin-left: var(--lib-space-xs);
+    align-self: center;
+    border-radius: 2px;
+    color: var(--lib-comp-fg-muted, var(--text-muted));
+    background: none;
+    cursor: pointer;
+    transition:
+      color var(--duration-base) var(--ease-out),
+      background var(--duration-base) var(--ease-out);
+  }
+
+  .tb-new:hover {
+    color: var(--lib-comp-fg, var(--text-primary));
+    background: var(--lib-comp-bg-subtle, var(--bg-surface));
+  }
+
+  .tb-new:focus-visible {
+    outline: 2px solid var(--color-kaki-400);
+    outline-offset: -2px;
+  }
+
+  .tb-new lib-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Tab en arrastre (reorder) */
+  .tb-tab.is-dragging {
+    opacity: .45;
+    cursor: grabbing;
+  }
+
+  :host([reorderable]) .tb-tab {
+    cursor: grab;
+  }
+
+  :host([reorderable]) .tb-tab.is-active {
+    cursor: grab;
+  }
+
+
   /* ─── KATACHI · ambient context ──────────────────────────────
      .tb-tab base usa --color-washi-{400, 700, 900} hardcoded.
      Mapeo a semantic tokens:

@@ -28,6 +28,8 @@ const meta: Meta = {
     scroll:   { control: 'boolean' },
     full:     { control: 'boolean' },
     closable: { control: 'boolean' },
+    newTab:      { control: 'boolean', name: 'new-tab' },
+    reorderable: { control: 'boolean' },
     active:   { control: 'text' },
   },
 };
@@ -53,6 +55,8 @@ export const Playground: Story = {
     scroll:   false,
     full:     false,
     closable: false,
+    newTab:      false,
+    reorderable: false,
     active:   'overview',
   },
   render: (args): TemplateResult => html`
@@ -67,6 +71,8 @@ export const Playground: Story = {
         ?scroll="${args.scroll}"
         ?full="${args.full}"
         ?closable="${args.closable}"
+        ?new-tab="${args.newTab}"
+        ?reorderable="${args.reorderable}"
         active="${args.active}"
         .items="${[
           { id: 'overview', label: 'Overview' },
@@ -576,6 +582,57 @@ tabs?.addEventListener('ui-lib-tab-close', (e) => {
         <div slot="ed-types"><p    style="font-size: var(--text-sm); color: rgba(250,247,244,.35); padding-top: 0.75rem;">Tipos e interfaces del proyecto.</p></div>
         <div slot="ed-styles"><p   style="font-size: var(--text-sm); color: rgba(250,247,244,.35); padding-top: 0.75rem;">Estilos globales — modificados.</p></div>
         <div slot="ed-config"><p   style="font-size: var(--text-sm); color: rgba(250,247,244,.35); padding-top: 0.75rem;">Configuración de Vite — tab fijo, no cerrable.</p></div>
+      </lib-tabs>
+    </div>
+  `,
+};
+
+/* ── Reorder por drag: mueve el item en el array del elemento ── */
+const _onTabReorder = (e: Event): void => {
+  const el = e.currentTarget as LibTabs;
+  const { fromIndex, toIndex } = (e as CustomEvent<{ fromIndex: number; toIndex: number }>).detail;
+  const next = [...el.items];
+  const [moved] = next.splice(fromIndex, 1);
+  if (moved) next.splice(toIndex, 0, moved);
+  el.items = next;
+};
+
+/* ── Botón "+": añade una pestaña nueva y la activa ── */
+let _newTabCounter = 0;
+const _onTabNew = (e: Event): void => {
+  const el = e.currentTarget as LibTabs;
+  _newTabCounter += 1;
+  const id = `nuevo-${_newTabCounter}`;
+  el.items = [...el.items, { id, label: `untitled-${_newTabCounter}.ts`, dirty: true } as TabItem];
+  el.active = id;
+};
+
+/**
+ * Tabs estilo IDE: las tres extras opt-in juntas — botón "+", reordenar
+ * arrastrando, cerrar con × o con click central del ratón.
+ */
+export const IdeTabs: Story = {
+  name: 'IDE — new-tab + reorderable + middle-click',
+  parameters: { backgrounds: { default: 'dark' } },
+  render: (): TemplateResult => html`
+    <div style="background: var(--color-washi-950); padding: 2rem;">
+      <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">
+        Arrastra para reordenar · "+" añade pestaña · × o click central cierra
+      </p>
+      <lib-tabs
+        variant="card" dark closable new-tab reorderable active="ide-a"
+        .items="${[
+          { id: 'ide-a', label: 'index.ts',  dirty: true },
+          { id: 'ide-b', label: 'app.tsx'                 },
+          { id: 'ide-c', label: 'utils.ts',  dirty: true },
+        ] as TabItem[]}"
+        @ui-lib-tab-close="${_onTabClose}"
+        @ui-lib-tab-reorder="${_onTabReorder}"
+        @ui-lib-tab-new="${_onTabNew}"
+      >
+        <div slot="ide-a"><p style="font-size: var(--text-sm); color: rgba(250,247,244,.35); padding-top: 0.75rem;">Punto de entrada.</p></div>
+        <div slot="ide-b"><p style="font-size: var(--text-sm); color: rgba(250,247,244,.35); padding-top: 0.75rem;">Componente raíz.</p></div>
+        <div slot="ide-c"><p style="font-size: var(--text-sm); color: rgba(250,247,244,.35); padding-top: 0.75rem;">Utilidades compartidas.</p></div>
       </lib-tabs>
     </div>
   `,
