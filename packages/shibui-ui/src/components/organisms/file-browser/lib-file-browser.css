@@ -1,0 +1,186 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-FILE-BROWSER — Shibui UI
+   Contexto  : app/desktop
+   Coverage  : semantic — consume tokens semánticos, katachi-aware
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .fb-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: var(--lib-space-sm);
+    font-family: var(--lib-font-mono, "DM Mono", monospace);
+  }
+
+  /* ─── Barra de navegación ────────────────────────────── */
+
+  .fb-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-sm);
+    padding-bottom: var(--lib-space-sm);
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .fb-up {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 2px 4px;
+    background: none;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: color 120ms ease, background 120ms ease;
+
+    &:hover:not(:disabled) {
+      color: var(--text-primary);
+      background: var(--bg-elevated);
+    }
+
+    &:disabled {
+      color: var(--text-muted);
+      cursor: default;
+      opacity: 0.5;
+    }
+  }
+
+  .fb-path {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+  }
+
+  /* ─── Lista ──────────────────────────────────────────── */
+
+  .fb-list {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── Fila ───────────────────────────────────────────── */
+
+  .fb-row {
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-sm);
+    padding: 0.35rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: background 120ms ease;
+
+    &:hover,
+    &:focus-visible {
+      background: var(--bg-elevated);
+    }
+
+    &:focus-visible {
+      box-shadow: inset 0 0 0 1px var(--border-default);
+    }
+  }
+
+  .fb-row-icon {
+    flex-shrink: 0;
+    color: var(--text-muted);
+  }
+
+  /* Carpetas: icono acentuado para distinguir de ficheros. */
+  .fb-row[data-dir="true"] .fb-row-icon {
+    color: var(--text-accent, var(--text-primary));
+  }
+
+  .fb-row-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* Contraste alto: nombre siempre legible (fix del problema reportado). */
+    color: var(--text-primary);
+  }
+
+  /* Los ficheros se atenúan ligeramente frente a las carpetas,
+     pero manteniendo legibilidad (secondary, no muted). */
+  .fb-row[data-dir="false"] .fb-row-name {
+    color: var(--text-secondary);
+  }
+
+  .fb-row-size {
+    flex-shrink: 0;
+    font-size: 0.55rem;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ─── Densidad compact (gadget) ──────────────────────── */
+
+  .fb-root[data-size="compact"] {
+    .fb-row {
+      padding: 0.22rem 0.3rem;
+    }
+
+    .fb-row-name {
+      font-size: 0.65rem;
+    }
+
+    .fb-row-size {
+      font-size: 0.5rem;
+    }
+  }
+
+  .fb-root[data-size="default"] {
+    .fb-row-name {
+      font-size: 0.72rem;
+    }
+  }
+
+  /* ─── Estados ────────────────────────────────────────── */
+
+  .fb-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: var(--lib-space-md);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+  }
+
+  .fb-error {
+    color: var(--text-danger, oklch(62% 0.19 25deg));
+    justify-content: flex-start;
+    padding: var(--lib-space-sm);
+  }
+
+  /* ─── KATACHI · ambient context ──────────────────────
+     Tokens semánticos (--text-primary, --text-secondary,
+     --text-muted, --text-accent, --bg-elevated,
+     --border-subtle, --border-default) heredados del
+     ancestro data-katachi — sin override propio.
+     ────────────────────────────────────────────────── */
+}
