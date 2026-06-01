@@ -2,6 +2,8 @@
 
 Dashboard de escritorio para monitorización del sistema y gestión de ficheros, construido con Tauri 2 + React 19 y el sistema de diseño Shibui UI.
 
+> ⚠️ **Aplicación de uso personal.** Es una herramienta privada de un solo usuario (el autor del proyecto), no un producto para distribuir. Esto explica varias decisiones de diseño: login con contraseña local en vez de auth real, sin roles ni multiusuario, sin backend remoto ni telemetría, y un "macro entorno" multi-ventana pensado para el setup de monitores concreto del autor. No la trates como software de cara al público.
+
 ---
 
 ## Stack

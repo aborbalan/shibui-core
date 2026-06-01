@@ -55,3 +55,7 @@ const { isAuthenticated, login, logout } = useAuth();
 ## Nota de seguridad
 
 Esta capa es **protección de acceso ligera** para una app de escritorio single-user. No implementa cifrado, tokens con expiración, ni comunicación con ningún servidor. Es suficiente para evitar acceso accidental; no es adecuada para escenarios multi-usuario o datos sensibles en red.
+
+> ⚠️ **Esto es intencionado.** La app es de **uso personal** (un solo usuario, su propia máquina). La contraseña hardcoded y la ausencia de auth real no son un descuido pendiente de arreglar: son la decisión correcta para este contexto. No conviertas esto en un sistema de login "de verdad" salvo que el propósito de la app cambie.
+
+> Ojo: la gestión de **ventanas** del macro entorno vive en `windows.ts` (no documentado aparte por ser un único fichero pequeño); `App.tsx` lo usa para enrutar cada ventana por su label de Tauri.
