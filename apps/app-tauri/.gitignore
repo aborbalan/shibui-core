@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Rust build artifacts (cargo genera target/ en core/ y en el workspace root)
+target
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
