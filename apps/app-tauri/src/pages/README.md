@@ -27,7 +27,8 @@ Cada subcarpeta es una **pantalla** (una ruta) de la app. Las rutas se conectan 
 
 ### `workspace/`
 - `index.tsx` → barra de tabs superior que conmuta entre el explorador de ficheros y el visualizador de git. Los dos paneles se mantienen montados (uno oculto) para no perder estado al cambiar de tab.
-- `GitGraphPanel.tsx` → visor de git a pantalla completa; usa el comando `get_git_log` y el web component `<lib-git-graph>`.
+- **Conectado al servicio de proyecto** (`useProject`, ver [`../core/README.md`](../core/README.md)): ambos paneles apuntan a `project.path`. El explorador muestra un botón "abrir proyecto" que fija la carpeta navegada como proyecto activo, y los tabs llevan un chip con el nombre + rama git del proyecto abierto.
+- `GitGraphPanel.tsx` → visor de git a pantalla completa; recibe `repoPath` del proyecto (cae al HOME si no hay proyecto). Usa `get_git_log` y el web component `<lib-git-graph>`.
 - Es la pantalla inicial de la ventana `secondary` (ver [`../core/windows.ts`](../core/) y el `WindowInitializer` de `../App.tsx`).
 
 ### `section-placeholder/`
