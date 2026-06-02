@@ -10,11 +10,11 @@ interface EducationSectionProps {
     languages: LanguageDto[];
 }
 
-const LEVEL_VARIANT: Record<string, 'default' | 'accent' | 'celadon' | 'dark'> = {
+const LEVEL_VARIANT: Record<string, 'default' | 'accent' | 'info' | 'strong'> = {
     Nativo: 'accent',
-    Profesional: 'celadon',
+    Profesional: 'info',
     Intermedio: 'default',
-    Básico: 'dark',
+    Básico: 'strong',
 };
 
 export const EducationSection: React.FC<EducationSectionProps> = ({ education, languages }) => {
@@ -34,7 +34,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
             {/* ── Educación ── */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
                 <div>
-                    <LibEyebrow color="dark" size="sm" style={{ display: 'inline-flex', marginBottom: '1rem' } as React.CSSProperties}>
+                    <LibEyebrow tone="accent" size="sm" style={{ display: 'inline-flex', marginBottom: '1rem' } as React.CSSProperties}>
                         Educación · Formation
                     </LibEyebrow>
                     <h2
@@ -122,7 +122,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
             {/* ── Idiomas ── */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
                 <div>
-                    <LibEyebrow color="dark" size="sm" style={{ display: 'inline-flex', marginBottom: '1rem' } as React.CSSProperties}>
+                    <LibEyebrow tone="accent" size="sm" style={{ display: 'inline-flex', marginBottom: '1rem' } as React.CSSProperties}>
                         Idiomas · Languages
                     </LibEyebrow>
                     <h2
@@ -146,7 +146,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                 {/* Language list */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                     {sortedLang.map((lang) => {
-                        const badgeVariant = LEVEL_VARIANT[lang.level] ?? 'dark';
+                        const badgeVariant = LEVEL_VARIANT[lang.level] ?? 'strong';
                         return (
                             <div
                                 key={lang.id}

@@ -17,7 +17,7 @@ export const PhilosophyHero: React.FC = () => {
         tag="h1"
         centered
       >
-        <lib-eyebrow slot="eyebrow" color="kaki" line="both" size="sm">
+        <lib-eyebrow slot="eyebrow" tone="accent" line="both" size="sm">
           Filosofía de Diseño
         </lib-eyebrow>
       </lib-display-heading>

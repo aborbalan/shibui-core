@@ -2,7 +2,7 @@ import React from 'react';
 import { LibFooter } from '@shibui-ui/ui/react';
 import { FooterColumn, FooterLink } from '@shibui-ui/ui';
 
-type FooterVariant = 'social' | 'accordion' | 'kintsugi' | 'glitch' | "dark";
+type FooterVariant = 'social' | 'accordion' | 'inverse' | 'glitch' | 'celadon' | 'sabi' | 'shizen';
 
 interface FooterProps {
   variant?: FooterVariant;
@@ -76,7 +76,7 @@ const GLITCH_NAV_LINKS: FooterLink[] = [
 ];
 
 export const Footer: React.FC<FooterProps> = ({
-  variant      = 'dark',
+  variant      = 'celadon',
   brandName    = 'shibui',
   brandKanji   = '渋い',
   brandSub     = 'Design System · Zaragoza',

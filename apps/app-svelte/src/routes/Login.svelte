@@ -25,7 +25,7 @@
 <lib-background variant="ash-grid">
   <div class="login-wrapper">
     <div class="card-wrapper" class:is-shaking={shake}>
-      <lib-glass-card variant="kaki" intensity="high">
+      <lib-glass-card variant="warm" intensity="high">
         <form class="login-form" onsubmit={onFormSubmit}>
 
           <div class="brand">

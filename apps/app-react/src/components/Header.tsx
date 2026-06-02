@@ -19,7 +19,7 @@ export interface DropdownItem {
 export interface HeaderAction {
   label: string;
   href?: string;
-  variant?: 'kaki' | 'outline' | 'ghost' | 'kintsugi' | 'glitch';
+  variant?: 'accent' | 'secondary' | 'ghost';
 }
 
 export type HeaderVariant =
@@ -27,15 +27,16 @@ export type HeaderVariant =
   | 'dark'
   | 'centered'
   | 'transparent'
-  | 'kintsugi'
-  | 'glitch'
   | 'mega'
   | 'minimal'
   | 'shrink'
-  | 'app-bar';
+  | 'app-bar'
+  | 'celadon'
+  | 'sabi'
+  | 'shizen';
 
 export interface ShibuiHeaderProps {
-  /** Variante visual del header. Default: 'kintsugi' */
+  /** Variante visual del header. Default: 'celadon' */
   variant?: HeaderVariant;
   /** Carácter del logo mark. Default: '渋' */
   logoMark?: string;
@@ -78,12 +79,12 @@ const DEFAULT_LINKS: NavLink[] = [
 ];
 
 const DEFAULT_ACTIONS: HeaderAction[] = [
-  { label: 'Empezar →', href: '#', variant: 'kintsugi' },
+  { label: 'Empezar →', href: '#', variant: 'accent' },
 ];
 
 // ─── Componente ───────────────────────────────────────────────────────────────
 export const ShibuiHeader: React.FC<ShibuiHeaderProps> = ({
-  variant = 'kintsugi',
+  variant = 'celadon',
   logoMark = '渋',
   brandName = 'shibui',
   brandTagline,

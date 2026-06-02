@@ -1,6 +1,6 @@
 <section class="experience-section">
   <div class="section-header">
-    <lib-eyebrow color="celadon" size="sm" class="eyebrow">Experiencia · Work History</lib-eyebrow>
+    <lib-eyebrow tone="accent" size="sm" class="eyebrow">Experiencia · Work History</lib-eyebrow>
     <lib-display-heading
       tag="h2"
       size="sm"
@@ -35,7 +35,7 @@
           @if (item.tags.length > 0) {
             <div class="tags">
               @for (tag of item.tags; track tag) {
-                <lib-badge variant="dark">{{ tag }}</lib-badge>
+                <lib-badge variant="strong">{{ tag }}</lib-badge>
               }
             </div>
           }
