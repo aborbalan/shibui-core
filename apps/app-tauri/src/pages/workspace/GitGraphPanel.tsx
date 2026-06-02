@@ -11,12 +11,19 @@ interface GitCommit {
   refs: string[];
 }
 
+interface GitGraphPanelProps {
+  /** Ruta del repositorio a visualizar. Si se omite, usa el HOME del usuario. */
+  repoPath?: string;
+}
+
 /**
  * Vista de git a pantalla completa para el workspace. Reutiliza el comando
- * Rust `get_git_log` y pinta el web component `<lib-git-graph>`. Permite
- * apuntar a cualquier repositorio escribiendo su ruta (por defecto, el HOME).
+ * Rust `get_git_log` y pinta el web component `<lib-git-graph>`.
+ *
+ * La ruta llega del servicio de proyecto (`repoPath`); si no hay proyecto
+ * abierto, cae al HOME. El input permite apuntar a otro repo puntualmente.
  */
-export function GitGraphPanel() {
+export function GitGraphPanel({ repoPath: repoProp }: GitGraphPanelProps = {}) {
   const graphRef = useRef<HTMLElement>(null);
   const [repoPath, setRepoPath] = useState<string>('');
   const [draftPath, setDraftPath] = useState<string>('');
@@ -39,15 +46,16 @@ export function GitGraphPanel() {
     }
   }, []);
 
+  // La ruta efectiva: la del proyecto (prop) o, si no hay, el HOME.
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
-        const home = await invoke<string>('get_home_dir');
+        const path = repoProp ?? (await invoke<string>('get_home_dir'));
         if (cancelled) return;
-        setRepoPath(home);
-        setDraftPath(home);
-        await load(home);
+        setRepoPath(path);
+        setDraftPath(path);
+        await load(path);
       } catch (e) {
         if (!cancelled) {
           setError(String(e));
@@ -58,7 +66,7 @@ export function GitGraphPanel() {
     return () => {
       cancelled = true;
     };
-  }, [load]);
+  }, [load, repoProp]);
 
   const submitPath = () => {
     const next = draftPath.trim();

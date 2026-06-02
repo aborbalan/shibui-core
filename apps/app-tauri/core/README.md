@@ -28,7 +28,8 @@ core/
     ├── lib.rs          ← re-exporta los módulos: pub mod system; pub mod fs; pub mod git;
     ├── system.rs       ← métricas de hardware (CPU, RAM, disco, red) con la crate `sysinfo`
     ├── fs.rs           ← listar directorios y obtener el home del usuario
-    └── git.rs          ← ejecuta `git log` y parsea el historial de commits
+    ├── git.rs          ← ejecuta `git log` y parsea el historial de commits
+    └── project.rs      ← detecta metadata de un proyecto (tipo + rama git)
 ```
 
 ---
@@ -40,6 +41,7 @@ core/
 | `system.rs` | `get_system_info`, `get_cpu_detail`, `get_memory_detail`, `get_disk_detail`, `get_network_detail` | Leer el estado del hardware. Lo consumen los gadgets de monitorización. |
 | `fs.rs` | `list_dir`, `home_dir` | Navegar el sistema de ficheros. Lo consume el explorador de archivos. |
 | `git.rs` | `get_git_log` | Leer el historial de un repositorio git. Lo consume el visualizador de git. |
+| `project.rs` | `get_project_info` | Detectar metadata de un proyecto (tipo por marcadores + rama git). Lo consume el servicio de proyecto del frontend. |
 
 Las **estructuras de datos** que devuelven (p. ej. `SystemInfo`, `FsEntry`, `GitCommit`) están documentadas con detalle en [`../src-tauri/README.md`](../src-tauri/README.md).
 
