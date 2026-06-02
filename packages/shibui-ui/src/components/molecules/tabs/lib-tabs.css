@@ -823,6 +823,59 @@
   }
 
 
+  /* ────────────────────────────────────────
+     EXTRAS IDE (opt-in)
+     ──────────────────────────────────────── */
+
+  /* Botón "+" de nueva pestaña */
+  .tb-new {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    margin-left: var(--lib-space-xs);
+    align-self: center;
+    border-radius: 2px;
+    color: var(--lib-comp-fg-muted, var(--text-muted));
+    background: none;
+    cursor: pointer;
+    transition:
+      color var(--duration-base) var(--ease-out),
+      background var(--duration-base) var(--ease-out);
+  }
+
+  .tb-new:hover {
+    color: var(--lib-comp-fg, var(--text-primary));
+    background: var(--lib-comp-bg-subtle, var(--bg-surface));
+  }
+
+  .tb-new:focus-visible {
+    outline: 2px solid var(--color-kaki-400);
+    outline-offset: -2px;
+  }
+
+  .tb-new lib-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Tab en arrastre (reorder) */
+  .tb-tab.is-dragging {
+    opacity: .45;
+    cursor: grabbing;
+  }
+
+  :host([reorderable]) .tb-tab {
+    cursor: grab;
+  }
+
+  :host([reorderable]) .tb-tab.is-active {
+    cursor: grab;
+  }
+
+
   /* ─── KATACHI · ambient context ──────────────────────────────
      .tb-tab base usa --color-washi-{400, 700, 900} hardcoded.
      Mapeo a semantic tokens:
@@ -901,6 +954,22 @@
     /* Underline border-bottom: washi-200 hardcoded → --border-subtle
        (en kintsugi = oklch(kaki-400 / 0.20), dorado sutil) */
     :host([variant="underline"]):host-context([data-katachi="kintsugi"]) .tb-list {
+      border-bottom-color: var(--border-subtle);
+    }
+
+    /* Celadon: ink bar → vena jade + glow frío */
+    :host-context([data-katachi="celadon"]) .tb-ink {
+      background: linear-gradient(
+        90deg,
+        var(--color-celadon-600)  0%,
+        var(--color-celadon-400) 40%,
+        var(--color-celadon-300) 65%,
+        var(--color-celadon-400) 100%
+      );
+      box-shadow: 0 0 8px oklch(58.33% 0.068 171.21deg / 0.45);
+    }
+
+    :host([variant="underline"]):host-context([data-katachi="celadon"]) .tb-list {
       border-bottom-color: var(--border-subtle);
     }
   }

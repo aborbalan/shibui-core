@@ -1550,6 +1550,34 @@
 
 ---
 
+### `lib-file-browser` · ✅
+
+> **Coverage: 🟢 semantic.** Explorador de ficheros de escritorio (datos puros).
+> Nombres de carpeta consumen `--text-primary` (contraste alto), ficheros `--text-secondary`,
+> iconos de carpeta `--text-accent` y ficheros `--text-muted`. Barra de navegación y filas
+> usan `--bg-elevated` (hover/focus) y `--border-subtle`/`--border-default`. Todos los tokens
+> se reescriben con cada katachi — sin override propio. Sin efectos glass/spotlight.
+
+#### Superficies
+
+| Superficie | Estado | Notas |
+|------------|--------|-------|
+| light      | ✅      | text-primary/secondary sobre bg claro |
+| dark       | ✅      | nombres legibles sobre bg oscuro (fix de contraste) |
+| kintsugi   | ✅      | hereda tokens semánticos del override |
+| glitch     | ✅      | terminal: phosphor sobre fondo oscuro |
+| celadón    | ✅      | tono jade vía override |
+| washi      | ✅      | papel envejecido vía override |
+
+#### Efectos
+
+| Efecto | Superficie | Estado | Notas |
+|--------|------------|--------|-------|
+| glass  | —          | `—`    | No aplica: contenedor de lista plano |
+| spotlight | —       | `—`    | No aplica |
+
+---
+
 ### `lib-gadget-frame` · ✅
 
 > **Coverage: 🟢 semantic.** Dos variantes de superficie:
@@ -2060,3 +2088,38 @@ selectores son **mutuamente exclusivos por construcción**, no por precedencia.
 | **F — Excluir** | No aplica o incompatible | `lib-burger-button` · `lib-text-glitch` · `lib-code-block` · variante `glitch` de header · variante `kintsugi` de spinner |
 
 **Listos sin trabajo adicional:** A + B + C = 63 / 77 (82 %) · **Gap menor:** D = 5 (7 %) · **Pendiente:** E = 4 (5 %)
+
+---
+
+## Decoraciones Celadon (青磁) — Fase 3
+
+> Capa de decoraciones sobre el katachi **celadon**, que pasó a ser un contexto
+> **oscuro** (cerámica jade, `family: dark`). Origen: `celadon-effects-spec.md` +
+> prototipo `celadon-taxonomy.html`.
+
+**Tokens** — `_palette.css` (`--color-celadon-glint/-opal/-250`, `--celadon-shadow-deep`,
+`--celadon-water(-deep)`) · `_effects.css` (`--lib-celadon-glaze/-depth/-mist/-iridescence`).
+
+**Módulo estructural** — `shared/celadon-decorations.css` (clases `.fx-*`, importado por
+`?inline` sólo en los pilotos) + `shared/celadon-generative.ts` (craquelé y condensación
+generativos, portados del prototipo) + `shared/celadon-decorations.ts` (helper de capas).
+
+**Activación**
+- **Ambiental** (sin prop, vía `data-katachi="celadon"`): tema oscuro + **sombra jade** (`--shadow-*`). Alcanza a todos los componentes.
+- **Opt-in capas** (prop `decoration`): `lib-card` (Surface), `lib-header` classic-family (Bar).
+- **Opt-in contexto** (hover, sin prop): `lib-button`, `lib-chip`, `lib-status-dot`.
+
+| Decoración | Activación | Pilotos |
+|---|---|---|
+| Sombra jade | ambiental | todos |
+| Craquelure · Condensation · Mist · Depth | `decoration` | lib-card |
+| Tide · Condensation · Depth | `decoration` | lib-header (classic-family), lib-footer (`variant="celadon"`) |
+| Reflejo · Iridescencia | contexto hover | lib-button |
+| Iridescencia | contexto hover | lib-chip, lib-status-dot |
+| Meniscus | `decoration` | (disponible en cualquier superficie decorada) |
+
+**Gate**: las capas `.fx-*` sólo se renderizan bajo `data-katachi="celadon"` (token
+`--lib-celadon-fx-display`, fallback `none`); `lib-footer[variant="celadon"]` lo habilita
+localmente al ser un contexto celadon en sí mismo.
+**A11y**: `prefers-reduced-motion` desactiva marea, niebla, reflejo y shimmer de menisco.
+**Pendiente**: regenerar baselines de regresión visual (deliberado).

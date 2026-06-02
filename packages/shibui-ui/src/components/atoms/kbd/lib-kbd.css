@@ -190,6 +190,15 @@
         0 1px 0 0 oklch(61.85% 0.149 48.72deg / 0.60),
         inset 0 1px 0 0 oklch(61.85% 0.149 48.72deg / 0.10);
     }
+
+    /* Celadon: tecla con anillo + relieve jade frío */
+    :host-context([data-katachi="celadon"]) .kbd {
+      box-shadow:
+        0 0 0 1px oklch(58.33% 0.068 171.21deg / 0.45),
+        0 0 8px oklch(58.33% 0.068 171.21deg / 0.12),
+        0 1px 0 0 oklch(58.33% 0.068 171.21deg / 0.60),
+        inset 0 1px 0 0 oklch(58.33% 0.068 171.21deg / 0.10);
+    }
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

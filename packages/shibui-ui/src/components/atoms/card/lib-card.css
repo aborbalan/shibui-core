@@ -356,4 +356,14 @@
     margin-top: var(--lib-space-xl);
   }
 
+  /* ── Decoraciones celadon ─────────────────────────────────
+     Las capas .fx-* (en celadon-decorations.css) se posicionan
+     dentro de la card. isolation:isolate contiene el
+     mix-blend-mode:multiply de la niebla a la propia card en vez
+     de mezclarse con el fondo de la página. El contenido ya va a
+     z-index:2, por encima de las capas estáticas. */
+  .card.has-decoration {
+    isolation: isolate;
+  }
+
 }

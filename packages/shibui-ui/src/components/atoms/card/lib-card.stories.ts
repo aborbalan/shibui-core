@@ -9,6 +9,7 @@ type LibCardArgs = {
   variant: 'default' | 'inverse' | 'accent' | 'featured';
   accentColor: string;
   kanji: string;
+  decoration: string;
 };
 
 const meta: Meta<LibCardArgs> = {
@@ -29,10 +30,15 @@ const meta: Meta<LibCardArgs> = {
       control: 'text',
       description: 'Carácter kanji decorativo de fondo',
     },
+    decoration: {
+      control: 'text',
+      description:
+        'Decoraciones celadon opt-in, separadas por espacio (craquelure · condensation · depth · mist · reflejo · iridescence). Pensadas para data-katachi="celadon".',
+    },
   },
   render: (args): TemplateResult => html`
     <div style="width:320px;padding:var(--lib-space-xl);background:${args.variant === 'inverse' ? 'var(--color-washi-950,#120E0A)' : 'var(--color-washi-100,#F2EDE6)'};">
-      <lib-card variant="${args.variant}" accent-color="${args.accentColor}" kanji="${args.kanji}">
+      <lib-card variant="${args.variant}" accent-color="${args.accentColor}" kanji="${args.kanji}" decoration="${args.decoration}">
         <span slot="tag">Etiqueta</span>
         <h2 slot="title">Título de la card</h2>
         <p>Contenido de ejemplo para visualizar el componente con texto representativo.</p>
@@ -55,6 +61,7 @@ export const Playground: Story = {
     variant:     'default',
     accentColor: '',
     kanji:       '渋',
+    decoration:  '',
   },
 };
 
@@ -350,6 +357,53 @@ export const TerminalContext: Story = {
         <h2 slot="title">Inverse</h2>
         <p>Fondo invertido: --bg-inverse en terminal es el verde phosphor 300.</p>
         <div slot="footer"><span>inverse + drift</span></div>
+      </lib-card>
+    </div>
+  `,
+  parameters: { layout: 'fullscreen' },
+};
+
+/* ── Celadon · decoraciones opt-in ──────────────────────── */
+/* Las decoraciones celadon son capas .fx-* opt-in vía la prop
+   `decoration`. Pensadas para data-katachi="celadon" (fondo jade
+   pálido). La sombra jade es ambiental (llega por el katachi). */
+
+export const CeladonDecorations: Story = {
+  name: 'Celadon · decoraciones',
+  render: (): TemplateResult => html`
+    <div data-katachi="celadon" style="
+      display: grid;
+      grid-template-columns: repeat(2, 320px);
+      gap: var(--lib-space-xl);
+      padding: var(--lib-space-xl);
+      background: var(--bg-base);
+    ">
+      <lib-card variant="default" decoration="craquelure mist depth reflejo" kanji="青">
+        <span slot="tag">Surface · completo</span>
+        <h2 slot="title">Craquelé + niebla</h2>
+        <p>Combinación rica para superficies grandes: craquelé cerámico, bruma jade que deriva, profundidad en la base y reflejo que barre.</p>
+        <div slot="footer"><span>craquelure · mist · depth · reflejo</span></div>
+      </lib-card>
+
+      <lib-card variant="default" decoration="craquelure" kanji="氷">
+        <span slot="tag">Craquelure</span>
+        <h2 slot="title">Ice-crackle</h2>
+        <p>Red de grietas estática: fisura jade oscura + realce claro. El centro queda despejado para no competir con el contenido.</p>
+        <div slot="footer"><span>decoration="craquelure"</span></div>
+      </lib-card>
+
+      <lib-card variant="default" decoration="condensation depth" kanji="露">
+        <span slot="tag">Condensación</span>
+        <h2 slot="title">Micro-gotas frías</h2>
+        <p>Gotas dispersas como lentes refractivas sobre el vidriado, ancladas por la masa de agua de la base.</p>
+        <div slot="footer"><span>condensation · depth</span></div>
+      </lib-card>
+
+      <lib-card variant="default" decoration="mist reflejo" kanji="霧">
+        <span slot="tag">Niebla + reflejo</span>
+        <h2 slot="title">Bruma viva</h2>
+        <p>Bruma jade que oscurece levemente (multiply) y deriva, con la banda de luz del reflejo barriendo la superficie.</p>
+        <div slot="footer"><span>mist · reflejo</span></div>
       </lib-card>
     </div>
   `,

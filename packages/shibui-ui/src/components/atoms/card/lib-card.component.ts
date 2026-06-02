@@ -1,11 +1,13 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import sharedTokens from "../../../styles/shared/tokens.css?inline";
+import celadonDecorations from "../../../styles/shared/celadon-decorations.css?inline";
 import cardStyles from "./lib-card.css?inline";
 import { cardTemplate } from "./lib-card.html";
 import type { LibCardVariant } from "./lib-card.types";
 
 export type { LibCardVariant } from "./lib-card.types";
+export type { CeladonDecoration } from "../../../styles/shared/celadon-decorations";
 
 /**
  * @element lib-card
@@ -25,6 +27,9 @@ export type { LibCardVariant } from "./lib-card.types";
  * @attr {string}  accent-color - Color del borde izquierdo (solo variante `accent`).
  * @attr {string}  kanji        - Kanji decorativo de fondo (ej: "渋", "金", "間").
  * @attr {boolean} clickable    - Emite `ui-lib-card-click` al hacer clic.
+ * @attr {string}  decoration   - Decoraciones celadon opt-in, separadas por espacio
+ *   (ej: "craquelure mist depth reflejo"). Pensadas para `data-katachi="celadon"`.
+ *   Valores: craquelure · condensation · depth · mist · reflejo · iridescence.
  *
  * @slot tag    - Etiqueta o metadata en el header (fuente mono, uppercase).
  * @slot title  - Título principal de la card.
@@ -48,6 +53,9 @@ export class LibCard extends LitElement {
       ${unsafeCSS(sharedTokens)}
     `,
     css`
+      ${unsafeCSS(celadonDecorations)}
+    `,
+    css`
       ${unsafeCSS(cardStyles)}
     `,
   ];
@@ -65,12 +73,17 @@ export class LibCard extends LitElement {
   @property({ type: Boolean, reflect: true })
   clickable = false;
 
+  /** Decoraciones celadon opt-in, separadas por espacio (ej: "craquelure mist depth"). */
+  @property({ type: String, reflect: true })
+  decoration = "";
+
   override render(): TemplateResult {
     return cardTemplate({
       variant: this.variant,
       accentColor: this.accentColor,
       kanji: this.kanji,
       clickable: this.clickable,
+      decoration: this.decoration,
       onClick: (e: MouseEvent) => this._onClick(e),
     });
   }

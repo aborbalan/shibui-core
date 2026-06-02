@@ -2,6 +2,10 @@
 
 El backend se divide en dos piezas: `src-tauri/src/lib.rs` (puente de comandos Tauri) y la crate `core/` (lógica del sistema, reutilizable e independiente de Tauri).
 
+> ⚠️ **App de uso personal (single-user).** Los comandos exponen información del sistema y de ficheros sin capas de permisos por rol porque la app la usa una sola persona en su propia máquina. No añadir aquí lógica pensada para terceros.
+
+> Documentación relacionada: permisos de ventana en [`capabilities/README.md`](capabilities/README.md) · lógica del sistema en [`../core/README.md`](../core/README.md).
+
 ---
 
 ## Estructura
@@ -37,6 +41,8 @@ Todos se invocan desde el frontend con `invoke('<nombre>', { ...args })` de `@ta
 | `get_network_detail` | `system::get_network_detail()` | `Vec<NetworkInterface>` | RX/TX por interfaz |
 | `list_dir` | `fs::list_dir(path)` | `Result<Vec<FsEntry>, String>` | Contenido de un directorio |
 | `get_home_dir` | `fs::home_dir()` | `Result<String, String>` | Directorio home del usuario |
+| `get_git_log` | `git::get_git_log(path, max_count)` | `Result<Vec<GitCommit>, String>` | Historial de commits |
+| `get_project_info` | `project::get_project_info(path)` | `Result<ProjectInfo, String>` | Metadata del proyecto (tipo, rama git) |
 
 ---
 
@@ -104,6 +110,20 @@ pub struct FsEntry {
     pub size: Option<u64>,   // None para directorios
 }
 ```
+
+### `ProjectInfo`
+```rust
+pub struct ProjectInfo {
+    pub path: String,             // ruta raíz absoluta
+    pub name: String,             // último segmento de la ruta
+    pub kinds: Vec<String>,       // tipos detectados: ["node", "rust", "git"...]
+    pub git_branch: Option<String>, // None si no es repo / detached HEAD
+    pub exists: bool,
+}
+```
+Snapshot calculado al abrir. `kinds` se deriva de ficheros marcadores
+(`package.json`→node, `Cargo.toml`→rust, `.git`→git…). Lo consume el
+servicio de proyecto del frontend (ver `src/core/project/`).
 
 ---
 

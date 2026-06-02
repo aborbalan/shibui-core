@@ -2,7 +2,11 @@
 
 App de escritorio nativa (Windows/macOS/Linux) construida con Tauri 2 y React 19. Actúa como panel personal de sistema: monitor de métricas hardware, explorador de ficheros y área de trabajo con gadgets redimensionables.
 
+> ⚠️ **Uso personal / single-user.** Esta app es una herramienta privada del autor, no un producto para distribuir. No introducir auth real, roles, multiusuario, backend remoto ni telemetría: el login con contraseña local hardcoded y la ausencia de esas capas son deliberados. El "macro entorno" multi-ventana está pensado para el setup multi-monitor del autor.
+
 > Requiere **Rust toolchain estable** (`rustup install stable`) además de Node + pnpm.
+
+> **Documentación por carpeta**: cada área tiene su `README.md` orientado a alguien junior — `src/`, `src/pages/`, `src/gadgets/`, `src/shell/`, `src/core/`, `src/hooks/`, `core/` (Rust), `src-tauri/` y `src-tauri/capabilities/`.
 
 ---
 

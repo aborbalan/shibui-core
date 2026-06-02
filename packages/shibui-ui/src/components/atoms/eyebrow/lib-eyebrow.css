@@ -318,6 +318,27 @@
             text-shadow: 0 0 12px oklch(61.85% 0.149 48.72deg / 0.35);
         }
 
+        /* Celadon — shimmer jade en la línea + glow frío en el texto */
+        :host-context([data-katachi="celadon"]) .eb::before,
+        :host([line="both"]):host-context([data-katachi="celadon"]) .eb::after {
+            background: linear-gradient(
+                90deg,
+                transparent               0%,
+                var(--color-celadon-600) 10%,
+                var(--color-celadon-300) 50%,
+                var(--color-celadon-400) 75%,
+                transparent              100%
+            );
+            background-size: 200% 100%;
+            animation:
+                eb-line-shimmer 3s linear infinite;
+            animation-play-state: var(--lib-effect-seam-play, paused);
+        }
+
+        :host-context([data-katachi="celadon"]) .eb {
+            text-shadow: 0 0 12px oklch(58.33% 0.068 171.21deg / 0.35);
+        }
+
     }
 
 }
