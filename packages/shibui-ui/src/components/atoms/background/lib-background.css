@@ -611,6 +611,21 @@
         background-size: 40px 40px, 40px 40px, auto;
     }
 
+    /* 46b · celadon-deep — 青磁深 dark celadon surface, jade tintado.
+       Más claro y verde que `celadon` (casi-negro) para que los acentos
+       de color del texto (kaki / celadon-green / texto claro) resalten. */
+    :host([variant="celadon-deep"]) .bg-base {
+        background-color: #0C1512;
+        background-image:
+            radial-gradient(ellipse 75% 60% at 30% 25%,
+                rgb(78, 148, 130, 0.14) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 50% at 80% 80%,
+                rgb(53, 113, 100, 0.10) 0%, transparent 60%),
+            linear-gradient(rgb(78, 148, 130, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(78, 148, 130, 0.04) 1px, transparent 1px);
+        background-size: auto, auto, 44px 44px, 44px 44px;
+    }
+
     /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
        GRADIENTS — Nuevos (47–49)
     ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
