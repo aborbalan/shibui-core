@@ -80,7 +80,8 @@
 > componente a una superficie dark global. No existen variantes de superficie palette-named
 > (`variant="kintsugi"` etc.). Los efectos katachi se activan vía `--lib-effect-ring`
 > (`box-shadow` en `.avatar__face`): anillo dorado + halo en kintsugi y ring brutal-mini en sabi.
-> El glaze ambiental de celadon (`--lib-celadon-glaze`) todavía **no** se consume.
+> Bajo `data-katachi="celadon"` consume `--lib-celadon-glaze` como barrido cerámico en hover
+> (`::after` recortado por el `overflow:hidden` de la cara), vía `:host-context()` como lib-button/lib-chip.
 
 #### Superficies
 
@@ -90,7 +91,7 @@
 | dark | `—` | Hereda tokens; `tone="inverse"` oscurece la cara pero no es variante surface |
 | kintsugi | ✅ | Anillo dorado + halo vía `--lib-effect-ring` (box-shadow en `.avatar__face`) |
 | glitch | 🔲 | Sin implementar |
-| celadón | 🟡 | `tone="cool"` cubre el caso de uso; glaze ambiental (`--lib-celadon-glaze`) pendiente |
+| celadón | ✅ | `tone="cool"` para la cara + glaze cerámico (`--lib-celadon-glaze`) en hover vía `:host-context()` |
 | washi | `—` | `tone="neutral"` es el default; cubre el caso de uso |
 
 #### Efectos
@@ -101,7 +102,7 @@
 | spotlight | — | `—` | No aplica: tamaño insuficiente para el efecto |
 | kintsugi-border | kintsugi | ✅ | Anillo dorado + halo vía `--lib-effect-ring` sobre el border (1px washi-300) |
 | shadow-brutal | sabi | ✅ | Ring brutal-mini (`2px 2px`) vía `--lib-effect-ring` en sabi |
-| celadon-glaze | celadón | 🔲 | Glaze cerámico (`--lib-celadon-glaze`) — pendiente (Tier A en la matriz celadon) |
+| celadon-glaze | celadón | ✅ | Glaze cerámico (`--lib-celadon-glaze`) en hover vía `:host-context([data-katachi="celadon"])` |
 | metal-texture | — | `—` | No aplica |
 
 ---
