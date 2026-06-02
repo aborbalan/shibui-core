@@ -36,14 +36,14 @@
     { id:'lang-0002', name:'Inglés',  level:'Profesional', order:1 },
   ];
 
-  const CATEGORY_VARIANT: Record<string,'default'|'accent'|'celadon'|'dark'|'warning'> = {
-    frontend: 'accent', expanding: 'warning', backend: 'celadon', architecture: 'default', testing: 'dark',
+  const CATEGORY_VARIANT: Record<string,'default'|'accent'|'info'|'strong'|'warning'> = {
+    frontend: 'accent', expanding: 'warning', backend: 'info', architecture: 'default', testing: 'strong',
   };
   const CATEGORY_KANJI: Record<string,string> = {
     frontend:'前', expanding:'拡', backend:'後', architecture:'構', testing:'試',
   };
-  const LEVEL_VARIANT: Record<string,'default'|'accent'|'celadon'|'dark'> = {
-    Nativo:'accent', Profesional:'celadon', Intermedio:'default', Básico:'dark',
+  const LEVEL_VARIANT: Record<string,'default'|'accent'|'info'|'strong'> = {
+    Nativo:'accent', Profesional:'info', Intermedio:'default', Básico:'strong',
   };
 
   function formatDate(ym: string): string {
@@ -79,7 +79,7 @@
 
     <div class="content-col">
       <div class="eyebrow-row">
-        <lib-eyebrow color="dark" size="sm">Perfil · About Me</lib-eyebrow>
+        <lib-eyebrow tone="accent" size="sm">Perfil · About Me</lib-eyebrow>
         <lib-badge variant="success" dot>Open to Work</lib-badge>
       </div>
 
@@ -101,7 +101,7 @@
   <!-- ── ExperienceSection ───────────────────────────────────────────────── -->
   <section class="exp-section">
     <div class="section-header">
-      <lib-eyebrow color="dark" size="sm" style="display:inline-flex;margin-bottom:var(--lib-space-md);">Experiencia · Work History</lib-eyebrow>
+      <lib-eyebrow tone="accent" size="sm" style="display:inline-flex;margin-bottom:var(--lib-space-md);">Experiencia · Work History</lib-eyebrow>
       <lib-display-heading tag="h2" size="sm" surface="dark" line1="Trayectoria" accent="profesional"></lib-display-heading>
     </div>
 
@@ -126,7 +126,7 @@
             {#if item.tags.length > 0}
               <div class="tags">
                 {#each item.tags as tag}
-                  <lib-badge variant="dark">{tag}</lib-badge>
+                  <lib-badge variant="strong">{tag}</lib-badge>
                 {/each}
               </div>
             {/if}
@@ -141,13 +141,13 @@
   <!-- ── SkillsSection ───────────────────────────────────────────────────── -->
   <section class="skills-section">
     <div class="section-header">
-      <lib-eyebrow color="dark" size="sm" style="display:inline-flex;margin-bottom:var(--lib-space-md);">Skills · Stack técnico</lib-eyebrow>
+      <lib-eyebrow tone="accent" size="sm" style="display:inline-flex;margin-bottom:var(--lib-space-md);">Skills · Stack técnico</lib-eyebrow>
       <lib-display-heading tag="h2" size="sm" surface="dark" line1="Herramientas" accent="del oficio"></lib-display-heading>
     </div>
 
     <div class="skills-grid">
       {#each SKILLS as group}
-        {@const variant = CATEGORY_VARIANT[group.category] ?? 'dark'}
+        {@const variant = CATEGORY_VARIANT[group.category] ?? 'strong'}
         {@const kanji   = CATEGORY_KANJI[group.category]  ?? '技'}
         <div class="skill-group">
           <div class="group-header">
@@ -170,7 +170,7 @@
   <section class="edu-section">
     <!-- Educación -->
     <div class="edu-col">
-      <lib-eyebrow color="dark" size="sm" style="display:inline-flex;margin-bottom:1rem;">Educación · Formation</lib-eyebrow>
+      <lib-eyebrow tone="accent" size="sm" style="display:inline-flex;margin-bottom:1rem;">Educación · Formation</lib-eyebrow>
       <h2 class="edu-heading">Base <em>académica</em></h2>
       {#each EDUCATION.sort((a,b) => a.order - b.order) as edu}
         <div class="edu-item">
@@ -184,10 +184,10 @@
 
     <!-- Idiomas -->
     <div class="edu-col">
-      <lib-eyebrow color="dark" size="sm" style="display:inline-flex;margin-bottom:1rem;">Idiomas · Languages</lib-eyebrow>
+      <lib-eyebrow tone="accent" size="sm" style="display:inline-flex;margin-bottom:1rem;">Idiomas · Languages</lib-eyebrow>
       <h2 class="edu-heading">Comunicación <em>global</em></h2>
       {#each LANGUAGES.sort((a,b) => a.order - b.order) as lang}
-        {@const v = LEVEL_VARIANT[lang.level] ?? 'dark'}
+        {@const v = LEVEL_VARIANT[lang.level] ?? 'strong'}
         <div class="lang-item">
           <span class="lang-name">{lang.name}</span>
           <lib-badge variant={v}>{lang.level}</lib-badge>

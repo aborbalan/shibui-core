@@ -43,7 +43,7 @@ export const PrinciplesSection: React.FC = () => {
           size="md"
           tag="h2"
         >
-          <lib-eyebrow slot="eyebrow" color="dark" size="sm">
+          <lib-eyebrow slot="eyebrow" tone="accent" size="sm">
             Principios de diseño
           </lib-eyebrow>
         </lib-display-heading>

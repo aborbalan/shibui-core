@@ -12,7 +12,7 @@
   ];
 
   const ACTIONS = [
-    { label: 'Empezar →', href: '#/componentes', variant: 'kintsugi' },
+    { label: 'Empezar →', href: '#/componentes', variant: 'accent' },
   ];
 
   onMount(async () => {
@@ -25,7 +25,7 @@
 
 <lib-header
   bind:this={headerEl}
-  variant="kintsugi"
+  variant="sabi"
   logo-mark="渋"
   brand-name="shibui"
   logo-href="#/"

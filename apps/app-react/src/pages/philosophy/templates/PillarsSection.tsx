@@ -37,7 +37,7 @@ export const PillarsSection: React.FC = () => {
           size="md"
           tag="h2"
         >
-          <lib-eyebrow slot="eyebrow" color="dark" size="sm">
+          <lib-eyebrow slot="eyebrow" tone="accent" size="sm">
             Los tres pilares
           </lib-eyebrow>
         </lib-display-heading>
