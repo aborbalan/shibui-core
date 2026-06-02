@@ -7,7 +7,6 @@ import { ExamplesModule } from './domain/examples/examples.module';
 import { UsersModule } from './domain/users/users.module';
 import { AboutModule } from './domain/about/about.module';
 import { TokensModule } from './domain/tokens/tokens.module';
-import { GitModule } from './domain/git/git.module';
 
 @Module({
   imports: [
@@ -17,7 +16,6 @@ import { GitModule } from './domain/git/git.module';
     ExamplesModule,
     AboutModule,
     TokensModule,
-    GitModule,
   ],
   controllers: [AppController],
   providers: [AppService],
