@@ -25,7 +25,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
         <section
             style={{
                 padding: 'clamp(2.5rem, 5vh, 4rem) 0',
-                borderTop: '1px solid rgba(255,255,255,0.05)',
+                borderTop: '1px solid var(--border-subtle)',
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 gap: 'clamp(2rem, 5vw, 4rem)',
@@ -44,7 +44,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                             fontWeight: 300,
                             letterSpacing: '-0.02em',
                             lineHeight: 1.15,
-                            color: 'rgba(250,247,244,0.65)',
+                            color: 'var(--text-primary)',
                             margin: 0,
                         }}
                     >
@@ -85,7 +85,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                                     fontFamily: 'var(--lib-font-display)',
                                     fontSize: '1.15rem',
                                     fontWeight: 400,
-                                    color: 'rgba(250,247,244,0.7)',
+                                    color: 'var(--text-primary)',
                                     margin: 0,
                                     letterSpacing: '-0.01em',
                                 }}
@@ -96,7 +96,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                                 style={{
                                     fontFamily: 'var(--lib-font-body)',
                                     fontSize: '0.82rem',
-                                    color: 'rgba(250,247,244,0.35)',
+                                    color: 'var(--text-muted)',
                                     lineHeight: 1.6,
                                     margin: 0,
                                 }}
@@ -108,7 +108,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                                     fontFamily: 'var(--lib-font-mono)',
                                     fontSize: '0.6rem',
                                     letterSpacing: '0.12em',
-                                    color: 'rgba(250,247,244,0.18)',
+                                    color: 'var(--text-muted)',
                                     margin: 0,
                                 }}
                             >
@@ -132,7 +132,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                             fontWeight: 300,
                             letterSpacing: '-0.02em',
                             lineHeight: 1.15,
-                            color: 'rgba(250,247,244,0.65)',
+                            color: 'var(--text-primary)',
                             margin: 0,
                         }}
                     >
@@ -155,8 +155,8 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                                     alignItems: 'center',
                                     justifyContent: 'space-between',
                                     padding: '0.75rem 1rem',
-                                    background: 'rgba(255,255,255,0.02)',
-                                    border: '1px solid rgba(255,255,255,0.05)',
+                                    background: 'var(--bg-surface)',
+                                    border: '1px solid var(--border-subtle)',
                                 }}
                             >
                                 <span
@@ -164,7 +164,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                                         fontFamily: 'var(--lib-font-display)',
                                         fontSize: '1.1rem',
                                         fontWeight: 300,
-                                        color: 'rgba(250,247,244,0.6)',
+                                        color: 'var(--text-secondary)',
                                         letterSpacing: '-0.01em',
                                     }}
                                 >
