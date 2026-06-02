@@ -7,7 +7,28 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type LibAvatarStoryArgs = Pick<LibAvatar, 'src' | 'name' | 'size' | 'shape' | 'tone'>;
 
-const DEMO_IMG = 'https://i.pravatar.cc/200?img=32';
+/**
+ * Retrato demo embebido como SVG `data-URI` — sin dependencia de red.
+ * Antes se usaba `https://i.pravatar.cc/200`, un servicio externo lento/
+ * inestable: cuando no cargaba (offline, red bloqueada o petición colgada
+ * sin disparar `error`) el fallback a iniciales no saltaba y las stories de
+ * imagen quedaban en blanco. Un `data-URI` es determinista: funciona offline,
+ * en el build estático y en los snapshots de regresión visual.
+ */
+const DEMO_AVATAR_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EBE3D9"/>
+      <stop offset="1" stop-color="#CFC1B0"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#g)"/>
+  <circle cx="100" cy="206" r="80" fill="#A36B43"/>
+  <circle cx="100" cy="84" r="44" fill="#E8C39B"/>
+  <path d="M58 88 Q58 40 100 40 Q142 40 142 88 Q120 64 100 64 Q80 64 58 88 Z" fill="#3E3127"/>
+</svg>`;
+
+const DEMO_IMG = `data:image/svg+xml,${encodeURIComponent(DEMO_AVATAR_SVG)}`;
 
 const meta: Meta<LibAvatarStoryArgs> = {
   title: 'Universal/Content/Avatar',
