@@ -51,7 +51,7 @@ Ideales para componer interfaces celadon. Tienen variante celadon propia y funci
 | `lib-kbd` | `variant="celadon"` | ✅ `variant="dark"` | Tecla jade + variante dark para fondo oscuro |
 | `lib-reading-progress` | `tone="celadon"` | ✅ | Overlay — surface-agnostic por naturaleza |
 | `lib-counter` | `tone="celadon"` | ✅ `tone="on-dark"` | Contador jade + on-dark OKLCH |
-| `lib-avatar` | `color="celadon"` | — | Cara jade; dark lo hereda del contexto padre |
+| `lib-avatar` | `tone="cool"` | — | Cara jade (paleta fija por `tone`, no semántica) + glaze cerámico en hover bajo `data-katachi="celadon"` |
 | `lib-liquid-button` | `variant="celadon"` | ✅ `ghost[dark]` | Efecto líquido jade |
 | `lib-parallax-text` | `color="celadon"` (capas outline e italic) | ✅ | Texto desfilante jade — natural en dark |
 
