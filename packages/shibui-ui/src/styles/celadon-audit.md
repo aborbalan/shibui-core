@@ -354,4 +354,35 @@ cálido (kaki/terracota)** → choque de temperatura cálido-vs-frío. El usuari
 > (`color="info"`, `color="celadon"`, `variant="celadon"`…) o el atributo `[dark]` donde exista.
 > Lo que **no** ocurre es la adaptación **ambiental** automática del acento bajo `data-katachi="celadon"`.
 
-*Inconsistencias documentadas: 2026-06-03*
+### Estado de resolución
+
+**✅ Resuelto (PR #448)** — los 4 casos "por defecto" consumen ahora los tokens
+semánticos de acento (`--text-accent` / `--border-focus`) bajo
+`:host-context([data-katachi="celadon"])`, así que el acento de selección sigue al
+katachi (jade) sin pedir prop:
+
+| Componente | Cubierto |
+|---|---|
+| `lib-checkbox-card` | checked → jade-oscuro (borde/check/título/badge/divider/features) |
+| `lib-tabs` | tab activo: texto (underline/vertical), fondo vertical, pill, badge |
+| `lib-sidebar` | link activo (variant dark) |
+| `lib-timeline` | nodo activo, dot::after, card y línea de progreso |
+
+**🔲 Pendiente (follow-up)** — mismo patrón, aún sin adaptación ambiental:
+
+| Componente / detalle | Por qué sigue cálido bajo celadon | Tipo |
+|---|---|---|
+| `lib-chip` | selección sólo jade con `color="info"`; `color="accent"` queda kaki | opt-in |
+| `lib-segmented-control` | indicador activo kaki en `variant="ghost"` | opt-in |
+| `lib-checkbox` | `variant="accent"` checked = kaki (default `washi-900` no aplica) | opt-in |
+| `lib-radio` | `variant="accent"` checked = kaki | opt-in |
+| `lib-rating` | `color="accent"` estrella llena = kaki (default `gold`) | opt-in |
+| `lib-tabs` · superficies | variantes folder/card con fondo claro no adaptan al celadon oscuro | superficie |
+| `lib-tabs` · `.tb-dirty` | punto "modificado" en `--accent-primary` → kaki | semántico distinto |
+| `lib-sidebar` · `variant="light"` | link/badge activos kaki bajo celadon (combinación inusual: sidebar claro en katachi oscuro) | edge case |
+
+> Criterio para el follow-up: aplicar el mismo `:host-context([data-katachi="celadon"])`
+> + `--text-accent`/`--border-focus` en los estados activos opt-in; las superficies claras
+> de `lib-tabs` son un problema de **adaptación de superficie** (distinto del acento) y van aparte.
+
+*Inconsistencias documentadas: 2026-06-03 · Estado actualizado: 2026-06-03 (PR #448)*
