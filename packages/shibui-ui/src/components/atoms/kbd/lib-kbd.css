@@ -150,12 +150,12 @@
 
   /* ── Variant: subtle ───────────────────────────────────── */
   :host([variant="subtle"]) .kbd {
-    background: var(--color-celadon-100);
-    color: var(--color-celadon-600);
-    border-color: var(--color-celadon-500);
-    border-bottom-color: var(--color-celadon-600);
+    background: var(--info-bg-2);
+    color: var(--info-text);
+    border-color: var(--info);
+    border-bottom-color: var(--info-text);
     box-shadow:
-      0 1px 0 0 var(--color-celadon-600),
+      0 1px 0 0 var(--info-text),
       inset 0 1px 0 0 rgb(255, 255, 255, 0.5);
   }
 

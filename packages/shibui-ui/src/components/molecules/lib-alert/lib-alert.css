@@ -104,16 +104,16 @@
 
   /* Info */
   :host([type="info"]) .alert {
-    background: var(--color-celadon-50);
-    border-color: var(--color-celadon-400);
+    background: var(--info-bg);
+    border-color: var(--info-line);
   }
 
   :host([type="info"]) .alert-title {
-    color: var(--color-celadon-600);
+    color: var(--info-text);
   }
 
   :host([type="info"]) .alert-body {
-    color: var(--color-celadon-500);
+    color: var(--info);
   }
 
   /* Warning */

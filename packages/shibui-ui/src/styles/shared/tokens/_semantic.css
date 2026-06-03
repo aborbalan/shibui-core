@@ -32,6 +32,20 @@
   --border-strong:  var(--color-washi-500);
   --border-focus:   var(--color-celadon-400);
 
+  /* --- Rol semántico: info (jade celadón) ---
+     Familia única del rol "info". Antes cada componente hardcodeaba
+     la paleta celadon en su variante info; ahora se consume de aquí
+     (un solo sitio que cambiar, y que podrá adaptar por katachi).
+     Nombres NEUTROS por intensidad (no bg/text/border) porque el
+     mismo tono se usa como fondo, texto o borde según el componente. */
+  --info-bg:     var(--color-celadon-50);   /* superficie info más suave */
+  --info-bg-2:   var(--color-celadon-100);  /* superficie info tenue */
+  --info-border: var(--color-celadon-200);  /* borde info */
+  --info-soft:   var(--color-celadon-300);  /* acento claro (sobre oscuro) */
+  --info-line:   var(--color-celadon-400);  /* línea / acento medio */
+  --info:        var(--color-celadon-500);  /* info principal (relleno o texto) */
+  --info-text:   var(--color-celadon-600);  /* texto info sobre claro */
+
   /* --- Sombras --- */
   --shadow-sm: 0 1px 2px var(--color-ink-10);
   --shadow-md: 0 2px 8px var(--color-ink-10), 0 1px 2px var(--color-ink-10);

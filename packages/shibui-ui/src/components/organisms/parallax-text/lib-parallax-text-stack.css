@@ -101,11 +101,11 @@
   }
 
   :host([color="info"]) .pts-layer--outline {
-    -webkit-text-stroke-color: var(--color-celadon-500);
+    -webkit-text-stroke-color: var(--info);
   }
 
   :host([color="info"]) .pts-layer--italic {
-    color: var(--color-celadon-500);
+    color: var(--info);
   }
 
   /* ── prefers-reduced-motion ── */

@@ -157,9 +157,9 @@
   }
 
   :host([tone="info"]) {
-    & .pb       { background: var(--color-celadon-100); }
-    & .pb-value { color: var(--color-celadon-600); }
-    & .pb-fill  { background: var(--color-celadon-500); }
+    & .pb       { background: var(--info-bg-2); }
+    & .pb-value { color: var(--info-text); }
+    & .pb-fill  { background: var(--info); }
   }
 
   :host([tone="error"]) {
@@ -207,7 +207,7 @@
   }
 
   :host([indeterminate][tone="accent"])    .pb-fill::after { background: var(--color-kaki-500); }
-  :host([indeterminate][tone="info"]) .pb-fill::after { background: var(--color-celadon-500); }
+  :host([indeterminate][tone="info"]) .pb-fill::after { background: var(--info); }
   :host([indeterminate][tone="error"])   .pb-fill::after { background: var(--color-error); }
   :host([indeterminate][square])         .pb-fill::after { border-radius: var(--radius-sm); }
 
@@ -237,7 +237,7 @@
   /* Tone classes for segments (applied via JS) */
   .seg-default { background: var(--color-washi-900); }
   .seg-accent    { background: var(--color-kaki-500); }
-  .seg-info { background: var(--color-celadon-500); }
+  .seg-info { background: var(--info); }
   .seg-error   { background: var(--color-error); }
 
   .seg-muted {

@@ -95,9 +95,9 @@
 
   /* ── Info (jade / informativo) ── */
   :host([variant="info"]) .badge {
-    background: var(--color-celadon-50);
-    color: var(--color-celadon-600);
-    border-color: var(--color-celadon-200);
+    background: var(--info-bg);
+    color: var(--info-text);
+    border-color: var(--info-border);
   }
 
   /* ── Strong (contraste máximo / inverso) ── */
