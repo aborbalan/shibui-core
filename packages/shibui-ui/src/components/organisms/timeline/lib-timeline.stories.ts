@@ -5,7 +5,9 @@ import { html, TemplateResult } from 'lit';
 import './lib-timeline.component';
 import './lib-timeline-item.component';
 import type { LibTimeline } from './lib-timeline.component';
+import type { LibTimelineItem } from './lib-timeline-item.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
+import { katachiContext, expectAccentMatchesToken } from '../../../stories/katachi-accent.helper';
 
 type Args = Partial<LibTimeline>;
 
@@ -403,3 +405,23 @@ export const KatachiKintsugi = _katachi.KatachiKintsugi;
 export const KatachiCeladon  = _katachi.KatachiCeladon;
 export const KatachiSabi     = _katachi.KatachiSabi;
 export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ── Acento de selección sigue al katachi (PR #448) ──────────────
+   El nodo del item activo adopta el token de acento jade bajo celadon,
+   no el kaki cálido hardcodeado. */
+export const TestAccentCeladon: Story = {
+  name: 'Test · accent del nodo activo sigue al katachi (celadon)',
+  tags: ['test'],
+  render: (): TemplateResult => katachiContext('celadon', html`
+    <lib-timeline>
+      <lib-timeline-item status="active" title="Kintsugi"></lib-timeline-item>
+    </lib-timeline>
+  `),
+  play: async ({ canvasElement }): Promise<void> => {
+    const ctx = canvasElement.querySelector('[data-katachi="celadon"]') as HTMLElement;
+    const item = ctx.querySelector('lib-timeline-item') as LibTimelineItem;
+    await item.updateComplete;
+    const dot = item.shadowRoot!.querySelector('.tl-item.is-active .tl-node-dot') as HTMLElement;
+    expectAccentMatchesToken(dot, 'borderTopColor', ctx, '--border-focus');
+  },
+};
