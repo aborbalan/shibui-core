@@ -385,4 +385,10 @@ katachi (jade) sin pedir prop:
 > + `--text-accent`/`--border-focus` en los estados activos opt-in; las superficies claras
 > de `lib-tabs` son un problema de **adaptación de superficie** (distinto del acento) y van aparte.
 
+> **🐞 Mismo root, otro katachi — `lib-checkbox-card` bajo kintsugi/wabi/terminal:** el checked
+> hardcodea fondo claro (`kaki-50`) y bajo katachis oscuros el texto (`--text-secondary`/`--text-primary`
+> en `.cc-desc`/`.cc-features`) se vuelve claro → **texto invisible al seleccionar** (confirmado en
+> kintsugi). No es choque de temperatura sino de luminancia/contraste. Pendiente, mismo fix ambiental.
+> Detalle en `effects-x-surfaces.md` § `lib-checkbox-card`.
+
 *Inconsistencias documentadas: 2026-06-03 · Estado actualizado: 2026-06-03 (PR #448)*

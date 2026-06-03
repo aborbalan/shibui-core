@@ -1153,19 +1153,24 @@
 ### `lib-checkbox-card` · ✅
 
 > **CSS verificado.** Variantes de color: `kaki` (default) · `celadon`. El estado checked activa
-> borde, fondo tintado y shimmer `::after`. Sin dark adaptation, sin kintsugi, sin glitch. Sin efectos del sistema.
-> ⚠️ El checked **default es kaki cálido hardcodeado** y no sigue al katachi: bajo `data-katachi="celadon"`
-> el seleccionado choca con el jade frío. Ver `celadon-audit.md` § Inconsistencias (acento kaki en estados seleccionados).
+> borde, fondo tintado y shimmer `::after`. Sin efectos del sistema.
+> ⚠️ **Root**: el checked default **hardcodea fondo claro** (`kaki-50`) y no sigue al katachi.
+> Dos síntomas en katachis oscuros:
+> - **celadon** → choque cálido/frío (resuelto en PR #448 con override jade ambiental). Ver `celadon-audit.md` § Inconsistencias.
+> - **🐞 kintsugi / wabi / terminal** → BUG: el fondo sigue claro (`kaki-50`) pero el texto usa tokens
+>   semánticos (`--text-secondary`, `--text-primary`, `.cc-desc`/`.cc-features`) que el katachi oscuro
+>   vuelve **claros** → **texto claro sobre fondo claro = invisible** al seleccionar. Confirmado en kintsugi
+>   (`--text-secondary` ≈ blanco/.35 sobre `kaki-50`). **Pendiente** (mismo fix ambiental que celadon).
 
 #### Superficies
 
 | Superficie | Estado | Notas |
 |------------|--------|-------|
 | light | ✅ | Default — bg-elevated, borde tenue, checked activa tinte kaki |
-| dark | 🔲 | Sin adaptación |
-| kintsugi | `—` | No aplica |
-| glitch | `—` | No aplica |
-| celadón | `—` | `color="celadon"` cubre el caso de uso |
+| dark | 🔲 | Sin adaptación: checked fondo `kaki-50` claro + texto semántico claro |
+| kintsugi | 🐞 | **BUG**: checked fondo claro + texto semántico claro → **texto invisible al seleccionar**. Pendiente |
+| glitch (terminal) | 🐞 | Mismo bug que kintsugi (fondo claro + texto claro) |
+| celadón | ✅ | Resuelto PR #448 — checked jade-oscuro ambiental vía `:host-context([data-katachi="celadon"])` |
 | washi | `—` | Default cubre el uso en washi |
 
 #### Efectos
