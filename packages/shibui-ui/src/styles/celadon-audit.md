@@ -368,6 +368,13 @@ katachi (jade) sin pedir prop:
 | `lib-sidebar` | link activo (variant dark) |
 | `lib-timeline` | nodo activo, dot::after, card y línea de progreso |
 
+**✅ Resuelto (follow-up dark-katachi)** — el override del checked de `lib-checkbox-card`
+se generalizó de sólo-celadon a **todos los katachis oscuros**
+(`:host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"]))`).
+Esto arregla además el **bug de texto invisible** bajo kintsugi/wabi/terminal (el checked
+hardcodeaba fondo claro `kaki-50` con texto semántico claro): ahora cada katachi usa su
+acento (oro·jade·phosphor·muted) sobre fondo translúcido oscuro → texto legible.
+
 **🔲 Pendiente (follow-up)** — mismo patrón, aún sin adaptación ambiental:
 
 | Componente / detalle | Por qué sigue cálido bajo celadon | Tipo |

@@ -73,3 +73,23 @@ export function expectAccentMatchesToken(
   const actual = getComputedStyle(el)[prop];
   expect(actual).toBe(expected);
 }
+
+/** Extrae el alpha de un color computado (`oklch(… / a)`, `rgba(…, a)`). 1 si es opaco. */
+export function colorAlpha(color: string): number {
+  const oklch = color.match(/\/\s*([\d.]+)\s*\)/);
+  if (oklch) return parseFloat(oklch[1]!);
+  const rgba = color.match(/rgba?\([^)]*?,\s*([\d.]+)\s*\)/);
+  if (rgba) return parseFloat(rgba[1]!);
+  return 1;
+}
+
+/**
+ * Afirma que el `backgroundColor` de `el` es TRANSLÚCIDO (alpha < 1): un tinte
+ * que compone sobre la superficie del katachi en vez de un bloque opaco claro.
+ * Bajo katachis oscuros garantiza que el texto semántico (claro) siga siendo
+ * legible sobre el seleccionado — guard del bug de "texto invisible".
+ */
+export function expectTranslucentBackground(el: Element): void {
+  const bg = getComputedStyle(el).backgroundColor;
+  expect(colorAlpha(bg)).toBeLessThan(1);
+}

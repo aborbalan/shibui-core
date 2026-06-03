@@ -1153,19 +1153,22 @@
 ### `lib-checkbox-card` · ✅
 
 > **CSS verificado.** Variantes de color: `kaki` (default) · `celadon`. El estado checked activa
-> borde, fondo tintado y shimmer `::after`. Sin dark adaptation, sin kintsugi, sin glitch. Sin efectos del sistema.
-> ⚠️ El checked **default es kaki cálido hardcodeado** y no sigue al katachi: bajo `data-katachi="celadon"`
-> el seleccionado choca con el jade frío. Ver `celadon-audit.md` § Inconsistencias (acento kaki en estados seleccionados).
+> borde, fondo tintado y shimmer `::after`. Sin efectos del sistema.
+> ✅ **Resuelto**: bajo cualquier katachi OSCURO el checked consume los tokens semánticos de acento
+> (`--text-accent`/`--border-focus`) sobre un fondo translúcido (`color-mix` @10%) vía
+> `:host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"]))`. Cada katachi
+> aplica su acento (jade·oro·phosphor·muted) y el texto vuelve a ser legible. Shizen/sabi (claros)
+> conservan el `kaki-50`. Ver `celadon-audit.md` § Inconsistencias.
 
 #### Superficies
 
 | Superficie | Estado | Notas |
 |------------|--------|-------|
 | light | ✅ | Default — bg-elevated, borde tenue, checked activa tinte kaki |
-| dark | 🔲 | Sin adaptación |
-| kintsugi | `—` | No aplica |
-| glitch | `—` | No aplica |
-| celadón | `—` | `color="celadon"` cubre el caso de uso |
+| dark | ✅ | Checked: acento del katachi + fondo translúcido oscuro (texto legible) |
+| kintsugi | ✅ | Checked oro sobre fondo oscuro (antes: 🐞 fondo claro + texto invisible) |
+| glitch (terminal) | ✅ | Checked phosphor verde sobre fondo oscuro |
+| celadón | ✅ | Checked jade ambiental (`color="celadon"` sigue disponible) |
 | washi | `—` | Default cubre el uso en washi |
 
 #### Efectos
