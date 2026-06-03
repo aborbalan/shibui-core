@@ -158,10 +158,39 @@
        de la cara circular es la expresión más literal del kintsugi.
      • sabi → ring brutal-mini en .avatar__face
      .avatar__face ya tiene border-radius: full — el ring sigue la forma circular.
+
+     Efecto signature de celadon (no es un --lib-effect-*, requiere
+     host-context como en lib-button/lib-chip):
+     • celadon → glaze cerámico: barrido de vidriado sutil en hover.
      ─────────────────────────────────────────────────────────── */
 
   .avatar__face {
     box-shadow: var(--lib-effect-ring, none);
+  }
+
+  /* celadon · glaze cerámico — barrido de vidriado que cruza la cara
+     en hover. overflow:hidden de .avatar__face lo recorta a la forma
+     (circle/squircle/square). Hover-driven: no altera el snapshot
+     estático de regresión visual. Patrón: lib-button / lib-chip. */
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="celadon"]) .avatar__face {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: var(--lib-celadon-glaze);
+        transform: translateX(-100%);
+        transition: transform var(--duration-slow) var(--ease-out);
+        pointer-events: none;
+      }
+
+      @media (hover: hover) {
+        &:hover::after { transform: translateX(100%); }
+      }
+    }
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
