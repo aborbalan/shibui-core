@@ -1,6 +1,6 @@
 /* ============================================================
    LIB-BACKGROUND — Tipos e interfaces públicas
-   55 variantes: 16 light · 16 dark · 8 gradient · 9 animated · 6 canvas
+   56 variantes: 16 light · 17 dark · 8 gradient · 9 animated · 6 canvas
    ============================================================ */
 
 /** 16 fondos light inspirados en papel y textil japonés */
@@ -23,7 +23,7 @@ export type LibBackgroundLight =
   | 'chirimen'    /* 縮緬  crepe silk fine crinkle */
   | 'celadon-wash'; /* 青磁洗い  light celadon-tinted paper */
 
-/** 16 fondos dark derivados de la tinta sumi */
+/** 17 fondos dark derivados de la tinta sumi */
 export type LibBackgroundDark =
   | 'sumi'
   | 'sumi-grain'
@@ -41,7 +41,9 @@ export type LibBackgroundDark =
   | 'void'        /* 虚空   vignette radial, oscuridad pura */
   | 'yami'        /* 闇     degradado de profundidad casi imperceptible */
   | 'midnight'    /* 深夜   matriz de puntos finos sobre near-black */
-  | 'celadon';    /* 青磁   dark jade surface — deep celadon grid */
+  | 'celadon'     /* 青磁   dark jade surface — deep celadon grid */
+  | 'celadon-deep'; /* 青磁深 dark jade afinado a oklch(15%), coincide con el
+                       --bg-base del katachi celadon (texto/acentos claros resaltan) */
 
 /** 8 fondos de gradiente mesh */
 export type LibBackgroundGradient =
@@ -102,7 +104,7 @@ export const BG_CANVAS_VARIANTS = new Set<LibBackgroundVariant>([
 export const BG_DARK_VARIANTS = new Set<LibBackgroundVariant>([
   'sumi', 'sumi-grain', 'kintsugi', 'ash-grid', 'ink-dot',
   'mokume', 'kumo', 'temari', 'dusk', 'embers',
-  'obsidian', 'forge', 'void', 'yami', 'midnight', 'celadon',
+  'obsidian', 'forge', 'void', 'yami', 'midnight', 'celadon', 'celadon-deep',
   'noctiluca', 'aurora-drift', 'scan', 'particles', 'rain',
   'constellation', 'twilight', 'jade-deep', 'pulse', 'fog',
   'static', 'glitch', 'fireflies', 'ink-wash',
