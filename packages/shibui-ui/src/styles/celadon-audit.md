@@ -152,7 +152,7 @@ Funcionan en light pero presentan gaps visuales sobre fondos oscuros. Usables co
 | `lib-progress` | `tone="celadon"` track `celadon-100` visible en dark. Track base mejorado con GUITV, pero la variante explícita aún es clara | Barra rellena jade ✅, track celadon-100 ligeramente claro ⚠️ |
 | `lib-progress-circle` | Track `washi-200` no invierte bajo dark | Arco jade ✅, track claro visible ⚠️ |
 | `lib-rating` | Estrella vacía `washi-300` no invierte | Estrellas seleccionadas jade ✅, vacías claras ⚠️ |
-| `lib-checkbox-card` | `bg-elevated` sin dark adaptation propia | Card jade al checked ✅, fondo claro en dark ⚠️ |
+| `lib-checkbox-card` | Checked default usa **acento kaki cálido** (`kaki-50` fondo + `kaki-500` borde/check) hardcodeado, no el token semántico | Sin marcar adapta (bg-elevated) ✅; **seleccionado = bloque cálido brillante** que choca con el jade frío ⚠️ (ver §Inconsistencias). `color="info"` da el checked jade correcto |
 | `lib-empty-state` | `bg-elevated` sin dark | Icono/texto jade ✅, fondo claro ⚠️ |
 | `lib-skeleton` | `washi-200/700/800` hardcoded; necesita `[surface="dark"]` explícito | Skeleton claro visible sobre jade dark ⚠️ |
 | `lib-content-pillar` | Solo `washi-600` hardcoded; sin dark ni celadon adaptation | Texto muted claro sobre fondo jade ⚠️ |
@@ -293,3 +293,96 @@ la capa de 10 decoraciones (ver `effects-x-surfaces.md` § Decoraciones Celadon 
 - **Pendiente**: baselines de regresión visual (deliberado).
 
 *Decoraciones añadidas: 2026-05-31*
+
+---
+
+## Inconsistencias — acento kaki cálido en estados seleccionados bajo celadon
+
+> **Detectado: 2026-06-03.** Origen: revisión del estado *checked* de `lib-checkbox-card`
+> sobre `data-katachi="celadon"` (el seleccionado se ve como un bloque cálido brillante
+> que choca con el jade frío del katachi).
+
+### La inconsistencia (causa raíz, sistémica)
+
+El katachi celadon **sí** remapea el token semántico de acento:
+
+```
+[data-katachi="celadon"] → --text-accent: celadon-400 · --border-focus: celadon-400 (jade frío)
+```
+
+Pero varios componentes pintan su estado **seleccionado / activo / checked** con el
+**primitivo `--color-kaki-*` hardcodeado**, saltándose ese token semántico. Resultado:
+bajo celadon las superficies se enfrían a jade, pero **el acento de selección se queda
+cálido (kaki/terracota)** → choque de temperatura cálido-vs-frío. El usuario que activa
+`data-katachi="celadon"` espera un acento frío coherente, no terracota.
+
+> **Nota de diseño**: hoy estos checked/active son "paletas deliberadas" (kaki = rol accent).
+> La inconsistencia es que el rol *accent* no sigue al katachi como sí lo hacen las superficies.
+> La corrección natural es consumir el token semántico (`--text-accent` / `--border-focus` /
+> equivalente) en vez del primitivo `--color-kaki-*`, o exponer un override ambiental
+> `:host-context([data-katachi="celadon"])`. **Pendiente de decidir** (toca baselines visuales).
+
+### Casos encontrados (auditoría 2026-06-03)
+
+**A · Por defecto** — el estado seleccionado es kaki **sin opt-in** (impacto alto bajo celadon):
+
+| Componente | Selector | Qué pinta kaki |
+|---|---|---|
+| `lib-checkbox-card` | `.cc-input:checked ~ .cc-body` | fondo `kaki-50`, borde/check `kaki-500`, título `kaki-600` |
+| `lib-tabs` | `[variant="underline"] .tb-tab.is-active` (variant default) | texto `kaki-600` (+ pill/vertical/badge en sus variantes) |
+| `lib-sidebar` | `.sb-link.is-active` | color `kaki-400/600`, fondo `kaki-50`/rgba, borde izq `kaki-500` |
+| `lib-timeline` | `.tl-item.is-active .tl-node-dot` | borde del nodo `kaki-500` |
+
+**B · Opt-in** — kaki sólo al elegir variante/color cálido (impacto menor, decisión del consumidor):
+
+| Componente | Activador | Qué pinta kaki |
+|---|---|---|
+| `lib-chip` | `color="accent"` + `[selected]` (default es `default`) | fondo/borde `kaki-500` |
+| `lib-segmented-control` | `variant="ghost"` `.is-active::after` (default es `outline`) | subrayado `kaki-500` |
+| `lib-checkbox` | `variant="accent"` `[checked]` (default es `washi-900`) | caja `kaki-500` |
+| `lib-radio` | `variant="accent"` `[checked]` (default es `washi-900`) | círculo `kaki-500` |
+| `lib-rating` | `color="accent"` `.is-filled` (default es `gold`) | estrella `kaki-500` |
+
+**C · Fuera de alcance** (no es choque de selección bajo celadon):
+
+| Componente | Motivo |
+|---|---|
+| `lib-text-glitch` | `[active]` kaki es aberración cromática de la estética terminal (Tier F, excluido de celadon) |
+| `lib-pagination` | kaki sólo en `:focus-visible` (anillo de foco, no relleno de selección) |
+
+> Vía oficial actual para contexto frío: usar la variante celadon/info del componente
+> (`color="info"`, `color="celadon"`, `variant="celadon"`…) o el atributo `[dark]` donde exista.
+> Lo que **no** ocurre es la adaptación **ambiental** automática del acento bajo `data-katachi="celadon"`.
+
+### Estado de resolución
+
+**✅ Resuelto (PR #448)** — los 4 casos "por defecto" consumen ahora los tokens
+semánticos de acento (`--text-accent` / `--border-focus`) bajo
+`:host-context([data-katachi="celadon"])`, así que el acento de selección sigue al
+katachi (jade) sin pedir prop:
+
+| Componente | Cubierto |
+|---|---|
+| `lib-checkbox-card` | checked → jade-oscuro (borde/check/título/badge/divider/features) |
+| `lib-tabs` | tab activo: texto (underline/vertical), fondo vertical, pill, badge |
+| `lib-sidebar` | link activo (variant dark) |
+| `lib-timeline` | nodo activo, dot::after, card y línea de progreso |
+
+**🔲 Pendiente (follow-up)** — mismo patrón, aún sin adaptación ambiental:
+
+| Componente / detalle | Por qué sigue cálido bajo celadon | Tipo |
+|---|---|---|
+| `lib-chip` | selección sólo jade con `color="info"`; `color="accent"` queda kaki | opt-in |
+| `lib-segmented-control` | indicador activo kaki en `variant="ghost"` | opt-in |
+| `lib-checkbox` | `variant="accent"` checked = kaki (default `washi-900` no aplica) | opt-in |
+| `lib-radio` | `variant="accent"` checked = kaki | opt-in |
+| `lib-rating` | `color="accent"` estrella llena = kaki (default `gold`) | opt-in |
+| `lib-tabs` · superficies | variantes folder/card con fondo claro no adaptan al celadon oscuro | superficie |
+| `lib-tabs` · `.tb-dirty` | punto "modificado" en `--accent-primary` → kaki | semántico distinto |
+| `lib-sidebar` · `variant="light"` | link/badge activos kaki bajo celadon (combinación inusual: sidebar claro en katachi oscuro) | edge case |
+
+> Criterio para el follow-up: aplicar el mismo `:host-context([data-katachi="celadon"])`
+> + `--text-accent`/`--border-focus` en los estados activos opt-in; las superficies claras
+> de `lib-tabs` son un problema de **adaptación de superficie** (distinto del acento) y van aparte.
+
+*Inconsistencias documentadas: 2026-06-03 · Estado actualizado: 2026-06-03 (PR #448)*

@@ -972,6 +972,27 @@
     :host([variant="underline"]):host-context([data-katachi="celadon"]) .tb-list {
       border-bottom-color: var(--border-subtle);
     }
+
+    /* Tab activo: el acento (texto/badge/pill/vertical) sigue al katachi
+       (jade frío) — consume --text-accent / --border-focus en vez del
+       kaki cálido hardcodeado de cada variante. */
+    :host([variant="underline"]):host-context([data-katachi="celadon"]) .tb-tab.is-active,
+    :host([variant="vertical"]):host-context([data-katachi="celadon"]) .tb-tab.is-active {
+      color: var(--text-accent);
+    }
+
+    :host([variant="vertical"]):host-context([data-katachi="celadon"]) .tb-tab.is-active {
+      border-left-color: var(--border-focus);
+      background: color-mix(in oklch, var(--text-accent), transparent 90%);
+    }
+
+    :host([variant="pill"]):host-context([data-katachi="celadon"]) .tb-tab.is-active {
+      background: var(--text-accent);
+    }
+
+    :host-context([data-katachi="celadon"]) .tb-tab.is-active .tb-badge {
+      background: var(--text-accent);
+    }
   }
 
   .tb-tab {

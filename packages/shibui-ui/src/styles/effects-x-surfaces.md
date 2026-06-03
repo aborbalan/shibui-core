@@ -1154,6 +1154,8 @@
 
 > **CSS verificado.** Variantes de color: `kaki` (default) · `celadon`. El estado checked activa
 > borde, fondo tintado y shimmer `::after`. Sin dark adaptation, sin kintsugi, sin glitch. Sin efectos del sistema.
+> ⚠️ El checked **default es kaki cálido hardcodeado** y no sigue al katachi: bajo `data-katachi="celadon"`
+> el seleccionado choca con el jade frío. Ver `celadon-audit.md` § Inconsistencias (acento kaki en estados seleccionados).
 
 #### Superficies
 
