@@ -2,6 +2,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-tabs.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
+import { katachiContext, expectAccentMatchesToken } from '../../../stories/katachi-accent.helper';
 import type { LibTabs } from './lib-tabs.component';
 import type { TabItem } from './lib-tabs.types';
 
@@ -695,3 +696,24 @@ export const KatachiKintsugi = _katachi.KatachiKintsugi;
 export const KatachiCeladon  = _katachi.KatachiCeladon;
 export const KatachiSabi     = _katachi.KatachiSabi;
 export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ── Acento de selección sigue al katachi (PR #448) ──────────────
+   El tab activo (variant underline por defecto) adopta el token de
+   acento jade bajo celadon, no el kaki cálido hardcodeado. */
+export const TestAccentCeladon: Story = {
+  name: 'Test · accent del tab activo sigue al katachi (celadon)',
+  tags: ['test'],
+  render: (): TemplateResult => katachiContext('celadon', html`
+    <lib-tabs
+      active="overview"
+      .items="${[{ id: 'overview', label: 'Overview' }, { id: 'code', label: 'Código' }] as TabItem[]}"
+    ></lib-tabs>
+  `),
+  play: async ({ canvasElement }): Promise<void> => {
+    const ctx = canvasElement.querySelector('[data-katachi="celadon"]') as HTMLElement;
+    const host = ctx.querySelector('lib-tabs') as LibTabs;
+    await host.updateComplete;
+    const active = host.shadowRoot!.querySelector('.tb-tab.is-active') as HTMLElement;
+    expectAccentMatchesToken(active, 'color', ctx, '--text-accent');
+  },
+};

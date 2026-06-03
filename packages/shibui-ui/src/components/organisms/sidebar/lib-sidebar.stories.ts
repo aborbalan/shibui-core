@@ -4,6 +4,7 @@ import './lib-sidebar.component';
 import type { LibSidebar }      from './lib-sidebar.component';
 import type { SidebarLink }     from '../../../types';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
+import { katachiContext, expectAccentMatchesToken } from '../../../stories/katachi-accent.helper';
 
 type StoryArgs = Partial<Pick<LibSidebar,
   'logoMark' | 'brandName' | 'showSearch' | 'active' |
@@ -292,3 +293,24 @@ export const KatachiKintsugi = _katachi.KatachiKintsugi;
 export const KatachiCeladon  = _katachi.KatachiCeladon;
 export const KatachiSabi     = _katachi.KatachiSabi;
 export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ── Acento de selección sigue al katachi (PR #448) ──────────────
+   El link activo (variant dark por defecto) adopta el token de acento
+   jade bajo celadon, no el kaki cálido hardcodeado. */
+export const TestAccentCeladon: Story = {
+  name: 'Test · accent del link activo sigue al katachi (celadon)',
+  tags: ['test'],
+  render: (): TemplateResult => katachiContext('celadon', html`
+    <lib-sidebar
+      active="dashboard"
+      .links="${[{ id: 'dashboard', label: 'Dashboard', icon: 'home' }] as SidebarLink[]}"
+    ></lib-sidebar>
+  `),
+  play: async ({ canvasElement }): Promise<void> => {
+    const ctx = canvasElement.querySelector('[data-katachi="celadon"]') as HTMLElement;
+    const host = ctx.querySelector('lib-sidebar') as LibSidebar;
+    await host.updateComplete;
+    const active = host.shadowRoot!.querySelector('.sb-link.is-active') as HTMLElement;
+    expectAccentMatchesToken(active, 'color', ctx, '--text-accent');
+  },
+};

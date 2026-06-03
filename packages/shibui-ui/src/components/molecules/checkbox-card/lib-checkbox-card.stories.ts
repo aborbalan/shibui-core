@@ -2,7 +2,9 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { expect, fireEvent } from 'storybook/test';
 import './lib-checkbox-card.component';
+import type { LibCheckboxCard } from './lib-checkbox-card.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
+import { katachiContext, expectAccentMatchesToken } from '../../../stories/katachi-accent.helper';
 
 const meta: Meta = {
   title: 'Universal/Forms/Checkbox Card',
@@ -390,5 +392,31 @@ export const TestDisabledCheckboxCard: Story = {
     const input = el.shadowRoot!.querySelector('input.cc-input') as HTMLInputElement;
 
     expect(input.disabled).toBe(true);
+  },
+};
+
+/* ── Acento de selección sigue al katachi (PR #448) ──────────────
+   Invariante: bajo data-katachi="celadon" el checked adopta el token
+   de acento (jade), no el primitivo kaki cálido. Ver
+   stories/katachi-accent.helper.ts y celadon-audit.md § Inconsistencias.
+   TODO(pendiente): kintsugi/wabi/terminal aún pintan el checked con
+   fondo claro hardcodeado → texto invisible (bug documentado); añadir
+   sus tests al resolver el fix ambiental para katachis oscuros. */
+export const TestAccentCeladon: Story = {
+  name: 'Test · accent de selección sigue al katachi (celadon)',
+  tags: ['test'],
+  render: (): TemplateResult => katachiContext('celadon', html`
+    <lib-checkbox-card value="sabi" card-title="Sabi" desc="Patina del tiempo" checked></lib-checkbox-card>
+  `),
+  play: async ({ canvasElement }): Promise<void> => {
+    const ctx = canvasElement.querySelector('[data-katachi="celadon"]') as HTMLElement;
+    const host = ctx.querySelector('lib-checkbox-card') as LibCheckboxCard;
+    await host.updateComplete;
+    const sr = host.shadowRoot!;
+
+    // El check relleno usa --text-accent; el borde del body usa --border-focus.
+    // Ambos deben resolver al acento jade del katachi celadon, no a kaki.
+    expectAccentMatchesToken(sr.querySelector('.cc-check')!, 'backgroundColor', ctx, '--text-accent');
+    expectAccentMatchesToken(sr.querySelector('.cc-body')!, 'borderTopColor', ctx, '--border-focus');
   },
 };
