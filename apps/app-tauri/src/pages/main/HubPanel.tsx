@@ -40,11 +40,11 @@ export function HubPanel({ onOpenArea, onAddTab }: HubPanelProps) {
           </LibCard>
         ))}
 
-        {/* Tarjeta "Añadir pestaña" — abre otro Hub */}
+        {/* Tarjeta "Añadir pestaña" — abre otro Hub. Se distingue por su
+            contenido (icono +), no por estilos sobre lib-card. */}
         <LibCard
           variant="glitch"
           clickable
-          className="hub-card-add"
           onUiLibCardClick={onAddTab}
         >
           <LibIcon slot="tag" name="plus" size="20" />

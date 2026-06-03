@@ -24,8 +24,8 @@ main/
 - La 1ª pestaña es siempre un Hub.
 - Click en una card de área → abre esa área como **pestaña nueva** (o enfoca la
   existente si ya estaba abierta — no se duplican áreas).
-- La card **"Añadir pestaña"** → abre **otro Hub** (y también el botón "+" de la
-  barra de tabs).
+- La card **"Añadir pestaña"** (se distingue por su icono `+`) → abre **otro Hub**
+  (y también el botón "+" de la barra de tabs).
 - Las pestañas se pueden **cerrar** (× o click central), salvo si es la última.
 - Los paneles se mantienen **montados** (oculto el inactivo) para no perder estado.
 

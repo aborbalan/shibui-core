@@ -82,9 +82,3 @@
   line-height: 1.55;
   color: var(--text-muted);
 }
-
-/* La tarjeta "Añadir pestaña" se distingue con borde discontinuo. */
-.hub-card-add {
-  border: 1px dashed var(--border-default) !important;
-  opacity: 0.85;
-}
