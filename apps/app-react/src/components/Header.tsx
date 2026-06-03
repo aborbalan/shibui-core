@@ -19,7 +19,8 @@ export interface DropdownItem {
 export interface HeaderAction {
   label: string;
   href?: string;
-  variant?: 'accent' | 'secondary' | 'ghost';
+  /** Roles semánticos + variantes art-direction a juego con el header (celadon/sabi/shizen) */
+  variant?: 'accent' | 'secondary' | 'ghost' | 'celadon' | 'sabi' | 'shizen';
 }
 
 export type HeaderVariant =
@@ -79,7 +80,7 @@ const DEFAULT_LINKS: NavLink[] = [
 ];
 
 const DEFAULT_ACTIONS: HeaderAction[] = [
-  { label: 'Empezar →', href: '#', variant: 'accent' },
+  { label: 'Empezar →', href: '#', variant: 'celadon' },
 ];
 
 // ─── Componente ───────────────────────────────────────────────────────────────

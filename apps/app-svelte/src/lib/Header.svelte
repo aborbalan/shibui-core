@@ -12,7 +12,7 @@
   ];
 
   const ACTIONS = [
-    { label: 'Empezar →', href: '#/componentes', variant: 'accent' },
+    { label: 'Empezar →', href: '#/componentes', variant: 'sabi' },
   ];
 
   onMount(async () => {
