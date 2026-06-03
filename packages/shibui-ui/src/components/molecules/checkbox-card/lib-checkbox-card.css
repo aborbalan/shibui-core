@@ -630,50 +630,51 @@
     /* ── celadon · el acento de selección sigue al katachi ───────
        El checked default (kaki cálido + fondo casi blanco) chocaba
        con el celadon OSCURO por temperatura Y por luminancia. Aquí
-       el seleccionado usa un tratamiento jade-oscuro (espejo de
-       [dark] pero en jade): tinte jade tenue sobre la superficie
-       oscura + acento jade claro legible — no el celadon-50 claro.
-       Contenido al contexto celadon → sin impacto en katachis claros. */
+       el seleccionado consume los tokens semánticos de acento
+       (--text-accent / --border-focus), que el katachi celadon ya
+       remapea a jade — en vez de hardcodear la paleta. El tinte de
+       fondo se deriva del acento con color-mix. Acotado a celadon →
+       sin impacto en katachis claros (shizen/sabi). */
     @supports selector(:host-context(a)) {
       :host-context([data-katachi="celadon"]) .cc-input:checked~.cc-body {
-        border-color: var(--color-celadon-400);
-        background: color-mix(in oklch, var(--color-celadon-500), transparent 90%);
+        border-color: var(--border-focus);
+        background: color-mix(in oklch, var(--text-accent), transparent 90%);
       }
 
       :host-context([data-katachi="celadon"]) .cc-input:checked~.cc-body::after {
-        background: linear-gradient(90deg, transparent, var(--color-celadon-400), transparent);
+        background: linear-gradient(90deg, transparent, var(--text-accent), transparent);
       }
 
       :host-context([data-katachi="celadon"]) .cc-input:checked~.cc-body .cc-check {
-        border-color: var(--color-celadon-400);
-        background: var(--color-celadon-400);
+        border-color: var(--border-focus);
+        background: var(--text-accent);
       }
 
       :host-context([data-katachi="celadon"]) .cc-input:checked~.cc-body .cc-title,
       :host-context([data-katachi="celadon"]) .cc-input:checked~.cc-body .cc-price,
       :host-context([data-katachi="celadon"]) .cc-input:checked~.cc-body .cc-icon svg {
-        color: var(--color-celadon-300);
+        color: var(--text-accent);
       }
 
       :host-context([data-katachi="celadon"]) .cc-input:checked~.cc-body .cc-badge {
-        color: var(--color-celadon-300);
-        border-color: color-mix(in oklch, var(--color-celadon-400), transparent 65%);
+        color: var(--text-accent);
+        border-color: color-mix(in oklch, var(--text-accent), transparent 65%);
       }
 
       :host-context([data-katachi="celadon"]) .cc-input:checked~.cc-body .cc-features li::before {
-        background: var(--color-celadon-400);
+        background: var(--text-accent);
       }
 
       :host-context([data-katachi="celadon"]) .cc-input:checked~.cc-body .cc-divider {
-        background: color-mix(in oklch, var(--color-celadon-400), transparent 80%);
+        background: color-mix(in oklch, var(--text-accent), transparent 80%);
       }
 
       :host-context([data-katachi="celadon"]) .cc-ripple-dot {
-        background: var(--color-celadon-400);
+        background: var(--text-accent);
       }
 
       :host-context([data-katachi="celadon"]) .cc:focus-within .cc-body {
-        outline-color: var(--color-celadon-400);
+        outline-color: var(--border-focus);
       }
     }
 
