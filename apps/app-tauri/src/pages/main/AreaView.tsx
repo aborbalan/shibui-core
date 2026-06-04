@@ -5,6 +5,7 @@ import type { AreaId } from './areas';
 // Áreas ya implementadas (lazy: solo se cargan al abrir su pestaña).
 const DashboardPage = lazy(() => import('../dashboard').then(m => ({ default: m.DashboardPage })));
 const FilesPage     = lazy(() => import('../files').then(m => ({ default: m.FilesPage })));
+const CodePage      = lazy(() => import('../code').then(m => ({ default: m.CodePage })));
 
 /**
  * Renderiza el contenido de un área dentro de su pestaña. Sin sidebar ni
@@ -26,7 +27,7 @@ function renderArea(area: AreaId) {
     case 'files':
       return <FilesPage />;
     case 'code':
-      return <SectionPlaceholder section="Code" icon="menu" />;
+      return <CodePage />;
     case 'security':
       return <SectionPlaceholder section="Security" icon="shield" />;
     case 'settings':
