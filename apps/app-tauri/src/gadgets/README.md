@@ -53,6 +53,7 @@ interface GadgetFrameProps {
 | `disk` | `DiskGadget` | `get_disk_detail` | Espacio usado por partición |
 | `network` | `NetworkGadget` | `get_network_detail` | Bytes RX/TX por interfaz de red |
 | `fileexp` | `FileExplorerGadget` | `list_dir` + `get_home_dir` | Explorador de ficheros compacto |
+| `agent-<id>` | `AgentGadget` | — (mock) | Tarjeta de "agente" actuando sobre una rama (estado + progreso). Datos en `pages/branches/agents.mock.ts`. Usado por el área Branches. |
 
 Los gadgets de sistema polling llaman al comando Tauri cada segundo con `setInterval`.
 
@@ -60,12 +61,16 @@ Los gadgets de sistema polling llaman al comando Tauri cada segundo con `setInte
 
 ## useGadgetLayout (`../hooks/useGadgetLayout.ts`)
 
-Hook que gestiona el estado del grid. Persiste el layout en `localStorage` bajo la clave `shibui-dashboard-layout`.
+Hook que gestiona el estado del grid. **Parametrizable** por `storageKey` y `defaultLayout` para reutilizarlo en varias áreas sin colisión. Sin argumentos usa los valores del Dashboard (`shibui-dashboard-layout`) — retrocompatible.
 
-**Migración automática**: si el layout guardado no contiene todos los IDs del `DEFAULT_LAYOUT` (p.ej. tras añadir un gadget nuevo), el hook resetea al layout por defecto. Esto evita que gadgets nuevos queden huérfanos.
+- **Dashboard**: `useGadgetLayout()` → clave `shibui-dashboard-layout`.
+- **Branches**: `useGadgetLayout('shibui-branches-layout', DEFAULT_LAYOUT)` → clave propia.
+
+**Migración automática**: si el layout guardado no contiene todos los IDs del `defaultLayout` (p.ej. tras añadir un gadget nuevo), el hook resetea al layout por defecto. Esto evita que gadgets nuevos queden huérfanos.
 
 ```typescript
-const { layout, setLayout, resetLayout } = useGadgetLayout();
+const { layout, setLayout, resetLayout } = useGadgetLayout();                     // Dashboard
+const { layout, setLayout, resetLayout } = useGadgetLayout('mi-clave', miLayout); // otra área
 ```
 
 El botón "reset layout" de `DashboardPage` llama a `resetLayout()`.
