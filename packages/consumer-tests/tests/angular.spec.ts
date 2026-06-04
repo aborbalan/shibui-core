@@ -28,15 +28,18 @@ test.describe('Angular 21 × @shibui-ui/ui — consumer contract', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto(BASE);
-    // Angular tarda más en arrancar que Vite — esperamos la hidratación completa.
-    // IMPORTANTE: `customElements.get('lib-button') !== undefined` puede resolverse
-    // antes de que Angular haya completado su primer ciclo de change detection (y por
-    // tanto antes de que ngAfterViewInit registre el listener de ui-lib-modal-close).
-    // Esperamos adicionalmente a que el template esté renderizado buscando un elemento
-    // del interior del template; eso garantiza que ngAfterViewInit ya ha corrido.
+    // Angular tarda más en arrancar que Vite. `customElements.get('lib-button')`
+    // puede resolverse antes de que Angular complete su primer change detection
+    // (y por tanto antes de que ngAfterViewInit registre el listener de
+    // ui-lib-modal-close). En vez de APROXIMAR esa garantía (esperar a que el
+    // botón esté en el DOM ≠ ngAfterViewInit corrido), esperamos la señal
+    // EXPLÍCITA que el fixture expone al montar el listener — elimina la carrera.
     await page.waitForSelector('app-root');
     await page.waitForFunction(() => customElements.get('lib-button') !== undefined);
     await page.waitForSelector('[data-testid="btn-open-modal"]');
+    await page.waitForFunction(
+      () => (window as unknown as { __modalListenerReady__?: boolean }).__modalListenerReady__ === true,
+    );
   });
 
   // ── 1. Registro ────────────────────────────────────────────────────────────

@@ -25,7 +25,12 @@ import {
 // El tipo CapturedEventsMap se define inline para no crear dependencia
 // cruzada con el paquete @shibui/consumer-tests vía ruta relativa.
 type CapturedEventsMap = Record<string, Array<Record<string, unknown>>>;
-type WindowWithCapture = Window & { __capturedEvents__: CapturedEventsMap };
+type WindowWithCapture = Window & {
+  __capturedEvents__: CapturedEventsMap;
+  /** Señal de readiness: el listener imperativo ya está montado.
+      Evita la carrera del test (pulsar Escape antes de ngAfterViewInit). */
+  __modalListenerReady__?: boolean;
+};
 
 @Component({
   selector: 'app-root',
@@ -55,6 +60,8 @@ export class AppComponent implements AfterViewInit {
         this.modalOpen.set(false);
       },
     );
+    // El listener ya está montado: el test puede pulsar Escape con garantía.
+    (window as unknown as WindowWithCapture).__modalListenerReady__ = true;
   }
 
   openModal(): void {
