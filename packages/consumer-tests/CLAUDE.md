@@ -71,6 +71,18 @@ porque Angular CLI no puede estar dentro de un paquete que no controla.
   `pnpm --filter @shibui/consumer-tests-angular run serve`.
 - `CUSTOM_ELEMENTS_SCHEMA` habilitado en el módulo para evitar errores de template.
 - Timeout de 120s — Angular CLI tarda ~15-20s en compilar en frío.
+- **Zoneless (sin zone.js)** — el fixture no incluye zone.js (ni en deps ni en
+  polyfills) y todo su estado es `signal()`; arranca con
+  `provideZonelessChangeDetection()` explícito. El change detection lo disparan
+  signals + event bindings, sin monkey-patching. Esto **verifica que la librería
+  funciona en Angular zoneless** — `@shibui-ui/ui` son web components (Lit),
+  agnósticos a la estrategia de CD.
+- **Carrera del listener (flaky resuelto)** — el listener de `ui-lib-modal-close`
+  se monta en `ngAfterViewInit`. El `beforeEach` espera la señal explícita
+  `window.__modalListenerReady__` (que el fixture expone al montarlo) en vez de
+  asumir que ya está; sin eso, pulsar Escape antes de tiempo causaba timeout
+  intermitente de 30s. El evento del modal es síncrono — el fallo era la carrera,
+  no lentitud.
 
 ---
 
