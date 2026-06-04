@@ -981,7 +981,7 @@
         height: 64px;
         background: oklch(22% 0.03 175deg / .92);
         backdrop-filter: blur(14px);
-        border-bottom: 1px solid oklch(45.54% 0.059 173.23deg / .15);
+        border-bottom: 1px solid color-mix(in oklch, var(--color-celadon-500), transparent 85%);
         padding: 0 var(--lib-space-xl);
         gap: var(--lib-space-xl);
     }
@@ -996,11 +996,11 @@
         height: 1px;
         background: linear-gradient(90deg,
                 transparent,
-                oklch(45.54% 0.059 173.23deg / .3) 20%,
+                color-mix(in oklch, var(--color-celadon-500), transparent 70%) 20%,
                 var(--color-celadon-400) 40%,
                 oklch(75% 0.08 172deg / .9) 50%,
                 var(--color-celadon-400) 60%,
-                oklch(45.54% 0.059 173.23deg / .3) 80%,
+                color-mix(in oklch, var(--color-celadon-500), transparent 70%) 80%,
                 transparent);
         background-size: 200% 100%;
         animation: hdr-celadon-seam 6s linear infinite;
@@ -1020,8 +1020,8 @@
 
     /* Logo mark */
     :host([variant="celadon"]) .hdr-logo-mark {
-        background: oklch(58.33% 0.068 171.21deg / .15);
-        border: 1px solid oklch(58.33% 0.068 171.21deg / .35);
+        background: color-mix(in oklch, var(--color-celadon-400), transparent 85%);
+        border: 1px solid color-mix(in oklch, var(--color-celadon-400), transparent 65%);
         color: var(--color-celadon-300);
     }
 
@@ -1048,7 +1048,7 @@
     /* Dropdown */
     :host([variant="celadon"]) .hdr-dd-menu {
         background: oklch(18% 0.025 178deg);
-        border-color: oklch(45.54% 0.059 173.23deg / .25);
+        border-color: color-mix(in oklch, var(--color-celadon-500), transparent 75%);
     }
 
     :host([variant="celadon"]) .hdr-dd-item {
@@ -1056,20 +1056,20 @@
     }
 
     :host([variant="celadon"]) .hdr-dd-item:hover {
-        background: oklch(58.33% 0.068 171.21deg / .08);
+        background: color-mix(in oklch, var(--color-celadon-400), transparent 92%);
         color: var(--color-celadon-300);
     }
 
     /* CTA celadon */
     .hdr-action--celadon {
         background: transparent;
-        border: 1px solid oklch(45.54% 0.059 173.23deg / .45);
+        border: 1px solid color-mix(in oklch, var(--color-celadon-500), transparent 55%);
         color: var(--color-celadon-400);
     }
 
     .hdr-action--celadon:hover {
         border-color: var(--color-celadon-400);
-        background: oklch(58.33% 0.068 171.21deg / .10);
+        background: color-mix(in oklch, var(--color-celadon-400), transparent 90%);
         color: var(--color-celadon-300);
     }
 
