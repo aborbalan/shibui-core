@@ -39,6 +39,16 @@ fn get_home_dir() -> Result<String, String> {
 }
 
 #[tauri::command]
+fn read_file(path: String) -> Result<String, String> {
+    app_tauri_core::fs::read_file(&path)
+}
+
+#[tauri::command]
+fn write_file(path: String, content: String) -> Result<(), String> {
+    app_tauri_core::fs::write_file(&path, &content)
+}
+
+#[tauri::command]
 fn get_git_log(path: String, max_count: Option<u32>) -> Result<Vec<GitCommit>, String> {
     app_tauri_core::git::get_git_log(&path, max_count)
 }
@@ -60,6 +70,8 @@ pub fn run() {
             get_network_detail,
             list_dir,
             get_home_dir,
+            read_file,
+            write_file,
             get_git_log,
             get_project_info,
         ])
