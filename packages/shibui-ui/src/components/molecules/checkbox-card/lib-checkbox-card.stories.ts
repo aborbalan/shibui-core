@@ -2,7 +2,9 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { expect, fireEvent } from 'storybook/test';
 import './lib-checkbox-card.component';
+import type { LibCheckboxCard } from './lib-checkbox-card.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
+import { katachiContext, expectAccentMatchesToken, expectTranslucentBackground } from '../../../stories/katachi-accent.helper';
 
 const meta: Meta = {
   title: 'Universal/Forms/Checkbox Card',
@@ -390,5 +392,51 @@ export const TestDisabledCheckboxCard: Story = {
     const input = el.shadowRoot!.querySelector('input.cc-input') as HTMLInputElement;
 
     expect(input.disabled).toBe(true);
+  },
+};
+
+/* ── Acento de selección sigue al katachi (PR #448 + dark-katachi fix) ──
+   Invariante: bajo cualquier katachi OSCURO el checked adopta el token de
+   acento del katachi (jade·oro·phosphor…), no el primitivo kaki cálido, y
+   sobre un fondo translúcido (legible). Ver katachi-accent.helper.ts y
+   celadon-audit.md § Inconsistencias. */
+export const TestAccentCeladon: Story = {
+  name: 'Test · accent de selección sigue al katachi (celadon)',
+  tags: ['test'],
+  render: (): TemplateResult => katachiContext('celadon', html`
+    <lib-checkbox-card value="sabi" card-title="Sabi" desc="Patina del tiempo" checked></lib-checkbox-card>
+  `),
+  play: async ({ canvasElement }): Promise<void> => {
+    const ctx = canvasElement.querySelector('[data-katachi="celadon"]') as HTMLElement;
+    const host = ctx.querySelector('lib-checkbox-card') as LibCheckboxCard;
+    await host.updateComplete;
+    const sr = host.shadowRoot!;
+
+    // El check relleno usa --text-accent; el borde del body usa --border-focus.
+    // Ambos deben resolver al acento jade del katachi celadon, no a kaki.
+    expectAccentMatchesToken(sr.querySelector('.cc-check')!, 'backgroundColor', ctx, '--text-accent');
+    expectAccentMatchesToken(sr.querySelector('.cc-body')!, 'borderTopColor', ctx, '--border-focus');
+  },
+};
+
+/* Kintsugi: regresión del bug de texto invisible. El checked debe adoptar el
+   acento del katachi (oro) sobre un fondo TRANSLÚCIDO oscuro — no el bloque
+   claro opaco kaki-50 que volvía el texto ilegible. */
+export const TestAccentKintsugi: Story = {
+  name: 'Test · accent + legibilidad del seleccionado (kintsugi)',
+  tags: ['test'],
+  render: (): TemplateResult => katachiContext('kintsugi', html`
+    <lib-checkbox-card value="k" card-title="Kintsugi" desc="Reparado con oro" checked></lib-checkbox-card>
+  `),
+  play: async ({ canvasElement }): Promise<void> => {
+    const ctx = canvasElement.querySelector('[data-katachi="kintsugi"]') as HTMLElement;
+    const host = ctx.querySelector('lib-checkbox-card') as LibCheckboxCard;
+    await host.updateComplete;
+    const sr = host.shadowRoot!;
+
+    // El acento sigue al katachi (oro), no el kaki fijo.
+    expectAccentMatchesToken(sr.querySelector('.cc-check')!, 'backgroundColor', ctx, '--text-accent');
+    // Fondo translúcido → compone oscuro bajo kintsugi → texto legible (guard del bug).
+    expectTranslucentBackground(sr.querySelector('.cc-body')!);
   },
 };
