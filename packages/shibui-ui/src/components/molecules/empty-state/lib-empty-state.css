@@ -211,9 +211,9 @@
   }
 
   :host([tone="info"]) .es-icon-wrap {
-    background: var(--color-celadon-100);
-    color: var(--color-celadon-500);
-    border-color: var(--color-celadon-100);
+    background: var(--info-bg-2);
+    color: var(--info);
+    border-color: var(--info-bg-2);
   }
 
   :host([tone="error"]) .es-icon-wrap {

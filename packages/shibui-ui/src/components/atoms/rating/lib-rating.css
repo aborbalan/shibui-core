@@ -162,11 +162,11 @@
 
   /* Celadon */
   :host([color="info"]) .rt-item.is-filled {
-    color: var(--color-celadon-500);
+    color: var(--info);
   }
 
   :host([color="info"]) .rt-item.is-preview {
-    color: var(--color-celadon-400);
+    color: var(--info-line);
     opacity: 0.45;
   }
 
@@ -206,7 +206,7 @@
   }
 
   :host([color="info"]) .rt-half-fill {
-    color: var(--color-celadon-500);
+    color: var(--info);
   }
 
   /* ────────────────────────────────────────

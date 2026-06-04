@@ -179,8 +179,8 @@
         border-color: var(--color-kaki-100);
             color: var(--color-kaki-500); }
 
-  .mo-header-icon.is-secondary { background: var(--color-celadon-50);
-     border-color: var(--color-celadon-100); color: var(--color-celadon-500); }
+  .mo-header-icon.is-secondary { background: var(--info-bg);
+     border-color: var(--info-bg-2); color: var(--info); }
 
   .mo-header-icon.is-error   { background: #F5DDD9;
      border-color: #F5DDD9;

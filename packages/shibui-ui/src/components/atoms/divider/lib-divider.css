@@ -137,7 +137,7 @@
   }
 
   :host([color="info"]) .dv__line {
-    background: var(--color-celadon-500);
+    background: var(--info);
     height: 2px;
   }
 
@@ -171,7 +171,7 @@
 
   /* Ornamentos heredan color del modificador */
   :host([color="accent"])    .dv__ornament { background: var(--color-kaki-500); }
-  :host([color="info"]) .dv__ornament { background: var(--color-celadon-500); }
+  :host([color="info"]) .dv__ornament { background: var(--info); }
 
   /* ============================================================
      LABELS
@@ -327,10 +327,10 @@
       overflow: hidden;
       background: linear-gradient(
         90deg,
-        var(--color-celadon-600)  0%,
-        var(--color-celadon-500) 30%,
-        var(--color-celadon-300) 65%,
-        var(--color-celadon-400) 100%
+        var(--info-text)  0%,
+        var(--info) 30%,
+        var(--info-soft) 65%,
+        var(--info-line) 100%
       );
       height: 2px;
     }
@@ -354,10 +354,10 @@
     :host([orientation="vertical"]):host-context([data-katachi="celadon"]) .dv__line {
       background: linear-gradient(
         to bottom,
-        var(--color-celadon-600)  0%,
-        var(--color-celadon-500) 30%,
-        var(--color-celadon-300) 65%,
-        var(--color-celadon-400) 100%
+        var(--info-text)  0%,
+        var(--info) 30%,
+        var(--info-soft) 65%,
+        var(--info-line) 100%
       );
       height: auto;
       width: 2px;
@@ -367,21 +367,21 @@
       background: linear-gradient(
         to right,
         transparent              0%,
-        var(--color-celadon-500) 20%,
-        var(--color-celadon-300) 50%,
-        var(--color-celadon-500) 80%,
+        var(--info) 20%,
+        var(--info-soft) 50%,
+        var(--info) 80%,
         transparent             100%
       );
     }
 
     :host([style-variant="heavy"]):host-context([data-katachi="celadon"]) .dv__line {
-      background: var(--color-celadon-400);
+      background: var(--info-line);
       height: 3px;
     }
 
     :host-context([data-katachi="celadon"]) .dv__ornament--dot,
     :host-context([data-katachi="celadon"]) .dv__ornament--diamond {
-      background: var(--color-celadon-400);
+      background: var(--info-line);
     }
 
     :host-context([data-katachi="celadon"]) .dv__label--mono {

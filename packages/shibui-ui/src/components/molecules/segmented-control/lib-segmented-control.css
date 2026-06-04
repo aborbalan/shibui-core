@@ -319,7 +319,7 @@
   }
 
   :host([variant="info"]) .seg-thumb {
-    background: var(--color-celadon-500);
+    background: var(--info);
     top: 3px;
     bottom: 3px;
   }
@@ -554,7 +554,7 @@
   }
 
   :host([glitch]) .seg-option.is-active::after {
-    color: var(--color-celadon-400);
+    color: var(--info-line);
     mix-blend-mode: screen;
   }
 

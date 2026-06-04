@@ -335,19 +335,19 @@
 
   /* ── Celadón ── */
   .tip-info .tip-bubble {
-    background: var(--color-celadon-500);
+    background: var(--info);
     color: var(--color-white);
   }
 
   .tip-info[data-pos="top"] .tip-bubble::after,
-  .tip-info:not([data-pos]) .tip-bubble::after     { border-top-color:    var(--color-celadon-500); }
-  .tip-info[data-pos="bottom"] .tip-bubble::after  { border-bottom-color: var(--color-celadon-500); }
-  .tip-info[data-pos="left"] .tip-bubble::after    { border-left-color:   var(--color-celadon-500); }
-  .tip-info[data-pos="right"] .tip-bubble::after   { border-right-color:  var(--color-celadon-500); }
-  .tip-info[data-pos="top-start"] .tip-bubble::after    { border-top-color:    var(--color-celadon-500); }
-  .tip-info[data-pos="top-end"] .tip-bubble::after      { border-top-color:    var(--color-celadon-500); }
-  .tip-info[data-pos="bottom-start"] .tip-bubble::after { border-bottom-color: var(--color-celadon-500); }
-  .tip-info[data-pos="bottom-end"] .tip-bubble::after   { border-bottom-color: var(--color-celadon-500); }
+  .tip-info:not([data-pos]) .tip-bubble::after     { border-top-color:    var(--info); }
+  .tip-info[data-pos="bottom"] .tip-bubble::after  { border-bottom-color: var(--info); }
+  .tip-info[data-pos="left"] .tip-bubble::after    { border-left-color:   var(--info); }
+  .tip-info[data-pos="right"] .tip-bubble::after   { border-right-color:  var(--info); }
+  .tip-info[data-pos="top-start"] .tip-bubble::after    { border-top-color:    var(--info); }
+  .tip-info[data-pos="top-end"] .tip-bubble::after      { border-top-color:    var(--info); }
+  .tip-info[data-pos="bottom-start"] .tip-bubble::after { border-bottom-color: var(--info); }
+  .tip-info[data-pos="bottom-end"] .tip-bubble::after   { border-bottom-color: var(--info); }
 
 
   /* ════════════════════════════════════════
