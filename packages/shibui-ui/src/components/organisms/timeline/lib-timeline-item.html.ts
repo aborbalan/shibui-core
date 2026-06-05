@@ -7,6 +7,7 @@ export function timelineItemTemplate(props: TimelineItemTemplateProps): Template
     nodeType, nodeColor, icon, avatar,
     status, lineVariant, lineProgress, hideLine,
     timestamp, title, body, card, collapsed, collapsible,
+    tooltip, tooltipPosition, tooltipVariant, hasTooltipSlot,
     onToggleCollapse,
   } = props;
 
@@ -18,9 +19,10 @@ export function timelineItemTemplate(props: TimelineItemTemplateProps): Template
   ].filter(Boolean).join(' ');
 
   /* ── Clases del nodo ── */
+  const hasTooltip = Boolean(tooltip) || hasTooltipSlot;
   const nodeTypeCls = `tl-node-${nodeType}`;
   const nodeColorCls = nodeColor !== 'default' ? `nd-${nodeColor}` : '';
-  const nodeCls = `tl-node ${nodeTypeCls} ${nodeColorCls}`.trim();
+  const nodeCls = `tl-node ${nodeTypeCls} ${nodeColorCls} ${hasTooltip ? 'has-tip' : ''}`.trim();
 
   /* ── Nodo interior ── */
   const nodeInner = nodeType === 'icon'
@@ -28,6 +30,25 @@ export function timelineItemTemplate(props: TimelineItemTemplateProps): Template
     : nodeType === 'avatar'
       ? html`${avatar}`
       : nothing; /* dot — nodo gestionado por CSS ::before/::after */
+
+  /* ── Nodo: bare o envuelto en tooltip ──
+     Cuando hay tooltip, el nodo (dot/icon/avatar) actúa como trigger
+     del átomo lib-tooltip. El contenido rico se reenvía vía slot. */
+  const nodeBare = html`<div class="${nodeCls}">${nodeInner}</div>`;
+  const nodeBlock = hasTooltip
+    ? html`
+        <lib-tooltip
+          class="tl-node-tip"
+          position="${tooltipPosition}"
+          variant="${tooltipVariant}"
+          content="${tooltip}"
+        >
+          ${nodeBare}
+          ${hasTooltipSlot
+            ? html`<span slot="content"><slot name="tooltip"></slot></span>`
+            : nothing}
+        </lib-tooltip>`
+    : nodeBare;
 
   /* ── Línea ── */
   const lineCls = [
@@ -71,7 +92,7 @@ export function timelineItemTemplate(props: TimelineItemTemplateProps): Template
 
       <!-- ── Spine: nodo + línea ── -->
       <div class="tl-spine">
-        <div class="${nodeCls}">${nodeInner}</div>
+        ${nodeBlock}
         ${hideLine
           ? nothing
           : html`<div class="${lineCls}" style="${lineStyles}"></div>`}

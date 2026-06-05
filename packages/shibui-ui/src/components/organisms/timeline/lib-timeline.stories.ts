@@ -210,6 +210,62 @@ export const LineVariants: Story = {
 };
 
 /* ================================================================
+   Tooltips en el nodo — texto simple · contenido rico
+   ================================================================ */
+export const NodeTooltips: Story = {
+  name: 'Tooltips en el nodo',
+  render: (): TemplateResult => html`
+    <div style="max-width:480px;padding:var(--lib-space-xl);">
+      <p style="font-size:var(--text-sm);color:var(--text-muted);margin-bottom:var(--lib-space-lg);">
+        Pasa el cursor sobre cada nodo para ver el tooltip.
+      </p>
+      <lib-timeline>
+
+        <!-- Texto simple via prop -->
+        <lib-timeline-item
+          status="done"
+          node-type="icon"
+          node-color="info"
+          icon="check-circle"
+          timestamp="Hoy · 10:30"
+          title="Pedido entregado"
+          body="Hover sobre el nodo para ver el detalle."
+          tooltip="Entregado a las 10:32 por mensajero · Firma: A. García"
+        ></lib-timeline-item>
+
+        <!-- Variante accent -->
+        <lib-timeline-item
+          status="active"
+          node-color="accent"
+          timestamp="Ayer · 14:00"
+          title="En tránsito"
+          body="Tooltip con variante accent."
+          tooltip="Salida de delegación Madrid · ETA 18:00"
+          tooltip-variant="accent"
+        ></lib-timeline-item>
+
+        <!-- Contenido rico via slot -->
+        <lib-timeline-item
+          node-type="avatar"
+          avatar="JR"
+          timestamp="12 Feb 2025"
+          title="Pedido registrado"
+          body="Tooltip con contenido rico (slot)."
+          tooltip-variant="light"
+          ?hide-line="${true}"
+        >
+          <span slot="tooltip">
+            <span class="tip-title">Juan Ramírez</span>
+            <span class="tip-body">Registró el pedido y validó el pago manualmente.</span>
+          </span>
+        </lib-timeline-item>
+
+      </lib-timeline>
+    </div>
+  `,
+};
+
+/* ================================================================
    Collapsible
    ================================================================ */
 export const Collapsible: Story = {

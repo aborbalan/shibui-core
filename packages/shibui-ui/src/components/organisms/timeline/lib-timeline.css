@@ -62,6 +62,16 @@
     transition: transform var(--duration-base), box-shadow var(--duration-base);
   }
 
+  /* Node con tooltip — el nodo es trigger de lib-tooltip */
+  .tl-node-tip {
+    position: relative;
+    z-index: 2; /* sobre la línea y por encima de ítems vecinos al abrir */
+  }
+
+  .tl-node.has-tip {
+    cursor: help;
+  }
+
   /* Dot */
   .tl-node-dot {
     background: var(--bg-elevated);
