@@ -1,23 +1,20 @@
 /* ============================================================
    LIB-BAR-CHART — Tipos e interfaces
+   Reutiliza los tipos compartidos de models/ui/charts.
    ============================================================ */
+
+import type { ChartSeries, ChartTooltip } from '../../../../models/ui/charts';
 
 export type BarChartMode = 'grouped' | 'stacked';
 
-export interface BarSeries {
-  name:   string;
-  values: number[];
-}
+/** @deprecated Usar `ChartSeries` de models/ui/charts. Alias por compatibilidad. */
+export type BarSeries = ChartSeries;
 
-export interface BarTooltip {
-  x:       number;
-  y:       number;
-  content: string;
-  color:   string;
-}
+/** @deprecated Usar `ChartTooltip` de models/ui/charts. Alias por compatibilidad. */
+export type BarTooltip = ChartTooltip;
 
 export interface BarChartTemplateProps {
-  series:     BarSeries[];
+  series:     ChartSeries[];
   categories: string[];
   colors:     readonly string[];
   xLabel:     string;
@@ -27,7 +24,7 @@ export interface BarChartTemplateProps {
   mode:       BarChartMode;
   height:     number;
   svgWidth:   number;
-  tooltip:    BarTooltip | null;
+  tooltip:    ChartTooltip | null;
   onBarEnter: (e: MouseEvent, seriesIndex: number, categoryIndex: number, value: number) => void;
   onBarLeave: () => void;
 }
