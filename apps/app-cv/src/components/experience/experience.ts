@@ -22,10 +22,12 @@ import { SectionHeading } from '../section-heading/section-heading';
             node-type="dot"
             [nodeColor]="job.highlight ? 'accent' : 'default'"
             [timestamp]="job.period"
-            [title]="job.company"
             card
           >
             <div class="xp__body">
+              <!-- Empresa por interpolación (no [title]: colisiona con el
+                   atributo nativo y rompe el escapado del '&' en 1&ABS) -->
+              <h3 class="xp__company">{{ job.company }}</h3>
               <p class="xp__role">
                 {{ job.role }}
                 @if (job.location) {
@@ -54,6 +56,15 @@ import { SectionHeading } from '../section-heading/section-heading';
       :host {
         display: block;
       }
+      .xp__company {
+        margin: 0 0 2px;
+        font-family: var(--lib-font-display, serif);
+        font-weight: var(--weight-medium, 500);
+        font-size: var(--text-xl, 1.5rem);
+        line-height: var(--leading-tight, 1.2);
+        color: var(--text-primary);
+        overflow-wrap: anywhere;
+      }
       .xp__role {
         margin: 0 0 var(--lib-space-sm, 8px);
         font-family: var(--lib-font-mono, monospace);
@@ -75,6 +86,7 @@ import { SectionHeading } from '../section-heading/section-heading';
         gap: var(--lib-space-sm, 8px);
         color: var(--text-secondary);
         line-height: var(--leading-relaxed, 1.8);
+        overflow-wrap: anywhere;
       }
       .xp__stack {
         display: flex;
