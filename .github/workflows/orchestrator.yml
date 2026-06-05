@@ -30,6 +30,10 @@ on:
         description: "Forzar pipeline Svelte App"
         type: boolean
         default: false
+      force_cv:
+        description: "Forzar pipeline CV App"
+        type: boolean
+        default: false
       force_api:
         description: "Forzar pipeline API"
         type: boolean
@@ -59,6 +63,7 @@ jobs:
       react:       ${{ steps.resolve.outputs.react }}
       angular:     ${{ steps.resolve.outputs.angular }}
       svelte:      ${{ steps.resolve.outputs.svelte }}
+      cv:          ${{ steps.resolve.outputs.cv }}
       api:         ${{ steps.resolve.outputs.api }}
       tauri:       ${{ steps.resolve.outputs.tauri }}
     steps:
@@ -85,6 +90,7 @@ jobs:
             react:   'apps/app-react/**'
             angular: 'apps/app-angular/**'
             svelte:  'apps/app-svelte/**'
+            cv:      'apps/app-cv/**'
             api:     'apps/shibui-api/**'
             tauri:   'apps/app-tauri/**'
 
@@ -97,6 +103,7 @@ jobs:
           echo "react=$([[ '${{ steps.filter.outputs.react }}' == 'true' || '${{ inputs.force_react }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "angular=$([[ '${{ steps.filter.outputs.angular }}' == 'true' || '${{ inputs.force_angular }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "svelte=$([[ '${{ steps.filter.outputs.svelte }}' == 'true' || '${{ inputs.force_svelte }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "cv=$([[ '${{ steps.filter.outputs.cv }}' == 'true' || '${{ inputs.force_cv }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "api=$([[ '${{ steps.filter.outputs.api }}' == 'true' || '${{ inputs.force_api }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "tauri=$([[ '${{ steps.filter.outputs.tauri }}' == 'true' || '${{ inputs.force_tauri }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
 
@@ -123,13 +130,15 @@ jobs:
       needs.detect-changes.outputs.ui == 'true' ||
       needs.detect-changes.outputs.react == 'true' ||
       needs.detect-changes.outputs.angular == 'true' ||
-      needs.detect-changes.outputs.svelte == 'true'
+      needs.detect-changes.outputs.svelte == 'true' ||
+      needs.detect-changes.outputs.cv == 'true'
     uses: ./.github/workflows/ci-apps.yml
     with:
       ui:      ${{ needs.detect-changes.outputs.ui }}
       react:   ${{ needs.detect-changes.outputs.react }}
       angular: ${{ needs.detect-changes.outputs.angular }}
       svelte:  ${{ needs.detect-changes.outputs.svelte }}
+      cv:      ${{ needs.detect-changes.outputs.cv }}
       ref: ${{ github.ref }}
     secrets: inherit
 
