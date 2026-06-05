@@ -212,6 +212,75 @@ export const LineVariants: Story = {
 };
 
 /* ================================================================
+   Tooltip Playground — controles interactivos
+   ================================================================ */
+interface TooltipArgs {
+  tooltip: string;
+  tooltipPosition: 'top' | 'bottom' | 'left' | 'right'
+    | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end';
+  tooltipVariant: 'dark' | 'light' | 'accent' | 'info' | 'error';
+}
+
+export const TooltipPlayground: StoryObj<TooltipArgs> = {
+  name: 'Tooltip · Playground',
+  args: {
+    tooltip: 'Entregado a las 10:32 por mensajero · Firma: A. García',
+    tooltipPosition: 'right',
+    tooltipVariant: 'dark',
+  },
+  argTypes: {
+    tooltip: { control: 'text' },
+    tooltipPosition: {
+      control: 'select',
+      options: ['top', 'bottom', 'left', 'right',
+        'top-start', 'top-end', 'bottom-start', 'bottom-end'],
+    },
+    tooltipVariant: {
+      control: 'select',
+      options: ['dark', 'light', 'accent', 'info', 'error'],
+    },
+  },
+  render: (args): TemplateResult => html`
+    <div style="max-width:480px;padding:var(--lib-space-xl);">
+      <p style="font-size:var(--text-sm);color:var(--text-muted);margin-bottom:var(--lib-space-lg);">
+        Pasa el cursor sobre el nodo del ítem central. Ajusta el tooltip desde los controles.
+      </p>
+      <lib-timeline>
+
+        <lib-timeline-item
+          status="done"
+          timestamp="Hoy · 09:00"
+          title="Pedido registrado"
+          body="Ítem de contexto (sin tooltip)."
+        ></lib-timeline-item>
+
+        <lib-timeline-item
+          status="active"
+          node-color="accent"
+          node-type="icon"
+          icon="package"
+          timestamp="Hoy · 10:30"
+          title="Pedido entregado ← hover sobre el nodo"
+          body="Este nodo tiene el tooltip controlado por los args."
+          tooltip="${args.tooltip ?? ''}"
+          tooltip-position="${args.tooltipPosition ?? 'right'}"
+          tooltip-variant="${args.tooltipVariant ?? 'dark'}"
+        ></lib-timeline-item>
+
+        <lib-timeline-item
+          status="pending"
+          timestamp="Mañana"
+          title="Cierre de incidencia"
+          body="Ítem de contexto (sin tooltip)."
+          ?hide-line="${true}"
+        ></lib-timeline-item>
+
+      </lib-timeline>
+    </div>
+  `,
+};
+
+/* ================================================================
    Tooltips en el nodo — texto simple · contenido rico
    ================================================================ */
 export const NodeTooltips: Story = {
