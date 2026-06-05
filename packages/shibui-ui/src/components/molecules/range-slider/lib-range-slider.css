@@ -201,7 +201,7 @@
 
   /* ── Tones ──────────────────────────────────────────────── */
   :host([tone="accent"])  .rs { --rs-fill-color: var(--color-kaki-500); }
-  :host([tone="info"])    .rs { --rs-fill-color: var(--color-celadon-500); }
+  :host([tone="info"])    .rs { --rs-fill-color: var(--info); }
   :host([tone="error"])   .rs { --rs-fill-color: var(--color-error); }
   :host([tone="neutral"]) .rs { --rs-fill-color: var(--color-washi-700); }
 

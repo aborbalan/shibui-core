@@ -7,12 +7,12 @@ interface SkillsSectionProps {
 }
 
 /** Mapeo de categoría a variante de badge */
-const CATEGORY_VARIANT: Record<string, 'default' | 'accent' | 'celadon' | 'dark' | 'warning'> = {
+const CATEGORY_VARIANT: Record<string, 'default' | 'accent' | 'info' | 'strong' | 'warning'> = {
     frontend: 'accent',
     expanding: 'warning',
-    backend: 'celadon',
+    backend: 'info',
     architecture: 'default',
-    testing: 'dark',
+    testing: 'strong',
 };
 
 /** Mapeo de categoría a kanji decorativo */
@@ -34,7 +34,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
         >
             {/* Header */}
             <div style={{ marginBottom: 'var(--lib-space-2xl)' }}>
-                <LibEyebrow color="dark" size="sm" style={{ display: 'inline-flex', marginBottom: 'var(--lib-space-md)' } as React.CSSProperties}>
+                <LibEyebrow tone="accent" size="sm" style={{ display: 'inline-flex', marginBottom: 'var(--lib-space-md)' } as React.CSSProperties}>
                     Skills · Stack técnico
                 </LibEyebrow>
                 <LibDisplayHeading
@@ -56,7 +56,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
                 }}
             >
                 {skillGroups.map((group) => {
-                    const variant = CATEGORY_VARIANT[group.category] ?? 'dark';
+                    const variant = CATEGORY_VARIANT[group.category] ?? 'strong';
                     const kanji = CATEGORY_KANJI[group.category] ?? '技';
 
                     return (

@@ -607,11 +607,12 @@
        --border-default, --text-primary, --text-secondary,
        --text-muted) — hereda katachi por construcción.
 
-       Los estados checked (accent por default, info por color
-       attribute) son paletas deliberadas y no se tocan. El
-       attribute `[dark]` con rgba blanco hardcoded es una capa
-       ortogonal (sin relación con katachi); se mantiene para
-       backward compat.
+       El estado checked default usa acento kaki (cálido). Bajo
+       data-katachi="celadon" (jade frío) ese acento chocaba; ahora
+       el seleccionado adopta la paleta celadon de forma ambiental
+       —igual que color="info"— sin pedir el prop (ver bloque celadon
+       más abajo y celadon-audit.md § Inconsistencias). El attribute
+       `[dark]` (rgba blanco) sigue siendo una capa ortogonal.
 
        Efectos automáticos vía --lib-effect-*:
        • kintsugi → ring+halo dorado en .cc-body (box-shadow)
@@ -624,6 +625,62 @@
 
     .cc-body {
       box-shadow: var(--lib-effect-ring, none);
+    }
+
+    /* ── katachis oscuros · el acento de selección sigue al katachi ──
+       El checked default (kaki cálido + fondo casi blanco kaki-50)
+       rompe en TODOS los katachis oscuros:
+       • celadon → choque cálido/frío.
+       • kintsugi/wabi/terminal → fondo claro + texto semántico claro
+         = TEXTO INVISIBLE al seleccionar (bug).
+       Aquí el seleccionado consume los tokens semánticos de acento
+       (--text-accent / --border-focus) —que cada katachi remapea a su
+       acento (jade · oro · phosphor…)— + un fondo OSCURO derivado del
+       acento con color-mix. Así el texto vuelve a ser legible y el
+       acento es coherente con el contexto.
+       Selector = cualquier katachi MENOS los claros (shizen/sabi), que
+       conservan intacto el tratamiento kaki-50 claro. */
+    @supports selector(:host-context(a)) {
+      :host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"])) .cc-input:checked~.cc-body {
+        border-color: var(--border-focus);
+        background: color-mix(in oklch, var(--text-accent), transparent 90%);
+      }
+
+      :host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"])) .cc-input:checked~.cc-body::after {
+        background: linear-gradient(90deg, transparent, var(--text-accent), transparent);
+      }
+
+      :host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"])) .cc-input:checked~.cc-body .cc-check {
+        border-color: var(--border-focus);
+        background: var(--text-accent);
+      }
+
+      :host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"])) .cc-input:checked~.cc-body .cc-title,
+      :host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"])) .cc-input:checked~.cc-body .cc-price,
+      :host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"])) .cc-input:checked~.cc-body .cc-icon svg {
+        color: var(--text-accent);
+      }
+
+      :host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"])) .cc-input:checked~.cc-body .cc-badge {
+        color: var(--text-accent);
+        border-color: color-mix(in oklch, var(--text-accent), transparent 65%);
+      }
+
+      :host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"])) .cc-input:checked~.cc-body .cc-features li::before {
+        background: var(--text-accent);
+      }
+
+      :host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"])) .cc-input:checked~.cc-body .cc-divider {
+        background: color-mix(in oklch, var(--text-accent), transparent 80%);
+      }
+
+      :host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"])) .cc-ripple-dot {
+        background: var(--text-accent);
+      }
+
+      :host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"])) .cc:focus-within .cc-body {
+        outline-color: var(--border-focus);
+      }
     }
 
     /* ─── /KATACHI ───────────────────────────────────────────── */

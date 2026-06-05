@@ -101,7 +101,7 @@
 
   /* ── TONES ─────────────────────────────────────────────── */
   :host([tone="accent"])     .cnt-row { color: var(--color-kaki-500); }
-  :host([tone="info"])  .cnt-row { color: var(--color-celadon-500); }
+  :host([tone="info"])  .cnt-row { color: var(--info); }
   :host([tone="error"])    .cnt-row { color: var(--color-error); }
   :host([tone="muted"])    .cnt-row { color: var(--text-muted); }
 
@@ -142,8 +142,8 @@
     line-height: 1.6;
   }
 
-  .cnt-delta-up   { background: var(--color-celadon-100);
-     color: var(--color-celadon-600); }
+  .cnt-delta-up   { background: var(--info-bg-2);
+     color: var(--info-text); }
 
   .cnt-delta-down { background: var(--color-error-light,  #F5DDD9);
      color: var(--color-error); }

@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100%;
   padding: 2rem;
   gap: 3rem;
   background: var(--bg-base);
@@ -53,10 +53,16 @@
 
 .hub-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.875rem;
   width: 100%;
-  max-width: 520px;
+  max-width: 760px;
+}
+
+@media (max-width: 640px) {
+  .hub-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* ── Card content (slotted into lib-card) ─────────────── */
@@ -75,4 +81,10 @@
   letter-spacing: 0.05em;
   line-height: 1.55;
   color: var(--text-muted);
+}
+
+/* La tarjeta "Añadir pestaña" se distingue con borde discontinuo. */
+.hub-card-add {
+  border: 1px dashed var(--border-default) !important;
+  opacity: 0.85;
 }

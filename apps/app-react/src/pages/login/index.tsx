@@ -33,7 +33,7 @@ export function LoginPage() {
                 minHeight: '100vh',
             }}>
                 <LibGlassCard
-                    variant="kaki"
+                    variant="warm"
                     intensity="high"
                     style={{
                         width: '100%',

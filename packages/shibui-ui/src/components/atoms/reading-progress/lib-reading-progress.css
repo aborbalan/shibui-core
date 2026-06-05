@@ -184,8 +184,8 @@
 
   /* Celadón */
   :host([tone="info"]) {
-    --rp-color:       var(--color-celadon-500);
-    --rp-color-light: var(--color-celadon-400);
+    --rp-color:       var(--info);
+    --rp-color-light: var(--info-line);
     --rp-glow:        rgb(53, 113, 100, 0.25);
   }
 

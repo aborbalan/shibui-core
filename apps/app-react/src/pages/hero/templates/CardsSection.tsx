@@ -7,7 +7,7 @@ interface CardItem {
   titleAccent?: string;
   description: string;
   footer?: string;
-  variant?: 'default' | 'inverse' | 'accent' | 'featured' | 'kintsugi';
+  variant?: 'default' | 'inverse' | 'accent' | 'featured';
   /** Cuando es featured, ocupa 2 columnas */
   featured?: boolean;
 }
@@ -27,21 +27,21 @@ const DEFAULT_CARDS: CardItem[] = [
     footer:       'Featured · 2 columnas',
   },
   {
-    variant:     'kintsugi',
+    variant:     'default',
     tag:         '01–05 · Botones',
     title:       'Buttons',
     description: 'Primary, outline, ghost, liquid, group y speed dial. Kintsugi y glitch como variantes adicionales.',
     footer:      'Atom',
   },
   {
-    variant:     'kintsugi',
+    variant:     'default',
     tag:         '28–29 · Formularios',
     title:       'Inputs',
     description: 'Text inputs, select, checkbox, radio, switch, pin code y rich text editor.',
     footer:      'Molecule',
   },
   {
-    variant:     'kintsugi',
+    variant:     'default',
     tag:         '53 · 65 · 66 · Layout',
     title:       'Nav',
     description: 'Header, sidebar y tabs. Mega-nav, colapsable, icon rail, centrado editorial y kintsugi.',
@@ -53,15 +53,19 @@ export const CardsSection: React.FC<CardsSectionProps> = ({
   cards = DEFAULT_CARDS,
 }) => {
   return (
-    <section style={{
-      
-      background: 'var(--color-washi-950, #120E0A)',
-    }}>
+    /* Sección kintsugi: el seam dorado se activa por contexto (data-katachi),
+       no por prop. Las cards adaptan automáticamente (Tier B). */
+    <section
+      data-katachi="kintsugi"
+      style={{
+        background: 'var(--color-washi-950, #120E0A)',
+      }}
+    >
       <LibComponentGrid>
         {cards.map((card, i) => (
           <LibCard
             key={i}
-            variant={card.variant ?? 'kintsugi'}
+            variant={card.variant ?? 'default'}
             style={card.featured ? { gridColumn: 'span 2' } : undefined}
           >
             <span slot="tag">{card.tag}</span>

@@ -308,7 +308,7 @@ export const Celadon: Story = {
         { id: 'archive',    label: 'Archivo',    href: '#' },
         { id: 'about',      label: 'Sobre',      href: '#' },
       ]}"
-      .actions="${[{ label: '青 Explorar', href: '#', variant: 'accent' }]}"
+      .actions="${[{ label: '青 Explorar', href: '#', variant: 'celadon' }]}"
     ></lib-header>
     <div style="background:oklch(15% 0.02 180deg);padding:var(--lib-space-xl) calc(var(--lib-space-xl)*2);min-height:300px;">
       <div style="font-family:var(--lib-font-display);font-size:2.8rem;font-weight:300;
@@ -324,7 +324,7 @@ export const CeladonDecorated: Story = {
   parameters: { backgrounds: { default: 'dark' } },
   render: (): TemplateResult => html`
     <div data-katachi="celadon" style="background:var(--bg-base);padding:var(--lib-space-xl);">
-      <lib-header variant="dark"
+      <lib-header variant="celadon"
         decoration="tide condensation depth"
         brand-name="shibui"
         login-label="Entrar"
@@ -333,7 +333,7 @@ export const CeladonDecorated: Story = {
           { id: 'collection', label: 'Colección',  href: '#' },
           { id: 'archive',    label: 'Archivo',    href: '#' },
         ]}"
-        .actions="${[{ label: '青 Explorar', href: '#', variant: 'accent' }]}"
+        .actions="${[{ label: '青 Explorar', href: '#', variant: 'celadon' }]}"
       ></lib-header>
       <p style="margin-top:var(--lib-space-lg);color:var(--text-muted);font-size:var(--text-sm);">
         Bar con <code>decoration="tide condensation depth"</code> bajo

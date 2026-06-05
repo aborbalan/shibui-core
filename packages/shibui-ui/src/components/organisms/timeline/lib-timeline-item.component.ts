@@ -3,11 +3,15 @@ import { customElement, property, state } from 'lit/decorators.js';
 import timelineCss from './lib-timeline.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import { timelineItemTemplate } from './lib-timeline-item.html';
+// ✅ side-effect: registra <lib-tooltip> usado en el nodo
+import '../../atoms/tooltip/lib-tooltip.component';
 import type {
   TimelineNodeType,
   TimelineNodeColor,
   TimelineItemStatus,
   TimelineLineVariant,
+  TooltipPosition,
+  TooltipVariant,
 } from './lib-timeline-item.types';
 
 /**
@@ -28,10 +32,14 @@ import type {
  * @prop {string}              body          — Texto descriptivo (alternativa al slot)
  * @prop {boolean}             card          — Envuelve el contenido en una tarjeta con borde
  * @prop {boolean}             collapsible   — Muestra botón de expandir/contraer
+ * @prop {string}              tooltip          — Texto que muestra el nodo en hover (lib-tooltip)
+ * @prop {TooltipPosition}     tooltip-position — Posición de la burbuja (default: 'right')
+ * @prop {TooltipVariant}      tooltip-variant  — Variante de color de la burbuja (default: 'dark')
  *
  * @slot         — Contenido libre (body del evento)
  * @slot meta    — Badges, avatares y metadatos en fila
  * @slot media   — Imágenes o bloques adjuntos (solo dentro de card)
+ * @slot tooltip — Contenido rico del tooltip del nodo (tip-title, tip-body…)
  */
 @customElement('lib-timeline-item')
 export class LibTimelineItem extends LitElement {
@@ -91,6 +99,17 @@ export class LibTimelineItem extends LitElement {
 
   @state() private _collapsed = false;
 
+  /* ── Tooltip del nodo ── */
+
+  @property({ type: String })
+  tooltip = '';
+
+  @property({ type: String, attribute: 'tooltip-position' })
+  tooltipPosition: TooltipPosition = 'right';
+
+  @property({ type: String, attribute: 'tooltip-variant' })
+  tooltipVariant: TooltipVariant = 'dark';
+
   /* ── API pública ── */
 
   /** Expande el ítem si es collapsible */
@@ -121,6 +140,10 @@ export class LibTimelineItem extends LitElement {
       card:        this.card,
       collapsed:   this._collapsed,
       collapsible: this.collapsible,
+      tooltip:         this.tooltip,
+      tooltipPosition: this.tooltipPosition,
+      tooltipVariant:  this.tooltipVariant,
+      hasTooltipSlot:  this.querySelector(':scope > [slot="tooltip"]') !== null,
       onToggleCollapse: (): void => { this._collapsed = !this._collapsed; },
     });
   }

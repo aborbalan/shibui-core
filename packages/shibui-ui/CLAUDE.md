@@ -223,7 +223,7 @@ Para garantizar IntelliSense correcto en las apps consumidoras:
 
 - **React** — Extensión del namespace `JSX` en `custom-elements.d.ts`. Es obligatorio importar `React` en el archivo para que el aumento de módulo sea efectivo.
 - **Svelte** — `shibui-elements.d.ts` extendiendo `svelte/elements` para mapear atributos y eventos personalizados.
-- **Angular** — Habilitación de `CUSTOM_ELEMENTS_SCHEMA` en el módulo. `typings.d.ts` para soportar imports con sufijos `?raw` (iconos), `?inline` (CSS) y `.svg`.
+- **Angular** — Habilitación de `CUSTOM_ELEMENTS_SCHEMA` en el módulo. `typings.d.ts` para soportar imports con sufijos `?raw` (iconos), `?inline` (CSS) y `.svg`. **Agnóstico al change detection**: funciona igual con **zone.js o zoneless** (`provideZonelessChangeDetection()` + signals) — son web components (Lit), no dependen de la estrategia de CD de Angular. El consumer-test de Angular corre zoneless precisamente para verificarlo.
 
 ---
 

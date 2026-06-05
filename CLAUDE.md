@@ -10,7 +10,7 @@
 Gestionado con **pnpm workspaces** (pnpm@9.15.0, Node >=20).
 
 Workspaces declarados en `pnpm-workspace.yaml`:
-- `apps/*` — app-react, app-angular, app-svelte, app-tauri, shibui-api
+- `apps/*` — app-react, app-angular, app-svelte, app-cv, app-tauri, shibui-api
 - `packages/*` — shibui-ui (`@shibui/ui`), api-contract ⚠️ WIP — no usable
 - `cloudflare/*` — cf-cache-worker
 
@@ -49,6 +49,7 @@ Cada app/package gestiona las suyas.
 | `pnpm start:react` | Dev app React |
 | `pnpm start:svelte` | Dev app Svelte |
 | `pnpm start:angular` | Dev app Angular |
+| `pnpm start:cv` | Dev app CV (Angular) |
 | `pnpm start:api` | Dev server NestJS |
 | `pnpm start:tauri` | Dev app Tauri (Vite + ventana nativa) — requiere Rust |
 | `pnpm dev:all` | Las tres apps web frontend en paralelo (sin Tauri) |
@@ -115,11 +116,12 @@ Punto de entrada único: `.github/workflows/orchestrator.yml`
 |---|---|
 | `packages/shibui-ui/**` | `ci-lib.yml` + `ci-apps.yml` |
 | `apps/app-react\|angular\|svelte/**` | `ci-apps.yml` |
+| `apps/app-cv/**` | `ci-apps.yml` (deploy a `shibui-cv.web.app`) |
 | `apps/shibui-api/**` | `ci-api.yml` |
 | `apps/app-tauri/**` | `ci-tauri.yml` (fmt + clippy + tests sobre crate `core/`) |
 | `main` + UI cambiada | `release.yml` (tras `ci-lib` exitoso) |
 
-Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_api`.
+Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_cv`, `force_api`.
 
 Secretos necesarios en GitHub repo: `FIREBASE_TOKEN`
 

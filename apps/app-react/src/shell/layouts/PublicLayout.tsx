@@ -9,11 +9,11 @@ export function PublicLayout() {
   const activeId = pathname.replace('/', '') || 'home';
 
   return (
-    <LibBackground variant="kaki-glow">
+    <LibBackground variant="celadon-wash">
       <div style={{ width: '100%', minHeight: '100vh' }}>
         <ShibuiHeader
           showSearch={activeId === 'componentes'}
-          variant="dark"
+          variant="celadon"
           onNavLink={(id) => navigate(id === 'home' ? '/' : `/${id}`)}
         />
         <Outlet />

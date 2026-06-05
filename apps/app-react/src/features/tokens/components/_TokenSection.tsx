@@ -17,7 +17,7 @@ export const TokenSection: React.FC<TokenSectionProps> = ({
   children,
 }) => (
   <section id={id} style={{ marginBottom: '5rem', scrollMarginTop: '80px' }}>
-    <LibEyebrow color="kaki" line="left" size="sm" style={{ marginBottom: '0.75rem' }}>
+    <LibEyebrow tone="accent" line="left" size="sm" style={{ marginBottom: '0.75rem' }}>
       {eyebrow}
     </LibEyebrow>
 

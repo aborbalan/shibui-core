@@ -8,14 +8,19 @@ Cada subcarpeta es una **pantalla** (una ruta) de la app. Las rutas se conectan 
 
 ## Mapa de páginas
 
-| Carpeta | Ruta | Layout | Qué es |
-|---------|------|--------|--------|
-| `login/` | `/login` | sin layout | Pantalla de acceso. Pide la contraseña local y, al acertar, abre la 2ª ventana y entra. |
-| `hub/` | `/` | standalone (sin sidebar) | Pantalla de inicio con tarjetas de navegación. |
-| `dashboard/` | `/dashboard` | con sidebar | Grid de **gadgets** arrastrables (CPU, RAM, notas…). Ver [`../gadgets/README.md`](../gadgets/README.md). |
-| `files/` | `/files` | con sidebar | Explorador de ficheros a pantalla completa. |
-| `workspace/` | `/workspace` | standalone (sin sidebar) | Ventana del macro entorno: barra de tabs (Files / Git). Es la pantalla que abre la **2ª ventana**. |
-| `section-placeholder/` | `/code`, `/security`, `/settings` | con sidebar | Stub reutilizable para secciones aún sin construir. |
+| Carpeta | Ruta | Qué es |
+|---------|------|--------|
+| `login/` | `/login` | Pantalla de acceso. Pide la contraseña local y, al acertar, abre la 2ª ventana y entra. |
+| `main/` | `/` | **Shell de pestañas** de la ventana principal (SIN sidebar). 1ª pestaña Hub + áreas como pestañas. Ver `main/` abajo. |
+| `workspace/` | `/workspace` | Ventana del macro entorno: barra de tabs (Files / Git). Es la pantalla que abre la **2ª ventana**. |
+| `dashboard/` | — (área) | Grid de **gadgets** arrastrables (CPU, RAM, notas…). Ya no es ruta: se abre como pestaña desde el Hub. Ver [`../gadgets/README.md`](../gadgets/README.md). |
+| `files/` | — (área) | Explorador de ficheros a pantalla completa. Área, no ruta. |
+| `code/` | — (área) | **Editor estilo VS Code**: árbol de ficheros (`lib-tree-select`) + editor multi-fichero (`lib-text-editor`). Layout fijo. Opera sobre el proyecto abierto (`useProject`). |
+| `section-placeholder/` | — (área) | Stub reutilizable para áreas aún sin construir (Security, Settings). |
+
+> **Ya no hay sidebar.** `DashboardLayout` y la antigua `hub/` se eliminaron. Las
+> secciones dejaron de ser rutas (`/files`, `/code`…) y ahora se abren como
+> pestañas dentro de `main/`.
 
 ---
 

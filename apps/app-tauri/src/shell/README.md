@@ -1,60 +1,46 @@
-# shell — Enrutado y layouts
+# shell — Enrutado y barra de pestañas
 
-Contiene la configuración de rutas de la aplicación y los componentes de layout estructural.
+Configuración de rutas de la aplicación y la barra de pestañas compartida. **Ya no hay sidebar** (`DashboardLayout` se eliminó): la ventana principal usa un modelo de pestañas.
 
 ---
 
 ## AppShell (`AppShell.tsx`)
 
-Define todas las rutas con React Router. Las páginas pesadas se cargan de forma lazy:
+Define las rutas con React Router. Solo hay tres, todas lazy excepto el login:
 
 ```
-/            → HubPage          (standalone, sin sidebar)
-/login       → LoginPage        (sin layout)
-/files       → FilesPage        (con DashboardLayout)
-/dashboard   → DashboardPage    (con DashboardLayout)
-/code        → SectionPlaceholder
-/security    → SectionPlaceholder
-/settings    → SectionPlaceholder
+/login       → LoginPage     (sin layout)
+/            → MainShell     (ventana principal: shell de pestañas, SIN sidebar)
+/workspace   → WorkspacePage (2ª ventana: tabs Files/Git)
 *            → redirect a /
 ```
 
-**Patrón clave**: el Hub (`/`) vive fuera del `DashboardLayout` — es una pantalla standalone sin sidebar. El resto de secciones usan un route sin `path` que envuelve con `DashboardLayout`.
+Todas excepto `/login` están protegidas por `<AuthGuard>`.
 
-Todas las rutas excepto `/login` están protegidas por `<AuthGuard>`.
+> Las "secciones" (Files, Dashboard, Code…) ya **no son rutas**: se abren como
+> pestañas dentro de `MainShell` (ver `src/pages/main/`). Por eso `/files`,
+> `/code`, etc. desaparecieron del router.
 
 ---
 
-## DashboardLayout (`layouts/DashboardLayout.tsx`)
+## WorkspaceTabs (`WorkspaceTabs.tsx`)
 
-Layout con sidebar izquierdo fijo + área de contenido principal.
+Barra de pestañas superior reutilizable (estilo terminal/IDE, tokens de Shibui).
+Controlada: el padre mantiene `activeId` y reacciona a `onChange` / `onClose`.
 
-```
-┌──────────┬────────────────────────────┐
-│ Sidebar  │  <Outlet />                │
-│(colapsed)│  (página activa)           │
-└──────────┴────────────────────────────┘
-```
+| Prop | Para qué |
+|------|----------|
+| `tabs` | Array de `{ id, label, icon }`. |
+| `activeId` / `onChange` | Pestaña activa (controlada). |
+| `closable` + `onClose` | Muestra el botón × por pestaña y habilita cerrar (también con click central). |
+| `trailing` | Contenido a la derecha de la barra (p.ej. el botón "+" de nueva pestaña). |
 
-Usa el componente `<LibSidebar>` de Shibui UI con `variant="terminal"` y en modo colapsado por defecto.
+La usan tanto `MainShell` (ventana principal) como `WorkspacePage` (2ª ventana).
 
-### Links del sidebar (`SIDEBAR_LINKS`)
+---
 
-| id | Label | Grupo |
-|----|-------|-------|
-| `` (vacío) | Hub | Workspace |
-| `code` | Code | Workspace |
-| `files` | Files | Workspace |
-| `security` | Security | Workspace |
-| `settings` | Settings | Workspace |
-| `logout` | Salir | Sesión |
+## Modelo de pestañas
 
-El `activeId` se deriva de `pathname.replace('/', '')`, de modo que `/files` → `files`.
-
-El link `logout` no navega: llama a `logout()` de `useAuth` y redirige a `/login`.
-
-### Añadir una nueva sección
-
-1. Añadir una entrada a `SIDEBAR_LINKS` en `DashboardLayout.tsx`.
-2. Añadir la ruta correspondiente en `AppShell.tsx` dentro del bloque `<Route element={<DashboardLayout />}>`.
-3. Crear la página en `src/pages/<nombre>/`.
+El shell de la ventana principal vive en [`../pages/main/`](../pages/main/) — ver
+su lógica ahí. Resumen: la 1ª pestaña es un Hub (grid de áreas), las cards abren
+áreas como pestañas nuevas, y "Añadir pestaña" abre otro Hub.

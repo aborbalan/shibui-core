@@ -1,5 +1,6 @@
 ﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
+import { expect } from 'storybook/test';
 import './lib-text-glitch.component';
 import type { LibTextGlitch } from './lib-text-glitch.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
@@ -336,9 +337,10 @@ export const Noise: Story = {
 
 /* ═══════════════════════════════════════════════════════════════
    KATACHI · 形 · Las 6 historias estándar
-   lib-text-glitch usa palette tokens deliberados (kaki, celadon)
-   para sus efectos — la superficie contenedora (bg-base,
-   text-primary) adapta al katachi activo.
+   Los fantasmas RGB siguen el acento del katachi activo vía
+   --tg-ghost-warm (--text-accent) y --tg-ghost-cool (--text-link):
+   terminal→fósforo, celadón→jade, kintsugi→oro, wabi→neutro…
+   La superficie contenedora (bg-base, text-primary) también adapta.
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
@@ -436,4 +438,65 @@ export const ContextNav: Story = {
 
     </div>
   `,
+};
+
+
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · katachi-awareness de los fantasmas
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestGhostsFollowKatachi: Story = {
+  name: 'Test · los fantasmas siguen el acento del katachi',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <div style="display:flex;gap:var(--lib-space-lg);padding:var(--lib-space-lg);background:var(--bg-base);">
+      ${(['terminal', 'celadon'] as const).map(k => html`
+        <div data-katachi="${k}" data-ctx="${k}" style="padding:var(--lib-space-md);">
+          <span style="font-family:var(--lib-font-display);font-size:2rem;">
+            <lib-text-glitch text="渋い" variant="slice"></lib-text-glitch>
+          </span>
+        </div>
+      `)}
+      <div data-ctx="base" style="padding:var(--lib-space-md);">
+        <span style="font-family:var(--lib-font-display);font-size:2rem;">
+          <lib-text-glitch text="渋い" variant="slice"></lib-text-glitch>
+        </span>
+      </div>
+    </div>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    await customElements.whenDefined('lib-text-glitch');
+    const glitches = [...canvasElement.querySelectorAll<LibTextGlitch>('lib-text-glitch')];
+    await Promise.all(glitches.map(g => g.updateComplete));
+
+    const ctx = (name: string): { warm: string; cool: string; accent: string; link: string } => {
+      const wrap = canvasElement.querySelector(`[data-ctx="${name}"]`) as HTMLElement;
+      const glitch = wrap.querySelector('lib-text-glitch') as HTMLElement;
+      const host = getComputedStyle(glitch);
+      const surface = getComputedStyle(wrap);
+      return {
+        warm:   host.getPropertyValue('--tg-ghost-warm').trim(),
+        cool:   host.getPropertyValue('--tg-ghost-cool').trim(),
+        accent: surface.getPropertyValue('--text-accent').trim(),
+        link:   surface.getPropertyValue('--text-link').trim(),
+      };
+    };
+
+    const terminal = ctx('terminal');
+    const celadon  = ctx('celadon');
+    const base     = ctx('base');
+
+    /* 1 · cada fantasma resuelve al acento/enlace de SU katachi */
+    expect(terminal.warm).toBe(terminal.accent);
+    expect(terminal.cool).toBe(terminal.link);
+    expect(celadon.warm).toBe(celadon.accent);
+
+    /* 2 · el cálido cambia con el katachi — ya no está clavado en kaki */
+    expect(terminal.warm).not.toBe(base.warm);
+    expect(celadon.warm).not.toBe(base.warm);
+    expect(terminal.warm).not.toBe(celadon.warm);
+
+    /* 3 · sin katachi cae al acento por defecto (kaki) */
+    expect(base.warm).toBe(base.accent);
+  },
 };

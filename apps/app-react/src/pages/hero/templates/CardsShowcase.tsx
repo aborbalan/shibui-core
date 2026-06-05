@@ -64,17 +64,36 @@ export const CardsShowcase: React.FC<CardsShowcaseProps> = ({
   return (
     <section style={{ background: 'var(--color-washi-950, #120E0A)' }}>
       <LibComponentGrid style={{ '--cg-cols': 'repeat(3, 1fr)' } as React.CSSProperties}>
-        {cards.map((card, i) => (
-          <LibCard
-            key={i}
-            variant={card.variant}
-            kanji={card.kanji}
-          >
-            <span slot="tag">{card.tag}</span>
-            <h3 slot="title">{card.title}</h3>
-            <p>{card.description}</p>
-          </LibCard>
-        ))}
+        {cards.map((card, i) => {
+          /* La tarjeta Celadón estrena el efecto signature del katachi:
+             spotlight-water (foco jade reactivo al cursor) bajo data-katachi="celadon". */
+          if (card.variant === 'celadon') {
+            return (
+              <div key={i} data-katachi="celadon">
+                <lib-spotlight-card spotlight="water" style={{ display: 'block', height: '100%' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-sm)' }}>
+                    <span style={{ fontFamily: 'var(--lib-font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)' }}>
+                      {card.kanji} · {card.tag}
+                    </span>
+                    <h3 style={{ margin: 0, color: 'var(--text-primary)' }}>{card.title}</h3>
+                    <p style={{ margin: 0, color: 'var(--text-secondary)' }}>{card.description}</p>
+                  </div>
+                </lib-spotlight-card>
+              </div>
+            );
+          }
+          return (
+            <LibCard
+              key={i}
+              variant={card.variant}
+              kanji={card.kanji}
+            >
+              <span slot="tag">{card.tag}</span>
+              <h3 slot="title">{card.title}</h3>
+              <p>{card.description}</p>
+            </LibCard>
+          );
+        })}
       </LibComponentGrid>
     </section>
   );

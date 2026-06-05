@@ -83,7 +83,7 @@
 
     /* Item abierto recibe los tokens kaki via custom props */
     & ::slotted(lib-accordion-item[open]) {
-      --accordion-item-accent-border:    2px solid var(--color-kaki-400);
+      --accordion-item-accent-color:     var(--color-kaki-400);
       --accordion-item-trigger-bg:       var(--color-kaki-50);
       --accordion-item-trigger-hover-bg: var(--color-kaki-100);
       --accordion-item-body-bg:          var(--color-kaki-50);

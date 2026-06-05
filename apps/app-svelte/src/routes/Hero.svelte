@@ -124,7 +124,7 @@
 <section class="philosophy-section">
   <div class="philosophy-inner">
     <div class="philosophy-left">
-      <lib-eyebrow color="dark" size="sm" style="margin-bottom:1.5rem;display:inline-flex;">Filosofía</lib-eyebrow>
+      <lib-eyebrow tone="accent" size="sm" style="margin-bottom:1.5rem;display:inline-flex;">Filosofía</lib-eyebrow>
       <div class="philosophy-quote">
         <span>Lo bello no se anuncia.</span>
         <em>Se descubre con pausa.</em>

@@ -74,22 +74,25 @@
 
 ### `lib-avatar` · ✅
 
-> **CSS verificado.** El componente expone una prop `color` (`washi` · `kaki` · `celadon` · `dark`)
-> que controla la paleta de fondo de la cara (iniciales / icono fallback). Esta dimensión es
-> independiente de las superficies del sistema — `color="dark"` oscurece la cara del avatar
-> pero no adapta el componente a una superficie dark global. No existen variantes de superficie
-> explícitas (`variant="kintsugi"` etc.). El avatar hereda tokens del contexto sin tratamiento propio.
+> **CSS verificado.** El componente expone una prop `tone` (`neutral` · `warm` · `cool` · `inverse`)
+> que controla la paleta de fondo de la cara (iniciales / icono fallback). Es ortogonal a las
+> superficies del sistema — `tone="inverse"` oscurece la cara del avatar pero no adapta el
+> componente a una superficie dark global. No existen variantes de superficie palette-named
+> (`variant="kintsugi"` etc.). Los efectos katachi se activan vía `--lib-effect-ring`
+> (`box-shadow` en `.avatar__face`): anillo dorado + halo en kintsugi y ring brutal-mini en sabi.
+> Bajo `data-katachi="celadon"` consume `--lib-celadon-glaze` como barrido cerámico en hover
+> (`::after` recortado por el `overflow:hidden` de la cara), vía `:host-context()` como lib-button/lib-chip.
 
 #### Superficies
 
 | Superficie | Estado | Notas |
 |------------|--------|-------|
-| light | `—` | Hereda tokens; `color="washi"` / `color="kaki"` son la paleta clara natural |
-| dark | `—` | Hereda tokens; `color="dark"` oscurece la cara pero no es variante surface |
-| kintsugi | 🔲 | Sin implementar — anillo dorado pendiente |
+| light | `—` | Hereda tokens; `tone="neutral"` / `tone="warm"` son la paleta clara natural |
+| dark | `—` | Hereda tokens; `tone="inverse"` oscurece la cara pero no es variante surface |
+| kintsugi | ✅ | Anillo dorado + halo vía `--lib-effect-ring` (box-shadow en `.avatar__face`) |
 | glitch | 🔲 | Sin implementar |
-| celadón | `—` | `color="celadon"` cubre el caso de uso; no necesita variante surface |
-| washi | `—` | `color="washi"` es el default; cubre el caso de uso |
+| celadón | ✅ | `tone="cool"` para la cara + glaze cerámico (`--lib-celadon-glaze`) en hover vía `:host-context()` |
+| washi | `—` | `tone="neutral"` es el default; cubre el caso de uso |
 
 #### Efectos
 
@@ -97,8 +100,9 @@
 |--------|------------|--------|-------|
 | glass | — | `—` | No aplica: tamaño insuficiente para el efecto |
 | spotlight | — | `—` | No aplica: tamaño insuficiente para el efecto |
-| kintsugi-border | kintsugi | 🔲 | Anillo dorado sustituyendo al border actual (1px washi-300) |
-| shadow-brutal | light / washi | 🔲 | Sombra sólida 2–3px en variante square/squircle |
+| kintsugi-border | kintsugi | ✅ | Anillo dorado + halo vía `--lib-effect-ring` sobre el border (1px washi-300) |
+| shadow-brutal | sabi | ✅ | Ring brutal-mini (`2px 2px`) vía `--lib-effect-ring` en sabi |
+| celadon-glaze | celadón | ✅ | Glaze cerámico (`--lib-celadon-glaze`) en hover vía `:host-context([data-katachi="celadon"])` |
 | metal-texture | — | `—` | No aplica |
 
 ---
@@ -1149,17 +1153,22 @@
 ### `lib-checkbox-card` · ✅
 
 > **CSS verificado.** Variantes de color: `kaki` (default) · `celadon`. El estado checked activa
-> borde, fondo tintado y shimmer `::after`. Sin dark adaptation, sin kintsugi, sin glitch. Sin efectos del sistema.
+> borde, fondo tintado y shimmer `::after`. Sin efectos del sistema.
+> ✅ **Resuelto**: bajo cualquier katachi OSCURO el checked consume los tokens semánticos de acento
+> (`--text-accent`/`--border-focus`) sobre un fondo translúcido (`color-mix` @10%) vía
+> `:host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"]))`. Cada katachi
+> aplica su acento (jade·oro·phosphor·muted) y el texto vuelve a ser legible. Shizen/sabi (claros)
+> conservan el `kaki-50`. Ver `celadon-audit.md` § Inconsistencias.
 
 #### Superficies
 
 | Superficie | Estado | Notas |
 |------------|--------|-------|
 | light | ✅ | Default — bg-elevated, borde tenue, checked activa tinte kaki |
-| dark | 🔲 | Sin adaptación |
-| kintsugi | `—` | No aplica |
-| glitch | `—` | No aplica |
-| celadón | `—` | `color="celadon"` cubre el caso de uso |
+| dark | ✅ | Checked: acento del katachi + fondo translúcido oscuro (texto legible) |
+| kintsugi | ✅ | Checked oro sobre fondo oscuro (antes: 🐞 fondo claro + texto invisible) |
+| glitch (terminal) | ✅ | Checked phosphor verde sobre fondo oscuro |
+| celadón | ✅ | Checked jade ambiental (`color="celadon"` sigue disponible) |
 | washi | `—` | Default cubre el uso en washi |
 
 #### Efectos

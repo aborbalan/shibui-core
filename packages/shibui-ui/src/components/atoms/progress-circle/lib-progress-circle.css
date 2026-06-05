@@ -69,8 +69,8 @@
   :host([variant="accent"]) .pc__arc   { stroke: var(--color-kaki-500); }
   :host([variant="accent"]) .pc__track { stroke: var(--color-kaki-100); }
 
-  :host([variant="info"]) .pc__arc   { stroke: var(--color-celadon-500); }
-  :host([variant="info"]) .pc__track { stroke: var(--color-celadon-100); }
+  :host([variant="info"]) .pc__arc   { stroke: var(--info); }
+  :host([variant="info"]) .pc__track { stroke: var(--info-bg-2); }
 
   :host([variant="error"]) .pc__arc   { stroke: var(--color-error); }
   :host([variant="error"]) .pc__track { stroke: #F5DDD9; }
@@ -125,12 +125,12 @@
 
   /* ── Color del valor según variante ─────────────────────── */
   :host([variant="accent"])    .pc__value { color: var(--color-kaki-600); }
-  :host([variant="info"]) .pc__value { color: var(--color-celadon-600); }
+  :host([variant="info"]) .pc__value { color: var(--info-text); }
   :host([variant="error"])   .pc__value { color: var(--color-error); }
 
   /* ── Icono check ─────────────────────────────────────────── */
   .pc__check polyline {
-    stroke: var(--color-celadon-500);
+    stroke: var(--info);
   }
 
   :host([variant="accent"]) .pc__check polyline {

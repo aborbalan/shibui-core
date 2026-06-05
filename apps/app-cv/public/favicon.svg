@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="渋 (shibui)">
+  <defs>
+    <linearGradient id="kaki" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D97234" />
+      <stop offset="1" stop-color="#B85A1E" />
+    </linearGradient>
+  </defs>
+  <!-- Sello (hanko) kaki -->
+  <rect width="32" height="32" rx="7" fill="url(#kaki)" />
+  <!-- Marco interior del sello -->
+  <rect x="3" y="3" width="26" height="26" rx="4.5" fill="none"
+        stroke="#FAF7F4" stroke-opacity="0.35" stroke-width="1" />
+  <!-- Kanji 渋 (shibui) en papel -->
+  <text x="16" y="17" text-anchor="middle" dominant-baseline="central"
+        font-family="'Shippori Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', 'MS Mincho', serif"
+        font-size="20" font-weight="600" fill="#FAF7F4">渋</text>
+</svg>

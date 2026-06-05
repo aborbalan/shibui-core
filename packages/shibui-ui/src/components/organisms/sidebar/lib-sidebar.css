@@ -710,5 +710,16 @@
      --lib-comp-bg-inverse / --lib-comp-fg-inverse.
      ─────────────────────────────────────────────────────────── */
 
+  /* celadon · el link activo sigue al katachi: consume el token
+     semántico de acento (--text-accent / --border-focus, jade bajo
+     celadon) en vez del kaki cálido hardcodeado. Acotado a celadon. */
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="celadon"]) .sb-link.is-active {
+      color: var(--text-accent);
+      background: color-mix(in oklch, var(--text-accent), transparent 88%);
+      border-left-color: var(--border-focus);
+    }
+  }
+
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

@@ -41,6 +41,8 @@ Todos se invocan desde el frontend con `invoke('<nombre>', { ...args })` de `@ta
 | `get_network_detail` | `system::get_network_detail()` | `Vec<NetworkInterface>` | RX/TX por interfaz |
 | `list_dir` | `fs::list_dir(path)` | `Result<Vec<FsEntry>, String>` | Contenido de un directorio |
 | `get_home_dir` | `fs::home_dir()` | `Result<String, String>` | Directorio home del usuario |
+| `read_file` | `fs::read_file(path)` | `Result<String, String>` | Contenido de un fichero de texto (máx 5 MiB, UTF-8) |
+| `write_file` | `fs::write_file(path, content)` | `Result<(), String>` | Sobrescribe/crea un fichero de texto |
 | `get_git_log` | `git::get_git_log(path, max_count)` | `Result<Vec<GitCommit>, String>` | Historial de commits |
 | `get_project_info` | `project::get_project_info(path)` | `Result<ProjectInfo, String>` | Metadata del proyecto (tipo, rama git) |
 

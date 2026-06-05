@@ -62,6 +62,16 @@
     transition: transform var(--duration-base), box-shadow var(--duration-base);
   }
 
+  /* Node con tooltip — el nodo es trigger de lib-tooltip */
+  .tl-node-tip {
+    position: relative;
+    z-index: 2; /* sobre la línea y por encima de ítems vecinos al abrir */
+  }
+
+  .tl-node.has-tip {
+    cursor: help;
+  }
+
   /* Dot */
   .tl-node-dot {
     background: var(--bg-elevated);
@@ -549,6 +559,28 @@
      Refinamientos surgical pueden venir en iteraciones futuras.
      Bloque marcador para discoverability.
      ─────────────────────────────────────────────────────────── */
+
+  /* celadon · el nodo/card activo sigue al katachi: consume el token
+     semántico de acento (--text-accent / --border-focus, jade bajo
+     celadon) en vez del kaki cálido hardcodeado. Acotado a celadon. */
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="celadon"]) .tl-item.is-active .tl-node-dot {
+      border-color: var(--border-focus);
+    }
+
+    :host-context([data-katachi="celadon"]) .tl-item.is-active .tl-node-dot::after {
+      background: var(--text-accent);
+    }
+
+    :host-context([data-katachi="celadon"]) .tl-item.is-active .tl-card {
+      border-color: color-mix(in oklch, var(--text-accent), transparent 65%);
+      background: color-mix(in oklch, var(--text-accent), transparent 92%);
+    }
+
+    :host-context([data-katachi="celadon"]) .tl-line.progress::after {
+      background: var(--text-accent);
+    }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }
