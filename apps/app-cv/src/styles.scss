@@ -1,0 +1,30 @@
+/* styles.scss — base global app-cv
+ * La superficie y el color heredan del katachi activo (shizen) vía
+ * tokens semánticos de @shibui-ui/ui (cargados en angular.json).
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--lib-font-body, serif);
+  font-size: var(--text-md, 1.0625rem);
+  line-height: var(--leading-relaxed, 1.8);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--text-link, inherit);
+}

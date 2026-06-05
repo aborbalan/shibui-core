@@ -1,0 +1,90 @@
+import { Component, CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
+import { ExperienceItem } from '@data/cv';
+import { SectionHeading } from '../section-heading/section-heading';
+
+/**
+ * Experiencia en timeline (cronológico inverso). Empresas destacadas
+ * con nodo de acento. Por rol: stack (chips) + 1-2 logros.
+ * Dumb component.
+ */
+@Component({
+  selector: 'cv-experience',
+  standalone: true,
+  imports: [SectionHeading],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  template: `
+    <section class="xp">
+      <cv-section-heading title="Experiencia" />
+
+      <lib-timeline size="lg">
+        @for (job of items(); track job.company + job.period) {
+          <lib-timeline-item
+            node-type="dot"
+            [nodeColor]="job.highlight ? 'accent' : 'default'"
+            [timestamp]="job.period"
+            [title]="job.company"
+            card
+          >
+            <div class="xp__body">
+              <p class="xp__role">
+                {{ job.role }}
+                @if (job.location) {
+                  <span class="xp__loc">· {{ job.location }}</span>
+                }
+              </p>
+              <ul class="xp__achievements">
+                @for (a of job.achievements; track a) {
+                  <li>{{ a }}</li>
+                }
+              </ul>
+            </div>
+
+            <div slot="meta" class="xp__stack">
+              @for (tech of job.stack; track tech) {
+                <lib-chip size="sm">{{ tech }}</lib-chip>
+              }
+            </div>
+          </lib-timeline-item>
+        }
+      </lib-timeline>
+    </section>
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+      .xp__role {
+        margin: 0 0 var(--lib-space-sm, 8px);
+        font-family: var(--lib-font-mono, monospace);
+        font-size: var(--text-sm, 0.8125rem);
+        letter-spacing: var(--tracking-wide, 0.08em);
+        text-transform: uppercase;
+        color: var(--text-accent);
+      }
+      .xp__loc {
+        color: var(--text-muted);
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      .xp__achievements {
+        margin: 0;
+        padding-left: 1.1em;
+        display: flex;
+        flex-direction: column;
+        gap: var(--lib-space-sm, 8px);
+        color: var(--text-secondary);
+        line-height: var(--leading-relaxed, 1.8);
+      }
+      .xp__stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--lib-space-sm, 8px);
+        margin-top: var(--lib-space-md, 16px);
+      }
+    `,
+  ],
+})
+export class Experience {
+  readonly items = input.required<ExperienceItem[]>();
+}

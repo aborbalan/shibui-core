@@ -10,7 +10,7 @@
 Gestionado con **pnpm workspaces** (pnpm@9.15.0, Node >=20).
 
 Workspaces declarados en `pnpm-workspace.yaml`:
-- `apps/*` — app-react, app-angular, app-svelte, app-tauri, shibui-api
+- `apps/*` — app-react, app-angular, app-svelte, app-cv, app-tauri, shibui-api
 - `packages/*` — shibui-ui (`@shibui/ui`), api-contract ⚠️ WIP — no usable
 - `cloudflare/*` — cf-cache-worker
 
@@ -49,6 +49,7 @@ Cada app/package gestiona las suyas.
 | `pnpm start:react` | Dev app React |
 | `pnpm start:svelte` | Dev app Svelte |
 | `pnpm start:angular` | Dev app Angular |
+| `pnpm start:cv` | Dev app CV (Angular) |
 | `pnpm start:api` | Dev server NestJS |
 | `pnpm start:tauri` | Dev app Tauri (Vite + ventana nativa) — requiere Rust |
 | `pnpm dev:all` | Las tres apps web frontend en paralelo (sin Tauri) |
