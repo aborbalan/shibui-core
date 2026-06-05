@@ -31,6 +31,9 @@ import { Profile } from '@data/cv';
   `,
   styles: [
     `
+      :host {
+        display: block;
+      }
       .hero {
         min-height: 100svh;
         display: flex;
@@ -42,15 +45,17 @@ import { Profile } from '@data/cv';
       .hero__tagline {
         margin: 0;
         max-width: 46ch;
-        font-size: var(--text-xl, 1.5rem);
+        /* fluido: ~17px en móvil → 24px en desktop */
+        font-size: clamp(var(--text-md, 1.0625rem), 1rem + 1.2vw, var(--text-xl, 1.5rem));
         font-weight: var(--weight-light, 300);
         line-height: var(--leading-snug, 1.4);
         color: var(--text-secondary);
+        overflow-wrap: anywhere;
       }
       .hero__links {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--lib-space-lg, 24px);
+        gap: var(--lib-space-md, 16px) var(--lib-space-lg, 24px);
         margin-top: var(--lib-space-sm, 8px);
       }
       .hero__links a {
@@ -61,7 +66,8 @@ import { Profile } from '@data/cv';
         text-transform: uppercase;
         text-decoration: none;
         color: var(--text-primary);
-        padding-bottom: 2px;
+        /* tap target cómodo en móvil */
+        padding: 4px 0 6px;
         transition: color 0.2s ease;
       }
       .hero__links a::after {

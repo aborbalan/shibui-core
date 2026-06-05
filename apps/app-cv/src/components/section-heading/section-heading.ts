@@ -26,7 +26,8 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
         margin: var(--lib-space-xs, 4px) 0 0;
         font-family: var(--lib-font-display, serif);
         font-weight: var(--weight-medium, 500);
-        font-size: var(--text-3xl, 2.75rem);
+        /* fluido: ~32px en móvil → 44px en desktop */
+        font-size: clamp(var(--text-2xl, 2rem), 1.5rem + 2.5vw, var(--text-3xl, 2.75rem));
         line-height: var(--leading-tight, 1.2);
         letter-spacing: var(--tracking-tight, -0.02em);
         color: var(--text-primary);
