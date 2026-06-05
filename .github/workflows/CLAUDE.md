@@ -32,6 +32,7 @@ Los outputs del job `detect-changes` son la API pública hacia los pipelines.
 | `react` | `apps/app-react/**` | Activa ci-apps para React |
 | `angular` | `apps/app-angular/**` | Activa ci-apps para Angular |
 | `svelte` | `apps/app-svelte/**` | Activa ci-apps para Svelte |
+| `cv` | `apps/app-cv/**` | Activa ci-apps para CV (deploy a `shibui-cv`) |
 | `api` | `apps/shibui-api/**` | Activa ci-api |
 | `tauri` | `apps/app-tauri/**` | Activa ci-tauri |
 
@@ -83,6 +84,7 @@ if: |
 | `force_react` | Activa ci-apps para React |
 | `force_angular` | Activa ci-apps para Angular |
 | `force_svelte` | Activa ci-apps para Svelte |
+| `force_cv` | Activa ci-apps para CV |
 | `force_api` | Activa ci-api |
 | `force_tauri` | Activa ci-tauri |
 
