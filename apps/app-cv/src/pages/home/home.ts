@@ -15,26 +15,35 @@ import { profile, experience, skills, education } from '@data/cv';
   imports: [Hero, Experience, Skills, Education],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <main class="page">
-      <cv-hero [profile]="profile" />
+    <lib-background variant="kaki-glow" class="bg">
+      <main class="page">
+        <cv-hero [profile]="profile" />
 
-      <lib-divider></lib-divider>
-      <cv-experience [items]="experience" />
+        <lib-divider></lib-divider>
+        <cv-experience [items]="experience" />
 
-      <lib-divider></lib-divider>
-      <cv-skills [groups]="skills" />
+        <lib-divider></lib-divider>
+        <cv-skills [groups]="skills" />
 
-      <lib-divider></lib-divider>
-      <cv-education [items]="education" />
+        <lib-divider></lib-divider>
+        <cv-education [items]="education" />
 
-      <footer class="page__foot">
-        <span>© {{ year }} {{ profile.firstName }} {{ profile.lastName }}</span>
-        <span>{{ profile.location }}</span>
-      </footer>
-    </main>
+        <footer class="page__foot">
+          <span>© {{ year }} {{ profile.firstName }} {{ profile.lastName }}</span>
+          <span>{{ profile.location }}</span>
+        </footer>
+      </main>
+    </lib-background>
   `,
   styles: [
     `
+      :host {
+        display: block;
+      }
+      .bg {
+        display: block;
+        min-height: 100svh;
+      }
       .page {
         max-width: 760px;
         margin-inline: auto;
