@@ -46,3 +46,11 @@ export interface AxisInfo {
 
 /** Forma del marcador en la leyenda. `dot` para puntos/líneas, `square` para barras. */
 export type LegendShape = 'dot' | 'square';
+
+/** Porción de una gráfica circular (pie / donut). */
+export interface PieSlice {
+  label:  string;
+  value:  number;
+  /** Color opcional; si se omite, se asigna desde la paleta de series. */
+  color?: string;
+}
