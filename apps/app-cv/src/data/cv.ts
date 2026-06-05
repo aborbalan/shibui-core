@@ -83,7 +83,7 @@ export const experience: ExperienceItem[] = [
     highlight: true,
   },
   {
-    company: '1&ABS',
+    company: '10 Labs',
     role: 'Programador',
     location: 'Zaragoza',
     period: 'nov 2020 – nov 2021',
@@ -142,9 +142,9 @@ export const experience: ExperienceItem[] = [
 // Python, Jest, Playwright, arquitectura…) — ampliar si se desea.
 // ─────────────────────────────────────────────────────────────
 export const skills: SkillGroup[] = [
-  { label: 'Core', items: ['Angular', 'TypeScript', 'RxJS'], primary: true },
+  { label: 'Core', items: ['Angular', 'TypeScript', 'RxJS', 'SCSS', 'Lit Elements'], primary: true },
   { label: 'Tooling', items: ['Nx', 'Storybook'] },
-  { label: 'Familiar', items: ['React', 'Svelte'] },
+  { label: 'Familiar', items: ['React', 'Svelte', 'NestJS'] },
 ];
 
 // ─────────────────────────────────────────────────────────────
