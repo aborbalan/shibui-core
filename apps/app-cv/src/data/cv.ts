@@ -142,9 +142,9 @@ export const experience: ExperienceItem[] = [
 // Python, Jest, Playwright, arquitectura…) — ampliar si se desea.
 // ─────────────────────────────────────────────────────────────
 export const skills: SkillGroup[] = [
-  { label: 'Core', items: ['Angular', 'TypeScript', 'RxJS'], primary: true },
+  { label: 'Core', items: ['Angular', 'TypeScript', 'RxJS', 'SCSS', 'Lit'], primary: true },
   { label: 'Tooling', items: ['Nx', 'Storybook'] },
-  { label: 'Familiar', items: ['React', 'Svelte'] },
+  { label: 'Familiar', items: ['React', 'Svelte', 'NestJS'] },
 ];
 
 // ─────────────────────────────────────────────────────────────
