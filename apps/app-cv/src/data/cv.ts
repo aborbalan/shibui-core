@@ -83,7 +83,7 @@ export const experience: ExperienceItem[] = [
     highlight: true,
   },
   {
-    company: '1&ABS',
+    company: '10 Labs',
     role: 'Programador',
     location: 'Zaragoza',
     period: 'nov 2020 – nov 2021',
