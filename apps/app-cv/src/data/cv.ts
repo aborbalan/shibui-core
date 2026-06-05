@@ -78,7 +78,7 @@ export const experience: ExperienceItem[] = [
     stack: ['Angular', 'TypeScript', 'RxJS', 'Monorepo', 'Arq. Hexagonal', 'Express.js'],
     achievements: [
       'Diseñé una librería de acceso a datos agnóstica de estado y framework: una capa de abstracción que permite cambiar la implementación subyacente sin tocar el frontal.',
-      'Levanté la librería de componentes propia (patrón smart/dumb) de una app Angular de gran escala sobre arquitectura hexagonal en monorepo, con RxJS para los flujos reactivos.',
+      'Levanté la librería de componentes propia para Angular (patrón smart/dumb) de una app de gran escala sobre arquitectura hexagonal en monorepo, con RxJS para los flujos reactivos.',
     ],
     highlight: true,
   },
