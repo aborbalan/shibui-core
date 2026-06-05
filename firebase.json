@@ -32,6 +32,17 @@
       ]
     },
     {
+      "target": "cv",
+      "public": "apps/app-cv/dist/app-cv/browser",
+      "ignore": ["**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
       "target": "svelte",
       "public": "apps/app-svelte/dist",
       "ignore": ["**/node_modules/**"],
