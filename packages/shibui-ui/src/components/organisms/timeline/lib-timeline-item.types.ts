@@ -22,6 +22,24 @@ export type TimelineItemStatus = 'default' | 'active' | 'done' | 'error' | 'pend
 /** Variante de la línea que conecta ítems */
 export type TimelineLineVariant = 'solid' | 'dashed' | 'progress';
 
+/**
+ * Detalle del evento `ui-lib-timeline-item-click`.
+ * Se emite al activar (click / Enter / Space) un ítem `clickable` o con `href`.
+ * Es `cancelable`: llama a `preventDefault()` para anular la navegación nativa por `href`.
+ */
+export interface TimelineItemClickDetail {
+  /** Identificador libre que el consumidor asocia al ítem (routing, analytics…) */
+  value:         string;
+  /** URL de navegación, si se definió */
+  href:          string;
+  /** Título del ítem */
+  title:         string;
+  /** Timestamp del ítem */
+  timestamp:     string;
+  /** Evento DOM original (click o keydown) */
+  originalEvent: Event;
+}
+
 /** Props del template de lib-timeline-item */
 export interface TimelineItemTemplateProps {
   /* Nodo */
@@ -49,6 +67,11 @@ export interface TimelineItemTemplateProps {
   tooltipPosition: TooltipPosition;
   tooltipVariant:  TooltipVariant;
   hasTooltipSlot:  boolean;
+  /* Clickable / navegación */
+  clickable:   boolean;
+  href:        string;
   /* Handlers */
   onToggleCollapse: () => void;
+  onActivate:       (e: Event) => void;
+  onKeydown:        (e: KeyboardEvent) => void;
 }
