@@ -20,6 +20,8 @@
   --lib-effect-crt-vignette:   0;           /* CRT edge vignette opacity             */
   --lib-effect-brutal-shadow:  none;        /* offset shadow value (surfaces/medium) */
   --lib-effect-ring:           none;        /* ring + halo for pill/indicator scale  */
+  --lib-effect-ring-stroke:    transparent; /* crisp ring stroke for SVG circular comps */
+  --lib-effect-ring-glow:      none;        /* drop-shadow halo/offset for SVG shapes   */
   --lib-effect-glass-blur:     0px;         /* backdrop-filter blur                  */
   /* Top accent bar — kintsugi (animated seam) and terminal (solid phosphor bar) */
   --lib-effect-topbar-opacity: 0;           /* visibility of the 2px top accent bar  */

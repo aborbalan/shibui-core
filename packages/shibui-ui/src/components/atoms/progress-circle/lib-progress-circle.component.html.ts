@@ -62,32 +62,43 @@ export function progressCircleTemplate(props: ProgressCircleTemplateProps): Temp
       aria-valuemax=${props.max}
       aria-label=${props.indeterminate ? 'Cargando…' : `${pct}%`}
     >
-      ${svg`
-        <svg
-          width="${px}"
-          height="${px}"
-          viewBox="0 0 ${px} ${px}"
-          class="pc__svg ${props.indeterminate ? 'pc__svg--spin' : ''}"
-        >
-          <circle
-            class="pc__track"
-            cx="${px / 2}"
-            cy="${px / 2}"
-            r="${r}"
-            stroke-width="${sw}"
-          />
-          <circle
-            class="pc__arc ${props.indeterminate ? 'pc__arc--indet' : ''}"
-            cx="${px / 2}"
-            cy="${px / 2}"
-            r="${r}"
-            stroke-width="${sw}"
-            stroke-dasharray="${props.indeterminate ? `${circ * 0.3} ${circ}` : circ}"
-            stroke-dashoffset="${props.indeterminate ? 0 : offset}"
-            stroke-linecap="round"
-          />
-        </svg>
-      `}
+      <div class="pc__viz">
+        ${svg`
+          <svg
+            width="${px}"
+            height="${px}"
+            viewBox="0 0 ${px} ${px}"
+            class="pc__svg ${props.indeterminate ? 'pc__svg--spin' : ''}"
+          >
+            <circle
+              class="pc__track"
+              cx="${px / 2}"
+              cy="${px / 2}"
+              r="${r}"
+              stroke-width="${sw}"
+            />
+            <circle
+              class="pc__arc ${props.indeterminate ? 'pc__arc--indet' : ''}"
+              cx="${px / 2}"
+              cy="${px / 2}"
+              r="${r}"
+              stroke-width="${sw}"
+              stroke-dasharray="${props.indeterminate ? `${circ * 0.3} ${circ}` : circ}"
+              stroke-dashoffset="${props.indeterminate ? 0 : offset}"
+              stroke-linecap="round"
+            />
+            <!-- Anillo katachi (kintsugi): stroke SVG nítido, antialiasing nativo.
+                 Apagado por defecto (stroke transparent) — ver lib-progress-circle.css -->
+            <circle
+              class="pc__ring"
+              cx="${px / 2}"
+              cy="${px / 2}"
+              r="${r + sw / 2 + 2}"
+              fill="none"
+            />
+          </svg>
+        `}
+      </div>
 
       ${!props.bare && !props.indeterminate ? html`
         <div class="pc__label">
