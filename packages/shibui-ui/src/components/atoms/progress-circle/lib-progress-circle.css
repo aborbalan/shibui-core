@@ -37,6 +37,15 @@
     flex-shrink: 0;
   }
 
+  /* ── Capa de visualización — porta el efecto drop-shadow ──
+     Wrapper NO rotado: el filter sigue la silueta del SVG con
+     antialiasing nativo y el offset (sabi) conserva su dirección. */
+  .pc__viz {
+    display: inline-flex;
+    line-height: 0;
+    filter: var(--lib-effect-ring-glow, none);
+  }
+
   /* ── SVG — rotado para que el arco empiece arriba ──────── */
   .pc__svg {
     display: block;
@@ -63,6 +72,15 @@
     transition:
       stroke-dashoffset 700ms cubic-bezier(0, 0, 0.2, 1),
       stroke            300ms;
+  }
+
+  /* Ring katachi — anillo nítido exterior. Apagado salvo que el
+     katachi ancestro encienda --lib-effect-ring-stroke (kintsugi). */
+  .pc__ring {
+    fill: none;
+    stroke: var(--lib-effect-ring-stroke, transparent);
+    stroke-width: 1.5;
+    transition: stroke 300ms;
   }
 
   /* ── VARIANTES DE COLOR ─────────────────────────────────── */
@@ -174,24 +192,20 @@
      el track washi-200. Para variar paleta, usar [variant]
      explícito.
 
-     Efectos automáticos vía --lib-effect-*:
-     • kintsugi → ring+halo dorado en .pc (box-shadow)
-     • sabi     → ring brutal-mini en .pc (box-shadow)
-     Se añade border-radius: 50% al .pc wrapper para que el box-shadow
-     siga la forma circular del SVG (el wrapper es cuadrado por defecto).
+     Efectos automáticos vía --lib-effect-* (render SVG, no box-shadow):
+     • kintsugi → anillo dorado nítido como stroke del <circle> .pc__ring
+                  (--lib-effect-ring-stroke) + halo difuso drop-shadow
+                  sobre .pc__viz (--lib-effect-ring-glow).
+     • sabi     → offset brutal vía drop-shadow sobre .pc__viz
+                  (--lib-effect-ring-glow), siguiendo la silueta del path.
 
-     TODO: el ring via box-shadow sobre div con border-radius:50% produce
-     aliasing visible en el borde del círculo — el efecto metálico queda
-     pixelado. Solución correcta: añadir un <circle> SVG extra en
-     lib-progress-circle.html.ts como capa de ring (stroke dorado sobre
-     el track exterior, r ligeramente mayor que el track). Esto renderiza
-     con antialiasing SVG nativo y queda perfectamente suave.
+     Por qué SVG/filter y no box-shadow: un box-shadow nítido sobre un div
+     cuadrado con border-radius:50% rasteriza el borde curvo con aliasing
+     visible (escalera "pixelada") en un círculo grande. El stroke del
+     <circle> y el drop-shadow siguen la geometría antialiaseada del path,
+     quedando perfectamente suaves. El token genérico --lib-effect-ring
+     (box-shadow) se reserva para comps rectangulares (badge, chip…).
      ─────────────────────────────────────────────────────────── */
-
-  .pc {
-    border-radius: 50%;
-    box-shadow: var(--lib-effect-ring, none);
-  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

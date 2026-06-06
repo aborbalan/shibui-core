@@ -365,7 +365,7 @@ Sirve de guía al implementar efectos en componentes nuevos o al refinar los exi
 | Decoración | Mecanismo CSS | Escala mínima | Notas |
 |---|---|---|---|
 | **Seam top** | `::before` barra animada 2–3px full-width | Surface / Bar | Ilegible en pills (<28px alto) — no usar en Pill/tag ni Indicator |
-| **Ring** | `box-shadow: 0 0 0 1px oklch(kaki-400 / 0.40)` | Cualquiera | Forma cerrada con `border-radius`; no strips sin borde |
+| **Ring** | `box-shadow: 0 0 0 1px oklch(kaki-400 / 0.40)` | Cualquiera | Forma cerrada con `border-radius`; no strips sin borde. En **círculos perfectos grandes** (p.ej. `lib-progress-circle`) el box-shadow nítido aliasea — usar `<circle>` stroke SVG (`--lib-effect-ring-stroke`) + `drop-shadow` (`--lib-effect-ring-glow`) en su lugar |
 | **Halo** | Ring + `0 0 Npx oklch(kaki-400 / 0.10)` blur | Pill/tag · Indicator · Interactive | Complementa o sustituye seam en formatos pequeños |
 | **Vein** | `border-left` o `border-bottom` en gold | Surface · Interactive medium | Direccional; evoca fisura diagonal en cerámica real |
 | **Warmth bg** | `background: color-mix(in oklch, var(--bg-elevated), var(--color-kaki-400) 4–6%)` | Cualquiera con fondo sólido | Sutil; no requiere pseudo-elemento |
