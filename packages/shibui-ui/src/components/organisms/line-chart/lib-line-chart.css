@@ -1,11 +1,12 @@
 @layer tokens, reset, components;
 
 /* ============================================================
-   LIB-SCATTER-CHART — Shibui UI
+   LIB-LINE-CHART — Shibui UI
    Contexto  : app/data-viz
    Coverage  : semantic — consume tokens semánticos, katachi-aware
    El esqueleto (ejes, rejilla, tooltip, leyenda) vive en
-   shared/charts/chart-skeleton.css. Aquí solo la marca (punto).
+   shared/charts/chart-skeleton.css. Aquí solo las marcas
+   (línea, área, punto).
    ============================================================ */
 
 @layer reset {
@@ -23,13 +24,28 @@
 }
 
 @layer components {
+  /* ─── Línea ─────────────────────────────────────────── */
+
+  .line-path {
+    fill:             none;
+    stroke-width:     2;
+    stroke-linejoin:  round;
+    stroke-linecap:   round;
+  }
+
+  /* ─── Área ──────────────────────────────────────────── */
+
+  .area-path {
+    stroke:       none;
+    fill-opacity: 0.16;
+  }
+
   /* ─── Puntos ────────────────────────────────────────── */
 
   .dot {
     cursor:     pointer;
-    opacity:    0.82;
-    transition: opacity 120ms ease, filter 120ms ease;
-    stroke:     none;
+    opacity:    0.9;
+    transition: opacity 120ms ease, filter 120ms ease, r 120ms ease;
 
     &:hover {
       opacity: 1;
