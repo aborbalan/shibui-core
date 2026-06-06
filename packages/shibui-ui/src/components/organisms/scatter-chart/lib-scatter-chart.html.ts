@@ -95,7 +95,7 @@ export function scatterChartTemplate(props: ScatterChartTemplateProps): Template
         ${renderAxes(M, innerW, innerH)}
         ${renderXTicks(M, xInfo.ticks, scaleX, innerH)}
         ${renderYTicks(M, yInfo.ticks, scaleY)}
-        ${renderAxisTitles(M, xLabel, yLabel, innerW, innerH, height)}
+        ${renderAxisTitles(M, xLabel, yLabel, innerW, innerH, height, 6)}
         ${isEmpty
           ? renderEmptyState(M, innerW, innerH)
           : renderDots(series, colors, dotRadius, scaleX, scaleY, onDotEnter, onDotLeave)}

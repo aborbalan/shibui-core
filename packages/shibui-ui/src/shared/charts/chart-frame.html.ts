@@ -138,12 +138,13 @@ export function renderAxisTitles(
   innerW: number,
   innerH: number,
   height: number,
+  xOffset = 8,
 ): TemplateResult {
   return svg`
     ${xLabel ? svg`
       <text
         x=${m.left + innerW / 2}
-        y=${height - 8}
+        y=${height - xOffset}
         text-anchor="middle"
         class="axis-label"
       >${xLabel}</text>
