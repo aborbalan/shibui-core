@@ -8,6 +8,8 @@ import type { LibTimeline } from './lib-timeline.component';
 import type { LibTimelineItem } from './lib-timeline-item.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 import { katachiContext, expectAccentMatchesToken } from '../../../stories/katachi-accent.helper';
+import { expect, userEvent } from 'storybook/test';
+import type { TimelineItemClickDetail } from './lib-timeline-item.types';
 
 type Args = Partial<LibTimeline>;
 
@@ -426,6 +428,72 @@ export const WithMetaAndMedia: Story = {
 };
 
 /* ================================================================
+   Clickable — evento + navegación (caso CV)
+   ================================================================ */
+export const Clickable: Story = {
+  name: 'Clickable — evento + navegación',
+  render: (): TemplateResult => html`
+    <div style="max-width:520px;padding:var(--lib-space-xl);">
+      <p style="font-size:var(--text-sm);color:var(--text-muted);margin-bottom:var(--lib-space-lg);">
+        Haz click (o Enter/Space con foco) en cada experiencia. El evento
+        <code>ui-lib-timeline-item-click</code> se loguea en la consola; un CV
+        podría usarlo para navegar al detalle.
+      </p>
+
+      <lib-timeline
+        @ui-lib-timeline-item-click="${(e: CustomEvent<TimelineItemClickDetail>): void => {
+          // En un CV real: router.navigate(e.detail.value) o abrir e.detail.href
+          // eslint-disable-next-line no-console
+          console.log('timeline-item-click →', e.detail.value, e.detail);
+        }}"
+      >
+
+        <lib-timeline-item
+          status="done"
+          node-type="avatar"
+          avatar="SH"
+          timestamp="2023 — Hoy"
+          title="Senior Frontend · Shibui"
+          body="Design system en Lit + Web Components. Click para ver el detalle."
+          ?card="${true}"
+          ?clickable="${true}"
+          value="exp/shibui"
+        >
+          <span slot="meta" class="tl-badge tl-badge-accent">Lit</span>
+          <span slot="meta" class="tl-badge tl-badge-info">TypeScript</span>
+        </lib-timeline-item>
+
+        <lib-timeline-item
+          status="default"
+          node-type="avatar"
+          avatar="AC"
+          timestamp="2020 — 2023"
+          title="Frontend Engineer · Acme"
+          body="Navegación nativa: este abre un href en pestaña nueva."
+          ?card="${true}"
+          href="https://example.com/cv/acme"
+          target="_blank"
+          value="exp/acme"
+        >
+          <span slot="meta" class="tl-badge tl-badge-default">React</span>
+        </lib-timeline-item>
+
+        <lib-timeline-item
+          node-type="dot"
+          timestamp="2018 — 2020"
+          title="Junior Dev · Início (sin card)"
+          body="También funciona sin card: la fila de contenido es la superficie."
+          ?clickable="${true}"
+          value="exp/inicio"
+          ?hide-line="${true}"
+        ></lib-timeline-item>
+
+      </lib-timeline>
+    </div>
+  `,
+};
+
+/* ================================================================
    Tamaños — sm · md · lg
    ================================================================ */
 export const Sizes: Story = {
@@ -548,5 +616,59 @@ export const TestAccentCeladon: Story = {
     await item.updateComplete;
     const dot = item.shadowRoot!.querySelector('.tl-item.is-active .tl-node-dot') as HTMLElement;
     expectAccentMatchesToken(dot, 'borderTopColor', ctx, '--border-focus');
+  },
+};
+
+/* ── Clickable emite el evento con el detalle correcto ───────────── */
+export const TestClickEmits: Story = {
+  name: 'Test · emite ui-lib-timeline-item-click al click',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <lib-timeline>
+      <lib-timeline-item
+        title="Experiencia"
+        timestamp="2023"
+        ?card="${true}"
+        ?clickable="${true}"
+        value="exp/1"
+      ></lib-timeline-item>
+    </lib-timeline>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const item = canvasElement.querySelector('lib-timeline-item') as LibTimelineItem;
+    await item.updateComplete;
+
+    let detail: TimelineItemClickDetail | undefined;
+    item.addEventListener('ui-lib-timeline-item-click', (e: Event): void => {
+      detail = (e as CustomEvent<TimelineItemClickDetail>).detail;
+    });
+
+    const card = item.shadowRoot!.querySelector('.tl-card.tl-clickable') as HTMLElement;
+    await expect(card).toBeTruthy();
+    await expect(card.getAttribute('role')).toBe('button');
+    await expect(card.getAttribute('tabindex')).toBe('0');
+
+    await userEvent.click(card);
+
+    await expect(detail).toBeTruthy();
+    await expect(detail!.value).toBe('exp/1');
+    await expect(detail!.title).toBe('Experiencia');
+  },
+};
+
+/* ── No-clickable no expone superficie interactiva ───────────────── */
+export const TestNotClickable: Story = {
+  name: 'Test · sin clickable/href no hay superficie interactiva',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <lib-timeline>
+      <lib-timeline-item title="Solo lectura" ?card="${true}"></lib-timeline-item>
+    </lib-timeline>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const item = canvasElement.querySelector('lib-timeline-item') as LibTimelineItem;
+    await item.updateComplete;
+    const surface = item.shadowRoot!.querySelector('.tl-clickable');
+    await expect(surface).toBeNull();
   },
 };

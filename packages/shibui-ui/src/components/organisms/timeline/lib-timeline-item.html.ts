@@ -1,4 +1,5 @@
 import { html, nothing, TemplateResult } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import type { TimelineItemTemplateProps } from './lib-timeline-item.types';
 
@@ -8,7 +9,8 @@ export function timelineItemTemplate(props: TimelineItemTemplateProps): Template
     status, lineVariant, lineProgress, hideLine,
     timestamp, title, body, card, collapsed, collapsible,
     tooltip, tooltipPosition, tooltipVariant, hasTooltipSlot,
-    onToggleCollapse,
+    clickable, href,
+    onToggleCollapse, onActivate, onKeydown,
   } = props;
 
   /* ── Clases del ítem raíz ── */
@@ -61,10 +63,28 @@ export function timelineItemTemplate(props: TimelineItemTemplateProps): Template
     ? styleMap({ '--tl-progress': `${lineProgress}%` } as Record<string, string>)
     : nothing;
 
+  /* ── Clickable / navegación ──
+     La superficie (card o contenido) se hace interactiva sin envolver en
+     <a>/<button> nativos: así no anida controles interactivos (el botón
+     collapse, links en slots…) que serían HTML inválido. Usamos role +
+     tabindex + handlers; el componente decide navegar o emitir evento. */
+  const interactive = clickable || Boolean(href);
+  const surfaceRole = href ? 'link' : 'button';
+  const surfaceAttrs = {
+    role:     interactive ? surfaceRole : undefined,
+    tabindex: interactive ? '0' : undefined,
+  };
+
   /* ── Contenido ── */
   const contentInner: TemplateResult = card
     ? html`
-        <div class="tl-card">
+        <div
+          class="tl-card ${interactive ? 'tl-clickable' : ''}"
+          role="${ifDefined(surfaceAttrs.role)}"
+          tabindex="${ifDefined(surfaceAttrs.tabindex)}"
+          @click="${interactive ? onActivate : undefined}"
+          @keydown="${interactive ? onKeydown : undefined}"
+        >
           ${title ? html`<p class="tl-title">${title}</p>` : nothing}
           <div class="tl-card-body">
             ${body ? html`<div class="tl-body">${body}</div>` : nothing}
@@ -78,14 +98,31 @@ export function timelineItemTemplate(props: TimelineItemTemplateProps): Template
             <slot name="media"></slot>
           </div>
         </div>`
-    : html`
-        ${title ? html`<p class="tl-title">${title}</p>` : nothing}
-        ${body
-          ? html`<div class="tl-body">${body}</div>`
-          : html`<div class="tl-body"><slot></slot></div>`}
-        <div class="tl-meta">
-          <slot name="meta"></slot>
-        </div>`;
+    : interactive
+      ? html`
+          <div
+            class="tl-content-clickable tl-clickable"
+            role="${ifDefined(surfaceAttrs.role)}"
+            tabindex="${ifDefined(surfaceAttrs.tabindex)}"
+            @click="${onActivate}"
+            @keydown="${onKeydown}"
+          >
+            ${title ? html`<p class="tl-title">${title}</p>` : nothing}
+            ${body
+              ? html`<div class="tl-body">${body}</div>`
+              : html`<div class="tl-body"><slot></slot></div>`}
+            <div class="tl-meta">
+              <slot name="meta"></slot>
+            </div>
+          </div>`
+      : html`
+          ${title ? html`<p class="tl-title">${title}</p>` : nothing}
+          ${body
+            ? html`<div class="tl-body">${body}</div>`
+            : html`<div class="tl-body"><slot></slot></div>`}
+          <div class="tl-meta">
+            <slot name="meta"></slot>
+          </div>`;
 
   return html`
     <div class="${itemCls}" role="listitem">
