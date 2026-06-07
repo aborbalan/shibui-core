@@ -1,0 +1,40 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-BUBBLE-CHART — Shibui UI
+   Contexto  : app/data-viz
+   Coverage  : semantic — consume tokens semánticos, katachi-aware
+   El esqueleto (ejes, rejilla, tooltip, leyenda) vive en
+   shared/charts/chart-skeleton.css. Aquí solo la marca (burbuja).
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  /* ─── Burbujas ──────────────────────────────────────────
+     fill-opacity baja para que se vean los solapes; el stroke
+     del mismo color define el contorno de cada burbuja. */
+  .bubble {
+    cursor:       pointer;
+    fill-opacity: 0.45;
+    stroke-width: 1.5;
+    transition:   fill-opacity 120ms ease, filter 120ms ease;
+
+    &:hover {
+      fill-opacity: 0.65;
+      filter:       brightness(1.08);
+    }
+  }
+}
