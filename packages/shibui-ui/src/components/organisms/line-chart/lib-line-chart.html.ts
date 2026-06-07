@@ -235,7 +235,7 @@ export function lineChartTemplate(props: LineChartTemplateProps): TemplateResult
         ${renderEmptyState(M, innerW, innerH)}
       `
     : isLinear
-      ? (() => {
+      ? ((): TemplateResult => {
           const r = buildLinearMarks(pointSeries, colors, mode, smooth, showDots, innerW, innerH, onDotEnter, onDotLeave);
           return svg`
             ${showGrid ? renderGrid({ m: M, innerW, innerH, yTicks: r.yTicks, scaleY: r.scaleY, xTicks: r.xTicks, scaleX: r.scaleX }) : nothing}
@@ -246,7 +246,7 @@ export function lineChartTemplate(props: LineChartTemplateProps): TemplateResult
             ${r.marks}
           `;
         })()
-      : (() => {
+      : ((): TemplateResult => {
           const r = buildBandMarks(series, categories, colors, mode, smooth, showDots, innerW, innerH, onDotEnter, onDotLeave);
           return svg`
             ${showGrid ? renderGrid({ m: M, innerW, innerH, yTicks: r.ticks.filter(t => t > 0), scaleY: r.scaleY }) : nothing}

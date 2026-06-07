@@ -105,7 +105,6 @@ export const WithLabels: Story = {
 
 /** Donut — hueco central vacío. */
 export const Donut: Story = {
-  name: 'Donut',
   args: { innerRatio: 0.6, slices: OS },
 };
 
