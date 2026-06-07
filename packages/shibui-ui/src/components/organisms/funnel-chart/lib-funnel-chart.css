@@ -1,0 +1,60 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-FUNNEL-CHART — Shibui UI
+   Contexto  : app/data-viz
+   Coverage  : semantic — etiquetas vía tokens; bandas con paleta fija.
+   El esqueleto (tooltip, estado vacío) vive en
+   shared/charts/chart-skeleton.css. Aquí solo las marcas.
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  /* ─── Bandas (trapecios) ────────────────────────────── */
+
+  .funnel-band {
+    cursor:       pointer;
+    opacity:      0.9;
+    stroke:       var(--bg-surface);
+    stroke-width: 2;
+    transition:   opacity 120ms ease, filter 120ms ease;
+
+    &:hover {
+      opacity: 1;
+      filter:  brightness(1.08);
+    }
+  }
+
+  /* ─── Etiquetas dentro de la banda ──────────────────────
+     Las bandas usan la paleta fija SERIES_COLORS (no cambia con
+     katachi), así que el texto usa un washi claro fijo para
+     contraste constante. */
+  .funnel-label {
+    fill:           var(--color-washi-50);
+    font-family:    inherit;
+    font-size:      12px;
+    font-weight:    600;
+    pointer-events: none;
+  }
+
+  .funnel-value {
+    fill:           var(--color-washi-50);
+    font-family:    ui-monospace, monospace;
+    font-size:      10px;
+    opacity:        0.85;
+    pointer-events: none;
+  }
+}
