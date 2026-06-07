@@ -35,6 +35,8 @@ export * from './radar-chart/lib-radar-chart.component';
 export * from './bubble-chart/lib-bubble-chart.component';
 export type { BubblePoint, BubbleSeries } from './bubble-chart/lib-bubble-chart.types';
 export * from './combo-chart/lib-combo-chart.component';
+export * from './funnel-chart/lib-funnel-chart.component';
+export type { FunnelStage } from './funnel-chart/lib-funnel-chart.types';
 export * from './scatter-chart-3d/lib-scatter-chart-3d.component';
 export type { ScatterSeries3d, ScatterPoint3d, ScatterTooltip3d } from './scatter-chart-3d/lib-scatter-chart-3d.types';
 export * from './git-graph/lib-git-graph.component';

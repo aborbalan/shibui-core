@@ -43,7 +43,8 @@ packages/shibui-ui/
             ├── gauge/
             ├── radar-chart/
             ├── bubble-chart/
-            └── combo-chart/
+            ├── combo-chart/
+            └── funnel-chart/
 ```
 
 **Regla mental:**
@@ -96,7 +97,8 @@ interface PieSlice         { label: string; value: number; color?: string; }
 ```
 
 Tipos específicos por gráfica (en su `*.types.ts`): `BubblePoint`/`BubbleSeries`,
-`GaugeZone`/`GaugeTone`, `SparklineType`/`SparklineTone`, `LineChartMode`, `BarChartMode`.
+`GaugeZone`/`GaugeTone`, `SparklineType`/`SparklineTone`, `FunnelStage`,
+`LineChartMode`, `BarChartMode`.
 
 ---
 
@@ -115,6 +117,7 @@ Todas en la categoría Storybook **`Universal/Charts/`**.
 | `lib-radar-chart` | organismo | Radar | `.axes` · `.series` (ChartSeries[]) · `max` · `levels` · `fill-opacity` |
 | `lib-bubble-chart` | organismo | Bubble | `.series` ({name,points{x,y,size}}) · `min-radius`/`max-radius` (tamaño → área, escala sqrt) |
 | `lib-combo-chart` | organismo | Combo | `.categories` · `.barSeries` · `.lineSeries` · `dual-axis` (2º eje Y) · `smooth` |
+| `lib-funnel-chart` | organismo | Funnel | `.stages` (FunnelStage[]) · `show-values` · % de conversión sobre la 1ª etapa |
 | `lib-sparkline` | **átomo** | Sparkline | `.values` · `type` line\|area\|bar · `tone` · `show-end-dot` · `min`/`max` |
 
 Notas:
@@ -143,5 +146,5 @@ Notas:
 **Estable:** la capa compartida está consolidada; `bar`/`scatter` se refactorizaron sobre
 ella sin cambios visuales (pixel-idénticos).
 
-**Pendientes propuestos** (nicho, aún no construidos): Heatmap, Histograma, Funnel,
+**Pendientes propuestos** (nicho, aún no construidos): Heatmap, Histograma,
 Treemap, Waterfall, Candlestick, Box-plot.
