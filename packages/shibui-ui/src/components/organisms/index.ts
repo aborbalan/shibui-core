@@ -29,6 +29,8 @@ export type { LineChartMode, LineAxisMode } from './line-chart/lib-line-chart.ty
 export type { ChartSeries, ChartPoint, ChartPointSeries, ChartTooltip } from '../../../models/ui/charts';
 export * from './pie-chart/lib-pie-chart.component';
 export type { PieSlice } from '../../../models/ui/charts';
+export * from './gauge/lib-gauge.component';
+export type { GaugeTone, GaugeZone } from './gauge/lib-gauge.types';
 export * from './scatter-chart-3d/lib-scatter-chart-3d.component';
 export type { ScatterSeries3d, ScatterPoint3d, ScatterTooltip3d } from './scatter-chart-3d/lib-scatter-chart-3d.types';
 export * from './git-graph/lib-git-graph.component';
