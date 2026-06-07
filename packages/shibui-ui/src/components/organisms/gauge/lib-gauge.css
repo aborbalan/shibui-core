@@ -1,0 +1,77 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-GAUGE — Shibui UI
+   Contexto  : app/data-viz
+   Coverage  : semantic — tonos vía tokens --text-*, katachi-aware.
+   El track y el texto usan tokens semánticos; el color del arco /
+   bandas / aguja se inyecta inline desde el tono (var(--text-*)).
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .gauge-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .gauge-svg {
+    display: block;
+    overflow: visible;
+  }
+
+  /* ─── Arcos ─────────────────────────────────────────── */
+
+  .gauge-track {
+    fill:           none;
+    stroke:         var(--border-subtle);
+    stroke-linecap: round;
+  }
+
+  .gauge-band,
+  .gauge-value {
+    fill:           none;
+    stroke-linecap: round;
+  }
+
+  /* ─── Aguja ─────────────────────────────────────────── */
+
+  .gauge-needle {
+    stroke-width:   2.5;
+    stroke-linecap: round;
+  }
+
+  /* ─── Texto ─────────────────────────────────────────── */
+
+  .gauge-value-text {
+    fill:        var(--text-primary);
+    font-family: inherit;
+    font-size:   26px;
+    font-weight: 700;
+  }
+
+  .gauge-caption {
+    fill:        var(--text-secondary);
+    font-family: inherit;
+    font-size:   12px;
+  }
+
+  .gauge-end {
+    fill:        var(--text-muted);
+    font-family: ui-monospace, monospace;
+    font-size:   11px;
+  }
+}

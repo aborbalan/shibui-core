@@ -1,0 +1,63 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-RADAR-CHART — Shibui UI
+   Contexto  : app/data-viz
+   Coverage  : semantic — rejilla y ejes vía tokens semánticos.
+   El esqueleto (tooltip, leyenda, estado vacío) vive en
+   shared/charts/chart-skeleton.css. Aquí solo las marcas.
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  /* ─── Rejilla ───────────────────────────────────────── */
+
+  .radar-ring {
+    fill:         none;
+    stroke:       var(--border-subtle);
+    stroke-width: 1;
+  }
+
+  .radar-spoke {
+    stroke:       var(--border-subtle);
+    stroke-width: 1;
+  }
+
+  .radar-axis-label {
+    fill:        var(--text-secondary);
+    font-family: inherit;
+    font-size:   11px;
+  }
+
+  /* ─── Series ────────────────────────────────────────── */
+
+  .radar-area {
+    stroke-width:    2;
+    stroke-linejoin: round;
+    transition:      fill-opacity 120ms ease;
+  }
+
+  .radar-vertex {
+    cursor:     pointer;
+    opacity:    0.9;
+    transition: opacity 120ms ease, filter 120ms ease;
+
+    &:hover {
+      opacity: 1;
+      filter:  brightness(1.12);
+    }
+  }
+}
