@@ -21,17 +21,17 @@
 
   @if (component().tags.length > 0) {
     <div class="tags-section">
-      <lib-eyebrow color="celadon" size="sm" class="eyebrow">Tags</lib-eyebrow>
+      <lib-eyebrow tone="accent" size="sm" class="eyebrow">Tags</lib-eyebrow>
       <div class="tags">
         @for (tag of component().tags; track tag) {
-          <lib-badge variant="dark">{{ tag }}</lib-badge>
+          <lib-badge variant="strong">{{ tag }}</lib-badge>
         }
       </div>
     </div>
   }
 
   <div class="preview-section">
-    <lib-eyebrow color="celadon" size="sm" class="eyebrow">Preview</lib-eyebrow>
+    <lib-eyebrow tone="accent" size="sm" class="eyebrow">Preview</lib-eyebrow>
     <div class="preview-area">
       <div [innerHTML]="'<' + component().tagName + '>' + component().name + '</' + component().tagName + '>'"></div>
     </div>

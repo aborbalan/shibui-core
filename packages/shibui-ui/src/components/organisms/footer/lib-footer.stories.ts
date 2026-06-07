@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import './lib-footer.component';
 import type { LibFooter } from './lib-footer.component';
@@ -58,7 +58,7 @@ const GLITCH_NAV_LINKS = [
 ];
 
 const meta: Meta<LibFooter> = {
-  title: 'Layout/Footer',
+  title: 'Universal/Layout/Footer',
   
   component: 'lib-footer',
   tags: ['autodocs'],
@@ -116,11 +116,11 @@ export const Accordion: Story = {
 /* ══════════════════════════════════════════
    03 · Kintsugi
    ══════════════════════════════════════════ */
-export const Kintsugi: Story = {
-  name: '03 · Kintsugi ✦',
+export const Inverse: Story = {
+  name: '03 · Inverse ✦',
   render: () => html`
     <lib-footer
-      variant="kintsugi"
+      variant="inverse"
       brand-name="shibui"
       brand-kanji="渋い"
       brand-sub="Design System · Zaragoza"
@@ -151,6 +151,81 @@ export const Glitch: Story = {
     ></lib-footer>
   `,
   parameters: { backgrounds: { default: 'dark' } },
+};
+
+/* ══════════════════════════════════════════
+   05 · Celadon
+   ══════════════════════════════════════════ */
+export const Celadon: Story = {
+  name: '05 · Celadon 青',
+  render: () => html`
+    <lib-footer
+      variant="celadon"
+      brand-name="shibui"
+      brand-kanji="青磁"
+      brand-sub="Design System · Zaragoza"
+      location="Zaragoza"
+      .columns=${DEFAULT_COLUMNS}
+      .legalLinks=${DEFAULT_LEGAL_LINKS}
+    ></lib-footer>
+  `,
+  parameters: { backgrounds: { default: 'dark' } },
+};
+
+export const CeladonDecorated: Story = {
+  name: '05b · Celadon — decoraciones (marea + condensación)',
+  render: () => html`
+    <lib-footer
+      variant="celadon"
+      decoration="tide condensation depth"
+      brand-name="shibui"
+      brand-kanji="青磁"
+      brand-sub="Design System · Zaragoza"
+      location="Zaragoza"
+      .columns=${DEFAULT_COLUMNS}
+      .legalLinks=${DEFAULT_LEGAL_LINKS}
+    ></lib-footer>
+  `,
+  parameters: { backgrounds: { default: 'dark' } },
+};
+
+/* ══════════════════════════════════════════
+   06 · Sabi
+   ══════════════════════════════════════════ */
+export const Sabi: Story = {
+  name: '06 · Sabi 寂',
+  render: () => html`
+    <lib-footer
+      variant="sabi"
+      brand-name="shibui"
+      brand-kanji="渋"
+      brand-sub="Design System · Zaragoza"
+      location="Zaragoza"
+      .columns=${DEFAULT_COLUMNS}
+      .legalLinks=${DEFAULT_LEGAL_LINKS}
+    ></lib-footer>
+  `,
+  parameters: { backgrounds: { default: 'paper' } },
+};
+
+/* ══════════════════════════════════════════
+   07 · Shizen
+   ══════════════════════════════════════════ */
+export const Shizen: Story = {
+  name: '07 · Shizen 自',
+  render: () => html`
+    <lib-footer
+      variant="shizen"
+      brand-name="shibui"
+      brand-kanji="渋"
+      brand-sub="Design System · Zaragoza"
+      location="Zaragoza"
+      .columns=${DEFAULT_COLUMNS}
+      .navLinks=${DEFAULT_NAV_LINKS}
+      .legalLinks=${DEFAULT_LEGAL_LINKS}
+    ></lib-footer>
+  `,
+  parameters: { backgrounds: { default: 'paper' } },
 };
 
 /* ══════════════════════════════════════════
@@ -187,9 +262,9 @@ export const AllVariants: Story = {
         .legalLinks=${DEFAULT_LEGAL_LINKS}
       ></lib-footer>
 
-      <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);background:#120E0A;">03 · Kintsugi ✦</p>
+      <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);background:#120E0A;">03 · Inverse ✦</p>
       <lib-footer
-        variant="kintsugi"
+        variant="inverse"
         brand-name="shibui"
         brand-kanji="渋い"
         brand-sub="Design System · Zaragoza"
@@ -210,6 +285,40 @@ export const AllVariants: Story = {
         .runtimeLines=${DEFAULT_RUNTIME}
         .legalLinks=${DEFAULT_LEGAL_LINKS}
       ></lib-footer>
+
+      <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);background:oklch(15% 0.02 180deg);">05 · Celadon 青</p>
+      <lib-footer
+        variant="celadon"
+        brand-name="shibui"
+        brand-kanji="青磁"
+        brand-sub="Design System · Zaragoza"
+        location="Zaragoza"
+        .columns=${DEFAULT_COLUMNS}
+        .legalLinks=${DEFAULT_LEGAL_LINKS}
+      ></lib-footer>
+
+      <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#9A8878;padding:.75rem 1rem;border-bottom:2px solid #221C16;background:#FAF7F4;">06 · Sabi 寂</p>
+      <lib-footer
+        variant="sabi"
+        brand-name="shibui"
+        brand-kanji="渋"
+        brand-sub="Design System · Zaragoza"
+        location="Zaragoza"
+        .columns=${DEFAULT_COLUMNS}
+        .legalLinks=${DEFAULT_LEGAL_LINKS}
+      ></lib-footer>
+
+      <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid #E5DDD3;background:#fff;">07 · Shizen 自</p>
+      <lib-footer
+        variant="shizen"
+        brand-name="shibui"
+        brand-kanji="渋"
+        brand-sub="Design System · Zaragoza"
+        location="Zaragoza"
+        .columns=${DEFAULT_COLUMNS}
+        .navLinks=${DEFAULT_NAV_LINKS}
+        .legalLinks=${DEFAULT_LEGAL_LINKS}
+      ></lib-footer>
     </div>
   `,
   parameters: { layout: 'fullscreen' },
@@ -219,22 +328,54 @@ export const AllVariants: Story = {
    KATACHI · 形 · Las 6 historias estándar
    lib-footer define tokens internos (--ft-*) envueltos con
    --lib-comp-* (GUITV) — adapta su superficie al katachi activo
-   sin CSS adicional. Variantes kintsugi/glitch/accordion son
+   sin CSS adicional. Variantes inverse/glitch/accordion son
    superficies oscuras deliberadas, independientes del katachi.
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-footer
-    brand-name="Shibui"
-    brand-kanji="渋"
-    brand-sub="Design System"
-    .navLinks=${[
-      { label: 'Componentes', href: '#' },
-      { label: 'Tokens', href: '#' },
-      { label: 'MIT License', href: '#' },
-    ]}
-    .legalLinks=${[{ label: 'privacy.md', href: '#' }]}
-  ></lib-footer>
+  <div style="display:flex;flex-direction:column;">
+
+    <!-- social variant -->
+    <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;padding:var(--lib-space-xs) var(--lib-space-sm);background:var(--bg-base);border:1px solid var(--border-subtle);">01 · social</p>
+    <lib-footer
+      variant="social"
+      brand-name="shibui"
+      brand-kanji="渋"
+      brand-sub="Design System"
+      location="Zaragoza"
+      github-href="#"
+      linkedin-href="#"
+      .navLinks=${[
+        { label: 'Componentes', href: '#' },
+        { label: 'Tokens', href: '#' },
+      ]}
+      .legalLinks=${[{ label: 'privacy.md', href: '#' }]}
+    ></lib-footer>
+
+    <!-- accordion variant -->
+    <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;padding:var(--lib-space-xs) var(--lib-space-sm);background:var(--bg-base);border:1px solid var(--border-subtle);">02 · accordion</p>
+    <lib-footer
+      variant="accordion"
+      brand-name="shibui"
+      brand-kanji="渋"
+      github-href="#"
+      email="hola@shibui.dev"
+      .columns=${DEFAULT_COLUMNS}
+      .legalLinks=${DEFAULT_LEGAL_LINKS}
+    ></lib-footer>
+
+    <!-- inverse variant -->
+    <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;padding:var(--lib-space-xs) var(--lib-space-sm);background:var(--bg-base);border:1px solid var(--border-subtle);">03 · inverse</p>
+    <lib-footer
+      variant="inverse"
+      brand-name="shibui"
+      brand-kanji="渋い"
+      brand-sub="Design System"
+      .columns=${DEFAULT_COLUMNS}
+      .legalLinks=${DEFAULT_LEGAL_LINKS}
+    ></lib-footer>
+
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

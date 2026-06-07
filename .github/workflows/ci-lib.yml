@@ -6,6 +6,19 @@ on:
       ui:
         type: string
         required: true
+      # ui_behavior: true cuando cambian ficheros que afectan el contrato observable
+      # desde fuera: TypeScript de componentes, tokens katachi/semánticos, o los
+      # propios ficheros de consumer-tests. CSS scoped a Shadow DOM queda excluido.
+      ui_behavior:
+        type: string
+        required: false
+        default: 'false'
+      # event: nombre del evento GitHub que desencadenó el workflow (push,
+      # pull_request, workflow_dispatch). Lo usa test-consumers para decidir si corre.
+      event:
+        type: string
+        required: false
+        default: 'push'
       ref:
         type: string
         required: true
@@ -51,6 +64,12 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: 🏗️ Build Library
         run: pnpm --filter @shibui-ui/ui build
+      - name: 📤 Upload UI Library dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-dist-${{ github.run_id }}
+          path: packages/shibui-ui/dist/
+          retention-days: 1
       - name: 🎡 Build Storybook
         run: pnpm --filter @shibui-ui/ui build-storybook
       - name: 📤 Upload Storybook artifact
@@ -79,6 +98,62 @@ jobs:
         run: pnpm --filter @shibui-ui/ui exec playwright install chromium --with-deps
       - name: 🧪 Run Story Tests
         run: pnpm --filter @shibui-ui/ui test:stories
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Consumer Contract Tests
+  # Verifica que @shibui-ui/ui se integra correctamente con React 19,
+  # Svelte 5 y Angular 21 como consumidores reales.
+  #
+  # Necesita build-ui porque los fixtures importan @shibui-ui/ui desde dist/.
+  # Corre en paralelo con test-stories (que no necesita dist/).
+  #
+  # Si falla → run-lib-pipeline.result = 'failure' → release bloqueado.
+  #
+  # Condición de ejecución (doble filtro):
+  #   1. QUÉ cambió: solo si ui_behavior == true (TS de componentes, tokens
+  #      katachi/semánticos, o ficheros de consumer-tests). CSS scoped a Shadow
+  #      DOM excluido — los tests no validan estilos internos de componentes.
+  #   2. EN QUÉ CONTEXTO: solo en PRs, ramas develop/main, o workflow_dispatch
+  #      (override manual). En pushes a feature/** o fix/** se omiten para no
+  #      penalizar cada commit de desarrollo.
+  # ─────────────────────────────────────────────────────────────────────────
+  test-consumers:
+    name: 🌐 Consumer Contract Tests (React · Svelte · Angular)
+    runs-on: ubuntu-latest
+    needs: build-ui
+    if: |
+      inputs.ui_behavior == 'true' &&
+      (inputs.event == 'pull_request' ||
+       inputs.event == 'workflow_dispatch' ||
+       inputs.ref == 'refs/heads/develop' ||
+       inputs.ref == 'refs/heads/main')
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 📥 Download UI Library dist
+        uses: actions/download-artifact@v4
+        with:
+          name: ui-dist-${{ github.run_id }}
+          path: packages/shibui-ui/dist/
+      - name: 🌐 Install Playwright Chromium
+        run: pnpm --filter @shibui/consumer-tests exec playwright install chromium --with-deps
+      - name: 🧪 Run Consumer Contract Tests
+        run: pnpm --filter @shibui/consumer-tests test
+      - name: 📤 Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: consumer-test-report-${{ github.run_id }}
+          path: packages/consumer-tests/playwright-report/
+          retention-days: 7
 
   deploy-storybook:
     name: 🚀 Deploy Storybook

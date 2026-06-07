@@ -9,7 +9,7 @@
    --accordion-item-trigger-hover-bg  fondo hover del trigger        (flush → transparent)
    --accordion-item-body-bg           fondo del body                 (accent → kaki-50)
    --accordion-item-trigger-bg        fondo del trigger abierto      (accent → kaki-50)
-   --accordion-item-accent-border     borde izquierdo del item       (accent → 2px kaki-400)
+   --accordion-item-accent-color      color barra izquierda del item (accent → kaki-400)
    --accordion-item-label-color       color del label abierto        (accent → kaki-600)
    --accordion-item-icon-color        color del icono abierto        (accent → kaki-400)
    --accordion-item-content-border    color borde top del content    (accent → kaki-200)
@@ -32,20 +32,23 @@
     --accordion-item-trigger-hover-bg: var(--bg-surface);
     --accordion-item-body-bg:          var(--bg-elevated);
     --accordion-item-trigger-bg:       var(--bg-elevated);
-    --accordion-item-accent-border:    2px solid transparent;
+    --accordion-item-accent-color:     transparent;
     --accordion-item-label-color:      var(--text-primary);
     --accordion-item-icon-color:       var(--text-muted);
     --accordion-item-content-border:   var(--border-subtle);
     --accordion-item-content-color:    var(--text-secondary);
   }
 
-  /* Separador inferior — el padre decide si eliminarlo */
+  /* Separador inferior — el padre decide si eliminarlo.
+     La barra de acento izquierda usa inset box-shadow (no border) para
+     no reservar 2px de layout cuando es transparent: así el trigger queda
+     a ras del borde del host y no aparece un hairline en el lado izquierdo. */
   .accordion-item__root {
     border-bottom: 1px solid var(--border-subtle);
-    border-left: var(--accordion-item-accent-border);
+    box-shadow: inset 2px 0 0 0 var(--accordion-item-accent-color);
     transition:
-      border-color var(--duration-slow) var(--ease-out),
-      background   var(--duration-base) var(--ease-default);
+      box-shadow var(--duration-slow) var(--ease-out),
+      background var(--duration-base) var(--ease-default);
   }
 
   /* Trigger */
@@ -141,8 +144,44 @@
      El padre lib-accordion sobreescribe esta API para sus variantes
      (accent, flush…) y mantiene la coherencia katachi.
 
-     Bloque marcador para discoverability.
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → seam dorada en .accordion-item__root::before
+       Cada item del acordeón muestra la vena dorada en su borde superior.
      ─────────────────────────────────────────────────────────── */
+
+  .accordion-item__root {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .accordion-item__root::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 20%,
+      var(--color-kaki-400) 50%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 80%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: accordion-item-seam 3s linear infinite;
+    animation-play-state: var(--lib-effect-seam-play, paused);
+    opacity: var(--lib-effect-seam-opacity, 0);
+    transition: opacity var(--duration-slow, 400ms) var(--ease-out, ease-out);
+  }
+
+  @keyframes accordion-item-seam {
+    from { background-position: 200% center; }
+    to   { background-position: -200% center; }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

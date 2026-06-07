@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 
 // ✅ side-effect import — registra el custom element
@@ -48,7 +48,7 @@ type Args = Partial<LibSegmentedControl> & {
 };
 
 const meta: Meta<Args> = {
-  title: 'Forms/Segmented Control',
+  title: 'Universal/Forms/Segmented Control',
   tags:['autodocs'],
   component: 'lib-segmented-control',
 
@@ -56,8 +56,8 @@ const meta: Meta<Args> = {
     variant: {
       control: 'select',
       options: [
-        'outline', 'underline', 'pill', 'ghost', 'kaki', 'celadon',
-        'dark-outline', 'dark-pill', 'dark-kaki', 'dark-underline',
+        'outline', 'underline', 'pill', 'ghost', 'accent', 'info',
+        'dark-outline', 'dark-pill', 'dark-accent', 'dark-underline',
       ],
       description: 'Variante de superficie',
     },
@@ -118,7 +118,7 @@ export const LightVariants: Story = {
       padding: var(--lib-space-xl);
       background: var(--bg-base);
     ">
-      ${(['outline', 'underline', 'pill', 'ghost', 'kaki', 'celadon'] as const).map(v => html`
+      ${(['outline', 'underline', 'pill', 'ghost', 'accent', 'info'] as const).map(v => html`
         <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm)">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">${v}</p>
           <lib-segmented-control
@@ -148,7 +148,7 @@ export const DarkVariants: Story = {
       padding: var(--lib-space-xl);
       background: var(--color-washi-950);
     ">
-      ${(['dark-outline', 'dark-pill', 'dark-kaki', 'dark-underline'] as const).map(v => html`
+      ${(['dark-outline', 'dark-pill', 'dark-accent', 'dark-underline'] as const).map(v => html`
         <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm)">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(250,247,244,.3)">${v}</p>
           <lib-segmented-control
@@ -260,7 +260,7 @@ export const WithBadges: Story = {
         value="inbox"
       ></lib-segmented-control>
       <lib-segmented-control
-        variant="kaki"
+        variant="accent"
         .options="${BADGE_OPTS}"
         value="inbox"
       ></lib-segmented-control>
@@ -313,7 +313,7 @@ export const GlitchVariant: Story = {
         Haz clic para ver el efecto glitch
       </p>
       <lib-segmented-control
-        variant="dark-kaki"
+        variant="dark-accent"
         ?glitch="${true}"
         .options="${VIEW_OPTS}"
         value="view"
@@ -335,13 +335,34 @@ export const GlitchVariant: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-md);">
     <lib-segmented-control
-      .options="${[
-        { value: 'a', label: 'Wabi' },
-        { value: 'b', label: 'Sabi' },
-        { value: 'c', label: 'Shizen' },
-      ]}"
+      variant="outline"
+      size="sm"
+      .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi' }, { value: 'c', label: 'Shizen' }]}"
+      value="a"
+    ></lib-segmented-control>
+    <lib-segmented-control
+      variant="pill"
+      size="md"
+      .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi' }, { value: 'c', label: 'Shizen' }]}"
+      value="b"
+    ></lib-segmented-control>
+    <lib-segmented-control
+      variant="underline"
+      size="lg"
+      .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi' }, { value: 'c', label: 'Shizen' }]}"
+      value="c"
+    ></lib-segmented-control>
+    <lib-segmented-control
+      variant="ghost"
+      ?full="${true}"
+      .options="${[{ value: 'a', label: 'Día' }, { value: 'b', label: 'Semana' }, { value: 'c', label: 'Mes' }, { value: 'd', label: 'Año' }]}"
+      value="a"
+    ></lib-segmented-control>
+    <lib-segmented-control
+      variant="accent"
+      .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi', disabled: true }, { value: 'c', label: 'Shizen' }]}"
       value="a"
     ></lib-segmented-control>
   </div>

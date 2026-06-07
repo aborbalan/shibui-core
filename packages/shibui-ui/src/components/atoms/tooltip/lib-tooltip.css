@@ -7,7 +7,7 @@
    ──────────────────────────────────────────────────────────
    position  top | bottom | left | right                      → data-pos en .tip-wrap
              top-start | top-end | bottom-start | bottom-end
-   variant   dark (default) | light | kaki | celadon | error  → clase .tip-[variant] en .tip-wrap
+   variant   dark (default) | light | accent | info | error  → clase .tip-[variant] en .tip-wrap
    size      sm | md (default) | lg                           → clase .tip-[size] en .tip-wrap
    instant   boolean — elimina el delay de entrada            → clase .tip-instant en .tip-wrap
    open      boolean — abre programáticamente                 → clase .is-open en .tip-wrap
@@ -302,20 +302,20 @@
   .tip-light[data-pos="bottom-end"] .tip-bubble::after   { border-bottom-color: var(--bg-elevated); }
 
   /* ── Kaki ── */
-  .tip-kaki .tip-bubble {
+  .tip-accent .tip-bubble {
     background: var(--color-kaki-500);
     color: var(--color-white);
   }
 
-  .tip-kaki[data-pos="top"] .tip-bubble::after,
-  .tip-kaki:not([data-pos]) .tip-bubble::after     { border-top-color:    var(--color-kaki-500); }
-  .tip-kaki[data-pos="bottom"] .tip-bubble::after  { border-bottom-color: var(--color-kaki-500); }
-  .tip-kaki[data-pos="left"] .tip-bubble::after    { border-left-color:   var(--color-kaki-500); }
-  .tip-kaki[data-pos="right"] .tip-bubble::after   { border-right-color:  var(--color-kaki-500); }
-  .tip-kaki[data-pos="top-start"] .tip-bubble::after    { border-top-color:    var(--color-kaki-500); }
-  .tip-kaki[data-pos="top-end"] .tip-bubble::after      { border-top-color:    var(--color-kaki-500); }
-  .tip-kaki[data-pos="bottom-start"] .tip-bubble::after { border-bottom-color: var(--color-kaki-500); }
-  .tip-kaki[data-pos="bottom-end"] .tip-bubble::after   { border-bottom-color: var(--color-kaki-500); }
+  .tip-accent[data-pos="top"] .tip-bubble::after,
+  .tip-accent:not([data-pos]) .tip-bubble::after     { border-top-color:    var(--color-kaki-500); }
+  .tip-accent[data-pos="bottom"] .tip-bubble::after  { border-bottom-color: var(--color-kaki-500); }
+  .tip-accent[data-pos="left"] .tip-bubble::after    { border-left-color:   var(--color-kaki-500); }
+  .tip-accent[data-pos="right"] .tip-bubble::after   { border-right-color:  var(--color-kaki-500); }
+  .tip-accent[data-pos="top-start"] .tip-bubble::after    { border-top-color:    var(--color-kaki-500); }
+  .tip-accent[data-pos="top-end"] .tip-bubble::after      { border-top-color:    var(--color-kaki-500); }
+  .tip-accent[data-pos="bottom-start"] .tip-bubble::after { border-bottom-color: var(--color-kaki-500); }
+  .tip-accent[data-pos="bottom-end"] .tip-bubble::after   { border-bottom-color: var(--color-kaki-500); }
 
   /* ── Error ── */
   .tip-error .tip-bubble {
@@ -334,20 +334,20 @@
   .tip-error[data-pos="bottom-end"] .tip-bubble::after   { border-bottom-color: var(--color-error); }
 
   /* ── Celadón ── */
-  .tip-celadon .tip-bubble {
-    background: var(--color-celadon-500);
+  .tip-info .tip-bubble {
+    background: var(--info);
     color: var(--color-white);
   }
 
-  .tip-celadon[data-pos="top"] .tip-bubble::after,
-  .tip-celadon:not([data-pos]) .tip-bubble::after     { border-top-color:    var(--color-celadon-500); }
-  .tip-celadon[data-pos="bottom"] .tip-bubble::after  { border-bottom-color: var(--color-celadon-500); }
-  .tip-celadon[data-pos="left"] .tip-bubble::after    { border-left-color:   var(--color-celadon-500); }
-  .tip-celadon[data-pos="right"] .tip-bubble::after   { border-right-color:  var(--color-celadon-500); }
-  .tip-celadon[data-pos="top-start"] .tip-bubble::after    { border-top-color:    var(--color-celadon-500); }
-  .tip-celadon[data-pos="top-end"] .tip-bubble::after      { border-top-color:    var(--color-celadon-500); }
-  .tip-celadon[data-pos="bottom-start"] .tip-bubble::after { border-bottom-color: var(--color-celadon-500); }
-  .tip-celadon[data-pos="bottom-end"] .tip-bubble::after   { border-bottom-color: var(--color-celadon-500); }
+  .tip-info[data-pos="top"] .tip-bubble::after,
+  .tip-info:not([data-pos]) .tip-bubble::after     { border-top-color:    var(--info); }
+  .tip-info[data-pos="bottom"] .tip-bubble::after  { border-bottom-color: var(--info); }
+  .tip-info[data-pos="left"] .tip-bubble::after    { border-left-color:   var(--info); }
+  .tip-info[data-pos="right"] .tip-bubble::after   { border-right-color:  var(--info); }
+  .tip-info[data-pos="top-start"] .tip-bubble::after    { border-top-color:    var(--info); }
+  .tip-info[data-pos="top-end"] .tip-bubble::after      { border-top-color:    var(--info); }
+  .tip-info[data-pos="bottom-start"] .tip-bubble::after { border-bottom-color: var(--info); }
+  .tip-info[data-pos="bottom-end"] .tip-bubble::after   { border-bottom-color: var(--info); }
 
 
   /* ════════════════════════════════════════
@@ -425,7 +425,7 @@
      como fondo/texto. Sin katachi los tokens son GUITV → fallback
      --bg-inverse/--text-inverse (washi-900/washi-50 en light mode).
      Con katachi activo heredan el inverso del contexto.
-     Variants semánticos (light, kaki, celadon, error) mantienen
+     Variants semánticos (light, accent, info, error) mantienen
      su paleta — son feedback visual, no estética de contexto.
      ─────────────────────────────────────────────────────────── */
 

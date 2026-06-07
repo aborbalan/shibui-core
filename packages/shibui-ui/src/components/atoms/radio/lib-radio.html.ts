@@ -1,7 +1,7 @@
 import { html, nothing, TemplateResult } from 'lit';
 
 export type LibRadioSize    = 'sm' | 'md' | 'lg';
-export type LibRadioVariant = 'default' | 'kaki' | 'error';
+export type LibRadioVariant = 'default' | 'accent' | 'error';
 
 export interface RadioTemplateProps {
   radioId: string;

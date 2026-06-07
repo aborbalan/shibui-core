@@ -33,7 +33,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
         <section style={{ padding: 'clamp(2.5rem, 5vh, 4rem) 0' }}>
             {/* Header */}
             <div style={{ marginBottom: 'var(--lib-space-2xl)' }}>
-                <LibEyebrow color="dark" size="sm" style={{ display: 'inline-flex', marginBottom: 'var(--lib-space-md)' } as React.CSSProperties}>
+                <LibEyebrow tone="accent" size="sm" style={{ display: 'inline-flex', marginBottom: 'var(--lib-space-md)' } as React.CSSProperties}>
                     Experiencia · Work History
                 </LibEyebrow>
                 <LibDisplayHeading
@@ -155,7 +155,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                             {item.tags.length > 0 && (
                                 <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                                     {item.tags.map((tag) => (
-                                        <LibBadge key={tag} variant="dark">
+                                        <LibBadge key={tag} variant="strong">
                                             {tag}
                                         </LibBadge>
                                     ))}

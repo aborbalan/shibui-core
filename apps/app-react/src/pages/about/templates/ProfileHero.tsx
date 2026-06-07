@@ -74,7 +74,7 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ profile, openToWork = 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-lg)' }}>
                 {/* Eyebrow */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--lib-space-md)', flexWrap: 'wrap' }}>
-                    <LibEyebrow color="dark" size="sm" style={{ display: 'inline-flex' } as React.CSSProperties}>
+                    <LibEyebrow tone="accent" size="sm" style={{ display: 'inline-flex' } as React.CSSProperties}>
                         Perfil · About Me
                     </LibEyebrow>
                     {openToWork && (

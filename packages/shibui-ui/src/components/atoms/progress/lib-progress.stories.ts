@@ -9,7 +9,7 @@ interface ProgressArgs {
   value:         number;
   max:           number;
   size:          'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  tone:          'default' | 'kaki' | 'celadon' | 'error';
+  tone:          'default' | 'accent' | 'info' | 'error';
   indeterminate: boolean;
   striped:       boolean;
   square:        boolean;
@@ -21,7 +21,7 @@ interface ProgressArgs {
 }
 
 const meta: Meta<ProgressArgs> = {
-  title: 'Feedback/Progress',
+  title: 'Universal/Feedback/Progress',
   tags:['autodocs'],
   component: 'lib-progress',
   argTypes: {
@@ -32,7 +32,7 @@ const meta: Meta<ProgressArgs> = {
     },
     tone: {
       control: 'select',
-      options: ['default', 'kaki', 'celadon', 'error'],
+      options: ['default', 'accent', 'info', 'error'],
     },
     indeterminate: { control: 'boolean' },
     striped:       { control: 'boolean' },
@@ -144,13 +144,13 @@ export const Tones: Story = {
 
       <div style="display: flex; align-items: center; gap: 16px;">
         <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); width: 64px; text-transform: uppercase;">Kaki</span>
-        <lib-progress tone="kaki" value="48" style="flex: 1;"></lib-progress>
+        <lib-progress tone="accent" value="48" style="flex: 1;"></lib-progress>
         <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); width: 32px; text-align: right;">48%</span>
       </div>
 
       <div style="display: flex; align-items: center; gap: 16px;">
         <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); width: 64px; text-transform: uppercase;">Celadón</span>
-        <lib-progress tone="celadon" value="88" style="flex: 1;"></lib-progress>
+        <lib-progress tone="info" value="88" style="flex: 1;"></lib-progress>
         <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); width: 32px; text-align: right;">88%</span>
       </div>
 
@@ -176,8 +176,8 @@ export const Variants: Story = {
         <p style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 12px;">Striped</p>
         <div style="display: flex; flex-direction: column; gap: 12px;">
           <lib-progress value="58" striped></lib-progress>
-          <lib-progress value="74" tone="kaki" striped></lib-progress>
-          <lib-progress value="42" tone="celadon" striped></lib-progress>
+          <lib-progress value="74" tone="accent" striped></lib-progress>
+          <lib-progress value="42" tone="info" striped></lib-progress>
         </div>
       </div>
 
@@ -185,8 +185,8 @@ export const Variants: Story = {
         <p style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 12px;">Indeterminate</p>
         <div style="display: flex; flex-direction: column; gap: 12px;">
           <lib-progress indeterminate></lib-progress>
-          <lib-progress tone="kaki" size="sm" indeterminate></lib-progress>
-          <lib-progress tone="celadon" size="xs" indeterminate></lib-progress>
+          <lib-progress tone="accent" size="sm" indeterminate></lib-progress>
+          <lib-progress tone="info" size="xs" indeterminate></lib-progress>
         </div>
       </div>
 
@@ -194,7 +194,7 @@ export const Variants: Story = {
         <p style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 12px;">Square</p>
         <div style="display: flex; flex-direction: column; gap: 12px;">
           <lib-progress value="67" square></lib-progress>
-          <lib-progress value="45" tone="kaki" size="lg" square></lib-progress>
+          <lib-progress value="45" tone="accent" size="lg" square></lib-progress>
         </div>
       </div>
 
@@ -217,7 +217,7 @@ export const WithMeta: Story = {
       ></lib-progress>
 
       <lib-progress
-        tone="kaki"
+        tone="accent"
         size="sm"
         label="Subida de fichero"
         value="48"
@@ -226,7 +226,7 @@ export const WithMeta: Story = {
       ></lib-progress>
 
       <lib-progress
-        tone="celadon"
+        tone="info"
         size="sm"
         label="Procesando"
         value-label="Analizando…"
@@ -254,14 +254,14 @@ export const MultiSegment: Story = {
 
     const storageSegments: ProgressSegment[] = [
       { percent: 38, tone: 'default', label: 'Docs · 38 GB' },
-      { percent: 22, tone: 'kaki',    label: 'Media · 22 GB' },
-      { percent: 16, tone: 'celadon', label: 'Backups · 16 GB' },
+      { percent: 22, tone: 'accent',    label: 'Media · 22 GB' },
+      { percent: 16, tone: 'info', label: 'Backups · 16 GB' },
       { percent: 24, tone: 'muted',   label: 'Libre · 24 GB' },
     ];
 
     const sprintSegments: ProgressSegment[] = [
-      { percent: 52, tone: 'celadon', label: 'Done · 22' },
-      { percent: 24, tone: 'kaki',    label: 'In progress · 10' },
+      { percent: 52, tone: 'info', label: 'Done · 22' },
+      { percent: 24, tone: 'accent',    label: 'In progress · 10' },
       { percent: 14, tone: 'error',   label: 'Blocked · 6' },
       { percent: 10, tone: 'muted',   label: 'Backlog · 4' },
     ];
@@ -286,6 +286,29 @@ export const MultiSegment: Story = {
     `;
   },
 };
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-progress usa tokens semánticos de relleno y superficie
+   (bg-elevated, text-primary) — adapta al katachi.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);max-width:400px;">
+    <lib-progress value="72" label="Default" show-value></lib-progress>
+    <lib-progress value="48" tone="accent" size="sm" label="Kaki"></lib-progress>
+    <lib-progress value="88" tone="info" size="sm" label="Celadón"></lib-progress>
+    <lib-progress tone="error" size="xs" indeterminate></lib-progress>
+    <lib-progress value="67" size="lg" striped label="Striped LG" show-value></lib-progress>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
 /* ═══════════════════════════════════════════════════════════════
    TESTS · ARIA y accesibilidad
    ═══════════════════════════════════════════════════════════════ */
@@ -322,22 +345,3 @@ export const TestIndeterminateNoValueNow: Story = {
     expect(bar?.hasAttribute('aria-valuenow')).toBe(false);
   },
 };
-
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Las 6 historias estándar
-   lib-progress usa tokens semánticos de relleno y superficie
-   (bg-elevated, text-primary) — adapta al katachi.
-   ═══════════════════════════════════════════════════════════════ */
-
-const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);max-width:320px;">
-    <lib-progress value="60"></lib-progress>
-  </div>
-`);
-
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;

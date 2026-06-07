@@ -1,27 +1,21 @@
 /* ============================================================
    LIB-SCATTER-CHART — Tipos e interfaces
+   Reutiliza los tipos compartidos de models/ui/charts.
    ============================================================ */
 
-export interface ScatterPoint {
-  x:      number;
-  y:      number;
-  label?: string;
-}
+import type { ChartPoint, ChartPointSeries, ChartTooltip } from '../../../../models/ui/charts';
 
-export interface ScatterSeries {
-  name:   string;
-  points: ScatterPoint[];
-}
+/** @deprecated Usar `ChartPoint` de models/ui/charts. Alias por compatibilidad. */
+export type ScatterPoint = ChartPoint;
 
-export interface ScatterTooltip {
-  x:       number;
-  y:       number;
-  content: string;
-  color:   string;
-}
+/** @deprecated Usar `ChartPointSeries` de models/ui/charts. Alias por compatibilidad. */
+export type ScatterSeries = ChartPointSeries;
+
+/** @deprecated Usar `ChartTooltip` de models/ui/charts. Alias por compatibilidad. */
+export type ScatterTooltip = ChartTooltip;
 
 export interface ScatterChartTemplateProps {
-  series:     ScatterSeries[];
+  series:     ChartPointSeries[];
   colors:     readonly string[];
   xLabel:     string;
   yLabel:     string;
@@ -30,7 +24,7 @@ export interface ScatterChartTemplateProps {
   dotRadius:  number;
   height:     number;
   svgWidth:   number;
-  tooltip:    ScatterTooltip | null;
-  onDotEnter: (e: MouseEvent, point: ScatterPoint, seriesIndex: number) => void;
+  tooltip:    ChartTooltip | null;
+  onDotEnter: (e: MouseEvent, point: ChartPoint, seriesIndex: number) => void;
   onDotLeave: () => void;
 }

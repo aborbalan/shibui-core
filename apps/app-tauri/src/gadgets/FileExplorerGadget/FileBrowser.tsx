@@ -49,9 +49,19 @@ export function baseName(path: string): string {
 
 interface FileBrowserProps {
   rowSize?: 'compact' | 'default';
+  /**
+   * Carpeta inicial. Si se omite, arranca en el HOME del usuario (caso gadget).
+   * El workspace pasa aquí la ruta del proyecto abierto.
+   */
+  initialPath?: string;
+  /**
+   * Si se define, muestra un botón "abrir como proyecto" en la barra de
+   * navegación que invoca este callback con la carpeta actual.
+   */
+  onOpenProject?: (path: string) => void;
 }
 
-export function FileBrowser({ rowSize = 'default' }: FileBrowserProps) {
+export function FileBrowser({ rowSize = 'default', initialPath, onOpenProject }: FileBrowserProps) {
   const [currentPath, setCurrentPath] = useState('');
   const [entries, setEntries] = useState<FsEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -70,10 +80,14 @@ export function FileBrowser({ rowSize = 'default' }: FileBrowserProps) {
   }, []);
 
   useEffect(() => {
+    if (initialPath) {
+      navigateTo(initialPath);
+      return;
+    }
     invoke<string>('get_home_dir')
       .then(navigateTo)
       .catch(() => navigateTo('C:\\'));
-  }, [navigateTo]);
+  }, [navigateTo, initialPath]);
 
   const canGoUp = currentPath.replace(/[/\\]+$/, '').split(/[/\\]/).filter(Boolean).length > 1;
 
@@ -121,6 +135,31 @@ export function FileBrowser({ rowSize = 'default' }: FileBrowserProps) {
         }}>
           {currentPath}
         </span>
+        {onOpenProject && currentPath && !loading && (
+          <button
+            onClick={() => onOpenProject(currentPath)}
+            title="Abrir esta carpeta como proyecto"
+            style={{
+              flexShrink: 0,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.3rem',
+              background: 'var(--bg-elevated)',
+              border: '1px solid var(--border-default)',
+              borderRadius: '4px',
+              padding: '0.2rem 0.5rem',
+              cursor: 'pointer',
+              fontFamily: 'var(--lib-font-mono, "DM Mono", monospace)',
+              fontSize: '0.55rem',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: 'var(--text-accent)',
+            }}
+          >
+            <lib-icon name="folder-open" size="12" />
+            abrir proyecto
+          </button>
+        )}
       </div>
 
       {/* File list */}
@@ -177,7 +216,15 @@ export function FileBrowser({ rowSize = 'default' }: FileBrowserProps) {
                 <span style={{
                   fontFamily: 'var(--lib-font-mono, "DM Mono", monospace)',
                   fontSize,
-                  color: entry.is_dir ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  // Las carpetas se resaltan con el token de acento (verde phosphor en
+                  // katachi terminal). NO usar --text-primary: en el light DOM de React
+                  // ese token puede caer al default claro (washi-900, casi negro) y las
+                  // carpetas quedan invisibles sobre el fondo oscuro. --text-accent y
+                  // --text-secondary son valores literales por katachi y siempre se ven.
+                  color: entry.is_dir
+                    ? 'var(--text-accent, #4E9482)'
+                    : 'var(--text-secondary, #9aa0a6)',
+                  fontWeight: entry.is_dir ? 500 : 400,
                   flex: 1,
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',

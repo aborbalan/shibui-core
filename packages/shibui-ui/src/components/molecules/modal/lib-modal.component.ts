@@ -25,7 +25,7 @@ import { ModalAnimate, ModalCloseEventDetail, ModalIconTone, ModalSize, ModalVar
  *
  * ## Con ícono y subtítulo
  * ```html
- * <lib-modal heading="Nuevo componente" subtitle="Shibui DS · añadir" icon-tone="kaki">
+ * <lib-modal heading="Nuevo componente" subtitle="Shibui DS · añadir" icon-tone="accent">
  *   <ph-plus slot="icon" weight="bold"></ph-plus>
  *   ...
  * </lib-modal>
@@ -99,7 +99,7 @@ export class LibModal extends LitElement {
 
   /**
    * Tono del ícono del header.
-   * Acepta: 'default' | 'kaki' | 'celadon' | 'error' | 'info' | null.
+   * Acepta: 'default' | 'accent' | 'secondary' | 'error' | 'info' | null.
    * Cuando es null no se renderiza el wrapper del ícono.
    */
   @property({ type: String, attribute: 'icon-tone' })

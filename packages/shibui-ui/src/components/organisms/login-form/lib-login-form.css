@@ -71,6 +71,48 @@
   /* ─── KATACHI · ambient context ──────────────────────────────
      lib-login-form usa tokens semánticos completos (--bg-elevated,
      --border-default, --text-primary/secondary). Adapta a todos
-     los katachi automáticamente. Taxonomía: semantic.
+     los katachi automáticamente. --shadow-md en kintsugi ya incluye
+     el anillo dorado (0 0 0 1px kaki/0.18) — la superficie gets
+     el ring por el sistema de sombras sin override extra.
+
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → seam dorada animada en .login-form::before
+     • terminal → seam phosphor en .login-form::before
+     Nota: sin overflow:hidden para no clipar dropdowns de form fields.
      ─────────────────────────────────────────────────────────── */
+
+  .login-form {
+    position: relative;
+  }
+
+  .login-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 20%,
+      var(--color-kaki-400) 50%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 80%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: login-form-seam 3s linear infinite;
+    animation-play-state: var(--lib-effect-seam-play, paused);
+    opacity: var(--lib-effect-seam-opacity, 0);
+    transition: opacity var(--duration-slow, 400ms) var(--ease-out, ease-out);
+  }
+
+  @keyframes login-form-seam {
+    from { background-position: 200% center; }
+    to   { background-position: -200% center; }
+  }
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }

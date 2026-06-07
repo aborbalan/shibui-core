@@ -3,8 +3,11 @@
 /* ============================================================
    LIB-SIDEBAR — Shibui UI · SG-65
    Estructura : Header(56px) · [Search] · Nav · User-footer
-   Variantes  : dark(default) · light · kintsugi · glitch
+   Variantes  : dark(default) · light
    Collapsed  : 240px → 64px (icon rail)
+   Efectos    : --lib-effect-seam-play    → seam dorado (::after)
+                --lib-effect-seam-opacity → opacidad del seam
+                --lib-effect-scanlines    → CRT overlay (::before)
    ============================================================ */
 
 @layer reset {
@@ -52,6 +55,44 @@
       border-right: 1px solid rgb(255, 255, 255, .07);
   }
 
+  /* Kintsugi seam — right edge, activado por --lib-effect-seam-* */
+  .sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg,
+      transparent 0%,
+      rgb(184, 90, 30, .3) 10%,
+      var(--color-kaki-400) 30%,
+      #F5D08A 50%,
+      var(--color-kaki-400) 70%,
+      rgb(184, 90, 30, .3) 90%,
+      transparent 100%);
+    background-size: 100% 200%;
+    animation: sb-kintsugi-seam 5s linear infinite;
+    animation-play-state: var(--lib-effect-seam-play, paused);
+    opacity: var(--lib-effect-seam-opacity, 0);
+    pointer-events: none;
+    z-index: 2;
+    transition: opacity var(--duration-base);
+  }
+
+  /* CRT scanlines — activado por --lib-effect-scanlines */
+  .sidebar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg,
+      transparent, transparent 3px,
+      rgb(255, 255, 255, .015) 3px, rgb(255, 255, 255, .015) 4px);
+    pointer-events: none;
+    z-index: 5;
+    opacity: var(--lib-effect-scanlines, 0);
+  }
+
   /* ── Collapsed: icon rail 64px ── */
   .sidebar.is-collapsed {
     width: 64px;
@@ -88,17 +129,11 @@
     flex-shrink: 0;
   }
 
-  /* Dark rail: logo mark slightly transparent */
+  /* Dark rail: logo mark */
   :host([variant="dark"]) .sb-logo-mark,
   .sb-logo-mark {
     background: var(--color-kaki-500);
     color: #fff;
-  }
-
-  @keyframes sb-logo-ring {
-    to {
-      transform: rotate(360deg);
-    }
   }
 
   /* Brand name text */
@@ -109,7 +144,8 @@
     letter-spacing: .08em;
     white-space: nowrap;
     overflow: hidden;
-    transition: opacity var(--duration-base) var(--ease-out),
+    transition:
+      opacity var(--duration-base) var(--ease-out),
       width var(--duration-slow) var(--ease-out);
     color: rgb(250, 247, 244, .65);
   }
@@ -121,30 +157,15 @@
     pointer-events: none;
   }
 
-  /* Glitch version counter */
-  .sb-version {
-    margin-left: auto;
-    font-family: var(--lib-font-mono);
-    font-size: 8px;
-    letter-spacing: .12em;
-    color: rgb(250, 247, 244, .15);
-    white-space: nowrap;
-    transition: opacity var(--duration-base);
-  }
-
-  .sidebar.is-collapsed .sb-version {
-    opacity: 0;
-    pointer-events: none;
-  }
-
   /* ══════════════════════════════════════
-     SEARCH BAR (dark + kintsugi)
+     SEARCH BAR
      ══════════════════════════════════════ */
   .sb-search {
     padding: var(--lib-space-sm) var(--lib-space-md);
     flex-shrink: 0;
     overflow: hidden;
-    transition: max-height var(--duration-slow) var(--ease-out),
+    transition:
+      max-height var(--duration-slow) var(--ease-out),
       opacity var(--duration-base);
     max-height: 52px;
   }
@@ -256,7 +277,10 @@
     color: rgb(250, 247, 244, .18);
     white-space: nowrap;
     overflow: hidden;
-    transition: opacity var(--duration-base), max-height var(--duration-slow), padding var(--duration-slow);
+    transition:
+      opacity var(--duration-base),
+      max-height var(--duration-slow),
+      padding var(--duration-slow);
     max-height: 32px;
   }
 
@@ -322,23 +346,13 @@
     opacity: 1;
   }
 
-  /* Glitch: › prefix */
-  .sb-link-prefix {
-    font-size: 9px;
-    flex-shrink: 0;
-    color: var(--color-kaki-400);
-  }
-
-  .sb-link:not(.is-active) .sb-link-prefix {
-    opacity: .4;
-    color: inherit;
-  }
-
   /* ── Link label ── */
   .sb-link-label {
     white-space: nowrap;
     overflow: hidden;
-    transition: opacity var(--duration-base), width var(--duration-slow) var(--ease-out);
+    transition:
+      opacity var(--duration-base),
+      width var(--duration-slow) var(--ease-out);
   }
 
   /* ── Badge ── */
@@ -371,17 +385,6 @@
     padding: 0;
   }
 
-  @keyframes sb-glitch-pulse {
-    0%,
-    100% {
-      opacity: 1;
-    }
-
-    50% {
-      opacity: .2;
-    }
-  }
-
   /* ── Collapsed: icon rail centrado ──
      Usamos position:relative en el link y position:absolute
      en el icono para que el centrado sea exacto e independiente
@@ -401,8 +404,7 @@
 
   /* Ocultar todo excepto el icono */
   .sidebar.is-collapsed .sb-link-label,
-  .sidebar.is-collapsed .sb-badge,
-  .sidebar.is-collapsed .sb-link-prefix {
+  .sidebar.is-collapsed .sb-badge {
     display: none;
   }
 
@@ -474,7 +476,9 @@
     min-width: 0;
     flex: 1;
     overflow: hidden;
-    transition: opacity var(--duration-base), width var(--duration-slow);
+    transition:
+      opacity var(--duration-base),
+      width var(--duration-slow);
   }
 
   .sidebar.is-collapsed .sb-user-info {
@@ -513,7 +517,10 @@
     border: 1px solid rgb(255, 255, 255, .1);
     color: rgb(250, 247, 244, .3);
     flex-shrink: 0;
-    transition: border-color var(--duration-base), color var(--duration-base), background var(--duration-base);
+    transition:
+      border-color var(--duration-base),
+      color var(--duration-base),
+      background var(--duration-base);
     cursor: pointer;
 
     &:hover {
@@ -632,124 +639,7 @@
     background: var(--color-kaki-50);
   }
 
-  /* ══════════════════════════════════════
-     KINTSUGI
-     ══════════════════════════════════════ */
-  :host([variant="kintsugi"]) {
-    & .sidebar {
-      background: var(--lib-comp-bg, var(--color-washi-950));
-      border-right: none;
-    }
-
-    /* Animated gold seam — right edge */
-    & .sidebar::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(180deg,
-          transparent 0%,
-          rgb(184, 90, 30, .3) 10%,
-          var(--color-kaki-400) 30%,
-          #F5D08A 50%,
-          var(--color-kaki-400) 70%,
-          rgb(184, 90, 30, .3) 90%,
-          transparent 100%);
-      background-size: 100% 200%;
-      animation: sb-kintsugi-seam 5s linear infinite;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    & .sb-header {
-      border-bottom-color: rgb(184, 90, 30, .12);
-    }
-
-    & .sb-logo-mark {
-      position: relative;
-      background: transparent;
-      border: none;
-      overflow: visible;
-      border-radius: 50%;
-
-      &::before {
-        content: '';
-        position: absolute;
-        inset: -2px;
-        border-radius: 50%;
-        background: conic-gradient(var(--color-kaki-600), #F5D08A, var(--color-kaki-400), #F5D08A, var(--color-kaki-600));
-        animation: sb-logo-ring 4s linear infinite;
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        inset: 1px;
-        border-radius: 50%;
-        background: var(--color-washi-950);
-      }
-
-      & span {
-        position: relative;
-        z-index: 2;
-        color: var(--color-kaki-400);
-      }
-    }
-
-    & .sb-brand {
-      color: rgb(250, 247, 244, .5);
-    }
-
-    & .sb-indicator {
-      background: var(--color-kaki-400);
-    }
-
-    & .sb-group {
-      color: rgb(184, 90, 30, .35);
-    }
-
-    & .sb-link {
-      color: rgb(250, 247, 244, .3);
-
-      &:hover:not(.is-active, [disabled]) {
-        color: rgb(250, 247, 244, .6);
-        background: rgb(184, 90, 30, .05);
-      }
-
-      &.is-active {
-        color: var(--color-kaki-400);
-        background: linear-gradient(90deg, rgb(184, 90, 30, .15), transparent);
-        border-left-color: var(--color-kaki-400);
-      }
-    }
-
-    & .sb-badge--kaki {
-      background: transparent;
-      border: 1px solid rgb(184, 90, 30, .3);
-      color: var(--color-kaki-400);
-    }
-
-    & .sb-user {
-      border-top-color: rgb(184, 90, 30, .12);
-    }
-
-    & .sb-user-avatar {
-      background: rgb(184, 90, 30, .25);
-      border: 1px solid rgb(184, 90, 30, .4);
-      color: var(--color-kaki-400);
-    }
-
-    & .sb-user-name {
-      color: rgb(250, 247, 244, .45);
-    }
-
-    & .sb-user-role {
-      color: rgb(184, 90, 30, .5);
-    }
-  }
-
+  /* ── Effect keyframes ── */
   @keyframes sb-kintsugi-seam {
     0% {
       background-position: 0 -100%;
@@ -757,125 +647,6 @@
 
     100% {
       background-position: 0 100%;
-    }
-  }
-
-  /* ══════════════════════════════════════
-     GLITCH
-     ══════════════════════════════════════ */
-  :host([variant="glitch"]) {
-    & .sidebar {
-      background: var(--lib-comp-bg, var(--color-washi-950));
-      border-right: 1px solid rgb(255, 255, 255, .06);
-      animation: sb-glitch-border 7s steps(1) infinite;
-    }
-
-    /* Scanline CRT overlay */
-    & .sidebar::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(0deg,
-          transparent, transparent 3px,
-          rgb(255, 255, 255, .015) 3px, rgb(255, 255, 255, .015) 4px);
-      pointer-events: none;
-      z-index: 5;
-      animation: sb-scanline-shift 7s steps(1) infinite;
-    }
-
-    & .sb-brand {
-      font-family: var(--lib-font-mono);
-      font-size: .75rem;
-      letter-spacing: .2em;
-      color: var(--color-kaki-400);
-    }
-
-    & .sb-group {
-      color: rgb(250, 247, 244, .15);
-      letter-spacing: .16em;
-    }
-
-    & .sb-link {
-      font-family: var(--lib-font-mono);
-      font-size: 9px;
-      letter-spacing: .1em;
-      color: rgb(250, 247, 244, .25);
-      padding: .45rem var(--lib-space-md);
-
-      &:hover:not(.is-active, [disabled]) {
-        color: rgb(250, 247, 244, .6);
-        background: rgb(255, 255, 255, .03);
-      }
-
-      &.is-active {
-        color: var(--color-kaki-400);
-        background: rgb(184, 90, 30, .08);
-        border-left-color: var(--color-kaki-500);
-      }
-    }
-
-    & .sb-badge--dot {
-      animation: sb-glitch-pulse 2s ease-in-out infinite;
-    }
-
-    & .sb-user {
-      border-top-color: rgb(255, 255, 255, .05);
-    }
-
-    & .sb-user-avatar {
-      background: rgb(184, 90, 30, .25);
-      border: 1px solid rgb(184, 90, 30, .35);
-      color: var(--color-kaki-400);
-      font-family: var(--lib-font-mono);
-      font-size: .75rem;
-    }
-  }
-
-  @keyframes sb-glitch-border {
-    0%,
-    88%,
-    100% {
-      border-color: rgb(255, 255, 255, .06);
-      box-shadow: none;
-    }
-
-    89% {
-      border-color: rgb(217, 114, 52, .4);
-      box-shadow: -2px 0 0 rgb(217, 114, 52, .2);
-    }
-
-    90% {
-      border-color: rgb(78, 148, 130, .3);
-      box-shadow: 2px 0 0 rgb(78, 148, 130, .15);
-    }
-
-    91% {
-      border-color: rgb(255, 255, 255, .06);
-      box-shadow: none;
-    }
-  }
-
-  @keyframes sb-scanline-shift {
-    0%,
-    87%,
-    100% {
-      opacity: 1;
-      transform: none;
-    }
-
-    88% {
-      transform: translateY(-3px);
-      opacity: .7;
-    }
-
-    89% {
-      transform: translateY(2px);
-      opacity: .9;
-    }
-
-    90% {
-      transform: none;
-      opacity: 1;
     }
   }
 
@@ -917,10 +688,8 @@
   @media (prefers-reduced-motion: reduce) {
     .sidebar,
     .sb-indicator,
-    :host([variant="kintsugi"]) .sidebar::after,
-    :host([variant="kintsugi"]) .sb-logo-mark::before,
-    :host([variant="glitch"]) .sidebar,
-    :host([variant="glitch"]) .sidebar::before {
+    .sidebar::after,
+    .sidebar::before {
       animation: none !important;
       transition: none !important;
     }
@@ -931,16 +700,26 @@
      .sidebar usa --color-washi-950 hardcoded por diseño deliberado.
      Para katachi claros, usar variant="light" explícito.
 
-     variant="kintsugi" + "glitch": bg envueltos con --lib-comp-bg
-     (GUITV) — sin katachi idéntico al original; con katachi activo,
-     adaptan al contexto.
+     Los efectos de katachi actúan sobre los pseudo-elementos:
+     • kintsugi → --lib-effect-seam-play:running + seam-opacity:1
+                  anima .sidebar::after (seam dorado en el borde derecho)
+     • terminal → --lib-effect-scanlines:0.05
+                  opacidad de .sidebar::before (overlay CRT)
 
      .sb-toggle (FAB mobile): bg/color envueltos con
      --lib-comp-bg-inverse / --lib-comp-fg-inverse.
-
-     Pseudo-elementos animados (::after kintsugi-seam, ::before
-     glitch scanlines, logo-mark::before/::after ring): sin cambios.
      ─────────────────────────────────────────────────────────── */
+
+  /* celadon · el link activo sigue al katachi: consume el token
+     semántico de acento (--text-accent / --border-focus, jade bajo
+     celadon) en vez del kaki cálido hardcodeado. Acotado a celadon. */
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="celadon"]) .sb-link.is-active {
+      color: var(--text-accent);
+      background: color-mix(in oklch, var(--text-accent), transparent 88%);
+      border-left-color: var(--border-focus);
+    }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

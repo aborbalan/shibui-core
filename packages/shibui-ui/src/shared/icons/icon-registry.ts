@@ -110,6 +110,7 @@ import ticket from '@phosphor-icons/core/assets/regular/ticket.svg?raw';
 import puzzlePiece from '@phosphor-icons/core/assets/regular/puzzle-piece.svg?raw';
 import dribbbleLogo from '@phosphor-icons/core/assets/regular/dribbble-logo.svg?raw';
 import bicycle from '@phosphor-icons/core/assets/regular/bicycle.svg?raw';
+import plus from '@phosphor-icons/core/assets/regular/plus.svg?raw';
 
 // ── Críticos — usados hardcoded en templates de componentes ──────────────────
 import check         from '@phosphor-icons/core/assets/regular/check.svg?raw';
@@ -243,6 +244,11 @@ export const ICON_REGISTRY: Record<string, string> = {
 'music': guitar,
 'event': ticket,
 'plugin': puzzlePiece,
+
+// ── Acción primaria (develop) ─────────────────────────────────────────────────
+'plus':           plus,
+'add':            plus,
+'new':            plus,
 
 // ── Críticos — usados hardcoded en templates de componentes ──────────────────
 'check':          check,
@@ -379,6 +385,7 @@ export {
   guitar as music,
   ticket as event,
   puzzlePiece as plugin,
+  plus,
   // Críticos
   check,
   caretRight as caretRight,

@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-BURGER — Shibui UI · SG-48
-   Variantes : ink · kanji · washi · framed · kintsugi · glitch
+   Variantes : filled · kanji · neutral · framed · inverse · glitch
    Tamaños   : sm · md · lg
    ============================================================ */
 
@@ -136,30 +136,30 @@
 
     /* ════════════════════════════════════════
      1 · INK STROKE
-     Trazos asimétricos — pincelada washi.
+     Trazos asimétricos — pincelada neutral.
      Central más ancha, exteriores más cortas.
      ════════════════════════════════════════ */
-    :host([variant="ink"]) .burger {
+    :host([variant="filled"]) .burger {
         width: 44px;
         height: 44px;
         color: var(--text-primary);
         transition: color var(--duration-base);
     }
 
-    :host([variant="ink"]) .burger:hover {
+    :host([variant="filled"]) .burger:hover {
         color: var(--color-kaki-500);
     }
 
-    :host([variant="ink"]) .burger:active {
+    :host([variant="filled"]) .burger:active {
         transform: scale(0.94);
     }
 
-    :host([variant="ink"]) .burger-lines {
+    :host([variant="filled"]) .burger-lines {
         width: 28px;
         height: 18px;
     }
 
-    :host([variant="ink"]) .burger-line {
+    :host([variant="filled"]) .burger-line {
         height: 1.5px;
         transition:
             transform var(--duration-slow) var(--ease-bounce),
@@ -167,34 +167,34 @@
             width var(--duration-slow) var(--ease-bounce);
     }
 
-    :host([variant="ink"]) .burger-line:nth-child(1) {
+    :host([variant="filled"]) .burger-line:nth-child(1) {
         width: 20px;
         margin-bottom: 7px;
     }
 
-    :host([variant="ink"]) .burger-line:nth-child(2) {
+    :host([variant="filled"]) .burger-line:nth-child(2) {
         width: 28px;
         margin-bottom: 7px;
     }
 
-    :host([variant="ink"]) .burger-line:nth-child(3) {
+    :host([variant="filled"]) .burger-line:nth-child(3) {
         width: 14px;
     }
 
     /* Open */
-    :host([variant="ink"][open]) .burger-line:nth-child(1) {
+    :host([variant="filled"][open]) .burger-line:nth-child(1) {
         transform: translateY(8.5px) rotate(45deg);
         width: 26px;
         transition-delay: 0ms, 0ms, 80ms;
     }
 
-    :host([variant="ink"][open]) .burger-line:nth-child(2) {
+    :host([variant="filled"][open]) .burger-line:nth-child(2) {
         opacity: 0;
         transform: scaleX(0);
         transition-delay: 0ms;
     }
 
-    :host([variant="ink"][open]) .burger-line:nth-child(3) {
+    :host([variant="filled"][open]) .burger-line:nth-child(3) {
         transform: translateY(-8.5px) rotate(-45deg);
         width: 26px;
         transition-delay: 0ms, 0ms, 80ms;
@@ -288,27 +288,27 @@
      3 · WASHI UNFOLD
      Líneas se pliegan simétricamente — papel.
      ════════════════════════════════════════ */
-    :host([variant="washi"]) .burger {
+    :host([variant="neutral"]) .burger {
         width: 48px;
         height: 48px;
         color: var(--text-primary);
         transition: color var(--duration-base);
     }
 
-    :host([variant="washi"]) .burger:hover {
+    :host([variant="neutral"]) .burger:hover {
         color: var(--color-kaki-500);
     }
 
-    :host([variant="washi"]) .burger:active {
+    :host([variant="neutral"]) .burger:active {
         transform: scale(0.93);
     }
 
-    :host([variant="washi"]) .burger-lines {
+    :host([variant="neutral"]) .burger-lines {
         width: 28px;
         height: 18px;
     }
 
-    :host([variant="washi"]) .burger-line {
+    :host([variant="neutral"]) .burger-line {
         width: 28px;
         height: 1px;
         transition:
@@ -317,26 +317,26 @@
             opacity var(--duration-base) var(--ease-out);
     }
 
-    :host([variant="washi"]) .burger-line:nth-child(1) {
+    :host([variant="neutral"]) .burger-line:nth-child(1) {
         margin-bottom: 8px;
     }
 
-    :host([variant="washi"]) .burger-line:nth-child(2) {
+    :host([variant="neutral"]) .burger-line:nth-child(2) {
         margin-bottom: 8px;
     }
 
     /* Open */
-    :host([variant="washi"][open]) .burger-line:nth-child(1) {
+    :host([variant="neutral"][open]) .burger-line:nth-child(1) {
         transform: translateY(9px) rotate(45deg);
         transition-delay: 60ms, 0ms, 0ms;
     }
 
-    :host([variant="washi"][open]) .burger-line:nth-child(2) {
+    :host([variant="neutral"][open]) .burger-line:nth-child(2) {
         opacity: 0;
         width: 0;
     }
 
-    :host([variant="washi"][open]) .burger-line:nth-child(3) {
+    :host([variant="neutral"][open]) .burger-line:nth-child(3) {
         transform: translateY(-9px) rotate(-45deg);
         transition-delay: 60ms, 0ms, 0ms;
     }
@@ -414,10 +414,10 @@
 
 
     /* ════════════════════════════════════════
-     5 · KINTSUGI  (surface oscura)
-     Grietas de oro. Destello kaki al abrirse.
+     5 · INVERSE  (surface oscura)
+     Diseñado para fondos oscuros — destello dorado al abrirse.
      ════════════════════════════════════════ */
-    :host([variant="kintsugi"]) .burger {
+    :host([variant="inverse"]) .burger {
         width: 48px;
         height: 48px;
         color: rgb(250, 247, 244, .5);
@@ -426,12 +426,12 @@
         transition: color var(--duration-base);
     }
 
-    :host([variant="kintsugi"]) .burger:hover {
+    :host([variant="inverse"]) .burger:hover {
         color: rgb(250, 247, 244, .8);
     }
 
     /* Destello radial al abrirse */
-    :host([variant="kintsugi"]) .burger::before {
+    :host([variant="inverse"]) .burger::before {
         content: '';
         position: absolute;
         inset: 0;
@@ -440,20 +440,20 @@
         transition: opacity var(--duration-slow);
     }
 
-    :host([variant="kintsugi"][open]) .burger::before {
+    :host([variant="inverse"][open]) .burger::before {
         opacity: 1;
     }
 
-    :host([variant="kintsugi"][open]) .burger {
+    :host([variant="inverse"][open]) .burger {
         color: var(--color-kaki-400);
     }
 
-    :host([variant="kintsugi"]) .burger-lines {
+    :host([variant="inverse"]) .burger-lines {
         width: 24px;
         height: 16px;
     }
 
-    :host([variant="kintsugi"]) .burger-line {
+    :host([variant="inverse"]) .burger-line {
         height: 1px;
         transition:
             transform var(--duration-slow) var(--ease-bounce),
@@ -462,32 +462,32 @@
             background var(--duration-base);
     }
 
-    :host([variant="kintsugi"]) .burger-line:nth-child(1) {
+    :host([variant="inverse"]) .burger-line:nth-child(1) {
         width: 24px;
         margin-bottom: 7px;
     }
 
-    :host([variant="kintsugi"]) .burger-line:nth-child(2) {
+    :host([variant="inverse"]) .burger-line:nth-child(2) {
         width: 16px;
         margin-bottom: 7px;
     }
 
-    :host([variant="kintsugi"]) .burger-line:nth-child(3) {
+    :host([variant="inverse"]) .burger-line:nth-child(3) {
         width: 24px;
     }
 
     /* Open */
-    :host([variant="kintsugi"][open]) .burger-line:nth-child(1) {
+    :host([variant="inverse"][open]) .burger-line:nth-child(1) {
         transform: translateY(7.5px) rotate(45deg);
         width: 22px;
     }
 
-    :host([variant="kintsugi"][open]) .burger-line:nth-child(2) {
+    :host([variant="inverse"][open]) .burger-line:nth-child(2) {
         opacity: 0;
         width: 0;
     }
 
-    :host([variant="kintsugi"][open]) .burger-line:nth-child(3) {
+    :host([variant="inverse"][open]) .burger-line:nth-child(3) {
         transform: translateY(-7.5px) rotate(-45deg);
         width: 22px;
     }
@@ -662,7 +662,7 @@
     }
 
     /* ─── KATACHI · ambient context ──────────────────────────────
-       lib-burger-button tiene variants ink/kanji/washi/framed/kintsugi/
+       lib-burger-button tiene variants filled/kanji/neutral/framed/inverse/
        glitch — el dev elige según superficie. Las refs hardcoded
        washi-50/600 son para el focus ring (alto contraste físico).
 

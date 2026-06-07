@@ -1,0 +1,64 @@
+<!-- Angular 21 consumer fixture — mismos cinco escenarios que React/Svelte -->
+
+<!-- 1. Registro -->
+<section data-scenario="registration">
+  <lib-button data-testid="btn-registration">Present</lib-button>
+</section>
+
+<!-- 2a. Property — boolean
+     [disabled]="true" usa property binding de Angular: establece .disabled = true
+     directamente en el elemento DOM, que es lo que Lit espera.
+     DIFERENCIA CLAVE: disabled="true" (sin corchetes) enviaría el string "true",
+     no el booleano true. El test verifica que la propiedad JS es boolean true. -->
+<section data-scenario="boolean-prop">
+  <lib-button [disabled]="true" data-testid="btn-disabled">Disabled</lib-button>
+  <lib-button [disabled]="false" data-testid="btn-enabled">Enabled</lib-button>
+</section>
+
+<!-- 2b. Property — string enum
+     variant="danger" es un atributo estático (sin corchetes): Angular envía el
+     string directamente. Lit lo recibe vía attributeChangedCallback. -->
+<section data-scenario="string-prop">
+  <lib-button variant="danger" data-testid="btn-danger">Danger</lib-button>
+</section>
+
+<!-- 3. Eventos
+     #testModal es la referencia de ViewChild en el componente.
+     El listener se registra en ngAfterViewInit con addEventListener.
+     [open]="modalOpen()" vincula la señal al property binding. -->
+<section data-scenario="events">
+  <lib-modal
+    #testModal
+    id="ct-modal"
+    [open]="modalOpen()"
+  >
+    <span slot="header">Consumer Test Modal</span>
+    <p>Prueba de propagación de eventos</p>
+  </lib-modal>
+
+  <lib-button
+    data-testid="btn-open-modal"
+    (click)="openModal()"
+  >
+    Abrir modal
+  </lib-button>
+</section>
+
+<!-- 4. Slots -->
+<section data-scenario="slots">
+  <lib-button data-testid="btn-with-icon">
+    <lib-icon slot="prefix" name="home"></lib-icon>
+    Home
+  </lib-button>
+</section>
+
+<!-- 5. Katachi -->
+<section data-scenario="katachi">
+  <div data-katachi="kintsugi">
+    <lib-button data-testid="btn-in-kintsugi">Button</lib-button>
+  </div>
+  <div data-katachi="terminal">
+    <lib-button data-testid="btn-in-terminal">Button</lib-button>
+  </div>
+  <lib-button data-testid="btn-no-katachi">Button</lib-button>
+</section>

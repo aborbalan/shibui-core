@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-data-table.component';
 import type { LibDataTable } from './lib-data-table.component';
@@ -45,7 +45,7 @@ const TEAM_COLS: TableColumn[] = [
   { key: 'name',       header: 'Miembro',     type: 'avatar', hintKey: 'email', sortable: true },
   { key: 'role',       header: 'Rol',         type: 'mono' },
   { key: 'status',     header: 'Estado',      type: 'badge', toneKey: 'status' },
-  { key: 'components', header: 'Componentes', type: 'progress', progressTone: 'kaki', sortable: true },
+  { key: 'components', header: 'Componentes', type: 'progress', progressTone: 'accent', sortable: true },
   { key: 'commits',    header: 'Commits',     type: 'num', sortable: true },
   { key: '_actions',   header: '',            type: 'actions' },
 ];
@@ -60,7 +60,7 @@ type LibDataTableArgs = Pick<
 >;
 
 const meta: Meta<LibDataTableArgs> = {
-  title: 'Data/Data Table',
+  title: 'Universal/Data/Data Table',
   tags:['autodocs'],
   component: 'lib-data-table',
   argTypes: {
@@ -375,18 +375,67 @@ export const Dark: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-data-table
-    .columns="${([
-      { key: 'id',   header: 'ID' },
-      { key: 'name', header: 'Nombre' },
-      { key: 'tier', header: 'Tier' },
-    ] as TableColumn[])}"
-    .data="${([
-      { id: '01', name: 'Wabi',     tier: 'A' },
-      { id: '02', name: 'Kintsugi', tier: 'A' },
-      { id: '03', name: 'Celadon',  tier: 'A' },
-    ] as TableRowData[])}"
-  ></lib-data-table>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-lg);padding:var(--lib-space-md);background:var(--bg-base);">
+
+    <!-- lines variant · sm size -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">lines · sm</p>
+      <lib-data-table
+        variant="lines"
+        size="sm"
+        .columns="${([
+          { key: 'name',     header: 'Componente', sortable: true },
+          { key: 'category', header: 'Categoría',  type: 'mono' },
+          { key: 'status',   header: 'Estado',     type: 'badge', toneKey: 'status' },
+          { key: 'variants', header: 'Vars',        type: 'num' },
+        ] as TableColumn[])}"
+        .data="${([
+          { name: 'Accordion',   category: 'Layout',   status: 'estable', variants: 4 },
+          { name: 'Carousel',    category: 'Motion',   status: 'estable', variants: 2 },
+          { name: 'Data Table',  category: 'Data',     status: 'estable', variants: 4 },
+        ] as TableRowData[])}"
+      ></lib-data-table>
+    </div>
+
+    <!-- striped variant · md size -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">striped · md</p>
+      <lib-data-table
+        variant="striped"
+        size="md"
+        .columns="${([
+          { key: 'name',     header: 'Componente', sortable: true },
+          { key: 'category', header: 'Categoría',  type: 'mono' },
+          { key: 'status',   header: 'Estado',     type: 'badge', toneKey: 'status' },
+        ] as TableColumn[])}"
+        .data="${([
+          { name: 'Sidebar',    category: 'Navigation', status: 'estable' },
+          { name: 'Dialog',     category: 'Overlay',    status: 'estable' },
+          { name: 'Stepper',    category: 'Navigation', status: 'beta'    },
+        ] as TableRowData[])}"
+      ></lib-data-table>
+    </div>
+
+    <!-- grid variant · lg size -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">grid · lg · selectable</p>
+      <lib-data-table
+        variant="grid"
+        size="lg"
+        ?selectable="${true}"
+        .columns="${([
+          { key: 'name',   header: 'Componente' },
+          { key: 'status', header: 'Estado',    type: 'badge', toneKey: 'status' },
+          { key: 'id',     header: 'N.º',        type: 'num' },
+        ] as TableColumn[])}"
+        .data="${([
+          { name: 'Timeline',     status: 'estable', id: 41 },
+          { name: 'Toast Mgr',    status: 'estable', id: 42 },
+        ] as TableRowData[])}"
+      ></lib-data-table>
+    </div>
+
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

@@ -1,7 +1,8 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-tabs.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
+import { katachiContext, expectAccentMatchesToken } from '../../../stories/katachi-accent.helper';
 import type { LibTabs } from './lib-tabs.component';
 import type { TabItem } from './lib-tabs.types';
 
@@ -15,19 +16,21 @@ const _onTabClose = (e: Event): void => {
 };
 
 const meta: Meta = {
-  title: 'Navigation/Tabs',
+  title: 'Universal/Navigation/Tabs',
   tags:['autodocs'],
   component: 'lib-tabs',
   argTypes: {
     variant:  { control: 'select', options: ['underline', 'pill', 'card', 'outline', 'vertical'] },
-    color:    { control: 'select', options: ['', 'kaki', 'celadon'] },
+    color:    { control: 'select', options: ['', 'accent', 'info'] },
     size:     { control: 'select', options: ['', 'sm', 'lg'] },
     dark:     { control: 'boolean' },
-    kintsugi: { control: 'boolean' },
+    gold: { control: 'boolean' },
     glitch:   { control: 'boolean' },
     scroll:   { control: 'boolean' },
     full:     { control: 'boolean' },
     closable: { control: 'boolean' },
+    newTab:      { control: 'boolean', name: 'new-tab' },
+    reorderable: { control: 'boolean' },
     active:   { control: 'text' },
   },
 };
@@ -48,11 +51,13 @@ export const Playground: Story = {
     color:    '',
     size:     '',
     dark:     false,
-    kintsugi: false,
+    gold: false,
     glitch:   false,
     scroll:   false,
     full:     false,
     closable: false,
+    newTab:      false,
+    reorderable: false,
     active:   'overview',
   },
   render: (args): TemplateResult => html`
@@ -62,11 +67,13 @@ export const Playground: Story = {
         color="${args.color}"
         size="${args.size}"
         ?dark="${args.dark}"
-        ?kintsugi="${args.kintsugi}"
+        ?gold="${args.gold}"
         ?glitch="${args.glitch}"
         ?scroll="${args.scroll}"
         ?full="${args.full}"
         ?closable="${args.closable}"
+        ?new-tab="${args.newTab}"
+        ?reorderable="${args.reorderable}"
         active="${args.active}"
         .items="${[
           { id: 'overview', label: 'Overview' },
@@ -116,7 +123,7 @@ export const Underline: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Celadon</p>
-        <lib-tabs variant="underline" color="celadon" active="u2-general"
+        <lib-tabs variant="underline" color="info" active="u2-general"
           .items="${[
             { id: 'u2-general',  label: 'General' },
             { id: 'u2-security', label: 'Seguridad' },
@@ -183,7 +190,7 @@ export const Pill: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Kaki</p>
-        <lib-tabs variant="pill" color="kaki" active="p2-a"
+        <lib-tabs variant="pill" color="accent" active="p2-a"
           .items="${[{ id: 'p2-a', label: 'Grid' }, { id: 'p2-b', label: 'Lista' }, { id: 'p2-c', label: 'Mosaic' }]}">
           <div slot="p2-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Vista grid.</p></div>
           <div slot="p2-b"></div><div slot="p2-c"></div>
@@ -192,7 +199,7 @@ export const Pill: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Celadon</p>
-        <lib-tabs variant="pill" color="celadon" active="p3-a"
+        <lib-tabs variant="pill" color="info" active="p3-a"
           .items="${[{ id: 'p3-a', label: 'Componentes' }, { id: 'p3-b', label: 'Tokens' }, { id: 'p3-c', label: 'Motion' }]}">
           <div slot="p3-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Componentes.</p></div>
           <div slot="p3-b"></div><div slot="p3-c"></div>
@@ -316,7 +323,7 @@ export const Dark: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">Pill dark · kaki</p>
-        <lib-tabs variant="pill" color="kaki" dark active="dk2-live"
+        <lib-tabs variant="pill" color="accent" dark active="dk2-live"
           .items="${[{ id: 'dk2-live', label: 'Live' }, { id: 'dk2-staging', label: 'Staging' }, { id: 'dk2-preview', label: 'Preview' }]}">
           <div slot="dk2-live"><p    style="padding-top: 1rem; font-size: var(--text-sm); color: rgba(250,247,244,.4);">Entorno live.</p></div>
           <div slot="dk2-staging"></div><div slot="dk2-preview"></div>
@@ -347,7 +354,7 @@ export const Kintsugi: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Underline · light</p>
-        <lib-tabs variant="underline" kintsugi active="ki1-wabi"
+        <lib-tabs variant="underline" gold active="ki1-wabi"
           .items="${[
             { id: 'ki1-wabi', label: 'Wabi' },
             { id: 'ki1-sabi', label: 'Sabi' },
@@ -363,7 +370,7 @@ export const Kintsugi: Story = {
 
       <div style="background: var(--color-washi-950); padding: 1.5rem;">
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">Underline · dark</p>
-        <lib-tabs variant="underline" kintsugi dark active="ki2-edo"
+        <lib-tabs variant="underline" gold dark active="ki2-edo"
           .items="${[{ id: 'ki2-edo', label: 'Edo' }, { id: 'ki2-meiji', label: 'Meiji' }, { id: 'ki2-showa', label: 'Shōwa' }]}">
           <div slot="ki2-edo"><p   style="padding-top: 1rem; font-size: var(--text-sm); color: rgba(250,247,244,.4);">Era Edo — 1603–1868.</p></div>
           <div slot="ki2-meiji"><p style="padding-top: 1rem; font-size: var(--text-sm); color: rgba(250,247,244,.4);">Era Meiji — 1868–1912.</p></div>
@@ -581,6 +588,57 @@ tabs?.addEventListener('ui-lib-tab-close', (e) => {
   `,
 };
 
+/* ── Reorder por drag: mueve el item en el array del elemento ── */
+const _onTabReorder = (e: Event): void => {
+  const el = e.currentTarget as LibTabs;
+  const { fromIndex, toIndex } = (e as CustomEvent<{ fromIndex: number; toIndex: number }>).detail;
+  const next = [...el.items];
+  const [moved] = next.splice(fromIndex, 1);
+  if (moved) next.splice(toIndex, 0, moved);
+  el.items = next;
+};
+
+/* ── Botón "+": añade una pestaña nueva y la activa ── */
+let _newTabCounter = 0;
+const _onTabNew = (e: Event): void => {
+  const el = e.currentTarget as LibTabs;
+  _newTabCounter += 1;
+  const id = `nuevo-${_newTabCounter}`;
+  el.items = [...el.items, { id, label: `untitled-${_newTabCounter}.ts`, dirty: true } as TabItem];
+  el.active = id;
+};
+
+/**
+ * Tabs estilo IDE: las tres extras opt-in juntas — botón "+", reordenar
+ * arrastrando, cerrar con × o con click central del ratón.
+ */
+export const IdeTabs: Story = {
+  name: 'IDE — new-tab + reorderable + middle-click',
+  parameters: { backgrounds: { default: 'dark' } },
+  render: (): TemplateResult => html`
+    <div style="background: var(--color-washi-950); padding: 2rem;">
+      <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">
+        Arrastra para reordenar · "+" añade pestaña · × o click central cierra
+      </p>
+      <lib-tabs
+        variant="card" dark closable new-tab reorderable active="ide-a"
+        .items="${[
+          { id: 'ide-a', label: 'index.ts',  dirty: true },
+          { id: 'ide-b', label: 'app.tsx'                 },
+          { id: 'ide-c', label: 'utils.ts',  dirty: true },
+        ] as TabItem[]}"
+        @ui-lib-tab-close="${_onTabClose}"
+        @ui-lib-tab-reorder="${_onTabReorder}"
+        @ui-lib-tab-new="${_onTabNew}"
+      >
+        <div slot="ide-a"><p style="font-size: var(--text-sm); color: rgba(250,247,244,.35); padding-top: 0.75rem;">Punto de entrada.</p></div>
+        <div slot="ide-b"><p style="font-size: var(--text-sm); color: rgba(250,247,244,.35); padding-top: 0.75rem;">Componente raíz.</p></div>
+        <div slot="ide-c"><p style="font-size: var(--text-sm); color: rgba(250,247,244,.35); padding-top: 0.75rem;">Utilidades compartidas.</p></div>
+      </lib-tabs>
+    </div>
+  `,
+};
+
 /* ═══════════════════════════════════════════════════════════════
    KATACHI · 形 · Las 6 historias estándar
    lib-tabs usa tokens semánticos de superficie y texto
@@ -588,16 +646,46 @@ tabs?.addEventListener('ui-lib-tab-close', (e) => {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
-    <lib-tabs active="t1"
+  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-xl);">
+    <lib-tabs variant="underline" active="t1"
       .items="${[
         { id: 't1', label: 'Diseño' },
         { id: 't2', label: 'Tokens' },
-        { id: 't3', label: 'Código' },
+        { id: 't3', label: 'Código', dirty: true },
+        { id: 't4', label: 'Issues', disabled: true },
       ]}">
       <div slot="t1" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Sistema de diseño.</div>
       <div slot="t2" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Tokens semánticos.</div>
       <div slot="t3" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Implementación Lit.</div>
+      <div slot="t4"></div>
+    </lib-tabs>
+    <lib-tabs variant="pill" active="p1"
+      .items="${[
+        { id: 'p1', label: 'Día' },
+        { id: 'p2', label: 'Semana' },
+        { id: 'p3', label: 'Mes' },
+        { id: 'p4', label: 'Año' },
+      ]}">
+      <div slot="p1" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Vista diaria.</div>
+      <div slot="p2"></div><div slot="p3"></div><div slot="p4"></div>
+    </lib-tabs>
+    <lib-tabs variant="card" active="c1"
+      .items="${[
+        { id: 'c1', label: 'HTML' },
+        { id: 'c2', label: 'CSS' },
+        { id: 'c3', label: 'JS' },
+      ]}">
+      <div slot="c1" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Estructura HTML.</div>
+      <div slot="c2"></div><div slot="c3"></div>
+    </lib-tabs>
+    <lib-tabs variant="outline" full active="o1"
+      .items="${[
+        { id: 'o1', label: 'Vista' },
+        { id: 'o2', label: 'Editar' },
+        { id: 'o3', label: 'Historial' },
+      ]}">
+      <div slot="o1" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Panel de vista.</div>
+      <div slot="o2"></div><div slot="o3"></div>
     </lib-tabs>
   </div>
 `);
@@ -608,3 +696,24 @@ export const KatachiKintsugi = _katachi.KatachiKintsugi;
 export const KatachiCeladon  = _katachi.KatachiCeladon;
 export const KatachiSabi     = _katachi.KatachiSabi;
 export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ── Acento de selección sigue al katachi (PR #448) ──────────────
+   El tab activo (variant underline por defecto) adopta el token de
+   acento jade bajo celadon, no el kaki cálido hardcodeado. */
+export const TestAccentCeladon: Story = {
+  name: 'Test · accent del tab activo sigue al katachi (celadon)',
+  tags: ['test'],
+  render: (): TemplateResult => katachiContext('celadon', html`
+    <lib-tabs
+      active="overview"
+      .items="${[{ id: 'overview', label: 'Overview' }, { id: 'code', label: 'Código' }] as TabItem[]}"
+    ></lib-tabs>
+  `),
+  play: async ({ canvasElement }): Promise<void> => {
+    const ctx = canvasElement.querySelector('[data-katachi="celadon"]') as HTMLElement;
+    const host = ctx.querySelector('lib-tabs') as LibTabs;
+    await host.updateComplete;
+    const active = host.shadowRoot!.querySelector('.tb-tab.is-active') as HTMLElement;
+    expectAccentMatchesToken(active, 'color', ctx, '--text-accent');
+  },
+};

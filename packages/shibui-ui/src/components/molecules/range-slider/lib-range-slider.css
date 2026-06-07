@@ -16,7 +16,7 @@
      .rs-limits                → min/max labels (opcional)
 
    Sizes   : sm / md (default) / lg
-   Tones   : default · kaki · celadon · error · washi · dark
+   Tones   : default · accent · info · error · neutral · inverse
    Modes   : single / dual / vertical
    Extras  : tooltip · marks · limits · disabled
    ============================================================ */
@@ -200,18 +200,18 @@
   :host([size="lg"]) .rs-value { font-size: var(--text-sm); }
 
   /* ── Tones ──────────────────────────────────────────────── */
-  :host([tone="kaki"])    .rs { --rs-fill-color: var(--color-kaki-500); }
-  :host([tone="celadon"]) .rs { --rs-fill-color: var(--color-celadon-500); }
+  :host([tone="accent"])  .rs { --rs-fill-color: var(--color-kaki-500); }
+  :host([tone="info"])    .rs { --rs-fill-color: var(--info); }
   :host([tone="error"])   .rs { --rs-fill-color: var(--color-error); }
-  :host([tone="washi"])   .rs { --rs-fill-color: var(--color-washi-700); }
+  :host([tone="neutral"]) .rs { --rs-fill-color: var(--color-washi-700); }
 
-  /* ── Dark tone ──────────────────────────────────────────── */
-  :host([tone="dark"]) .rs {
+  /* ── Inverse tone ───────────────────────────────────────── */
+  :host([tone="inverse"]) .rs {
     --rs-track-bg:   oklch(20% 0.02 45deg);
     --rs-fill-color: oklch(65% 0.02 55deg);
   }
-  :host([tone="dark"]) .rs-label { color: oklch(42% 0.02 50deg); }
-  :host([tone="dark"]) .rs-value { color: oklch(65% 0.02 55deg); }
+  :host([tone="inverse"]) .rs-label { color: oklch(42% 0.02 50deg); }
+  :host([tone="inverse"]) .rs-value { color: oklch(65% 0.02 55deg); }
   :host([tone="dark"]) .rs-limit { color: oklch(28% 0.02 50deg); }
   :host([tone="dark"]) .rs-mark  { background: oklch(22% 0.02 45deg); }
   :host([tone="dark"]) .rs-mark.is-filled { background: oklch(65% 0.02 55deg); }
@@ -384,7 +384,7 @@
      superficie/inverso en light. Swap a tokens semánticos para
      que el slider sin tone explícito se adapte al katachi.
 
-     Los tones explícitos (kaki/celadon/error/washi/dark) son
+     Los tones explícitos (accent/info/error/neutral/inverse) son
      paletas deliberadas y siguen ganando. El tooltip washi-900/50
      también se actualiza para coherencia.
      ─────────────────────────────────────────────────────────── */
@@ -401,6 +401,42 @@
 
   .rs-tooltip-bubble::after {
     border-top-color: var(--bg-inverse);
+  }
+
+  /* ── Kintsugi: ring dorado en el thumb ────────────────────
+     Los pseudo-elementos de input nativo no consumen CSS custom
+     properties, por lo que se usa :host-context con valor literal.
+     El box-shadow compone el shadow base (--shadow-sm) + ring kaki.
+     ─────────────────────────────────────────────────────────── */
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="kintsugi"]) .rs input[type="range"]::-webkit-slider-thumb {
+      box-shadow:
+        var(--shadow-sm),
+        0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.45),
+        0 0 8px oklch(61.85% 0.149 48.72deg / 0.20);
+    }
+
+    :host-context([data-katachi="kintsugi"]) .rs input[type="range"]::-moz-range-thumb {
+      box-shadow:
+        var(--shadow-sm),
+        0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.45),
+        0 0 8px oklch(61.85% 0.149 48.72deg / 0.20);
+    }
+
+    /* Celadon: thumb con anillo + glow jade */
+    :host-context([data-katachi="celadon"]) .rs input[type="range"]::-webkit-slider-thumb {
+      box-shadow:
+        var(--shadow-sm),
+        0 0 0 1px oklch(58.33% 0.068 171.21deg / 0.45),
+        0 0 8px oklch(58.33% 0.068 171.21deg / 0.20);
+    }
+
+    :host-context([data-katachi="celadon"]) .rs input[type="range"]::-moz-range-thumb {
+      box-shadow:
+        var(--shadow-sm),
+        0 0 0 1px oklch(58.33% 0.068 171.21deg / 0.45),
+        0 0 8px oklch(58.33% 0.068 171.21deg / 0.20);
+    }
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

@@ -4,7 +4,7 @@
    LIB-SKELETON — Shibui UI · 骨格
    Shape     : line · title · h1 · avatar · icon · btn · badge · pill · img · rect
    Animation : shimmer (default) · wave · pulse
-   Surface   : light (default) · dark · kaki
+   Surface   : light (default) · dark · accent · info
    ============================================================
 
    Arquitectura de animación:
@@ -94,8 +94,30 @@
     animation: sk-pulse 1.8s ease-in-out infinite;
   }
 
-  /* kaki — tinte cálido para superficies premium */
-  :host([surface="kaki"]) .sk {
+  /* info — jade oscuro para superficies data-katachi="celadon" */
+  :host([surface="info"]) .sk {
+    background: linear-gradient(
+      90deg,
+      oklch(22% 0.030 175deg) 25%,
+      oklch(32% 0.048 174deg) 50%,
+      oklch(22% 0.030 175deg) 75%
+    );
+    background-size: 300% 100%;
+    animation: sk-shimmer 1.8s ease-in-out infinite;
+  }
+
+  :host([surface="info"][animation="wave"]) .sk {
+    animation-duration: 2.4s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  }
+
+  :host([surface="info"][animation="pulse"]) .sk {
+    background: oklch(22% 0.030 175deg);
+    animation: sk-pulse 1.8s ease-in-out infinite;
+  }
+
+  /* accent — tinte cálido para superficies premium */
+  :host([surface="accent"]) .sk {
     background: linear-gradient(
       90deg,
       var(--color-kaki-200) 25%,
@@ -106,12 +128,12 @@
     animation: sk-shimmer 1.8s ease-in-out infinite;
   }
 
-  :host([surface="kaki"][animation="wave"]) .sk {
+  :host([surface="accent"][animation="wave"]) .sk {
     animation-duration: 2.4s;
     animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
   }
 
-  :host([surface="kaki"][animation="pulse"]) .sk {
+  :host([surface="accent"][animation="pulse"]) .sk {
     background: var(--color-kaki-200);
     animation: sk-pulse 1.8s ease-in-out infinite;
   }
@@ -184,25 +206,49 @@
       background-size: unset;
     }
 
-    :host([surface="dark"]) .sk  { background: var(--color-washi-700); }
-    :host([surface="kaki"]) .sk  { background: var(--color-kaki-200); }
+    :host([surface="dark"])    .sk { background: var(--color-washi-700); }
+    :host([surface="accent"])    .sk { background: var(--color-kaki-200); }
+    :host([surface="info"]) .sk { background: oklch(22% 0.030 175deg); }
   }
 
-  /* ─── KATACHI · ambient context ──────────────────────────────
-     lib-skeleton es un primitivo de loading state con su propia
-     dimensión [surface] (light · dark · kaki). Las paletas
-     washi-100/200/700/800 y kaki-100/200 son específicas para
-     el efecto shimmer (necesitan dos tonos contiguos en el
-     gradient).
+  /* ─── KATACHI · celadon · auto-adaptación ambient ─────────────
+     Cuando el skeleton no lleva [surface] explícito (o lleva
+     [surface="light"]) pero reside dentro de un ancestro con
+     data-katachi="celadon", cambia automáticamente a jade oscuro.
+     El consumidor no necesita pasar surface="info" — basta
+     con que el lib-canvas o cualquier wrapper tenga el katachi.
 
-     Para usar bajo un katachi dark sin pasar [surface] explícito,
-     el comportamiento actual es razonable: el skeleton se ve
-     "claro" siempre — lo cual es coherente con su rol de
-     placeholder neutro. Si se desea adaptación, el consumidor
-     pasa [surface="dark"] explícito.
-
-     Bloque marcador para discoverability.
+     Se excluyen dark, accent y info propios para no sobreescribir
+     elecciones explícitas del consumidor.
      ─────────────────────────────────────────────────────────── */
+
+  :host-context([data-katachi="celadon"]):not([surface="dark"], [surface="accent"], [surface="info"]) .sk {
+    background: linear-gradient(
+      90deg,
+      oklch(22% 0.030 175deg) 25%,
+      oklch(32% 0.048 174deg) 50%,
+      oklch(22% 0.030 175deg) 75%
+    );
+    background-size: 300% 100%;
+    animation: sk-shimmer 1.8s ease-in-out infinite;
+  }
+
+  :host-context([data-katachi="celadon"]):not([surface="dark"], [surface="accent"], [surface="info"])[animation="wave"] .sk {
+    animation-duration: 2.4s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  }
+
+  :host-context([data-katachi="celadon"]):not([surface="dark"], [surface="accent"], [surface="info"])[animation="pulse"] .sk {
+    background: oklch(22% 0.030 175deg);
+    animation: sk-pulse 1.8s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host-context([data-katachi="celadon"]):not([surface="dark"], [surface="accent"], [surface="info"]) .sk {
+      background: oklch(22% 0.030 175deg);
+      background-size: unset;
+    }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

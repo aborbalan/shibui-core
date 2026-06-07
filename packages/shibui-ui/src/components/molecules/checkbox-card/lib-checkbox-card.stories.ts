@@ -2,14 +2,16 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { expect, fireEvent } from 'storybook/test';
 import './lib-checkbox-card.component';
+import type { LibCheckboxCard } from './lib-checkbox-card.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
+import { katachiContext, expectAccentMatchesToken, expectTranslucentBackground } from '../../../stories/katachi-accent.helper';
 
 const meta: Meta = {
-  title: 'Forms/Checkbox Card',
+  title: 'Universal/Forms/Checkbox Card',
   tags:['autodocs'],
   component: 'lib-checkbox-card',
   argTypes: {
-    color:       { control: 'select', options: ['kaki', 'celadon'] },
+    color:       { control: 'select', options: ['accent', 'info'] },
     layout:      { control: 'select', options: ['vertical', 'horizontal', 'compact'] },
     'input-type':{ control: 'select', options: ['checkbox', 'radio'] },
     checked:     { control: 'boolean' },
@@ -53,7 +55,7 @@ const featureList = (items: string[]): TemplateResult => html`
 /* ── Playground ── */
 export const Playground: Story = {
   args: {
-    color: 'kaki', layout: 'vertical',
+    color: 'accent', layout: 'vertical',
     'input-type': 'checkbox', checked: false,
     dark: false, disabled: false, error: false,
   },
@@ -77,9 +79,9 @@ export const Playground: Story = {
   `,
 };
 
-/* ── Variante kaki — vertical con icono ── */
-export const KakiVertical: Story = {
-  name: 'Kaki · Vertical con icono',
+/* ── Variante accent — vertical con icono ── */
+export const AccentVertical: Story = {
+  name: 'Accent · Vertical con icono',
   render: (): TemplateResult => html`
     <div style="display:grid;grid-template-columns:repeat(3,240px);gap:1rem;padding:2rem;">
 
@@ -130,13 +132,13 @@ export const BadgeAndFeatures: Story = {
   `,
 };
 
-/* ── Celadon ── */
-export const Celadon: Story = {
-  name: 'Celadon · Pill checkmark',
+/* ── Info ── */
+export const Info: Story = {
+  name: 'Info · Pill checkmark',
   render: (): TemplateResult => html`
     <div style="display:grid;grid-template-columns:repeat(3,240px);gap:1rem;padding:2rem;">
 
-      <lib-checkbox-card color="celadon" check-shape="pill"
+      <lib-checkbox-card color="info" check-shape="pill"
         card-title="Seguridad" checked
         desc="Autenticación de dos factores y auditoría de accesos.">
         <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -146,7 +148,7 @@ export const Celadon: Story = {
         </svg>
       </lib-checkbox-card>
 
-      <lib-checkbox-card color="celadon" check-shape="pill"
+      <lib-checkbox-card color="info" check-shape="pill"
         card-title="Monitorización"
         desc="Alertas en tiempo real y dashboards de salud.">
         <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -156,7 +158,7 @@ export const Celadon: Story = {
         </svg>
       </lib-checkbox-card>
 
-      <lib-checkbox-card color="celadon" check-shape="pill"
+      <lib-checkbox-card color="info" check-shape="pill"
         card-title="API Access"
         desc="Claves, webhooks y rate limiting configurables.">
         <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -317,6 +319,36 @@ export const States: Story = {
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-checkbox-card usa tokens semánticos de borde y superficie
+   (border-subtle, bg-elevated, text-primary) — adapta al katachi.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);padding:var(--lib-space-md);">
+    <div style="display:flex;gap:var(--lib-space-sm);">
+      <lib-checkbox-card value="wabi" card-title="Wabi" desc="Austeridad serena"></lib-checkbox-card>
+      <lib-checkbox-card value="sabi" card-title="Sabi" desc="Patina del tiempo" checked></lib-checkbox-card>
+      <lib-checkbox-card value="shizen" color="info" card-title="Shizen" desc="Naturaleza"></lib-checkbox-card>
+    </div>
+    <lib-checkbox-card layout="horizontal" value="kintsugi" card-title="Kintsugi" desc="La belleza de las grietas reparadas con oro."></lib-checkbox-card>
+    <div style="display:flex;gap:var(--lib-space-sm);">
+      <lib-checkbox-card layout="compact" card-title="Angular" checked></lib-checkbox-card>
+      <lib-checkbox-card layout="compact" card-title="React"></lib-checkbox-card>
+      <lib-checkbox-card layout="compact" card-title="Svelte" checked></lib-checkbox-card>
+      <lib-checkbox-card layout="compact" card-title="Lit" disabled></lib-checkbox-card>
+    </div>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ═══════════════════════════════════════════════════════════════
    TESTS · Interacción y eventos
    ═══════════════════════════════════════════════════════════════ */
 
@@ -363,22 +395,48 @@ export const TestDisabledCheckboxCard: Story = {
   },
 };
 
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Las 6 historias estándar
-   lib-checkbox-card usa tokens semánticos de borde y superficie
-   (border-subtle, bg-elevated, text-primary) — adapta al katachi.
-   ═══════════════════════════════════════════════════════════════ */
-
-const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);padding:var(--lib-space-md);">
-    <lib-checkbox-card value="wabi" card-title="Wabi" desc="Austeridad serena"></lib-checkbox-card>
+/* ── Acento de selección sigue al katachi (PR #448 + dark-katachi fix) ──
+   Invariante: bajo cualquier katachi OSCURO el checked adopta el token de
+   acento del katachi (jade·oro·phosphor…), no el primitivo kaki cálido, y
+   sobre un fondo translúcido (legible). Ver katachi-accent.helper.ts y
+   celadon-audit.md § Inconsistencias. */
+export const TestAccentCeladon: Story = {
+  name: 'Test · accent de selección sigue al katachi (celadon)',
+  tags: ['test'],
+  render: (): TemplateResult => katachiContext('celadon', html`
     <lib-checkbox-card value="sabi" card-title="Sabi" desc="Patina del tiempo" checked></lib-checkbox-card>
-  </div>
-`);
+  `),
+  play: async ({ canvasElement }): Promise<void> => {
+    const ctx = canvasElement.querySelector('[data-katachi="celadon"]') as HTMLElement;
+    const host = ctx.querySelector('lib-checkbox-card') as LibCheckboxCard;
+    await host.updateComplete;
+    const sr = host.shadowRoot!;
 
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;
+    // El check relleno usa --text-accent; el borde del body usa --border-focus.
+    // Ambos deben resolver al acento jade del katachi celadon, no a kaki.
+    expectAccentMatchesToken(sr.querySelector('.cc-check')!, 'backgroundColor', ctx, '--text-accent');
+    expectAccentMatchesToken(sr.querySelector('.cc-body')!, 'borderTopColor', ctx, '--border-focus');
+  },
+};
+
+/* Kintsugi: regresión del bug de texto invisible. El checked debe adoptar el
+   acento del katachi (oro) sobre un fondo TRANSLÚCIDO oscuro — no el bloque
+   claro opaco kaki-50 que volvía el texto ilegible. */
+export const TestAccentKintsugi: Story = {
+  name: 'Test · accent + legibilidad del seleccionado (kintsugi)',
+  tags: ['test'],
+  render: (): TemplateResult => katachiContext('kintsugi', html`
+    <lib-checkbox-card value="k" card-title="Kintsugi" desc="Reparado con oro" checked></lib-checkbox-card>
+  `),
+  play: async ({ canvasElement }): Promise<void> => {
+    const ctx = canvasElement.querySelector('[data-katachi="kintsugi"]') as HTMLElement;
+    const host = ctx.querySelector('lib-checkbox-card') as LibCheckboxCard;
+    await host.updateComplete;
+    const sr = host.shadowRoot!;
+
+    // El acento sigue al katachi (oro), no el kaki fijo.
+    expectAccentMatchesToken(sr.querySelector('.cc-check')!, 'backgroundColor', ctx, '--text-accent');
+    // Fondo translúcido → compone oscuro bajo kintsugi → texto legible (guard del bug).
+    expectTranslucentBackground(sr.querySelector('.cc-body')!);
+  },
+};

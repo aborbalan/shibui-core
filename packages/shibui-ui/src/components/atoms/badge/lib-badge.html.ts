@@ -2,13 +2,14 @@ import { html, nothing, TemplateResult } from 'lit';
 
 /**
  * Variantes visuales del badge.
+ * Roles semánticos — independientes de la paleta del katachi activo.
  * TODO: mover a src/models/ui/ cuando se integre en el monorepo.
  */
 export type LibBadgeVariant =
-  | 'default'
-  | 'accent'
-  | 'celadon'
-  | 'dark'
+  | 'default'   // neutro adaptativo — hereda del contexto katachi
+  | 'accent'    // énfasis cálido (kaki/persimón)
+  | 'info'      // informativo (jade/celadon) — era 'celadon'
+  | 'strong'    // contraste máximo (inverso) — era 'dark'
   | 'error'
   | 'success'
   | 'warning';

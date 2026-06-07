@@ -1,5 +1,6 @@
 import { html, TemplateResult, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import '../../atoms/icon/lib-icon.component';
 import type { LibTabs } from './lib-tabs.component';
 import type { TabItem, TabsVariant } from './lib-tabs.types';
 
@@ -37,9 +38,11 @@ function renderClose(item: TabItem, context: LibTabs): TemplateResult | typeof n
 }
 
 /* ── Tab button ── */
-function renderTab(item: TabItem, context: LibTabs): TemplateResult {
+function renderTab(item: TabItem, index: number, context: LibTabs): TemplateResult {
   const isActive   = context.active === item.id;
   const isDisabled = item.disabled === true;
+  const draggable  = context.reorderable && !isDisabled;
+  const isDragging = context._dragIndex === index;
 
   return html`
     ${item.group
@@ -47,7 +50,7 @@ function renderTab(item: TabItem, context: LibTabs): TemplateResult {
       : nothing}
     <button
       id="tab-${item.id}"
-      class="tb-tab ${isActive ? 'is-active' : ''} ${isDisabled ? 'is-disabled' : ''}"
+      class="tb-tab ${isActive ? 'is-active' : ''} ${isDisabled ? 'is-disabled' : ''} ${isDragging ? 'is-dragging' : ''}"
       role="tab"
       aria-selected="${isActive}"
       aria-controls="panel-${item.id}"
@@ -55,13 +58,35 @@ function renderTab(item: TabItem, context: LibTabs): TemplateResult {
       data-id="${item.id}"
       data-label="${item.label}"
       ?disabled="${isDisabled}"
+      draggable="${draggable ? 'true' : 'false'}"
       @click="${(e:Event):void=> context._handleClick(e as CustomEvent)}"
+      @auxclick="${(e: MouseEvent): void => context._handleAuxClick(e, item)}"
+      @dragstart="${(e: DragEvent): void => context._handleDragStart(e, index)}"
+      @dragover="${(e: DragEvent): void => context._handleDragOver(e)}"
+      @drop="${(e: DragEvent): void => context._handleDrop(e, index)}"
+      @dragend="${(): void => context._handleDragEnd()}"
     >
       ${item.icon ? html`${unsafeHTML(item.icon)}` : nothing}
       ${item.label}
       ${renderBadge(item)}
       ${renderDirty(item)}
       ${renderClose(item, context)}
+    </button>
+  `;
+}
+
+/* ── Botón "+" de nueva pestaña (opt-in) ── */
+function renderNewTab(context: LibTabs): TemplateResult | typeof nothing {
+  if (!context.newTab) return nothing;
+  return html`
+    <button
+      class="tb-new"
+      part="new-tab"
+      type="button"
+      aria-label="Nueva pestaña"
+      @click="${(): void => context._handleNew()}"
+    >
+      <lib-icon name="plus" size="sm"></lib-icon>
     </button>
   `;
 }
@@ -85,7 +110,7 @@ function renderPanel(item: TabItem, context: LibTabs): TemplateResult {
 export function tabsTemplate(context: LibTabs): TemplateResult {
   const tabs = (context.items ?? []) as TabItem[];
 
-  /* La ink bar solo aplica en underline (y sus modificadores kintsugi/glitch) */
+  /* La ink bar solo aplica en underline (y sus modificadores gold/glitch) */
   const showInk = !(['pill', 'card', 'outline', 'vertical'] as TabsVariant[]).includes(context.variant);
 
   return html`
@@ -100,7 +125,8 @@ export function tabsTemplate(context: LibTabs): TemplateResult {
         
         @keydown="${(e: KeyboardEvent): void => context._handleKey(e)}"
       >
-        ${tabs.map(item => renderTab(item, context))}
+        ${tabs.map((item, index) => renderTab(item, index, context))}
+        ${renderNewTab(context)}
       </div>
 
       <!-- Ink bar (posicionada por JS, solo para variantes underline) -->

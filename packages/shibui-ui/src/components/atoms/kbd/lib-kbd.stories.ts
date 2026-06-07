@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-kbd.component';
 import type { LibKbd } from './lib-kbd.component';
@@ -7,12 +7,12 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type KbdArgs = Pick<LibKbd, 'size' | 'variant' | 'pressed'>;
 
 const meta: Meta<KbdArgs> = {
-  title: 'Content/Kbd',
+  title: 'Universal/Content/Kbd',
   tags:['autodocs'],
   component: 'lib-kbd',
   argTypes: {
     size:    { control: 'select', options: ['xs', 'sm', 'md', 'lg'] },
-    variant: { control: 'select', options: ['default', 'dark', 'ghost', 'kaki', 'celadon'] },
+    variant: { control: 'select', options: ['default', 'inverse', 'ghost', 'accent', 'subtle'] },
     pressed: { control: 'boolean' },
   },
 };
@@ -69,10 +69,10 @@ export const ModifierSymbols: Story = {
 
 /* ── Variants ── */
 export const Variants: Story = {
-  name: 'Variants — Default · Dark · Ghost · Kaki · Celadón',
+  name: 'Variants — Default · Inverse · Ghost · Accent · Subtle',
   render: (): TemplateResult => html`
     <div style=${stage}>
-      ${(['default','dark','ghost','kaki','celadon'] as const).map(v => html`
+      ${(['default','inverse','ghost','accent','subtle'] as const).map(v => html`
         <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
           <div style="display:flex;align-items:center;gap:4px;">
             <lib-kbd size="md" variant=${v}>⌘</lib-kbd>
@@ -87,15 +87,15 @@ export const Variants: Story = {
 
 /* ── Dark surface ── */
 export const DarkSurface: Story = {
-  name: 'Dark — sobre superficie oscura',
+  name: 'Inverse — sobre superficie oscura',
   parameters: { backgrounds: { default: 'dark' } },
   render: (): TemplateResult => html`
     <div style=${stageDk}>
-      <lib-kbd size="md" variant="dark">⌘</lib-kbd>
-      <lib-kbd size="md" variant="dark">⇧</lib-kbd>
-      <lib-kbd size="md" variant="dark">P</lib-kbd>
-      <lib-kbd size="md" variant="dark" pressed>Esc</lib-kbd>
-      <lib-kbd size="md" variant="dark">Space</lib-kbd>
+      <lib-kbd size="md" variant="inverse">⌘</lib-kbd>
+      <lib-kbd size="md" variant="inverse">⇧</lib-kbd>
+      <lib-kbd size="md" variant="inverse">P</lib-kbd>
+      <lib-kbd size="md" variant="inverse" pressed>Esc</lib-kbd>
+      <lib-kbd size="md" variant="inverse">Space</lib-kbd>
     </div>
   `,
 };
@@ -224,11 +224,36 @@ export const InlineProse: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;">
-    <lib-kbd>⌘</lib-kbd>
-    <lib-kbd>K</lib-kbd>
-    <lib-kbd>Shift</lib-kbd>
-    <lib-kbd pressed>Esc</lib-kbd>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <!-- Sizes -->
+    <div style="display:flex;align-items:flex-end;gap:var(--lib-space-md);flex-wrap:wrap;">
+      ${(['xs','sm','md','lg'] as const).map(s => html`
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-xs);">
+          <div style="display:flex;align-items:flex-end;gap:var(--lib-space-xs);">
+            <lib-kbd size=${s}>⌘</lib-kbd>
+            <lib-kbd size=${s} pressed>K</lib-kbd>
+          </div>
+          <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;color:var(--text-muted);text-transform:uppercase;">${s}</span>
+        </div>
+      `)}
+    </div>
+    <!-- Variants -->
+    <div style="display:flex;align-items:center;gap:var(--lib-space-md);flex-wrap:wrap;">
+      ${(['default','inverse','ghost','accent','subtle'] as const).map(v => html`
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-xs);">
+          <lib-kbd size="md" variant=${v}>⌘</lib-kbd>
+          <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;color:var(--text-muted);text-transform:uppercase;">${v}</span>
+        </div>
+      `)}
+    </div>
+    <!-- Combo -->
+    <div style="display:flex;align-items:center;gap:4px;">
+      <lib-kbd size="sm">⌘</lib-kbd>
+      <span style="font-family:var(--lib-font-mono);font-size:10px;color:var(--text-muted);padding:0 2px;">+</span>
+      <lib-kbd size="sm">⇧</lib-kbd>
+      <span style="font-family:var(--lib-font-mono);font-size:10px;color:var(--text-muted);padding:0 2px;">+</span>
+      <lib-kbd size="sm">P</lib-kbd>
+    </div>
   </div>
 `);
 

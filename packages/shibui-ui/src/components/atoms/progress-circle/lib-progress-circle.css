@@ -3,7 +3,7 @@
 /* ============================================================
    LIB-PROGRESS-CIRCLE — Shibui UI · 円形
    Size    : xs · sm · md · lg · xl
-   Variant : default · kaki · celadon · error
+   Variant : default · accent · info · error
    States  : indeterminate · bare · sub · icon (check)
 
    Fórmula del arco (calculada en JS):
@@ -37,6 +37,15 @@
     flex-shrink: 0;
   }
 
+  /* ── Capa de visualización — porta el efecto drop-shadow ──
+     Wrapper NO rotado: el filter sigue la silueta del SVG con
+     antialiasing nativo y el offset (sabi) conserva su dirección. */
+  .pc__viz {
+    display: inline-flex;
+    line-height: 0;
+    filter: var(--lib-effect-ring-glow, none);
+  }
+
   /* ── SVG — rotado para que el arco empiece arriba ──────── */
   .pc__svg {
     display: block;
@@ -65,12 +74,21 @@
       stroke            300ms;
   }
 
-  /* ── VARIANTES DE COLOR ─────────────────────────────────── */
-  :host([variant="kaki"]) .pc__arc   { stroke: var(--color-kaki-500); }
-  :host([variant="kaki"]) .pc__track { stroke: var(--color-kaki-100); }
+  /* Ring katachi — anillo nítido exterior. Apagado salvo que el
+     katachi ancestro encienda --lib-effect-ring-stroke (kintsugi). */
+  .pc__ring {
+    fill: none;
+    stroke: var(--lib-effect-ring-stroke, transparent);
+    stroke-width: 1.5;
+    transition: stroke 300ms;
+  }
 
-  :host([variant="celadon"]) .pc__arc   { stroke: var(--color-celadon-500); }
-  :host([variant="celadon"]) .pc__track { stroke: var(--color-celadon-100); }
+  /* ── VARIANTES DE COLOR ─────────────────────────────────── */
+  :host([variant="accent"]) .pc__arc   { stroke: var(--color-kaki-500); }
+  :host([variant="accent"]) .pc__track { stroke: var(--color-kaki-100); }
+
+  :host([variant="info"]) .pc__arc   { stroke: var(--info); }
+  :host([variant="info"]) .pc__track { stroke: var(--info-bg-2); }
 
   :host([variant="error"]) .pc__arc   { stroke: var(--color-error); }
   :host([variant="error"]) .pc__track { stroke: #F5DDD9; }
@@ -124,16 +142,16 @@
   :host([size="xl"]) .pc__sub   { font-size: var(--text-xs); }
 
   /* ── Color del valor según variante ─────────────────────── */
-  :host([variant="kaki"])    .pc__value { color: var(--color-kaki-600); }
-  :host([variant="celadon"]) .pc__value { color: var(--color-celadon-600); }
+  :host([variant="accent"])    .pc__value { color: var(--color-kaki-600); }
+  :host([variant="info"]) .pc__value { color: var(--info-text); }
   :host([variant="error"])   .pc__value { color: var(--color-error); }
 
   /* ── Icono check ─────────────────────────────────────────── */
   .pc__check polyline {
-    stroke: var(--color-celadon-500);
+    stroke: var(--info);
   }
 
-  :host([variant="kaki"]) .pc__check polyline {
+  :host([variant="accent"]) .pc__check polyline {
     stroke: var(--color-kaki-500);
   }
 
@@ -174,7 +192,19 @@
      el track washi-200. Para variar paleta, usar [variant]
      explícito.
 
-     Bloque marcador para discoverability.
+     Efectos automáticos vía --lib-effect-* (render SVG, no box-shadow):
+     • kintsugi → anillo dorado nítido como stroke del <circle> .pc__ring
+                  (--lib-effect-ring-stroke) + halo difuso drop-shadow
+                  sobre .pc__viz (--lib-effect-ring-glow).
+     • sabi     → offset brutal vía drop-shadow sobre .pc__viz
+                  (--lib-effect-ring-glow), siguiendo la silueta del path.
+
+     Por qué SVG/filter y no box-shadow: un box-shadow nítido sobre un div
+     cuadrado con border-radius:50% rasteriza el borde curvo con aliasing
+     visible (escalera "pixelada") en un círculo grande. El stroke del
+     <circle> y el drop-shadow siguen la geometría antialiaseada del path,
+     quedando perfectamente suaves. El token genérico --lib-effect-ring
+     (box-shadow) se reserva para comps rectangulares (badge, chip…).
      ─────────────────────────────────────────────────────────── */
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

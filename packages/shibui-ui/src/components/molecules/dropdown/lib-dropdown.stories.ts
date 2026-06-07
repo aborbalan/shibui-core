@@ -1,14 +1,14 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-dropdown.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Navigation/Dropdown',
+  title: 'Universal/Navigation/Dropdown',
   tags:['autodocs'],
   component: 'lib-dropdown',
   argTypes: {
-    variant: { control: 'select', options: ['default', 'ghost', 'filled', 'kaki'] },
+    variant: { control: 'select', options: ['default', 'ghost', 'filled', 'accent'] },
     align:   { control: 'select', options: ['left', 'right'] },
     open:    { control: 'boolean' },
     dark:    { control: 'boolean' },
@@ -96,7 +96,7 @@ export const Base: Story = {
 
 /* ── Triggers ── */
 export const Triggers: Story = {
-  name: 'Triggers — default · ghost · filled · kaki',
+  name: 'Triggers — default · ghost · filled · accent',
   render: (): TemplateResult => html`
     <div style="padding:2rem;min-height:280px;display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap;background:var(--bg-surface);">
 
@@ -121,7 +121,7 @@ export const Triggers: Story = {
         ${item('Eliminar',  { icon: iconTrash, danger: true })}
       </lib-dropdown>
 
-      <lib-dropdown label="Kaki" variant="kaki">
+      <lib-dropdown label="Kaki" variant="accent">
         ${item('Editar',    { icon: iconPencil })}
         ${item('Duplicar',  { icon: iconCopy })}
         ${sep()}
@@ -314,12 +314,31 @@ export const InTableRow: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-xl);min-height:200px;background:var(--bg-base);border:1px solid var(--border-subtle);">
-    <lib-dropdown label="Opciones">
-      ${item('Wabi-Sabi')}
-      ${item('Kintsugi')}
+  <div style="padding:var(--lib-space-lg);min-height:280px;background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;gap:var(--lib-space-lg);align-items:flex-start;flex-wrap:wrap;">
+    <lib-dropdown label="Default" variant="default">
+      ${item('Wabi-Sabi', { icon: iconGear })}
+      ${item('Kintsugi',  { icon: iconGear })}
       <div class="dd-sep"></div>
-      ${item('Celadon')}
+      ${item('Celadon',   { icon: iconGear })}
+      ${item('Eliminar',  { icon: iconTrash, danger: true })}
+    </lib-dropdown>
+    <lib-dropdown label="Ghost" variant="ghost">
+      ${item('Editar',   { icon: iconPencil })}
+      ${item('Copiar',   { icon: iconCopy })}
+      <div class="dd-sep"></div>
+      ${item('Eliminar', { icon: iconTrash, danger: true })}
+    </lib-dropdown>
+    <lib-dropdown label="Filled" variant="filled">
+      ${item('Vista',      { icon: iconGear, active: true })}
+      ${item('Ajustes',    { icon: iconGear, hint: '⌘,' })}
+      <div class="dd-sep"></div>
+      ${item('Salir',      { icon: iconSignOut, danger: true })}
+    </lib-dropdown>
+    <lib-dropdown label="Kaki" variant="accent">
+      ${item('Exportar',  { icon: iconCopy })}
+      ${item('Duplicar',  { icon: iconCopy, disabled: true })}
+      <div class="dd-sep"></div>
+      ${item('Eliminar',  { icon: iconTrash, danger: true })}
     </lib-dropdown>
   </div>
 `);

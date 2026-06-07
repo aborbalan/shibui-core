@@ -10,7 +10,7 @@
      → efecto de pulsación real
 
    Sizes    : xs (18px) · sm (22px) · md (28px, default) · lg (36px)
-   Variants : default · dark · ghost · kaki · celadon
+   Variants : default · inverse · ghost · accent · subtle
    ============================================================ */
 
 @layer reset {
@@ -106,8 +106,8 @@
     }
   }
 
-  /* ── Variant: dark ─────────────────────────────────────── */
-  :host([variant="dark"]) .kbd {
+  /* ── Variant: inverse ──────────────────────────────────── */
+  :host([variant="inverse"]) .kbd {
     background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     color: var(--lib-comp-fg-inverse, var(--text-inverse));
     border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
@@ -137,8 +137,8 @@
     }
   }
 
-  /* ── Variant: kaki ─────────────────────────────────────── */
-  :host([variant="kaki"]) .kbd {
+  /* ── Variant: accent ───────────────────────────────────── */
+  :host([variant="accent"]) .kbd {
     background: var(--color-kaki-50);
     color: var(--color-kaki-600);
     border-color: var(--color-kaki-400);
@@ -148,14 +148,14 @@
       inset 0 1px 0 0 rgb(255, 255, 255, 0.6);
   }
 
-  /* ── Variant: celadon ──────────────────────────────────── */
-  :host([variant="celadon"]) .kbd {
-    background: var(--color-celadon-100);
-    color: var(--color-celadon-600);
-    border-color: var(--color-celadon-500);
-    border-bottom-color: var(--color-celadon-600);
+  /* ── Variant: subtle ───────────────────────────────────── */
+  :host([variant="subtle"]) .kbd {
+    background: var(--info-bg-2);
+    color: var(--info-text);
+    border-color: var(--info);
+    border-bottom-color: var(--info-text);
     box-shadow:
-      0 1px 0 0 var(--color-celadon-600),
+      0 1px 0 0 var(--info-text),
       inset 0 1px 0 0 rgb(255, 255, 255, 0.5);
   }
 
@@ -172,8 +172,34 @@
 
      Variants explícitos (dark, ghost) sin cambios.
 
-     Bloque marcador para discoverability.
+     Efecto kintsugi: el box-shadow del kbd es compuesto (ring dorado
+     externo + key-depth + inset highlight). No se puede usar
+     --lib-effect-ring directamente porque sobreescribiría el key-depth.
+     Se usa :host-context para componer todo en un solo shadow:
+       1. ring dorado 1px (externo)
+       2. halo difuso dorado
+       3. key-depth dorado (reemplaza el bottom wall washi-300)
+       4. inset: tinte dorado muy sutil (reemplaza el highlight blanco)
      ─────────────────────────────────────────────────────────── */
+
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="kintsugi"]) .kbd {
+      box-shadow:
+        0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.45),
+        0 0 8px oklch(61.85% 0.149 48.72deg / 0.12),
+        0 1px 0 0 oklch(61.85% 0.149 48.72deg / 0.60),
+        inset 0 1px 0 0 oklch(61.85% 0.149 48.72deg / 0.10);
+    }
+
+    /* Celadon: tecla con anillo + relieve jade frío */
+    :host-context([data-katachi="celadon"]) .kbd {
+      box-shadow:
+        0 0 0 1px oklch(58.33% 0.068 171.21deg / 0.45),
+        0 0 8px oklch(58.33% 0.068 171.21deg / 0.12),
+        0 1px 0 0 oklch(58.33% 0.068 171.21deg / 0.60),
+        inset 0 1px 0 0 oklch(58.33% 0.068 171.21deg / 0.10);
+    }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

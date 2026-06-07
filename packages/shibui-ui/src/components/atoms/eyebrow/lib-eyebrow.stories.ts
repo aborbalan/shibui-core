@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/web-components-vite";
+﻿import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import { html, TemplateResult } from "lit";
 import "./lib-eyebrow.component";
 import type { LibEyebrow } from "./lib-eyebrow.component";
@@ -67,7 +67,7 @@ const stageWashi = (content: ReturnType<typeof html>): TemplateResult => html`
 
 /* ── Meta ── */
 const meta: Meta<LibEyebrow> = {
-  title: "Foundations/Typography/Eyebrow",
+  title: "Universal/Foundations/Typography/Eyebrow",
   component: "lib-eyebrow",
   tags: ["autodocs"],
   parameters: {
@@ -84,10 +84,9 @@ Unifica los patrones \`.sg-section-label\`, \`.hero-eyebrow\` y \`.section-label
 
 | Atributo | Tipo | Default | Descripción |
 |---|---|---|---|
-| \`color\` | \`'kaki'\\|'washi'\\|'celadon'\\|'white'\\|'muted'\\|'dark'\` | \`'kaki'\` | Color del texto y línea |
+| \`tone\` | \`'accent'\\|'neutral'\\|'inverse'\\|'muted'\` | \`'accent'\` | Rol semántico del color |
 | \`line\` | \`'left'\\|'right'\\|'both'\\|'none'\` | \`'left'\` | Posición de la línea decorativa |
 | \`size\` | \`'sm'\\|'md'\\|'lg'\` | \`'md'\` | Tamaño tipográfico |
-| \`effect\` | \`'none'\\|'kintsugi'\\|'glitch'\` | \`'none'\` | Animación especial |
 | \`dot\` | \`boolean\` | \`false\` | Sustituye la línea por un punto |
 | \`num\` | \`string\` | \`''\` | Badge numérico sufijo |
 
@@ -102,13 +101,13 @@ Unifica los patrones \`.sg-section-label\`, \`.hero-eyebrow\` y \`.section-label
     },
   },
   argTypes: {
-    color: {
+    tone: {
       control: "select",
-      options: ["kaki", "washi", "celadon", "white", "muted", "dark"],
+      options: ["accent", "neutral", "inverse", "muted"],
+      description: "Rol semántico del color — el katachi activo determina el acento exacto",
     },
     line: { control: "select", options: ["left", "right", "both", "none"] },
     size: { control: "select", options: ["sm", "md", "lg"] },
-    effect: { control: "select", options: ["none", "kintsugi", "glitch"] },
     dot: { control: "boolean" },
     num: { control: "text" },
   },
@@ -123,10 +122,9 @@ type Story = StoryObj<LibEyebrow>;
 export const Playground: Story = {
   name: "⚙ Playground",
   args: {
-    color: "kaki",
+    tone: "accent",
     line: "left",
     size: "md",
-    effect: "none",
     dot: false,
     num: "",
   },
@@ -135,10 +133,9 @@ export const Playground: Story = {
       style="padding:3rem;display:flex;flex-direction:column;gap:1rem;background:#fff;"
     >
       <lib-eyebrow
-        color=${args.color}
+        tone=${args.tone}
         line=${args.line}
         size=${args.size}
-        effect=${args.effect}
         ?dot=${args.dot}
         num=${args.num}
         >Design System · v0.1.0 · Zaragoza</lib-eyebrow
@@ -223,62 +220,68 @@ export const Lines: Story = {
 };
 
 /* ══════════════════════════════════════════
-   03 · Colores · light
+   03 · Tonos semánticos
    ══════════════════════════════════════════ */
-export const ColorsLight: Story = {
-  name: "03 · Colores · light",
+export const Tones: Story = {
+  name: "03 · Tonos semánticos",
   render: () =>
     stageWashi(html`
       ${block(
-        html`<lib-eyebrow color="kaki" style="margin-bottom:.75rem"
-          >Kaki · default</lib-eyebrow
+        html`<lib-eyebrow tone="accent" style="margin-bottom:.75rem"
+          >Accent · acento del katachi activo</lib-eyebrow
         >`,
         "Arquitectura",
       )}
       ${block(
-        html`<lib-eyebrow color="washi" style="margin-bottom:.75rem"
-          >Washi · neutral</lib-eyebrow
+        html`<lib-eyebrow tone="neutral" style="margin-bottom:.75rem"
+          >Neutral · cálido-washi</lib-eyebrow
         >`,
         "Componentes",
       )}
       ${block(
-        html`<lib-eyebrow color="celadon" style="margin-bottom:.75rem"
-          >Celadón · datos</lib-eyebrow
+        html`<lib-eyebrow tone="inverse" style="margin-bottom:.75rem"
+          >Inverse · para superficies oscuras</lib-eyebrow
         >`,
-        "Sistema online",
+        "Contraste",
+      )}
+      ${block(
+        html`<lib-eyebrow tone="muted" style="margin-bottom:.75rem"
+          >Muted · ultra atenuado</lib-eyebrow
+        >`,
+        "Metadatos",
       )}
     `),
   parameters: { backgrounds: { default: "paper" } },
 };
 
 /* ══════════════════════════════════════════
-   04 · Colores · dark
+   04 · Tonos sobre superficies oscuras
    ══════════════════════════════════════════ */
-export const ColorsDark: Story = {
-  name: "04 · Colores · dark",
+export const TonesDark: Story = {
+  name: "04 · Tonos · sobre oscuro",
   render: () =>
     stageDark(html`
       ${blockDark(
-        html`<lib-eyebrow color="dark" style="margin-bottom:.75rem"
-          >Kaki dark · dark</lib-eyebrow
+        html`<lib-eyebrow style="margin-bottom:.75rem"
+          >Accent · adapta al contexto</lib-eyebrow
         >`,
         "Componentes activos",
       )}
       ${blockDark(
-        html`<lib-eyebrow color="white" style="margin-bottom:.75rem"
-          >White · sobre oscuro</lib-eyebrow
+        html`<lib-eyebrow tone="inverse" style="margin-bottom:.75rem"
+          >Inverse · contraste claro</lib-eyebrow
         >`,
         "Runtime activo",
       )}
       ${blockDark(
-        html`<lib-eyebrow color="muted" style="margin-bottom:.75rem"
+        html`<lib-eyebrow tone="muted" style="margin-bottom:.75rem"
           >Muted · ultra tenue</lib-eyebrow
         >`,
         "Metadatos secundarios",
       )}
       ${blockDark(
-        html`<lib-eyebrow color="celadon" style="margin-bottom:.75rem"
-          >Celadón · éxito</lib-eyebrow
+        html`<lib-eyebrow tone="neutral" style="margin-bottom:.75rem"
+          >Neutral · washi cálido</lib-eyebrow
         >`,
         "Sistema operativo",
       )}
@@ -334,7 +337,6 @@ export const Dot: Story = {
         ${block(
           html`<lib-eyebrow
             dot
-            color="celadon"
             size="sm"
             style="margin-bottom:.5rem"
             >Latencia 42ms</lib-eyebrow
@@ -342,8 +344,8 @@ export const Dot: Story = {
           "Rendimiento",
         )}
         ${block(
-          html`<lib-eyebrow dot color="washi" style="margin-bottom:.5rem"
-            >Washi dot</lib-eyebrow
+          html`<lib-eyebrow dot tone="neutral" style="margin-bottom:.5rem"
+            >Neutral dot</lib-eyebrow
           >`,
           "Metadatos",
         )}
@@ -352,7 +354,6 @@ export const Dot: Story = {
         ${blockDark(
           html`<lib-eyebrow
             dot
-            color="celadon"
             size="sm"
             style="margin-bottom:.5rem"
             >Sistema online</lib-eyebrow
@@ -360,7 +361,7 @@ export const Dot: Story = {
           "Monitor activo",
         )}
         ${blockDark(
-          html`<lib-eyebrow dot color="white" style="margin-bottom:.5rem"
+          html`<lib-eyebrow dot tone="inverse" style="margin-bottom:.5rem"
             >Módulo cargado</lib-eyebrow
           >`,
           "Runtime",
@@ -387,7 +388,6 @@ export const Numbered: Story = {
         html`<lib-eyebrow
           num="59"
           size="sm"
-          color="celadon"
           style="margin-bottom:.5rem"
           >Overlay</lib-eyebrow
         >`,
@@ -397,7 +397,6 @@ export const Numbered: Story = {
         html`<lib-eyebrow
           num="67"
           size="sm"
-          effect="kintsugi"
           style="margin-bottom:.5rem"
           >Featured</lib-eyebrow
         >`,
@@ -408,103 +407,87 @@ export const Numbered: Story = {
 };
 
 /* ══════════════════════════════════════════
-   08 · Kintsugi
+   08 · Kintsugi context
    ══════════════════════════════════════════ */
-export const Kintsugi: Story = {
-  name: "08 · Kintsugi ✦",
+export const KintsugiContext: Story = {
+  name: "08 · Kintsugi context ✦",
   render: () => html`
-    <div
-      style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(184,90,30,.15);"
-    >
-      ${stageLight(html`
-        ${block(
-          html`<lib-eyebrow effect="kintsugi" style="margin-bottom:.75rem"
-            >✦ Design System · v0.1.0</lib-eyebrow
-          >`,
-          "La belleza de lo austero",
-        )}
-        ${block(
-          html`<lib-eyebrow
-            effect="kintsugi"
-            line="both"
-            style="margin-bottom:.75rem"
-            >✦ Featured</lib-eyebrow
-          >`,
-          "Tour",
-        )}
-      `)}
-      ${stageDark(html`
-        ${blockDark(
-          html`<lib-eyebrow
-            effect="kintsugi"
-            size="lg"
-            style="margin-bottom:.75rem"
-            >Design System · v0.1.0 · Zaragoza</lib-eyebrow
-          >`,
-          "La belleza de lo austero",
-        )}
-        ${blockDark(
-          html`<lib-eyebrow
-            effect="kintsugi"
-            line="both"
-            style="margin-bottom:.75rem"
-            >© 2026 · Shibui · MIT</lib-eyebrow
-          >`,
-          "渋い",
-        )}
-      `)}
+    <div data-katachi="kintsugi" style="background:var(--bg-base);">
+      <div
+        style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:oklch(45% 0.05 45deg / 0.15);"
+      >
+        <div style="padding:2.5rem 2rem;display:flex;flex-direction:column;gap:2rem;">
+          ${block(
+            html`<lib-eyebrow style="margin-bottom:.75rem"
+              >✦ Design System · v0.1.0</lib-eyebrow
+            >`,
+            "La belleza de lo austero",
+          )}
+          ${block(
+            html`<lib-eyebrow line="both" style="margin-bottom:.75rem"
+              >✦ Featured</lib-eyebrow
+            >`,
+            "Tour",
+          )}
+        </div>
+        <div style="padding:2.5rem 2rem;display:flex;flex-direction:column;gap:2rem;">
+          ${blockDark(
+            html`<lib-eyebrow size="lg" style="margin-bottom:.75rem"
+              >Design System · v0.1.0 · Zaragoza</lib-eyebrow
+            >`,
+            "La belleza de lo austero",
+          )}
+          ${blockDark(
+            html`<lib-eyebrow line="both" style="margin-bottom:.75rem"
+              >© 2026 · Shibui · MIT</lib-eyebrow
+            >`,
+            "渋い",
+          )}
+        </div>
+      </div>
     </div>
   `,
 };
 
 /* ══════════════════════════════════════════
-   09 · Glitch
+   09 · Terminal context (glitch drift)
    ══════════════════════════════════════════ */
-export const Glitch: Story = {
-  name: "09 · Glitch ⌗",
+export const TerminalContext: Story = {
+  name: "09 · Terminal context ⌗",
   render: () => html`
-    <div
-      style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.04);"
-    >
-      ${stageLight(html`
-        ${block(
-          html`<lib-eyebrow effect="glitch" style="margin-bottom:.75rem"
-            >⌗ runtime · session</lib-eyebrow
-          >`,
-          "Sistema operativo",
-        )}
-        ${block(
-          html`<lib-eyebrow
-            effect="glitch"
-            line="none"
-            style="margin-bottom:.75rem"
-            >⌗ error.log</lib-eyebrow
-          >`,
-          "PID 4821 · offline",
-        )}
-      `)}
-      ${stageDark(html`
-        ${blockDark(
-          html`<lib-eyebrow effect="glitch" style="margin-bottom:.75rem"
-            >⌗ SHIBUI.SYS · v0.1</lib-eyebrow
-          >`,
-          "RUNTIME ACTIVE_",
-        )}
-        ${blockDark(
-          html`<lib-eyebrow
-            effect="glitch"
-            size="sm"
-            style="margin-bottom:.5rem"
-            >⌗ processes · 4</lib-eyebrow
-          >`,
-          "node · postgres · redis",
-        )}
-        <div>
-          <lib-eyebrow effect="glitch" line="right" style="margin-bottom:.75rem"
-            >// module scan ⌗</lib-eyebrow
-          >
+    <div data-katachi="terminal" style="background:var(--bg-base);">
+      <div
+        style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:oklch(68% 0.14 155deg / 0.1);"
+      >
+        <div style="padding:2.5rem 2rem;display:flex;flex-direction:column;gap:2rem;">
+          ${blockDark(
+            html`<lib-eyebrow style="margin-bottom:.75rem"
+              >⌗ runtime · session</lib-eyebrow
+            >`,
+            "Sistema operativo",
+          )}
+          ${blockDark(
+            html`<lib-eyebrow line="none" style="margin-bottom:.75rem"
+              >⌗ error.log</lib-eyebrow
+            >`,
+            "PID 4821 · offline",
+          )}
         </div>
-      `)}
+        <div style="padding:2.5rem 2rem;display:flex;flex-direction:column;gap:2rem;">
+          ${blockDark(
+            html`<lib-eyebrow style="margin-bottom:.75rem"
+              >⌗ SHIBUI.SYS · v0.1</lib-eyebrow
+            >`,
+            "RUNTIME ACTIVE_",
+          )}
+          ${blockDark(
+            html`<lib-eyebrow size="sm" style="margin-bottom:.5rem"
+              >⌗ processes · 4</lib-eyebrow
+            >`,
+            "node · postgres · redis",
+          )}
+        </div>
+      </div>
     </div>
   `,
   parameters: { backgrounds: { default: "dark" } },
@@ -529,7 +512,7 @@ export const EnContexto: Story = {
           渋
         </div>
         <div style="position:relative;z-index:2;">
-          <lib-eyebrow effect="kintsugi" size="lg" style="margin-bottom:1.25rem"
+          <lib-eyebrow size="lg" style="margin-bottom:1.25rem"
             >Design System · v0.1.0 · Zaragoza</lib-eyebrow
           >
           <div
@@ -596,7 +579,7 @@ export const EnContexto: Story = {
         <div
           style="padding:1.5rem;background:var(--color-washi-950,#120E0A);display:flex;flex-direction:column;gap:.75rem;"
         >
-          <lib-eyebrow size="sm" color="celadon" style="margin-bottom:.5rem"
+          <lib-eyebrow size="sm" style="margin-bottom:.5rem"
             >59 · Overlay</lib-eyebrow
           >
           <div
@@ -613,7 +596,7 @@ export const EnContexto: Story = {
         <div
           style="padding:1.5rem;background:var(--color-washi-950,#120E0A);display:flex;flex-direction:column;gap:.75rem;"
         >
-          <lib-eyebrow effect="kintsugi" size="sm" style="margin-bottom:.5rem"
+          <lib-eyebrow size="sm" style="margin-bottom:.5rem"
             >✦ Featured</lib-eyebrow
           >
           <div
@@ -637,7 +620,6 @@ export const EnContexto: Story = {
           <div>
             <lib-eyebrow
               dot
-              color="celadon"
               size="sm"
               style="margin-bottom:.25rem"
               >Sistema online</lib-eyebrow

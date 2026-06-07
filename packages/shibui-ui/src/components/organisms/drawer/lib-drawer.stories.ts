@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-drawer.component';
 import type { LibDrawer } from './lib-drawer.component';
@@ -10,14 +10,14 @@ function getDrawer(selector: string): LibDrawer {
 }
 
 const meta: Meta = {
-  title: 'Overlay/Drawer',
+  title: 'Universal/Overlay/Drawer',
   tags:['autodocs'],
   component: 'lib-drawer',
   argTypes: {
     open:      { control: 'boolean' },
     placement: { control: 'select', options: ['right', 'left', 'top', 'bottom'] },
     size:      { control: 'select', options: ['sm', 'md', 'lg', 'xl', 'full'] },
-    variant:   { control: 'select', options: ['default', 'dark', 'kintsugi', 'kintsugi-dark', 'glitch', 'glitch-dark'] },
+    variant:   { control: 'select', options: ['default', 'dark', 'inverse', 'inverse-dark', 'glitch', 'glitch-dark'] },
     label:     { control: 'text' },
     eyebrow:   { control: 'text' },
     subtitle:  { control: 'text' },
@@ -371,7 +371,7 @@ export const BottomSheet: Story = {
    Variantes
    ────────────────────────────────────────────── */
 export const Variants: Story = {
-  name: 'Variantes — dark · kintsugi · glitch',
+  name: 'Variantes — dark · inverse · inverse-dark · glitch',
   render: (): TemplateResult => html`
     <div style="padding:3rem; background:var(--bg-surface); min-height:300px;
       display:flex; align-items:center; justify-content:center; gap:var(--lib-space-md); flex-wrap:wrap;">
@@ -379,8 +379,8 @@ export const Variants: Story = {
       ${([
         { id: 'default',      label: 'Default',        eyebrow: 'Variant', accent: false },
         { id: 'dark',         label: 'Dark',           eyebrow: 'Variant', accent: false },
-        { id: 'kintsugi',     label: 'Kintsugi',       eyebrow: '金継ぎ',   accent: true  },
-        { id: 'kintsugi-dark',label: 'Kintsugi Dark',  eyebrow: '金継ぎ',   accent: true  },
+        { id: 'inverse',     label: 'Inverse',       eyebrow: '金継ぎ',   accent: true  },
+        { id: 'inverse-dark',label: 'Inverse Dark',  eyebrow: '金継ぎ',   accent: true  },
         { id: 'glitch',       label: 'Glitch',         eyebrow: 'Variant', accent: false },
         { id: 'glitch-dark',  label: 'Glitch Dark',    eyebrow: 'Variant', accent: false },
       ] as const).map(v => html`
@@ -412,8 +412,48 @@ export const Variants: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;min-height:80px;">
-    <div style="padding:var(--lib-space-sm) var(--lib-space-md);border:1px solid var(--border-default);background:var(--bg-elevated);font-family:var(--lib-font-mono);font-size:var(--text-xs);letter-spacing:.12em;text-transform:uppercase;color:var(--text-secondary);">Abrir drawer</div>
+  <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-md);">
+
+    <!-- Variant badges -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">variants</p>
+      <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;">
+        ${(['default', 'dark', 'inverse', 'inverse-dark', 'glitch', 'glitch-dark'] as const).map(v => html`
+          <div style="padding:var(--lib-space-xs) var(--lib-space-sm);border:1px solid var(--border-default);background:var(--bg-elevated);font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);">${v}</div>
+        `)}
+      </div>
+    </div>
+
+    <!-- Placement badges -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">placements</p>
+      <div style="display:flex;gap:var(--lib-space-sm);">
+        ${(['right', 'left', 'top', 'bottom'] as const).map(p => html`
+          <div style="padding:var(--lib-space-xs) var(--lib-space-sm);border:1px solid var(--border-subtle);background:var(--bg-surface);font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">${p}</div>
+        `)}
+      </div>
+    </div>
+
+    <!-- Drawer structure preview -->
+    <div style="border:1px solid var(--border-default);background:var(--bg-elevated);max-width:280px;">
+      <div style="padding:var(--lib-space-md);border-bottom:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:2px;">Shibui DS</div>
+          <div style="font-family:var(--lib-font-display);font-size:var(--text-lg);font-weight:300;color:var(--text-primary);">Panel lateral</div>
+        </div>
+        <div style="width:18px;height:18px;border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);">✕</div>
+      </div>
+      <div style="padding:var(--lib-space-md);">
+        <div style="height:6px;background:var(--border-subtle);margin-bottom:var(--lib-space-sm);"></div>
+        <div style="height:6px;background:var(--border-subtle);width:80%;margin-bottom:var(--lib-space-sm);"></div>
+        <div style="height:6px;background:var(--border-subtle);width:60%;"></div>
+      </div>
+      <div style="padding:var(--lib-space-sm) var(--lib-space-md);border-top:1px solid var(--border-subtle);display:flex;justify-content:flex-end;gap:var(--lib-space-sm);">
+        <div style="padding:var(--lib-space-xs) var(--lib-space-sm);border:1px solid var(--border-default);font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">Cancelar</div>
+        <div style="padding:var(--lib-space-xs) var(--lib-space-sm);background:var(--text-primary);font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--bg-base);">Confirmar</div>
+      </div>
+    </div>
+
   </div>
 `);
 

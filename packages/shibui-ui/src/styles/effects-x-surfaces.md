@@ -2,8 +2,9 @@
 
 > Registro de implementación real. Se actualiza componente a componente en orden alfabético.
 > La compatibilidad teórica de la matriz global está en `shibui-surfaces-x-effects.html`.
-> Última auditoría: 2026-05-16 — átomos, moléculas y organismos verificados sobre CSS real.
-> Sistema Katachi (形) completado al 100% (77/77 componentes con bloque KATACHI).
+> Última auditoría: 2026-05-16 (base) + 2026-05-29 (Fase 2 — identidades selladas).
+> **Modelo actual**: efectos activados por `--lib-effect-*` tokens heredados del ancestro katachi.
+> Componentes migrados (Fase 2): lib-card, lib-badge, lib-eyebrow, lib-chip, lib-header, lib-sidebar, lib-spinner.
 
 ---
 
@@ -73,22 +74,25 @@
 
 ### `lib-avatar` · ✅
 
-> **CSS verificado.** El componente expone una prop `color` (`washi` · `kaki` · `celadon` · `dark`)
-> que controla la paleta de fondo de la cara (iniciales / icono fallback). Esta dimensión es
-> independiente de las superficies del sistema — `color="dark"` oscurece la cara del avatar
-> pero no adapta el componente a una superficie dark global. No existen variantes de superficie
-> explícitas (`variant="kintsugi"` etc.). El avatar hereda tokens del contexto sin tratamiento propio.
+> **CSS verificado.** El componente expone una prop `tone` (`neutral` · `warm` · `cool` · `inverse`)
+> que controla la paleta de fondo de la cara (iniciales / icono fallback). Es ortogonal a las
+> superficies del sistema — `tone="inverse"` oscurece la cara del avatar pero no adapta el
+> componente a una superficie dark global. No existen variantes de superficie palette-named
+> (`variant="kintsugi"` etc.). Los efectos katachi se activan vía `--lib-effect-ring`
+> (`box-shadow` en `.avatar__face`): anillo dorado + halo en kintsugi y ring brutal-mini en sabi.
+> Bajo `data-katachi="celadon"` consume `--lib-celadon-glaze` como barrido cerámico en hover
+> (`::after` recortado por el `overflow:hidden` de la cara), vía `:host-context()` como lib-button/lib-chip.
 
 #### Superficies
 
 | Superficie | Estado | Notas |
 |------------|--------|-------|
-| light | `—` | Hereda tokens; `color="washi"` / `color="kaki"` son la paleta clara natural |
-| dark | `—` | Hereda tokens; `color="dark"` oscurece la cara pero no es variante surface |
-| kintsugi | 🔲 | Sin implementar — anillo dorado pendiente |
+| light | `—` | Hereda tokens; `tone="neutral"` / `tone="warm"` son la paleta clara natural |
+| dark | `—` | Hereda tokens; `tone="inverse"` oscurece la cara pero no es variante surface |
+| kintsugi | ✅ | Anillo dorado + halo vía `--lib-effect-ring` (box-shadow en `.avatar__face`) |
 | glitch | 🔲 | Sin implementar |
-| celadón | `—` | `color="celadon"` cubre el caso de uso; no necesita variante surface |
-| washi | `—` | `color="washi"` es el default; cubre el caso de uso |
+| celadón | ✅ | `tone="cool"` para la cara + glaze cerámico (`--lib-celadon-glaze`) en hover vía `:host-context()` |
+| washi | `—` | `tone="neutral"` es el default; cubre el caso de uso |
 
 #### Efectos
 
@@ -96,8 +100,9 @@
 |--------|------------|--------|-------|
 | glass | — | `—` | No aplica: tamaño insuficiente para el efecto |
 | spotlight | — | `—` | No aplica: tamaño insuficiente para el efecto |
-| kintsugi-border | kintsugi | 🔲 | Anillo dorado sustituyendo al border actual (1px washi-300) |
-| shadow-brutal | light / washi | 🔲 | Sombra sólida 2–3px en variante square/squircle |
+| kintsugi-border | kintsugi | ✅ | Anillo dorado + halo vía `--lib-effect-ring` sobre el border (1px washi-300) |
+| shadow-brutal | sabi | ✅ | Ring brutal-mini (`2px 2px`) vía `--lib-effect-ring` en sabi |
+| celadon-glaze | celadón | ✅ | Glaze cerámico (`--lib-celadon-glaze`) en hover vía `:host-context([data-katachi="celadon"])` |
 | metal-texture | — | `—` | No aplica |
 
 ---
@@ -157,11 +162,11 @@
 
 ---
 
-### `lib-badge` · ✅
+### `lib-badge` · ✅ (Fase 2 — renombrado semántico)
 
-> **CSS verificado.** Las variantes (`default` · `accent` · `celadon` · `dark` · `error` · `success` · `warning`)
-> son paletas semánticas de color, no variantes del sistema de superficies.
-> `variant="dark"` cubre el uso en fondos oscuros pero no es una adaptación de superficie formal.
+> **CSS verificado. Migrado a variantes semánticas (2026-05-29).**
+> Variantes: `default` · `accent` · `info` · `strong` · `error` · `success` · `warning`.
+> **Cambios**: `celadon` → `info` (informativo jade); `dark` → `strong` (contraste máximo).
 > Sin efectos implementados.
 
 #### Superficies
@@ -273,32 +278,41 @@
 
 ---
 
-### `lib-card` · ✅
+### `lib-card` · ✅ (Fase 2 — modelo sellado)
 
-> **CSS verificado.** Las 8 variantes están completamente implementadas y cubren
-> todas las superficies del sistema. Los efectos son baked-in — la seam kintsugi
-> usa `linear-gradient` propio animado (no `--lib-kintsugi-border`), el RGB split
-> del glitch usa `box-shadow` con offset (no tokens del sistema). Sin glass ni spotlight.
+> **CSS verificado. Migrado a identidades selladas (2026-05-29).**
+> 4 variantes semánticas: `default` · `inverse` · `accent` · `featured`.
+> Las variantes palette-named anteriores (`kintsugi`, `glitch`, `celadon`, `washi`, `brutal`)
+> han sido eliminadas — los efectos se activan automáticamente vía `--lib-effect-*` tokens
+> heredados del contexto katachi ancestro.
 
-#### Superficies
+#### Variantes semánticas actuales
 
-| Superficie | Estado | Variante | Notas |
-|------------|--------|----------|-------|
-| light | ✅ | `default` · `accent` | `bg-elevated`, `border-subtle` |
-| dark | ✅ | `inverse` · `featured` | `washi-900` / gradient kaki |
-| kintsugi | ✅ | `kintsugi` | `washi-950`, seam animada `::before`, gradiente dorado en título |
-| glitch | ✅ | `glitch` | `washi-950`, barra celadón, scanlines `::after`, `glitch-drift`, RGB split en hover |
-| celadón | ✅ | `celadon` | `washi-950`, barra celadón superior, hover glow verde |
-| washi | ✅ | `washi` | `washi-50`, `washi-200`, barra `washi-400` superior |
+| Variante | Descripción |
+|---|---|
+| `default` | Fondo `--bg-elevated`, borde `--border-subtle` |
+| `inverse` | Fondo `--bg-inverse` (contrasta con la página) |
+| `accent` | Borde izquierdo 3px con `--card-accent-color` |
+| `featured` | Gradiente cálido + título grande; ocupa 2 columnas |
 
-#### Efectos
+#### Efectos katachi automáticos (via `--lib-effect-*`)
+
+| Katachi | Efecto | Mecanismo |
+|---|---|---|
+| `kintsugi` | Barra dorada animada 3px + anillo de oro permanente | `::before` opacity + animation-play-state; `box-shadow` via `--lib-effect-brutal-shadow` |
+| `terminal` | Scanlines CRT horizontales (0.10 opacity) + glitch-drift | `::after` repeating-gradient alpha; `glitch-drift` animation |
+| `sabi` | Offset brutal shadow 4px | `box-shadow` via `--lib-effect-brutal-shadow` |
+| `kintsugi` (hover) | Gold ring reforzado + sombra profunda | `--shadow-lg` con anillo `kaki-400/0.28` |
+| `wabi` / `shizen` / `celadon` | Sin efectos adicionales | Defaults `:root` apagados |
+
+#### Estado de efectos del sistema
 
 | Efecto | Superficie | Estado | Notas |
 |--------|------------|--------|-------|
-| glass | — | `—` | No implementado — `lib-glass-card` lo cubre como componente separado |
-| spotlight | dark / kintsugi | 🔲 | No implementado — `lib-spotlight-card` lo cubre, posible convergencia futura |
-| kintsugi-border | kintsugi | `—` | Variante `kintsugi` tiene seam propia (`linear-gradient` animado), no usa `--lib-kintsugi-border` |
-| shadow-brutal | light / washi | 🔲 | Tiene `shadow-lg` difusa en hover; `--lib-shadow-brutal` (4px sólida) no implementada |
+| glass | — | `—` | `lib-glass-card` lo cubre como componente separado |
+| spotlight | dark / kintsugi | 🔲 | `lib-spotlight-card` lo cubre |
+| kintsugi-border | kintsugi | ✅ | Barra top + anillo via `--lib-effect-*` tokens (no `--lib-kintsugi-border`) |
+| shadow-brutal | sabi | ✅ | Via `--lib-effect-brutal-shadow: 4px 4px 0px 0px var(--color-washi-900)` |
 | metal-texture | — | `—` | No implementado |
 
 ---
@@ -522,16 +536,19 @@
 
 ---
 
-### `lib-eyebrow`
+### `lib-eyebrow` · ✅ (Fase 2 — prop renombrado)
 
-> **Nota:** Elemento tipográfico de apoyo. Neutro.
+> **Migrado (2026-05-29).** Prop `color` con valores palette-named reemplazado por
+> `tone` con valores semánticos: `accent` · `neutral` · `inverse` · `muted`.
+> El efecto de glitch-drift (antes controlado por `[effect="glitch"]`) se activa
+> automáticamente vía `--lib-effect-glitch-play` en contexto terminal.
 
 #### Superficies / Efectos
 
-| | Estado |
-|-|--------|
-| Superficies | `—` |
-| Efectos | `—` |
+| | Estado | Notas |
+|-|--------|-------|
+| Superficies | `—` | Elemento tipográfico — adapta color via `tone` prop |
+| Glitch drift | ✅ | Automático en `[data-katachi="terminal"]` via `--lib-effect-glitch-play` |
 
 ---
 
@@ -689,7 +706,9 @@
 ### `lib-progress-circle` · ✅
 
 > **CSS verificado.** Variantes: `default` (washi-900) · `kaki` · `celadon` · `error`. Sin dark adaptation.
-> El arco animado vía SVG `stroke-dashoffset`. Sin efectos del sistema.
+> El arco animado vía SVG `stroke-dashoffset`. Ring katachi (kintsugi/sabi) renderizado vía
+> SVG (`<circle>` stroke + `drop-shadow` sobre `.pc__viz`), no box-shadow — evita el aliasing
+> del borde curvo en círculos grandes.
 
 #### Superficies
 
@@ -697,7 +716,7 @@
 |------------|--------|-------|
 | light | ✅ | Default — arco washi-900 sobre track washi-200 |
 | dark | 🔲 | Sin adaptación — arco y track no invierten |
-| kintsugi | 🔲 | Trazo dorado del arco pendiente |
+| kintsugi | ✅ | Anillo dorado nítido vía `--lib-effect-ring-stroke` (stroke SVG) + halo `--lib-effect-ring-glow` |
 | glitch | `—` | No aplica |
 | celadón | `—` | `variant="celadon"` cubre el caso de uso |
 | washi | `—` | Default cubre el uso en washi |
@@ -706,7 +725,8 @@
 
 | Efecto | Estado | Notas |
 |--------|--------|-------|
-| todos | `—` | No aplica |
+| ring (kintsugi) | ✅ | `<circle class="pc__ring">` stroke dorado + `drop-shadow` halo |
+| ring (sabi) | ✅ | Offset brutal vía `drop-shadow(2px 2px 0)` sobre `.pc__viz` |
 
 ---
 
@@ -1136,17 +1156,22 @@
 ### `lib-checkbox-card` · ✅
 
 > **CSS verificado.** Variantes de color: `kaki` (default) · `celadon`. El estado checked activa
-> borde, fondo tintado y shimmer `::after`. Sin dark adaptation, sin kintsugi, sin glitch. Sin efectos del sistema.
+> borde, fondo tintado y shimmer `::after`. Sin efectos del sistema.
+> ✅ **Resuelto**: bajo cualquier katachi OSCURO el checked consume los tokens semánticos de acento
+> (`--text-accent`/`--border-focus`) sobre un fondo translúcido (`color-mix` @10%) vía
+> `:host-context([data-katachi]:not([data-katachi="shizen"], [data-katachi="sabi"]))`. Cada katachi
+> aplica su acento (jade·oro·phosphor·muted) y el texto vuelve a ser legible. Shizen/sabi (claros)
+> conservan el `kaki-50`. Ver `celadon-audit.md` § Inconsistencias.
 
 #### Superficies
 
 | Superficie | Estado | Notas |
 |------------|--------|-------|
 | light | ✅ | Default — bg-elevated, borde tenue, checked activa tinte kaki |
-| dark | 🔲 | Sin adaptación |
-| kintsugi | `—` | No aplica |
-| glitch | `—` | No aplica |
-| celadón | `—` | `color="celadon"` cubre el caso de uso |
+| dark | ✅ | Checked: acento del katachi + fondo translúcido oscuro (texto legible) |
+| kintsugi | ✅ | Checked oro sobre fondo oscuro (antes: 🐞 fondo claro + texto invisible) |
+| glitch (terminal) | ✅ | Checked phosphor verde sobre fondo oscuro |
+| celadón | ✅ | Checked jade ambiental (`color="celadon"` sigue disponible) |
 | washi | `—` | Default cubre el uso en washi |
 
 #### Efectos
@@ -1274,11 +1299,13 @@
 
 ---
 
-### `lib-header` · ✅
+### `lib-header` · ✅ (Fase 2 — modelo sellado)
 
-> **CSS verificado.** Cobertura completa de superficies: `classic` (light) · `dark` · `centered` (light) ·
-> `transparent` · `kintsugi` (seam animada `::after`, bg `washi-950`) · `glitch` (scanlines, glitch keyframe) ·
-> `mega` · `minimal` · `shrink` · `app-bar`. Sin efectos del sistema (kintsugi y glitch son baked-in).
+> **CSS verificado. Migrado a identidades selladas (2026-05-29).**
+> Variantes: `classic` · `dark` · `centered` · `transparent` · `mega` · `minimal` · `shrink` · `app-bar` · `celadon` · `sabi` · `shizen`.
+> **Eliminadas**: `kintsugi` y `glitch` — los efectos equivalentes se activan automáticamente
+> vía `data-katachi="kintsugi"` o `data-katachi="terminal"` en el ancestro.
+> Sin efectos del sistema (katachi propaga los tokens de efecto automáticamente).
 
 #### Superficies
 
@@ -1532,6 +1559,34 @@
 ---
 
 ## Organismos
+
+---
+
+### `lib-file-browser` · ✅
+
+> **Coverage: 🟢 semantic.** Explorador de ficheros de escritorio (datos puros).
+> Nombres de carpeta consumen `--text-primary` (contraste alto), ficheros `--text-secondary`,
+> iconos de carpeta `--text-accent` y ficheros `--text-muted`. Barra de navegación y filas
+> usan `--bg-elevated` (hover/focus) y `--border-subtle`/`--border-default`. Todos los tokens
+> se reescriben con cada katachi — sin override propio. Sin efectos glass/spotlight.
+
+#### Superficies
+
+| Superficie | Estado | Notas |
+|------------|--------|-------|
+| light      | ✅      | text-primary/secondary sobre bg claro |
+| dark       | ✅      | nombres legibles sobre bg oscuro (fix de contraste) |
+| kintsugi   | ✅      | hereda tokens semánticos del override |
+| glitch     | ✅      | terminal: phosphor sobre fondo oscuro |
+| celadón    | ✅      | tono jade vía override |
+| washi      | ✅      | papel envejecido vía override |
+
+#### Efectos
+
+| Efecto | Superficie | Estado | Notas |
+|--------|------------|--------|-------|
+| glass  | —          | `—`    | No aplica: contenedor de lista plano |
+| spotlight | —       | `—`    | No aplica |
 
 ---
 
@@ -2045,3 +2100,38 @@ selectores son **mutuamente exclusivos por construcción**, no por precedencia.
 | **F — Excluir** | No aplica o incompatible | `lib-burger-button` · `lib-text-glitch` · `lib-code-block` · variante `glitch` de header · variante `kintsugi` de spinner |
 
 **Listos sin trabajo adicional:** A + B + C = 63 / 77 (82 %) · **Gap menor:** D = 5 (7 %) · **Pendiente:** E = 4 (5 %)
+
+---
+
+## Decoraciones Celadon (青磁) — Fase 3
+
+> Capa de decoraciones sobre el katachi **celadon**, que pasó a ser un contexto
+> **oscuro** (cerámica jade, `family: dark`). Origen: `celadon-effects-spec.md` +
+> prototipo `celadon-taxonomy.html`.
+
+**Tokens** — `_palette.css` (`--color-celadon-glint/-opal/-250`, `--celadon-shadow-deep`,
+`--celadon-water(-deep)`) · `_effects.css` (`--lib-celadon-glaze/-depth/-mist/-iridescence`).
+
+**Módulo estructural** — `shared/celadon-decorations.css` (clases `.fx-*`, importado por
+`?inline` sólo en los pilotos) + `shared/celadon-generative.ts` (craquelé y condensación
+generativos, portados del prototipo) + `shared/celadon-decorations.ts` (helper de capas).
+
+**Activación**
+- **Ambiental** (sin prop, vía `data-katachi="celadon"`): tema oscuro + **sombra jade** (`--shadow-*`). Alcanza a todos los componentes.
+- **Opt-in capas** (prop `decoration`): `lib-card` (Surface), `lib-header` classic-family (Bar).
+- **Opt-in contexto** (hover, sin prop): `lib-button`, `lib-chip`, `lib-status-dot`.
+
+| Decoración | Activación | Pilotos |
+|---|---|---|
+| Sombra jade | ambiental | todos |
+| Craquelure · Condensation · Mist · Depth | `decoration` | lib-card |
+| Tide · Condensation · Depth | `decoration` | lib-header (classic-family), lib-footer (`variant="celadon"`) |
+| Reflejo · Iridescencia | contexto hover | lib-button |
+| Iridescencia | contexto hover | lib-chip, lib-status-dot |
+| Meniscus | `decoration` | (disponible en cualquier superficie decorada) |
+
+**Gate**: las capas `.fx-*` sólo se renderizan bajo `data-katachi="celadon"` (token
+`--lib-celadon-fx-display`, fallback `none`); `lib-footer[variant="celadon"]` lo habilita
+localmente al ser un contexto celadon en sí mismo.
+**A11y**: `prefers-reduced-motion` desactiva marea, niebla, reflejo y shimmer de menisco.
+**Pendiente**: regenerar baselines de regresión visual (deliberado).

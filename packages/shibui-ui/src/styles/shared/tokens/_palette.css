@@ -1,4 +1,4 @@
-:host, :root {
+:root {
   /* --- WASHI: Tonos de papel neutros --- */
   --color-washi-50:  oklch(97.77% 0.003 68.35deg);  /* #FAF7F4 */
   --color-washi-100: oklch(94.29% 0.007 72.91deg);  /* #F2EDE6 */
@@ -39,6 +39,18 @@
   --color-celadon-400: oklch(58.33% 0.068 171.21deg);  /* #4E9482 */
   --color-celadon-500: oklch(45.54% 0.059 173.23deg);  /* #357164 */
   --color-celadon-600: oklch(33.72% 0.046 173.86deg);  /* #245249 */
+
+  /* --- CELADÓN · decoraciones (青磁) ---
+     Tokens extra que consumen las 10 decoraciones celadon.
+     Reinterpretados para fondo CLARO: la fisura/sombra es jade oscuro,
+     el glint es el realce, el opal aporta el hue-shift iridiscente,
+     y el agua (marea/menisco) usa tonos medios para no ennegrecer. */
+  --color-celadon-glint:  oklch(98% 0.012 172deg);     /* realce especular (~#eafbf5) */
+  --color-celadon-opal:   oklch(65% 0.08  196deg);     /* azul frío para iridescencia */
+  --color-celadon-250:    oklch(75.8% 0.048 169.2deg); /* interpolación 200↔300 (~#8fb6a8) */
+  --celadon-shadow-deep:  oklch(5%  0.04  178deg);     /* fisura craquelé / sombra de gota (~#040f0c) */
+  --celadon-water:        oklch(51% 0.057 169deg);     /* cuerpo de agua / frente (~#3f7d6f) */
+  --celadon-water-deep:   oklch(40% 0.050 172deg);     /* cuerpo de agua hondo / fondo (~#2c5d52) */
 
   /* --- BASE --- */
   --color-white: oklch(100% 0 0deg); /* #FFFFFF */

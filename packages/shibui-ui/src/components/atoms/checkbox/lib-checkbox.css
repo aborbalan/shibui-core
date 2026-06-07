@@ -179,19 +179,19 @@
      font-size: var(--text-md); }
 
   /* ============================================================
-     VARIANT: kaki
+     VARIANT: accent
      ============================================================ */
-  :host([variant="kaki"][checked]) .checkbox__box,
-  :host([variant="kaki"][indeterminate]) .checkbox__box {
+  :host([variant="accent"][checked]) .checkbox__box,
+  :host([variant="accent"][indeterminate]) .checkbox__box {
     background: var(--color-kaki-500);
     border-color: var(--color-kaki-500);
   }
 
-  :host([variant="kaki"]) .checkbox:hover .checkbox__box {
+  :host([variant="accent"]) .checkbox:hover .checkbox__box {
     border-color: var(--color-kaki-400);
   }
 
-  :host([variant="kaki"]) .checkbox:focus-within .checkbox__box {
+  :host([variant="accent"]) .checkbox:focus-within .checkbox__box {
     box-shadow: 0 0 0 3px oklch(45% 0.05 45deg / 0.12);
     border-color: var(--color-kaki-500);
   }
@@ -228,5 +228,15 @@
      el fallback --bg-inverse reproduce el comportamiento original.
      Focus ring usa --lib-comp-border-focus y border-strong.
      Variants kaki/error mantienen su paleta (mayor especificidad).
+
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → ring+halo dorado en .checkbox__box (box-shadow)
+     • sabi     → ring brutal-mini en .checkbox__box (box-shadow)
+     El focus-ring (:focus-visible ~ .checkbox__box) tiene mayor
+     especificidad y sobreescribe el ring katachi al enfocar.
      ─────────────────────────────────────────────────────────── */
+
+  .checkbox__box {
+    box-shadow: var(--lib-effect-ring, none);
+  }
 }

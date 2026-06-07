@@ -1,0 +1,6 @@
+/* Componentes que necesitan estilos globales (Light DOM) */
+
+/* Git Graph visualizer (Tauri desktop) */
+@import url('../../../components/organisms/git-graph/lib-git-graph.css');
+
+/* otros componentes globales se importan aqui */

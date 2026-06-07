@@ -139,8 +139,8 @@
     }
 
     & .copy-btn {
-      color: var(--color-celadon-600) !important;
-      border-color: var(--color-celadon-500) !important;
+      color: var(--info-text) !important;
+      border-color: var(--info) !important;
     }
 
     & .copy-btn__tooltip {
@@ -189,7 +189,7 @@
 
   /* Filled copied → fondo celadón */
   :host([variant="filled"][copied]) .copy-btn {
-    background: var(--color-celadon-500) !important;
+    background: var(--info) !important;
     border-color: transparent !important;
     color: white !important;
   }
@@ -209,7 +209,7 @@
 
   /* Subtle copied → fondo celadón-100 */
   :host([variant="subtle"][copied]) .copy-btn {
-    background: var(--color-celadon-100) !important;
+    background: var(--info-bg-2) !important;
   }
 
   /* ── VARIANTE — On dark ────────────────────────────────────── */

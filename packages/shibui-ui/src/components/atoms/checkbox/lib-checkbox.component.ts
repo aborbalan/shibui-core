@@ -23,7 +23,7 @@ export interface CheckboxChangeDetail {
  * @example
  * <lib-checkbox label="Aceptar terminos" value="terms"></lib-checkbox>
  * <lib-checkbox label="Seleccion parcial" indeterminate></lib-checkbox>
- * <lib-checkbox label="Acento kaki" variant="kaki" checked></lib-checkbox>
+ * <lib-checkbox label="Acento" variant="accent" checked></lib-checkbox>
  */
 @customElement('lib-checkbox')
 export class LibCheckbox extends LitElement {

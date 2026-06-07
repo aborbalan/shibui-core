@@ -1,5 +1,19 @@
 import type { Preview } from '@storybook/web-components-vite';
-import '../src/styles/shared/tokens.css';
+
+// Importamos los partials de tokens directamente (no vía tokens.css con
+// @import url(...)) para garantizar que Storybook/Vite inyecta TODAS las
+// capas a nivel de documento. Sin esto, los @import anidados no siempre se
+// resuelven en el preview y los componentes pierden los tokens semánticos
+// (--text-accent, --lib-comp-*…) → render sin color ni efectos.
+// El orden es crítico: primitivos → semánticos → katachi.
+import '../src/styles/shared/tokens/_palette.css';
+import '../src/styles/shared/tokens/_typography.css';
+import '../src/styles/shared/tokens/_spacing.css';
+import '../src/styles/shared/tokens/_motion.css';
+import '../src/styles/shared/tokens/_state.css';
+import '../src/styles/shared/tokens/_semantic.css';
+import '../src/styles/shared/tokens/_effects.css';
+import '../src/styles/shared/tokens/_katachi.css';
 
 const preview: Preview = {
   decorators: [

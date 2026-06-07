@@ -1,0 +1,63 @@
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-SPARKLINE — Shibui UI
+   Contexto  : app/data-viz (átomo inline)
+   Coverage  : semantic — el color sale de currentColor, que el
+   host fija desde tokens --text-* según `tone`. Katachi-aware
+   por herencia (los tokens cambian con cada contexto).
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display:        inline-block;
+    line-height:    0;            /* evita hueco bajo el SVG inline */
+    vertical-align: middle;
+    color:          var(--text-primary);
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .spark {
+    display:  block;
+    overflow: visible;
+  }
+
+  .spark-line {
+    fill:            none;
+    stroke:          currentColor;
+    stroke-width:    1.5;
+    stroke-linejoin: round;
+    stroke-linecap:  round;
+  }
+
+  .spark-area {
+    fill:         currentColor;
+    fill-opacity: 0.18;
+    stroke:       none;
+  }
+
+  .spark-bar {
+    fill:    currentColor;
+    opacity: 0.85;
+  }
+
+  .spark-dot {
+    fill: currentColor;
+  }
+
+  /* ─── Tonos semánticos → color del host ───────────────
+     `default` usa --text-primary (definido en :host).
+     El resto mapea a su token semántico, katachi-aware. */
+  :host([tone="accent"])  { color: var(--text-accent);  }
+  :host([tone="info"])    { color: var(--text-info);     }
+  :host([tone="success"]) { color: var(--text-success);  }
+  :host([tone="warning"]) { color: var(--text-warning);  }
+  :host([tone="error"])   { color: var(--text-error);    }
+}

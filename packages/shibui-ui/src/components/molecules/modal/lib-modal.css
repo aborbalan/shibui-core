@@ -25,7 +25,7 @@
 
    Modificadores de .mo-header-icon
    ──────────────────────────────────────────────────────────
-   .is-kaki / .is-celadon / .is-error / .is-info  → tono de ícono
+   .is-accent / .is-secondary / .is-error / .is-info  → tono de ícono
    ============================================================ */
 
 @layer reset {
@@ -175,12 +175,12 @@
     color: var(--text-muted);
   }
 
-  .mo-header-icon.is-kaki    { background: var(--color-kaki-50);
+  .mo-header-icon.is-accent    { background: var(--color-kaki-50);
         border-color: var(--color-kaki-100);
             color: var(--color-kaki-500); }
 
-  .mo-header-icon.is-celadon { background: var(--color-celadon-50);
-     border-color: var(--color-celadon-100); color: var(--color-celadon-500); }
+  .mo-header-icon.is-secondary { background: var(--info-bg);
+     border-color: var(--info-bg-2); color: var(--info); }
 
   .mo-header-icon.is-error   { background: #F5DDD9;
      border-color: #F5DDD9;
@@ -311,8 +311,44 @@
 
      Variant explícita dark (.mo-dark) mantiene su paleta.
 
-     Bloque marcador para discoverability.
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → seam dorada animada en .mo-panel::before
+     • terminal → seam phosphor sólida en .mo-panel::before
      ─────────────────────────────────────────────────────────── */
+
+  /* ── Kintsugi / terminal seam ── */
+  .mo-panel {
+    position: relative;
+  }
+
+  .mo-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    pointer-events: none;
+    z-index: 10;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 20%,
+      var(--color-kaki-400) 50%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 80%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: modal-seam 3s linear infinite;
+    animation-play-state: var(--lib-effect-seam-play, paused);
+    opacity: var(--lib-effect-seam-opacity, 0);
+    transition: opacity var(--duration-slow, 400ms) var(--ease-out, ease-out);
+  }
+
+  @keyframes modal-seam {
+    from { background-position: 200% center; }
+    to   { background-position: -200% center; }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

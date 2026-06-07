@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-code-block.component';
 import type { LibCodeBlock } from './lib-code-block.component';
@@ -10,7 +10,7 @@ type LibCodeBlockStoryArgs = Pick<
 >;
 
 const meta: Meta<LibCodeBlockStoryArgs> = {
-  title: 'Content/Code Block',
+  title: 'Universal/Content/Code Block',
   tags:['autodocs'],
   component: 'lib-code-block',
 
@@ -114,7 +114,7 @@ export const MultiLanguage: Story = {
         language="html"
         filename="index.html"
         code='<lib-button variant="primary">Click me</lib-button>
-<lib-badge variant="celadon" dot>Activo</lib-badge>'
+<lib-badge variant="info" dot>Activo</lib-badge>'
       ></lib-code-block>
 
       <lib-code-block
@@ -180,12 +180,25 @@ export const NoCopy: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="max-width:400px;">
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);max-width:480px;">
+    <lib-code-block
+      variant="default"
+      language="bash"
+      code="npm install @shibui-ui/ui lit"
+      copyable
+    ></lib-code-block>
     <lib-code-block
       variant="ghost"
       language="ts"
-      code="import '@shibui/ui';"
+      filename="main.ts"
+      code="import '@shibui-ui/ui';"
       copyable
+    ></lib-code-block>
+    <lib-code-block
+      variant="default"
+      language="json"
+      filename="package.json"
+      code='{ "version": "1.0.0" }'
     ></lib-code-block>
   </div>
 `);

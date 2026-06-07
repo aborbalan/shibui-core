@@ -36,7 +36,7 @@
     tag="h1"
     centered
   >
-    <lib-eyebrow slot="eyebrow" color="kaki" line="both" size="sm">Filosofía de Diseño</lib-eyebrow>
+    <lib-eyebrow slot="eyebrow" tone="accent" line="both" size="sm">Filosofía de Diseño</lib-eyebrow>
   </lib-display-heading>
 </section>
 
@@ -53,7 +53,7 @@
         size="md"
         tag="h2"
       >
-        <lib-eyebrow slot="eyebrow" color="dark" size="sm">Los tres pilares</lib-eyebrow>
+        <lib-eyebrow slot="eyebrow" tone="accent" size="sm">Los tres pilares</lib-eyebrow>
       </lib-display-heading>
     </div>
 
@@ -80,7 +80,7 @@
         size="md"
         tag="h2"
       >
-        <lib-eyebrow slot="eyebrow" color="dark" size="sm">Principios de diseño</lib-eyebrow>
+        <lib-eyebrow slot="eyebrow" tone="accent" size="sm">Principios de diseño</lib-eyebrow>
       </lib-display-heading>
     </div>
 

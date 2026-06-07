@@ -11,7 +11,7 @@ export type { LibSwitchVariant, LibSwitchSize };
 /**
  * @element lib-switch
  *
- * Toggle switch con variante kintsugi de acabado premium.
+ * Toggle switch con variante inverse de acabado premium.
  *
  * @fires ui-lib-change — Emitido al cambiar estado con `{ checked: boolean }`
  *
@@ -21,8 +21,8 @@ export type { LibSwitchVariant, LibSwitchSize };
  * @example — con subtítulo
  * <lib-switch label="Acceso premium" sub="Funciones exclusivas" checked></lib-switch>
  *
- * @example — kintsugi (superficie oscura)
- * <lib-switch variant="kintsugi" label="Modo ceremonial" sub="Activa el tema kintsugi"></lib-switch>
+ * @example — inverse (superficie oscura)
+ * <lib-switch variant="inverse" label="Modo ceremonial" sub="Activa el tema inverse"></lib-switch>
  *
  * @example — tamaños
  * <lib-switch size="sm"></lib-switch>
@@ -53,7 +53,7 @@ export class LibSwitch extends LitElement {
   /**
    * Variante visual.
    * - default   : track washi, thumb blanco
-   * - kintsugi  : cerámica oscura, venas doradas, thumb de oro al activar
+   * - inverse  : cerámica oscura, venas doradas, thumb de oro al activar
    */
   @property({ type: String, reflect: true })
   variant: LibSwitchVariant = 'default';

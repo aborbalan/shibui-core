@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-accordion-item.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
@@ -10,7 +10,7 @@ interface AccordionItemArgs {
 }
 
 const meta: Meta<AccordionItemArgs> = {
-  title: 'Layout/Accordion Item',
+  title: 'Universal/Layout/Accordion Item',
   tags:['autodocs'],
   component: 'lib-accordion-item',
   argTypes: {

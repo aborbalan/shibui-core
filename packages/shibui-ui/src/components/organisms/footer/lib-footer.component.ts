@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import  { FooterColumn, FooterLink, FooterVariant } from './lib-footer.types';
 import { renderFooter } from './lib-footer.html';
 import componentCss from './lib-footer.css?inline';
+import celadonDecorations from '../../../styles/shared/celadon-decorations.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
 /**
@@ -10,7 +11,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  *
  * @tag lib-footer
  *
- * @attr {string}  variant      - Estilo del footer: 'social' | 'accordion' | 'kintsugi' | 'glitch'
+ * @attr {string}  variant      - Estilo del footer: 'social' | 'accordion' | 'inverse' | 'glitch' | 'celadon' | 'sabi' | 'shizen'
  * @attr {string}  brand-name   - Nombre de marca (ej: "shibui")
  * @attr {string}  brand-kanji  - Caracter kanji decorativo (ej: "渋")
  * @attr {string}  brand-sub    - Subtítulo bajo el logo (ej: "Design System · Zaragoza")
@@ -22,7 +23,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * @attr {string}  rss-href     - URL del feed RSS
  * @attr {string}  email        - Dirección de email de contacto
  *
- * @prop {FooterColumn[]} columns      - Columnas de navegación (accordion / kintsugi)
+ * @prop {FooterColumn[]} columns      - Columnas de navegación (accordion / inverse)
  * @prop {FooterLink[]}   nav-links    - Links de navegación planos (social / glitch)
  * @prop {FooterLink[]}   legal-links  - Links de pie (privacidad, términos, etc.)
  * @prop {RuntimeLine[]}  runtime-lines- Líneas de la tabla runtime (variante glitch)
@@ -35,6 +36,7 @@ export class LibFooter extends LitElement {
 
   static override styles = [
     css`${unsafeCSS(sharedTokens)}`,
+    css`${unsafeCSS(celadonDecorations)}`,
     css`${unsafeCSS(componentCss)}`,
   ];
 
@@ -42,6 +44,13 @@ export class LibFooter extends LitElement {
 
   @property({ type: String })
   variant: FooterVariant = 'social';
+
+  /**
+   * Decoraciones celadon opt-in (Bar), separadas por espacio
+   * (ej: "tide condensation depth"). Sólo en `variant="celadon"`.
+   */
+  @property({ type: String })
+  decoration = '';
 
   @property({ type: String, attribute: 'brand-name' })
   brandName = 'shibui';

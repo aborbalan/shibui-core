@@ -64,6 +64,7 @@
     "test:stories": "vitest --config .config/vite.config.ts --project storybook --run",
     "test:unit": "vitest run --config .config/vitest.unit.config.ts",
     "test:unit:watch": "vitest --config .config/vitest.unit.config.ts",
+    "test:e2e": "playwright test --config .config/playwright.config.js atoms/ molecules/ organisms/",
     "test:visual": "playwright test --config .config/playwright.config.js visual/",
     "test:visual:update": "playwright test --config .config/playwright.config.js visual/ --update-snapshots",
     "validate:wrappers": "tsx scripts/validate-react-wrappers.ts"
@@ -77,8 +78,13 @@
   ],
   "author": "",
   "license": "MIT",
+  "sideEffects": ["*.css", "*.component.ts", "*.component.js", "dist/index.js"],
   "peerDependencies": {
-    "lit": "^3.0.0"
+    "lit": "^3.0.0",
+    "react": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true }
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",
@@ -95,7 +101,7 @@
     "@types/react": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
-    "@vitest/browser": "4.1.4",
+    "@vitest/browser": "4.1.6",
     "@vitest/browser-playwright": "4.1.4",
     "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^8.56.0",

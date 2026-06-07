@@ -4,7 +4,7 @@
    LIB-AVATAR - Shibui UI
    Sizes  : xs(24) sm(32) md(40) lg(56) xl(72) 2xl(96)
    Shapes : circle | squircle | square
-   Colors : washi | kaki | celadon | dark
+   Tones  : neutral | warm | cool | inverse
    Content: image > initials > icon slot
    ============================================================ */
 
@@ -122,39 +122,76 @@
     display: flex;
   }
 
-  /* Color: kaki */
-  :host([color="kaki"]) .avatar__face      { background: var(--color-kaki-100);
+  /* Tone: warm (terracota kaki)  — era color="kaki" */
+  :host([tone="warm"]) .avatar__face      { background: var(--color-kaki-100);
      border-color: var(--color-kaki-200); }
-  :host([color="kaki"]) .avatar__initials  { color: var(--color-kaki-600); }
-  :host([color="kaki"]) .avatar__icon      { color: var(--color-kaki-500); }
+  :host([tone="warm"]) .avatar__initials  { color: var(--color-kaki-600); }
+  :host([tone="warm"]) .avatar__icon      { color: var(--color-kaki-500); }
 
-  /* Color: celadon */
-  :host([color="celadon"]) .avatar__face     { background: var(--color-celadon-100);
+  /* Tone: cool (jade celadón)    — era color="celadon" */
+  :host([tone="cool"]) .avatar__face     { background: var(--color-celadon-100);
      border-color: var(--color-celadon-200); }
-  :host([color="celadon"]) .avatar__initials { color: var(--color-celadon-600); }
-  :host([color="celadon"]) .avatar__icon     { color: var(--color-celadon-500); }
+  :host([tone="cool"]) .avatar__initials { color: var(--color-celadon-600); }
+  :host([tone="cool"]) .avatar__icon     { color: var(--color-celadon-500); }
 
-  /* Color: dark */
-  :host([color="dark"]) .avatar__face      { background: var(--color-washi-900);
+  /* Tone: inverse (oscuro)       — era color="dark" */
+  :host([tone="inverse"]) .avatar__face      { background: var(--color-washi-900);
     border-color: var(--color-washi-800); }
-  :host([color="dark"]) .avatar__initials  { color: var(--color-washi-300); }
-  :host([color="dark"]) .avatar__icon      { color: var(--color-washi-500); }
+  :host([tone="inverse"]) .avatar__initials  { color: var(--color-washi-300); }
+  :host([tone="inverse"]) .avatar__icon      { color: var(--color-washi-500); }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     lib-avatar tiene un atributo `color` (washi · kaki · celadon ·
-     dark) que es una dimensión ortogonal al katachi: define la
-     paleta de la cara, no la superficie del entorno. No se aplica
-     semantic override sobre los hardcoded `--color-washi-X` del
-     face default porque cambiar esos colores alteraría el look
-     intencional de la cara washi independientemente del katachi.
+     lib-avatar usa `tone` (neutral · warm · cool · inverse) para
+     el fondo de iniciales/icono — es ortogonal al katachi del
+     entorno (define la cara, no la superficie contenedora).
+     Los fondos de `neutral` y `inverse` usan colores hardcodeados
+     de paleta washi porque son identidades deliberadas, no adaptan
+     al katachi.
 
-     El avatar hereda el contexto a nivel de tokens generales
-     (border-radius, tipografía) y mantiene su identidad cromática
-     propia. Para variar el avatar por superficie usa `color="dark"`
-     explícito.
+     Para que el avatar se adapte automáticamente al contexto del
+     entorno, usar simplemente el tone adecuado (e.g. `inverse` en
+     fondos oscuros) sin necesidad de `data-katachi`.
 
-     Bloque marcador para discoverability.
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → ring+halo dorado en .avatar__face (box-shadow)
+       La pieza de cerámica reparada — el anillo dorado alrededor
+       de la cara circular es la expresión más literal del kintsugi.
+     • sabi → ring brutal-mini en .avatar__face
+     .avatar__face ya tiene border-radius: full — el ring sigue la forma circular.
+
+     Efecto signature de celadon (no es un --lib-effect-*, requiere
+     host-context como en lib-button/lib-chip):
+     • celadon → glaze cerámico: barrido de vidriado sutil en hover.
      ─────────────────────────────────────────────────────────── */
+
+  .avatar__face {
+    box-shadow: var(--lib-effect-ring, none);
+  }
+
+  /* celadon · glaze cerámico — barrido de vidriado que cruza la cara
+     en hover. overflow:hidden de .avatar__face lo recorta a la forma
+     (circle/squircle/square). Hover-driven: no altera el snapshot
+     estático de regresión visual. Patrón: lib-button / lib-chip. */
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="celadon"]) .avatar__face {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: var(--lib-celadon-glaze);
+        transform: translateX(-100%);
+        transition: transform var(--duration-slow) var(--ease-out);
+        pointer-events: none;
+      }
+
+      @media (hover: hover) {
+        &:hover::after { transform: translateX(100%); }
+      }
+    }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

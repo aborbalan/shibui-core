@@ -9,7 +9,7 @@ import type { DropdownTriggerVariant, DropdownAlign } from './lib-dropdown.types
  * lib-dropdown — Menú contextual flotante Shibui (SG-25)
  *
  * @prop label          — Texto del trigger (si no hay slot "trigger")
- * @prop variant        — 'default' | 'ghost' | 'filled' | 'kaki'
+ * @prop variant        — 'default' | 'ghost' | 'filled' | 'accent'
  * @prop align          — 'left' (default) | 'right'
  * @prop open           — Estado abierto (refleja en atributo)
  * @prop dark           — Menú con tema oscuro

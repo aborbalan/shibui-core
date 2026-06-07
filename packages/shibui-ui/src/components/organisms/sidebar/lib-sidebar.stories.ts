@@ -4,6 +4,7 @@ import './lib-sidebar.component';
 import type { LibSidebar }      from './lib-sidebar.component';
 import type { SidebarLink }     from '../../../types';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
+import { katachiContext, expectAccentMatchesToken } from '../../../stories/katachi-accent.helper';
 
 type StoryArgs = Partial<Pick<LibSidebar,
   'logoMark' | 'brandName' | 'showSearch' | 'active' |
@@ -13,44 +14,26 @@ type StoryArgs = Partial<Pick<LibSidebar,
 
 /* ── Fixtures ── */
 const LINKS: SidebarLink[] = [
-  { id: 'dashboard',   label: 'Dashboard',      icon: 'home',         group: 'Principal' },
-  { id: 'analytics',   label: 'Analíticas',     icon: 'chart-line',   badge: 12 },
-  { id: 'projects',    label: 'Proyectos',      icon: 'folder' },
-  { id: 'team',        label: 'Equipo',         icon: 'student',      badge: 4 },
-  { id: 'components',  label: 'Componentes',    icon: 'stack',        group: 'Sistema' },
-  { id: 'settings',    label: 'Configuración',  icon: 'compass' },
+  { id: 'dashboard',   label: 'Dashboard',       icon: 'home',        group: 'Principal' },
+  { id: 'analytics',   label: 'Analíticas',      icon: 'chart-line',  badge: 12 },
+  { id: 'projects',    label: 'Proyectos',       icon: 'folder' },
+  { id: 'team',        label: 'Equipo',          icon: 'student',     badge: 4 },
+  { id: 'components',  label: 'Componentes',     icon: 'stack',       group: 'Sistema' },
+  { id: 'settings',    label: 'Configuración',   icon: 'compass' },
   { id: 'updates',     label: 'Actualizaciones', icon: 'download',    disabled: true },
 ];
 
-const LINKS_KINTSUGI: SidebarLink[] = [
-  { id: 'gallery',    label: 'Galería',        icon: 'image',   group: '金継ぎ · Sistema' },
-  { id: 'collection', label: 'Colección',      icon: 'folder',  badge: 24 },
-  { id: 'history',    label: 'Historia',       icon: 'book' },
-  { id: 'wabi',       label: 'Wabi-sabi',      icon: 'leaf',    group: '侘び · Filosofía' },
-  { id: 'ma',         label: 'Ma · El espacio', icon: 'compass' },
-];
-
-const LINKS_GLITCH: SidebarLink[] = [
-  { id: 'processes',  label: 'processes',   icon: 'atom',       group: 'modules' },
-  { id: 'metrics',    label: 'metrics',     icon: 'chart-line' },
-  { id: 'errorlog',   label: 'error.log',   icon: 'bell',       badge: 'dot' },
-  { id: 'network',    label: 'network',     icon: 'globe',      group: 'runtime' },
-  { id: 'config',     label: 'config.yaml', icon: 'compass' },
-  { id: 'deploy',     label: 'deploy.sh',   icon: 'upload' },
-];
-
-
 /* ── Meta ── */
 const meta: Meta<StoryArgs> = {
-  title: 'Navigation/Sidebar',
-  tags:['autodocs'],
+  title: 'Universal/Navigation/Sidebar',
+  tags: ['autodocs'],
   component: 'lib-sidebar',
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    variant: { control: 'select', options: ['dark','light','kintsugi','glitch'] },
-    showSearch: { control: 'boolean' },
+    variant:        { control: 'select', options: ['dark', 'light'] },
+    showSearch:     { control: 'boolean' },
     showUserAction: { control: 'boolean' },
-    collapsed: { control: 'boolean' },
+    collapsed:      { control: 'boolean' },
   },
 };
 export default meta;
@@ -116,7 +99,7 @@ export const Playground: Story = {
 };
 
 /* ════════════════════════════════════════
-   LIGHT — Classic washi
+   VARIANTS
    ════════════════════════════════════════ */
 export const Light: Story = {
   name: 'Variant · Light — Classic washi',
@@ -170,9 +153,6 @@ export const Light: Story = {
   `,
 };
 
-/* ════════════════════════════════════════
-   DARK — con search bar
-   ════════════════════════════════════════ */
 export const Dark: Story = {
   name: 'Variant · Dark — washi-950 + search',
   render: (): TemplateResult => html`
@@ -195,68 +175,6 @@ export const Dark: Story = {
         </div>
         <div style="flex:1;padding:var(--lib-space-xl) 3rem;overflow-y:auto;color:rgba(250,247,244,.2);font-family:var(--lib-font-mono);font-size:9px;line-height:2;">
           Dark variant con search bar integrada.
-        </div>
-      </div>
-    </div>
-  `,
-};
-
-/* ════════════════════════════════════════
-   KINTSUGI — ✦ seam
-   ════════════════════════════════════════ */
-export const Kintsugi: Story = {
-  name: 'Variant · Kintsugi — ✦ gold seam',
-  render: (): TemplateResult => html`
-    <div style="display:flex;height:100vh;overflow:hidden;">
-      <lib-sidebar
-        variant="kintsugi"
-        logo-mark="渋"
-        brand-name="shibui ✦"
-        active="gallery"
-        user-name="Artesano" user-role="✦ Maestro"
-        .links="${LINKS_KINTSUGI}"
-      ></lib-sidebar>
-      <div style="flex:1;background:var(--color-washi-950);display:flex;align-items:center;justify-content:center;">
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--lib-space-xl);max-width:400px;padding:var(--lib-space-xl);">
-          ${['侘','渋','間'].map(k => html`
-            <div style="aspect-ratio:1;border:1px solid rgba(184,90,30,.2);
-              background:linear-gradient(135deg,rgba(184,90,30,.08),transparent);
-              display:flex;align-items:center;justify-content:center;
-              font-family:var(--lib-font-display);font-size:2.5rem;font-weight:300;
-              color:var(--color-kaki-400);">${k}</div>
-          `)}
-        </div>
-      </div>
-    </div>
-  `,
-};
-
-/* ════════════════════════════════════════
-   GLITCH — ⌗ scanlines
-   ════════════════════════════════════════ */
-export const Glitch: Story = {
-  name: 'Variant · Glitch — ⌗ scanlines',
-  render: (): TemplateResult => html`
-    <div style="display:flex;height:100vh;overflow:hidden;">
-      <lib-sidebar
-        variant="glitch"
-        logo-mark="⌗" brand-name="SHIBUI"
-        active="processes"
-        user-name="PID 4821" user-role="node@22"
-        .links="${LINKS_GLITCH}"
-      ></lib-sidebar>
-      <div style="flex:1;background:var(--color-washi-950);display:flex;flex-direction:column;">
-        <div style="height:48px;border-bottom:1px solid rgba(255,255,255,.06);
-          display:flex;align-items:center;padding:0 var(--lib-space-lg);">
-          <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-kaki-400);">⌗ processes</span>
-          <span style="margin-left:auto;font-family:var(--lib-font-mono);font-size:8px;letter-spacing:.12em;color:rgba(250,247,244,.2);">2026-03-19 · 14:32:07</span>
-        </div>
-        <div style="flex:1;padding:var(--lib-space-xl) 3rem;overflow-y:auto;
-          font-family:var(--lib-font-mono);font-size:9px;line-height:2.4;color:rgba(250,247,244,.25);">
-          <div><span style="color:var(--color-celadon-400);">✔</span>&nbsp;node server.js &nbsp;PID 4821 &nbsp;↑ 2d 14h</div>
-          <div><span style="color:var(--color-celadon-400);">✔</span>&nbsp;vite dev &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PID 4830 &nbsp;↑ 2d 14h</div>
-          <div><span style="color:var(--color-kaki-400);">⚠</span>&nbsp;watcher &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PID 4842 &nbsp;↑ 1h 07m</div>
-          <div style="margin-top:1rem;"><span style="color:var(--color-celadon-400);">●</span>&nbsp;online · 99.2% uptime</div>
         </div>
       </div>
     </div>
@@ -314,24 +232,58 @@ export const Collapsible: Story = {
     </div>
   `,
 };
+
 /* ═══════════════════════════════════════════════════════════════
    KATACHI · 形 · Las 6 historias estándar
-   lib-sidebar usa tokens semánticos de superficie y navegación
-   (bg-base, border-subtle, text-primary) — adapta al katachi.
+   lib-sidebar consume tokens semánticos (bg-elevated, border-subtle,
+   text-primary) — adapta al katachi activo. Los efectos de katachi
+   (seam dorado en kintsugi, scanlines en terminal) se activan
+   automáticamente vía --lib-effect-* tokens sin prop adicional.
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;height:280px;border:1px solid var(--border-subtle);overflow:hidden;">
-    <lib-sidebar
-      variant="dark"
-      .links="${[
-        { id: 'dashboard', label: 'Dashboard', icon: 'home' },
-        { id: 'projects',  label: 'Proyectos', icon: 'folder' },
-        { id: 'settings',  label: 'Ajustes',   icon: 'compass' },
-      ] as SidebarLink[]}"
-      style="--lib-sidebar-width:200px;"
-    ></lib-sidebar>
-    <div style="flex:1;padding:var(--lib-space-md);background:var(--bg-base);font-family:var(--lib-font-mono);font-size:var(--text-xs);color:var(--text-muted);">content</div>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+
+    <!-- dark variant -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">dark</p>
+      <div style="display:flex;height:200px;border:1px solid var(--border-subtle);overflow:hidden;">
+        <lib-sidebar
+          variant="dark"
+          active="dashboard"
+          .links="${([
+            { id: 'dashboard', label: 'Dashboard',  icon: 'home',       group: 'Principal' },
+            { id: 'analytics', label: 'Analíticas', icon: 'chart-line', badge: 5 },
+            { id: 'projects',  label: 'Proyectos',  icon: 'folder' },
+            { id: 'settings',  label: 'Ajustes',    icon: 'compass',    disabled: true },
+          ] as SidebarLink[])}"
+          style="--lib-sidebar-width:200px;"
+        ></lib-sidebar>
+        <div style="flex:1;padding:var(--lib-space-md);background:var(--color-washi-950);font-family:var(--lib-font-mono);font-size:9px;color:rgba(250,247,244,.2);">content area</div>
+      </div>
+    </div>
+
+    <!-- light variant -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">light</p>
+      <div style="display:flex;height:200px;border:1px solid var(--border-subtle);overflow:hidden;">
+        <lib-sidebar
+          variant="light"
+          active="analytics"
+          user-name="Shibui User"
+          user-role="Pro"
+          show-user-action
+          .links="${([
+            { id: 'dashboard', label: 'Dashboard',  icon: 'home',       group: 'Principal' },
+            { id: 'analytics', label: 'Analíticas', icon: 'chart-line', badge: 12 },
+            { id: 'projects',  label: 'Proyectos',  icon: 'folder' },
+          ] as SidebarLink[])}"
+          style="--lib-sidebar-width:200px;"
+        ></lib-sidebar>
+        <div style="flex:1;padding:var(--lib-space-md);background:var(--bg-base);font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);">content area</div>
+      </div>
+    </div>
+
   </div>
 `);
 
@@ -341,3 +293,24 @@ export const KatachiKintsugi = _katachi.KatachiKintsugi;
 export const KatachiCeladon  = _katachi.KatachiCeladon;
 export const KatachiSabi     = _katachi.KatachiSabi;
 export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ── Acento de selección sigue al katachi (PR #448) ──────────────
+   El link activo (variant dark por defecto) adopta el token de acento
+   jade bajo celadon, no el kaki cálido hardcodeado. */
+export const TestAccentCeladon: Story = {
+  name: 'Test · accent del link activo sigue al katachi (celadon)',
+  tags: ['test'],
+  render: (): TemplateResult => katachiContext('celadon', html`
+    <lib-sidebar
+      active="dashboard"
+      .links="${[{ id: 'dashboard', label: 'Dashboard', icon: 'home' }] as SidebarLink[]}"
+    ></lib-sidebar>
+  `),
+  play: async ({ canvasElement }): Promise<void> => {
+    const ctx = canvasElement.querySelector('[data-katachi="celadon"]') as HTMLElement;
+    const host = ctx.querySelector('lib-sidebar') as LibSidebar;
+    await host.updateComplete;
+    const active = host.shadowRoot!.querySelector('.sb-link.is-active') as HTMLElement;
+    expectAccentMatchesToken(active, 'color', ctx, '--text-accent');
+  },
+};

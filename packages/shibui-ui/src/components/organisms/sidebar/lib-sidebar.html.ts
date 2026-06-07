@@ -57,20 +57,12 @@ function renderBadge(badge: string | number | undefined): TemplateResult | typeo
 
 /* ── Header ── */
 function renderHeader(p: SidebarTemplateProps): TemplateResult {
-  const isGlitch = p.variant === 'glitch';
-  const isKintsugi = p.variant === 'kintsugi';
-
   return html`
     <div class="sb-header" part="header">
       <div class="sb-logo-mark" part="logo-mark">
-        ${isKintsugi
-          ? html`<span>${p.logoMark}</span>`
-          : p.logoMark}
+        ${p.logoMark}
       </div>
-      ${isGlitch
-        ? html`<span class="sb-brand">⌗ ${p.brandName.toUpperCase()}</span>
-                <span class="sb-version">v0.1</span>`
-        : html`<span class="sb-brand">${p.brandName}</span>`}
+      <span class="sb-brand">${p.brandName}</span>
     </div>
   `;
 }
@@ -98,8 +90,6 @@ function renderSearch(p: SidebarTemplateProps): TemplateResult | typeof nothing 
 
 /* ── Nav ── */
 function renderNav(p: SidebarTemplateProps): TemplateResult {
-  const isGlitch = p.variant === 'glitch';
-
   return html`
     <nav class="sb-nav" part="nav" aria-label="Navegación principal">
       <div class="sb-indicator" part="indicator"></div>
@@ -107,7 +97,7 @@ function renderNav(p: SidebarTemplateProps): TemplateResult {
       ${p.links.map(link => html`
         ${link.group ? html`
           <div class="sb-group" part="group">
-            ${isGlitch ? `// ${link.group}` : link.group}
+            ${link.group}
           </div>
         ` : nothing}
 
@@ -122,10 +112,6 @@ function renderNav(p: SidebarTemplateProps): TemplateResult {
           <span class="sb-link-icon">
             <lib-icon name="${link.icon}" size="sm"></lib-icon>
           </span>
-
-          ${isGlitch
-            ? html`<span class="sb-link-prefix">›</span>`
-            : nothing}
 
           <span class="sb-link-label">${link.label}</span>
 

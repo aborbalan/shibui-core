@@ -1,4 +1,4 @@
-import type { Meta, StoryObj }   from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj }   from '@storybook/web-components-vite';
 import { html }                  from 'lit';
 import './lib-metric-bar.component';
 import { createKatachiStories }  from '../../../stories/katachi-stories.helper';
@@ -9,14 +9,14 @@ interface MetricBarArgs {
   value:     number;
   max:       number;
   unit:      string;
-  tone:      'default' | 'kaki' | 'celadon' | 'error';
+  tone:      'default' | 'accent' | 'info' | 'error';
   size:      'xs' | 'sm' | 'md' | 'lg' | 'xl';
   showValue: boolean;
 }
 
 /* ── Meta ── */
 const meta: Meta<MetricBarArgs> = {
-  title:     'Metrics/Metric Bar',
+  title:     'Desktop/Data/Metric Bar',
   component: 'lib-metric-bar',
   tags:      ['autodocs'],
 
@@ -45,7 +45,7 @@ por lo que el componente adapta su aspecto automáticamente con cada katachi.
     unit:      { control: 'text',   description: 'Unidad ("%", "GB", "MB/s")' },
     tone: {
       control: 'select',
-      options: ['default', 'kaki', 'celadon', 'error'],
+      options: ['default', 'accent', 'info', 'error'],
     },
     size: {
       control: 'select',
@@ -106,10 +106,10 @@ export const SystemMonitor: Story = {
       "
     >
       <lib-metric-bar label="CPU"    value="67"   max="100" unit="%"    size="sm" show-value></lib-metric-bar>
-      <lib-metric-bar label="RAM"    value="12.4" max="32"  unit="GB"   size="sm" show-value tone="kaki"></lib-metric-bar>
+      <lib-metric-bar label="RAM"    value="12.4" max="32"  unit="GB"   size="sm" show-value tone="accent"></lib-metric-bar>
       <lib-metric-bar label="Disco"  value="380"  max="512" unit="GB"   size="sm" show-value></lib-metric-bar>
-      <lib-metric-bar label="Red ↑"  value="42"   max="100" unit="MB/s" size="sm" show-value tone="celadon"></lib-metric-bar>
-      <lib-metric-bar label="Net ↓"  value="18"   max="100" unit="MB/s" size="sm" show-value tone="celadon"></lib-metric-bar>
+      <lib-metric-bar label="Red ↑"  value="42"   max="100" unit="MB/s" size="sm" show-value tone="info"></lib-metric-bar>
+      <lib-metric-bar label="Net ↓"  value="18"   max="100" unit="MB/s" size="sm" show-value tone="info"></lib-metric-bar>
     </div>
   `,
 };
@@ -128,8 +128,8 @@ export const Tones: Story = {
       "
     >
       <lib-metric-bar label="default" value="60" unit="%" size="sm" show-value></lib-metric-bar>
-      <lib-metric-bar label="kaki"    value="75" unit="%" size="sm" show-value tone="kaki"></lib-metric-bar>
-      <lib-metric-bar label="celadon" value="45" unit="%" size="sm" show-value tone="celadon"></lib-metric-bar>
+      <lib-metric-bar label="accent"  value="75" unit="%" size="sm" show-value tone="accent"></lib-metric-bar>
+      <lib-metric-bar label="info"    value="45" unit="%" size="sm" show-value tone="info"></lib-metric-bar>
       <lib-metric-bar label="error"   value="92" unit="%" size="sm" show-value tone="error"></lib-metric-bar>
     </div>
   `,
@@ -166,17 +166,19 @@ const _katachi = createKatachiStories<MetricBarArgs>(() => html`
       display: flex;
       flex-direction: column;
       gap: var(--lib-space-md);
-      width: 260px;
+      width: 280px;
       padding: var(--lib-space-lg);
       background: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
     "
   >
-    <lib-metric-bar label="CPU"   value="67"   max="100" unit="%"  size="sm" show-value></lib-metric-bar>
-    <lib-metric-bar label="RAM"   value="12.4" max="32"  unit="GB" size="sm" show-value tone="kaki"></lib-metric-bar>
-    <lib-metric-bar label="Disco" value="380"  max="512" unit="GB" size="sm" show-value></lib-metric-bar>
-    <lib-metric-bar label="Red"   value="42"   max="100" unit="MB/s" size="sm" show-value tone="celadon"></lib-metric-bar>
+    <lib-metric-bar label="CPU"    value="67"   max="100" unit="%"    size="sm" show-value></lib-metric-bar>
+    <lib-metric-bar label="RAM"    value="12.4" max="32"  unit="GB"   size="sm" show-value tone="accent"></lib-metric-bar>
+    <lib-metric-bar label="Disco"  value="380"  max="512" unit="GB"   size="sm" show-value></lib-metric-bar>
+    <lib-metric-bar label="Red ↑"  value="42"   max="100" unit="MB/s" size="sm" show-value tone="info"></lib-metric-bar>
+    <lib-metric-bar label="Alerta" value="91"   max="100" unit="%"    size="xs" show-value tone="error"></lib-metric-bar>
+    <lib-metric-bar label="LG"     value="55"   max="100" unit="%"    size="lg" show-value></lib-metric-bar>
   </div>
 `);
 

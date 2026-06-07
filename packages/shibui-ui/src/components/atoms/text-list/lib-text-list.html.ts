@@ -171,7 +171,7 @@ export function textListTemplate(props: TextListTemplateProps): TemplateResult {
     const trackCls = [
       'lst',
       size !== 'md'   ? `lst-${size}`            : '',
-      marker === 'kaki'    ? 'lst-kaki'    : '',
+      marker === 'accent'  ? 'lst-accent'  : '',
       marker === 'dash'    ? 'lst-dash'    : '',
       marker === 'check'   ? 'lst-checked' : '',
       family === 'ol' && counter === 'roman' ? 'lst-ordered-roman' : '',

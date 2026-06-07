@@ -15,10 +15,10 @@ import type {
  * lib-tabs — Componente de pestañas Shibui (SG-60)
  *
  * @prop variant  — 'underline' | 'pill' | 'card' | 'outline' | 'vertical'
- * @prop color    — 'kaki' | 'celadon'
+ * @prop color    — 'accent' | 'info'
  * @prop size     — 'sm' | 'md' | 'lg'
  * @prop dark     — surface oscura
- * @prop kintsugi — ink bar animada dorada
+ * @prop gold     — ink bar animada dorada (era kintsugi)
  * @prop glitch   — efecto RGB split en tab activo
  * @prop scroll   — overflow-x scroll en la lista
  * @prop full     — tabs en grid de columnas iguales
@@ -30,8 +30,14 @@ import type {
  *
  * @prop {boolean} closable  — muestra botón × en todos los tabs (item.closable sobreescribe por tab)
  *
- * @fires ui-lib-tab-change — {detail: { id: string; prev: string }}
- * @fires ui-lib-tab-close  — {detail: { id: string }} — cuando se pulsa × en un tab
+ * ── Extras estilo IDE (opt-in, apagados por defecto) ──
+ * @prop {boolean} newTab      — muestra un botón "+" al final de la lista (attribute: new-tab)
+ * @prop {boolean} reorderable — permite reordenar los tabs arrastrándolos
+ *
+ * @fires ui-lib-tab-change  — {detail: { id: string; prev: string }}
+ * @fires ui-lib-tab-close   — {detail: { id: string }} — al pulsar × o hacer click central
+ * @fires ui-lib-tab-new     — void — al pulsar el botón "+"
+ * @fires ui-lib-tab-reorder — {detail: { id: string; fromIndex: number; toIndex: number }}
  */
 @customElement("lib-tabs")
 export class LibTabs extends LitElement {
@@ -57,7 +63,7 @@ export class LibTabs extends LitElement {
   dark = false;
 
   @property({ type: Boolean, reflect: true })
-  kintsugi = false;
+  gold = false;
 
   @property({ type: Boolean, reflect: true })
   glitch = false;
@@ -79,8 +85,19 @@ export class LibTabs extends LitElement {
   @property({ type: Boolean, reflect: true })
   closable = false;
 
+  /** Extra IDE (opt-in): muestra un botón "+" al final de la lista de tabs. */
+  @property({ type: Boolean, reflect: true, attribute: 'new-tab' })
+  newTab = false;
+
+  /** Extra IDE (opt-in): permite reordenar los tabs arrastrándolos. */
+  @property({ type: Boolean, reflect: true })
+  reorderable = false;
+
   @property({ type: Array, hasChanged: () => true })
   items: TabItem[] = [];
+
+  /** Índice del tab que se está arrastrando (reorder), o null. */
+  @state() _dragIndex: number | null = null;
 
   /* ── Internal state para la ink bar ── */
   @state() _inkLeft = 0;
@@ -180,6 +197,65 @@ export class LibTabs extends LitElement {
         composed: true,
       }),
     );
+  }
+
+  /* ── Extras IDE (opt-in) ── */
+
+  /** Click central del ratón sobre un tab cerrable → cierra (patrón navegador/IDE). */
+  _handleAuxClick(e: MouseEvent, item: TabItem): void {
+    if (e.button !== 1) return; // solo botón central
+    const closable = item.closable !== undefined ? item.closable : this.closable;
+    if (!closable) return;
+    e.preventDefault();
+    this._handleClose(e, item.id);
+  }
+
+  /** Botón "+" → emite ui-lib-tab-new para que el host añada una pestaña. */
+  _handleNew(): void {
+    this.dispatchEvent(
+      new CustomEvent('ui-lib-tab-new', { bubbles: true, composed: true }),
+    );
+  }
+
+  /* ── Reorder por drag (solo si reorderable) ── */
+
+  _handleDragStart(e: DragEvent, index: number): void {
+    if (!this.reorderable) return;
+    this._dragIndex = index;
+    if (e.dataTransfer) {
+      e.dataTransfer.effectAllowed = 'move';
+      // Necesario en Firefox para que arranque el drag.
+      e.dataTransfer.setData('text/plain', String(index));
+    }
+  }
+
+  _handleDragOver(e: DragEvent): void {
+    if (!this.reorderable || this._dragIndex === null) return;
+    e.preventDefault(); // habilita el drop
+    if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+  }
+
+  _handleDrop(e: DragEvent, toIndex: number): void {
+    if (!this.reorderable || this._dragIndex === null) return;
+    e.preventDefault();
+    const fromIndex = this._dragIndex;
+    this._dragIndex = null;
+    if (fromIndex === toIndex) return;
+
+    const moved = this.items[fromIndex];
+    if (!moved) return;
+
+    this.dispatchEvent(
+      new CustomEvent('ui-lib-tab-reorder', {
+        detail: { id: moved.id, fromIndex, toIndex },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
+  _handleDragEnd(): void {
+    this._dragIndex = null;
   }
 
   _handleClick(e: CustomEvent): void {

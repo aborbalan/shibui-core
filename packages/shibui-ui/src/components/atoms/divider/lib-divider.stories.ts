@@ -13,7 +13,7 @@ const PREVIEW_H = 'padding:24px; background:#F2EDE6; border:1px solid #E5DDD3; d
 const PREVIEW_DARK = 'padding:24px; background:#120E0A; border:1px solid #221C16; display:flex; flex-direction:column; gap:24px;';
 
 const meta: Meta<LibDividerStoryArgs> = {
-  title: 'Foundations/Spacing/Divider',
+  title: 'Universal/Foundations/Spacing/Divider',
   component: 'lib-divider',
   tags:['autodocs'],
   argTypes: {
@@ -28,7 +28,7 @@ const meta: Meta<LibDividerStoryArgs> = {
     },
     color: {
       control: 'select',
-      options: ['default', 'kaki', 'celadon'],
+      options: ['default', 'accent', 'info'],
     },
     align: {
       control: 'select',
@@ -81,7 +81,6 @@ export const Playground: Story = {
 
 /* ── Styles ── */
 export const LineStyles: Story = {
-  name: 'Line Styles.',
   render: (): TemplateResult => html`
     <div style="${PREVIEW_H}">
       ${(['hairline', 'default', 'strong', 'heavy', 'dashed', 'dotted', 'gradient'] as const).map(s => html`
@@ -126,14 +125,14 @@ export const Colors: Story = {
   render: (): TemplateResult => html`
     <div style="${PREVIEW_H}">
       <p style="font-family:monospace; font-size:10px; color:#9A8878; text-transform:uppercase; letter-spacing:0.25em;">Kaki</p>
-      <lib-divider color="kaki"></lib-divider>
-      <lib-divider color="kaki" ornament="dot"></lib-divider>
-      <lib-divider color="kaki" ornament="diamond"></lib-divider>
-      <lib-divider color="kaki">Nueva sección</lib-divider>
+      <lib-divider color="accent"></lib-divider>
+      <lib-divider color="accent" ornament="dot"></lib-divider>
+      <lib-divider color="accent" ornament="diamond"></lib-divider>
+      <lib-divider color="accent">Nueva sección</lib-divider>
 
       <p style="font-family:monospace; font-size:10px; color:#9A8878; text-transform:uppercase; letter-spacing:0.25em; margin-top:8px;">Celadón</p>
-      <lib-divider color="celadon"></lib-divider>
-      <lib-divider color="celadon" ornament="diamond"></lib-divider>
+      <lib-divider color="info"></lib-divider>
+      <lib-divider color="info" ornament="diamond"></lib-divider>
     </div>
   `,
 };

@@ -1,4 +1,4 @@
-import { html, type TemplateResult } from 'lit';
+﻿import { html, type TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-icon.component';
 import { ICON_REGISTRY } from '../../../shared/icons/icon-registry';
@@ -10,7 +10,7 @@ interface IconStoryArgs {
 }
 
 const meta: Meta<IconStoryArgs> = {
-  title: 'Content/Icon',
+  title: 'Universal/Content/Icon',
   tags:['autodocs'],
   component: 'lib-icon',
   argTypes: {

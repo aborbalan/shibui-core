@@ -1,7 +1,7 @@
 import { html, TemplateResult } from 'lit';
 
 export type LibStepperOrientation = 'horizontal' | 'vertical';
-export type LibStepperVariant     = 'default' | 'minimal' | 'kintsugi';
+export type LibStepperVariant     = 'default' | 'minimal' | 'inverse';
 export type LibStepperSize        = 'sm' | 'md' | 'lg';
 
 export interface StepperTemplateProps {

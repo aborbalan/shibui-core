@@ -12,7 +12,7 @@ import type { DrawerPlacement, DrawerSize, DrawerVariant } from './lib-drawer.ty
  * @prop open         — Abre / cierra el drawer
  * @prop placement    — 'right'(default) | 'left' | 'top' | 'bottom'
  * @prop size         — 'sm' | 'md'(default) | 'lg' | 'xl' | 'full'
- * @prop variant      — 'default' | 'dark' | 'kintsugi' | 'kintsugi-dark' | 'glitch' | 'glitch-dark'
+ * @prop variant      — 'default' | 'dark' | 'inverse' | 'inverse-dark' | 'glitch' | 'glitch-dark'
  * @prop label        — Texto del título (también rellenable via slot[name="title"])
  * @prop eyebrow      — Texto del eyebrow (también via slot[name="eyebrow"])
  * @prop subtitle     — Texto del subtítulo (también via slot[name="subtitle"])

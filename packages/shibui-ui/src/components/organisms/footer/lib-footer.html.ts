@@ -1,5 +1,9 @@
-import { html, type TemplateResult } from 'lit';
+import { html, nothing, type TemplateResult } from 'lit';
 import type { LibFooter } from './lib-footer.component';
+import {
+  celadonDecorationLayers,
+  parseDecorations,
+} from '../../../styles/shared/celadon-decorations';
 
 /* ── SVG helpers inline ── */
 const ICON_GITHUB = html`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>`;
@@ -130,13 +134,7 @@ export function renderKintsugi(ctx: LibFooter): TemplateResult {
     <footer style="position:relative;">
 
       <!-- Gold seam -->
-      <div class="ft-kintsugi-seam" aria-hidden="true"></div>
-
-      <!-- Ring ornament -->
-      <div class="ft-kintsugi-ring" aria-hidden="true">
-        <div class="ft-kintsugi-ring-track"></div>
-        <span class="ft-kintsugi-symbol">✦</span>
-      </div>
+      <div class="ft-gold-seam" aria-hidden="true"></div>
 
       <div class="ft-inner" style="padding-top:var(--lib-space-xl,2rem);">
 
@@ -151,15 +149,15 @@ export function renderKintsugi(ctx: LibFooter): TemplateResult {
         </div>
 
         <!-- Nav columns -->
-        <div class="ft-kintsugi-grid">
+        <div class="ft-inverse-grid">
           ${(ctx.columns ?? []).map(col => html`
             <div>
-              <div class="ft-kintsugi-col-head">${col.heading}</div>
-              <ul class="ft-kintsugi-col-links">
+              <div class="ft-inverse-col-head">${col.heading}</div>
+              <ul class="ft-inverse-col-links">
                 ${(col.links ?? []).map(link => html`
                   <li>
                     <a href="${link.href}">
-                      <span class="ft-kintsugi-arrow">›</span>
+                      <span class="ft-inverse-arrow">›</span>
                       ${link.label}
                     </a>
                   </li>
@@ -271,14 +269,179 @@ export function renderGlitch(ctx: LibFooter): TemplateResult {
 }
 
 /* ────────────────────────────────────────────────────────────
+   06 · SABI (papel washi + tinta + brutal borders)
+   ──────────────────────────────────────────────────────────── */
+export function renderSabi(ctx: LibFooter): TemplateResult {
+  return html`
+    <footer>
+
+      <!-- Barra de tinta superior -->
+      <div class="ft-sabi-stripe" aria-hidden="true"></div>
+
+      <div class="ft-inner">
+
+        <!-- Brand: izquierda, gran display -->
+        <div class="ft-sabi-brand-row">
+          <div class="ft-sabi-brand">
+            ${ctx.brandKanji} <em>${ctx.brandName}</em>
+          </div>
+          <span class="ft-sabi-sub">${ctx.brandSub}</span>
+        </div>
+
+        <!-- Columnas con bordes de tinta -->
+        <div class="ft-sabi-grid">
+          ${(ctx.columns ?? []).map(col => html`
+            <div class="ft-sabi-col">
+              <div class="ft-sabi-col-head">${col.heading}</div>
+              <ul class="ft-sabi-col-links">
+                ${(col.links ?? []).map(link => html`
+                  <li><a href="${link.href}">${link.label}</a></li>
+                `)}
+              </ul>
+            </div>
+          `)}
+        </div>
+
+        <!-- Barra inferior -->
+        <div class="ft-sabi-bottom">
+          <p>© ${ctx.year} · ${ctx.brandName} · ${ctx.location} · MIT</p>
+          <div style="display:flex;gap:var(--lib-space-md,1rem);">
+            ${(ctx.legalLinks ?? []).map(link => html`
+              <a href="${link.href}" class="ft-link-mono">${link.label}</a>
+            `)}
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  `;
+}
+
+/* ────────────────────────────────────────────────────────────
+   07 · SHIZEN (natural, blanco, limpio)
+   ──────────────────────────────────────────────────────────── */
+export function renderShizen(ctx: LibFooter): TemplateResult {
+  return html`
+    <footer>
+      <div class="ft-inner">
+
+        <!-- Marca botánica + brand centrado -->
+        <div style="text-align:center;margin-bottom:var(--lib-space-xl,2rem);">
+          <span class="ft-shizen-mark">✦ 自然 ✦</span>
+          <div class="ft-brand" style="font-size:1.75rem;">
+            ${ctx.brandName} <em>${ctx.brandKanji}</em>
+          </div>
+          <span class="ft-brand-sub">${ctx.brandSub}</span>
+        </div>
+
+        <!-- Columnas limpias -->
+        <div class="ft-shizen-grid">
+          ${(ctx.columns ?? []).map(col => html`
+            <div>
+              <div class="ft-shizen-col-head">${col.heading}</div>
+              <ul class="ft-shizen-col-links">
+                ${(col.links ?? []).map(link => html`
+                  <li><a href="${link.href}">${link.label}</a></li>
+                `)}
+              </ul>
+            </div>
+          `)}
+        </div>
+
+        <!-- Nav + copyright -->
+        <div class="ft-nav-row">
+          <ul class="ft-nav-links">
+            ${(ctx.navLinks ?? []).map(link => html`
+              <li>
+                <a href="${link.href}" class="ft-link-mono">${link.label}</a>
+              </li>
+            `)}
+          </ul>
+          <p class="ft-copyright">© ${ctx.year} · ${ctx.brandName} DS · ${ctx.location}</p>
+        </div>
+
+      </div>
+    </footer>
+  `;
+}
+
+/* ────────────────────────────────────────────────────────────
+   05 · CELADON (jade oscuro + seam jade)
+   ──────────────────────────────────────────────────────────── */
+export function renderCeladon(ctx: LibFooter): TemplateResult {
+  const hasDecoration = parseDecorations(ctx.decoration).length > 0;
+  return html`
+    <footer style="position:relative;" class="${hasDecoration ? 'ft-decorated' : ''}">
+
+      <!-- Jade seam -->
+      <div class="ft-celadon-seam" aria-hidden="true"></div>
+
+      ${hasDecoration
+        ? html`<div class="ft-fx" aria-hidden="true">
+            ${celadonDecorationLayers(ctx.decoration)}
+          </div>`
+        : nothing}
+
+      <div class="ft-inner" style="padding-top:var(--lib-space-xl,2rem);">
+
+        <!-- Brand centered -->
+        <div style="text-align:center;margin-bottom:var(--lib-space-lg,1.5rem);">
+          <div style="font-family:var(--ft-font-display);font-weight:300;font-size:1.75rem;
+            letter-spacing:0.15em;color:oklch(75% 0.05 180deg / .55);">
+            ${ctx.brandName} <em style="font-style:italic;color:var(--color-celadon-400,#4E9482);">${ctx.brandKanji}</em>
+          </div>
+          <span style="font-family:var(--ft-font-mono);font-size:.5rem;letter-spacing:.22em;
+            text-transform:uppercase;color:oklch(60% 0.05 180deg / .3);display:block;margin-top:.375rem;">
+            ${ctx.brandSub}
+          </span>
+        </div>
+
+        <!-- Nav columns -->
+        <div class="ft-celadon-grid">
+          ${(ctx.columns ?? []).map(col => html`
+            <div>
+              <div class="ft-celadon-col-head">${col.heading}</div>
+              <ul class="ft-celadon-col-links">
+                ${(col.links ?? []).map(link => html`
+                  <li>
+                    <a href="${link.href}">
+                      <span class="ft-celadon-arrow">›</span>
+                      ${link.label}
+                    </a>
+                  </li>
+                `)}
+              </ul>
+            </div>
+          `)}
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="ft-bottom" style="border-top-color:oklch(45.54% 0.059 173.23deg / .12);">
+          <p class="ft-copyright">青磁 · © ${ctx.year} · ${ctx.brandName.toUpperCase()} · MIT LICENSE</p>
+          <div style="display:flex;gap:var(--lib-space-md,1rem);">
+            ${(ctx.legalLinks ?? []).map(link => html`
+              <a href="${link.href}" class="ft-link-mono">${link.label}</a>
+            `)}
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  `;
+}
+
+/* ────────────────────────────────────────────────────────────
    Dispatcher — decide qué template renderizar
    ──────────────────────────────────────────────────────────── */
 export function renderFooter(ctx: LibFooter): TemplateResult {
   switch (ctx.variant) {
     case 'social':    return renderSocial(ctx);
     case 'accordion': return renderAccordion(ctx);
-    case 'kintsugi':  return renderKintsugi(ctx);
+    case 'inverse':   return renderKintsugi(ctx);
     case 'glitch':    return renderGlitch(ctx);
+    case 'celadon':   return renderCeladon(ctx);
+    case 'sabi':      return renderSabi(ctx);
+    case 'shizen':    return renderShizen(ctx);
     default:          return renderSocial(ctx);
   }
 }

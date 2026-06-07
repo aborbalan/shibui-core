@@ -11,7 +11,7 @@ interface SelectOptionArgs {
 }
 
 const meta: Meta<SelectOptionArgs> = {
-  title: 'Forms/Select Option',
+  title: 'Universal/Forms/Select Option',
   tags:['autodocs'],
   component: 'lib-select-option',
   argTypes: {
@@ -46,7 +46,6 @@ export const Playground: Story = {
 };
 
 export const AllStates: Story = {
-  name: 'All States.',
   render: (): TemplateResult => html`
     <div style="background: var(--bg-elevated); width: 300px; border: 1px solid var(--border-subtle);">
       <lib-select-option value="a">Default</lib-select-option>
@@ -63,11 +62,20 @@ export const AllStates: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);width:240px;">
-    <lib-select-option value="wabi">Wabi · Imperfección serena</lib-select-option>
-    <lib-select-option value="kintsugi" selected>Kintsugi · Cicatrices de oro</lib-select-option>
-    <lib-select-option value="shizen">Shizen · Naturaleza orgánica</lib-select-option>
-    <lib-select-option value="sabi" disabled>Sabi · No disponible</lib-select-option>
+  <div style="display:flex;gap:var(--lib-space-lg);padding:var(--lib-space-lg);flex-wrap:wrap;align-items:flex-start;">
+    <!-- Default state spectrum -->
+    <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);width:220px;">
+      <lib-select-option value="wabi">Wabi · Imperfección serena</lib-select-option>
+      <lib-select-option value="kintsugi" selected>Kintsugi · Cicatrices de oro</lib-select-option>
+      <lib-select-option value="shizen">Shizen · Naturaleza orgánica</lib-select-option>
+      <lib-select-option value="sabi" disabled>Sabi · No disponible</lib-select-option>
+    </div>
+    <!-- Second list without selection -->
+    <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);width:220px;">
+      <lib-select-option value="a">Default</lib-select-option>
+      <lib-select-option value="b">Otra opción</lib-select-option>
+      <lib-select-option value="c">Tercera opción</lib-select-option>
+    </div>
   </div>
 `);
 

@@ -132,6 +132,10 @@ export * from './components/[atoms|molecules|organisms]/lib-[nombre]/index';
 - Los tokens `--lib-*` se usan para todos los valores visuales, nunca se hardcodean colores ni espaciados
 - Los componentes con efectos glass requieren: `overflow: hidden` + `backdrop-filter` + `::before` con `--lib-glass-shine` + `z-index` en el contenido
 - **CSS nesting nativo**: usar `&` para agrupar `:hover`, `::after`, `::before`, `@media`, `:active` dentro del bloque de variante `:host([attr]) .clase`. Los compound `:host([attrA][attrB])` se mantienen planos. Ver convenciones completas en [`docs/styles/css-nesting.md`](./docs/styles/css-nesting.md)
+- **Efectos katachi**: siempre declarados en el componente pero silenciados por default. Los pseudo-elementos leen `--lib-effect-*` vía `var()` y se activan solo cuando el katachi ancestro los enciende (`animation-play-state: var(--lib-effect-seam-play, paused)`; `opacity: var(--lib-effect-seam-opacity, 0)`). Patrón de referencia: `lib-card.styles.css`, `lib-badge.css`, `lib-chip.css`
+- **Tokens de token**: los ficheros `_*.css` usan únicamente `:root { }` — NUNCA `:host, :root { }`. El selector `:host` en un `adoptedStyleSheet` bloquea la herencia desde `[data-katachi]` al fijar valores directamente en el shadow host
+- **SVG color vía `currentColor`**: los SVG inline usan `stroke="currentColor"` y `fill="currentColor"`, nunca colores hardcodeados. El CSS del host controla el `color` (con variantes de `tone` / `dark`) y el SVG hereda automáticamente en todos los katachis. Referencia: `lib-spinner.html.ts`
+- **Gradientes dinámicos con opacidad contextual**: para gradientes que necesitan variar la opacidad sobre un color de contexto, declarar una custom property interna en `:host` (p.ej. `--_sp-color: var(--text-primary, fallback)`) y usarla con `color-mix()` en el gradiente: `color-mix(in oklch, var(--_sp-color), transparent 35%)`. Esto evita oklch hardcodeados que no se adaptan al katachi. Referencia: `.sp-sumi` en `lib-spinner.css`
 
 **Eventos:**
 - Siguen el patrón `ui-lib-[acción]` con `bubbles: true, composed: true`
@@ -164,27 +168,52 @@ Paleta washi, kaki, celadón. Escala tipográfica, espaciado 4pt, sombras, radio
 
 ---
 
-## Sistema Katachi (形)
+## Sistema Katachi (形) — identidades selladas
 
-Seis contextos estéticos que reescriben los tokens semánticos manteniendo los nombres. Se activan poniendo `data-katachi="<id>"` en cualquier ancestro:
+Seis identidades visuales selladas. Los efectos se activan **automáticamente** por contexto
+(`data-katachi="x"` en cualquier ancestro) sin necesidad de props adicionales en los componentes.
 
-| ID | Estética | Coverage |
+| ID | Familia | Concepto | Efecto signature |
+|---|---|---|---|
+| `shizen` | light | Natural, base, zero-point | ninguno |
+| `celadon` | light | Jade pálido, frío (≠ dark — es la alternativa cool a shizen) | glaze cerámico sutil |
+| `sabi` | light | Papel envejecido, handcraft | brutal offset shadow |
+| `kintsugi` | dark | Reparado con oro (único dark-first) | seam dorada animada + anillo |
+| `wabi` | dark | Kuroi · oscuridad pura, el anti-kintsugi | ninguno (silencio) |
+| `terminal` | dark | CRT retro, phosphor verde | scanlines + glitch-drift |
+
+**Mecanismo**: los tokens `--lib-effect-*` en `_effects.css` tienen defaults apagados en `:root`.
+Cada bloque `[data-katachi="x"]` en `_katachi.css` activa los que le corresponden.
+Las CSS custom properties atraviesan Shadow DOM por herencia — solo funciona si los ficheros
+de tokens NO usan `:host, :root { }` (solo `:root { }`).
+
+**Wrapper DX**: `<lib-canvas katachi="kintsugi">…</lib-canvas>` aplica el atributo con tipado TS.
+
+### Mapa de renombrado semántico (Phase 3 — completado)
+
+Los valores de props que nombraban paletas han sido migrados a roles semánticos:
+
+| Nombre de paleta (obsoleto) | Rol semántico (actual) | Aplica a |
 |---|---|---|
-| `wabi` | Imperfección serena — washi, ink, espacios amplios | tokens semánticos |
-| `kintsugi` | Dark + acento dorado en grietas | tokens semánticos + efecto kintsugi-border |
-| `sabi` | Patina envejecida, sombras brutales | tokens semánticos |
-| `terminal` | Mono + glitch + verde fósforo | tokens semánticos + lib-text-glitch |
-| `shizen` | Naturaleza — verdes botánicos, formas orgánicas | tokens semánticos |
-| `celadon` | Cerámica coreana — celadón frío, vidrioso | tokens semánticos |
+| `kaki` | `accent` | `color`, `tone`, `variant` props |
+| `celadon` | `info` | `color`, `tone`, `variant` props |
+| `washi` | `neutral` | `color`, `surface` props |
+| `ink` | `filled` | `mode` (cursor-follower, burger-button) |
+| `dark` | `strong` | `variant` (badge, kbd) |
+
+**Excepciones — NO renombrar:**
+
+| Qué | Por qué |
+|---|---|
+| CSS custom properties `--color-kaki-*`, `--color-celadon-*`, `--color-washi-*` | Primitivos de paleta; solo los consume CSS, nunca son props de componente |
+| Selectores de contexto `[data-katachi="celadon"]`, `[data-katachi="kintsugi"]`, … | Identificadores de identidad sellada, no valores de prop |
+| `variant="celadon"` / `"sabi"` / `"shizen"` en `lib-header` / `lib-footer` | Art-direction — controlan la plantilla de layout, no el color |
+| `texture="washi"` / `"celadon-wash"` / `"kintsugi"` en `lib-background` | Identificadores de recurso gráfico, no roles semánticos |
 
 **Taxonomía de cobertura** (en `styles/effects-x-surfaces.md`):
-- 🟢 **semantic** (~23 comp.) — consume tokens semánticos, cambia visualmente con cada katachi
-- 🔵 **marker** (~50 comp.) — neutral estructural, no necesita override
-- ⚪ **effect** (~4 comp.) — efectos puros (parallax, stagger, cursor-follower), agnósticos
-
-**Wrapper DX**: `<lib-canvas katachi="kintsugi">…</lib-canvas>` aplica el atributo + un fondo de fondo apropiado. Útil en Storybook y previews.
-
-Verificación visual de las 6 propagaciones: kitchen-sink en cada app consumidora (`/admin/kitchen-sink` en React/Angular/Svelte).
+- 🟢 **semantic** — consume tokens semánticos, cambia visualmente con cada katachi
+- 🔵 **marker** — neutral estructural; hereda pero no necesita override explícito
+- ⚪ **effect** — efectos puros (parallax, cursor-follower), agnósticos
 
 ---
 
@@ -194,7 +223,7 @@ Para garantizar IntelliSense correcto en las apps consumidoras:
 
 - **React** — Extensión del namespace `JSX` en `custom-elements.d.ts`. Es obligatorio importar `React` en el archivo para que el aumento de módulo sea efectivo.
 - **Svelte** — `shibui-elements.d.ts` extendiendo `svelte/elements` para mapear atributos y eventos personalizados.
-- **Angular** — Habilitación de `CUSTOM_ELEMENTS_SCHEMA` en el módulo. `typings.d.ts` para soportar imports con sufijos `?raw` (iconos), `?inline` (CSS) y `.svg`.
+- **Angular** — Habilitación de `CUSTOM_ELEMENTS_SCHEMA` en el módulo. `typings.d.ts` para soportar imports con sufijos `?raw` (iconos), `?inline` (CSS) y `.svg`. **Agnóstico al change detection**: funciona igual con **zone.js o zoneless** (`provideZonelessChangeDetection()` + signals) — son web components (Lit), no dependen de la estrategia de CD de Angular. El consumer-test de Angular corre zoneless precisamente para verificarlo.
 
 ---
 
@@ -209,9 +238,121 @@ Para garantizar IntelliSense correcto en las apps consumidoras:
 
 ## Storybook
 
+### Configuración base
+
 - `.storybook/preview.ts` inyecta los tokens globales
 - Mapeo de componentes mediante **Args** para pruebas de estado dinámicas (variant, size, disabled)
 - Fondo de las stories configurado con gradiente oscuro para que los efectos glass sean visibles
+
+---
+
+### Taxonomía macro — tres nodos raíz
+
+El sidebar de Storybook se organiza en tres nodos de primer nivel que reflejan en qué plataforma(s) aplica cada componente. El `title` de cada story file sigue el patrón `<Plataforma>/<Categoría>/<Componente>`.
+
+#### `Universal/` — componentes compartidos por web y escritorio
+
+| Categoría | Ejemplos |
+|---|---|
+| `Foundations/` | Color Palette, Typography, Spacing, Katachi · System |
+| `Actions/` | Button, Button Liquid, Burger, Close Button, Copy Button, Magnetic, Chip |
+| `Content/` | Card, Avatar, Badge, Icon, Code Block, Quote, Text List, Timeline… |
+| `Forms/` | Input, Select, Checkbox, Radio, Switch, Rating, Color Picker, File Uploader… |
+| `Feedback/` | Spinner, Skeleton, Toast Manager, Progress, Status Dot, Alert, Empty State… |
+| `Navigation/` | Sidebar, Tabs, Breadcrumb, Dropdown, Stepper, Pagination… |
+| `Layout/` | Accordion, Bento Grid, Aspect Ratio, Header, Footer… |
+| `Data/` | Counter, Data Table |
+| `Charts/` | Bar Chart, Scatter Chart, Scatter Chart 3D |
+| `Overlay/` | Dialog, Drawer, Modal, Tooltip |
+| `Utilities/` | Background, Canvas, Visually Hidden |
+
+#### `Web/` — comportamiento exclusivo de browser
+
+| Categoría | Componentes |
+|---|---|
+| `Motion/` | Carousel, Cursor Follower, Horizontal Scroll Section, Parallax Container, Parallax Text Stack, Ripple, Stagger |
+
+Estos componentes dependen de APIs de browser (IntersectionObserver, scroll-linked animations, cursor tracking) que no tienen sentido en un gadget de escritorio nativo.
+
+#### `Desktop/` — exclusivos de la app Tauri
+
+| Categoría | Componentes |
+|---|---|
+| `Layout/` | Gadget Frame |
+| `Editor/` | Editor Toolbar, Text Editor |
+| `Data/` | Metric Bar |
+
+---
+
+### Estructura canónica de cada story file
+
+Todos los archivos `lib-[nombre].stories.ts` siguen **obligatoriamente** este orden de cuatro secciones:
+
+```
+/* ── 1. Playground ──────────────────────────────────────── */
+// Siempre primero. Todos los props controlables via args/controls.
+// Defaults sensatos. Sin render() propio — usa el render del meta.
+export const Playground: Story = { args: { … } };
+
+/* ── 2. API stories ──────────────────────────────────────── */
+// Una story por dimensión de la API del componente:
+//   Variants   — grid de todas las variantes semánticas
+//   Sizes      — si el componente tiene prop size
+//   States     — disabled, error, loading, indeterminate…
+//   Composition — uso de slots, composición con otros componentes
+//   [Efecto]   — GlassEffect, SpotlightEffect, etc. si aplica
+// Usar tokens para todos los valores en inline styles:
+//   gap/padding → var(--lib-space-xs/sm/md/lg/xl)
+//   colores     → var(--text-primary), var(--bg-elevated), etc.
+export const Variants: Story = { render: () => html`…` };
+export const Sizes:    Story = { render: () => html`…` };
+// …
+
+/* ── 3. Katachi · 形 ──────────────────────────────────────── */
+// Las 6 stories estándar generadas con el helper.
+// El renderContent DEBE mostrar el espectro completo del componente:
+// todos los variants principales + tamaños + estados relevantes.
+// No mostrar solo una instancia mínima — estas stories son el
+// baseline de regresión visual para los 6 contextos estéticos.
+import { createKatachiStories } from '../../../stories/katachi-stories.helper';
+
+const _katachi = createKatachiStories<MyArgs>(() => html`
+  // ← contenido completo: todos los variants, no solo el default
+`);
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ── 4. Tests ────────────────────────────────────────────── */
+// Nombre: 'Test · [qué se verifica]'
+// Siempre con tags: ['test'] y play: async function.
+export const TestAlgo: Story = {
+  name: 'Test · descripción de lo que se verifica',
+  tags: ['test'],
+  play: async ({ canvasElement }): Promise<void> => { … },
+};
+```
+
+#### Reglas de naming en stories
+
+- El `export const` es la fuente de verdad del nombre visible — Storybook lo convierte automáticamente (`AllVariants` → "All Variants"). Añadir `name:` solo cuando el nombre legible DIFIERE del que generaría el export (e.g., `name: 'Glass — Efecto Agua'` en `export const GlassEffect`).
+- No usar puntos finales en los nombres (`'All Variants.'` → `'All Variants'`).
+- Los Tests usan siempre el prefijo `Test ·` en el `name:`.
+
+#### Espaciado en inline styles de stories
+
+Usar siempre tokens en lugar de valores px:
+
+| Valor | Token |
+|---|---|
+| 4px | `var(--lib-space-xs)` |
+| 8px | `var(--lib-space-sm)` |
+| 16px | `var(--lib-space-md)` |
+| 24px | `var(--lib-space-lg)` |
+| 32px | `var(--lib-space-xl)` |
 
 ---
 
@@ -220,9 +361,14 @@ Para garantizar IntelliSense correcto en las apps consumidoras:
 - Cuando se pida un componente nuevo, seguir siempre la estructura de 5 ficheros
 - Pedir el fichero del componente antes de proponer cambios sobre uno existente
 - Usar los tokens `--lib-*` para todos los valores visuales, nunca hardcodear colores ni espaciados
-- Proponer siempre la Storybook story junto al componente
+- Proponer siempre la Storybook story junto al componente siguiendo la estructura canónica de cuatro secciones (Playground → API → Katachi → Tests)
+- Asignar el `title` correcto según la plataforma: `Universal/<Cat>/<Nombre>`, `Web/Motion/<Nombre>` o `Desktop/<Cat>/<Nombre>`
+- El katachi `renderContent` debe mostrar el espectro completo del componente (todos los variants + tamaños + estados), no una instancia mínima
 - Los efectos glass y spotlight son opcionales — no añadirlos salvo que se pida explícitamente
 - Los tipos siempre desde `src/models/`, nunca inline
-- **Katachi-aware**: si un componente nuevo es `semantic` (depende del look), consume tokens semánticos (`--bg-elevated`, `--text-primary`, `--accent-primary`…) en vez de la paleta primitiva. Añadirlo a `styles/effects-x-surfaces.md` con su coverage
-- Si añades un componente nuevo, actualizar también los `catalog.ts` de los kitchen-sinks (React/Angular/Svelte) con su slug + coverage
+- **Katachi-aware**: si un componente nuevo es `semantic`, consumir tokens semánticos (`--bg-elevated`, `--text-primary`…) en vez de la paleta primitiva. Los efectos de katachi se activan automáticamente via `--lib-effect-*` — no hace falta leer `--katachi-id`
+- **Sin variantes palette-named**: los componentes no tienen `variant="kintsugi"`, `variant="glitch"`, `color="celadon"`, `color="kaki"`, etc. Solo roles semánticos (`default`, `inverse`, `accent`, `info`, `neutral`, `filled`, `strong`…). Mapa de equivalencias: `kaki`→`accent`, `celadon`→`info`, `washi`→`neutral`, `ink`→`filled`, `dark`→`strong`. Si te piden añadir una variante con nombre de paleta o katachi, proponer el equivalente semántico. **Excepciones intocables**: CSS custom properties `--color-kaki-*`/`--color-celadon-*`, selectores `[data-katachi="*"]`, variantes art-direction en header/footer (`celadon`/`sabi`/`shizen`), texturas de `lib-background`
+- **Efectos katachi en componentes nuevos**: declarar los pseudo-elementos siempre, controlados por `--lib-effect-*` (ver patrón en `lib-card.css`, `lib-badge.css`, `lib-chip.css`). No activar efectos por ID de katachi. Para SVG internos usar `stroke="currentColor"` — nunca colores hardcodeados. Para gradientes con opacidad, usar `color-mix(in oklch, var(--_prop-interna), transparent N%)` en lugar de oklch con alpha hardcodeado
+- **Selectors de token files**: solo `:root { }`, nunca `:host, :root { }` — rompe la herencia de custom properties a través de Shadow DOM
+- Si añades un componente nuevo, actualizar también los `catalog.ts` de los kitchen-sinks (React/Angular/Svelte) con su slug + coverage, y `styles/effects-x-surfaces.md` con la coverage real
 - Si hay duda sobre convenciones, preguntar antes de asumir

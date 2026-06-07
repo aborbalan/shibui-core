@@ -22,8 +22,8 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * @example — dark + wave
  * <lib-skeleton shape="title" surface="dark" animation="wave" width="60%"></lib-skeleton>
  *
- * @example — kaki + pulse
- * <lib-skeleton shape="img" surface="kaki" animation="pulse"></lib-skeleton>
+ * @example — accent + pulse
+ * <lib-skeleton shape="img" surface="accent" animation="pulse"></lib-skeleton>
  */
 @customElement('lib-skeleton')
 export class LibSkeleton extends LitElement {
@@ -60,9 +60,12 @@ export class LibSkeleton extends LitElement {
 
   /**
    * Superficie de color.
-   * - light : washi-200 → washi-100 (default)
-   * - dark  : washi-800 → washi-700
-   * - kaki  : kaki-200  → kaki-100
+   * - light   : washi-200 → washi-100 (default)
+   * - dark    : washi-800 → washi-700
+   * - accent  : kaki-200  → kaki-100
+   * - info    : jade oscuro  oklch(22%→32% / 175deg)
+   *   También se activa automáticamente cuando el ancestro tiene
+   *   data-katachi="celadon" sin necesidad de pasar este prop.
    */
   @property({ type: String, reflect: true })
   surface: LibSkeletonSurface = 'light';

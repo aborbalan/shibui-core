@@ -1,5 +1,18 @@
 # Guía de contribución — Shibui Ecosystem
 
+## Prerequisitos
+
+| Herramienta | Versión mínima | Necesaria para |
+|---|---|---|
+| Node.js | ≥ 20 | Todas las apps |
+| pnpm | ≥ 9 | Todas las apps |
+| Rust toolchain estable | última stable | `app-tauri` únicamente |
+
+Para instalar Rust: `rustup install stable`  
+Para instalar Tauri CLI: `cargo install tauri-cli` (o viene incluido vía `@tauri-apps/cli` en el package.json de la app).
+
+---
+
 ## Flujo de ramas (GitFlow)
 
 ```
@@ -57,6 +70,8 @@ fix(lib-input): correct focus ring token reference
 docs(CLAUDE): add framework integration section
 chore(deps): update lit to 3.2.1
 refactor(lib-badge): extract template to html.ts
+feat(app-tauri): add ProcessesGadget with sysinfo integration
+fix(app-tauri): correct list_dir sorting for hidden files
 ```
 
 ---
@@ -77,6 +92,32 @@ Seguir este orden sin saltarse pasos:
 - [ ] `npm run lint` pasa sin errores
 - [ ] Story visible y funcional en Storybook
 - [ ] Ritual de cierre ejecutado (push + merge a `develop`)
+
+---
+
+## Desarrollo en app-tauri
+
+`app-tauri` tiene un stack mixto: frontend React (TypeScript) + backend Rust. Los comandos difieren del resto de apps:
+
+```bash
+# Arrancar con ventana nativa (Vite + Tauri):
+pnpm --filter @shibui/app-tauri tauri dev
+# o desde raíz:
+pnpm start:tauri
+
+# Solo frontend (sin ventana nativa, útil para UI):
+pnpm --filter @shibui/app-tauri dev
+
+# Tests de la crate Rust:
+cd apps/app-tauri && cargo test
+```
+
+Para añadir un comando Tauri nuevo:
+1. Implementar la función en `core/src/system.rs` o `core/src/fs.rs`
+2. Registrarla en `src-tauri/src/lib.rs` con `#[tauri::command]`
+3. Invocarla desde el frontend con `invoke('nombre_comando')` de `@tauri-apps/api/core`
+
+Ver [`apps/app-tauri/src-tauri/README.md`](apps/app-tauri/src-tauri/README.md) para la referencia completa de comandos y structs.
 
 ---
 

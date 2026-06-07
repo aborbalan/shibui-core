@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-display-heading.component';
 import '../eyebrow/lib-eyebrow.component';
@@ -26,7 +26,7 @@ const stageWashi = (content: ReturnType<typeof html>):TemplateResult => html`
 
 /* ── Meta ── */
 const meta: Meta<LibDisplayHeading> = {
-  title: 'Foundations/Typography/Display Heading',
+  title: 'Universal/Foundations/Typography/Display Heading',
   component: 'lib-display-heading',
   tags: ['autodocs'],
   parameters: {
@@ -48,7 +48,7 @@ Acepta un \`<lib-eyebrow>\` por slot.
 | \`line2-prefix\` | \`string\` | \`''\` | Texto antes del acento |
 | \`accent\` | \`string\` | \`''\` | Texto en itálica kaki |
 | \`description\` | \`string\` | \`''\` | Párrafo de descripción |
-| \`surface\` | \`'light'\\|'dark'\\|'washi'\` | \`'light'\` | Superficie de fondo |
+| \`surface\` | \`'light'\\|'dark'\\|'neutral'\` | \`'light'\` | Superficie de fondo |
 | \`size\` | \`'sm'\\|'md'\\|'lg'\` | \`'md'\` | Tamaño fluido |
 | \`tag\` | \`'h1'\\|'h2'\\|'h3'\\|'h4'\` | \`'h2'\` | Tag semántico |
 | \`centered\` | \`boolean\` | \`false\` | Centra el bloque |
@@ -62,7 +62,7 @@ Acepta un \`<lib-eyebrow>\` por slot.
     },
   },
   argTypes: {
-    surface:  { control: 'select', options: ['light', 'dark', 'washi'] },
+    surface:  { control: 'select', options: ['light', 'dark', 'neutral'] },
     size:     { control: 'select', options: ['sm', 'md', 'lg'] },
     tag:      { control: 'select', options: ['h1', 'h2', 'h3', 'h4'] },
     centered: { control: 'boolean' },
@@ -90,7 +90,7 @@ export const Playground: Story = {
     _animate:  false,
   },
   render: (args) => html`
-    <div style="padding:3rem 2.5rem;background:${args.surface === 'dark' ? 'var(--color-washi-950,#120E0A)' : args.surface === 'washi' ? 'var(--color-washi-100,#F2EDE6)' : '#fff'}">
+    <div style="padding:3rem 2.5rem;background:${args.surface === 'dark' ? 'var(--color-washi-950,#120E0A)' : args.surface === 'neutral' ? 'var(--color-washi-100,#F2EDE6)' : '#fff'}">
       <lib-display-heading
         line1=${args.line1}
         line2-prefix=${args.line2Prefix}
@@ -168,9 +168,9 @@ export const Surfaces: Story = {
           line1="Belleza en"
           accent="la austeridad"
           description="El sistema abraza las restricciones como características, no como limitaciones."
-          surface="washi"
+          surface="neutral"
         >
-          <lib-eyebrow slot="eyebrow" color="washi" size="sm" style="margin-bottom:1rem">Washi surface</lib-eyebrow>
+          <lib-eyebrow slot="eyebrow" tone="neutral" size="sm" style="margin-bottom:1rem">Neutral surface</lib-eyebrow>
         </lib-display-heading>
       `)}
 
@@ -228,7 +228,7 @@ export const AccentOnly: Story = {
           surface="dark"
           size="lg"
         >
-          <lib-eyebrow slot="eyebrow" effect="kintsugi" size="lg" style="margin-bottom:1.25rem">Design System · v0.1.0</lib-eyebrow>
+          <lib-eyebrow slot="eyebrow" size="lg" style="margin-bottom:1.25rem">Design System · v0.1.0</lib-eyebrow>
         </lib-display-heading>
       `)}
     </div>
@@ -326,7 +326,7 @@ export const KintsugiHero: Story = {
           size="lg"
           _animate
         >
-          <lib-eyebrow slot="eyebrow" effect="kintsugi" size="lg" style="margin-bottom:1.25rem">
+          <lib-eyebrow slot="eyebrow" size="lg" style="margin-bottom:1.25rem">
             Design System · v0.1.0 · Zaragoza
           </lib-eyebrow>
         </lib-display-heading>

@@ -44,7 +44,7 @@ export function renderAppBar(ctx: LibHeader): TemplateResult {
           ${ctx.actions.map((action: HeaderAction) => html`
             <a href="${action.href || '#'}"
               class="hdr-action ${action.variant === 'outline'
-                ? 'hdr-action--outline' : 'hdr-action--kaki'}"
+                ? 'hdr-action--outline' : 'hdr-action--accent'}"
               style="height:32px;font-size:8px;"
             >${action.label}</a>
           `)}

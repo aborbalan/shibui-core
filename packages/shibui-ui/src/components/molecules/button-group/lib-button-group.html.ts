@@ -38,8 +38,8 @@ export interface SplitTemplateProps {
 export function buttonSplitTemplate(p: SplitTemplateProps): TemplateResult {
   const { label, variant, size, dark, disabled, menuOpen, items } = p;
 
-  /* Kintsugi en el arrow solo para variantes sólidas (accent/primary) */
-  const arrowKintsugi = variant === 'accent' || variant === 'primary';
+  /* Gold en el arrow solo para variantes sólidas (accent/primary) */
+  const arrowGold = variant === 'accent' || variant === 'primary';
 
   const menuItems: TemplateResult = items.length > 0
     ? html`${items.map(item => html`
@@ -80,7 +80,7 @@ export function buttonSplitTemplate(p: SplitTemplateProps): TemplateResult {
         group-pos="last"
         group-shape="rounded"
         icon-only
-        ?kintsugi="${arrowKintsugi}"
+        ?gold="${arrowGold}"
         aria-label="Más opciones"
         aria-haspopup="true"
         aria-expanded="${menuOpen ? 'true' : 'false'}"

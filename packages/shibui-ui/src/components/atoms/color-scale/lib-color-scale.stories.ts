@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj }  from '@storybook/web-components-vite';
 import './lib-color-scale.component';
 import type { ColorStep } from './lib-color-scale.types';
@@ -41,7 +41,7 @@ const CELADON: ColorStep[] = [
 ];
 
 const meta: Meta = {
-  title: 'Foundations/Color Palette',
+  title: 'Universal/Foundations/Color Palette',
   tags:['autodocs'],
   component: 'lib-color-scale',
   parameters: { layout: 'padded' },

@@ -15,7 +15,7 @@
   @if (component().tags.length > 0) {
     <div class="card-tags">
       @for (tag of component().tags.slice(0, 3); track tag) {
-        <lib-badge variant="dark">{{ tag }}</lib-badge>
+        <lib-badge variant="strong">{{ tag }}</lib-badge>
       }
     </div>
   }

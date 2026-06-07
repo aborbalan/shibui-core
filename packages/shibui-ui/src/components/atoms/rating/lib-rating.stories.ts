@@ -5,14 +5,14 @@ import './lib-rating.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Forms/Rating',
+  title: 'Universal/Forms/Rating',
   tags:['autodocs'],
   component: 'lib-rating',
   argTypes: {
     value:     { control: { type: 'number', min: 0, max: 10, step: 0.5 } },
     max:       { control: { type: 'number', min: 1, max: 10 } },
     size:      { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-    color:     { control: 'select', options: ['gold', 'kaki', 'washi', 'celadon'] },
+    color:     { control: 'select', options: ['gold', 'accent', 'neutral', 'info'] },
     icon:      { control: 'select', options: ['star', 'heart', 'diamond'] },
     readonly:  { control: 'boolean' },
     disabled:  { control: 'boolean' },
@@ -100,21 +100,21 @@ export const Icons: Story = {
   name: 'Icons — star · heart · diamond',
   render: (): TemplateResult => wrap('var(--bg-surface)', html`
     ${row('ph-star — valoración genérica',   html`<lib-rating icon="star"    value="4" size="lg"></lib-rating>`)}
-    ${row('ph-heart — favoritos · kaki',     html`<lib-rating icon="heart"   value="3" size="lg" color="kaki"></lib-rating>`)}
-    ${row('ph-diamond — calidad · washi',    html`<lib-rating icon="diamond" value="5" size="lg" color="washi"></lib-rating>`)}
+    ${row('ph-heart — favoritos · accent',   html`<lib-rating icon="heart"   value="3" size="lg" color="accent"></lib-rating>`)}
+    ${row('ph-diamond — calidad · neutral',  html`<lib-rating icon="diamond" value="5" size="lg" color="neutral"></lib-rating>`)}
   `),
 };
 
 /* ──────────────────────────────────────────────
-   Colors — gold · kaki · washi · celadon
+   Colors — gold · accent · neutral · info
    ────────────────────────────────────────────── */
 export const Colors: Story = {
-  name: 'Colors — gold · kaki · washi · celadon',
+  name: 'Colors — gold · accent · neutral · info',
   render: (): TemplateResult => wrap('var(--bg-surface)', html`
     ${row('Gold (default)',    html`<lib-rating color="gold"    value="4"></lib-rating>`)}
-    ${row('Kaki',             html`<lib-rating color="kaki"    value="4"></lib-rating>`)}
-    ${row('Washi (mono)',     html`<lib-rating color="washi"   value="4"></lib-rating>`)}
-    ${row('Celadón',          html`<lib-rating color="celadon" value="4"></lib-rating>`)}
+    ${row('Accent',           html`<lib-rating color="accent"  value="4"></lib-rating>`)}
+    ${row('Neutral (mono)',   html`<lib-rating color="neutral" value="4"></lib-rating>`)}
+    ${row('Info',             html`<lib-rating color="info"    value="4"></lib-rating>`)}
   `),
 };
 
@@ -197,8 +197,8 @@ export const ReviewCards: Story = {
     <div style="padding:var(--lib-space-xl);background:var(--bg-surface);
       border:1px solid var(--border-subtle);display:flex;gap:var(--lib-space-md);flex-wrap:wrap;">
       ${[
-        { name: 'Alejandro B.', date: 'Marzo 2026',    value: 5,   text: 'El sistema de tokens es exactamente lo que llevaba buscando. La coherencia entre componentes es impecable.' },
-        { name: 'Marta R.',     date: 'Febrero 2026',  value: 4.5, text: 'Las animaciones tienen una personalidad muy marcada. El bounce del switch es mi favorito — se siente físico.' },
+        { name: 'Alejandro B', date: 'Marzo 2026',    value: 5,   text: 'El sistema de tokens es exactamente lo que llevaba buscando. La coherencia entre componentes es impecable.' },
+        { name: 'Marta R',     date: 'Febrero 2026',  value: 4.5, text: 'Las animaciones tienen una personalidad muy marcada. El bounce del switch es mi favorito — se siente físico.' },
       ].map(r => html`
         <div style="border:1px solid var(--border-subtle);background:var(--bg-elevated);
           padding:var(--lib-space-lg);display:flex;flex-direction:column;
@@ -261,6 +261,44 @@ export const InTable: Story = {
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-rating usa tokens semánticos de superficie y texto
+   (bg-elevated, border-subtle, text-muted) — adapta al katachi.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <!-- Sizes -->
+    <div style="display:flex;align-items:center;gap:var(--lib-space-lg);flex-wrap:wrap;">
+      ${(['xs','sm','md','lg','xl'] as const).map(s => html`
+        <lib-rating size="${s}" value="3" readonly></lib-rating>
+      `)}
+    </div>
+    <!-- Colors -->
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+      <lib-rating color="gold"    value="4" size="sm" readonly show-count count="214"></lib-rating>
+      <lib-rating color="accent"    value="4" size="sm" icon="heart" readonly></lib-rating>
+      <lib-rating color="neutral"   value="4" size="sm" icon="diamond" readonly></lib-rating>
+      <lib-rating color="info" value="4" size="sm" readonly></lib-rating>
+    </div>
+    <!-- States -->
+    <div style="display:flex;gap:var(--lib-space-lg);align-items:center;flex-wrap:wrap;">
+      <lib-rating value="0" size="sm"></lib-rating>
+      <lib-rating value="2.5" size="sm" readonly></lib-rating>
+      <lib-rating value="5" size="sm" readonly></lib-rating>
+      <lib-rating value="3" size="sm" disabled></lib-rating>
+    </div>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ═══════════════════════════════════════════════════════════════
    TESTS · Interacción y eventos
    ═══════════════════════════════════════════════════════════════ */
 
@@ -311,21 +349,3 @@ export const TestReadonlyBlocksEvent: Story = {
   },
 };
 
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Las 6 historias estándar
-   lib-rating usa tokens semánticos de superficie y texto
-   (bg-elevated, border-subtle, text-muted) — adapta al katachi.
-   ═══════════════════════════════════════════════════════════════ */
-
-const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-rating value="3"></lib-rating>
-  </div>
-`);
-
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;

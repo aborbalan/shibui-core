@@ -83,7 +83,7 @@
 
     /* Item abierto recibe los tokens kaki via custom props */
     & ::slotted(lib-accordion-item[open]) {
-      --accordion-item-accent-border:    2px solid var(--color-kaki-400);
+      --accordion-item-accent-color:     var(--color-kaki-400);
       --accordion-item-trigger-bg:       var(--color-kaki-50);
       --accordion-item-trigger-hover-bg: var(--color-kaki-100);
       --accordion-item-body-bg:          var(--color-kaki-50);
@@ -110,8 +110,44 @@
      Los hijos lib-accordion-item heredan el katachi via su API
      de CSS custom properties.
 
-     Bloque marcador para discoverability.
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → seam dorada animada en .accordion__root::before
+     • terminal → seam phosphor en .accordion__root::before
      ─────────────────────────────────────────────────────────── */
+
+  .accordion__root {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .accordion__root::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 20%,
+      var(--color-kaki-400) 50%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 80%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: accordion-seam 3s linear infinite;
+    animation-play-state: var(--lib-effect-seam-play, paused);
+    opacity: var(--lib-effect-seam-opacity, 0);
+    transition: opacity var(--duration-slow, 400ms) var(--ease-out, ease-out);
+  }
+
+  @keyframes accordion-seam {
+    from { background-position: 200% center; }
+    to   { background-position: -200% center; }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

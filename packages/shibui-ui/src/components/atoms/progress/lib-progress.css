@@ -3,7 +3,7 @@
 /* ============================================================
    LIB-PROGRESS — Shibui UI
    Tamaños   : xs · sm · md (default) · lg · xl
-   Tonos     : default · kaki · celadon · error
+   Tonos     : default · accent · info · error
    Variantes : striped · indeterminate · square
    Modos     : barra simple · con label/meta · multi-segmento
    ============================================================ */
@@ -151,15 +151,15 @@
      TONES — track + fill + meta text
   ───────────────────────────────────────────────────────── */
 
-  :host([tone="kaki"]) {
+  :host([tone="accent"]) {
     & .pb      { background: var(--color-kaki-100); }
     & .pb-fill { background: var(--color-kaki-500); }
   }
 
-  :host([tone="celadon"]) {
-    & .pb       { background: var(--color-celadon-100); }
-    & .pb-value { color: var(--color-celadon-600); }
-    & .pb-fill  { background: var(--color-celadon-500); }
+  :host([tone="info"]) {
+    & .pb       { background: var(--info-bg-2); }
+    & .pb-value { color: var(--info-text); }
+    & .pb-fill  { background: var(--info); }
   }
 
   :host([tone="error"]) {
@@ -206,8 +206,8 @@
     }
   }
 
-  :host([indeterminate][tone="kaki"])    .pb-fill::after { background: var(--color-kaki-500); }
-  :host([indeterminate][tone="celadon"]) .pb-fill::after { background: var(--color-celadon-500); }
+  :host([indeterminate][tone="accent"])    .pb-fill::after { background: var(--color-kaki-500); }
+  :host([indeterminate][tone="info"]) .pb-fill::after { background: var(--info); }
   :host([indeterminate][tone="error"])   .pb-fill::after { background: var(--color-error); }
   :host([indeterminate][square])         .pb-fill::after { border-radius: var(--radius-sm); }
 
@@ -236,8 +236,8 @@
 
   /* Tone classes for segments (applied via JS) */
   .seg-default { background: var(--color-washi-900); }
-  .seg-kaki    { background: var(--color-kaki-500); }
-  .seg-celadon { background: var(--color-celadon-500); }
+  .seg-accent    { background: var(--color-kaki-500); }
+  .seg-info { background: var(--info); }
   .seg-error   { background: var(--color-error); }
 
   .seg-muted {
@@ -290,8 +290,17 @@
      lib-progress fill default usa --color-washi-900 → --bg-inverse
      (identical default, invierte coherentemente bajo katachi/dark).
 
+     .pb track usa --color-washi-200 (87% L) → visible en light pero
+     demasiado brillante en kintsugi/wabi/terminal (bg ~11-22% L).
+     GUITV con --lib-comp-border-subtle: sin katachi → GUITV → washi-200
+     (idéntico); con katachi oscuro → track sutil sobre fondo dark.
+
      Variants explícitos (kaki, celadon, danger, dark) sin cambios.
      ─────────────────────────────────────────────────────────── */
+
+  .pb {
+    background: var(--lib-comp-border-subtle, var(--color-washi-200));
+  }
 
   .pb-fill {
     background: var(--bg-inverse);

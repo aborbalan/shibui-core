@@ -1,4 +1,4 @@
-import { Meta, StoryObj }      from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj }      from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-reading-progress.component';
 import type { LibReadingProgress } from './lib-reading-progress.component';
@@ -6,7 +6,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 /* ── Meta ──────────────────────────────────────────────── */
 const meta: Meta<LibReadingProgress> = {
-  title: 'Feedback/Reading Progress',
+  title: 'Universal/Feedback/Reading Progress',
   tags:['autodocs'],
   component: 'lib-reading-progress',
   parameters: { layout: 'fullscreen' },
@@ -17,7 +17,7 @@ const meta: Meta<LibReadingProgress> = {
     },
     tone: {
       control: 'select',
-      options: ['kaki', 'celadon', 'ink'],
+      options: ['accent', 'info', 'filled'],
     },
   },
 };
@@ -83,7 +83,7 @@ export const Bar: Story = {
         <!-- BAR: posición absoluta, pegada al borde inferior del nav -->
         <lib-reading-progress
           variant="bar"
-          tone="kaki"
+          tone="accent"
           target="#article-bar"
         ></lib-reading-progress>
       `)}
@@ -111,7 +111,7 @@ export const Line: Story = {
         </span>
         <lib-reading-progress
           variant="line"
-          tone="celadon"
+          tone="info"
           target="#article-line"
         ></lib-reading-progress>
       `)}
@@ -136,7 +136,7 @@ export const Dots: Story = {
       ${mockNav(html`
         <lib-reading-progress
           variant="dots"
-          tone="kaki"
+          tone="accent"
           dots-count="7"
           target="#article-dots"
         ></lib-reading-progress>
@@ -176,7 +176,7 @@ export const Ring: Story = {
         <div style="display:flex;align-items:center;gap:0.75rem;">
           <lib-reading-progress
             variant="ring"
-            tone="kaki"
+            tone="accent"
             ring-size="32"
             target="#article-ring"
           ></lib-reading-progress>
@@ -208,7 +208,7 @@ export const Vertical: Story = {
       <!-- La barra vertical se posiciona sola con position:fixed -->
       <lib-reading-progress
         variant="vertical"
-        tone="kaki"
+        tone="accent"
         target="#article-vertical"
       ></lib-reading-progress>
 
@@ -232,11 +232,11 @@ export const Vertical: Story = {
    TONOS — comparativa
    ══════════════════════════════════════ */
 export const Tones: Story = {
-  name: 'Tonos — kaki · celadon · ink',
+  name: 'Tonos — accent · info · filled',
   render: (): TemplateResult => html`
     <div style="padding:2rem;display:flex;flex-direction:column;gap:2rem;background:var(--bg-base);">
 
-      ${(['kaki', 'celadon', 'ink'] as const).map(tone => html`
+      ${(['accent', 'info', 'filled'] as const).map(tone => html`
         <div style="display:flex;flex-direction:column;gap:0.5rem;">
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">${tone}</span>
 
@@ -291,17 +291,17 @@ export const FullDemo: Story = {
         z-index:2;
       ">
         <div style="display:flex;align-items:center;gap:0.75rem;">
-          <lib-reading-progress variant="ring" tone="kaki" ring-size="32" target="#article-full"></lib-reading-progress>
+          <lib-reading-progress variant="ring" tone="accent" ring-size="32" target="#article-full"></lib-reading-progress>
           <div style="font-family:var(--lib-font-display);font-size:1.5rem;letter-spacing:0.15em;font-weight:300;">
             shibui
             <span style="font-family:var(--lib-font-mono);font-size:0.6875rem;color:var(--text-muted);letter-spacing:0.25em;display:block;">渋い · artículo de prueba</span>
           </div>
         </div>
 
-        <lib-reading-progress variant="dots" tone="kaki" dots-count="7" target="#article-full"></lib-reading-progress>
+        <lib-reading-progress variant="dots" tone="accent" dots-count="7" target="#article-full"></lib-reading-progress>
 
         <!-- BAR: pegada al borde inferior -->
-        <lib-reading-progress variant="bar" tone="kaki" target="#article-full"></lib-reading-progress>
+        <lib-reading-progress variant="bar" tone="accent" target="#article-full"></lib-reading-progress>
       </div>
 
       <!-- Artículo scrollable -->
@@ -323,7 +323,7 @@ export const Kintsugi: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex;flex-direction:column;height:100vh;background:var(--bg-base);">
 
-      <!-- Nav completo con BAR kintsugi + RING kaki + DOTS kintsugi -->
+      <!-- Nav completo con BAR gold + RING kaki + DOTS gold -->
       <div style="
         background:rgba(250,247,244,0.96);
         backdrop-filter:blur(8px);
@@ -340,35 +340,35 @@ export const Kintsugi: Story = {
         <!-- Brand -->
         <div style="font-family:var(--lib-font-display);font-size:1.5rem;letter-spacing:0.15em;font-weight:300;">
           shibui
-          <span style="font-family:var(--lib-font-mono);font-size:0.6875rem;color:var(--text-muted);letter-spacing:0.25em;display:block;">渋い · 金継ぎ · kintsugi</span>
+          <span style="font-family:var(--lib-font-mono);font-size:0.6875rem;color:var(--text-muted);letter-spacing:0.25em;display:block;">渋い · 金継ぎ · gold</span>
         </div>
 
-        <!-- Dots kintsugi -->
+        <!-- Dots gold -->
         <lib-reading-progress
           variant="dots"
-          tone="kintsugi"
+          tone="gold"
           dots-count="7"
-          target="#article-kintsugi"
+          target="#article-gold"
         ></lib-reading-progress>
 
-        <!-- BAR kintsugi — pegada al borde inferior -->
+        <!-- BAR gold — pegada al borde inferior -->
         <lib-reading-progress
           variant="bar"
-          tone="kintsugi"
-          target="#article-kintsugi"
+          tone="gold"
+          target="#article-gold"
         ></lib-reading-progress>
       </div>
 
-      <!-- Barra vertical kintsugi -->
+      <!-- Barra vertical gold -->
       <lib-reading-progress
         variant="vertical"
-        tone="kintsugi"
-        target="#article-kintsugi"
+        tone="gold"
+        target="#article-gold"
       ></lib-reading-progress>
 
       <!-- Artículo -->
       <div
-        id="article-kintsugi"
+        id="article-gold"
         style="flex:1;overflow-y:scroll;padding:3rem 3.5rem 3rem 4rem;max-width:680px;margin:0 auto;width:100%;scrollbar-width:none;"
       >
         ${ARTICLE_BODY}
@@ -408,26 +408,26 @@ export const KintsugiDark: Story = {
 
         <lib-reading-progress
           variant="dots"
-          tone="kintsugi"
+          tone="gold"
           dots-count="5"
-          target="#article-kintsugi-dark"
+          target="#article-gold-dark"
         ></lib-reading-progress>
 
         <lib-reading-progress
           variant="bar"
-          tone="kintsugi"
-          target="#article-kintsugi-dark"
+          tone="gold"
+          target="#article-gold-dark"
         ></lib-reading-progress>
       </div>
 
       <lib-reading-progress
         variant="vertical"
-        tone="kintsugi"
-        target="#article-kintsugi-dark"
+        tone="gold"
+        target="#article-gold-dark"
       ></lib-reading-progress>
 
       <div
-        id="article-kintsugi-dark"
+        id="article-gold-dark"
         style="flex:1;overflow-y:scroll;padding:3rem 3.5rem 3rem 4rem;max-width:680px;margin:0 auto;width:100%;scrollbar-width:none;"
       >
         <!-- Versión oscura del body -->
@@ -458,11 +458,33 @@ export const KintsugiDark: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-reading-progress
-    tone="celadon"
-    variant="bar"
-    style="position:static;width:100%;height:4px;"
-  ></lib-reading-progress>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <!-- Bar — kaki -->
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">bar · accent · 65%</span>
+      <div style="position:relative;overflow:hidden;height:3px;background:var(--bg-surface);width:100%;">
+        <lib-reading-progress variant="bar" tone="accent" style="position:absolute;bottom:0;left:0;width:65%;"></lib-reading-progress>
+      </div>
+    </div>
+    <!-- Bar — celadon -->
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
+      <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">bar · info · 40%</span>
+      <div style="position:relative;overflow:hidden;height:3px;background:var(--bg-surface);width:100%;">
+        <lib-reading-progress variant="bar" tone="info" style="position:absolute;bottom:0;left:0;width:40%;"></lib-reading-progress>
+      </div>
+    </div>
+    <!-- Dots + Ring -->
+    <div style="display:flex;align-items:center;gap:var(--lib-space-lg);flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:var(--lib-space-sm);">
+        <lib-reading-progress variant="dots" tone="accent" dots-count="7" style="--rp-progress:65%"></lib-reading-progress>
+        <span style="font-family:monospace;font-size:10px;color:var(--text-muted);">dots · 65%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:var(--lib-space-sm);">
+        <lib-reading-progress variant="ring" tone="accent" ring-size="32" style="--rp-progress:65%"></lib-reading-progress>
+        <span style="font-family:monospace;font-size:10px;color:var(--text-muted);">ring · 65%</span>
+      </div>
+    </div>
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

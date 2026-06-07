@@ -12,5 +12,13 @@ export interface SidebarLink {
     disabled?: boolean;
   }
    
-  export type SidebarVariant = 'dark' | 'light' | 'kintsugi' | 'glitch';
+  /**
+   * Rol estructural del sidebar (no paleta):
+   * - dark  → superficie oscura washi-950 (default, para layouts oscuros)
+   * - light → superficie clara semántica bg-elevated (para layouts claros)
+   *
+   * Los efectos de katachi (seam dorado, scanlines) se activan
+   * automáticamente vía --lib-effect-* tokens del contexto data-katachi.
+   */
+  export type SidebarVariant = 'dark' | 'light';
    

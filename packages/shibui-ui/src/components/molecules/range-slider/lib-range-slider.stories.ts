@@ -12,12 +12,12 @@ type RsArgs = Pick<LibRangeSlider,
 >;
 
 const meta: Meta<RsArgs> = {
-  title: 'Forms/Range Slider',
+  title: 'Universal/Forms/Range Slider',
   tags:['autodocs'],
   component: 'lib-range-slider',
   argTypes: {
     size:     { control: 'select', options: ['sm', 'md', 'lg'] },
-    tone:     { control: 'select', options: ['default', 'kaki', 'celadon', 'error', 'washi', 'dark'] },
+    tone:     { control: 'select', options: ['default', 'accent', 'info', 'error', 'neutral', 'inverse'] },
     dual:     { control: 'boolean' },
     vertical: { control: 'boolean' },
     disabled: { control: 'boolean' },
@@ -89,14 +89,14 @@ export const Tones: Story = {
   render: (): TemplateResult => html`
     <div style=${wrap}>
 
-      <lib-range-slider label="Contraste"  value="65" unit="%" tone="washi"></lib-range-slider>
+      <lib-range-slider label="Contraste"  value="65" unit="%" tone="neutral"></lib-range-slider>
 
       <lib-range-slider
         label="Temperatura" value="3800" min="2200" max="6500" unit="K"
-        tone="kaki" show-limits limit-min="2200K" limit-max="6500K"
+        tone="accent" show-limits limit-min="2200K" limit-max="6500K"
       ></lib-range-slider>
 
-      <lib-range-slider label="Energía renovable" value="82" unit="%" tone="celadon"></lib-range-slider>
+      <lib-range-slider label="Energía renovable" value="82" unit="%" tone="info"></lib-range-slider>
 
       <lib-range-slider
         label="Nivel de riesgo" value="34" unit="/100" tone="error"
@@ -135,7 +135,7 @@ export const DualRange: Story = {
         dual label="Precio"
         value-min="120" value-max="480"
         min="0" max="500"
-        unit="€" tone="kaki"
+        unit="€" tone="accent"
         show-limits limit-min="0 €" limit-max="500 €"
       ></lib-range-slider>
 
@@ -143,7 +143,7 @@ export const DualRange: Story = {
         dual label="Rango de edad"
         value-min="25" value-max="45"
         min="0" max="100"
-        unit=" años" tone="celadon"
+        unit=" años" tone="info"
         show-limits
       ></lib-range-slider>
 
@@ -183,12 +183,12 @@ export const WithSteps: Story = {
 
         <lib-range-slider
           label="Talla" value="2" min="0" max="4" step="1"
-          size="lg" tone="kaki" marks=${sizeMks}
+          size="lg" tone="accent" marks=${sizeMks}
         ></lib-range-slider>
 
         <lib-range-slider
           label="Valoración" value="7" min="0" max="10" step="1"
-          tone="celadon" marks=${ratingMks}
+          tone="info" marks=${ratingMks}
           show-limits limit-min="0" limit-max="10"
         ></lib-range-slider>
 
@@ -208,9 +208,9 @@ export const Vertical: Story = {
   render: (): TemplateResult => html`
     <div style="padding: 40px; display: flex; align-items: flex-end; gap: 32px; min-height: 280px;">
 
-      <lib-range-slider vertical tone="kaki"    label="Bajo"       value="80"></lib-range-slider>
+      <lib-range-slider vertical tone="accent"    label="Bajo"       value="80"></lib-range-slider>
       <lib-range-slider vertical                label="Medio"      value="55"></lib-range-slider>
-      <lib-range-slider vertical tone="celadon" label="Alto"       value="35"></lib-range-slider>
+      <lib-range-slider vertical tone="info" label="Alto"       value="35"></lib-range-slider>
       <lib-range-slider vertical size="sm"      label="Presencia"  value="92"></lib-range-slider>
       <lib-range-slider vertical tone="error"   label="Distorsión" value="20"></lib-range-slider>
       <lib-range-slider vertical disabled        label="Reverb"    value="50"></lib-range-slider>
@@ -247,6 +247,30 @@ export const DarkSurface: Story = {
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-range-slider usa tokens semánticos de superficie y track
+   (bg-elevated, border-subtle, text-muted) — adapta al katachi.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-lg);">
+    <lib-range-slider label="Volumen"   value="60"  min="0" max="100" unit="%" size="sm" show-limits></lib-range-slider>
+    <lib-range-slider label="Opacidad"  value="75"  min="0" max="100" unit="%" size="md" tone="accent" show-limits></lib-range-slider>
+    <lib-range-slider label="Energía"   value="82"  min="0" max="100" unit="%" size="lg" tone="info" tooltip></lib-range-slider>
+    <lib-range-slider label="Riesgo"    value="34"  min="0" max="100" unit="/100" tone="error" show-limits limit-min="Bajo" limit-max="Alto"></lib-range-slider>
+    <lib-range-slider dual label="Precio" value-min="120" value-max="480" min="0" max="500" unit="€" tone="accent" show-limits limit-min="0€" limit-max="500€"></lib-range-slider>
+    <lib-range-slider label="Bloqueado" value="50"  min="0" max="100" unit="%" disabled></lib-range-slider>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
+
+/* ═══════════════════════════════════════════════════════════════
    TESTS · Interacción y eventos
    ═══════════════════════════════════════════════════════════════ */
 
@@ -277,22 +301,3 @@ export const TestRangeChangeEvent: Story = {
     expect(detail!.value).toBe(75);
   },
 };
-
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Las 6 historias estándar
-   lib-range-slider usa tokens semánticos de superficie y track
-   (bg-elevated, border-subtle, text-muted) — adapta al katachi.
-   ═══════════════════════════════════════════════════════════════ */
-
-const _katachi = createKatachiStories<object>(() => html`
-  <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-range-slider value="60" min="0" max="100"></lib-range-slider>
-  </div>
-`);
-
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;

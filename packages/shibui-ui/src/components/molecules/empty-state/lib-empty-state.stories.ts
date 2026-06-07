@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-empty-state.component';
 import type { LibEmptyState } from './lib-empty-state.component';
@@ -10,11 +10,11 @@ type EmptyStateArgs = Pick<
 >;
 
 const meta: Meta<EmptyStateArgs> = {
-  title: 'Feedback/Empty State',
+  title: 'Universal/Feedback/Empty State',
   tags:['autodocs'],
   component: 'lib-empty-state',
   argTypes: {
-    tone:    { control: 'select', options: ['neutral', 'kaki', 'celadon', 'error'] },
+    tone:    { control: 'select', options: ['neutral', 'accent', 'info', 'error'] },
     layout:  { control: 'select', options: ['default', 'inline'] },
     size:    { control: 'select', options: ['md', 'sm'] },
     bordered: { control: 'boolean' },
@@ -175,14 +175,14 @@ export const Tones: Story = {
       </div>
 
       <div style="flex:1; min-width:180px; max-width:220px;">
-        <lib-empty-state size="sm" tone="kaki" heading="Empieza aquí" description="Crea tu primer proyecto.">
+        <lib-empty-state size="sm" tone="accent" heading="Empieza aquí" description="Crea tu primer proyecto.">
           <ph-sparkle slot="illustration" weight="regular"></ph-sparkle>
           <lib-button slot="actions" variant="accent">Crear proyecto</lib-button>
         </lib-empty-state>
       </div>
 
       <div style="flex:1; min-width:180px; max-width:220px;">
-        <lib-empty-state size="sm" tone="celadon" heading="Todo completado" description="No quedan tareas pendientes.">
+        <lib-empty-state size="sm" tone="info" heading="Todo completado" description="No quedan tareas pendientes.">
           <ph-check-circle slot="illustration" weight="regular"></ph-check-circle>
         </lib-empty-state>
       </div>
@@ -260,10 +260,32 @@ export const DarkSurface: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <lib-empty-state
-    heading="Sin resultados"
-    description="No hay datos en este contexto."
-  ></lib-empty-state>
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-md);background:var(--bg-surface);border:1px solid var(--border-subtle);">
+    <lib-empty-state
+      heading="Sin resultados"
+      description="No hay datos en este contexto."
+    ></lib-empty-state>
+    <lib-empty-state
+      tone="accent"
+      size="sm"
+      heading="Empieza aquí"
+      description="Crea tu primer elemento."
+    ></lib-empty-state>
+    <lib-empty-state
+      layout="inline"
+      size="sm"
+      bordered
+      heading="Sin registros"
+      description="La tabla no contiene datos."
+    ></lib-empty-state>
+    <lib-empty-state
+      tone="error"
+      size="sm"
+      ghost
+      heading="Acceso denegado"
+      description="No tienes permisos para ver este contenido."
+    ></lib-empty-state>
+  </div>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;

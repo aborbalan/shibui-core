@@ -1,4 +1,4 @@
-﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
+import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { expect, fireEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-checkbox.component';
@@ -11,7 +11,7 @@ type LibCheckboxStoryArgs = Pick<
 >;
 
 const meta: Meta<LibCheckboxStoryArgs> = {
-  title: 'Forms/Checkbox',
+  title: 'Universal/Forms/Checkbox',
   tags:['autodocs'],
   component: 'lib-checkbox',
 
@@ -28,7 +28,7 @@ const meta: Meta<LibCheckboxStoryArgs> = {
     },
     variant: {
       control: 'select',
-      options: ['default', 'kaki', 'error'],
+      options: ['default', 'accent', 'error'],
     },
   },
 
@@ -67,7 +67,6 @@ export const Playground: Story = {
 
 /* ── States ── */
 export const States: Story = {
-  name: 'States.',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
       <lib-checkbox
@@ -120,7 +119,7 @@ export const Variants: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
       <lib-checkbox variant="default" label="Default" sublabel="Fondo washi-900" checked></lib-checkbox>
-      <lib-checkbox variant="kaki"    label="Kaki" sublabel="Fondo kaki-500" checked></lib-checkbox>
+      <lib-checkbox variant="accent"    label="Kaki" sublabel="Fondo kaki-500" checked></lib-checkbox>
       <lib-checkbox variant="error"   label="Error" sublabel="Borde y label en color-error"></lib-checkbox>
     </div>
   `,
@@ -128,7 +127,6 @@ export const Variants: Story = {
 
 /* ── With sublabel ── */
 export const WithSublabel: Story = {
-  name: 'With Sublabel.',
   render: (): TemplateResult => html`
     <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3; max-width:400px;">
       <lib-checkbox
@@ -148,6 +146,61 @@ export const WithSublabel: Story = {
     </div>
   `,
 };
+
+/* ── Indeterminate group ── */
+export const IndeterminateGroup: Story = {
+  render: (): TemplateResult => html`
+    <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3; max-width:400px;">
+      <p style="font-family:monospace; font-size:11px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:4px;">
+        Seleccion parcial de grupo
+      </p>
+      <lib-checkbox
+        label="Canales de notificacion"
+        sublabel="2 de 3 activos"
+        indeterminate
+      ></lib-checkbox>
+      <div style="padding-left:24px; display:flex; flex-direction:column; gap:16px;">
+        <lib-checkbox label="Correo electronico" checked></lib-checkbox>
+        <lib-checkbox label="SMS"></lib-checkbox>
+        <lib-checkbox label="Push en app" checked></lib-checkbox>
+      </div>
+    </div>
+  `,
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   KATACHI · 形 · Las 6 historias estándar
+   lib-checkbox usa tokens semánticos de borde y fondo
+   (border-subtle, bg-elevated, text-primary) — adapta al katachi.
+   ═══════════════════════════════════════════════════════════════ */
+
+const _katachi = createKatachiStories<object>(() => html`
+  <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+      <lib-checkbox label="Unchecked" sublabel="Estado por defecto"></lib-checkbox>
+      <lib-checkbox label="Checked" sublabel="Seleccionado" checked></lib-checkbox>
+      <lib-checkbox label="Indeterminate" sublabel="Seleccion parcial" indeterminate></lib-checkbox>
+      <lib-checkbox label="Disabled" sublabel="No interactivo" disabled></lib-checkbox>
+    </div>
+    <div style="display:flex;gap:var(--lib-space-lg);align-items:center;">
+      <lib-checkbox label="sm" size="sm" checked></lib-checkbox>
+      <lib-checkbox label="md" size="md" checked></lib-checkbox>
+      <lib-checkbox label="lg" size="lg" checked></lib-checkbox>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
+      <lib-checkbox variant="default" label="Default" checked></lib-checkbox>
+      <lib-checkbox variant="accent"    label="Kaki" checked></lib-checkbox>
+      <lib-checkbox variant="error"   label="Error"></lib-checkbox>
+    </div>
+  </div>
+`);
+
+export const KatachiShizen   = _katachi.KatachiShizen;
+export const KatachiWabi     = _katachi.KatachiWabi;
+export const KatachiKintsugi = _katachi.KatachiKintsugi;
+export const KatachiCeladon  = _katachi.KatachiCeladon;
+export const KatachiSabi     = _katachi.KatachiSabi;
+export const KatachiTerminal = _katachi.KatachiTerminal;
 
 /* ═══════════════════════════════════════════════════════════════
    TESTS · Interacción y eventos
@@ -186,46 +239,3 @@ export const TestDisabledCheckbox: Story = {
     expect(input.disabled).toBe(true);
   },
 };
-
-/* ── Indeterminate group ── */
-export const IndeterminateGroup: Story = {
-  name: 'Indeterminate Group.',
-  render: (): TemplateResult => html`
-    <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3; max-width:400px;">
-      <p style="font-family:monospace; font-size:11px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:4px;">
-        Seleccion parcial de grupo
-      </p>
-      <lib-checkbox
-        label="Canales de notificacion"
-        sublabel="2 de 3 activos"
-        indeterminate
-      ></lib-checkbox>
-      <div style="padding-left:24px; display:flex; flex-direction:column; gap:16px;">
-        <lib-checkbox label="Correo electronico" checked></lib-checkbox>
-        <lib-checkbox label="SMS"></lib-checkbox>
-        <lib-checkbox label="Push en app" checked></lib-checkbox>
-      </div>
-    </div>
-  `,
-};
-
-/* ═══════════════════════════════════════════════════════════════
-   KATACHI · 形 · Las 6 historias estándar
-   lib-checkbox usa tokens semánticos de borde y fondo
-   (border-subtle, bg-elevated, text-primary) — adapta al katachi.
-   ═══════════════════════════════════════════════════════════════ */
-
-const _katachi = createKatachiStories<object>(() => html`
-  <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-checkbox label="Opción A"></lib-checkbox>
-    <lib-checkbox label="Opción B" checked></lib-checkbox>
-    <lib-checkbox label="Opción C" disabled></lib-checkbox>
-  </div>
-`);
-
-export const KatachiShizen   = _katachi.KatachiShizen;
-export const KatachiWabi     = _katachi.KatachiWabi;
-export const KatachiKintsugi = _katachi.KatachiKintsugi;
-export const KatachiCeladon  = _katachi.KatachiCeladon;
-export const KatachiSabi     = _katachi.KatachiSabi;
-export const KatachiTerminal = _katachi.KatachiTerminal;

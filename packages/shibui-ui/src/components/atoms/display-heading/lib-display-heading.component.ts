@@ -22,7 +22,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * @attr {string} line2-prefix  - Texto antes del acento en la segunda línea.
  * @attr {string} accent        - Texto en itálica kaki (acento).
  * @attr {string} description   - Párrafo de descripción (alternativa al slot).
- * @attr {'dark'|'light'|'washi'} surface - Superficie sobre la que se muestra.
+ * @attr {'dark'|'light'|'neutral'} surface - Superficie sobre la que se muestra.
  * @attr {'sm'|'md'|'lg'}       size    - Tamaño tipográfico fluido.
  * @attr {'h1'|'h2'|'h3'|'h4'} tag     - Tag semántico del heading.
  * @attr {boolean}              centered - Centra el bloque.
@@ -53,7 +53,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  *   size="lg"
  *   description="66 componentes sin dependencias."
  * >
- *   <lib-eyebrow slot="eyebrow" effect="kintsugi" size="lg">
+ *   <lib-eyebrow slot="eyebrow" size="lg">
  *     Design System · v0.1.0
  *   </lib-eyebrow>
  * </lib-display-heading>

@@ -3,6 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { headerTemplate }   from './lib-header.html';
 import '../../atoms/burger-button/lib-burger-button.component';
 import headerCss             from './lib-header.css?inline';
+import celadonDecorations    from '../../../styles/shared/celadon-decorations.css?inline';
 import sharedTokens          from '../../../styles/shared/tokens.css?inline';
 import type {
   HeaderVariant, NavLink, HeaderAction, BreadcrumbItem,
@@ -21,8 +22,8 @@ export interface MegaCta {
 /**
  * lib-header — Shibui UI · SG-66
  *
- * 10 variantes: classic · dark · centered · transparent · kintsugi ·
- *               glitch · mega · minimal · shrink · app-bar
+ * 11 variantes: classic · dark · centered · transparent · mega ·
+ *               minimal · shrink · app-bar · celadon · sabi · shizen
  *
  * Mobile: breakpoint 640px — drawer vertical compartido por todas las variantes.
  */
@@ -30,12 +31,22 @@ export interface MegaCta {
 export class LibHeader extends LitElement {
   static override styles = [
     css`${unsafeCSS(sharedTokens)}`,
+    css`${unsafeCSS(celadonDecorations)}`,
     css`${unsafeCSS(headerCss)}`,
   ];
 
   /* ── Variant ── */
   @property({ type: String, reflect: true })
   variant: HeaderVariant = 'classic';
+
+  /**
+   * Decoraciones celadon opt-in (Bar), separadas por espacio
+   * (ej: "tide condensation depth"). Sólo en variantes de layout
+   * simple (classic · dark · transparent · minimal · shrink) y
+   * pensadas para `data-katachi="celadon"`.
+   */
+  @property({ type: String })
+  decoration = '';
 
   /* ── Logo ── */
   @property({ type: String, attribute: 'logo-mark' })

@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-aspect-ratio.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Layout/Aspect Ratio',
+  title: 'Universal/Layout/Aspect Ratio',
   tags:['autodocs'],
   component: 'lib-aspect-ratio',
 };

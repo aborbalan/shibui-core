@@ -1,81 +1,150 @@
-# Katachi · 形 · Sistema de contextos estéticos
+# Katachi · 形 · Identidades estéticas selladas
 
-> **Estado**: Sistema completado al 100%. Fases 1+2+3, rollouts B1–B6 y C1–C5 mergeadas a `main`.
-> **Cobertura: 77/77 componentes con bloque KATACHI documentado** (23 semantic + 54 marker).
-> Última actualización: 2026-05-16
+> **Estado**: Fase 2 completada (lib-card, lib-glass-card, lib-badge, lib-eyebrow, lib-chip,
+> lib-spinner, lib-sidebar, lib-header). Fase 3 (componentes restantes) en progreso.
+> Última actualización: 2026-05-29
 
 ---
 
 ## ¿Qué es Katachi?
 
-**Katachi (形)** significa "forma, contorno, configuración". En Shibui UI es una capa de
-estilos que agrupa **superficie + efectos + temperatura cromática** en una personalidad
-visual nombrada, propagable a un árbol entero de componentes desde un único atributo
-en cualquier ancestro HTML.
+**Katachi (形)** significa "forma, contorno, configuración". En Shibui UI es una
+**identidad visual sellada** — un mundo visual completo donde los efectos se activan
+automáticamente por contexto, sin necesidad de props específicos en los componentes.
 
-Resuelve el problema de hoy: para componer una sección coherente "kintsugi" había que
-repetir `variant="kintsugi"` en cada componente individualmente, recordar qué efectos
-entran en conflicto con esa estética, y ajustar la paleta manualmente. Con Katachi:
+Antes del modelo sellado, para componer una sección "kintsugi" había que repetir
+`variant="kintsugi"` en cada componente individualmente. Con katachi:
 
 ```html
 <section data-katachi="kintsugi">
-  <lib-header>…</lib-header>          <!-- hereda kintsugi -->
-  <lib-card>…</lib-card>              <!-- hereda kintsugi -->
+  <lib-header>…</lib-header>     <!-- seam dorada automática -->
+  <lib-card>…</lib-card>         <!-- anillo dorado + barra animada automáticos -->
   <lib-glass-card>…</lib-glass-card>  <!-- glass se desactiva (conflicto) -->
-  <lib-spotlight-card>…</lib-spotlight-card>  <!-- spotlight reforzado -->
 </section>
 ```
+
+**No hay prop `variant="kintsugi"` ni `variant="glitch"`.** El componente lee tokens
+`--lib-effect-*` heredados del ancestro y activa sus efectos solo cuando el contexto
+lo indica.
 
 ---
 
 ## Los seis Katachi
 
-| ID         | Kanji  | Concepto              | Surface base | Efecto principal     | Acento        |
-|------------|--------|----------------------|--------------|---------------------|---------------|
-| `wabi`     | 侘び    | Austero, brumoso     | dark         | glass (reforzado)   | celadon-400   |
-| `kintsugi` | 金継ぎ  | Reparado con oro     | kintsugi     | kintsugi-border     | kaki-400      |
-| `sabi`     | 寂び    | Envejecido, papel    | washi        | shadow-brutal       | kaki-600      |
-| `terminal` | —      | CRT, digital duro    | glitch       | shadow-brutal       | celadon-400   |
-| `shizen`   | 自然    | Natural, sin adorno  | light        | (ninguno · reset)   | kaki-500      |
-| `celadon`  | 青磁    | Jade, frío sereno    | celadón      | spotlight-water     | celadon-400   |
+Tres light · tres dark. `shizen` es el default del sistema (sin `data-katachi` = shizen).
+
+| ID         | Kanji  | Familia | Concepto                            | Efecto principal             | Acento         |
+|------------|--------|---------|-------------------------------------|------------------------------|----------------|
+| `shizen`   | 自然    | light   | Natural, base, zero-point           | ninguno (silencio)           | kaki-500       |
+| `celadon`  | 青磁    | light   | Jade pálido, frío, alternativa cool | glaze cerámico sutil         | celadon-500    |
+| `sabi`     | 寂び    | light   | Papel envejecido, handcraft         | shadow-brutal offset         | kaki-600       |
+| `kintsugi` | 金継ぎ  | dark    | Reparado con oro (único dark-1st)   | seam dorada animada          | kaki-400       |
+| `wabi`     | 侘び    | dark    | Kuroi · oscuridad pura, silencio    | ninguno (el anti-kintsugi)   | (gris cálido)  |
+| `terminal` | —      | dark    | CRT retro, phosphor verde           | scanlines + glitch-drift     | celadon-300    |
+
+**Notas importantes:**
+- `celadon` es **light** (jade pálido, `oklch(97% 0.012 175deg)`). No es dark.
+- `wabi` es **oscuridad pura sin efectos** — lo opuesto a kintsugi: no hay oro, no hay animaciones.
+- Los efectos son **automáticos** — ningún componente necesita leer el ID del katachi.
 
 Matriz completa de compatibilidad efectos × katachi en `effects-x-surfaces.md`.
 
 ---
 
-## Estado actual — sistema completado al 100%
+## Arquitectura técnica — modelo sellado
 
-### Lo que está implementado
+### Mecanismo de activación de efectos
 
-**Capa de tokens (`_katachi.css`):**
-- 6 bloques `[data-katachi="x"], :host([data-katachi="x"])` definidos en
-  `src/styles/shared/tokens/_katachi.css`
-- Cada bloque:
-  1. Establece bridge tokens (`--katachi-id`, `--katachi-family`, `--katachi-surface`,
-     `--katachi-accent`, `--katachi-accent-muted`, `--katachi-fg`, `--katachi-fg-muted`,
-     `--katachi-border`)
-  2. Sobreescribe tokens semánticos relevantes (`--bg-*`, `--text-*`, `--border-*`)
-  3. Ajusta primitivos de efecto (`--lib-glass-*`, `--lib-spotlight-*`,
-     `--lib-kintsugi-border`, `--lib-shadow-brutal`)
-  4. Silencia efectos incompatibles (e.g. en `kintsugi`, `--lib-glass-blur-amount: 0px`)
+Los efectos no se activan con props en el componente. Se activan mediante
+**tokens CSS custom heredados** desde el ancestro `[data-katachi]`.
 
-**Integración con build:**
-- `_katachi.css` añadido al `@import` chain de `tokens.css`
-- `_katachi.css` añadido al array de partials del plugin `emit-tokens-css` en
-  `packages/shibui-ui/.config/vite.config.ts`
-- `dist/tokens.css` inlinea los 6 contextos (≈673 líneas totales)
+Cadena de herencia completa:
 
-### Lo que **no** cambia para los consumidores actuales
+```
+_effects.css (:root)          → defaults globales apagados
+_katachi.css ([data-katachi]) → activa los tokens del katachi
+lib-card shadow DOM           → hereda los tokens del ancestro
+.card::before / ::after       → animation-play-state / opacity via var()
+```
 
-**Feature flag implícito** — sin `data-katachi` en el HTML, este sistema es invisible:
-- Cualquier `variant=""` existente sigue funcionando exactamente igual
-- Los snapshots visuales de Storybook deben ser idénticos al pre-Fase-1
-- Las apps `app-react`, `app-angular`, `app-svelte` no requieren ningún cambio para
-  seguir funcionando
+**Por qué funciona a través de Shadow DOM**: las CSS custom properties son
+heredadas por naturaleza. La clave es que los ficheros de tokens NO usan
+`:host, :root { }` — solo `:root { }`. En un `adoptedStyleSheet` de Shadow DOM,
+`:root` no coincide con ningún elemento (el shadow root no es estilizable), por
+lo que los defaults se establecen únicamente en el documento global y la herencia
+desde el ancestro `[data-katachi]` fluye libremente.
+
+### Tokens de activación de efectos (`--lib-effect-*`)
+
+Definidos en `_effects.css` con defaults apagados. Cada katachi activa los suyos:
+
+| Token | Default (`:root`) | kintsugi | terminal | sabi | wabi/shizen/celadon |
+|---|---|---|---|---|---|
+| `--lib-effect-seam-play` | `paused` | `running` | `paused` | `paused` | `paused` |
+| `--lib-effect-seam-opacity` | `0` | `1` | `0` | `0` | `0` |
+| `--lib-effect-glitch-play` | `paused` | `paused` | `running` | `paused` | `paused` |
+| `--lib-effect-scanlines` | `0` | `0` | `0.10` | `0` | `0` |
+| `--lib-effect-crt-vignette` | `0` | `0` | `0.50` | `0` | `0` |
+| `--lib-effect-brutal-shadow` | `none` | gold ring† | `none` | `4px 4px 0px 0px washi-900` | `none` |
+| `--lib-effect-glass-blur` | `0px` | `0px` | `0px` | `0px` | `0px` |
+| `--lib-effect-topbar-opacity` | `0` | `1` | `1` | `0` | `0` |
+| `--lib-effect-topbar-bg` | `transparent` | gold gradient | phosphor sólido | `transparent` | `transparent` |
+
+† En kintsugi: `0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.22), 0 4px 20px oklch(0%/0.40)`
+
+### Patrón CSS en componentes
+
+Los efectos se declaran siempre en el componente pero permanecen invisible:
+
+```css
+/* En el componente: siempre presente, visible solo con el katachi correcto */
+.card::before {
+  content: ''; position: absolute; inset: 0 0 auto 0;
+  height: 3px; pointer-events: none; z-index: 3;
+  background: var(--lib-effect-topbar-bg, <gold-gradient-default>);
+  background-size: 200% 100%;
+  animation: kintsugi-seam 5s linear infinite;
+  animation-play-state: var(--lib-effect-seam-play, paused);   /* ← hereda del katachi */
+  opacity: var(--lib-effect-topbar-opacity, 0);                 /* ← hereda del katachi */
+}
+
+.card::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent, transparent 3px,
+    oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 3px,    /* ← hereda del katachi */
+    oklch(100% 0 0deg / var(--lib-effect-scanlines, 0)) 4px
+  );
+}
+
+.card {
+  box-shadow: var(--lib-effect-brutal-shadow, none);             /* ← hereda del katachi */
+}
+```
+
+### Variantes de componente — solo semánticas
+
+Los componentes **no tienen variantes con nombres de paleta o katachi**. Solo roles estructurales:
+
+| Componente | Variantes eliminadas | Variantes actuales |
+|---|---|---|
+| `lib-card` | `kintsugi`, `glitch`, `celadon`, `washi`, `brutal` | `default`, `inverse`, `accent`, `featured` |
+| `lib-badge` | `celadon`, `dark` | `default`, `accent`, `info`, `strong`, `error`, `success`, `warning` |
+| `lib-eyebrow` | `color="kaki/celadon/dark/white/muted"` | `tone="accent/neutral/inverse/muted"` |
+| `lib-chip` | `kaki`, `celadon` | `default`, `accent`, `info`, `dark`, `error` |
+| `lib-spinner` | — | `enso`, `sumi`, `kintsugi`†, `shizuku` |
+| `lib-header` | `kintsugi`, `glitch` | `classic`, `dark`, `centered`, `transparent`, `mega`, `minimal`, `shrink`, `app-bar`, `celadon`, `sabi`, `shizen` |
+| `lib-sidebar` | `kintsugi`, `glitch` | `light`, `dark` |
+
+† `lib-spinner variant="kintsugi"` es la excepción — es un efecto estructural del spinner,
+no una variante de paleta.
+
+### Cómo opt-in
 
 ---
 
-## Cómo opt-in hoy (Fase 1)
+## Cómo opt-in
 
 Aunque la awareness automática en componentes llega en Fase 2, ya puedes activar Katachi
 de forma manual:
@@ -111,9 +180,34 @@ Con `data-katachi="kintsugi"` activo, los siguientes tokens computan a:
 | `--katachi-id`                 | `kintsugi` |
 | `--katachi-family`             | `dark` |
 | `--katachi-accent`             | `oklch(61.85% 0.149 48.72deg)` (kaki-400) |
-| `--bg-base`                    | `oklch(11.39% 0.009 84.7deg)` (washi-950) |
+| `--bg-base`                    | `var(--color-washi-950)` ≈ `#120E0A` |
+| `--bg-elevated`                | `oklch(14% 0.01 60deg)` |
+| `--border-subtle`              | `oklch(61.85% 0.149 48.72deg / 0.20)` (gold visible) |
+| `--lib-effect-seam-play`       | `running` |
+| `--lib-effect-topbar-opacity`  | `1` |
+| `--lib-effect-brutal-shadow`   | gold ring + glow |
 | `--lib-glass-blur-amount`      | `0px` (glass silenciado) |
 | `--lib-spotlight-opacity`      | `0.18` (spotlight reforzado) |
+
+Con `data-katachi="terminal"`:
+
+| Token                          | Valor esperado |
+|--------------------------------|---------------|
+| `--bg-base`                    | `oklch(7% 0.008 150deg)` (near-black verde) |
+| `--text-primary`               | `var(--color-celadon-300)` (phosphor verde) |
+| `--lib-effect-scanlines`       | `0.10` (stripes blancas al 10%) |
+| `--lib-effect-glitch-play`     | `running` |
+| `--lib-effect-topbar-opacity`  | `1` |
+| `--lib-effect-topbar-bg`       | `oklch(68% 0.14 155deg)` (phosphor sólido) |
+
+Con `data-katachi="celadon"`:
+
+| Token                          | Valor esperado |
+|--------------------------------|---------------|
+| `--bg-base`                    | `oklch(97% 0.012 175deg)` (jade pálido, light) |
+| `--text-primary`               | `oklch(18% 0.025 175deg)` (jade-ink oscuro) |
+| `--lib-effect-seam-play`       | `paused` |
+| `--lib-effect-scanlines`       | `0` |
 
 ---
 
@@ -148,58 +242,63 @@ llevan el bloque KATACHI documentado:
 
 ## Roadmap
 
-### ✅ Fase 1 — Sistema de contextos (completada)
+### ✅ Fase 0 — Identidades Katachi confirmadas
 
-- `_katachi.css` con 6 contextos
-- Integración con `emit-tokens-css`
-- Documentación inicial (este archivo)
+Los 6 katachis definitivos (shizen, celadon, sabi, kintsugi, wabi, terminal) y sus características:
+- `celadon` redefinido de dark jade a **light pale jade**
+- `wabi` redefinido de dark-glass a **kuroi · pure darkness (no effects)**
+- `terminal` con CRT phosphor verde correcto
+- Efectos signature documentados por katachi
 
-### ✅ Fase 2 — Awareness en componentes (completada)
+### ✅ Fase 1 — CSS Foundation (non-breaking)
 
-Añadir al final de cada componente prioritario el bloque ambient:
+- `_katachi.css`: 6 bloques con `--lib-effect-*` activation tokens
+- `_effects.css`: tokens de efecto con defaults apagados (`:root` only)
+- Todos los ficheros de token cambiados de `:host, :root { }` a `:root { }` para
+  permitir herencia correcta a través de Shadow DOM
+- Integración con `tokens.css` y build pipeline
 
-```css
-/* ─── KATACHI · ambient context ─────────────────────── */
-:host(:not([variant])) .card {
-  background: var(--bg-elevated);
-  border-color: var(--border-subtle);
-  color: var(--text-primary);
-}
-/* ─── /KATACHI ───────────────────────────────────────── */
-```
+### ✅ Fase 2 — Primera oleada de componentes (BREAKING)
 
-**Especificidad**: `:host([variant="kintsugi"])` y `:host(:not([variant]))` son
-mutuamente exclusivos por construcción. El `variant=""` explícito siempre gana.
+**Componentes migrados** (PR #420 — mergeado a `develop`):
+- `lib-card`: 4 variantes semánticas + efectos katachi automáticos via `--lib-effect-*`
+- `lib-glass-card`: context-driven (glass activo solo en katachis dark sin conflicto)
+- `lib-badge`: `celadon` → `info`, `dark` → `strong`
+- `lib-eyebrow`: `color` prop palette → `tone` prop semántico
+- `lib-chip`: actualizado a tokens semánticos
+- `lib-spinner`: variantes estructurales (excepto `kintsugi` que es estructural)
+- `lib-header`: eliminadas variantes `kintsugi` y `glitch`
+- `lib-sidebar`: eliminadas variantes `kintsugi` y `glitch`
 
-**Adopción ejecutada** (PRs mergeados a `main`):
-1. `lib-card` — #289 (2026-05-15)
-2. `lib-button` + `lib-badge` — #290 (2026-05-15)
-3. `lib-header` + `lib-sidebar` — #291 (2026-05-15)
-4. `lib-alert` + `lib-input` + `lib-select` — #292 (2026-05-15)
-5. Rollout B1–B6 (29 componentes) — #296 → #301 (2026-05-15)
-6. Tanda C1–C5 (38 componentes restantes) — #309 → #313 (2026-05-16)
+**Snapshot de legado** (`_katachi-legacy/`): copia de los 7 componentes pre-migración
+como referencia, excluida del build.
 
-### ✅ Fase 3 — `<lib-canvas>` wrapper (mergeada en #303)
+**Fixes de herencia Shadow DOM** (PR #423 — en `develop`):
+- Corregido bug de doble opacidad en scanlines terminal
+- Bordes kintsugi actualizados a `kaki-400` real (visible sobre negro)
+- Anillo dorado permanente en kintsugi vía `--lib-effect-brutal-shadow`
+- Barra de seam de 2px → 3px
 
-Componente que refleja `katachi="…"` como `data-katachi` en el host. Útil para
-type-safety y futura propagación JS (eventos, `prefers-reduced-motion` por zona).
+### 🔲 Fase 3 — Segunda oleada de componentes
 
-```typescript
-@customElement('lib-canvas')
-export class LibCanvas extends LitElement {
-  @property({ type: String, reflect: true })
-  katachi: KatachiId | '' = '';
+Pendiente:
+- `lib-avatar` (`color` → `tone`)
+- `lib-liquid-button`, `lib-burger-button`
+- `lib-kbd`, `lib-tooltip`, `lib-tabs`, `lib-dropdown`
+- `lib-dialog`, `lib-modal`, `lib-drawer`
+- `lib-progress`, `lib-progress-circle`, `lib-checkbox`, `lib-radio`
+- `lib-switch`, `lib-stepper`, `lib-step`
+- `lib-divider`, `lib-rating`, `lib-checkbox-card`
+- `lib-parallax-text`, `lib-spotlight-card`
 
-  override willUpdate(changed: Map<string, unknown>): void {
-    if (changed.has('katachi')) {
-      if (this.katachi) this.setAttribute('data-katachi', this.katachi);
-      else              this.removeAttribute('data-katachi');
-    }
-  }
-}
-```
+### 🔲 Fase 4 — Documentación
 
-Uso desde apps consumidoras con tipado:
+Actualizar `CLAUDE.md`, este archivo, `TOKENS.md`, `effects-x-surfaces.md` y
+`katachi-migration.md` con la arquitectura del modelo sellado.
+
+### ✅ `<lib-canvas>` wrapper (existente)
+
+Componente que refleja `katachi="…"` como `data-katachi` en el host:
 
 ```html
 <lib-canvas katachi="kintsugi" display="block" pad="xl">
@@ -244,37 +343,60 @@ element hosts). Katachi extiende este patrón añadiendo soporte light-DOM via
 
 ---
 
-## Contrato variant × katachi — tokens `--lib-comp-*`
+## Taxonomía de decoraciones · Kintsugi
 
-### El problema
+Marco de referencia para decidir qué ornamento aplica a cada escala de componente.
+Sirve de guía al implementar efectos en componentes nuevos o al refinar los existentes.
 
-Los componentes con `variant` explícito hardcodean valores primitivos (`var(--color-washi-*)`,
-`rgb(...)`) que son inmunes a la herencia de tokens semánticos. Resultado: un
-`<lib-button variant="kintsugi">` dentro de `data-katachi="celadon"` ignora el contexto
-y queda visualmente incongruente.
+### Clases de componentes por escala y forma
 
-### La solución: GUITV + tokens de contexto
+| Clase | Ejemplos | Características |
+|---|---|---|
+| **Surface** | `lib-card`, `lib-glass-card`, `lib-modal`, `lib-dialog`, `lib-drawer`, `lib-sidebar` | Rectangular grande; área suficiente para efectos complejos |
+| **Bar/strip** | `lib-header`, `lib-footer`, `lib-progress`, `lib-metric-bar` | Horizontal, ancho completo o casi; alto reducido |
+| **Interactive medium** | `lib-button`, `lib-input`, `lib-select`, `lib-segmented-control`, `lib-tabs` | ~36–48px alto; claramente accionable |
+| **Pill/tag** | `lib-badge`, `lib-chip` | ~20–28px alto; pill-shaped; denso en información |
+| **Indicator** | `lib-status-dot`, `lib-avatar` (sm), `lib-progress-circle` | ≤24px; puntual; semántico |
+| **Typography** | `lib-eyebrow`, `lib-display-heading`, `lib-kbd`, `lib-label` | Texto puro o casi puro; sin forma contenedora propia |
+| **Structural** | `lib-divider`, `lib-background`, `lib-canvas` | Layout; sin contenido propio |
 
-Se definen 14 tokens `--lib-comp-*` **únicamente bajo `[data-katachi]`** en `_katachi.css`.
-Los componentes los consumen como valor primario con el valor original como fallback:
+### Catálogo de decoraciones kintsugi
 
-```css
-/* Patrón GUITV (Guaranteed Invalid at Computed Value Time) */
-background: var(--lib-comp-bg, var(--color-washi-950));
-color:      var(--lib-comp-fg, var(--text-primary));
-```
+| Decoración | Mecanismo CSS | Escala mínima | Notas |
+|---|---|---|---|
+| **Seam top** | `::before` barra animada 2–3px full-width | Surface / Bar | Ilegible en pills (<28px alto) — no usar en Pill/tag ni Indicator |
+| **Ring** | `box-shadow: 0 0 0 1px oklch(kaki-400 / 0.40)` | Cualquiera | Forma cerrada con `border-radius`; no strips sin borde. En **círculos perfectos grandes** (p.ej. `lib-progress-circle`) el box-shadow nítido aliasea — usar `<circle>` stroke SVG (`--lib-effect-ring-stroke`) + `drop-shadow` (`--lib-effect-ring-glow`) en su lugar |
+| **Halo** | Ring + `0 0 Npx oklch(kaki-400 / 0.10)` blur | Pill/tag · Indicator · Interactive | Complementa o sustituye seam en formatos pequeños |
+| **Vein** | `border-left` o `border-bottom` en gold | Surface · Interactive medium | Direccional; evoca fisura diagonal en cerámica real |
+| **Warmth bg** | `background: color-mix(in oklch, var(--bg-elevated), var(--color-kaki-400) 4–6%)` | Cualquiera con fondo sólido | Sutil; no requiere pseudo-elemento |
+| **Warmth text** | `color: color-mix(in oklch, var(--text-primary), var(--color-kaki-400) 15–20%)` | Typography · Pill/tag | Invisible a primera vista; crea coherencia contextual |
+| **Shadow depth** | `box-shadow` oscuro + anillo kaki (`0 0 0 1px kaki/0.25, 0 4px 20px ink/0.40`) | Surface · Interactive medium | Ya implementado en `--shadow-md/lg/xl` de kintsugi |
+| **Pulse** | Opacity animation en ring o halo | Indicator | Reservar para estado activo/vivo, no decorativo puro |
+| **Corner accent** | `::after` trazo diagonal en esquina | Surface · Interactive medium | Literal con el concepto de fisura; evitar en pills |
+| **Animated dash** | `::before` trazo corto (~35% ancho) desplazándose | Pill/tag · Bar | Alternativa al seam full-width cuando el espacio es reducido |
 
-| Escenario | Resultado |
-|-----------|-----------|
-| Sin katachi activo | `--lib-comp-*` no definido → GUITV → fallback exacto al original |
-| Con katachi activo | `--lib-comp-*` definido por `_katachi.css` → katachi gana |
+### Matriz de compatibilidad
 
-**La garantía**: sin `data-katachi` en el árbol, el comportamiento visual es
-**bit-a-bit idéntico** al anterior. No hay riesgo de regresión.
+| | Seam top | Ring | Halo | Vein | Warmth bg | Warmth text | Shadow depth | Pulse | Corner | Animated dash |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Surface** | ✅ | ✅ | — | ✅ | ✅ | — | ✅ | — | ✅ | — |
+| **Bar/strip** | ✅ | — | — | ✅ | ✅ | — | — | — | — | — |
+| **Interactive medium** | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — | ✅ | — |
+| **Pill/tag** | ❌ | ✅ | ✅ | — | ✅ | ✅ | — | — | — | ✅ |
+| **Indicator** | ❌ | ✅ | ✅ | — | ✅ | — | — | ✅ | — | — |
+| **Typography** | — | — | — | — | — | ✅ | — | — | — | — |
+| **Structural** | — | — | — | ✅ | ✅ | — | — | — | — | — |
 
-### Los 14 tokens de contexto
+`✅` natural · `⚠️` posible pero vigilar legibilidad · `❌` inapropiado · `—` no aplica
 
-Definidos en `_katachi.css` bajo `[data-katachi], :host([data-katachi])`:
+---
+
+## Contrato katachi × componente
+
+### Tokens de contexto `--lib-comp-*`
+
+Definidos en `_katachi.css` bajo `[data-katachi], :host([data-katachi])`.
+Los componentes los consumen como alias de los tokens semánticos del contexto activo:
 
 | Token | Valor | Uso típico |
 |-------|-------|-----------|
@@ -292,51 +414,21 @@ Definidos en `_katachi.css` bajo `[data-katachi], :host([data-katachi])`:
 | `--lib-comp-border-subtle` | `var(--border-subtle)` | Borde sutil |
 | `--lib-comp-border-strong` | `var(--border-strong)` | Borde fuerte |
 | `--lib-comp-border-focus` | `var(--border-focus)` | Focus ring |
+| `--lib-comp-kanji-color` | por katachi | Color del watermark kanji decorativo |
 
-### Componentes actualizados (22 ficheros CSS)
+### Regla de naming para variantes de componente
 
-| Fichero | Tokens aplicados |
-|---------|-----------------|
-| `_katachi.css` | definición de los 14 tokens |
-| `atoms/button` | primary, secondary, ghost, kintsugi, brutal |
-| `atoms/card` | inverse, kintsugi, glitch, celadon, washi, brutal |
-| `atoms/badge` | celadon |
-| `atoms/switch` | kintsugi |
-| `atoms/step` | active/completed status + kintsugi |
-| `atoms/checkbox` | focus ring + checked |
-| `atoms/radio` | focus ring + checked |
-| `atoms/close-button` | focus ring + ghost/subtle hover + filled |
-| `atoms/burger-button` | focus ring |
-| `atoms/kbd` | box-shadow + pressed + dark |
-| `atoms/tooltip` | dark bubble + arrows |
-| `molecules/breadcrumb` | separator + pill current + ellipsis hover |
-| `molecules/pagination` | active page button + outline active |
-| `molecules/tabs` | tab states + glitch ink underline |
-| `molecules/segmented-control` | outline thumb + active option |
-| `molecules/dropdown` | filled trigger + active item + scrollbar |
-| `molecules/header` | kintsugi/glitch bg + classic/minimal colors + outline action + breadcrumb/search |
-| `organisms/sidebar` | kintsugi/glitch bg + mobile toggle |
-| `organisms/drawer` | drag-hint + handle bar + scrollbar + dark/kintsugi-dark/glitch-dark bg + glitch seam |
-| `organisms/footer` | `--ft-*` token definitions (base light + dark surface) + `.ft-brand` |
+**Si el nombre de la variante es un color de paleta o un katachi ID → eliminar y reemplazar
+por un rol semántico.**
 
-### Exclusiones deliberadas
-
-Los pseudo-elementos con efectos visuales propios **no se modifican**:
-
-- `::after` de kintsugi-seam animados (header, sidebar, drawer, footer)
-- `::before` de glitch scanlines / RGB ghost layers
-- `::before/::after` de logo-ring (conic-gradient animado)
-- `lib-spinner` variant kintsugi — anillo OKLCH dorado, identidad estética fija
-
-### Naming collision — `variant="kintsugi"` vs `data-katachi="kintsugi"`
-
-Son mecanismos ortogonales. `variant="kintsugi"` en un componente aplica
-la estética fija hardcoded del componente. `data-katachi="kintsugi"` en un
-ancestro define el contexto ambient.
-
-Cuando ambos coinciden (componente kintsugi dentro de sección kintsugi),
-los `--lib-comp-*` ya son los tokens del katachi kintsugi → resultado visual
-coherente. No hay colisión: el mecanismo los hace compatibles sin renombrar.
+| Antes (palette-named) | Después (semantic role) |
+|---|---|
+| `variant="kintsugi"` | Efecto automático (no existe como prop) |
+| `variant="glitch"` | Efecto automático (no existe como prop) |
+| `variant="celadon"` | `variant="info"` |
+| `variant="dark"` | `variant="strong"` o `variant="inverse"` |
+| `color="kaki"` | `tone="accent"` |
+| `color="dark"` | `tone="inverse"` |
 
 ### Verificación
 
@@ -353,6 +445,64 @@ pnpm exec playwright test --update-snapshots --project=katachi
 # 4. Type-check y lint
 pnpm type-check && pnpm lint
 ```
+
+---
+
+## Patrones de decoración expresiva · Kintsugi
+
+Más allá del seam top genérico (2px barra animada) y del ring (box-shadow dorado),
+algunos componentes justifican un tratamiento kintsugi con mayor carácter.
+
+### Patrón: vena de oro irregular (reading-progress)
+
+**Componente de referencia**: `lib-reading-progress` → `variant="bar"` / `tone="gold"`
+
+El gradiente flat de color sólido no evoca el kintsugi — el oro real en cerámica
+es **irregular**, con variaciones de intensidad a lo largo de la vena. La técnica:
+
+```css
+/* Gradiente diagonal con transición desigual — evoca el hilo de oro real */
+background: linear-gradient(
+  90deg,
+  var(--color-kaki-600)  0%,   /* oscuro en el arranque */
+  var(--color-kaki-500) 30%,
+  var(--color-kaki-300) 65%,   /* brightest — punto de fusión */
+  var(--color-kaki-400) 100%
+);
+
+/* Shimmer: reflejo de luz recorriendo la vena en bucle lento */
+&::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent                    0%,
+    oklch(92% 0.04 60deg / 0.75)  45%,
+    oklch(98% 0.01 60deg / 0.90)  50%,   /* destello central */
+    oklch(92% 0.04 60deg / 0.75)  55%,
+    transparent                   100%
+  );
+  animation: gold-shimmer 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Glow tip: halo en el extremo activo del arco/barra */
+&[active]::after {
+  width: 24px;
+  height: 8px;
+  background: oklch(65% 0.1 50deg / 0.65);
+  filter: blur(5px);
+}
+```
+
+**Cuándo usar este patrón** en lugar del seam genérico:
+- El componente es una barra de progreso o indicador lineal/radial
+- El "avance" del componente tiene sentido semántico como "vena que se extiende"
+- Hay espacio suficiente para que el shimmer sea legible (≥ 3px de altura)
+
+**Componentes candidatos** donde aplicar esta lógica en el futuro:
+`lib-progress` (bar variant) · `lib-reading-progress` (ya implementado) ·
+`lib-progress-circle` (versión radial del gradiente) · `lib-metric-bar` (barra interna)
 
 ---
 

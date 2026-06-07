@@ -121,28 +121,28 @@
      VARIANTES
      ══════════════════════════════════════ */
 
-  /* ink — washi-900 sólido */
-  :host([variant="ink"]) .btn {
+  /* filled — fondo sólido, tinta inversa */
+  :host([variant="filled"]) .btn {
     background: var(--color-washi-900);
     color: var(--color-washi-100);
   }
 
-  /* washi — outline, fondo transparente */
-  :host([variant="washi"]) .btn {
+  /* outlined — outline, fondo transparente */
+  :host([variant="outlined"]) .btn {
     background: transparent;
     color: var(--text-primary);
     border: 1px solid var(--border-strong);
   }
 
-  /* kaki — acento kaki */
-  :host([variant="kaki"]) .btn {
+  /* accent — acento kaki terracota */
+  :host([variant="accent"]) .btn {
     background: var(--color-kaki-400);
     color: #fff;
   }
 
-  /* celadon — acento celadón */
-  :host([variant="celadon"]) .btn {
-    background: var(--color-celadon-500);
+  /* info — acento celadón jade */
+  :host([variant="info"]) .btn {
+    background: var(--info);
     color: #fff;
   }
 
@@ -166,21 +166,30 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     variant="ink" usa washi-900 (== --bg-inverse en light mode) y
+     variant="filled" usa washi-900 (== --bg-inverse en light mode) y
      washi-100 (≈ --text-inverse). Swap a tokens semánticos para
-     que en katachis dark (kintsugi/wabi/terminal) el botón "ink"
+     que en katachis dark (kintsugi/wabi/terminal) el botón "filled"
      invierta correctamente y siga siendo el botón primario del
      contexto.
 
-     Las demás variantes (kaki, celadon, danger, ghost, washi) son
+     Las demás variantes (accent, info, danger, ghost, outlined) son
      paletas deliberadas — no se tocan.
 
      Especificidad equivalente al selector original.
+
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → ring+halo dorado en .btn (box-shadow)
+     • sabi     → ring brutal-mini en .btn (box-shadow)
+     .btn ya tiene box-shadow en transition — el ring anima suavemente.
      ─────────────────────────────────────────────────────────── */
 
-  :host([variant="ink"]) .btn {
+  :host([variant="filled"]) .btn {
     background: var(--bg-inverse);
     color: var(--text-inverse);
+  }
+
+  .btn {
+    box-shadow: var(--lib-effect-ring, none);
   }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */

@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-BADGE — Shibui UI
-   Variantes : default · accent · celadon · dark · error · success · warning
+   Variantes semánticas: default · accent · info · strong · error · success · warning
    Modificadores: size (sm/md) · dot · pill
    ============================================================ */
 
@@ -37,6 +37,10 @@
     border: var(--lib-border-width) solid transparent;
     border-radius: var(--lib-radius-xs);
     user-select: none;
+    position: relative;
+    overflow: hidden;
+    /* kintsugi ring+halo · sabi brutal-mini — activados por [data-katachi] */
+    box-shadow: var(--lib-effect-ring, none);
   }
 
   /* ── Size: md (default) ── */
@@ -89,15 +93,15 @@
     border-color: var(--color-kaki-200);
   }
 
-  /* ── Celadón (jade) ── */
-  :host([variant="celadon"]) .badge {
-    background: var(--color-celadon-50);
-    color: var(--color-celadon-600);
-    border-color: var(--color-celadon-200);
+  /* ── Info (jade / informativo) ── */
+  :host([variant="info"]) .badge {
+    background: var(--info-bg);
+    color: var(--info-text);
+    border-color: var(--info-border);
   }
 
-  /* ── Dark (inverso) ── */
-  :host([variant="dark"]) .badge {
+  /* ── Strong (contraste máximo / inverso) ── */
+  :host([variant="strong"]) .badge {
     background: var(--lib-comp-bg-inverse, var(--color-washi-900));
     color: var(--lib-comp-fg-sec, var(--color-washi-300));
     border-color: var(--lib-comp-border, var(--color-washi-700));
@@ -125,9 +129,13 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     default y dark usan --lib-comp-* como valor primario; cuando
-     katachi está activo el contexto prevalece sobre el variant.
-     Variants semánticos (error, success, warning, accent, celadon)
+     default y strong consumen --lib-comp-* (ya katachi-aware).
+     Variants semánticos (error, success, warning, accent, info)
      mantienen su paleta de estado — son feedback visual, no estética.
+
+     Efectos automáticos vía --lib-effect-* (heredados del ancestro):
+     • kintsugi → --lib-effect-ring: ring+halo dorado  → box-shadow en .badge
+     • sabi     → --lib-effect-ring: brutal-mini 2px   → box-shadow en .badge
+     Nota: seam top eliminado (inapropiado en pill <28px — ver taxonomía KATACHI.md)
      ─────────────────────────────────────────────────────────── */
 }

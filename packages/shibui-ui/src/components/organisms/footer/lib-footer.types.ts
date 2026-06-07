@@ -1,8 +1,11 @@
 export type FooterVariant =
   | 'social'
   | 'accordion'
-  | 'kintsugi'
-  | 'glitch';
+  | 'inverse'
+  | 'glitch'
+  | 'celadon'
+  | 'sabi'
+  | 'shizen';
 
 export interface FooterLink {
   /** Texto visible del enlace */

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 
 // ✅ side-effect import — registra el custom element
@@ -47,14 +47,14 @@ const CHECK_ITEMS: ContentItem[] = [
 
 const UI_ITEMS_BASIC: UiItem[] = [
   { key: 'profile',  label: 'Mi perfil',     desc: 'Actualiza tus datos', icon: 'user',         iconVariant: 'default', chevron: true },
-  { key: 'notif',   label: 'Notificaciones', desc: 'Configura alertas',   icon: 'bell',          iconVariant: 'kaki',    badge: { label: '3', variant: 'kaki' }, chevron: true },
-  { key: 'privacy', label: 'Privacidad',     desc: 'Permisos y acceso',   icon: 'shield-check',  iconVariant: 'celadon', chevron: true },
+  { key: 'notif',   label: 'Notificaciones', desc: 'Configura alertas',   icon: 'bell',          iconVariant: 'accent',    badge: { label: '3', variant: 'accent' }, chevron: true },
+  { key: 'privacy', label: 'Privacidad',     desc: 'Permisos y acceso',   icon: 'shield-check',  iconVariant: 'secondary', chevron: true },
 ];
 
 const UI_ITEMS_GROUPED: UiItem[] = [
   { type: 'header', label: 'Cuenta' },
   { key: 'profile',  label: 'Mi perfil',  icon: 'user',    iconVariant: 'default', chevron: true },
-  { key: 'plan',     label: 'Plan actual', icon: 'crown',  iconVariant: 'kaki',    meta: 'Pro', chevron: true },
+  { key: 'plan',     label: 'Plan actual', icon: 'crown',  iconVariant: 'accent',    meta: 'Pro', chevron: true },
   { type: 'separator' },
   { type: 'header', label: 'Preferencias' },
   { key: 'dark',    label: 'Modo oscuro',  icon: 'moon',   iconVariant: 'default', toggle: false },
@@ -84,7 +84,7 @@ const DL_ITEMS: DlItem[] = [
 type Args = Partial<LibTextList>;
 
 const meta: Meta<Args> = {
-  title: 'Content/Text List',
+  title: 'Universal/Content/Text List',
   component: 'lib-text-list',
   tags:['autodocs'],
   argTypes: {
@@ -95,7 +95,7 @@ const meta: Meta<Args> = {
     },
     marker: {
       control: 'select',
-      options: ['default', 'kaki', 'dash', 'check'],
+      options: ['default', 'accent', 'dash', 'check'],
       description: 'Viñeta (solo ul)',
     },
     counter: {
@@ -148,7 +148,7 @@ export const ContentBullets: Story = {
   name: 'Content — Viñetas',
   render: (): TemplateResult => html`
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xl);padding:var(--lib-space-xl);">
-      ${(['default', 'kaki', 'dash'] as const).map(m => html`
+      ${(['default', 'accent', 'dash'] as const).map(m => html`
         <div style="min-width:200px;">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm)">${m}</p>
           <lib-text-list
@@ -355,19 +355,60 @@ export const Loading: Story = {
    KATACHI · 形 · Las 6 historias estándar
    lib-text-list usa tokens semánticos (--text-primary,
    --text-secondary, --border-subtle) — hereda katachi sin
-   CSS adicional. Bullet kaki y marcadores de viñeta adaptan.
+   CSS adicional. Bullet accent y marcadores de viñeta adaptan.
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="width:100%;max-width:320px;">
-    <lib-text-list
-      family="ul"
-      .items="${[
-        { label: 'Wabi — austeridad en lo imperfecto' },
-        { label: 'Sabi — belleza en el paso del tiempo' },
-        { label: 'Shizen — naturalidad sin fuerza' },
-      ]}"
-    ></lib-text-list>
+  <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-lg);padding:var(--lib-space-lg);">
+    <!-- ul markers -->
+    <div style="min-width:180px;flex:1;">
+      <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">ul · default</p>
+      <lib-text-list
+        family="ul"
+        marker="default"
+        .items="${[
+          { label: 'Wabi — imperfección serena' },
+          { label: 'Sabi — belleza en el tiempo' },
+          { label: 'Shizen — naturalidad' },
+        ]}"
+      ></lib-text-list>
+    </div>
+    <div style="min-width:180px;flex:1;">
+      <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">ul · accent</p>
+      <lib-text-list
+        family="ul"
+        marker="accent"
+        .items="${[
+          { label: 'Tokens de color' },
+          { label: 'Sistema tipográfico' },
+          { label: 'Espaciado 4px base' },
+        ]}"
+      ></lib-text-list>
+    </div>
+    <div style="min-width:180px;flex:1;">
+      <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">ol · decimal</p>
+      <lib-text-list
+        family="ol"
+        counter="decimal"
+        .items="${[
+          { label: 'Explorar componentes' },
+          { label: 'Configurar tokens' },
+          { label: 'Publicar npm' },
+        ]}"
+      ></lib-text-list>
+    </div>
+    <div style="min-width:180px;flex:1;">
+      <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-sm);">ul · check</p>
+      <lib-text-list
+        family="ul"
+        marker="check"
+        .items="${[
+          { label: 'Accesibilidad WCAG AA', checked: true },
+          { label: 'CSS nativo',            checked: true },
+          { label: 'Internacionalización',  checked: false },
+        ]}"
+      ></lib-text-list>
+    </div>
   </div>
 `);
 

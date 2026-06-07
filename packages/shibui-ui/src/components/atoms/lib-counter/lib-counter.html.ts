@@ -1,7 +1,7 @@
 import { html, nothing, svg, TemplateResult } from 'lit';
 
 export type LibCounterSize     = 'sm' | 'md' | 'lg' | 'xl';
-export type LibCounterTone     = 'default' | 'kaki' | 'celadon' | 'error' | 'muted' | 'on-dark';
+export type LibCounterTone     = 'default' | 'accent' | 'info' | 'error' | 'muted' | 'on-dark';
 export type LibCounterDeltaDir = 'up' | 'down' | 'flat';
 
 export interface CounterTemplateProps {

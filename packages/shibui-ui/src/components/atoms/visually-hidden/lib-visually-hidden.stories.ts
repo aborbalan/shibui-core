@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
 import './lib-visually-hidden.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Utilities/Visually Hidden',
+  title: 'Universal/Utilities/Visually Hidden',
   tags:['autodocs'],
   component: 'lib-visually-hidden',
 };

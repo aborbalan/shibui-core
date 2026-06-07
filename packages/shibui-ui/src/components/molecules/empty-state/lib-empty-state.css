@@ -7,7 +7,7 @@
    Props:
      layout   : default (column) · inline (row)
      size     : md (default) · sm
-     tone     : neutral (default) · kaki · celadon · error
+     tone     : neutral (default) · accent · info · error
      bordered : dashed border + bg-surface
      ghost    : icon-wrap sin chrome
    ============================================================ */
@@ -204,16 +204,16 @@
   /* ============================================================
      TONES — icono con tono semántico
      ============================================================ */
-  :host([tone="kaki"]) .es-icon-wrap {
+  :host([tone="accent"]) .es-icon-wrap {
     background: var(--color-kaki-50);
     color: var(--color-kaki-500);
     border-color: var(--color-kaki-100);
   }
 
-  :host([tone="celadon"]) .es-icon-wrap {
-    background: var(--color-celadon-100);
-    color: var(--color-celadon-500);
-    border-color: var(--color-celadon-100);
+  :host([tone="info"]) .es-icon-wrap {
+    background: var(--info-bg-2);
+    color: var(--info);
+    border-color: var(--info-bg-2);
   }
 
   :host([tone="error"]) .es-icon-wrap {

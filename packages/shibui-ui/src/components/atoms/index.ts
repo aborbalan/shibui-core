@@ -36,6 +36,8 @@ export * from './ripple/lib-ripple.component';
 export * from './select-option/lib-select-option.component';
 export * from './skeleton/lib-skeleton.component';
 export * from './spacer/lib-spacer.component';
+export * from './sparkline/lib-sparkline.component';
+export type { SparklineType, SparklineTone } from './sparkline/lib-sparkline.types';
 export * from './spinner/lib-spinner.component';
 export * from './status-dot/lib-status-dot.component';
 export * from './step/lib-step.component';

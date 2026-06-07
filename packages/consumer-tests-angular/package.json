@@ -1,0 +1,25 @@
+{
+  "name": "@shibui/consumer-tests-angular",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Angular 21 fixture para consumer contract tests de @shibui-ui/ui",
+  "scripts": {
+    "serve": "ng serve --port 4201",
+    "build": "ng build"
+  },
+  "dependencies": {
+    "@angular/common": "^21.1.0",
+    "@angular/compiler": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@angular/platform-browser": "^21.1.0",
+    "@shibui-ui/ui": "*",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.1.5",
+    "@angular/cli": "^21.1.5",
+    "@angular/compiler-cli": "^21.1.0",
+    "typescript": "~5.9.2"
+  }
+}

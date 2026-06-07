@@ -4,7 +4,7 @@
    LIB-DRAWER — Shibui UI · SG-59
    Positions : right · left · top · bottom
    Sizes     : sm · md · lg · xl · full
-   Variants  : default · dark · kintsugi · kintsugi-dark · glitch · glitch-dark
+   Variants  : default · dark · inverse · inverse-dark · glitch · glitch-dark
    ============================================================ */
 
 @layer reset {
@@ -400,7 +400,7 @@
   /* ════════════════════════════════
      KINTSUGI
      ════════════════════════════════ */
-  :host([variant="kintsugi"]) {
+  :host([variant="inverse"]) {
     & .dr {
       border-color: rgb(184, 90, 30, .3) !important;
     }
@@ -435,12 +435,12 @@
     & .dr-body::-webkit-scrollbar-thumb {
       background: linear-gradient(180deg, var(--color-kaki-400), #F5D08A, var(--color-kaki-600));
       background-size: 100% 200%;
-      animation: kintsugi-seam 3s ease-in-out infinite alternate;
+      animation: drawer-gold-seam 3s ease-in-out infinite alternate;
     }
   }
 
   /* Gold seam — right */
-  :host([variant="kintsugi"][placement="right"]) .dr::after {
+  :host([variant="inverse"][placement="right"]) .dr::after {
     content: '';
     position: absolute;
     top: 0;
@@ -449,12 +449,12 @@
     width: 2px;
     background: linear-gradient(180deg, transparent 0%, var(--color-kaki-400) 20%, #F5D08A 50%, var(--color-kaki-400) 80%, transparent 100%);
     background-size: 100% 200%;
-    animation: kintsugi-seam 4s ease-in-out infinite alternate;
+    animation: drawer-gold-seam 4s ease-in-out infinite alternate;
     pointer-events: none;
   }
 
   /* Gold seam — left */
-  :host([variant="kintsugi"][placement="left"]) .dr::after {
+  :host([variant="inverse"][placement="left"]) .dr::after {
     content: '';
     position: absolute;
     top: 0;
@@ -463,13 +463,13 @@
     width: 2px;
     background: linear-gradient(180deg, transparent 0%, var(--color-kaki-400) 20%, #F5D08A 50%, var(--color-kaki-400) 80%, transparent 100%);
     background-size: 100% 200%;
-    animation: kintsugi-seam 4s ease-in-out infinite alternate;
+    animation: drawer-gold-seam 4s ease-in-out infinite alternate;
     pointer-events: none;
   }
 
   /* Gold seam — top/bottom */
-  :host([variant="kintsugi"][placement="top"]) .dr::after,
-  :host([variant="kintsugi"][placement="bottom"]) .dr::after {
+  :host([variant="inverse"][placement="top"]) .dr::after,
+  :host([variant="inverse"][placement="bottom"]) .dr::after {
     content: '';
     position: absolute;
     left: 0;
@@ -477,19 +477,19 @@
     height: 2px;
     background: linear-gradient(90deg, transparent 0%, var(--color-kaki-400) 20%, #F5D08A 50%, var(--color-kaki-400) 80%, transparent 100%);
     background-size: 200% 100%;
-    animation: kintsugi-sweep 4s ease-in-out infinite alternate;
+    animation: drawer-gold-sweep 4s ease-in-out infinite alternate;
     pointer-events: none;
   }
 
-  :host([variant="kintsugi"][placement="top"]) .dr::after {
+  :host([variant="inverse"][placement="top"]) .dr::after {
     bottom: 0;
   }
 
-  :host([variant="kintsugi"][placement="bottom"]) .dr::after {
+  :host([variant="inverse"][placement="bottom"]) .dr::after {
     top: 0;
   }
 
-  @keyframes kintsugi-seam {
+  @keyframes drawer-gold-seam {
     0% {
       background-position: 0 -20%;
       opacity: .7;
@@ -506,7 +506,7 @@
     }
   }
 
-  @keyframes kintsugi-sweep {
+  @keyframes drawer-gold-sweep {
     0% {
       background-position: -200% 0;
     }
@@ -519,7 +519,7 @@
   /* ════════════════════════════════
      KINTSUGI DARK
      ════════════════════════════════ */
-  :host([variant="kintsugi-dark"]) {
+  :host([variant="inverse-dark"]) {
     & .dr {
       background: var(--lib-comp-bg, var(--color-washi-950));
       border-color: rgb(184, 90, 30, .2) !important;
@@ -567,7 +567,7 @@
     }
   }
 
-  :host([variant="kintsugi-dark"][placement="right"]) .dr::after {
+  :host([variant="inverse-dark"][placement="right"]) .dr::after {
     content: '';
     position: absolute;
     top: 0;
@@ -576,11 +576,11 @@
     width: 2px;
     background: linear-gradient(180deg, transparent 0%, rgb(184, 90, 30, .5) 20%, rgb(245, 208, 138, .7) 50%, rgb(184, 90, 30, .5) 80%, transparent 100%);
     background-size: 100% 200%;
-    animation: kintsugi-seam 4s ease-in-out infinite alternate;
+    animation: drawer-gold-seam 4s ease-in-out infinite alternate;
     pointer-events: none;
   }
 
-  :host([variant="kintsugi-dark"][placement="left"]) .dr::after {
+  :host([variant="inverse-dark"][placement="left"]) .dr::after {
     content: '';
     position: absolute;
     top: 0;
@@ -589,7 +589,7 @@
     width: 2px;
     background: linear-gradient(180deg, transparent 0%, rgb(184, 90, 30, .5) 20%, rgb(245, 208, 138, .7) 50%, rgb(184, 90, 30, .5) 80%, transparent 100%);
     background-size: 100% 200%;
-    animation: kintsugi-seam 4s ease-in-out infinite alternate;
+    animation: drawer-gold-seam 4s ease-in-out infinite alternate;
     pointer-events: none;
   }
 
@@ -971,8 +971,8 @@
       animation: none;
     }
 
-    :host([variant="kintsugi"]) .dr::after,
-    :host([variant="kintsugi-dark"]) .dr::after {
+    :host([variant="inverse"]) .dr::after,
+    :host([variant="inverse-dark"]) .dr::after {
       animation: none;
     }
 
@@ -988,13 +988,49 @@
      - Side drag-hint (::before): --lib-comp-border-subtle
      - Handle bar (.dr-handle-bar): --lib-comp-border
      - Scrollbar thumb: --lib-comp-border / --lib-comp-border-strong
-     - dark/kintsugi-dark/glitch-dark bg: --lib-comp-bg
+     - dark/inverse-dark/glitch-dark bg: --lib-comp-bg
      - glitch seam (::after): --lib-comp-bg-inverse
 
-     Pseudo-elementos con efectos kintsugi/glitch (::after gold seam,
+     Pseudo-elementos con efectos inverse/glitch (::after gold seam,
      ::before scanlines, RGB ghost layers): sin cambios — efectos
      decorativos propios.
+
+     Efectos automáticos vía --lib-effect-*:
+     • kintsugi → seam dorada animada en .dr::after (top 2px horizontal)
+       Nota: variant="inverse" ya usa ::after para seam vertical dorado
+       y tiene mayor especificidad — gana cuando ambos coexisten.
+     • terminal → seam phosphor en .dr::after
      ─────────────────────────────────────────────────────────── */
+
+  /* ── Kintsugi / terminal seam ── */
+  .dr::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    pointer-events: none;
+    z-index: 10;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 20%,
+      var(--color-kaki-400) 50%,
+      oklch(61.85% 0.149 48.72deg / 0.55) 80%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: drawer-katachi-seam 3s linear infinite;
+    animation-play-state: var(--lib-effect-seam-play, paused);
+    opacity: var(--lib-effect-seam-opacity, 0);
+    transition: opacity var(--duration-slow, 400ms) var(--ease-out, ease-out);
+  }
+
+  @keyframes drawer-katachi-seam {
+    from { background-position: 200% center; }
+    to   { background-position: -200% center; }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

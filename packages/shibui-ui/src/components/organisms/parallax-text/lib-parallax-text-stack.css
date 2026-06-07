@@ -92,20 +92,20 @@
     color: var(--text-muted);
   }
 
-  :host([color="kaki"]) .pts-layer--outline {
+  :host([color="accent"]) .pts-layer--outline {
     -webkit-text-stroke-color: var(--color-kaki-500);
   }
 
-  :host([color="kaki"]) .pts-layer--italic {
+  :host([color="accent"]) .pts-layer--italic {
     color: var(--color-kaki-500);
   }
 
-  :host([color="celadon"]) .pts-layer--outline {
-    -webkit-text-stroke-color: var(--color-celadon-500);
+  :host([color="info"]) .pts-layer--outline {
+    -webkit-text-stroke-color: var(--info);
   }
 
-  :host([color="celadon"]) .pts-layer--italic {
-    color: var(--color-celadon-500);
+  :host([color="info"]) .pts-layer--italic {
+    color: var(--info);
   }
 
   /* ── prefers-reduced-motion ── */

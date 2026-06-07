@@ -18,7 +18,7 @@ export type { LibCounterSize, LibCounterTone, LibCounterDeltaDir };
  * <lib-counter value="24819" label="Usuarios activos" play-on-visible></lib-counter>
  *
  * @example — moneda con delta
- * <lib-counter value="18540" prefix="€" size="lg" tone="kaki"
+ * <lib-counter value="18540" prefix="€" size="lg" tone="accent"
  *   label="Ingresos" delta="+14,7%" delta-dir="up" play-on-visible>
  * </lib-counter>
  *

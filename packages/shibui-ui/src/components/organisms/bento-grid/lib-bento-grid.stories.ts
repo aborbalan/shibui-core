@@ -1,11 +1,11 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-bento-grid.component';
 import './../../atoms/bento-item/lib-bento-item.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Layout/Bento Grid',
+  title: 'Universal/Layout/Bento Grid',
   tags:['autodocs'],
   component: 'lib-bento-grid',
   argTypes: {
@@ -267,25 +267,60 @@ export const FlushCells: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="width:100%;max-width:360px;">
-    <lib-bento-grid columns="3" gap="xs" row-height="56px">
-      <lib-bento-item cols="2" rows="2" flush>
-        <div style="height:100%;background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;">
-          <span style="font-family:var(--lib-font-display);font-size:var(--text-xl);font-weight:300;color:var(--text-primary);">渋い</span>
-        </div>
-      </lib-bento-item>
-      <lib-bento-item cols="1" rows="1" flush>
-        <div style="height:100%;background:var(--bg-surface);border:1px solid var(--border-subtle);"></div>
-      </lib-bento-item>
-      <lib-bento-item cols="1" rows="1" flush>
-        <div style="height:100%;background:var(--border-subtle);"></div>
-      </lib-bento-item>
-      <lib-bento-item cols="3" rows="1" flush>
-        <div style="height:100%;background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;align-items:center;padding:0 10px;">
-          <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.12em;">shibui · design system</span>
-        </div>
-      </lib-bento-item>
-    </lib-bento-grid>
+  <div style="width:100%;max-width:480px;display:flex;flex-direction:column;gap:var(--lib-space-md);">
+
+    <!-- Gap md · interactive -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">gap md · interactive</p>
+      <lib-bento-grid columns="3" gap="md" row-height="80px">
+        <lib-bento-item cols="2" rows="2" interactive>
+          <div style="height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:var(--lib-space-md);">
+            <div style="font-family:var(--lib-font-display);font-size:var(--text-xl);font-weight:300;color:var(--text-primary);">渋い</div>
+            <div style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.12em;">2×2 · destacado</div>
+          </div>
+        </lib-bento-item>
+        <lib-bento-item cols="1" rows="1" interactive>
+          <div style="display:flex;flex-direction:column;justify-content:center;padding:var(--lib-space-sm);">
+            <div style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);">1×1</div>
+          </div>
+        </lib-bento-item>
+        <lib-bento-item cols="1" rows="1" interactive>
+          <div style="display:flex;flex-direction:column;justify-content:center;padding:var(--lib-space-sm);">
+            <div style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);">1×1</div>
+          </div>
+        </lib-bento-item>
+        <lib-bento-item cols="3" rows="1" interactive>
+          <div style="display:flex;align-items:center;justify-content:center;height:100%;">
+            <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.12em;">3×1 · full width</span>
+          </div>
+        </lib-bento-item>
+      </lib-bento-grid>
+    </div>
+
+    <!-- Gap xs · flush (imágenes a sangre) -->
+    <div>
+      <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">gap xs · flush</p>
+      <lib-bento-grid columns="4" gap="xs" row-height="48px">
+        <lib-bento-item cols="1" rows="2" flush>
+          <div style="height:100%;background:var(--border-subtle);"></div>
+        </lib-bento-item>
+        <lib-bento-item cols="2" rows="1" flush>
+          <div style="height:100%;background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);">2×1</span>
+          </div>
+        </lib-bento-item>
+        <lib-bento-item cols="1" rows="1" flush>
+          <div style="height:100%;background:var(--bg-surface);border:1px solid var(--border-subtle);"></div>
+        </lib-bento-item>
+        <lib-bento-item cols="2" rows="1" flush>
+          <div style="height:100%;background:var(--bg-elevated);border:1px solid var(--border-subtle);"></div>
+        </lib-bento-item>
+        <lib-bento-item cols="1" rows="1" flush>
+          <div style="height:100%;background:var(--border-subtle);"></div>
+        </lib-bento-item>
+      </lib-bento-grid>
+    </div>
+
   </div>
 `);
 

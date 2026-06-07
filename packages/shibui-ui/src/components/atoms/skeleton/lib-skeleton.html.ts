@@ -14,7 +14,7 @@ export type LibSkeletonShape =
   | 'rect';   // sin altura propia — bloque libre
 
 export type LibSkeletonAnimation = 'shimmer' | 'wave' | 'pulse';
-export type LibSkeletonSurface   = 'light' | 'dark' | 'kaki';
+export type LibSkeletonSurface   = 'light' | 'dark' | 'accent' | 'info';
 
 export interface SkeletonTemplateProps {
   shape:     LibSkeletonShape;

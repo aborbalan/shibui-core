@@ -117,38 +117,31 @@
     }
 
     /* ══════════════════════════════════════
-        COLORES
+        TONOS SEMÁNTICOS
+        Independientes de la paleta del katachi activo.
+        tone="accent" (default) usa --lib-comp-fg-accent que
+        ya adapta el color al contexto katachi.
         ══════════════════════════════════════ */
 
-    :host([color='washi']) .eb {
+    /* Neutral — cálido washi, bajo contraste */
+    :host([tone='neutral']) .eb {
         --eb-color: var(--color-washi-400, #B8A99A);
         --eb-line-grad: linear-gradient(90deg, var(--color-washi-400, #B8A99A), transparent);
         --eb-line-grad-r: linear-gradient(270deg, var(--color-washi-400, #B8A99A), transparent);
     }
 
-    :host([color='celadon']) .eb {
-        --eb-color: rgb(78, 148, 130, 0.6);
-        --eb-line-grad: linear-gradient(90deg, var(--color-celadon-400, #4E9482), transparent);
-        --eb-line-grad-r: linear-gradient(270deg, var(--color-celadon-400, #4E9482), transparent);
+    /* Inverse — para superficies oscuras (contraste claro) */
+    :host([tone='inverse']) .eb {
+        --eb-color: oklch(97% 0.003 68deg / 0.35);
+        --eb-line-grad: linear-gradient(90deg, oklch(97% 0.003 68deg / 0.40), transparent);
+        --eb-line-grad-r: linear-gradient(270deg, oklch(97% 0.003 68deg / 0.40), transparent);
     }
 
-    :host([color='white']) .eb {
-        --eb-color: rgb(250, 247, 244, 0.35);
-        --eb-line-grad: linear-gradient(90deg, rgb(250, 247, 244, 0.4), transparent);
-        --eb-line-grad-r: linear-gradient(270deg, rgb(250, 247, 244, 0.4), transparent);
-    }
-
-    :host([color='muted']) .eb {
-        --eb-color: rgb(250, 247, 244, 0.15);
-        --eb-line-grad: linear-gradient(90deg, rgb(250, 247, 244, 0.15), transparent);
-        --eb-line-grad-r: linear-gradient(270deg, rgb(250, 247, 244, 0.15), transparent);
-    }
-
-    /* dark surface — kaki atenuado */
-    :host([color='dark']) .eb {
-        --eb-color: rgb(184, 90, 30, 0.45);
-        --eb-line-grad: linear-gradient(90deg, rgb(184, 90, 30, 0.5), transparent);
-        --eb-line-grad-r: linear-gradient(270deg, rgb(184, 90, 30, 0.5), transparent);
+    /* Muted — atenuado, casi invisible */
+    :host([tone='muted']) .eb {
+        --eb-color: oklch(97% 0.003 68deg / 0.15);
+        --eb-line-grad: linear-gradient(90deg, oklch(97% 0.003 68deg / 0.15), transparent);
+        --eb-line-grad-r: linear-gradient(270deg, oklch(97% 0.003 68deg / 0.15), transparent);
     }
 
     /* ══════════════════════════════════════
@@ -179,17 +172,13 @@
         animation: none !important;
     }
 
-    /* Colores del dot por variante de color */
-    :host([dot][color='celadon']) .eb::before {
-        --eb-dot-color: var(--color-celadon-400, #4E9482);
-    }
-
-    :host([dot][color='washi']) .eb::before {
+    /* Dot por tono */
+    :host([dot][tone='neutral']) .eb::before {
         --eb-dot-color: var(--color-washi-400, #B8A99A);
     }
 
-    :host([dot][color='white']) .eb::before {
-        --eb-dot-color: rgb(250, 247, 244, 0.4);
+    :host([dot][tone='inverse']) .eb::before {
+        --eb-dot-color: oklch(97% 0.003 68deg / 0.40);
     }
 
     /* Cancelar expansión en hover para dot */
@@ -214,50 +203,14 @@
     }
 
     /* ══════════════════════════════════════
-        KINTSUGI — gold shimmer
+        EFECTOS KATACHI — context-driven
+        Los efectos se activan automáticamente cuando el eyebrow
+        está dentro de un ancestro con [data-katachi="x"].
+        No se necesita ninguna prop de efecto explícita.
         ══════════════════════════════════════ */
 
-    @keyframes eb-gold {
-        0% {
-            background-position: -200% 0;
-        }
-
-        100% {
-            background-position: 200% 0;
-        }
-    }
-
-    :host([effect='kintsugi']) .eb {
-        background: linear-gradient(90deg,
-                var(--color-kaki-600, #8C4115),
-                #F5D08A,
-                var(--color-kaki-400, #D97234),
-                #F5D08A,
-                var(--color-kaki-600, #8C4115));
-        background-size: 200% 100%;
-        animation: eb-gold 4s linear infinite;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        color: transparent;
-        /* fallback */
-    }
-
-    :host([effect='kintsugi']) .eb::before {
-        background: linear-gradient(90deg, var(--color-kaki-400, #D97234), #F5D08A, transparent);
-        background-size: 200% 100%;
-        animation: eb-gold 4s linear infinite;
-    }
-
-    :host([effect='kintsugi'][line='right']) .eb::before,
-    :host([effect='kintsugi'][line='both']) .eb::after {
-        background: linear-gradient(270deg, var(--color-kaki-400, #D97234), #F5D08A, transparent);
-        background-size: 200% 100%;
-        animation: eb-gold 4s linear infinite;
-    }
-
-    /* ══════════════════════════════════════
-        GLITCH — drift + flicker periódico
-        ══════════════════════════════════════ */
+    /* ── Glitch drift (terminal context) ─────────────────────── */
+    /* Activo cuando --lib-effect-glitch-play = running */
 
     @keyframes eb-glitch {
         0%,
@@ -307,30 +260,85 @@
         }
     }
 
-    :host([effect='glitch']) .eb {
-        color: rgb(250, 247, 244, 0.25);
+    .eb {
         animation:
             eb-glitch 6s steps(1) infinite,
             eb-flicker 6s steps(1) infinite;
+        animation-play-state:
+            var(--lib-effect-glitch-play, paused),
+            var(--lib-effect-glitch-play, paused);
     }
 
-    :host([effect='glitch']) .eb::before {
-        background: linear-gradient(90deg, rgb(250, 247, 244, 0.25), transparent);
-    }
-
-    /* ─── KATACHI · ambient context ──────────────────────────────
+    /* ─── KATACHI · nota de diseño ───────────────────────────────
        Los bridge tokens en :host cubren el estado predeterminado
-       (sin color= explícito). Los atributos color="washi|celadon…"
-       siguen funcionando: su specificity (0,1,0) supera a :host
-       (0,0,0) dentro de @layer tokens, por lo que son overrides
-       deliberados del desarrollador — katachi no los pisa.
+       (sin tone= explícito) vía --lib-comp-fg-accent → adapta el
+       color del eyebrow al katachi activo automáticamente:
+         kintsugi → kaki dorado · terminal → phosphor green · etc.
 
-       effect="kintsugi" y effect="glitch" son correctos por diseño
-       y no necesitan overrides de contexto.
+       tone="neutral|inverse|muted" son overrides semánticos
+       deliberados del desarrollador — tienen mayor especificidad
+       que el contexto katachi y no son pisados.
 
        La fuente ya es --lib-font-mono por defecto → terminal encaja
        sin cambios adicionales.
+
+       Kintsugi extra: el color ya es kaki-400 vía --lib-comp-fg-accent,
+       pero la diferencia de tono es imperceptible en deuteranopia.
+       Se añaden dos efectos perceptibles por forma/brillo, no por color:
+       • Shimmer animado en la línea lateral (::before) — movimiento
+       • Text-shadow glow en el texto — diferencia de luminosidad
        ─────────────────────────────────────────────────────────── */
 
-    /* ─── /KATACHI ───────────────────────────────────────────── */
+    @keyframes eb-line-shimmer {
+        from { background-position: 200% center; }
+        to   { background-position: -200% center; }
+    }
+
+    @supports selector(:host-context(a)) {
+
+        /* Shimmer en la línea lateral — movimiento perceptible */
+        :host-context([data-katachi="kintsugi"]) .eb::before,
+        :host([line="both"]):host-context([data-katachi="kintsugi"]) .eb::after {
+            background: linear-gradient(
+                90deg,
+                transparent            0%,
+                var(--color-kaki-600) 10%,
+                var(--color-kaki-300) 50%,
+                var(--color-kaki-400) 75%,
+                transparent           100%
+            );
+            background-size: 200% 100%;
+            animation:
+                eb-line-shimmer 3s linear infinite;
+            animation-play-state: var(--lib-effect-seam-play, paused);
+        }
+
+        /* Glow en el texto — diferencia de luminosidad, no de color */
+        :host-context([data-katachi="kintsugi"]) .eb {
+            text-shadow: 0 0 12px oklch(61.85% 0.149 48.72deg / 0.35);
+        }
+
+        /* Celadon — shimmer jade en la línea + glow frío en el texto */
+        :host-context([data-katachi="celadon"]) .eb::before,
+        :host([line="both"]):host-context([data-katachi="celadon"]) .eb::after {
+            background: linear-gradient(
+                90deg,
+                transparent               0%,
+                var(--color-celadon-600) 10%,
+                var(--color-celadon-300) 50%,
+                var(--color-celadon-400) 75%,
+                transparent              100%
+            );
+            background-size: 200% 100%;
+            animation:
+                eb-line-shimmer 3s linear infinite;
+            animation-play-state: var(--lib-effect-seam-play, paused);
+        }
+
+        :host-context([data-katachi="celadon"]) .eb {
+            text-shadow: 0 0 12px oklch(58.33% 0.068 171.21deg / 0.35);
+        }
+
+    }
+
 }

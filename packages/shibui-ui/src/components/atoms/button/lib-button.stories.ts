@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { expect, userEvent, fireEvent } from 'storybook/test';
 import { html, TemplateResult } from 'lit';
 import './lib-button.component';
@@ -9,7 +9,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 type LibButtonStoryArgs = LibButton & { slotContent?: string | TemplateResult };
 
 const meta: Meta<LibButtonStoryArgs> = {
-  title: 'Actions/Button',
+  title: 'Universal/Actions/Button',
   tags: ['autodocs'],
   component: 'lib-button',
 

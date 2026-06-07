@@ -3,7 +3,7 @@
 /* ============================================================
    LIB-RATING — Shibui UI · SG-19
    Sizes   : xs · sm · md · lg · xl
-   Colors  : gold · kaki · washi · celadon
+   Colors  : gold · accent · neutral · info
    Icons   : star · heart · diamond (SVG inline)
    Extras  : half-star (readonly) · numeric display · disabled
    ============================================================ */
@@ -141,32 +141,32 @@
      ──────────────────────────────────────── */
 
   /* Kaki */
-  :host([color="kaki"]) .rt-item.is-filled {
+  :host([color="accent"]) .rt-item.is-filled {
     color: var(--color-kaki-500);
   }
 
-  :host([color="kaki"]) .rt-item.is-preview {
+  :host([color="accent"]) .rt-item.is-preview {
     color: var(--color-kaki-400);
     opacity: 0.6;
   }
 
   /* Washi — monocromático */
-  :host([color="washi"]) .rt-item.is-filled {
+  :host([color="neutral"]) .rt-item.is-filled {
     color: var(--color-washi-900);
   }
 
-  :host([color="washi"]) .rt-item.is-preview {
+  :host([color="neutral"]) .rt-item.is-preview {
     color: var(--color-washi-600);
     opacity: 0.5;
   }
 
   /* Celadon */
-  :host([color="celadon"]) .rt-item.is-filled {
-    color: var(--color-celadon-500);
+  :host([color="info"]) .rt-item.is-filled {
+    color: var(--info);
   }
 
-  :host([color="celadon"]) .rt-item.is-preview {
-    color: var(--color-celadon-400);
+  :host([color="info"]) .rt-item.is-preview {
+    color: var(--info-line);
     opacity: 0.45;
   }
 
@@ -197,16 +197,16 @@
     flex-shrink: 0;
   }
 
-  :host([color="kaki"]) .rt-half-fill {
+  :host([color="accent"]) .rt-half-fill {
     color: var(--color-kaki-500);
   }
 
-  :host([color="washi"]) .rt-half-fill {
+  :host([color="neutral"]) .rt-half-fill {
     color: var(--color-washi-900);
   }
 
-  :host([color="celadon"]) .rt-half-fill {
-    color: var(--color-celadon-500);
+  :host([color="info"]) .rt-half-fill {
+    color: var(--info);
   }
 
   /* ────────────────────────────────────────

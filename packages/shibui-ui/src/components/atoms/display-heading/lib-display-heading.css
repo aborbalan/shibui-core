@@ -39,7 +39,7 @@
         --dh-color-desc: rgb(250, 247, 244, 0.28);
     }
 
-    :host([surface='washi']) {
+    :host([surface='neutral']) {
         --dh-color-heading: var(--color-washi-800, #3D332A);
         --dh-color-desc: var(--color-washi-600, #7A6A5C);
     }
@@ -209,6 +209,26 @@
         font-size: 0.75rem;
         letter-spacing: 0.03em;
         line-height: 2;
+      }
+
+      /* ── Kintsugi: glow dorado en heading + accent más vívido ── */
+      :host-context([data-katachi="kintsugi"]) .dh-heading {
+        text-shadow: 0 0 24px oklch(61.85% 0.149 48.72deg / 0.25);
+      }
+
+      :host-context([data-katachi="kintsugi"]) .dh-accent {
+        color: var(--color-kaki-300);
+        text-shadow: 0 0 16px oklch(61.85% 0.149 48.72deg / 0.40);
+      }
+
+      /* ── Celadon: glow jade en heading + accent más vívido ── */
+      :host-context([data-katachi="celadon"]) .dh-heading {
+        text-shadow: 0 0 24px oklch(58.33% 0.068 171.21deg / 0.25);
+      }
+
+      :host-context([data-katachi="celadon"]) .dh-accent {
+        color: var(--color-celadon-300);
+        text-shadow: 0 0 16px oklch(58.33% 0.068 171.21deg / 0.40);
       }
     }
 

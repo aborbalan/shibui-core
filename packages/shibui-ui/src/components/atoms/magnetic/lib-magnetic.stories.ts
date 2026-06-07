@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from '@storybook/web-components-vite';
+﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import './lib-magnetic.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 import '../button/lib-button.component'; // Asegúrate de que esta ruta sea correcta
 
 const meta: Meta = {
-  title: 'Actions/Magnetic',
+  title: 'Universal/Actions/Magnetic',
   tags:['autodocs'],
   component: 'lib-magnetic',
   argTypes: {
@@ -32,9 +32,15 @@ export const Default: StoryObj = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
-  <div style="height:120px;display:flex;align-items:center;justify-content:center;background:var(--bg-elevated);border:1px solid var(--border-subtle);">
-    <lib-magnetic shift="0.4">
-      <lib-button variant="primary">Acércate</lib-button>
+  <div style="height:200px;display:flex;align-items:center;justify-content:center;gap:var(--lib-space-xl);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
+    <lib-magnetic shift="0.3">
+      <lib-button variant="primary" size="sm">Sutil</lib-button>
+    </lib-magnetic>
+    <lib-magnetic shift="0.5">
+      <lib-button variant="primary" size="md">Acércate</lib-button>
+    </lib-magnetic>
+    <lib-magnetic shift="0.8">
+      <lib-button variant="primary" size="lg">Intenso</lib-button>
     </lib-magnetic>
   </div>
 `);

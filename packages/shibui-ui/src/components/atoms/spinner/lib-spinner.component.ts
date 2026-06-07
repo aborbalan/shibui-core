@@ -7,13 +7,13 @@ import { spinnerTemplate } from './lib-spinner.html';
 /* ── Tipos públicos ─────────────────────────────────────────── */
 
 /**
- * Variante visual.
- * - `enso`     — trazo de pincel zen (SVG doble capa).
- * - `sumi`     — tinta disolviéndose en agua (conic-gradient).
- * - `kintsugi` — anillo dorado con halo de polvo de oro.
- * - `shizuku`  — gotas en órbita decreciente.
+ * Variante visual (forma del spinner — estructural, no paleta).
+ * - `enso`    — trazo de pincel zen (SVG doble capa).
+ * - `sumi`    — tinta disolviéndose en agua (conic-gradient).
+ * - `kin`     — anillo dorado con halo de polvo de oro.   era 'kintsugi'
+ * - `shizuku` — gotas en órbita decreciente.
  */
-export type SpinnerVariant = 'enso' | 'sumi' | 'kintsugi' | 'shizuku';
+export type SpinnerVariant = 'enso' | 'sumi' | 'kin' | 'shizuku';
 
 /** Tamaño del spinner. */
 export type SpinnerSize = 'sm' | 'md' | 'lg';
@@ -21,10 +21,13 @@ export type SpinnerSize = 'sm' | 'md' | 'lg';
 /**
  * Tono de color.
  * Afecta a `enso` (stroke) y `sumi` (gradiente).
- * En `shizuku`, `tone="kaki"` equivale a `dark`.
- * No tiene efecto sobre `kintsugi` (siempre oro).
+ * En `shizuku`, `tone="accent"` activa las gotas doradas.
+ * No tiene efecto sobre `kin` (siempre oro).
+ * - `ink`    — tinta oscura (default)
+ * - `accent` — cálido kaki/persimón       era 'kaki'
+ * - `cool`   — jade celadón sereno         era 'celadon'
  */
-export type SpinnerTone = 'ink' | 'kaki' | 'celadon';
+export type SpinnerTone = 'ink' | 'accent' | 'cool';
 
 /**
  * @element lib-spinner

@@ -62,6 +62,16 @@
     transition: transform var(--duration-base), box-shadow var(--duration-base);
   }
 
+  /* Node con tooltip — el nodo es trigger de lib-tooltip */
+  .tl-node-tip {
+    position: relative;
+    z-index: 2; /* sobre la línea y por encima de ítems vecinos al abrir */
+  }
+
+  .tl-node.has-tip {
+    cursor: help;
+  }
+
   /* Dot */
   .tl-node-dot {
     background: var(--bg-elevated);
@@ -95,7 +105,7 @@
   }
 
   /* ── NODE COLORS ── */
-  .nd-kaki {
+  .nd-accent {
     &.tl-node-dot { border-color: var(--color-kaki-500); }
 
     &.tl-node-dot::after { background: var(--color-kaki-500); }
@@ -113,7 +123,7 @@
     }
   }
 
-  .nd-celadon {
+  .nd-info {
     &.tl-node-dot { border-color: var(--color-celadon-500); }
 
     &.tl-node-dot::after { background: var(--color-celadon-500); }
@@ -159,7 +169,7 @@
 
   /* ── ITEM STATES ── */
 
-  /* Active — pulse kaki */
+  /* Active — pulse accent */
   @keyframes tl-pulse {
     0% {
       box-shadow: 0 0 0 0 rgb(184, 90, 30, 0.35);
@@ -362,6 +372,53 @@
     margin-top: var(--lib-space-xs);
   }
 
+  /* ── CLICKABLE / NAVEGACIÓN ──
+     La superficie interactiva (card o contenido) usa role+tabindex en JS;
+     aquí solo el feedback visual. Tokens semánticos → katachi-aware. */
+  .tl-clickable {
+    cursor: pointer;
+    outline: none;
+    transition:
+      transform var(--duration-base) var(--ease-out),
+      box-shadow var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out),
+      background var(--duration-base) var(--ease-out);
+
+    &:focus-visible {
+      outline: 2px solid var(--color-kaki-500);
+      outline-offset: 2px;
+    }
+  }
+
+  /* Card clickable — elevación + borde accent */
+  .tl-card.tl-clickable {
+    &:hover {
+      border-color: var(--color-kaki-200);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+
+  /* Contenido (sin card) clickable — superficie sutil al hover */
+  .tl-content-clickable {
+    margin: calc(var(--lib-space-xs) * -1) calc(var(--lib-space-sm) * -1);
+    padding: var(--lib-space-xs) var(--lib-space-sm);
+    border-radius: var(--radius-sm);
+
+    &:hover { background: var(--bg-surface); }
+    &:active { background: var(--border-subtle); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tl-card.tl-clickable:hover,
+    .tl-card.tl-clickable:active { transform: none; }
+  }
+
   /* Media block */
   .tl-media {
     margin-top: var(--lib-space-md);
@@ -413,13 +470,13 @@
     border: 1px solid var(--border-subtle);
   }
 
-  .tl-badge-kaki {
+  .tl-badge-accent {
     color: var(--color-kaki-500);
     background: var(--color-kaki-50);
     border: 1px solid var(--color-kaki-100);
   }
 
-  .tl-badge-celadon {
+  .tl-badge-info {
     color: var(--color-celadon-500);
     background: var(--color-celadon-50);
     border: 1px solid var(--color-celadon-100);
@@ -549,6 +606,28 @@
      Refinamientos surgical pueden venir en iteraciones futuras.
      Bloque marcador para discoverability.
      ─────────────────────────────────────────────────────────── */
+
+  /* celadon · el nodo/card activo sigue al katachi: consume el token
+     semántico de acento (--text-accent / --border-focus, jade bajo
+     celadon) en vez del kaki cálido hardcodeado. Acotado a celadon. */
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi="celadon"]) .tl-item.is-active .tl-node-dot {
+      border-color: var(--border-focus);
+    }
+
+    :host-context([data-katachi="celadon"]) .tl-item.is-active .tl-node-dot::after {
+      background: var(--text-accent);
+    }
+
+    :host-context([data-katachi="celadon"]) .tl-item.is-active .tl-card {
+      border-color: color-mix(in oklch, var(--text-accent), transparent 65%);
+      background: color-mix(in oklch, var(--text-accent), transparent 92%);
+    }
+
+    :host-context([data-katachi="celadon"]) .tl-line.progress::after {
+      background: var(--text-accent);
+    }
+  }
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
 }

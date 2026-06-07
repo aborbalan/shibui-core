@@ -1,16 +1,16 @@
-import { html, TemplateResult } from 'lit';
+﻿import { html, TemplateResult } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import './lib-parallax-text-stack.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 const meta: Meta = {
-  title: 'Motion/Parallax Text Stack',
+  title: 'Web/Motion/Parallax Text Stack',
   tags:['autodocs'],
   component: 'lib-parallax-text-stack',
   argTypes: {
     speed: { control: { type: 'range', min: 0.05, max: 0.5, step: 0.05 } },
     size:  { control: 'select', options: ['sm', 'md', 'lg', 'xl', '2xl'] },
-    color: { control: 'select', options: ['default', 'muted', 'kaki', 'celadon'] },
+    color: { control: 'select', options: ['default', 'muted', 'accent', 'info'] },
   },
 };
 export default meta;
@@ -85,7 +85,7 @@ export const Sizes: Story = {
    Colores
    ────────────────────────────────────────────── */
 export const Colors: Story = {
-  name: 'Colors — default · muted · kaki · celadon',
+  name: 'Colors — default · muted · accent · info',
   render: (): TemplateResult => page(html`
     ${scrollHint()}
     <lib-parallax-text-stack .lines=${['Default', 'Color']}
@@ -93,9 +93,9 @@ export const Colors: Story = {
     <lib-parallax-text-stack .lines=${['Muted', 'Subtle']}
       speed="0.12" size="xl" color="muted"></lib-parallax-text-stack>
     <lib-parallax-text-stack .lines=${['Kaki', 'Terracota']}
-      speed="0.12" size="xl" color="kaki"></lib-parallax-text-stack>
+      speed="0.12" size="xl" color="accent"></lib-parallax-text-stack>
     <lib-parallax-text-stack .lines=${['Celadón', 'Verde']}
-      speed="0.12" size="xl" color="celadon"></lib-parallax-text-stack>
+      speed="0.12" size="xl" color="info"></lib-parallax-text-stack>
     ${spacer()}
   `),
 };
@@ -172,11 +172,51 @@ export const HeroLanding: Story = {
 
 const _katachi = createKatachiStories<object>(() => html`
   <div style="overflow-x:hidden;background:var(--bg-base);">
+
+    <!-- sm — default color -->
+    <div style="border-bottom:1px solid var(--border-subtle);padding:var(--lib-space-xs) var(--lib-space-md);">
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;">sm · default</span>
+    </div>
     <lib-parallax-text-stack
       .lines=${['Shibui · 渋い · Wabi · 侘 · Kintsugi · 金継ぎ · Sabi · 寂 · ']}
-      speed="0.12"
+      speed="0.1"
       size="sm"
+      color="default"
     ></lib-parallax-text-stack>
+
+    <!-- md — muted -->
+    <div style="border-bottom:1px solid var(--border-subtle);border-top:1px solid var(--border-subtle);padding:var(--lib-space-xs) var(--lib-space-md);">
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;">md · muted</span>
+    </div>
+    <lib-parallax-text-stack
+      .lines=${['Design System · 形 · Katachi · Washi · ']}
+      speed="0.12"
+      size="md"
+      color="muted"
+    ></lib-parallax-text-stack>
+
+    <!-- lg — kaki -->
+    <div style="border-bottom:1px solid var(--border-subtle);border-top:1px solid var(--border-subtle);padding:var(--lib-space-xs) var(--lib-space-md);">
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;">lg · accent</span>
+    </div>
+    <lib-parallax-text-stack
+      .lines=${['Kaki · 柿 · Terracota · Acento · ']}
+      speed="0.15"
+      size="lg"
+      color="accent"
+    ></lib-parallax-text-stack>
+
+    <!-- xl — celadon -->
+    <div style="border-bottom:1px solid var(--border-subtle);border-top:1px solid var(--border-subtle);padding:var(--lib-space-xs) var(--lib-space-md);">
+      <span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;">xl · info</span>
+    </div>
+    <lib-parallax-text-stack
+      .lines=${['Celadón · 青磁 · Celadon · 寒色 · ']}
+      speed="0.18"
+      size="xl"
+      color="info"
+    ></lib-parallax-text-stack>
+
   </div>
 `);
 
