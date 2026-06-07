@@ -706,7 +706,9 @@
 ### `lib-progress-circle` · ✅
 
 > **CSS verificado.** Variantes: `default` (washi-900) · `kaki` · `celadon` · `error`. Sin dark adaptation.
-> El arco animado vía SVG `stroke-dashoffset`. Sin efectos del sistema.
+> El arco animado vía SVG `stroke-dashoffset`. Ring katachi (kintsugi/sabi) renderizado vía
+> SVG (`<circle>` stroke + `drop-shadow` sobre `.pc__viz`), no box-shadow — evita el aliasing
+> del borde curvo en círculos grandes.
 
 #### Superficies
 
@@ -714,7 +716,7 @@
 |------------|--------|-------|
 | light | ✅ | Default — arco washi-900 sobre track washi-200 |
 | dark | 🔲 | Sin adaptación — arco y track no invierten |
-| kintsugi | 🔲 | Trazo dorado del arco pendiente |
+| kintsugi | ✅ | Anillo dorado nítido vía `--lib-effect-ring-stroke` (stroke SVG) + halo `--lib-effect-ring-glow` |
 | glitch | `—` | No aplica |
 | celadón | `—` | `variant="celadon"` cubre el caso de uso |
 | washi | `—` | Default cubre el uso en washi |
@@ -723,7 +725,8 @@
 
 | Efecto | Estado | Notas |
 |--------|--------|-------|
-| todos | `—` | No aplica |
+| ring (kintsugi) | ✅ | `<circle class="pc__ring">` stroke dorado + `drop-shadow` halo |
+| ring (sabi) | ✅ | Offset brutal vía `drop-shadow(2px 2px 0)` sobre `.pc__viz` |
 
 ---
 

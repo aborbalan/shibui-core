@@ -12,6 +12,7 @@ import type {
   TimelineLineVariant,
   TooltipPosition,
   TooltipVariant,
+  TimelineItemClickDetail,
 } from './lib-timeline-item.types';
 
 /**
@@ -35,6 +36,13 @@ import type {
  * @prop {string}              tooltip          — Texto que muestra el nodo en hover (lib-tooltip)
  * @prop {TooltipPosition}     tooltip-position — Posición de la burbuja (default: 'right')
  * @prop {TooltipVariant}      tooltip-variant  — Variante de color de la burbuja (default: 'dark')
+ * @prop {boolean}             clickable        — Hace la card/contenido interactivo y emite evento al click
+ * @prop {string}              href             — URL de navegación; navega de forma nativa salvo preventDefault
+ * @prop {string}              target           — Target del enlace (p.ej. '_blank') cuando hay href
+ * @prop {string}              value            — Identificador libre incluido en el detalle del evento
+ *
+ * @fires ui-lib-timeline-item-click — Al activar (click/Enter/Space) un ítem clickable o con href.
+ *                                     detail: { value, href, title, timestamp, originalEvent }. Cancelable.
  *
  * @slot         — Contenido libre (body del evento)
  * @slot meta    — Badges, avatares y metadatos en fila
@@ -110,6 +118,71 @@ export class LibTimelineItem extends LitElement {
   @property({ type: String, attribute: 'tooltip-variant' })
   tooltipVariant: TooltipVariant = 'dark';
 
+  /* ── Clickable / navegación ── */
+
+  @property({ type: Boolean, reflect: true })
+  clickable = false;
+
+  @property({ type: String })
+  href = '';
+
+  @property({ type: String })
+  target = '';
+
+  @property({ type: String })
+  value = '';
+
+  /** ¿El ítem responde a click/teclado? */
+  private get _interactive(): boolean {
+    return this.clickable || Boolean(this.href);
+  }
+
+  /** Emite el evento y, si hay href y nadie cancela, navega. */
+  private _emitClick(originalEvent: Event): void {
+    const detail: TimelineItemClickDetail = {
+      value:     this.value,
+      href:      this.href,
+      title:     this.title,
+      timestamp: this.timestamp,
+      originalEvent,
+    };
+    const allowed = this.dispatchEvent(new CustomEvent<TimelineItemClickDetail>(
+      'ui-lib-timeline-item-click',
+      { detail, bubbles: true, composed: true, cancelable: true },
+    ));
+
+    if (allowed && this.href) {
+      if (this.target === '_blank') {
+        window.open(this.href, '_blank', 'noopener');
+      } else {
+        window.location.assign(this.href);
+      }
+    }
+  }
+
+  /** Click sobre la superficie — ignora controles interactivos anidados. */
+  private _onActivate(e: Event): void {
+    if (!this._interactive) return;
+    const surface = this.renderRoot.querySelector('.tl-clickable');
+    for (const node of e.composedPath()) {
+      if (node === surface) break;
+      if (node instanceof HTMLElement &&
+          node.matches('a[href], button, input, select, textarea, [role="button"], [role="link"]')) {
+        return; /* clic en un control interno/anidado → no activar el ítem */
+      }
+    }
+    this._emitClick(e);
+  }
+
+  /** Activación por teclado (Enter / Space). */
+  private _onKeydown(e: KeyboardEvent): void {
+    if (!this._interactive) return;
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      this._emitClick(e);
+    }
+  }
+
   /* ── API pública ── */
 
   /** Expande el ítem si es collapsible */
@@ -144,7 +217,11 @@ export class LibTimelineItem extends LitElement {
       tooltipPosition: this.tooltipPosition,
       tooltipVariant:  this.tooltipVariant,
       hasTooltipSlot:  this.querySelector(':scope > [slot="tooltip"]') !== null,
+      clickable:       this.clickable,
+      href:            this.href,
       onToggleCollapse: (): void => { this._collapsed = !this._collapsed; },
+      onActivate:       (e: Event): void => this._onActivate(e),
+      onKeydown:        (e: KeyboardEvent): void => this._onKeydown(e),
     });
   }
 }
@@ -152,5 +229,8 @@ export class LibTimelineItem extends LitElement {
 declare global {
   interface HTMLElementTagNameMap {
     'lib-timeline-item': LibTimelineItem;
+  }
+  interface HTMLElementEventMap {
+    'ui-lib-timeline-item-click': CustomEvent<TimelineItemClickDetail>;
   }
 }

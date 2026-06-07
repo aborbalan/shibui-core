@@ -1,19 +1,12 @@
-import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
+import { LitElement, css, unsafeCSS, type TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import sharedTokens             from '../../../styles/shared/tokens.css?inline';
+import skeletonCss              from '../../../shared/charts/chart-skeleton.css?inline';
 import componentCss             from './lib-scatter-chart.css?inline';
 import { scatterChartTemplate } from './lib-scatter-chart.html';
-import type { ScatterSeries, ScatterPoint, ScatterTooltip } from './lib-scatter-chart.types';
-
-/** Paleta de colores para las series — visualmente distintos en claro y oscuro. */
-const SERIES_COLORS: readonly string[] = [
-  'oklch(45.54% 0.059 173.23deg)',  /* celadon-500 */
-  'oklch(51.65% 0.134  46.13deg)',  /* kaki-500    */
-  'oklch(65%    0.15  300deg)',
-  'oklch(55%    0.18  240deg)',
-  'oklch(65%    0.12   60deg)',
-  'oklch(60%    0.14    0deg)',
-];
+import { SERIES_COLORS, seriesColor, ChartResizeController, tooltipAnchor } from '../../../shared/charts';
+import type { ChartPoint, ChartTooltip } from '../../../../models/ui/charts';
+import type { ScatterSeries } from './lib-scatter-chart.types';
 
 /**
  * @element lib-scatter-chart
@@ -46,6 +39,7 @@ const SERIES_COLORS: readonly string[] = [
 export class LibScatterChart extends LitElement {
   static override styles = [
     css`${unsafeCSS(sharedTokens)}`,
+    css`${unsafeCSS(skeletonCss)}`,
     css`${unsafeCSS(componentCss)}`,
   ];
 
@@ -70,52 +64,21 @@ export class LibScatterChart extends LitElement {
   @property({ type: Number })
   height = 320;
 
-  @state() private _svgWidth = 600;
-  @state() private _tooltip: ScatterTooltip | null = null;
+  @state() private _tooltip: ChartTooltip | null = null;
 
-  private _ro: ResizeObserver | null = null;
+  private readonly _resize = new ChartResizeController(this);
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this._ro = new ResizeObserver((entries) => {
-      const w = entries[0]?.contentRect.width;
-      if (w !== undefined && Math.round(w) !== Math.round(this._svgWidth)) {
-        this._svgWidth = w;
-      }
-    });
-    this._ro.observe(this);
-  }
+  private _handleDotEnter(e: MouseEvent, point: ChartPoint, seriesIndex: number): void {
+    const wrapper = this.shadowRoot?.querySelector('.chart-wrapper') as HTMLElement | null;
+    const anchor  = tooltipAnchor(wrapper, e.currentTarget as SVGCircleElement);
+    if (!anchor) return;
 
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this._ro?.disconnect();
-    this._ro = null;
-  }
-
-  override firstUpdated(): void {
-    this._svgWidth = this.clientWidth || 600;
-  }
-
-  private _handleDotEnter(e: MouseEvent, point: ScatterPoint, seriesIndex: number): void {
-    const wrapper  = this.shadowRoot?.querySelector('.scatter-chart-wrapper') as HTMLElement | null;
-    const dot      = e.currentTarget as SVGCircleElement;
-    const wrapRect = wrapper?.getBoundingClientRect();
-    const dotRect  = dot.getBoundingClientRect();
-
-    if (!wrapRect) return;
-
-    const color   = SERIES_COLORS[seriesIndex % SERIES_COLORS.length] ?? SERIES_COLORS[0]!;
-    const parts   = [
-      point.label ?? null,
-      `x: ${point.x}`,
-      `y: ${point.y}`,
-    ].filter(Boolean);
+    const parts = [point.label ?? null, `x: ${point.x}`, `y: ${point.y}`].filter(Boolean);
 
     this._tooltip = {
-      x:       dotRect.left - wrapRect.left + dotRect.width  / 2,
-      y:       dotRect.top  - wrapRect.top,
+      ...anchor,
       content: parts.join(' · '),
-      color,
+      color:   seriesColor(seriesIndex),
     };
   }
 
@@ -133,7 +96,7 @@ export class LibScatterChart extends LitElement {
       showLegend: this.showLegend,
       dotRadius:  this.dotRadius,
       height:     this.height,
-      svgWidth:   this._svgWidth,
+      svgWidth:   this._resize.width,
       tooltip:    this._tooltip,
       onDotEnter: (e, point, si) => { this._handleDotEnter(e, point, si); },
       onDotLeave: () => { this._handleDotLeave(); },
