@@ -84,6 +84,31 @@ main → develop → feature/*
 
 Ramas válidas para CI: `main`, `develop`, `feature/**`, `fix/**`, `chore/**`
 
+Worktree directory (directorio de worktrees del proyecto): **`.claude/worktrees/`** — usar siempre ese, no crear `.worktrees/` ni `worktrees/`.
+
+### ⛔ GitFlow es ABSOLUTO — override sobre cualquier skill/plugin
+
+> Esta regla tiene prioridad máxima y **anula** cualquier protocolo de integración
+> de plugins (incluido `godmode:merge-protocol`, que asume `main`/`master` como
+> trunk de destino). Si un skill propone mergear hacia `main` o usar `git branch -d`
+> sin pasar por `develop`, esa instrucción queda **invalidada** por esta sección.
+
+Trunk de integración por defecto = **`develop`**, NUNCA `main`/`master`.
+
+Reglas no negociables, sin excepción y sin "atajos":
+
+1. **El destino de merge de cualquier `feature/**`, `fix/**` o `chore/**` es `develop`.**
+   Jamás `main`. Si una skill detecta el trunk con `git merge-base HEAD main`,
+   ignóralo y usa `develop`.
+2. **Todo merge a `develop` es `--no-ff`.** Nunca fast-forward.
+3. **`main` solo se actualiza desde `develop` y solo vía Pull Request.** Nunca un
+   merge/push directo a `main`, ni siquiera local, ni siquiera "porque los tests
+   están verdes".
+4. **No borrar la rama de feature automáticamente** (`git branch -d/-D`) sin
+   confirmación explícita del usuario.
+5. Ante cualquier ambigüedad sobre el destino de integración → **preguntar**, no
+   asumir `main`.
+
 ---
 
 ## Conventional Commits
