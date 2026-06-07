@@ -112,6 +112,18 @@ import dribbbleLogo from '@phosphor-icons/core/assets/regular/dribbble-logo.svg?
 import bicycle from '@phosphor-icons/core/assets/regular/bicycle.svg?raw';
 import plus from '@phosphor-icons/core/assets/regular/plus.svg?raw';
 
+// ── Críticos — usados hardcoded en templates de componentes ──────────────────
+import check         from '@phosphor-icons/core/assets/regular/check.svg?raw';
+import caretRight    from '@phosphor-icons/core/assets/regular/caret-right.svg?raw';
+import checkCircle   from '@phosphor-icons/core/assets/regular/check-circle.svg?raw';
+import warningCircle from '@phosphor-icons/core/assets/regular/warning-circle.svg?raw';
+import warning       from '@phosphor-icons/core/assets/regular/warning.svg?raw';
+import cloudArrowUp  from '@phosphor-icons/core/assets/regular/cloud-arrow-up.svg?raw';
+import circle        from '@phosphor-icons/core/assets/regular/circle.svg?raw';
+// ── Sistema / interfaz — usados en stories y ejemplos JSDoc ─────────────────
+import cpu           from '@phosphor-icons/core/assets/regular/cpu.svg?raw';
+import terminal      from '@phosphor-icons/core/assets/regular/terminal.svg?raw';
+
 
 
 export const ICON_REGISTRY: Record<string, string> = {
@@ -232,9 +244,34 @@ export const ICON_REGISTRY: Record<string, string> = {
 'music': guitar,
 'event': ticket,
 'plugin': puzzlePiece,
-'plus': plus,
-'add': plus,
-'new': plus,
+
+// ── Acción primaria (develop) ─────────────────────────────────────────────────
+'plus':           plus,
+'add':            plus,
+'new':            plus,
+
+// ── Críticos — usados hardcoded en templates de componentes ──────────────────
+'check':          check,
+'caret-right':    caretRight,
+'check-circle':   checkCircle,
+'warning-circle': warningCircle,
+'warning':        warning,
+'cloud-arrow-up': cloudArrowUp,
+'circle':         circle,
+
+// ── Sistema / interfaz — usados en stories y ejemplos de JSDoc ───────────────
+'cpu':            cpu,
+'terminal':       terminal,
+
+// ── Aliases — iconos ya importados, nuevas claves canónicas ──────────────────
+'paperclip':      paperclip,   // lib-file-uploader usa name="paperclip"
+'house':          house,        // lib-icon stories usan name="house" (canónico: 'home')
+'leaf':           leaf,         // lib-icon stories usan name="leaf"  (canónico: 'nature')
+'globe':          globe,        // lib-sidebar stories usan name="globe" (canónico: 'world')
+'shield-check':   shieldCheck,  // lib-text-list stories usan name="shield-check" (canónico: 'shield')
+'thermometer':    thermometer,  // lib-gadget-frame usan name="thermometer" (canónico: 'temp')
+'map-pin':        mapPin,       // lib-segmented-control usan name="map-pin" (canónico: 'location')
+'list':           list,         // lib-segmented-control usan name="list" (canónico: 'menu')
 };
 
 //exportaciones nominales
@@ -348,7 +385,18 @@ export {
   guitar as music,
   ticket as event,
   puzzlePiece as plugin,
-  plus
+  plus,
+  // Críticos
+  check,
+  caretRight as caretRight,
+  checkCircle as checkCircle,
+  warningCircle as warningCircle,
+  warning,
+  cloudArrowUp as cloudArrowUp,
+  circle,
+  // Sistema / interfaz
+  cpu,
+  terminal,
 };
 
 declare global {
