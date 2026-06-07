@@ -333,11 +333,13 @@
     0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.45),
     0 0 8px oklch(61.85% 0.149 48.72deg / 0.15);
   /* Variante SVG (comps circulares) — anillo dorado nítido como stroke
-     (antialiasing nativo) + halo difuso vía drop-shadow */
+     (antialiasing nativo) + halo difuso sutil vía drop-shadow.
+     Halo discreto a propósito: replica el 0 0 8px/0.15 del box-shadow viejo
+     sin competir con el anillo ni glow-ear los arcos de color. */
   --lib-effect-ring-stroke:
-    oklch(61.85% 0.149 48.72deg / 0.55);
+    oklch(61.85% 0.149 48.72deg / 0.5);
   --lib-effect-ring-glow:
-    drop-shadow(0 0 6px oklch(61.85% 0.149 48.72deg / 0.30));
+    drop-shadow(0 0 4px oklch(61.85% 0.149 48.72deg / 0.18));
   --lib-effect-glass-blur:     0px;
   /* Top bar: seam gradient (default en card CSS) — sólo abrirlo */
   --lib-effect-topbar-opacity: 1;

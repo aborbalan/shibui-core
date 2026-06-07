@@ -88,12 +88,14 @@ export function progressCircleTemplate(props: ProgressCircleTemplateProps): Temp
               stroke-linecap="round"
             />
             <!-- Anillo katachi (kintsugi): stroke SVG nítido, antialiasing nativo.
+                 Pegado al borde exterior del arco (hug) para leer como un único
+                 anillo, no como una segunda circunferencia despegada.
                  Apagado por defecto (stroke transparent) — ver lib-progress-circle.css -->
             <circle
               class="pc__ring"
               cx="${px / 2}"
               cy="${px / 2}"
-              r="${r + sw / 2 + 2}"
+              r="${r + sw / 2 + 1}"
               fill="none"
             />
           </svg>
