@@ -28,14 +28,23 @@ const GALLERY_URL = `${BASE}content-icon--gallery`;
 /**
  * Total de claves en ICON_REGISTRY.
  * Actualizar aquí si se añaden o eliminan iconos del registro.
+ *
+ * Historia:
+ *   116 → base original
+ *   133 → +7 críticos (check, caret-right, check-circle, warning-circle,
+ *                       warning, cloud-arrow-up, circle)
+ *          +2 sistema (cpu, terminal)
+ *          +8 aliases (paperclip, house, leaf, globe, shield-check,
+ *                      thermometer, map-pin, list)
  */
-const EXPECTED_ICON_COUNT = 116;
+const EXPECTED_ICON_COUNT = 133;
 
 /**
  * Pares [alias, canónico] que deben apuntar exactamente al mismo SVG.
  * Refleja los alias declarados en icon-registry.ts.
  */
 const ALIAS_PAIRS: ReadonlyArray<readonly [string, string]> = [
+  // Aliases originales
   ['back',         'arrow-left'],
   ['forward',      'arrow-right'],
   ['notification', 'bell'],
@@ -43,6 +52,15 @@ const ALIAS_PAIRS: ReadonlyArray<readonly [string, string]> = [
   ['pin',          'location'],
   ['x-social',     'twitter'],
   ['quill',        'write'],
+  // Aliases añadidos (nombres usados en componentes/stories)
+  ['paperclip',    'attachment'],
+  ['house',        'home'],
+  ['leaf',         'nature'],
+  ['globe',        'world'],
+  ['shield-check', 'shield'],
+  ['thermometer',  'temp'],
+  ['map-pin',      'location'],
+  ['list',         'menu'],
 ] as const;
 
 /** Shorthand para acceder a window.__SHIBUI_ICONS__ con tipado */
@@ -265,5 +283,137 @@ test.describe('lib-icon · ICON_REGISTRY', () => {
     });
 
     expect(hasSvg).toBe(false);
+  });
+});
+
+/* ══════════════════════════════════════════════════════════════════════
+   Bloque 3 · Iconos críticos — uso real en componentes
+   Verifica que cada icono hardcoded en un template renderiza correctamente
+   dentro del shadow DOM del componente que lo usa.
+   ══════════════════════════════════════════════════════════════════════ */
+
+test.describe('lib-icon · iconos críticos en contexto de componente', () => {
+
+  /** Helper: devuelve el innerHTML del wrapper de un lib-icon dentro del
+   *  shadow DOM del componente indicado. Cruza dos niveles de shadow. */
+  async function getIconSvgInComponent(
+    page: Page,
+    hostSelector: string,
+    iconName: string,
+  ): Promise<string> {
+    return page.evaluate(
+      ({ host, name }: { host: string; name: string }): string => {
+        const el = document.querySelector(host) as HTMLElement | null;
+        const libIcon = el?.shadowRoot?.querySelector(
+          `lib-icon[name="${name}"]`,
+        ) as HTMLElement | null;
+        return libIcon?.shadowRoot?.querySelector('.icon-wrapper')?.innerHTML ?? '';
+      },
+      { host: hostSelector, name: iconName },
+    );
+  }
+
+  /* ── lib-copy-button · icono "check" ── */
+  test('"check" se renderiza correctamente en lib-copy-button', async ({ page }) => {
+    await page.goto(`${BASE}actions-copy-button--playground`, { waitUntil: 'networkidle' });
+    await page.waitForFunction(() => customElements.get('lib-copy-button') !== undefined);
+
+    const svgContent = await getIconSvgInComponent(page, 'lib-copy-button', 'check');
+    expect(svgContent).toContain('<svg');
+  });
+
+  /* ── lib-breadcrumb · icono "caret-right" ── */
+  test('"caret-right" se renderiza correctamente en lib-breadcrumb con separador chevron', async ({ page }) => {
+    await page.goto(`${BASE}navigation-breadcrumb--separators`, { waitUntil: 'networkidle' });
+    await page.waitForFunction(() => customElements.get('lib-breadcrumb') !== undefined);
+
+    // Hay múltiples lib-breadcrumb en la story; el chevron está en el segundo
+    const svgContent = await page.evaluate((): string => {
+      const crumbs = Array.from(document.querySelectorAll('lib-breadcrumb'));
+      for (const crumb of crumbs) {
+        const icon = crumb.shadowRoot?.querySelector('lib-icon[name="caret-right"]') as HTMLElement | null;
+        if (icon) {
+          return icon.shadowRoot?.querySelector('.icon-wrapper')?.innerHTML ?? '';
+        }
+      }
+      return '';
+    });
+    expect(svgContent).toContain('<svg');
+  });
+
+  /* ── lib-file-uploader · icono "cloud-arrow-up" ── */
+  test('"cloud-arrow-up" se renderiza correctamente en lib-file-uploader', async ({ page }) => {
+    await page.goto(`${BASE}forms-file-uploader--zone-default`, { waitUntil: 'networkidle' });
+    await page.waitForFunction(() => customElements.get('lib-file-uploader') !== undefined);
+
+    const svgContent = await getIconSvgInComponent(page, 'lib-file-uploader', 'cloud-arrow-up');
+    expect(svgContent).toContain('<svg');
+  });
+
+  /* ── lib-file-uploader · icono "check-circle" — estado done ── */
+  test('"check-circle" existe en el registry y tiene SVG válido', async ({ page }) => {
+    // Verificamos el registro global (cargado por cualquier story de la galería)
+    await page.goto(`${BASE}content-icon--gallery`, { waitUntil: 'networkidle' });
+    await page.waitForFunction(() => customElements.get('lib-icon') !== undefined);
+    await waitForAllIcons(page, EXPECTED_ICON_COUNT);
+
+    const svg = await page.evaluate((): string => {
+      const icons = (window as unknown as ShibuiGlobal).__SHIBUI_ICONS__ ?? {};
+      return icons['check-circle'] ?? '';
+    });
+    expect(svg).toContain('<svg');
+  });
+
+  /* ── lib-file-uploader · icono "warning-circle" ── */
+  test('"warning-circle" existe en el registry y tiene SVG válido', async ({ page }) => {
+    await page.goto(`${BASE}content-icon--gallery`, { waitUntil: 'networkidle' });
+    await page.waitForFunction(() => customElements.get('lib-icon') !== undefined);
+    await waitForAllIcons(page, EXPECTED_ICON_COUNT);
+
+    const svg = await page.evaluate((): string => {
+      const icons = (window as unknown as ShibuiGlobal).__SHIBUI_ICONS__ ?? {};
+      return icons['warning-circle'] ?? '';
+    });
+    expect(svg).toContain('<svg');
+  });
+
+  /* ── lib-file-uploader · icono "warning" ── */
+  test('"warning" existe en el registry y tiene SVG válido', async ({ page }) => {
+    await page.goto(`${BASE}content-icon--gallery`, { waitUntil: 'networkidle' });
+    await page.waitForFunction(() => customElements.get('lib-icon') !== undefined);
+    await waitForAllIcons(page, EXPECTED_ICON_COUNT);
+
+    const svg = await page.evaluate((): string => {
+      const icons = (window as unknown as ShibuiGlobal).__SHIBUI_ICONS__ ?? {};
+      return icons['warning'] ?? '';
+    });
+    expect(svg).toContain('<svg');
+  });
+
+  /* ── lib-timeline-item · icono "circle" ── */
+  test('"circle" existe en el registry y tiene SVG válido', async ({ page }) => {
+    await page.goto(`${BASE}content-icon--gallery`, { waitUntil: 'networkidle' });
+    await page.waitForFunction(() => customElements.get('lib-icon') !== undefined);
+    await waitForAllIcons(page, EXPECTED_ICON_COUNT);
+
+    const svg = await page.evaluate((): string => {
+      const icons = (window as unknown as ShibuiGlobal).__SHIBUI_ICONS__ ?? {};
+      return icons['circle'] ?? '';
+    });
+    expect(svg).toContain('<svg');
+  });
+
+  /* ── Alias "paperclip" → mismo SVG que "attachment" ── */
+  test('alias "paperclip" apunta al mismo SVG que "attachment" (lib-file-uploader)', async ({ page }) => {
+    await page.goto(`${BASE}content-icon--gallery`, { waitUntil: 'networkidle' });
+    await page.waitForFunction(() => customElements.get('lib-icon') !== undefined);
+    await waitForAllIcons(page, EXPECTED_ICON_COUNT);
+
+    const [paperclipSvg, attachmentSvg] = await page.evaluate((): [string, string] => {
+      const icons = (window as unknown as ShibuiGlobal).__SHIBUI_ICONS__ ?? {};
+      return [icons['paperclip'] ?? '', icons['attachment'] ?? ''];
+    });
+    expect(paperclipSvg).not.toBe('');
+    expect(paperclipSvg).toBe(attachmentSvg);
   });
 });
