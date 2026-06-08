@@ -64,6 +64,12 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: 🏗️ Build Library
         run: pnpm --filter @shibui-ui/ui build
+      - name: 🔁 Drift guard — datos de componentes en sync con el manifiesto
+        # El build ya corre `analyze` + `generate:components-api`. Si el fichero
+        # generado difiere del commiteado, alguien tocó un componente sin regenerar.
+        run: |
+          git diff --exit-code -- apps/shibui-api/src/domain/components/data/components.generated.ts \
+            || { echo "::error::components.generated.ts desactualizado. Corre 'pnpm --filter @shibui-ui/ui generate:components-api' y commitea el resultado."; exit 1; }
       - name: 📤 Upload UI Library dist artifact
         uses: actions/upload-artifact@v4
         with:
