@@ -1,3 +1,7 @@
+import { apiGet } from './client';
+
+// ─── Modelos ──────────────────────────────────────────────────────────────────
+
 export type ComponentStatus = 'draft' | 'stable' | 'deprecated';
 
 export interface ApiProp {
@@ -64,3 +68,17 @@ export interface ExampleDto {
   order: number;
   isDefault: boolean;
 }
+
+// ─── Llamadas ───────────────────────────────────────────────────────────────────
+
+/** GET /api/v1/categories/with-components — categorías con sus componentes embebidos. */
+export const getCategoriesWithComponents = (): Promise<CategoryWithComponentsDto[]> =>
+  apiGet<CategoryWithComponentsDto[]>('/api/v1/categories/with-components');
+
+/** GET /api/v1/components/slug/:slug — componente individual (incluye bloque `api`). */
+export const getBySlug = (slug: string): Promise<ComponentDto> =>
+  apiGet<ComponentDto>(`/api/v1/components/slug/${slug}`);
+
+/** GET /api/v1/examples/component/:componentId — ejemplos de un componente. */
+export const getExamplesByComponent = (componentId: string): Promise<ExampleDto[]> =>
+  apiGet<ExampleDto[]>(`/api/v1/examples/component/${componentId}`);
