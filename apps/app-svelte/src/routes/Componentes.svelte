@@ -1,41 +1,57 @@
 <script lang="ts">
-  import { COVERAGE, type Coverage } from './kitchen/catalog';
+  import { onMount } from 'svelte';
   import { navigate } from '../lib/router';
+  import {
+    getCategoriesWithComponents,
+    type CategoryWithComponentsDto,
+  } from '../lib/api/components';
 
-  const ALL_COMPONENTS = Object.entries(COVERAGE).map(([tagName, coverage]) => ({
-    tagName,
-    coverage,
-    name: tagName
-      .replace('lib-', '')
-      .split('-')
-      .map(w => w[0].toUpperCase() + w.slice(1))
-      .join(' '),
-  })).sort((a, b) => a.tagName.localeCompare(b.tagName));
-
-  const CATEGORIES: Coverage[] = ['semantic', 'marker', 'effect'];
-
-  const CATEGORY_META: Record<Coverage, { label: string; kanji: string; description: string }> = {
-    semantic: { label: 'Semánticos',  kanji: '意',  description: 'Comportamiento propio, estados y accesibilidad integrada.' },
-    marker:   { label: 'Marcadores',  kanji: '印',  description: 'Primitivas de layout y estructura sin lógica propia.' },
-    effect:   { label: 'Efectos',     kanji: '効',  description: 'Capas de animación y efecto visual sobre el contenido.' },
+  // Kanji decorativo por categoría (fallback 形).
+  const CATEGORY_KANJI: Record<string, string> = {
+    'inputs-forms': '入',
+    navigation: '導',
+    feedback: '応',
+    layout: '構',
+    'data-display': '表',
+    'visual-effects': '効',
+    charts: '図',
   };
 
+  let categories = $state<CategoryWithComponentsDto[]>([]);
+  let loading = $state(true);
+  let error = $state<string | null>(null);
   let query = $state('');
+
+  onMount(async () => {
+    try {
+      categories = await getCategoriesWithComponents();
+    } catch (e) {
+      error = e instanceof Error ? e.message : 'Error al cargar componentes';
+    } finally {
+      loading = false;
+    }
+  });
+
+  function matches(c: { name: string; tagName: string; description: string; tags: string[] }, q: string) {
+    const t = q.toLowerCase();
+    return (
+      c.name.toLowerCase().includes(t) ||
+      c.tagName.toLowerCase().includes(t) ||
+      c.description.toLowerCase().includes(t) ||
+      c.tags.some((tag) => tag.toLowerCase().includes(t))
+    );
+  }
 
   let filtered = $derived(
     query.trim()
-      ? ALL_COMPONENTS.filter(c =>
-          c.tagName.includes(query.toLowerCase()) ||
-          c.name.toLowerCase().includes(query.toLowerCase())
-        )
-      : ALL_COMPONENTS
+      ? categories
+          .map((cat) => ({ ...cat, components: cat.components.filter((c) => matches(c, query)) }))
+          .filter((cat) => cat.components.length > 0)
+      : categories
   );
 
-  function byCategory(cat: Coverage) {
-    return filtered.filter(c => c.coverage === cat);
-  }
-
-  const totalCount = ALL_COMPONENTS.length;
+  let totalCount = $derived(categories.reduce((acc, cat) => acc + cat.components.length, 0));
+  let hasResults = $derived(filtered.some((cat) => cat.components.length > 0));
 </script>
 
 <!-- ── Hero ───────────────────────────────────────────────────────────────── -->
@@ -46,7 +62,7 @@
     surface="light"
     line1="Librería de"
     accent="componentes"
-    description={`${totalCount} componentes · ${CATEGORIES.length} categorías`}
+    description={loading ? '' : `${totalCount} componentes · ${categories.length} categorías`}
   ></lib-display-heading>
 </section>
 
@@ -54,7 +70,7 @@
 <div class="search-wrapper">
   <div class="search-inner">
     <lib-input
-      placeholder="Buscar por nombre o tag…"
+      placeholder="Buscar por nombre, tag o descripción…"
       value={query}
       onui-lib-input={(e: Event) => { query = (e as CustomEvent<{ value: string }>).detail.value; }}
     >
@@ -65,41 +81,49 @@
 
 <lib-divider style-variant="hairline" style="margin:0;"></lib-divider>
 
-<!-- ── Categories ─────────────────────────────────────────────────────────── -->
+<!-- ── Catalog ────────────────────────────────────────────────────────────── -->
 <div class="catalog-wrapper">
-  {#each CATEGORIES as cat}
-    {@const items = byCategory(cat)}
-    {#if items.length > 0}
-      {@const meta = CATEGORY_META[cat]}
-      <section class="category-section">
-        <div class="category-header">
-          <span class="category-kanji">{meta.kanji}</span>
-          <div>
-            <p class="category-label">{meta.label}</p>
-            <p class="category-desc">{meta.description}</p>
-          </div>
-          <span class="category-count">{items.length}</span>
-        </div>
-
-        <div class="components-grid">
-          {#each items as comp}
-            <div class="component-card">
-              <p class="component-name">{comp.name}</p>
-              <p class="component-tag">&lt;{comp.tagName}&gt;</p>
+  {#if loading}
+    <div class="status-state"><lib-spinner size="lg"></lib-spinner></div>
+  {:else if error}
+    <lib-alert type="error" heading="Error al cargar componentes">{error}</lib-alert>
+  {:else}
+    {#each filtered as cat (cat.id)}
+      {#if cat.components.length > 0}
+        <section class="category-section" id={cat.slug}>
+          <div class="category-header">
+            <span class="category-kanji">{CATEGORY_KANJI[cat.slug] ?? '形'}</span>
+            <div>
+              <p class="category-label">{cat.name}</p>
+              {#if cat.description}<p class="category-desc">{cat.description}</p>{/if}
             </div>
-          {/each}
-        </div>
-      </section>
+            <span class="category-count">{cat.components.length}</span>
+          </div>
 
-      <lib-divider style-variant="hairline" style="margin:0;"></lib-divider>
+          <div class="components-grid">
+            {#each cat.components as comp (comp.id)}
+              <button
+                class="component-card"
+                type="button"
+                onclick={() => navigate(`/componentes/${comp.slug}`)}
+              >
+                <p class="component-name">{comp.name}</p>
+                <p class="component-tag">&lt;{comp.tagName}&gt;</p>
+              </button>
+            {/each}
+          </div>
+        </section>
+
+        <lib-divider style-variant="hairline" style="margin:0;"></lib-divider>
+      {/if}
+    {/each}
+
+    {#if !hasResults}
+      <div class="empty-state">
+        <p class="empty-kanji">空</p>
+        <p class="empty-message">Ningún componente coincide con "{query}"</p>
+      </div>
     {/if}
-  {/each}
-
-  {#if filtered.length === 0}
-    <div class="empty-state">
-      <p class="empty-kanji">空</p>
-      <p class="empty-message">Ningún componente coincide con "{query}"</p>
-    </div>
   {/if}
 </div>
 
@@ -125,6 +149,12 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 clamp(1.5rem, 5vw, 5rem);
+  }
+
+  .status-state {
+    display: flex;
+    justify-content: center;
+    padding: clamp(4rem, 8vh, 6rem) 0;
   }
 
   .category-section {
@@ -162,6 +192,7 @@
     color: var(--text-muted);
     line-height: var(--leading-relaxed);
     margin: 0;
+    max-width: 60ch;
   }
 
   .category-count {
@@ -189,7 +220,11 @@
     background: var(--bg-base);
     padding: clamp(1rem, 2vw, 1.5rem);
     transition: background 200ms ease;
-    cursor: default;
+    cursor: pointer;
+    border: none;
+    text-align: left;
+    width: 100%;
+    font: inherit;
   }
 
   .component-card:hover {
