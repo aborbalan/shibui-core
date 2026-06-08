@@ -10,6 +10,32 @@ interface ApiEnvelope<T> {
 
 export type ComponentStatus = "draft" | "stable" | "deprecated";
 
+export interface ApiPropDto {
+  name: string;
+  type: string;
+  default?: string;
+  description?: string;
+  attribute?: string;
+}
+
+export interface ApiSlotDto {
+  name: string;
+  description?: string;
+}
+
+export interface ApiEventDto {
+  name: string;
+  type?: string;
+  description?: string;
+}
+
+/** Referencia de API técnica (props/slots/events) derivada del manifiesto. */
+export interface ComponentApiDto {
+  props: ApiPropDto[];
+  slots: ApiSlotDto[];
+  events: ApiEventDto[];
+}
+
 export interface ComponentDto {
   id: string;
   name: string;
@@ -22,6 +48,8 @@ export interface ComponentDto {
   packageName: string | null;
   tags: string[];
   docsUrl: string | null;
+  /** Presente en el detalle (GET /components/slug/:slug). */
+  api?: ComponentApiDto;
 }
 
 export interface CategoryWithComponentsDto {

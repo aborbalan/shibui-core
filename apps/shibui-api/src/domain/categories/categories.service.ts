@@ -77,6 +77,17 @@ export class CategoriesService {
       createdAt: new Date('2024-01-01T00:00:00Z'),
       updatedAt: new Date('2024-01-01T00:00:00Z'),
     },
+    {
+      id: 'cat-0007-0000-0000-000000000000',
+      name: 'Charts',
+      slug: 'charts',
+      description:
+        'Data visualization: bar, line, pie, radar, scatter, gauge, sparkline and graph components.',
+      icon: 'chart-bar',
+      order: 6,
+      createdAt: new Date('2024-01-01T00:00:00Z'),
+      updatedAt: new Date('2024-01-01T00:00:00Z'),
+    },
   ];
 
   create(createCategoryDto: CreateCategoryDto): Category {
