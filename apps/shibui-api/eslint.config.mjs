@@ -6,7 +6,12 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['eslint.config.mjs'],
+    // components.generated.ts es auto-generado desde el manifiesto; no
+    // lintar/formatear para que el drift-guard (git diff) sea fiable.
+    ignores: [
+      'eslint.config.mjs',
+      'src/domain/components/data/components.generated.ts',
+    ],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,

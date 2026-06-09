@@ -29,7 +29,10 @@ export default defineConfig({
     // Ruta resuelta desde el directorio de este config para ser independiente
     // del cwd desde el que se lance vitest.
     // Nota: fast-glob (usado por Vitest) requiere forward slashes en Windows.
-    include: [path.resolve(configDir, '../scripts/**/*.test.ts').replace(/\\/g, '/')],
+    include: [
+      path.resolve(configDir, '../scripts/**/*.test.ts').replace(/\\/g, '/'),
+      path.resolve(configDir, '../tests/unit/**/*.test.ts').replace(/\\/g, '/'),
+    ],
 
     // Excluye los tests de Storybook que van en src/
     exclude: [

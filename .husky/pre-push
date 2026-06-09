@@ -1,0 +1,16 @@
+# GitFlow guard: bloquea push directo a `main`.
+# `main` solo se actualiza desde `develop` vía Pull Request (merge server-side),
+# nunca por push local. Ver sección "GitFlow es ABSOLUTO" en CLAUDE.md.
+
+protected="refs/heads/main"
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [ "$remote_ref" = "$protected" ]; then
+    echo "⛔ Push directo a 'main' bloqueado (GitFlow)." >&2
+    echo "   main solo se actualiza desde develop vía Pull Request." >&2
+    echo "   Abre un PR develop → main en su lugar." >&2
+    exit 1
+  fi
+done
+
+exit 0

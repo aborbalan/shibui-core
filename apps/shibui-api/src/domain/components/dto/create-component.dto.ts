@@ -3,6 +3,7 @@ import {
   IsArray,
   IsEnum,
   IsNotEmpty,
+  IsObject,
   IsOptional,
   IsString,
   IsUrl,
@@ -10,7 +11,7 @@ import {
   Matches,
   MaxLength,
 } from 'class-validator';
-import { ComponentStatus } from '../entities/component.entity';
+import { ComponentApi, ComponentStatus } from '../entities/component.entity';
 
 export class CreateComponentDto {
   @ApiProperty({ example: 'Button', maxLength: 100 })
@@ -95,4 +96,12 @@ export class CreateComponentDto {
   @IsOptional()
   @IsUrl()
   docsUrl?: string;
+
+  @ApiPropertyOptional({
+    description:
+      'Technical API reference (props/slots/events). Normalmente generado desde el manifiesto.',
+  })
+  @IsOptional()
+  @IsObject()
+  api?: ComponentApi;
 }

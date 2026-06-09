@@ -7,6 +7,7 @@ Welcome to the UI Library documentation. This section provides detailed informat
 This documentation mirrors the `src/` folder structure to make it easy to find relevant information for each part of the codebase:
 
 - [Components](./components/index.md): Documentation for individual UI components.
+- [Charts module](./components/charts.md): Native SVG charts and their shared primitives layer.
 - [Core](./core/index.md): Explanations for core logic, utilities, and state management.
 - [Styles](./styles/index.md): Details on styling conventions, design tokens, and CSS layers.
 - [Types](./types/index.md): Global type definitions and interfaces.

@@ -2,6 +2,8 @@
 
 Componentes organizados por nivel de diseño atómico. Para convenciones de estructura de ficheros, tokens y estándares de código ver `CONVENTIONS.md`.
 
+> 📊 El **módulo de gráficas** (bar, scatter, line/area, pie/donut, gauge, radar, bubble, combo, sparkline) y su capa compartida `src/shared/charts` tienen documentación propia en [`charts.md`](./charts.md).
+
 > ⚠️ **Nota:** `text-glitch` tiene un typo en el barrel `src/index.ts` (`text-glich`). Pendiente de corregir.
 
 ---
