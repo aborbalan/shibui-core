@@ -3,6 +3,7 @@ import { LibButton, LibBadge, LibChip, LibDivider, LibSpinner } from "@shibui-ui
 import type { ComponentDto, ExampleDto } from "../../../data/api/domain/components/api/components.api";
 import { ComponentDetailExamples } from "./ComponentDetailExamples";
 import { ComponentDetailApi } from "./ComponentDetailApi";
+import { ComponentDetailPreview } from "./ComponentDetailPreview";
 
 interface ComponentDetailViewProps {
   component: ComponentDto;
@@ -87,6 +88,9 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
           ))}
         </div>
       )}
+
+      {/* Live preview (en el katachi celadon de la página) */}
+      <ComponentDetailPreview tagName={component.tagName} />
 
       {/* API reference (props / slots / events) */}
       <ComponentDetailApi api={component.api} />
