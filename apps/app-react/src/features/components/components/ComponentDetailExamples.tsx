@@ -20,6 +20,15 @@ const frameworkLabel: Record<ExampleFramework, string> = {
   vue:     "Vue",
 };
 
+// `lib-code-block` solo admite un set acotado y decorativo de lenguajes
+// (bash|ts|js|html|css|json|text). No hay token jsx/tsx → React usa `ts`.
+const frameworkLanguage: Record<ExampleFramework, "html" | "ts"> = {
+  vanilla: "html",
+  react:   "ts",
+  angular: "html",
+  vue:     "html",
+};
+
 export const ComponentDetailExamples: React.FC<ComponentDetailExamplesProps> = ({ examples }) => {
   const grouped = FRAMEWORK_ORDER.reduce<Record<ExampleFramework, ExampleDto[]>>(
     (acc, fw) => {
@@ -85,7 +94,7 @@ export const ComponentDetailExamples: React.FC<ComponentDetailExamplesProps> = (
               {example.description}
             </p>
           )}
-          <LibCodeBlock code={example.code} language="html" />
+          <LibCodeBlock code={example.code} language={frameworkLanguage[example.framework]} />
         </div>
       ))}
     </div>
