@@ -2,6 +2,7 @@ import React from "react";
 import { LibButton, LibBadge, LibChip, LibDivider, LibSpinner } from "@shibui-ui/ui/react";
 import type { ComponentDto, ExampleDto } from "../../../data/api/domain/components/api/components.api";
 import { ComponentDetailExamples } from "./ComponentDetailExamples";
+import { ComponentDetailApi } from "./ComponentDetailApi";
 
 interface ComponentDetailViewProps {
   component: ComponentDto;
@@ -51,6 +52,16 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
           {component.packageName && (
             <span style={metaStyle}>{component.packageName}</span>
           )}
+          {component.docsUrl && (
+            <a
+              href={component.docsUrl}
+              target="_blank"
+              rel="noreferrer"
+              style={{ ...metaStyle, textDecoration: "none", borderBottom: "1px solid currentColor", paddingBottom: "1px" }}
+            >
+              Documentación ↗
+            </a>
+          )}
         </div>
 
         <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 600, marginBottom: "0.5rem" }}>
@@ -76,6 +87,9 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
           ))}
         </div>
       )}
+
+      {/* API reference (props / slots / events) */}
+      <ComponentDetailApi api={component.api} />
 
       {/* Examples */}
       <section>
