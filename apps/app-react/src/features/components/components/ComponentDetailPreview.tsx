@@ -1,15 +1,58 @@
 import React from "react";
-import { LibButton, LibCanvas, LibDivider } from "@shibui-ui/ui/react";
+import { LibCanvas, LibDivider } from "@shibui-ui/ui/react";
+import type { ComponentDto, ApiPropDto } from "../../../data/api/domain/components/api/components.api";
 
 /**
  * Vista previa en vivo del componente, renderizada dentro de un
  * `lib-canvas katachi="celadon"` — el mismo katachi en el que está hecha la
- * página (LibBackground celadon-wash + header celadon). Así cada uso se ve tal
- * cual queda en su contexto real.
+ * página. Es DATA-DRIVEN: las variantes salen del bloque `api` (props con
+ * `options`, derivadas del manifiesto), no de listas hardcodeadas.
  *
- * Registro extensible por `tagName`: si un componente no tiene preview
- * registrada, la sección simplemente no aparece. Punto de partida: lib-button.
+ * Cobertura: un allowlist de componentes "hoja" que se renderizan bien con
+ * una etiqueta/receta. Los componentes estructurales / overlay / charts se
+ * omiten (no se rompe la página); el allowlist es extensible.
  */
+
+// Nombres de prop que actúan como "eje de variante" (el primero con options gana).
+const VARIANT_AXIS_NAMES = ["variant", "type", "tone", "kind", "color", "status", "intent"];
+
+interface Recipe {
+  /** Atributos base aplicados a cada instancia. */
+  attrs?: Record<string, string>;
+  /** Contenido de slot por defecto (texto/markup) para la instancia básica. */
+  slot?: React.ReactNode;
+  /** Si true, el valor de la variante se usa como texto del slot. */
+  variantAsLabel?: boolean;
+}
+
+// Allowlist + recetas. Solo estos componentes muestran preview (de momento).
+const RECIPES: Record<string, Recipe> = {
+  "lib-button": { slot: "Botón", variantAsLabel: true },
+  "lib-button-liquid": { slot: "Botón", variantAsLabel: true },
+  "lib-badge": { slot: "Badge", variantAsLabel: true },
+  "lib-chip": { slot: "Chip", variantAsLabel: true, attrs: { kind: "static" } },
+  "lib-alert": { slot: "Mensaje de ejemplo", attrs: { heading: "Aviso" } },
+  "lib-kbd": { slot: "Ctrl" },
+  "lib-label": { slot: "Etiqueta" },
+  "lib-eyebrow": { slot: "Eyebrow" },
+  "lib-quote": { slot: "Una cita de ejemplo." },
+  "lib-checkbox": { slot: "Opción" },
+  "lib-radio": { slot: "Opción" },
+  "lib-text-glitch": { slot: "Glitch" },
+  "lib-status-dot": {},
+  "lib-spinner": {},
+  "lib-switch": {},
+  "lib-divider": {},
+  "lib-burger": {},
+  "lib-close-button": {},
+  "lib-skeleton": { attrs: { width: "140px", height: "1rem" } },
+  "lib-progress": { attrs: { value: "60" } },
+  "lib-progress-circle": { attrs: { value: "60" } },
+  "lib-rating": { attrs: { value: "3" } },
+  "lib-avatar": { attrs: { name: "Shibui" } },
+  "lib-icon": { attrs: { name: "star" } },
+  "lib-input": { attrs: { placeholder: "Escribe algo…" } },
+};
 
 const sectionTitleStyle: React.CSSProperties = {
   fontFamily: "var(--lib-font-mono)",
@@ -28,10 +71,7 @@ const groupLabelStyle: React.CSSProperties = {
   margin: "0 0 0.6rem",
 };
 
-const PreviewGroup: React.FC<{ label: string; children: React.ReactNode }> = ({
-  label,
-  children,
-}) => (
+const PreviewGroup: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
   <div style={{ marginBottom: "1.5rem" }}>
     <p style={groupLabelStyle}>{label}</p>
     <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
@@ -40,42 +80,45 @@ const PreviewGroup: React.FC<{ label: string; children: React.ReactNode }> = ({
   </div>
 );
 
-// Registro de previews en vivo, indexado por tagName del componente.
-const PREVIEWS: Record<string, React.ReactNode> = {
-  "lib-button": (
-    <>
-      <PreviewGroup label="Variantes">
-        <LibButton variant="primary">Primary</LibButton>
-        <LibButton variant="secondary">Secondary</LibButton>
-        <LibButton variant="accent">Accent</LibButton>
-        <LibButton variant="ghost">Ghost</LibButton>
-        <LibButton variant="danger">Danger</LibButton>
-      </PreviewGroup>
-
-      <PreviewGroup label="Tamaños">
-        <LibButton variant="primary" size="sm">Small</LibButton>
-        <LibButton variant="primary" size="md">Medium</LibButton>
-        <LibButton variant="primary" size="lg">Large</LibButton>
-        <LibButton variant="primary" size="xl">XLarge</LibButton>
-      </PreviewGroup>
-
-      <PreviewGroup label="Estados y efectos">
-        <LibButton variant="primary" disabled>Disabled</LibButton>
-        <LibButton variant="primary" glass>Glass</LibButton>
-        {/* spotlight = efecto signature celadon (spotlight-water reactivo al cursor) */}
-        <LibButton variant="accent" spotlight>Spotlight</LibButton>
-      </PreviewGroup>
-    </>
-  ),
-};
-
-interface ComponentDetailPreviewProps {
-  tagName: string;
+function findAxis(props: ApiPropDto[], names: string[]): ApiPropDto | undefined {
+  for (const name of names) {
+    const p = props.find((pr) => pr.name === name && pr.options && pr.options.length > 1);
+    if (p) return p;
+  }
+  return undefined;
 }
 
-export const ComponentDetailPreview: React.FC<ComponentDetailPreviewProps> = ({ tagName }) => {
-  const preview = PREVIEWS[tagName];
-  if (!preview) return null;
+// Renderiza una instancia del custom element con atributos arbitrarios.
+function renderInstance(
+  tagName: string,
+  attrs: Record<string, string>,
+  slot: React.ReactNode,
+  key: string,
+): React.ReactNode {
+  const Tag = tagName as unknown as React.FC<Record<string, unknown>>;
+  return (
+    <Tag key={key} {...attrs}>
+      {slot}
+    </Tag>
+  );
+}
+
+interface ComponentDetailPreviewProps {
+  component: ComponentDto;
+}
+
+export const ComponentDetailPreview: React.FC<ComponentDetailPreviewProps> = ({ component }) => {
+  const recipe = RECIPES[component.tagName];
+  if (!recipe) return null;
+
+  const props = component.api?.props ?? [];
+  const baseAttrs = recipe.attrs ?? {};
+  const tag = component.tagName;
+
+  const variantAxis = findAxis(props, VARIANT_AXIS_NAMES);
+  const sizeProp = props.find((p) => p.name === "size" && p.options && p.options.length > 1);
+
+  const variantAttr = variantAxis?.attribute ?? variantAxis?.name ?? "variant";
 
   return (
     <section style={{ marginBottom: "3rem" }}>
@@ -86,12 +129,32 @@ export const ComponentDetailPreview: React.FC<ComponentDetailPreviewProps> = ({ 
         katachi="celadon"
         display="block"
         pad="xl"
-        style={{
-          border: "1px solid var(--border-subtle)",
-          borderRadius: "var(--lib-radius-lg, 12px)",
-        }}
+        style={{ border: "1px solid var(--border-subtle)", borderRadius: "var(--lib-radius-lg, 12px)" }}
       >
-        {preview}
+        <PreviewGroup label="Uso básico">
+          {renderInstance(tag, baseAttrs, recipe.slot, "basic")}
+        </PreviewGroup>
+
+        {variantAxis?.options && (
+          <PreviewGroup label={`Variantes (${variantAxis.name})`}>
+            {variantAxis.options.map((value) =>
+              renderInstance(
+                tag,
+                { ...baseAttrs, [variantAttr]: value },
+                recipe.variantAsLabel ? value : recipe.slot,
+                `v-${value}`,
+              ),
+            )}
+          </PreviewGroup>
+        )}
+
+        {sizeProp?.options && (
+          <PreviewGroup label="Tamaños">
+            {sizeProp.options.map((value) =>
+              renderInstance(tag, { ...baseAttrs, size: value }, recipe.slot, `s-${value}`),
+            )}
+          </PreviewGroup>
+        )}
       </LibCanvas>
     </section>
   );

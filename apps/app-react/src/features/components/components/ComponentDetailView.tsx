@@ -89,8 +89,8 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
         </div>
       )}
 
-      {/* Live preview (en el katachi celadon de la página) */}
-      <ComponentDetailPreview tagName={component.tagName} />
+      {/* Live preview (data-driven, en el katachi celadon de la página) */}
+      <ComponentDetailPreview component={component} />
 
       {/* API reference (props / slots / events) */}
       <ComponentDetailApi api={component.api} />
