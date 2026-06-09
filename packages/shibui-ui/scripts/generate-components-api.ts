@@ -12,7 +12,7 @@
    La salida es determinista (ordenada por slug) para que el
    drift-guard de CI (`git diff --exit-code`) sea fiable.
    ============================================================ */
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { COMPONENTS_EDITORIAL, type Editorial } from './components-editorial';
@@ -21,6 +21,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '../../..');
 
 const MANIFEST = resolve(root, 'packages/shibui-ui/dist/custom-elements.json');
+const SRC = resolve(root, 'packages/shibui-ui/src');
 const OUT = resolve(
   root,
   'apps/shibui-api/src/domain/components/data/components.generated.ts',
@@ -62,6 +63,78 @@ function titleCase(slug: string): string {
     .join(' ');
 }
 
+/**
+ * Extrae los literales de una unión de strings pura (`'a' | 'b' | "c"`).
+ * Devuelve null si el texto contiene identificadores u otros tipos (no es
+ * una unión enumerable de literales).
+ */
+function extractLiterals(rhs: string): string[] | null {
+  // Quita comentarios (de bloque y de línea) antes de analizar: las uniones
+  // suelen llevar `// nota` tras cada literal y romperían el chequeo de pureza.
+  const clean = rhs
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\/\/[^\n]*/g, '');
+  const literals = [...clean.matchAll(/'([^']*)'|"([^"]*)"/g)].map(
+    (m) => m[1] ?? m[2] ?? '',
+  );
+  if (literals.length === 0) return null;
+  const residue = clean.replace(/'[^']*'|"[^"]*"/g, '').replace(/[|\s]/g, '');
+  if (residue.length > 0) return null; // p.ej. `LibSize | 'auto'` → no puro
+  return literals;
+}
+
+/**
+ * Escanea `src/**\/*.ts` y mapea cada alias de tipo que sea una unión de
+ * literales string (`export type LibButtonVariant = 'primary' | …`) a sus
+ * valores. Permite resolver props cuyo `type` es solo el nombre del alias.
+ */
+function buildAliasMap(srcDir: string): Map<string, string[]> {
+  const map = new Map<string, string[]>();
+  let entries: string[] = [];
+  try {
+    entries = readdirSync(srcDir, { recursive: true }) as string[];
+  } catch {
+    return map;
+  }
+  for (const rel of entries) {
+    if (!rel.endsWith('.ts')) continue;
+    if (/\.(stories|test|spec|d)\.ts$/.test(rel)) continue;
+    let content: string;
+    try {
+      content = readFileSync(resolve(srcDir, rel), 'utf8');
+    } catch {
+      continue;
+    }
+    for (const m of content.matchAll(/export\s+type\s+(\w+)\s*=\s*([^;]+);/g)) {
+      const name = m[1];
+      const lits = extractLiterals(m[2]);
+      if (lits && !map.has(name)) map.set(name, lits);
+    }
+  }
+  return map;
+}
+
+/**
+ * Resuelve los valores enumerables de un prop a partir de su tipo:
+ * unión inline de literales, o alias de un solo identificador conocido.
+ */
+function resolveOptions(
+  typeText: string | undefined,
+  aliasMap: Map<string, string[]>,
+): string[] | undefined {
+  if (!typeText) return undefined;
+  const text = typeText.trim();
+  const inline = extractLiterals(text);
+  if (inline && inline.length >= 2) return inline;
+  if (/^\w+$/.test(text)) {
+    const mapped = aliasMap.get(text);
+    if (mapped && mapped.length >= 2) return mapped;
+  }
+  return undefined;
+}
+
+const ALIAS_MAP = buildAliasMap(SRC);
+
 function mapProps(members: CemMember[] = []) {
   // Backfill de descripciones: el JSDoc @prop genera "miembros" con
   // nombre = atributo (con guiones). Recuperamos su descripción.
@@ -85,12 +158,14 @@ function mapProps(members: CemMember[] = []) {
     .map((m) => {
       const description =
         m.description || (m.attribute ? descByAttr.get(m.attribute) : undefined);
+      const options = resolveOptions(m.type?.text, ALIAS_MAP);
       return {
         name: m.name,
         type: m.type?.text ?? 'unknown',
         ...(m.default !== undefined ? { default: m.default } : {}),
         ...(description ? { description } : {}),
         ...(m.attribute ? { attribute: m.attribute } : {}),
+        ...(options ? { options } : {}),
       };
     });
 }

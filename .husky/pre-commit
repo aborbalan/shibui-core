@@ -2,7 +2,7 @@ pnpm --filter @shibui-ui/ui type-check
 
 # Si cambió algún componente, regenerar el manifiesto y los datos de la API
 # desde la fuente de verdad (el código) y dejarlos en el mismo commit.
-if git diff --cached --name-only | grep -q 'packages/shibui-ui/src/components/.*\.component\.ts$'; then
+if git diff --cached --name-only | grep -qE 'packages/shibui-ui/src/(components/.*\.(component|types)\.ts|types/.*\.ts)$'; then
   echo "↻ Componentes cambiados → regenerando manifiesto + datos de API"
   pnpm --filter @shibui-ui/ui analyze
   pnpm --filter @shibui-ui/ui generate:components-api

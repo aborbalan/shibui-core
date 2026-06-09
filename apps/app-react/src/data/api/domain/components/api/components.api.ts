@@ -16,6 +16,8 @@ export interface ApiPropDto {
   default?: string;
   description?: string;
   attribute?: string;
+  /** Valores enumerables del prop cuando su tipo es una unión de literales. */
+  options?: string[];
 }
 
 export interface ApiSlotDto {
