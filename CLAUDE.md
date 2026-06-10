@@ -11,12 +11,10 @@ Gestionado con **pnpm workspaces** (pnpm@9.15.0, Node >=20).
 
 Workspaces declarados en `pnpm-workspace.yaml`:
 - `apps/*` — app-react, app-angular, app-svelte, app-cv, app-tauri, shibui-api
-- `packages/*` — shibui-ui (`@shibui/ui`), api-contract ⚠️ WIP — no usable
+- `packages/*` — shibui-ui (`@shibui/ui`)
 - `cloudflare/*` — cf-cache-worker
 
 > `app-tauri` requiere **Rust toolchain estable** (`rustup install stable`) además de Node+pnpm. Es una app de escritorio Tauri 2 + React 19 con backend Rust (`crate core/`).
-
-> `packages/api-contract` está en desarrollo activo pero no es consumible todavía. No integrarlo en sugerencias ni en imports.
 
 TypeScript base compartido en `tsconfig.base.json`.  
 Path alias `@shibui-ui/ui` → `packages/shibui-ui/dist/index.d.ts`.
