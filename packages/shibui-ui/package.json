@@ -65,6 +65,7 @@
     "test:stories": "vitest --config .config/vite.config.ts --project storybook --run",
     "test:unit": "vitest run --config .config/vitest.unit.config.ts",
     "test:unit:watch": "vitest --config .config/vitest.unit.config.ts",
+    "test:cohesion": "vitest run --config .config/vitest.unit.config.ts scripts/__tests__/manifest-cohesion.test.ts",
     "test:e2e": "playwright test --config .config/playwright.config.js atoms/ molecules/ organisms/",
     "test:visual": "playwright test --config .config/playwright.config.js visual/",
     "test:visual:update": "playwright test --config .config/playwright.config.js visual/ --update-snapshots",

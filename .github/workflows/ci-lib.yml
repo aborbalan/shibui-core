@@ -46,6 +46,11 @@ jobs:
         run: pnpm --filter @shibui-ui/ui type-check
       - name: 🧹 Lint
         run: pnpm --filter @shibui-ui/ui lint
+      - name: 🎯 Cohesión de props (contrato del DS)
+        # Valida que el manifest cumple docs/props-contract.md (size/tone/tint/
+        # surface canónicos, sin '' ni unknown, defaults válidos). El allowlist
+        # KNOWN_PENDING cubre ejes aún en migración.
+        run: pnpm --filter @shibui-ui/ui test:cohesion
 
   build-ui:
     name: 🏗️ Build UI Library
