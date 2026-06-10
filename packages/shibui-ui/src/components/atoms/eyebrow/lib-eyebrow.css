@@ -124,14 +124,14 @@
         ══════════════════════════════════════ */
 
     /* Neutral — cálido washi, bajo contraste */
-    :host([tone='neutral']) .eb {
+    :host([tone='default']) .eb {
         --eb-color: var(--color-washi-400, #B8A99A);
         --eb-line-grad: linear-gradient(90deg, var(--color-washi-400, #B8A99A), transparent);
         --eb-line-grad-r: linear-gradient(270deg, var(--color-washi-400, #B8A99A), transparent);
     }
 
     /* Inverse — para superficies oscuras (contraste claro) */
-    :host([tone='inverse']) .eb {
+    :host([surface='inverse']) .eb {
         --eb-color: oklch(97% 0.003 68deg / 0.35);
         --eb-line-grad: linear-gradient(90deg, oklch(97% 0.003 68deg / 0.40), transparent);
         --eb-line-grad-r: linear-gradient(270deg, oklch(97% 0.003 68deg / 0.40), transparent);
@@ -173,11 +173,11 @@
     }
 
     /* Dot por tono */
-    :host([dot][tone='neutral']) .eb::before {
+    :host([dot][tone='default']) .eb::before {
         --eb-dot-color: var(--color-washi-400, #B8A99A);
     }
 
-    :host([dot][tone='inverse']) .eb::before {
+    :host([dot][surface='inverse']) .eb::before {
         --eb-dot-color: oklch(97% 0.003 68deg / 0.40);
     }
 

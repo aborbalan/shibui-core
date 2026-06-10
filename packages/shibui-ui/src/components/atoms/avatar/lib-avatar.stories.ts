@@ -5,7 +5,7 @@ import '../status-dot/lib-status-dot.component';
 import type { LibAvatar } from './lib-avatar.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
-type LibAvatarStoryArgs = Pick<LibAvatar, 'src' | 'name' | 'size' | 'shape' | 'tone'>;
+type LibAvatarStoryArgs = Pick<LibAvatar, 'src' | 'name' | 'size' | 'shape' | 'tint'>;
 
 /**
  * Retrato demo embebido como SVG `data-URI` — sin dependencia de red.
@@ -48,10 +48,10 @@ const meta: Meta<LibAvatarStoryArgs> = {
       options: ['circle', 'squircle', 'square'],
       description: 'Forma del avatar',
     },
-    tone: {
+    tint: {
       control: 'select',
       options: ['neutral', 'warm', 'cool', 'inverse'],
-      description: 'Tono semántico del fondo (iniciales / icono)',
+      description: 'Tinte decorativo del fondo (iniciales / icono)',
     },
   },
 
@@ -61,7 +61,7 @@ const meta: Meta<LibAvatarStoryArgs> = {
       name=${args.name}
       size=${args.size}
       shape=${args.shape}
-      tone=${args.tone}
+      tint=${args.tint}
     ></lib-avatar>
   `,
 };
@@ -76,7 +76,7 @@ export const Playground: Story = {
     name: 'Ana Bel',
     size: 'md',
     shape: 'circle',
-    tone: 'neutral',
+    tint: 'neutral',
   },
 };
 
@@ -171,19 +171,19 @@ export const Tones: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex; align-items:flex-end; gap:32px; padding:24px; background:#F2EDE6;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-        <lib-avatar size="lg" name="Ana Bel" tone="neutral"></lib-avatar>
+        <lib-avatar size="lg" name="Ana Bel" tint="neutral"></lib-avatar>
         <span style="font-family:monospace;font-size:10px;color:#9A8878;text-transform:uppercase;letter-spacing:0.1em;">neutral</span>
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-        <lib-avatar size="lg" name="Ana Bel" tone="warm"></lib-avatar>
+        <lib-avatar size="lg" name="Ana Bel" tint="warm"></lib-avatar>
         <span style="font-family:monospace;font-size:10px;color:#9A8878;text-transform:uppercase;letter-spacing:0.1em;">warm</span>
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-        <lib-avatar size="lg" name="Ana Bel" tone="cool"></lib-avatar>
+        <lib-avatar size="lg" name="Ana Bel" tint="cool"></lib-avatar>
         <span style="font-family:monospace;font-size:10px;color:#9A8878;text-transform:uppercase;letter-spacing:0.1em;">cool</span>
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-        <lib-avatar size="lg" name="Ana Bel" tone="inverse"></lib-avatar>
+        <lib-avatar size="lg" name="Ana Bel" tint="inverse"></lib-avatar>
         <span style="font-family:monospace;font-size:10px;color:#9A8878;text-transform:uppercase;letter-spacing:0.1em;">inverse</span>
       </div>
     </div>
@@ -198,13 +198,13 @@ export const WithStatusDot: Story = {
       <lib-avatar size="lg" src=${DEMO_IMG} name="Ana Bel">
         <lib-status-dot slot="status" variant="success" pulse></lib-status-dot>
       </lib-avatar>
-      <lib-avatar size="lg" name="Carlos M" tone="warm">
+      <lib-avatar size="lg" name="Carlos M" tint="warm">
         <lib-status-dot slot="status" variant="warning"></lib-status-dot>
       </lib-avatar>
-      <lib-avatar size="lg" name="Davide R" tone="cool">
+      <lib-avatar size="lg" name="Davide R" tint="cool">
         <lib-status-dot slot="status" variant="danger" pulse></lib-status-dot>
       </lib-avatar>
-      <lib-avatar size="lg" name="Eva P" tone="inverse">
+      <lib-avatar size="lg" name="Eva P" tint="inverse">
         <lib-status-dot slot="status" variant="neutral"></lib-status-dot>
       </lib-avatar>
     </div>
@@ -215,17 +215,17 @@ export const WithStatusDot: Story = {
 export const IconFallback: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex; align-items:center; gap:24px; padding:24px; background:#F2EDE6;">
-      <lib-avatar size="xl" tone="neutral"></lib-avatar>
-      <lib-avatar size="xl" tone="warm"></lib-avatar>
-      <lib-avatar size="xl" tone="cool"></lib-avatar>
-      <lib-avatar size="xl" tone="inverse"></lib-avatar>
+      <lib-avatar size="xl" tint="neutral"></lib-avatar>
+      <lib-avatar size="xl" tint="warm"></lib-avatar>
+      <lib-avatar size="xl" tint="cool"></lib-avatar>
+      <lib-avatar size="xl" tint="inverse"></lib-avatar>
     </div>
   `,
 };
 
 /* ═══════════════════════════════════════════════════════════════
    KATACHI · 形 · Las 6 historias estándar
-   lib-avatar usa tone attr para fondos de iniciales —
+   lib-avatar usa tint attr para fondos de iniciales —
    el contexto katachi adapta el entorno contenedor (bg-base,
    border-subtle) mientras los avatares mantienen su identidad.
    ═══════════════════════════════════════════════════════════════ */
@@ -233,24 +233,24 @@ export const IconFallback: Story = {
 const _katachi = createKatachiStories<object>(() => html`
   <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);">
     <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
-      <lib-avatar name="Sora K" size="xs" tone="neutral"></lib-avatar>
-      <lib-avatar name="Sora K" size="sm" tone="neutral"></lib-avatar>
-      <lib-avatar name="Sora K" size="md" tone="neutral"></lib-avatar>
-      <lib-avatar name="Sora K" size="lg" tone="neutral"></lib-avatar>
-      <lib-avatar name="Sora K" size="xl" tone="neutral"></lib-avatar>
-      <lib-avatar name="Sora K" size="2xl" tone="neutral"></lib-avatar>
+      <lib-avatar name="Sora K" size="xs" tint="neutral"></lib-avatar>
+      <lib-avatar name="Sora K" size="sm" tint="neutral"></lib-avatar>
+      <lib-avatar name="Sora K" size="md" tint="neutral"></lib-avatar>
+      <lib-avatar name="Sora K" size="lg" tint="neutral"></lib-avatar>
+      <lib-avatar name="Sora K" size="xl" tint="neutral"></lib-avatar>
+      <lib-avatar name="Sora K" size="2xl" tint="neutral"></lib-avatar>
     </div>
     <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
-      <lib-avatar name="Ana B" size="md" tone="neutral" shape="circle"></lib-avatar>
-      <lib-avatar name="Ana B" size="md" tone="warm" shape="squircle"></lib-avatar>
-      <lib-avatar name="Ana B" size="md" tone="cool" shape="square"></lib-avatar>
-      <lib-avatar name="Ana B" size="md" tone="inverse" shape="circle"></lib-avatar>
+      <lib-avatar name="Ana B" size="md" tint="neutral" shape="circle"></lib-avatar>
+      <lib-avatar name="Ana B" size="md" tint="warm" shape="squircle"></lib-avatar>
+      <lib-avatar name="Ana B" size="md" tint="cool" shape="square"></lib-avatar>
+      <lib-avatar name="Ana B" size="md" tint="inverse" shape="circle"></lib-avatar>
     </div>
     <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
-      <lib-avatar size="md" tone="neutral"></lib-avatar>
-      <lib-avatar size="md" tone="warm"></lib-avatar>
-      <lib-avatar size="md" tone="cool"></lib-avatar>
-      <lib-avatar size="md" tone="inverse"></lib-avatar>
+      <lib-avatar size="md" tint="neutral"></lib-avatar>
+      <lib-avatar size="md" tint="warm"></lib-avatar>
+      <lib-avatar size="md" tint="cool"></lib-avatar>
+      <lib-avatar size="md" tint="inverse"></lib-avatar>
       <lib-avatar src=${DEMO_IMG} name="AB" size="md" shape="circle"></lib-avatar>
     </div>
   </div>

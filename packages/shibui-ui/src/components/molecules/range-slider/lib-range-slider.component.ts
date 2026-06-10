@@ -1,11 +1,12 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { rangeSliderTemplate } from './lib-range-slider.html';
+import type { LibSurface } from '../../../types';
 import sliderCss from './lib-range-slider.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
 export type RsSize = 'sm' | 'md' | 'lg';
-export type RsTone = 'default' | 'accent' | 'info' | 'error' | 'neutral' | 'inverse';
+export type RsTone = 'default' | 'accent' | 'info' | 'error' | 'muted';
 
 export interface RsMark {
   /** Posición 0–100 sobre el track */
@@ -86,6 +87,10 @@ export class LibRangeSlider extends LitElement {
 
   @property({ type: String, reflect: true })
   tone: RsTone = 'default';
+
+  /** Superficie/contexto (p.ej. 'inverse'/'on-dark' para fondos oscuros). */
+  @property({ type: String, reflect: true })
+  surface: LibSurface = 'default';
 
   @property({ type: Boolean, reflect: true })
   disabled = false;

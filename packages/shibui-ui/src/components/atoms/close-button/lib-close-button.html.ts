@@ -6,7 +6,7 @@ export type LibCloseVariant =
   | 'outlined'
   | 'filled'
   | 'filled-round'
-  | 'danger'
+  | 'error'
   | 'on-dark';
 
 export type LibCloseSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';

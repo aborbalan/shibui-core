@@ -2,10 +2,12 @@
    LIB-SPARKLINE — Tipos e interfaces
    ============================================================ */
 
+import type { LibSemanticTone } from '../../../types';
+
 export type SparklineType = 'line' | 'area' | 'bar';
 
-/** Rol semántico de color (mapeado a tokens --text-*). */
-export type SparklineTone = 'default' | 'accent' | 'info' | 'success' | 'warning' | 'error';
+/** Rol semántico de color (mapeado a tokens --text-*). Alias del tono semántico canónico. */
+export type SparklineTone = LibSemanticTone;
 
 export interface SparklineTemplateProps {
   values:     number[];

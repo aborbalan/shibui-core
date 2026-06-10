@@ -10,7 +10,7 @@ const meta: Meta = {
   argTypes: {
     kind:     { control: 'select', options: ['static', 'toggle', 'input'] },
     size:     { control: 'select', options: ['xs', 'sm', 'md', 'lg'] },
-    color:    { control: 'select', options: ['default', 'accent', 'info', 'error', 'strong'] },
+    tone:     { control: 'select', options: ['default', 'accent', 'info', 'error', 'strong'] },
     selected: { control: 'boolean' },
     dot:      { control: 'boolean' },
   },
@@ -24,13 +24,13 @@ const group = (children: TemplateResult): TemplateResult => html`
 
 /* ── Playground ── */
 export const Playground: Story = {
-  args: { kind: 'static', size: 'md', color: 'default' as const, selected: false, dot: false },
+  args: { kind: 'static', size: 'md', tone: 'default' as const, selected: false, dot: false },
   render: (args): TemplateResult => html`
     <div style="padding:3rem;">
       <lib-chip
         kind="${args.kind}"
         size="${args.size}"
-        color="${args.color}"
+        tone="${args.tone}"
         ?selected="${args.selected}"
         ?dot="${args.dot}"
         @ui-lib-chip-toggle="${(e: CustomEvent): void => console.log('toggle', e.detail)}"
@@ -131,10 +131,10 @@ export const Colors: Story = {
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.25em;
             text-transform:uppercase;color:var(--text-muted);width:72px;flex-shrink:0;">${c}</span>
           ${group(html`
-            <lib-chip color="${c}">Static</lib-chip>
-            <lib-chip kind="toggle" color="${c}">Toggle</lib-chip>
-            <lib-chip kind="toggle" color="${c}" selected>Selected</lib-chip>
-            <lib-chip kind="input"  color="${c}">Input</lib-chip>
+            <lib-chip tone="${c}">Static</lib-chip>
+            <lib-chip kind="toggle" tone="${c}">Toggle</lib-chip>
+            <lib-chip kind="toggle" tone="${c}" selected>Selected</lib-chip>
+            <lib-chip kind="input"  tone="${c}">Input</lib-chip>
           `)}
         </div>
       `)}
@@ -144,10 +144,10 @@ export const Colors: Story = {
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.25em;
           text-transform:uppercase;color:var(--color-washi-700);width:72px;flex-shrink:0;">strong</span>
         ${group(html`
-          <lib-chip color="strong">Static</lib-chip>
-          <lib-chip kind="toggle" color="strong">Toggle</lib-chip>
-          <lib-chip kind="toggle" color="strong" selected>Selected</lib-chip>
-          <lib-chip kind="input"  color="strong">Input</lib-chip>
+          <lib-chip tone="strong">Static</lib-chip>
+          <lib-chip kind="toggle" tone="strong">Toggle</lib-chip>
+          <lib-chip kind="toggle" tone="strong" selected>Selected</lib-chip>
+          <lib-chip kind="input"  tone="strong">Input</lib-chip>
         `)}
       </div>
 
@@ -165,9 +165,9 @@ export const Enriched: Story = {
         <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.25em;
           text-transform:uppercase;color:var(--text-muted);margin-bottom:.75rem;">Dot</p>
         ${group(html`
-          <lib-chip dot color="accent">Accent</lib-chip>
-          <lib-chip dot color="info">Info</lib-chip>
-          <lib-chip dot color="error">Error</lib-chip>
+          <lib-chip dot tone="accent">Accent</lib-chip>
+          <lib-chip dot tone="info">Info</lib-chip>
+          <lib-chip dot tone="error">Error</lib-chip>
           <lib-chip kind="toggle" dot selected>Seleccionado</lib-chip>
         `)}
       </div>
@@ -241,10 +241,10 @@ export const FilterBar: Story = {
         <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.25em;
           text-transform:uppercase;color:var(--text-muted);margin-bottom:.5rem;">Accent seleccionado</p>
         <div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;">
-          <lib-chip kind="toggle" color="accent" selected>Diseño</lib-chip>
-          <lib-chip kind="toggle" color="accent">Tipografía</lib-chip>
-          <lib-chip kind="toggle" color="accent">Tokens</lib-chip>
-          <lib-chip kind="toggle" color="accent" selected>Grid</lib-chip>
+          <lib-chip kind="toggle" tone="accent" selected>Diseño</lib-chip>
+          <lib-chip kind="toggle" tone="accent">Tipografía</lib-chip>
+          <lib-chip kind="toggle" tone="accent">Tokens</lib-chip>
+          <lib-chip kind="toggle" tone="accent" selected>Grid</lib-chip>
         </div>
       </div>
 
@@ -277,7 +277,7 @@ export const ChipField: Story = {
           @ui-lib-chip-remove="${(e: Event): void => (e.target as HTMLElement).remove()}">
           Lit
         </lib-chip>
-        <lib-chip kind="input" color="accent"
+        <lib-chip kind="input" tone="accent"
           @ui-lib-chip-remove="${(e: Event): void => (e.target as HTMLElement).remove()}">
           TypeScript
         </lib-chip>
@@ -323,14 +323,14 @@ const _katachi = createKatachiStories<object>(() => html`
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xs);">
       <lib-chip kind="toggle" selected>Diseño</lib-chip>
       <lib-chip kind="toggle">Sistema</lib-chip>
-      <lib-chip kind="toggle" selected color="accent">Accent</lib-chip>
-      <lib-chip kind="toggle" color="info">Info</lib-chip>
+      <lib-chip kind="toggle" selected tone="accent">Accent</lib-chip>
+      <lib-chip kind="toggle" tone="info">Info</lib-chip>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-xs);">
       <lib-chip kind="input">Katachi</lib-chip>
       <lib-chip kind="input">Wabi-Sabi</lib-chip>
-      <lib-chip dot color="accent">Dot accent</lib-chip>
-      <lib-chip dot color="error">Dot error</lib-chip>
+      <lib-chip dot tone="accent">Dot accent</lib-chip>
+      <lib-chip dot tone="error">Dot error</lib-chip>
     </div>
   </div>
 `);

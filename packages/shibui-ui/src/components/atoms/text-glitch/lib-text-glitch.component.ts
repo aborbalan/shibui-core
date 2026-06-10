@@ -7,7 +7,7 @@ import { textGlitchTemplate } from './lib-text-glitch.html';
 /* ── Tipos públicos ─────────────────────────────────────────── */
 
 /** Variante visual del efecto de glitch. */
-export type TextGlitchVariant = 'slice' | 'scan' | 'shift' | 'decode' | 'redact' | 'noise';
+export type TextGlitchTheme = 'slice' | 'scan' | 'shift' | 'decode' | 'redact' | 'noise';
 
 /**
  * Modo de activación del efecto.
@@ -47,7 +47,7 @@ export class LibTextGlitch extends LitElement {
   text: string = '';
 
   @property({ type: String, reflect: true })
-  variant: TextGlitchVariant = 'slice';
+  theme: TextGlitchTheme = 'slice';
 
   @property({ type: String, reflect: true })
   trigger: TextGlitchTrigger = 'hover';
@@ -79,7 +79,7 @@ export class LibTextGlitch extends LitElement {
 
   override updated(changed: PropertyValues): void {
     const reInit =
-      changed.has('variant') ||
+      changed.has('theme') ||
       changed.has('trigger') ||
       changed.has('text');
 
@@ -93,7 +93,7 @@ export class LibTextGlitch extends LitElement {
   }
 
   override render(): TemplateResult {
-    return textGlitchTemplate({ text: this.text, variant: this.variant });
+    return textGlitchTemplate({ text: this.text, theme: this.theme });
   }
 
   /* ── API pública ────────────────────────────────────────── */
@@ -105,13 +105,13 @@ export class LibTextGlitch extends LitElement {
    * - Para `slice` / `shift` / `noise`: activa [active] (CSS bucle).
    */
   play(): void {
-    if (this.variant === 'decode') {
+    if (this.theme === 'decode') {
       this._decodePlay();
       return;
     }
     this.active = true;
-    if (this.variant === 'scan' || this.variant === 'redact') {
-      const dur = this.variant === 'scan' ? 620 : 720;
+    if (this.theme === 'scan' || this.theme === 'redact') {
+      const dur = this.theme === 'scan' ? 620 : 720;
       setTimeout(() => { this.active = false; }, dur);
     }
   }
@@ -126,7 +126,7 @@ export class LibTextGlitch extends LitElement {
   /* ── Decode engine ──────────────────────────────────────── */
 
   private _setupDecode(): void {
-    if (this.variant !== 'decode') return;
+    if (this.theme !== 'decode') return;
 
     if (this.trigger === 'hover') {
       this.addEventListener('mouseenter', this._boundMouseEnter);

@@ -1,8 +1,8 @@
 import { html, svg, TemplateResult } from 'lit';
-import type { SpinnerVariant, SpinnerSize, SpinnerTone } from './lib-spinner.component';
+import type { SpinnerTheme, SpinnerSize, SpinnerTone } from './lib-spinner.component';
 
 export interface SpinnerTemplateProps {
-  variant: SpinnerVariant;
+  theme:   SpinnerTheme;
   size:    SpinnerSize;
   tone:    SpinnerTone;
   dark:    boolean;
@@ -99,9 +99,9 @@ function shizukuTemplate(size: SpinnerSize): TemplateResult {
 /* ── Root ───────────────────────────────────────────────────── */
 export function spinnerTemplate(props: SpinnerTemplateProps): TemplateResult {
   const inner: TemplateResult =
-    props.variant === 'sumi'    ? sumiTemplate() :
-    props.variant === 'kin'     ? kinTemplate() :
-    props.variant === 'shizuku' ? shizukuTemplate(props.size) :
+    props.theme === 'sumi'    ? sumiTemplate() :
+    props.theme === 'kin'     ? kinTemplate() :
+    props.theme === 'shizuku' ? shizukuTemplate(props.size) :
     ensoTemplate(props);
 
   return html`

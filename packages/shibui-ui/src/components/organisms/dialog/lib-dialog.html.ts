@@ -38,10 +38,10 @@ export function dialogTemplate(props: DialogTemplateProps): TemplateResult {
   const dlgCls   = `dlg ${sizeCls} ${layoutCls} ${alertCls}`.trim();
 
   /* ── Icono de header (solo danger / warning) ── */
-  const hasIcon = variant === 'danger' || variant === 'warning';
+  const hasIcon = variant === 'error' || variant === 'warning';
   const headerIcon = hasIcon
     ? html`<div class="dlg-header-icon">
-        ${ variant === 'danger' ? dangerSvg : warningSvg }
+        ${ variant === 'error' ? dangerSvg : warningSvg }
       </div>`
     : null;
 

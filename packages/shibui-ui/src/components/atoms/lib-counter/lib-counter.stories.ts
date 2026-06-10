@@ -20,7 +20,7 @@ const meta: Meta<CounterArgs> = {
     thousands:      { control: 'text' },
     decimals:       { control: 'number' },
     size:           { control: 'select', options: ['sm', 'md', 'lg', 'xl'] },
-    tone:           { control: 'select', options: ['default', 'accent', 'info', 'error', 'muted', 'on-dark'] },
+    tone:           { control: 'select', options: ['default', 'accent', 'info', 'error', 'muted'] },
     label:          { control: 'text' },
     delta:          { control: 'text' },
     deltaDir:       { control: 'select', options: ['up', 'down', 'flat'] },
@@ -194,15 +194,15 @@ export const DarkSurface: Story = {
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;width:100%;">
         <div style="display:flex;flex-direction:column;gap:12px;">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:oklch(30% 0.02 50);text-transform:uppercase;">Componentes</p>
-          <lib-counter value="22" thousands="" size="lg" tone="on-dark" label="En el sistema" play-on-visible></lib-counter>
+          <lib-counter value="22" thousands="" size="lg" surface="on-dark" label="En el sistema" play-on-visible></lib-counter>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:oklch(30% 0.02 50);text-transform:uppercase;">Design tokens</p>
-          <lib-counter value="148" thousands="" size="lg" tone="on-dark" label="Variables CSS" play-on-visible></lib-counter>
+          <lib-counter value="148" thousands="" size="lg" surface="on-dark" label="Variables CSS" play-on-visible></lib-counter>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px;">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:oklch(30% 0.02 50);text-transform:uppercase;">Kintsugi</p>
-          <lib-counter value="5" thousands="" size="lg" tone="on-dark" label="Variantes" play-on-visible></lib-counter>
+          <lib-counter value="5" thousands="" size="lg" surface="on-dark" label="Variantes" play-on-visible></lib-counter>
         </div>
       </div>
     </div>

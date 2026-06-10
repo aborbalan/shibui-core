@@ -6,7 +6,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type LibProgressCircleStoryArgs = Pick<
   LibProgressCircle,
-  'value' | 'max' | 'size' | 'strokeWidth' | 'variant' | 'indeterminate' | 'bare' | 'sub' | 'icon'
+  'value' | 'max' | 'size' | 'strokeWidth' | 'tone' | 'indeterminate' | 'bare' | 'sub' | 'icon'
 >;
 
 const preview = (bg: string, content: TemplateResult): TemplateResult => html`
@@ -31,7 +31,7 @@ const meta: Meta<LibProgressCircleStoryArgs> = {
     value:         { control: { type: 'range', min: 0, max: 100 } },
     max:           { control: 'number' },
     size:          { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-    variant:       { control: 'select', options: ['default', 'accent', 'info', 'error'] },
+    tone:          { control: 'select', options: ['default', 'accent', 'info', 'error'] },
     strokeWidth:   { control: 'number' },
     indeterminate: { control: 'boolean' },
     bare:          { control: 'boolean' },
@@ -44,7 +44,7 @@ const meta: Meta<LibProgressCircleStoryArgs> = {
       value=${args.value}
       max=${args.max}
       size=${args.size}
-      variant=${args.variant}
+      tone=${args.tone}
       ?indeterminate=${args.indeterminate}
       ?bare=${args.bare}
       sub=${args.sub}
@@ -59,7 +59,7 @@ type Story = StoryObj<LibProgressCircleStoryArgs>;
 
 /* ── Playground ── */
 export const Playground: Story = {
-  args: { value: 68, max: 100, size: 'md', variant: 'default', indeterminate: false, bare: false, sub: '', icon: null },
+  args: { value: 68, max: 100, size: 'md', tone: 'default', indeterminate: false, bare: false, sub: '', icon: null },
 };
 
 /* ── Cinco tamaños ── */
@@ -83,9 +83,9 @@ export const Variants: Story = {
   name: 'Colour Variants',
   render: (): TemplateResult => preview('var(--bg-surface)', html`
     ${withLabel('Default', html`<lib-progress-circle value="72" size="md"></lib-progress-circle>`)}
-    ${withLabel('Accent',  html`<lib-progress-circle value="48" size="md" variant="accent"></lib-progress-circle>`)}
-    ${withLabel('Info',    html`<lib-progress-circle value="91" size="md" variant="info"></lib-progress-circle>`)}
-    ${withLabel('Error',   html`<lib-progress-circle value="103" max="100" size="md" variant="error"></lib-progress-circle>`)}
+    ${withLabel('Accent',  html`<lib-progress-circle value="48" size="md" tone="accent"></lib-progress-circle>`)}
+    ${withLabel('Info',    html`<lib-progress-circle value="91" size="md" tone="info"></lib-progress-circle>`)}
+    ${withLabel('Error',   html`<lib-progress-circle value="103" max="100" size="md" tone="error"></lib-progress-circle>`)}
   `),
 };
 
@@ -95,8 +95,8 @@ export const Labels: Story = {
   render: (): TemplateResult => preview('var(--bg-surface)', html`
     ${withLabel('Solo valor',    html`<lib-progress-circle value="74" size="lg"></lib-progress-circle>`)}
     ${withLabel('Valor + sub',   html`<lib-progress-circle value="74" size="lg" sub="Tareas"></lib-progress-circle>`)}
-    ${withLabel('Completado',    html`<lib-progress-circle value="100" size="lg" variant="info" icon="check"></lib-progress-circle>`)}
-    ${withLabel('Sin label',     html`<lib-progress-circle value="38" size="lg" variant="accent" ?bare=${true}></lib-progress-circle>`)}
+    ${withLabel('Completado',    html`<lib-progress-circle value="100" size="lg" tone="info" icon="check"></lib-progress-circle>`)}
+    ${withLabel('Sin label',     html`<lib-progress-circle value="38" size="lg" tone="accent" ?bare=${true}></lib-progress-circle>`)}
   `),
 };
 
@@ -104,10 +104,10 @@ export const Labels: Story = {
 export const Indeterminate: Story = {
   render: (): TemplateResult => preview('var(--bg-surface)', html`
     ${withLabel('MD · default',  html`<lib-progress-circle size="md" ?indeterminate=${true}></lib-progress-circle>`)}
-    ${withLabel('MD · accent',   html`<lib-progress-circle size="md" variant="accent" ?indeterminate=${true}></lib-progress-circle>`)}
-    ${withLabel('MD · info',     html`<lib-progress-circle size="md" variant="info" ?indeterminate=${true}></lib-progress-circle>`)}
+    ${withLabel('MD · accent',   html`<lib-progress-circle size="md" tone="accent" ?indeterminate=${true}></lib-progress-circle>`)}
+    ${withLabel('MD · info',     html`<lib-progress-circle size="md" tone="info" ?indeterminate=${true}></lib-progress-circle>`)}
     ${withLabel('SM · default',  html`<lib-progress-circle size="sm" ?indeterminate=${true}></lib-progress-circle>`)}
-    ${withLabel('SM · accent',   html`<lib-progress-circle size="sm" variant="accent" ?indeterminate=${true}></lib-progress-circle>`)}
+    ${withLabel('SM · accent',   html`<lib-progress-circle size="sm" tone="accent" ?indeterminate=${true}></lib-progress-circle>`)}
     ${withLabel('XS · default',  html`<lib-progress-circle size="xs" ?indeterminate=${true}></lib-progress-circle>`)}
   `),
 };
@@ -199,15 +199,15 @@ const _katachi = createKatachiStories<object>(() => html`
       <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">md</span>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
-      <lib-progress-circle value="48" size="md" variant="accent" sub="Accent"></lib-progress-circle>
+      <lib-progress-circle value="48" size="md" tone="accent" sub="Accent"></lib-progress-circle>
       <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">accent</span>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
-      <lib-progress-circle value="91" size="md" variant="info" sub="Info"></lib-progress-circle>
+      <lib-progress-circle value="91" size="md" tone="info" sub="Info"></lib-progress-circle>
       <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">info</span>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
-      <lib-progress-circle value="100" size="md" variant="info" icon="check"></lib-progress-circle>
+      <lib-progress-circle value="100" size="md" tone="info" icon="check"></lib-progress-circle>
       <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">100% ✓</span>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">

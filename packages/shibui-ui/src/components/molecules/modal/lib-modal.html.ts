@@ -34,7 +34,7 @@ function panelWrapClass(p: ModalTemplateProps): string {
 function panelClass(variant: ModalVariant): string {
   const classes = ['mo-panel'];
   if (variant === 'editorial') classes.push('is-editorial');
-  if (variant === 'danger')    classes.push('is-danger');
+  if (variant === 'error')     classes.push('is-error');
   return classes.join(' ');
 }
 

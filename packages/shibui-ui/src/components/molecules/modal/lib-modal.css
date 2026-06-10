@@ -142,13 +142,13 @@
   }
 
   /* ── Variante danger ── */
-  .mo-panel.is-danger .mo-header {
+  .mo-panel.is-error .mo-header {
     border-bottom-color: #F5DDD9;
     background: #F5DDD9;
   }
-  .mo-panel.is-danger .mo-title    { color: var(--color-error); }
+  .mo-panel.is-error .mo-title    { color: var(--color-error); }
 
-  .mo-panel.is-danger .mo-footer   { border-top-color: #F5DDD9;
+  .mo-panel.is-error .mo-footer   { border-top-color: #F5DDD9;
      background: #fef5f3; }
 
   /* ════════════════════════════════════════

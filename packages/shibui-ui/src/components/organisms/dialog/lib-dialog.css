@@ -202,8 +202,8 @@
      VARIANTES DE COLOR
      ============================================================ */
 
-  /* danger */
-  :host([variant="danger"]) {
+  /* error */
+  :host([variant="error"]) {
     & .dlg-header {
       border-bottom-color: var(--color-error-border, #E8B4AE);
       background: var(--color-error-bg, #FDF0EE);

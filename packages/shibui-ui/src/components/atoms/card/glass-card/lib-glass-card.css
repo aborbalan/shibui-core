@@ -70,12 +70,12 @@
   /* neutral — ya aplicado en base (usa --lib-glass-bg) */
 
   /* cool — tinte azul sereno (era 'water') */
-  :host([variant="cool"]) .glass-card {
+  :host([tint="cool"]) .glass-card {
     background: var(--lib-glass-bg-water);
   }
 
   /* warm — tinte cálido orgánico (era 'kaki') */
-  :host([variant="warm"]) .glass-card {
+  :host([tint="warm"]) .glass-card {
     background: var(--lib-glass-bg-kaki);
   }
 
@@ -98,19 +98,19 @@
   }
 
   /* Combinaciones variant + intensity — mantienen el tinte correcto */
-  :host([variant="cool"][intensity="low"]) .glass-card {
+  :host([tint="cool"][intensity="low"]) .glass-card {
     background: oklch(55% 0.06 210deg / var(--lib-glass-opacity-low));
   }
 
-  :host([variant="cool"][intensity="high"]) .glass-card {
+  :host([tint="cool"][intensity="high"]) .glass-card {
     background: oklch(55% 0.06 210deg / var(--lib-glass-opacity-high));
   }
 
-  :host([variant="warm"][intensity="low"]) .glass-card {
+  :host([tint="warm"][intensity="low"]) .glass-card {
     background: oklch(45% 0.05 45deg / var(--lib-glass-opacity-low));
   }
 
-  :host([variant="warm"][intensity="high"]) .glass-card {
+  :host([tint="warm"][intensity="high"]) .glass-card {
     background: oklch(45% 0.05 45deg / var(--lib-glass-opacity-high));
   }
 

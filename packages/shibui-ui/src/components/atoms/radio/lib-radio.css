@@ -143,16 +143,16 @@
   /* ============================================================
      VARIANT: accent
      ============================================================ */
-  :host([variant="accent"][checked]) .radio__circle {
+  :host([tone="accent"][checked]) .radio__circle {
     background: var(--color-kaki-500);
     border-color: var(--color-kaki-500);
   }
 
-  :host([variant="accent"]) .radio:hover .radio__circle {
+  :host([tone="accent"]) .radio:hover .radio__circle {
     border-color: var(--color-kaki-400);
   }
 
-  :host([variant="accent"]) .radio:focus-within .radio__circle {
+  :host([tone="accent"]) .radio:focus-within .radio__circle {
     box-shadow: 0 0 0 3px oklch(45% 0.05 45deg / 0.12);
     border-color: var(--color-kaki-500);
   }
@@ -160,15 +160,15 @@
   /* ============================================================
      VARIANT: error
      ============================================================ */
-  :host([variant="error"]) .radio__circle {
+  :host([tone="error"]) .radio__circle {
     border-color: var(--color-error);
   }
 
-  :host([variant="error"]) .radio:hover .radio__circle {
+  :host([tone="error"]) .radio:hover .radio__circle {
     border-color: var(--color-error);
   }
 
-  :host([variant="error"]) .radio__label-text {
+  :host([tone="error"]) .radio__label-text {
     color: var(--color-error);
   }
 

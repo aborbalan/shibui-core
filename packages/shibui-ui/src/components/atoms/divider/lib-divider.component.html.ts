@@ -1,7 +1,7 @@
 import { html, nothing, TemplateResult } from 'lit';
 
 export type LibDividerStyle     = 'hairline' | 'default' | 'strong' | 'heavy' | 'dashed' | 'dotted' | 'gradient';
-export type LibDividerColor     = 'default' | 'accent' | 'info';
+export type LibDividerTone      = 'default' | 'accent' | 'info';
 export type LibDividerAlign     = 'left' | 'center' | 'right';
 export type LibDividerOrnament  = 'none' | 'dot' | 'diamond';
 export type LibDividerLabelStyle = 'mono' | 'display' | 'kanji';
@@ -10,7 +10,7 @@ export type LibDividerOrientation = 'horizontal' | 'vertical';
 export interface DividerTemplateProps {
   orientation: LibDividerOrientation;
   style: LibDividerStyle;
-  color: LibDividerColor;
+  tone: LibDividerTone;
   align: LibDividerAlign;
   ornament: LibDividerOrnament;
   labelStyle: LibDividerLabelStyle;

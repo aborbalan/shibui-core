@@ -1,9 +1,9 @@
 import { html, TemplateResult } from 'lit';
-import type { TextGlitchVariant } from './lib-text-glitch.component';
+import type { TextGlitchTheme } from './lib-text-glitch.component';
 
 export interface TextGlitchTemplateProps {
   text: string;
-  variant: TextGlitchVariant;
+  theme: TextGlitchTheme;
 }
 
 /**
@@ -17,7 +17,7 @@ export interface TextGlitchTemplateProps {
  * que los ::before/::after leen con attr(data-text).
  */
 export function textGlitchTemplate(props: TextGlitchTemplateProps): TemplateResult {
-  if (props.variant === 'decode') {
+  if (props.theme === 'decode') {
     return html`
       <span class="tg-inner" data-text="${props.text}">
         ${[...props.text].map(
