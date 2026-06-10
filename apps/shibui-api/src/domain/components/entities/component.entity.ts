@@ -11,6 +11,8 @@ export interface ApiProp {
   default?: string;
   description?: string;
   attribute?: string;
+  /** Valores enumerables del prop (uniones de literales resueltas por el extractor). */
+  options?: string[];
 }
 
 /** Slot del componente. */
