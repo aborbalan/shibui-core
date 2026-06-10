@@ -93,12 +93,20 @@ jobs:
             cv:      'apps/app-cv/**'
             api:     'apps/shibui-api/**'
             tauri:   'apps/app-tauri/**'
+            # base: cambios de dependencias/workspace en la raíz que pueden afectar
+            # a todo el monorepo (lockfile, workspaces, tsconfig base, configs raíz).
+            # Disparan la lib-pipeline para validar `pnpm install --frozen-lockfile`.
+            base:
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'package.json'
+              - 'tsconfig.base.json'
 
       # OR lógico: cambio detectado ó forzado manualmente
       - name: 🎛️ Resolve outputs (auto + manual override)
         id: resolve
         run: |
-          echo "ui=$([[ '${{ steps.filter.outputs.ui }}' == 'true' || '${{ inputs.force_ui }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "ui=$([[ '${{ steps.filter.outputs.ui }}' == 'true' || '${{ steps.filter.outputs.base }}' == 'true' || '${{ inputs.force_ui }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "ui_behavior=$([[ '${{ steps.filter.outputs.ui_behavior }}' == 'true' || '${{ inputs.force_ui }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "react=$([[ '${{ steps.filter.outputs.react }}' == 'true' || '${{ inputs.force_react }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "angular=$([[ '${{ steps.filter.outputs.angular }}' == 'true' || '${{ inputs.force_angular }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
