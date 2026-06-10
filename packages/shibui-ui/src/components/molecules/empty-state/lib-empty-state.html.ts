@@ -1,6 +1,6 @@
 import { html, nothing, TemplateResult } from 'lit';
 
-export type LibEmptyStateTone   = 'neutral' | 'accent' | 'info' | 'error';
+export type LibEmptyStateTone   = 'default' | 'accent' | 'info' | 'error';
 export type LibEmptyStateLayout = 'default' | 'inline';
 export type LibEmptyStateSize   = 'sm' | 'md';
 
@@ -49,7 +49,7 @@ export function emptyStateTemplate(props: EmptyStateTemplateProps): TemplateResu
     <div class="es
       ${props.layout  === 'inline'  ? 'es-inline'  : ''}
       ${props.size    === 'sm'      ? 'es-sm'      : ''}
-      ${props.tone    !== 'neutral' ? `es-${props.tone}` : ''}
+      ${props.tone    !== 'default' ? `es-${props.tone}` : ''}
       ${props.bordered              ? 'es-bordered' : ''}
       ${props.ghost                 ? 'es-ghost'   : ''}
     ">

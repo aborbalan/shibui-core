@@ -1,7 +1,7 @@
 import { html, nothing, TemplateResult } from 'lit';
 
 export type LibRadioSize    = 'sm' | 'md' | 'lg';
-export type LibRadioVariant = 'default' | 'accent' | 'error';
+export type LibRadioTone = 'default' | 'accent' | 'error';
 
 export interface RadioTemplateProps {
   radioId: string;
@@ -12,7 +12,7 @@ export interface RadioTemplateProps {
   label: string;
   sublabel: string;
   size: LibRadioSize;
-  variant: LibRadioVariant;
+  tone: LibRadioTone;
   onChange: (e: Event) => void;
 }
 

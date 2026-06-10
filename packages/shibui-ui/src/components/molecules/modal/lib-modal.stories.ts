@@ -71,7 +71,7 @@ const meta: Meta<LibModalArgs> = {
   component: 'lib-modal',
   argTypes: {
     size:    { control: 'select', options: ['xs','sm','md','lg','xl','full'] satisfies ModalSize[] },
-    variant: { control: 'select', options: ['default','editorial','danger'] satisfies ModalVariant[] },
+    variant: { control: 'select', options: ['default','editorial','error'] satisfies ModalVariant[] },
     _animate: { control: 'select', options: ['scale','slide-up','slide-down'] satisfies ModalAnimate[] },
     iconTone:        { control: 'select', options: [null,'default','accent','secondary','error','info'] },
     open:            { control: 'boolean' },
@@ -211,7 +211,7 @@ export const Variants: Story = {
       ${trigger('Danger', 'mo-v-danger', true)}
       <lib-modal id="mo-v-danger"
         heading="Eliminar proyecto" subtitle="acción irreversible"
-        icon-tone="error" variant="danger" size="sm"
+        icon-tone="error" variant="error" size="sm"
         @ui-lib-modal-close="${closeOnEvent}"
       >
         <span slot="icon">🗑</span>

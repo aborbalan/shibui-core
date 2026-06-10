@@ -2,8 +2,10 @@
    LIB-GAUGE — Tipos e interfaces
    ============================================================ */
 
-/** Rol semántico de color (mapeado a tokens --text-*). */
-export type GaugeTone = 'default' | 'accent' | 'info' | 'success' | 'warning' | 'error';
+import type { LibSemanticTone } from '../../../types';
+
+/** Rol semántico de color (mapeado a tokens --text-*). Alias del tono semántico canónico. */
+export type GaugeTone = LibSemanticTone;
 
 /** Zona de umbral: tramo [from, to] del dominio con su tono. */
 export interface GaugeZone {

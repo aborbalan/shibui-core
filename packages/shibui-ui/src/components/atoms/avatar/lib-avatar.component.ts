@@ -1,6 +1,7 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { LibAvatarSize, LibAvatarShape, LibAvatarTone } from './lib-avatar.html';
+import type { LibAvatarSize, LibAvatarShape } from './lib-avatar.html';
+import type { LibTint } from '../../../types';
 import { avatarTemplate } from './lib-avatar.html';
 import avatarCss from './lib-avatar.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
@@ -15,7 +16,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * @slot status   - Indicador de estado (lib-status-dot)
  *
  * @example
- * <lib-avatar src="..." name="Ana Bel" size="lg" tone="warm"></lib-avatar>
+ * <lib-avatar src="..." name="Ana Bel" size="lg" tint="warm"></lib-avatar>
  * <lib-avatar name="Ana Bel" shape="squircle">
  *   <lib-status-dot slot="status" variant="success" pulse></lib-status-dot>
  * </lib-avatar>
@@ -43,9 +44,9 @@ export class LibAvatar extends LitElement {
   @property({ type: String, reflect: true })
   shape: LibAvatarShape = 'circle';
 
-  /** Tono semántico del fondo de iniciales/icono */
+  /** Tinte decorativo del fondo de iniciales/icono (no semántico) */
   @property({ type: String, reflect: true })
-  tone: LibAvatarTone = 'neutral';
+  tint: LibTint = 'neutral';
 
   @state() private _hasError = false;
 
@@ -68,7 +69,7 @@ export class LibAvatar extends LitElement {
       name: this.name,
       size: this.size,
       shape: this.shape,
-      tone: this.tone,
+      tint: this.tint,
       showImage,
       initials,
       onError: () => { this._hasError = true; },

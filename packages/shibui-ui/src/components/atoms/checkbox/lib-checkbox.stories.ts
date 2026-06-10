@@ -7,7 +7,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type LibCheckboxStoryArgs = Pick<
   LibCheckbox,
-  'checked' | 'disabled' | 'indeterminate' | 'label' | 'sublabel' | 'size' | 'variant' | 'value'
+  'checked' | 'disabled' | 'indeterminate' | 'label' | 'sublabel' | 'size' | 'tone' | 'value'
 >;
 
 const meta: Meta<LibCheckboxStoryArgs> = {
@@ -26,7 +26,7 @@ const meta: Meta<LibCheckboxStoryArgs> = {
       control: 'select',
       options: ['sm', 'md', 'lg'],
     },
-    variant: {
+    tone: {
       control: 'select',
       options: ['default', 'accent', 'error'],
     },
@@ -39,7 +39,7 @@ const meta: Meta<LibCheckboxStoryArgs> = {
         sublabel=${args.sublabel}
         value=${args.value}
         size=${args.size}
-        variant=${args.variant}
+        tone=${args.tone}
         ?checked=${args.checked}
         ?disabled=${args.disabled}
         ?indeterminate=${args.indeterminate}
@@ -58,7 +58,7 @@ export const Playground: Story = {
     sublabel: '',
     value: 'terms',
     size: 'md',
-    variant: 'default',
+    tone: 'default',
     checked: false,
     disabled: false,
     indeterminate: false,
@@ -97,7 +97,7 @@ export const States: Story = {
       <lib-checkbox
         label="Error"
         sublabel="Campo requerido"
-        variant="error"
+        tone="error"
       ></lib-checkbox>
     </div>
   `,
@@ -118,9 +118,9 @@ export const Sizes: Story = {
 export const Variants: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
-      <lib-checkbox variant="default" label="Default" sublabel="Fondo washi-900" checked></lib-checkbox>
-      <lib-checkbox variant="accent"    label="Kaki" sublabel="Fondo kaki-500" checked></lib-checkbox>
-      <lib-checkbox variant="error"   label="Error" sublabel="Borde y label en color-error"></lib-checkbox>
+      <lib-checkbox tone="default" label="Default" sublabel="Fondo washi-900" checked></lib-checkbox>
+      <lib-checkbox tone="accent"    label="Kaki" sublabel="Fondo kaki-500" checked></lib-checkbox>
+      <lib-checkbox tone="error"   label="Error" sublabel="Borde y label en color-error"></lib-checkbox>
     </div>
   `,
 };
@@ -188,9 +188,9 @@ const _katachi = createKatachiStories<object>(() => html`
       <lib-checkbox label="lg" size="lg" checked></lib-checkbox>
     </div>
     <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
-      <lib-checkbox variant="default" label="Default" checked></lib-checkbox>
-      <lib-checkbox variant="accent"    label="Kaki" checked></lib-checkbox>
-      <lib-checkbox variant="error"   label="Error"></lib-checkbox>
+      <lib-checkbox tone="default" label="Default" checked></lib-checkbox>
+      <lib-checkbox tone="accent"    label="Kaki" checked></lib-checkbox>
+      <lib-checkbox tone="error"   label="Error"></lib-checkbox>
     </div>
   </div>
 `);

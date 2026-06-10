@@ -57,7 +57,7 @@ export class LibTabs extends LitElement {
   color: TabsColor | "" = "";
 
   @property({ type: String, reflect: true })
-  size: TabsSize | "" = "";
+  size?: TabsSize;
 
   @property({ type: Boolean, reflect: true })
   dark = false;

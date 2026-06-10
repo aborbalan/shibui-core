@@ -12,7 +12,7 @@
    La salida es determinista (ordenada por slug) para que el
    drift-guard de CI (`git diff --exit-code`) sea fiable.
    ============================================================ */
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { COMPONENTS_EDITORIAL, type Editorial } from './components-editorial';
@@ -21,6 +21,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '../../..');
 
 const MANIFEST = resolve(root, 'packages/shibui-ui/dist/custom-elements.json');
+const SRC = resolve(root, 'packages/shibui-ui/src');
 const OUT = resolve(
   root,
   'apps/shibui-api/src/domain/components/data/components.generated.ts',
@@ -62,6 +63,93 @@ function titleCase(slug: string): string {
     .join(' ');
 }
 
+/** Trocea una RHS de tipo por `|` de nivel superior y limpia comentarios. */
+function splitUnion(rhs: string): string[] {
+  const clean = rhs
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\/\/[^\n]*/g, '');
+  return clean
+    .split('|')
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+const LITERAL_RE = /^'([^']*)'$|^"([^"]*)"$/;
+
+/**
+ * Expande una RHS de tipo a su lista de literales string, resolviendo
+ * recursivamente alias conocidos (p.ej. `LibSize | 'full'` → la unión
+ * completa). Devuelve null si algún término no es literal ni alias resoluble.
+ * Descarta el literal vacío (`''`/`""`), que es ruido de sentinel, no opción.
+ */
+function expandUnion(
+  rhs: string,
+  raw: Map<string, string>,
+  seen: Set<string> = new Set(),
+): string[] | null {
+  const out: string[] = [];
+  for (const tok of splitUnion(rhs)) {
+    // `undefined`/`null` aparecen en props opcionales (`size?: LibSize` →
+    // `LibSize | undefined`); no son opciones, se ignoran sin abortar.
+    if (tok === 'undefined' || tok === 'null') continue;
+    const lit = LITERAL_RE.exec(tok);
+    if (lit) {
+      const v = lit[1] ?? lit[2] ?? '';
+      if (v !== '') out.push(v); // descarta sentinel ''
+      continue;
+    }
+    if (/^\w+$/.test(tok) && raw.has(tok) && !seen.has(tok)) {
+      seen.add(tok);
+      const nested = expandUnion(raw.get(tok)!, raw, seen);
+      if (nested === null) return null;
+      out.push(...nested);
+      continue;
+    }
+    return null; // identificador desconocido, genérico, etc. → no enumerable
+  }
+  return [...new Set(out)]; // dedupe preservando orden
+}
+
+/**
+ * Escanea `src/**\/*.ts` y recolecta la RHS cruda de cada
+ * `export type X = …;`. Permite resolución recursiva de alias anidados.
+ */
+function collectRawAliases(srcDir: string): Map<string, string> {
+  const raw = new Map<string, string>();
+  let entries: string[] = [];
+  try {
+    entries = readdirSync(srcDir, { recursive: true }) as string[];
+  } catch {
+    return raw;
+  }
+  for (const rel of entries) {
+    if (!rel.endsWith('.ts')) continue;
+    if (/\.(stories|test|spec|d)\.ts$/.test(rel)) continue;
+    let content: string;
+    try {
+      content = readFileSync(resolve(srcDir, rel), 'utf8');
+    } catch {
+      continue;
+    }
+    for (const m of content.matchAll(/export\s+type\s+(\w+)\s*=\s*([^;]+);/g)) {
+      if (!raw.has(m[1])) raw.set(m[1], m[2]);
+    }
+  }
+  return raw;
+}
+
+const RAW_ALIASES = collectRawAliases(SRC);
+
+/**
+ * Resuelve los valores enumerables de un prop a partir de su tipo:
+ * unión (inline o con alias anidados) de literales string.
+ */
+function resolveOptions(typeText: string | undefined): string[] | undefined {
+  if (!typeText) return undefined;
+  const opts = expandUnion(typeText.trim(), RAW_ALIASES);
+  return opts && opts.length >= 2 ? opts : undefined;
+}
+
 function mapProps(members: CemMember[] = []) {
   // Backfill de descripciones: el JSDoc @prop genera "miembros" con
   // nombre = atributo (con guiones). Recuperamos su descripción.
@@ -85,12 +173,14 @@ function mapProps(members: CemMember[] = []) {
     .map((m) => {
       const description =
         m.description || (m.attribute ? descByAttr.get(m.attribute) : undefined);
+      const options = resolveOptions(m.type?.text);
       return {
         name: m.name,
         type: m.type?.text ?? 'unknown',
         ...(m.default !== undefined ? { default: m.default } : {}),
         ...(description ? { description } : {}),
         ...(m.attribute ? { attribute: m.attribute } : {}),
+        ...(options ? { options } : {}),
       };
     });
 }

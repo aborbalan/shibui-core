@@ -153,8 +153,8 @@
     border: none;
   }
 
-  /* danger — outline rojo */
-  :host([variant="danger"]) .btn {
+  /* error — outline rojo */
+  :host([variant="error"]) .btn {
     background: transparent;
     color: var(--color-error);
     border: 1px solid var(--color-error);

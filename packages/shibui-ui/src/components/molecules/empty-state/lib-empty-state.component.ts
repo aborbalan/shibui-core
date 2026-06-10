@@ -71,7 +71,7 @@ export class LibEmptyState extends LitElement {
    * - error: fallo, acceso denegado
    */
   @property({ type: String, reflect: true })
-  tone: LibEmptyStateTone = 'neutral';
+  tone: LibEmptyStateTone = 'default';
 
   /**
    * Disposición del componente.

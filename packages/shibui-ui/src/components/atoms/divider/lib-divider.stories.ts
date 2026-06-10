@@ -6,7 +6,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type LibDividerStoryArgs = Pick<
   LibDivider,
-  'orientation' | 'styleVariant' | 'color' | 'align' | 'ornament' | 'labelStyle'
+  'orientation' | 'styleVariant' | 'tone' | 'align' | 'ornament' | 'labelStyle'
 > & { slotContent?: string };
 
 const PREVIEW_H = 'padding:24px; background:#F2EDE6; border:1px solid #E5DDD3; display:flex; flex-direction:column; gap:24px;';
@@ -26,7 +26,7 @@ const meta: Meta<LibDividerStoryArgs> = {
       options: ['hairline', 'default', 'strong', 'heavy', 'dashed', 'dotted', 'gradient'],
       name: 'style-variant',
     },
-    color: {
+    tone: {
       control: 'select',
       options: ['default', 'accent', 'info'],
     },
@@ -54,7 +54,7 @@ const meta: Meta<LibDividerStoryArgs> = {
       <lib-divider
         orientation=${args.orientation}
         style-variant=${args.styleVariant}
-        color=${args.color}
+        tone=${args.tone}
         align=${args.align}
         ornament=${args.ornament}
         label-style=${args.labelStyle}
@@ -71,7 +71,7 @@ export const Playground: Story = {
   args: {
     orientation: 'horizontal',
     styleVariant: 'default',
-    color: 'default',
+    tone: 'default',
     align: 'center',
     ornament: 'none',
     labelStyle: 'mono',
@@ -125,10 +125,10 @@ export const Colors: Story = {
   render: (): TemplateResult => html`
     <div style="${PREVIEW_H}">
       <p style="font-family:monospace; font-size:10px; color:#9A8878; text-transform:uppercase; letter-spacing:0.25em;">Kaki</p>
-      <lib-divider color="accent"></lib-divider>
-      <lib-divider color="accent" ornament="dot"></lib-divider>
-      <lib-divider color="accent" ornament="diamond"></lib-divider>
-      <lib-divider color="accent">Nueva sección</lib-divider>
+      <lib-divider tone="accent"></lib-divider>
+      <lib-divider tone="accent" ornament="dot"></lib-divider>
+      <lib-divider tone="accent" ornament="diamond"></lib-divider>
+      <lib-divider tone="accent">Nueva sección</lib-divider>
 
       <p style="font-family:monospace; font-size:10px; color:#9A8878; text-transform:uppercase; letter-spacing:0.25em; margin-top:8px;">Celadón</p>
       <lib-divider color="info"></lib-divider>

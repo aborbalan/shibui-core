@@ -1,7 +1,7 @@
 import { html, nothing, TemplateResult } from 'lit';
 
 export type LibCheckboxSize    = 'sm' | 'md' | 'lg';
-export type LibCheckboxVariant = 'default' | 'accent' | 'error';
+export type LibCheckboxTone = 'default' | 'accent' | 'error';
 
 export interface CheckboxTemplateProps {
   checked: boolean;
@@ -11,7 +11,7 @@ export interface CheckboxTemplateProps {
   sublabel: string;
   value: string;
   size: LibCheckboxSize;
-  variant: LibCheckboxVariant;
+  tone: LibCheckboxTone;
   onChange: (e: Event) => void;
 }
 

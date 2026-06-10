@@ -263,113 +263,113 @@
   /* ────────────────────────────────────────
      COLORES — accent (era kaki)
      ──────────────────────────────────────── */
-  :host([color="accent"]) .chip {
+  :host([tone="accent"]) .chip {
     background: var(--color-kaki-50);
     color: var(--color-kaki-600);
     border-color: var(--color-kaki-100);
   }
 
-  :host([color="accent"]) .chip-toggle:not(.chip-toggle-selected) {
+  :host([tone="accent"]) .chip-toggle:not(.chip-toggle-selected) {
     background: var(--color-kaki-50);
     color: var(--color-kaki-600);
     border-color: var(--color-kaki-100);
   }
 
-  :host([color="accent"]) .chip-toggle:hover:not([selected]) {
+  :host([tone="accent"]) .chip-toggle:hover:not([selected]) {
     border-color: var(--color-kaki-400);
   }
 
-  :host([color="accent"][selected]) .chip-toggle {
+  :host([tone="accent"][selected]) .chip-toggle {
     background: var(--color-kaki-500);
     border-color: var(--color-kaki-500);
     color: #fff;
   }
 
-  :host([color="accent"]) .chip-input {
+  :host([tone="accent"]) .chip-input {
     background: var(--color-kaki-50);
     color: var(--color-kaki-600);
     border-color: var(--color-kaki-100);
   }
 
-  :host([color="accent"]) .chip-remove::part(close-btn):hover {
+  :host([tone="accent"]) .chip-remove::part(close-btn):hover {
     background: var(--color-kaki-100);
     color: var(--color-kaki-600);
   }
 
   /* ── info (era celadon) ── */
-  :host([color="info"]) .chip {
+  :host([tone="info"]) .chip {
     background: var(--info-bg-2);
     color: var(--info-text);
     border-color: var(--info-bg-2);
   }
 
-  :host([color="info"]) .chip-toggle {
+  :host([tone="info"]) .chip-toggle {
     background: var(--info-bg);
     color: var(--info-text);
     border-color: var(--info-bg-2);
   }
 
-  :host([color="info"][selected]) .chip-toggle {
+  :host([tone="info"][selected]) .chip-toggle {
     background: var(--info);
     border-color: var(--info);
     color: #fff;
   }
 
-  :host([color="info"]) .chip-input {
+  :host([tone="info"]) .chip-input {
     background: var(--info-bg);
     color: var(--info-text);
     border-color: var(--info-bg-2);
   }
 
-  :host([color="info"]) .chip-remove::part(close-btn):hover {
+  :host([tone="info"]) .chip-remove::part(close-btn):hover {
     background: var(--info-bg-2);
     color: var(--info-text);
   }
 
   /* ── error ── */
-  :host([color="error"]) .chip,
-  :host([color="error"]) .chip-input {
+  :host([tone="error"]) .chip,
+  :host([tone="error"]) .chip-input {
     background: var(--color-error-light);
     color: var(--color-error);
     border-color: var(--color-error-light);
   }
 
-  :host([color="error"]) .chip-remove::part(close-btn):hover {
+  :host([tone="error"]) .chip-remove::part(close-btn):hover {
     background: #EBC5BF;
     color: var(--color-error);
   }
 
   /* ── strong (era dark) — contraste máximo, fondo inverso ── */
-  :host([color="strong"]) .chip {
+  :host([tone="strong"]) .chip {
     background: var(--lib-comp-bg-inverse, var(--color-washi-900));
     color: var(--lib-comp-fg-sec, var(--color-washi-300));
     border-color: var(--lib-comp-border, var(--color-washi-800));
   }
 
-  :host([color="strong"]) .chip-toggle {
+  :host([tone="strong"]) .chip-toggle {
     background: var(--color-washi-800);
     color: var(--color-washi-300);
     border-color: var(--color-washi-700);
   }
 
-  :host([color="strong"]) .chip-toggle:hover {
+  :host([tone="strong"]) .chip-toggle:hover {
     border-color: var(--color-washi-500);
     color: var(--color-washi-100);
   }
 
-  :host([color="strong"][selected]) .chip-toggle {
+  :host([tone="strong"][selected]) .chip-toggle {
     background: var(--color-washi-50);
     border-color: var(--color-washi-50);
     color: var(--color-washi-950);
   }
 
-  :host([color="strong"]) .chip-input {
+  :host([tone="strong"]) .chip-input {
     background: var(--color-washi-800);
     color: var(--color-washi-300);
     border-color: var(--color-washi-700);
   }
 
-  :host([color="strong"]) .chip-remove::part(close-btn):hover {
+  :host([tone="strong"]) .chip-remove::part(close-btn):hover {
     background: var(--color-washi-700);
     color: var(--color-washi-100);
   }

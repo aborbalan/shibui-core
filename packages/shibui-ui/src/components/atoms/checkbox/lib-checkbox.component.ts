@@ -1,6 +1,6 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { LibCheckboxSize, LibCheckboxVariant } from './lib-checkbox.html';
+import type { LibCheckboxSize, LibCheckboxTone } from './lib-checkbox.html';
 import { checkboxTemplate } from './lib-checkbox.html';
 import checkboxCss from './lib-checkbox.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
@@ -23,7 +23,7 @@ export interface CheckboxChangeDetail {
  * @example
  * <lib-checkbox label="Aceptar terminos" value="terms"></lib-checkbox>
  * <lib-checkbox label="Seleccion parcial" indeterminate></lib-checkbox>
- * <lib-checkbox label="Acento" variant="accent" checked></lib-checkbox>
+ * <lib-checkbox label="Acento" tone="accent" checked></lib-checkbox>
  */
 @customElement('lib-checkbox')
 export class LibCheckbox extends LitElement {
@@ -63,9 +63,9 @@ export class LibCheckbox extends LitElement {
   @property({ type: String, reflect: true })
   size: LibCheckboxSize = 'md';
 
-  /** Variante de color */
+  /** Tono de color */
   @property({ type: String, reflect: true })
-  variant: LibCheckboxVariant = 'default';
+  tone: LibCheckboxTone = 'default';
 
   private _handleChange(e: Event): void {
     const input = e.target as HTMLInputElement;
@@ -90,7 +90,7 @@ export class LibCheckbox extends LitElement {
       sublabel: this.sublabel,
       value: this.value,
       size: this.size,
-      variant: this.variant,
+      tone: this.tone,
       onChange: this._handleChange.bind(this),
     });
   }

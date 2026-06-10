@@ -13,7 +13,7 @@ import { spinnerTemplate } from './lib-spinner.html';
  * - `kin`     — anillo dorado con halo de polvo de oro.   era 'kintsugi'
  * - `shizuku` — gotas en órbita decreciente.
  */
-export type SpinnerVariant = 'enso' | 'sumi' | 'kin' | 'shizuku';
+export type SpinnerTheme = 'enso' | 'sumi' | 'kin' | 'shizuku';
 
 /** Tamaño del spinner. */
 export type SpinnerSize = 'sm' | 'md' | 'lg';
@@ -32,7 +32,7 @@ export type SpinnerTone = 'ink' | 'accent' | 'cool';
 /**
  * @element lib-spinner
  *
- * @prop {SpinnerVariant} variant  - Variante visual (default: enso).
+ * @prop {SpinnerTheme}   theme    - Variante estética (default: enso).
  * @prop {SpinnerSize}    size     - Tamaño sm | md | lg (default: md).
  * @prop {SpinnerTone}    tone     - Tono de color (default: ink).
  * @prop {boolean}        dark     - Optimiza colores para fondos oscuros.
@@ -48,7 +48,7 @@ export class LibSpinner extends LitElement {
   ];
 
   @property({ type: String, reflect: true })
-  variant: SpinnerVariant = 'enso';
+  theme: SpinnerTheme = 'enso';
 
   @property({ type: String, reflect: true })
   size: SpinnerSize = 'md';
@@ -64,7 +64,7 @@ export class LibSpinner extends LitElement {
 
   override render(): TemplateResult {
     return spinnerTemplate({
-      variant: this.variant,
+      theme: this.theme,
       size:    this.size,
       tone:    this.tone,
       dark:    this.dark,

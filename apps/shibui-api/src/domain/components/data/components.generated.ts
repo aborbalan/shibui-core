@@ -46,7 +46,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibAccordionVariant",
           "default": "'default'",
           "description": "Variante visual del accordion",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "flush",
+            "separated",
+            "accent"
+          ]
         },
         {
           "name": "exclusive",
@@ -132,7 +138,14 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "type",
           "type": "AlertType",
           "default": "'default'",
-          "attribute": "type"
+          "attribute": "type",
+          "options": [
+            "default",
+            "info",
+            "warning",
+            "error",
+            "success"
+          ]
         },
         {
           "name": "heading",
@@ -232,21 +245,40 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibAvatarSize",
           "default": "'md'",
           "description": "Escala de tamaño",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "2xl"
+          ]
         },
         {
           "name": "shape",
           "type": "LibAvatarShape",
           "default": "'circle'",
           "description": "Forma del avatar",
-          "attribute": "shape"
+          "attribute": "shape",
+          "options": [
+            "circle",
+            "squircle",
+            "square"
+          ]
         },
         {
-          "name": "tone",
-          "type": "LibAvatarTone",
+          "name": "tint",
+          "type": "LibTint",
           "default": "'neutral'",
-          "description": "Tono semántico del fondo de iniciales/icono",
-          "attribute": "tone"
+          "description": "Tinte decorativo del fondo de iniciales/icono (no semántico)",
+          "attribute": "tint",
+          "options": [
+            "neutral",
+            "warm",
+            "cool",
+            "inverse"
+          ]
         }
       ],
       "slots": [
@@ -283,7 +315,64 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibBackgroundVariant",
           "default": "'washi'",
           "description": "— Fondo activo (default: 'washi')",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "washi",
+            "washi-grain",
+            "washi-weave",
+            "seigaiha",
+            "tatami",
+            "asanoha",
+            "sashiko",
+            "komon",
+            "kasuri",
+            "nishiki",
+            "kagome",
+            "shoji",
+            "shibori",
+            "ori",
+            "chirimen",
+            "celadon-wash",
+            "sumi",
+            "sumi-grain",
+            "kintsugi",
+            "ash-grid",
+            "ink-dot",
+            "mokume",
+            "kumo",
+            "temari",
+            "dusk",
+            "embers",
+            "obsidian",
+            "forge",
+            "void",
+            "yami",
+            "midnight",
+            "celadon",
+            "aurora-light",
+            "kaki-glow",
+            "celadon-mist",
+            "noctiluca",
+            "horizon",
+            "sakura",
+            "twilight",
+            "jade-deep",
+            "breathing",
+            "aurora-drift",
+            "scan",
+            "ink-drop",
+            "shimmer",
+            "pulse",
+            "fog",
+            "static",
+            "glitch",
+            "particles",
+            "rain",
+            "wave-mesh",
+            "constellation",
+            "fireflies",
+            "ink-wash"
+          ]
         },
         {
           "name": "paused",
@@ -324,14 +413,27 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibBadgeVariant",
           "default": "'default'",
           "description": "Variante visual del badge",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "accent",
+            "info",
+            "strong",
+            "error",
+            "success",
+            "warning"
+          ]
         },
         {
           "name": "size",
           "type": "LibBadgeSize",
           "default": "'md'",
           "description": "Tamaño del badge",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md"
+          ]
         },
         {
           "name": "dot",
@@ -421,7 +523,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "BarChartMode",
           "default": "'grouped'",
           "description": "— 'grouped' (default) | 'stacked'.",
-          "attribute": "mode"
+          "attribute": "mode",
+          "options": [
+            "grouped",
+            "stacked"
+          ]
         },
         {
           "name": "height",
@@ -464,7 +570,14 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "BentoGapSize",
           "default": "'md'",
           "description": "— Espacio entre celdas: 'xs'|'sm'|'md'(default)|'lg'|'xl'",
-          "attribute": "gap"
+          "attribute": "gap",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         },
         {
           "name": "rowHeight",
@@ -565,25 +678,47 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "separator",
           "type": "BreadcrumbSeparator",
           "default": "\"slash\"",
-          "attribute": "separator"
+          "attribute": "separator",
+          "options": [
+            "slash",
+            "chevron",
+            "dot",
+            "line"
+          ]
         },
         {
           "name": "size",
           "type": "BreadcrumbSize",
           "default": "\"md\"",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "surface",
           "type": "BreadcrumbSurface",
           "default": "\"default\"",
-          "attribute": "surface"
+          "attribute": "surface",
+          "options": [
+            "default",
+            "filled",
+            "pill"
+          ]
         },
         {
           "name": "accent",
           "type": "BreadcrumbAccent",
           "default": "\"none\"",
-          "attribute": "accent"
+          "attribute": "accent",
+          "options": [
+            "none",
+            "accent",
+            "info",
+            "bold"
+          ]
         },
         {
           "name": "dark",
@@ -707,14 +842,27 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "BurgerVariant",
           "default": "'filled'",
           "description": "— 'filled' | 'kanji' | 'neutral' | 'framed' | 'inverse' | 'glitch'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "filled",
+            "kanji",
+            "neutral",
+            "framed",
+            "inverse",
+            "glitch"
+          ]
         },
         {
           "name": "size",
           "type": "BurgerSize",
           "default": "'md'",
           "description": "— 'sm' | 'md' | 'lg'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "open",
@@ -777,13 +925,26 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "variant",
           "type": "\"primary\" | \"secondary\" | \"ghost\" | \"accent\" | \"danger\"",
           "default": "'primary'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "primary",
+            "secondary",
+            "ghost",
+            "accent",
+            "danger"
+          ]
         },
         {
           "name": "size",
           "type": "\"sm\" | \"md\" | \"lg\" | \"xl\"",
           "default": "'md'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         },
         {
           "name": "disabled",
@@ -807,7 +968,12 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "type",
           "type": "'button' | 'submit' | 'reset'",
           "default": "'button'",
-          "attribute": "type"
+          "attribute": "type",
+          "options": [
+            "button",
+            "submit",
+            "reset"
+          ]
         },
         {
           "name": "customPadding",
@@ -854,14 +1020,23 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "ButtonGroupShape",
           "default": "'flat'",
           "description": "Forma de los extremos del grupo",
-          "attribute": "shape"
+          "attribute": "shape",
+          "options": [
+            "flat",
+            "rounded",
+            "pill"
+          ]
         },
         {
           "name": "orientation",
           "type": "ButtonGroupOrientation",
           "default": "'horizontal'",
           "description": "Orientación del grupo",
-          "attribute": "orientation"
+          "attribute": "orientation",
+          "options": [
+            "horizontal",
+            "vertical"
+          ]
         },
         {
           "name": "block",
@@ -900,10 +1075,16 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         },
         {
           "name": "size",
-          "type": "LibSize | ''",
-          "default": "''",
-          "description": "Tamaño propagado a todos los hijos",
-          "attribute": "size"
+          "type": "LibSize | undefined",
+          "description": "Tamaño propagado a todos los hijos (sin set = no propaga)",
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         }
       ],
       "slots": [],
@@ -935,15 +1116,28 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "variant",
           "type": "LiquidVariant",
           "default": "'filled'",
-          "description": "— 'filled' | 'outlined' | 'accent' | 'info' | 'ghost' | 'danger'",
-          "attribute": "variant"
+          "description": "— 'filled' | 'outlined' | 'accent' | 'info' | 'ghost' | 'error'",
+          "attribute": "variant",
+          "options": [
+            "filled",
+            "outlined",
+            "accent",
+            "info",
+            "ghost",
+            "error"
+          ]
         },
         {
           "name": "size",
           "type": "LiquidSize",
           "default": "'md'",
           "description": "— 'sm' | 'md' | 'lg'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "disabled",
@@ -1029,15 +1223,29 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
       "props": [
         {
           "name": "variant",
-          "type": "LibVariant",
+          "type": "LibButtonVariant",
           "default": "'primary'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "primary",
+            "secondary",
+            "ghost",
+            "accent",
+            "danger"
+          ]
         },
         {
           "name": "size",
           "type": "LibSize",
           "default": "'md'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         },
         {
           "name": "dark",
@@ -1098,19 +1306,37 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "katachi",
           "type": "KatachiId | ''",
           "default": "''",
-          "attribute": "katachi"
+          "attribute": "katachi",
+          "options": [
+            "shizen",
+            "wabi",
+            "kintsugi",
+            "celadon",
+            "sabi",
+            "terminal"
+          ]
         },
         {
           "name": "display",
           "type": "LibCanvasDisplay",
           "default": "'contents'",
-          "attribute": "display"
+          "attribute": "display",
+          "options": [
+            "contents",
+            "block",
+            "flex"
+          ]
         },
         {
           "name": "pad",
           "type": "LibCanvasPad",
           "default": "''",
-          "attribute": "pad"
+          "attribute": "pad",
+          "options": [
+            "lg",
+            "xl",
+            "2xl"
+          ]
         },
         {
           "name": "minH",
@@ -1144,7 +1370,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "variant",
           "type": "LibCardVariant",
           "default": "\"default\"",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "inverse",
+            "accent",
+            "featured"
+          ]
         },
         {
           "name": "accentColor",
@@ -1222,7 +1454,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibCarouselMode",
           "default": "'slide'",
           "description": "Mecanismo de transición.\n- slide : desplazamiento horizontal (transform)\n- fade  : crossfade por opacidad",
-          "attribute": "mode"
+          "attribute": "mode",
+          "options": [
+            "slide",
+            "fade"
+          ]
         },
         {
           "name": "peek",
@@ -1351,14 +1587,24 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibCheckboxSize",
           "default": "'md'",
           "description": "Tamano del checkbox",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
-          "name": "variant",
-          "type": "LibCheckboxVariant",
+          "name": "tone",
+          "type": "LibCheckboxTone",
           "default": "'default'",
-          "description": "Variante de color",
-          "attribute": "variant"
+          "description": "Tono de color",
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "error"
+          ]
         }
       ],
       "slots": [
@@ -1404,7 +1650,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "CheckboxCardInputType",
           "default": "'checkbox'",
           "description": "— 'checkbox' | 'radio'",
-          "attribute": "input-type"
+          "attribute": "input-type",
+          "options": [
+            "checkbox",
+            "radio"
+          ]
         },
         {
           "name": "name",
@@ -1425,14 +1675,23 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "CheckboxCardColor",
           "default": "'accent'",
           "description": "— 'accent' | 'info'",
-          "attribute": "color"
+          "attribute": "color",
+          "options": [
+            "accent",
+            "info"
+          ]
         },
         {
           "name": "layout",
           "type": "CheckboxCardLayout",
           "default": "'vertical'",
           "description": "— 'vertical' | 'horizontal' | 'compact'",
-          "attribute": "layout"
+          "attribute": "layout",
+          "options": [
+            "vertical",
+            "horizontal",
+            "compact"
+          ]
         },
         {
           "name": "cardTitle",
@@ -1453,7 +1712,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "'square' | 'pill'",
           "default": "'square'",
           "description": "— 'square' | 'pill'",
-          "attribute": "check-shape"
+          "attribute": "check-shape",
+          "options": [
+            "square",
+            "pill"
+          ]
         },
         {
           "name": "dark",
@@ -1553,21 +1816,39 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "ChipKind",
           "default": "'static'",
           "description": "— 'static' | 'toggle' | 'input'",
-          "attribute": "kind"
+          "attribute": "kind",
+          "options": [
+            "static",
+            "toggle",
+            "input"
+          ]
         },
         {
           "name": "size",
           "type": "ChipSize",
           "default": "'md'",
           "description": "— 'xs' | 'sm' | 'md' | 'lg'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
-          "name": "color",
-          "type": "ChipColor",
+          "name": "tone",
+          "type": "ChipTone",
           "default": "'default'",
           "description": "— 'default' | 'accent' | 'info' | 'error' | 'strong'",
-          "attribute": "color"
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "info",
+            "error",
+            "strong"
+          ]
         },
         {
           "name": "selected",
@@ -1641,21 +1922,42 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibCloseVariant",
           "default": "'ghost'",
           "description": "Variante visual",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "ghost",
+            "subtle",
+            "outlined",
+            "filled",
+            "filled-round",
+            "error",
+            "on-dark"
+          ]
         },
         {
           "name": "size",
           "type": "LibCloseSize",
           "default": "'md'",
           "description": "Tamaño: sm (24px) · md (32px) · lg (40px) · xl (48px)",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         },
         {
           "name": "icon",
           "type": "LibCloseIcon",
           "default": "'x'",
           "description": "Icono Phosphor a mostrar.\nx → simple · x-circle → con circulo · x-square → con cuadrado",
-          "attribute": "icon"
+          "attribute": "icon",
+          "options": [
+            "x",
+            "x-circle",
+            "x-square"
+          ]
         },
         {
           "name": "disabled",
@@ -1710,7 +2012,16 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibCodeBlockLanguage",
           "default": "'bash'",
           "description": "Etiqueta de lenguaje mostrada en el header (decorativa)",
-          "attribute": "language"
+          "attribute": "language",
+          "options": [
+            "bash",
+            "ts",
+            "js",
+            "html",
+            "css",
+            "json",
+            "text"
+          ]
         },
         {
           "name": "filename",
@@ -1731,7 +2042,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibCodeBlockVariant",
           "default": "'default'",
           "description": "Variante visual: default (oscuro) | ghost (claro)",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "ghost"
+          ]
         }
       ],
       "slots": [
@@ -1772,7 +2087,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "ColorPickerVariant",
           "default": "'inline'",
           "description": "— inline · trigger (default: inline)",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "inline",
+            "trigger"
+          ]
         },
         {
           "name": "showAlpha",
@@ -2081,7 +2400,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "'dark' | 'light'",
           "default": "'dark'",
           "description": "Superficie de fondo",
-          "attribute": "surface"
+          "attribute": "surface",
+          "options": [
+            "dark",
+            "light"
+          ]
         }
       ],
       "slots": [
@@ -2122,14 +2445,26 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibCopyVariant",
           "default": "'ghost'",
           "description": "Variante visual",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "ghost",
+            "outlined",
+            "filled",
+            "subtle",
+            "on-dark"
+          ]
         },
         {
           "name": "size",
           "type": "LibCopySize",
           "default": "'md'",
           "description": "Tamaño",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "iconOnly",
@@ -2234,14 +2569,39 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibCounterSize",
           "default": "'md'",
           "description": "Tamaño del contador.",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         },
         {
           "name": "tone",
           "type": "LibCounterTone",
           "default": "'default'",
           "description": "Tono de color.",
-          "attribute": "tone"
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "info",
+            "error",
+            "muted"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "LibSurface",
+          "default": "'default'",
+          "description": "Superficie/contexto (p.ej. 'on-dark' para fondos oscuros).",
+          "attribute": "surface",
+          "options": [
+            "default",
+            "inverse",
+            "on-dark"
+          ]
         },
         {
           "name": "label",
@@ -2262,7 +2622,12 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibCounterDeltaDir",
           "default": "'up'",
           "description": "Dirección del delta — controla color e icono.",
-          "attribute": "delta-dir"
+          "attribute": "delta-dir",
+          "options": [
+            "up",
+            "down",
+            "flat"
+          ]
         },
         {
           "name": "playOnVisible",
@@ -2298,7 +2663,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "CursorMode",
           "default": "'filled'",
           "description": "— filled · minimal · accent · ghost (default: 'filled')",
-          "attribute": "mode"
+          "attribute": "mode",
+          "options": [
+            "filled",
+            "minimal",
+            "accent",
+            "ghost"
+          ]
         },
         {
           "name": "lerp",
@@ -2355,14 +2726,25 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "TableVariant",
           "default": "'lines'",
           "description": "lines | grid | striped | borderless",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "lines",
+            "grid",
+            "striped",
+            "borderless"
+          ]
         },
         {
           "name": "size",
           "type": "TableSize",
           "default": "'md'",
           "description": "sm | md | lg",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "dark",
@@ -2520,21 +2902,40 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "DialogVariant",
           "default": "'default'",
           "description": "— default · danger · warning · dark",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "error",
+            "warning",
+            "dark"
+          ]
         },
         {
           "name": "size",
           "type": "DialogSize",
           "default": "'md'",
           "description": "— sm · md · lg · xl · full (default: md)",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "full"
+          ]
         },
         {
           "name": "layout",
           "type": "DialogLayout",
           "default": "'dialog'",
           "description": "— dialog · drawer-right · drawer-bottom · alert (default: dialog)",
-          "attribute": "layout"
+          "attribute": "layout",
+          "options": [
+            "dialog",
+            "drawer-right",
+            "drawer-bottom",
+            "alert"
+          ]
         },
         {
           "name": "open",
@@ -2623,21 +3024,37 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "DisplayHeadingSurface",
           "default": "'light'",
           "description": "Superficie sobre la que aparece",
-          "attribute": "surface"
+          "attribute": "surface",
+          "options": [
+            "dark",
+            "light",
+            "neutral"
+          ]
         },
         {
           "name": "size",
           "type": "DisplayHeadingSize",
           "default": "'md'",
           "description": "Tamaño tipográfico fluido",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "tag",
           "type": "DisplayHeadingTag",
           "default": "'h2'",
           "description": "Tag semántico del heading",
-          "attribute": "tag"
+          "attribute": "tag",
+          "options": [
+            "h1",
+            "h2",
+            "h3",
+            "h4"
+          ]
         },
         {
           "name": "centered",
@@ -2681,42 +3098,75 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibDividerOrientation",
           "default": "'horizontal'",
           "description": "Dirección del separador",
-          "attribute": "orientation"
+          "attribute": "orientation",
+          "options": [
+            "horizontal",
+            "vertical"
+          ]
         },
         {
           "name": "styleVariant",
           "type": "LibDividerStyle",
           "default": "'hairline'",
           "description": "Estilo de la línea.\nNota: el atributo es `style-variant` para no colisionar\ncon el atributo nativo `style` del DOM.",
-          "attribute": "style-variant"
+          "attribute": "style-variant",
+          "options": [
+            "hairline",
+            "default",
+            "strong",
+            "heavy",
+            "dashed",
+            "dotted",
+            "gradient"
+          ]
         },
         {
-          "name": "color",
-          "type": "LibDividerColor",
+          "name": "tone",
+          "type": "LibDividerTone",
           "default": "'default'",
-          "description": "Color de acento de la línea",
-          "attribute": "color"
+          "description": "Tono de acento de la línea",
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "info"
+          ]
         },
         {
           "name": "align",
           "type": "LibDividerAlign",
           "default": "'center'",
           "description": "Alineación del label u ornamento.\n`left` y `right` acortan el segmento opuesto a 24px.",
-          "attribute": "align"
+          "attribute": "align",
+          "options": [
+            "left",
+            "center",
+            "right"
+          ]
         },
         {
           "name": "ornament",
           "type": "LibDividerOrnament",
           "default": "'none'",
           "description": "Ornamento visual entre las líneas.\nToma prioridad sobre el contenido del slot si ambos están presentes.",
-          "attribute": "ornament"
+          "attribute": "ornament",
+          "options": [
+            "none",
+            "dot",
+            "diamond"
+          ]
         },
         {
           "name": "labelStyle",
           "type": "LibDividerLabelStyle",
           "default": "'mono'",
           "description": "Tipografía del label slotado",
-          "attribute": "label-style"
+          "attribute": "label-style",
+          "options": [
+            "mono",
+            "display",
+            "kanji"
+          ]
         }
       ],
       "slots": [
@@ -2758,21 +3208,42 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "DrawerPlacement",
           "default": "'right'",
           "description": "— 'right'(default) | 'left' | 'top' | 'bottom'",
-          "attribute": "placement"
+          "attribute": "placement",
+          "options": [
+            "right",
+            "left",
+            "top",
+            "bottom"
+          ]
         },
         {
           "name": "size",
           "type": "DrawerSize",
           "default": "'md'",
           "description": "— 'sm' | 'md'(default) | 'lg' | 'xl' | 'full'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "full"
+          ]
         },
         {
           "name": "variant",
           "type": "DrawerVariant",
           "default": "'default'",
           "description": "— 'default' | 'dark' | 'inverse' | 'inverse-dark' | 'glitch' | 'glitch-dark'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "dark",
+            "inverse",
+            "inverse-dark",
+            "glitch",
+            "glitch-dark"
+          ]
         },
         {
           "name": "label",
@@ -2863,14 +3334,24 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "DropdownTriggerVariant",
           "default": "'default'",
           "description": "— 'default' | 'ghost' | 'filled' | 'accent'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "ghost",
+            "filled",
+            "accent"
+          ]
         },
         {
           "name": "align",
           "type": "DropdownAlign",
           "default": "'left'",
           "description": "— 'left' (default) | 'right'",
-          "attribute": "align"
+          "attribute": "align",
+          "options": [
+            "left",
+            "right"
+          ]
         },
         {
           "name": "open",
@@ -3038,23 +3519,37 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "tone",
           "type": "LibEmptyStateTone",
-          "default": "'neutral'",
+          "default": "'default'",
           "description": "Tono cromático del icono.\n- neutral (default): washi\n- accent: cálido, primer uso, atención\n- info: completado, éxito\n- error: fallo, acceso denegado",
-          "attribute": "tone"
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "info",
+            "error"
+          ]
         },
         {
           "name": "layout",
           "type": "LibEmptyStateLayout",
           "default": "'default'",
           "description": "Disposición del componente.\n- default: columna centrada (pantallas, modales, paneles)\n- inline: fila con icono a la izquierda (tablas, banners)",
-          "attribute": "layout"
+          "attribute": "layout",
+          "options": [
+            "default",
+            "inline"
+          ]
         },
         {
           "name": "size",
           "type": "LibEmptyStateSize",
           "default": "'md'",
           "description": "Tamaño del componente.\n- md (default): padding generoso, icono 72px\n- sm: compacto para sidebars y paneles secundarios",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md"
+          ]
         },
         {
           "name": "bordered",
@@ -3105,21 +3600,49 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "EyebrowTone",
           "default": "'accent'",
           "description": "Rol semántico del color del texto y la línea decorativa",
-          "attribute": "tone"
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "muted"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "LibSurface",
+          "default": "'default'",
+          "description": "Superficie/contexto (p.ej. 'inverse' para fondos oscuros).",
+          "attribute": "surface",
+          "options": [
+            "default",
+            "inverse",
+            "on-dark"
+          ]
         },
         {
           "name": "line",
           "type": "EyebrowLine",
           "default": "'left'",
           "description": "Posición de la línea decorativa",
-          "attribute": "line"
+          "attribute": "line",
+          "options": [
+            "left",
+            "right",
+            "both",
+            "none"
+          ]
         },
         {
           "name": "size",
           "type": "EyebrowSize",
           "default": "'md'",
           "description": "Tamaño tipográfico",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "dot",
@@ -3180,7 +3703,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "FileBrowserRowSize",
           "default": "'default'",
           "description": "— 'default' (pantalla completa) | 'compact' (gadget).",
-          "attribute": "row-size"
+          "attribute": "row-size",
+          "options": [
+            "compact",
+            "default"
+          ]
         },
         {
           "name": "loading",
@@ -3240,7 +3767,12 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "UploaderZone",
           "default": "'default'",
           "description": "— Variante de zona (default: 'default')",
-          "attribute": "zone"
+          "attribute": "zone",
+          "options": [
+            "default",
+            "compact",
+            "image"
+          ]
         },
         {
           "name": "title",
@@ -3354,7 +3886,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "variant",
           "type": "FooterVariant",
           "default": "'social'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "social",
+            "accordion",
+            "kintsugi",
+            "glitch"
+          ]
         },
         {
           "name": "decoration",
@@ -3559,7 +4097,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "GadgetFrameVariant",
           "default": "'card'",
           "description": "— 'glass' (default) | 'card'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "glass",
+            "card"
+          ]
         }
       ],
       "slots": [
@@ -3625,7 +4167,15 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "GaugeTone",
           "default": "'info'",
           "description": "— Color del arco en modo simple. Default 'info'.",
-          "attribute": "tone"
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "info",
+            "success",
+            "warning",
+            "error"
+          ]
         },
         {
           "name": "zones",
@@ -3749,18 +4299,28 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "LibGlassVariant",
+          "name": "tint",
+          "type": "LibGlassTint",
           "default": "'neutral'",
           "description": "Tinte estructural del cristal.\n- neutral : neutro paper (default)\n- cool    : tinte azul sereno — oklch(55% 0.06 210)\n- warm    : tinte cálido orgánico — oklch(45% 0.05 45)\nDentro de un katachi el tinte es sobreescrito por el contexto.",
-          "attribute": "variant"
+          "attribute": "tint",
+          "options": [
+            "neutral",
+            "cool",
+            "warm"
+          ]
         },
         {
           "name": "intensity",
           "type": "LibGlassIntensity",
           "default": "'md'",
           "description": "Intensidad del efecto (blur + opacidad).\n- low  : blur 4px  · opacity 0.10 — sutil\n- md   : blur 12px · opacity 0.15 — default\n- high : blur 25px · opacity 0.25 — máximo",
-          "attribute": "intensity"
+          "attribute": "intensity",
+          "options": [
+            "low",
+            "md",
+            "high"
+          ]
         }
       ],
       "slots": [
@@ -3792,7 +4352,20 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "variant",
           "type": "HeaderVariant",
           "default": "'classic'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "classic",
+            "dark",
+            "centered",
+            "transparent",
+            "mega",
+            "minimal",
+            "shrink",
+            "app-bar",
+            "celadon",
+            "sabi",
+            "shizen"
+          ]
         },
         {
           "name": "decoration",
@@ -4091,7 +4664,12 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "type",
           "type": "'text' | 'email' | 'password'",
           "default": "'text'",
-          "attribute": "type"
+          "attribute": "type",
+          "options": [
+            "text",
+            "email",
+            "password"
+          ]
         },
         {
           "name": "required",
@@ -4165,14 +4743,27 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibKbdSize",
           "default": "'md'",
           "description": "Tamaño de la tecla.",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "variant",
           "type": "LibKbdVariant",
           "default": "'default'",
           "description": "Variante visual de color.",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "inverse",
+            "ghost",
+            "accent",
+            "subtle"
+          ]
         },
         {
           "name": "pressed",
@@ -4312,7 +4903,12 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LineChartMode",
           "default": "'line'",
           "description": "— 'line' (default) | 'area' | 'stacked-area'.",
-          "attribute": "mode"
+          "attribute": "mode",
+          "options": [
+            "line",
+            "area",
+            "stacked-area"
+          ]
         },
         {
           "name": "height",
@@ -4459,14 +5055,27 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "ProgressTone",
           "default": "'default'",
           "description": "— default · accent · info · error. Default default.",
-          "attribute": "tone"
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "info",
+            "error"
+          ]
         },
         {
           "name": "size",
           "type": "ProgressSize",
           "default": "'sm'",
           "description": "— xs · sm · md · lg · xl. Default sm.",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         },
         {
           "name": "showValue",
@@ -4510,14 +5119,27 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "ModalSize",
           "default": "'md'",
           "description": "— xs · sm · md · lg · xl · full (default md).",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "full"
+          ]
         },
         {
           "name": "variant",
           "type": "ModalVariant",
           "default": "'default'",
           "description": "— default · editorial · danger.",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "editorial",
+            "error"
+          ]
         },
         {
           "name": "dark",
@@ -4545,7 +5167,14 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "ModalIconTone | null",
           "default": "null",
           "description": "Tono del ícono del header.\nAcepta: 'default' | 'accent' | 'secondary' | 'error' | 'info' | null.\nCuando es null no se renderiza el wrapper del ícono.",
-          "attribute": "icon-tone"
+          "attribute": "icon-tone",
+          "options": [
+            "default",
+            "accent",
+            "secondary",
+            "error",
+            "info"
+          ]
         },
         {
           "name": "footerInfo",
@@ -4635,14 +5264,24 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "PaginationSize",
           "default": "'md'",
           "description": "— 'sm' | 'md' | 'lg' (default 'md')",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "variant",
           "type": "PaginationVariant",
           "default": "'default'",
           "description": "— 'default' | 'outline' | 'ghost'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "outline",
+            "ghost"
+          ]
         },
         {
           "name": "dark",
@@ -4705,7 +5344,12 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "ParallaxAxis",
           "default": "'y'",
           "description": "— Eje del efecto: 'y' | 'x' | 'xy' (default 'y')",
-          "attribute": "axis"
+          "attribute": "axis",
+          "options": [
+            "y",
+            "x",
+            "xy"
+          ]
         },
         {
           "name": "clamp",
@@ -4760,14 +5404,27 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "ParallaxTextSize",
           "default": "'lg'",
           "description": "— 'sm' | 'md' | 'lg'(default) | 'xl' | '2xl'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "2xl"
+          ]
         },
         {
           "name": "color",
           "type": "ParallaxTextColor",
           "default": "'default'",
           "description": "— 'default' | 'muted' | 'accent' | 'info' IMPORTANTE: el padre debe llevar overflow-x:hidden. El componente NO lo aplica en :host — si lo hiciera, el translateX quedaría clipado y el efecto sería invisible.",
-          "attribute": "color"
+          "attribute": "color",
+          "options": [
+            "default",
+            "muted",
+            "accent",
+            "info"
+          ]
         }
       ],
       "slots": [],
@@ -4877,13 +5534,26 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "size",
           "type": "ProgressSize",
           "default": "'md'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         },
         {
           "name": "tone",
           "type": "ProgressTone",
           "default": "'default'",
-          "attribute": "tone"
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "info",
+            "error"
+          ]
         },
         {
           "name": "indeterminate",
@@ -4981,7 +5651,14 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibProgressCircleSize",
           "default": "'md'",
           "description": "Tamaño semántico del círculo.\nMapea a dimensiones fijas con strokeWidth proporcional:\n- xs : 40px  · stroke 3  (sin label)\n- sm : 64px  · stroke 4\n- md : 96px  · stroke 6  (default)\n- lg : 128px · stroke 7\n- xl : 176px · stroke 6",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         },
         {
           "name": "strokeWidth",
@@ -4991,11 +5668,17 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "stroke-width"
         },
         {
-          "name": "variant",
-          "type": "LibProgressCircleVariant",
+          "name": "tone",
+          "type": "LibProgressCircleTone",
           "default": "'default'",
-          "description": "Paleta de color del arco.\nEl track toma automáticamente el tono -100 de cada variante.\n- default : washi-900 (tinta)\n- accent  : persimmon orgánico (kaki)\n- info    : jade sereno (celadon)\n- error   : estado crítico",
-          "attribute": "variant"
+          "description": "Tono de color del arco.\nEl track toma automáticamente el tono -100 de cada tono.\n- default : washi-900 (tinta)\n- accent  : persimmon orgánico (kaki)\n- info    : jade sereno (celadon)\n- error   : estado crítico",
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "info",
+            "error"
+          ]
         },
         {
           "name": "indeterminate",
@@ -5072,14 +5755,24 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "'dark' | 'light' | 'neutral'",
           "default": "'dark'",
           "description": "Superficie de fondo",
-          "attribute": "surface"
+          "attribute": "surface",
+          "options": [
+            "dark",
+            "light",
+            "neutral"
+          ]
         },
         {
           "name": "size",
           "type": "'sm' | 'md' | 'lg'",
           "default": "'md'",
           "description": "Tamaño tipográfico fluido",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "slots": [
@@ -5233,14 +5926,24 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibRadioSize",
           "default": "'md'",
           "description": "Tamano del radio",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
-          "name": "variant",
-          "type": "LibRadioVariant",
+          "name": "tone",
+          "type": "LibRadioTone",
           "default": "'default'",
-          "description": "Variante de color",
-          "attribute": "variant"
+          "description": "Tono de color",
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "error"
+          ]
         }
       ],
       "slots": [
@@ -5333,13 +6036,37 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "size",
           "type": "RsSize",
           "default": "'md'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "tone",
           "type": "RsTone",
           "default": "'default'",
-          "attribute": "tone"
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "info",
+            "error",
+            "muted"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "LibSurface",
+          "default": "'default'",
+          "description": "Superficie/contexto (p.ej. 'inverse'/'on-dark' para fondos oscuros).",
+          "attribute": "surface",
+          "options": [
+            "default",
+            "inverse",
+            "on-dark"
+          ]
         },
         {
           "name": "disabled",
@@ -5441,21 +6168,39 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "RatingSize",
           "default": "'md'",
           "description": "— 'xs' | 'sm' | 'md'(default) | 'lg' | 'xl'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         },
         {
           "name": "color",
           "type": "RatingColor",
           "default": "'gold'",
           "description": "— 'gold'(default) | 'accent' | 'neutral' | 'info'",
-          "attribute": "color"
+          "attribute": "color",
+          "options": [
+            "gold",
+            "accent",
+            "neutral",
+            "info"
+          ]
         },
         {
           "name": "icon",
           "type": "RatingIcon",
           "default": "'star'",
           "description": "— 'star'(default) | 'heart' | 'diamond'",
-          "attribute": "icon"
+          "attribute": "icon",
+          "options": [
+            "star",
+            "heart",
+            "diamond"
+          ]
         },
         {
           "name": "readonly",
@@ -5517,13 +6262,26 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "variant",
           "type": "ReadingProgressVariant",
           "default": "'bar'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "bar",
+            "line",
+            "dots",
+            "ring",
+            "vertical"
+          ]
         },
         {
           "name": "tone",
           "type": "ReadingProgressTone",
           "default": "'accent'",
-          "attribute": "tone"
+          "attribute": "tone",
+          "options": [
+            "accent",
+            "info",
+            "filled",
+            "gold"
+          ]
         },
         {
           "name": "target",
@@ -5760,14 +6518,31 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "SegmentedVariant",
           "default": "'outline'",
           "description": "— Superficie visual (reflected)",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "outline",
+            "underline",
+            "pill",
+            "ghost",
+            "accent",
+            "info",
+            "dark-outline",
+            "dark-pill",
+            "dark-accent",
+            "dark-underline"
+          ]
         },
         {
           "name": "size",
           "type": "SegmentedSize",
           "default": "'md'",
           "description": "— Tamaño (reflected)",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "full",
@@ -5895,13 +6670,23 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "size",
           "type": "SelectSize",
           "default": "'md'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "variant",
           "type": "SelectVariant",
           "default": "'default'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "filled",
+            "ghost"
+          ]
         },
         {
           "name": "value",
@@ -6104,7 +6889,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "SidebarVariant",
           "default": "'dark'",
           "description": "— 'dark'(default) | 'light'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "dark",
+            "light",
+            "kintsugi",
+            "glitch"
+          ]
         },
         {
           "name": "collapsed",
@@ -6156,21 +6947,44 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibSkeletonShape",
           "default": "'rect'",
           "description": "Forma semántica del bloque.\nCada shape tiene una altura por defecto en CSS:\n- line   : 13px\n- title  : 22px\n- h1     : 36px\n- avatar : border-radius full (width/height obligatorio)\n- icon   : border-radius sm  (width/height obligatorio)\n- btn    : 36px\n- badge  : 20px\n- pill   : 22px, border-radius full\n- img    : 160px\n- rect   : sin altura — usar `height` prop",
-          "attribute": "shape"
+          "attribute": "shape",
+          "options": [
+            "line",
+            "title",
+            "h1",
+            "avatar",
+            "icon",
+            "btn",
+            "badge",
+            "pill",
+            "img",
+            "rect"
+          ]
         },
         {
           "name": "animation",
           "type": "LibSkeletonAnimation",
           "default": "'shimmer'",
           "description": "Tipo de animación.\n- shimmer : barrido de luz lateral (default)\n- wave    : barrido más lento y orgánico\n- pulse   : opacidad, sin movimiento",
-          "attribute": "animation"
+          "attribute": "animation",
+          "options": [
+            "shimmer",
+            "wave",
+            "pulse"
+          ]
         },
         {
           "name": "surface",
           "type": "LibSkeletonSurface",
           "default": "'light'",
           "description": "Superficie de color.\n- light   : washi-200 → washi-100 (default)\n- dark    : washi-800 → washi-700\n- accent  : kaki-200  → kaki-100\n- info    : jade oscuro  oklch(22%→32% / 175deg)\n  También se activa automáticamente cuando el ancestro tiene\n  data-katachi=\"celadon\" sin necesidad de pasar este prop.",
-          "attribute": "surface"
+          "attribute": "surface",
+          "options": [
+            "light",
+            "dark",
+            "accent",
+            "info"
+          ]
         },
         {
           "name": "width",
@@ -6217,7 +7031,14 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "size",
           "type": "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
           "default": "'md'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         },
         {
           "name": "horizontal",
@@ -6259,14 +7080,27 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "SparklineType",
           "default": "'line'",
           "description": "— 'line' (default) | 'area' | 'bar'.",
-          "attribute": "type"
+          "attribute": "type",
+          "options": [
+            "line",
+            "area",
+            "bar"
+          ]
         },
         {
           "name": "tone",
           "type": "SparklineTone",
           "default": "'default'",
           "description": "— default | accent | info | success | warning | error.",
-          "attribute": "tone"
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent",
+            "info",
+            "success",
+            "warning",
+            "error"
+          ]
         },
         {
           "name": "width",
@@ -6333,25 +7167,41 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "SpinnerVariant",
+          "name": "theme",
+          "type": "SpinnerTheme",
           "default": "'enso'",
-          "description": "Variante visual (default: enso).",
-          "attribute": "variant"
+          "description": "Variante estética (default: enso).",
+          "attribute": "theme",
+          "options": [
+            "enso",
+            "sumi",
+            "kin",
+            "shizuku"
+          ]
         },
         {
           "name": "size",
           "type": "SpinnerSize",
           "default": "'md'",
           "description": "Tamaño sm | md | lg (default: md).",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "tone",
           "type": "SpinnerTone",
           "default": "'ink'",
           "description": "Tono de color (default: ink).",
-          "attribute": "tone"
+          "attribute": "tone",
+          "options": [
+            "ink",
+            "accent",
+            "cool"
+          ]
         },
         {
           "name": "dark",
@@ -6394,7 +7244,12 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibSpotlightVariant",
           "default": "'accent'",
           "description": "Color del foco de luz.\n- accent : orgánico cálido — oklch(45% 0.05 45)  [default]\n- water  : azul sereno     — oklch(55% 0.06 210)\n- white  : neutro          — oklch(100% 0 0)\n\nNota: cuando `gold` está activo el spotlight es siempre accent.",
-          "attribute": "spotlight"
+          "attribute": "spotlight",
+          "options": [
+            "accent",
+            "water",
+            "white"
+          ]
         },
         {
           "name": "gold",
@@ -6448,14 +7303,26 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "StaggerDirection",
           "default": "'up'",
           "description": "— 'up' | 'down' | 'left' | 'right' | 'fade'",
-          "attribute": "direction"
+          "attribute": "direction",
+          "options": [
+            "up",
+            "down",
+            "left",
+            "right",
+            "fade"
+          ]
         },
         {
           "name": "easing",
           "type": "StaggerEasing",
           "default": "'out'",
           "description": "— 'default' | 'out' | 'bounce'",
-          "attribute": "easing"
+          "attribute": "easing",
+          "options": [
+            "default",
+            "out",
+            "bounce"
+          ]
         },
         {
           "name": "threshold",
@@ -6514,14 +7381,25 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibStatusDotStatus",
           "default": "'offline'",
           "description": "Estado de presencia.\n- online  : celadón · onda mizu\n- away    : kaki · respiración iki\n- busy    : error · parpadeo hayai\n- offline : washi-400 · quietud ma",
-          "attribute": "status"
+          "attribute": "status",
+          "options": [
+            "online",
+            "away",
+            "busy",
+            "offline"
+          ]
         },
         {
           "name": "size",
           "type": "LibStatusDotSize",
           "default": "'md'",
           "description": "Tamaño del punto.\n- sm : 6px  — tablas y listas densas\n- md : 10px — uso general (default)\n- lg : 14px — alta visibilidad",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "bordered",
@@ -6585,7 +7463,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibStepStatus",
           "default": "'pending'",
           "description": "Estado visual del nodo.\nInyectado automáticamente por lib-stepper.\n- pending   : por defecto — nodo vacío\n- active    : paso en curso — fondo oscuro + halo\n- completed : paso superado — checkmark\n- error     : fallo — icono de exclamación",
-          "attribute": "status"
+          "attribute": "status",
+          "options": [
+            "pending",
+            "active",
+            "completed",
+            "error"
+          ]
         },
         {
           "name": "last",
@@ -6599,21 +7483,36 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibStepOrientation",
           "default": "'horizontal'",
           "description": "Dirección del flujo. Inyectado por lib-stepper.",
-          "attribute": "orientation"
+          "attribute": "orientation",
+          "options": [
+            "horizontal",
+            "vertical"
+          ]
         },
         {
           "name": "variant",
           "type": "LibStepVariant",
           "default": "'default'",
           "description": "Variante visual. Inyectada por lib-stepper.\n- default  : nodo circular washi\n- minimal  : nodo cuadrado kaki\n- inverse  : venas doradas sobre superficie oscura (era kintsugi)",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "minimal",
+            "inverse",
+            "brutal"
+          ]
         },
         {
           "name": "size",
           "type": "LibStepSize",
           "default": "'md'",
           "description": "Tamaño del nodo. Inyectado por lib-stepper.\n- sm : 24px\n- md : 32px (default)\n- lg : 40px",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "slots": [],
@@ -6649,21 +7548,35 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibStepperOrientation",
           "default": "'horizontal'",
           "description": "Dirección del flujo.\n- horizontal : barra horizontal con conectores (default)\n- vertical   : lista vertical con contenido expandido por paso",
-          "attribute": "orientation"
+          "attribute": "orientation",
+          "options": [
+            "horizontal",
+            "vertical"
+          ]
         },
         {
           "name": "variant",
           "type": "LibStepperVariant",
           "default": "'default'",
           "description": "Variante visual. Se propaga a todos los lib-step hijos.\n- default  : nodo circular washi\n- minimal  : nodo cuadrado, acento kaki\n- inverse : venas doradas, pensado para superficies oscuras",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "minimal",
+            "inverse"
+          ]
         },
         {
           "name": "size",
           "type": "LibStepperSize",
           "default": "'md'",
           "description": "Tamaño de los nodos. Se propaga a todos los lib-step hijos.\n- sm : 24px · md : 32px (default) · lg : 40px",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "slots": [],
@@ -6712,14 +7625,23 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "LibSwitchVariant",
           "default": "'default'",
           "description": "Variante visual.\n- default   : track washi, thumb blanco\n- inverse  : cerámica oscura, venas doradas, thumb de oro al activar",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "default",
+            "inverse"
+          ]
         },
         {
           "name": "size",
           "type": "LibSwitchSize",
           "default": "'md'",
           "description": "Tamaño del switch.\n- sm : 30×18px · md : 40×24px (default) · lg : 52×30px",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "label",
@@ -6768,21 +7690,36 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "TabsVariant",
           "default": "\"underline\"",
           "description": "— 'underline' | 'pill' | 'card' | 'outline' | 'vertical'",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "underline",
+            "pill",
+            "card",
+            "outline",
+            "vertical"
+          ]
         },
         {
           "name": "color",
           "type": "TabsColor | \"\"",
           "default": "\"\"",
           "description": "— 'accent' | 'info'",
-          "attribute": "color"
+          "attribute": "color",
+          "options": [
+            "accent",
+            "info"
+          ]
         },
         {
           "name": "size",
-          "type": "TabsSize | \"\"",
-          "default": "\"\"",
+          "type": "TabsSize | undefined",
           "description": "— 'sm' | 'md' | 'lg'",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "dark",
@@ -7005,18 +7942,29 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "text"
         },
         {
-          "name": "variant",
-          "type": "TextGlitchVariant",
+          "name": "theme",
+          "type": "TextGlitchTheme",
           "default": "'slice'",
-          "description": "Efecto visual: slice | scan | shift | decode | redact | noise.",
-          "attribute": "variant"
+          "attribute": "theme",
+          "options": [
+            "slice",
+            "scan",
+            "shift",
+            "decode",
+            "redact",
+            "noise"
+          ]
         },
         {
           "name": "trigger",
           "type": "TextGlitchTrigger",
           "default": "'hover'",
           "description": "Modo de activación: hover | always.",
-          "attribute": "trigger"
+          "attribute": "trigger",
+          "options": [
+            "hover",
+            "always"
+          ]
         },
         {
           "name": "active",
@@ -7024,6 +7972,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "false",
           "description": "Activa el efecto programáticamente (reflectado en atributo).",
           "attribute": "active"
+        },
+        {
+          "name": "variant",
+          "type": "TextGlitchVariant",
+          "description": "Efecto visual: slice | scan | shift | decode | redact | noise."
         }
       ],
       "slots": [],
@@ -7051,7 +8004,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "ListFamily",
           "default": "'ul'",
           "description": "— Familia activa (default: 'ul') — Content list —",
-          "attribute": "family"
+          "attribute": "family",
+          "options": [
+            "ul",
+            "ol",
+            "ui",
+            "dl"
+          ]
         },
         {
           "name": "items",
@@ -7065,21 +8024,37 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "ContentMarker",
           "default": "'default'",
           "description": "— Tipo de viñeta (default: 'default')",
-          "attribute": "marker"
+          "attribute": "marker",
+          "options": [
+            "default",
+            "accent",
+            "dash",
+            "check"
+          ]
         },
         {
           "name": "counter",
           "type": "OrderedCounter",
           "default": "'decimal'",
           "description": "— Tipo de contador ol (default: 'decimal')",
-          "attribute": "counter"
+          "attribute": "counter",
+          "options": [
+            "decimal",
+            "roman",
+            "alpha"
+          ]
         },
         {
           "name": "size",
           "type": "ListSize",
           "default": "'md'",
           "description": "— Tamaño (default: 'md') — UI list —",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "uiItems",
@@ -7128,7 +8103,12 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "DlLayout",
           "default": "'inline'",
           "description": "— Layout (default: 'inline')",
-          "attribute": "dl-layout"
+          "attribute": "dl-layout",
+          "options": [
+            "inline",
+            "wide",
+            "stack"
+          ]
         },
         {
           "name": "dlDivided",
@@ -7195,7 +8175,12 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "TimelineSize",
           "default": "'md'",
           "description": "— Tamaño global: sm · md · lg (default: 'md')",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "slots": [
@@ -7228,14 +8213,26 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "TimelineNodeType",
           "default": "'dot'",
           "description": "— Tipo de nodo: dot · icon · avatar (default: 'dot')",
-          "attribute": "node-type"
+          "attribute": "node-type",
+          "options": [
+            "dot",
+            "icon",
+            "avatar"
+          ]
         },
         {
           "name": "nodeColor",
           "type": "TimelineNodeColor",
           "default": "'default'",
           "description": "— Color del nodo: default · accent · info · error · muted",
-          "attribute": "node-color"
+          "attribute": "node-color",
+          "options": [
+            "default",
+            "accent",
+            "info",
+            "error",
+            "muted"
+          ]
         },
         {
           "name": "icon",
@@ -7256,14 +8253,26 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "TimelineItemStatus",
           "default": "'default'",
           "description": "— Estado: default · active · done · error · pending",
-          "attribute": "status"
+          "attribute": "status",
+          "options": [
+            "default",
+            "active",
+            "done",
+            "error",
+            "pending"
+          ]
         },
         {
           "name": "lineVariant",
           "type": "TimelineLineVariant",
           "default": "'solid'",
           "description": "— Estilo de línea: solid · dashed · progress",
-          "attribute": "line-variant"
+          "attribute": "line-variant",
+          "options": [
+            "solid",
+            "dashed",
+            "progress"
+          ]
         },
         {
           "name": "lineProgress",
@@ -7326,14 +8335,31 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "TooltipPosition",
           "default": "'right'",
           "description": "— Posición de la burbuja (default: 'right')",
-          "attribute": "tooltip-position"
+          "attribute": "tooltip-position",
+          "options": [
+            "top",
+            "bottom",
+            "left",
+            "right",
+            "top-start",
+            "top-end",
+            "bottom-start",
+            "bottom-end"
+          ]
         },
         {
           "name": "tooltipVariant",
           "type": "TooltipVariant",
           "default": "'dark'",
           "description": "— Variante de color de la burbuja (default: 'dark')",
-          "attribute": "tooltip-variant"
+          "attribute": "tooltip-variant",
+          "options": [
+            "dark",
+            "light",
+            "accent",
+            "info",
+            "error"
+          ]
         },
         {
           "name": "clickable",
@@ -7435,21 +8461,43 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "type": "TooltipPosition",
           "default": "'top'",
           "description": "Posición de la burbuja (default: top).",
-          "attribute": "position"
+          "attribute": "position",
+          "options": [
+            "top",
+            "bottom",
+            "left",
+            "right",
+            "top-start",
+            "top-end",
+            "bottom-start",
+            "bottom-end"
+          ]
         },
         {
           "name": "variant",
           "type": "TooltipVariant",
           "default": "'dark'",
           "description": "Variante de color (default: dark).",
-          "attribute": "variant"
+          "attribute": "variant",
+          "options": [
+            "dark",
+            "light",
+            "accent",
+            "info",
+            "error"
+          ]
         },
         {
           "name": "size",
           "type": "TooltipSize",
           "default": "'md'",
           "description": "Tamaño sm | md | lg (default: md).",
-          "attribute": "size"
+          "attribute": "size",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ]
         },
         {
           "name": "content",
