@@ -62,9 +62,6 @@ const SIZE_FREEFORM = new Set(['lib-icon']); // size: string (acepta px/tokens)
 // ── Allowlist de migración pendiente (Tanda 5+). SHRINK conforme avanza. ──
 // Cada entrada = `${slug}.${prop}`. Quitar cuando el componente se migre.
 const KNOWN_PENDING = new Set<string>([
-  // tone decorativo / no-semántico aún sin migrar:
-  'lib-spinner.tone',          // ink|accent|cool → revisar (¿tint? ¿theme?)
-  'lib-reading-progress.tone', // accent|info|filled|gold → filled/gold fuera de canon
   // tipo sin resolver (scrollable reflejado como atributo `scroll`):
   'lib-tabs.scroll',
 ]);

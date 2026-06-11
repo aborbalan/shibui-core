@@ -17,7 +17,11 @@ const meta: Meta<LibReadingProgress> = {
     },
     tone: {
       control: 'select',
-      options: ['accent', 'info', 'filled'],
+      options: ['default', 'accent', 'info'],
+    },
+    theme: {
+      control: 'select',
+      options: ['default', 'kintsugi'],
     },
   },
 };
@@ -232,11 +236,11 @@ export const Vertical: Story = {
    TONOS — comparativa
    ══════════════════════════════════════ */
 export const Tones: Story = {
-  name: 'Tonos — accent · info · filled',
+  name: 'Tonos — default · accent · info',
   render: (): TemplateResult => html`
     <div style="padding:2rem;display:flex;flex-direction:column;gap:2rem;background:var(--bg-base);">
 
-      ${(['accent', 'info', 'filled'] as const).map(tone => html`
+      ${(['default', 'accent', 'info'] as const).map(tone => html`
         <div style="display:flex;flex-direction:column;gap:0.5rem;">
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">${tone}</span>
 
@@ -346,7 +350,7 @@ export const Kintsugi: Story = {
         <!-- Dots gold -->
         <lib-reading-progress
           display="dots"
-          tone="gold"
+          theme="kintsugi"
           dots-count="7"
           target="#article-gold"
         ></lib-reading-progress>
@@ -354,7 +358,7 @@ export const Kintsugi: Story = {
         <!-- BAR gold — pegada al borde inferior -->
         <lib-reading-progress
           display="bar"
-          tone="gold"
+          theme="kintsugi"
           target="#article-gold"
         ></lib-reading-progress>
       </div>
@@ -362,7 +366,7 @@ export const Kintsugi: Story = {
       <!-- Barra vertical gold -->
       <lib-reading-progress
         display="vertical"
-        tone="gold"
+        theme="kintsugi"
         target="#article-gold"
       ></lib-reading-progress>
 
@@ -408,21 +412,21 @@ export const KintsugiDark: Story = {
 
         <lib-reading-progress
           display="dots"
-          tone="gold"
+          theme="kintsugi"
           dots-count="5"
           target="#article-gold-dark"
         ></lib-reading-progress>
 
         <lib-reading-progress
           display="bar"
-          tone="gold"
+          theme="kintsugi"
           target="#article-gold-dark"
         ></lib-reading-progress>
       </div>
 
       <lib-reading-progress
         display="vertical"
-        tone="gold"
+        theme="kintsugi"
         target="#article-gold-dark"
       ></lib-reading-progress>
 

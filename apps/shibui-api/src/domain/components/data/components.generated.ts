@@ -42,15 +42,25 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "LibAccordionVariant",
+          "name": "display",
+          "type": "LibAccordionDisplay",
           "default": "'default'",
-          "description": "Variante visual del accordion",
-          "attribute": "variant",
+          "description": "Modo de presentación (default · flush · separated)",
+          "attribute": "display",
           "options": [
             "default",
             "flush",
-            "separated",
+            "separated"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "LibAccordionTone",
+          "default": "'default'",
+          "description": "Tinte semántico (default · accent)",
+          "attribute": "tone",
+          "options": [
+            "default",
             "accent"
           ]
         },
@@ -6303,10 +6313,19 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "'accent'",
           "attribute": "tone",
           "options": [
+            "default",
             "accent",
-            "info",
-            "filled",
-            "gold"
+            "info"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "ReadingProgressTheme",
+          "default": "'default'",
+          "attribute": "theme",
+          "options": [
+            "default",
+            "kintsugi"
           ]
         },
         {
@@ -7245,13 +7264,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "tone",
           "type": "SpinnerTone",
-          "default": "'ink'",
-          "description": "Tono de color (default: ink).",
+          "default": "'default'",
+          "description": "Tono de color (default: default).",
           "attribute": "tone",
           "options": [
-            "ink",
+            "default",
             "accent",
-            "cool"
+            "info"
           ]
         },
         {

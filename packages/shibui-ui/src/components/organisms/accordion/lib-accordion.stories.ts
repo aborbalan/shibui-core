@@ -5,17 +5,22 @@ import '../../atoms/accordion-item/lib-accordion-item.component';
 import type { LibAccordion } from './lib-accordion.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
-type LibAccordionStoryArgs = Pick<LibAccordion, 'variant' | 'exclusive'>;
+type LibAccordionStoryArgs = Pick<LibAccordion, 'display' | 'tone' | 'exclusive'>;
 
 const meta: Meta<LibAccordionStoryArgs> = {
   title: 'Universal/Layout/Accordion',
   component: 'lib-accordion',
   tags:['autodocs'],
   argTypes: {
-    variant: {
+    display: {
       control: 'select',
-      options: ['default', 'flush', 'separated', 'accent'],
-      description: 'Variante visual del accordion',
+      options: ['default', 'flush', 'separated'],
+      description: 'Modo de presentación del accordion',
+    },
+    tone: {
+      control: 'select',
+      options: ['default', 'accent'],
+      description: 'Tinte semántico',
     },
     exclusive: {
       control: 'boolean',
@@ -25,7 +30,7 @@ const meta: Meta<LibAccordionStoryArgs> = {
 
   render: (args): TemplateResult => html`
     <div style="max-width:640px; padding:24px; background:#F2EDE6;">
-      <lib-accordion variant=${args.variant} ?exclusive=${args.exclusive}>
+      <lib-accordion display=${args.display} tone=${args.tone} ?exclusive=${args.exclusive}>
         <lib-accordion-item label="Que es el sistema Shibui?" open>
           Shibui es una libreria de componentes agnostica inspirada en la estetica japonesa de lo bello sin ostentacion. Construida sobre CSS custom properties y arquitectura basada en tokens.
         </lib-accordion-item>
@@ -49,23 +54,24 @@ type Story = StoryObj<LibAccordionStoryArgs>;
 /* ── Playground ── */
 export const Playground: Story = {
   args: {
-    variant: 'default',
+    display: 'default',
+    tone: 'default',
     exclusive: false,
   },
 };
 
 /* ── Default ── */
 export const Default: Story = {
-  args: { variant: 'default', exclusive: false },
+  args: { display: 'default', exclusive: false },
 };
 
 /* ── Flush ── */
 export const Flush: Story = {
-  args: { variant: 'flush', exclusive: false },
+  args: { display: 'flush', exclusive: false },
   render: (): TemplateResult => html`
     <div style="max-width:640px; padding:24px; background:#F2EDE6;">
       <div style="background:#FFFFFF; padding:24px;">
-        <lib-accordion variant="flush">
+        <lib-accordion display="flush">
           <lib-accordion-item label="Diseno sin adornos" open>
             La variante flush elimina cualquier contenedor visual propio. El contenido se lee de forma lineal, como una extension natural del texto circundante.
           </lib-accordion-item>
@@ -83,10 +89,10 @@ export const Flush: Story = {
 
 /* ── Separated ── */
 export const Separated: Story = {
-  args: { variant: 'separated', exclusive: false },
+  args: { display: 'separated', exclusive: false },
   render: (): TemplateResult => html`
     <div style="max-width:640px; padding:24px; background:#F2EDE6;">
-      <lib-accordion variant="separated">
+      <lib-accordion display="separated">
         <lib-accordion-item label="Tipografia — Cormorant Garamond">
           Fuente de display usada para titulos y elementos de alta jerarquia. Pesos disponibles: light (300), regular (400) y semibold (600).
         </lib-accordion-item>
@@ -103,10 +109,10 @@ export const Separated: Story = {
 
 /* ── Accent ── */
 export const Accent: Story = {
-  args: { variant: 'accent', exclusive: false },
+  args: { tone: 'accent', exclusive: false },
   render: (): TemplateResult => html`
     <div style="max-width:640px; padding:24px; background:#F2EDE6;">
-      <lib-accordion variant="accent">
+      <lib-accordion tone="accent">
         <lib-accordion-item label="Paleta Washi" open>
           Escala de 10 tonos del blanco roto al negro calido. Es la paleta base del sistema: fondos, bordes, texto primario y secundario.
         </lib-accordion-item>
@@ -124,13 +130,13 @@ export const Accent: Story = {
 /* ── Exclusive mode ── */
 export const Exclusive: Story = {
   name: 'Exclusive Mode',
-  args: { variant: 'default', exclusive: true },
+  args: { display: 'default', exclusive: true },
   render: (): TemplateResult => html`
     <div style="max-width:640px; padding:24px; background:#F2EDE6;">
       <p style="font-family:monospace; font-size:11px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:16px;">
         Exclusive — solo un item abierto a la vez
       </p>
-      <lib-accordion variant="default" exclusive>
+      <lib-accordion display="default" exclusive>
         <lib-accordion-item label="Seccion 1 — Arquitectura" open>
           Atomic Design para separar la logica de los componentes en atomos, moleculas y organismos.
         </lib-accordion-item>
@@ -152,7 +158,7 @@ export const AllVariants: Story = {
 
       <div>
         <p style="font-family:monospace; font-size:11px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:12px;">Default</p>
-        <lib-accordion variant="default">
+        <lib-accordion display="default">
           <lib-accordion-item label="Item abierto" open>Contenido del item abierto por defecto.</lib-accordion-item>
           <lib-accordion-item label="Item cerrado">Contenido oculto hasta que se expande.</lib-accordion-item>
         </lib-accordion>
@@ -161,7 +167,7 @@ export const AllVariants: Story = {
       <div>
         <p style="font-family:monospace; font-size:11px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:12px;">Flush</p>
         <div style="background:#FFFFFF; padding:16px 24px;">
-          <lib-accordion variant="flush">
+          <lib-accordion display="flush">
             <lib-accordion-item label="Item abierto" open>Contenido sin padding lateral, integrado en el contenedor.</lib-accordion-item>
             <lib-accordion-item label="Item cerrado">Contenido oculto hasta que se expande.</lib-accordion-item>
           </lib-accordion>
@@ -170,7 +176,7 @@ export const AllVariants: Story = {
 
       <div>
         <p style="font-family:monospace; font-size:11px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:12px;">Separated</p>
-        <lib-accordion variant="separated">
+        <lib-accordion display="separated">
           <lib-accordion-item label="Item abierto" open>Cada item es una tarjeta independiente con elevacion al abrirse.</lib-accordion-item>
           <lib-accordion-item label="Item cerrado">Contenido oculto hasta que se expande.</lib-accordion-item>
         </lib-accordion>
@@ -178,7 +184,7 @@ export const AllVariants: Story = {
 
       <div>
         <p style="font-family:monospace; font-size:11px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:12px;">Accent</p>
-        <lib-accordion variant="accent">
+        <lib-accordion tone="accent">
           <lib-accordion-item label="Item abierto" open>Borde kaki izquierdo y fondo kaki-50 al expandirse.</lib-accordion-item>
           <lib-accordion-item label="Item cerrado">Contenido oculto hasta que se expande.</lib-accordion-item>
         </lib-accordion>
@@ -201,7 +207,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <!-- default -->
     <div>
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">default</p>
-      <lib-accordion variant="default">
+      <lib-accordion display="default">
         <lib-accordion-item label="Wabi — la imperfección serena" open>
           <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Austeridad brumosa: fondos elevados, bordes sutiles.</p>
         </lib-accordion-item>
@@ -215,7 +221,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <div>
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">flush</p>
       <div style="background:var(--bg-surface);padding:var(--lib-space-sm) var(--lib-space-md);">
-        <lib-accordion variant="flush">
+        <lib-accordion display="flush">
           <lib-accordion-item label="Sabi — la pátina del tiempo" open>
             <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Superficies desvanecidas con dignidad silenciosa.</p>
           </lib-accordion-item>
@@ -229,7 +235,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <!-- separated -->
     <div>
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">separated</p>
-      <lib-accordion variant="separated">
+      <lib-accordion display="separated">
         <lib-accordion-item label="Celadon — la cerámica fría" open>
           <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Verde azulado inspirado en la cerámica coreana.</p>
         </lib-accordion-item>
@@ -242,7 +248,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <!-- accent -->
     <div>
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">accent</p>
-      <lib-accordion variant="accent">
+      <lib-accordion tone="accent">
         <lib-accordion-item label="Kaki — el barro terracota" open>
           <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Acento principal: naranja tostado de influencia japonesa.</p>
         </lib-accordion-item>

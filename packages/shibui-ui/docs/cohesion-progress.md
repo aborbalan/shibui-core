@@ -23,9 +23,9 @@ _Última actualización: 2026-06-12_
 | **danger → error** | ✅ | #484 | close-button · button-liquid · dialog · modal |
 | **estéticas → theme** | ✅ | #484/#487 | spinner·text-glitch (#484) · sidebar·footer·header·burger·drawer·step·stepper·background (#487) |
 | **display** (modos render) | 🟢 | #488 | data-table·reading-progress·color-picker · (+fix fantasmas variant burger/sidebar/text-glitch) |
-| **accordion** (split display+tone) | ⏳ | — | flush/separated→display, accent→tone |
+| **accordion** (split display+tone) | 🟢 | feature/props-cohesion-tone | flush/separated→display, accent→tone |
 | **surface resto** | 🟢 | feature/props-cohesion-surface | switch·counter·range-slider·eyebrow (on-dark→dark) · quote·display-heading (neutral→default) · content-pillar (ya canónico) · breadcrumb (surface→variant) · skeleton (split surface/tone) · tooltip·kbd·segmented-control (split variant/surface/tone) · timeline (tooltip-variant→tooltip-surface/tone). `LibSurface`=default·light·dark·inverse |
-| **tone sueltos** | ⏳ | — | spinner(ink/cool→¿tint?) · reading-progress(filled/gold) |
+| **tone sueltos** | 🟢 | feature/props-cohesion-tone | spinner: ink→default·cool→info · reading-progress: filled→default(ink)·info/accent canónicos·**gold→theme=kintsugi** |
 | **flag-o-valor + tipos** | ⏳ | — | label/error/tooltip/active/spotlight/counter · uniones `string\|number` · ariaLabel · tabs.scroll(unknown) |
 | **button cluster** | ⏳ | — | button + button-split + button-group · split variant+tone · ⚠️ alto impacto |
 | **Phase 2: apps + wrappers** | ⏳ | — | react/angular/svelte/cv usan atributos viejos · regenerar wrappers ⚠️ |
@@ -33,13 +33,13 @@ _Última actualización: 2026-06-12_
 
 ## KNOWN_PENDING actual (allowlist del test:cohesion)
 Vaciar conforme se migren. Hoy:
-- `lib-spinner.tone`, `lib-reading-progress.tone` (tone sueltos)
 - `lib-tabs.scroll` (unknown — scrollable reflejada como attr `scroll`)
 
 ## PRs
 - #484 ✅ merged · #485 ✅ merged · #486 ✅ merged · #487 ✅ merged
 - #488 🟢 open (display + fix fantasmas)
-- `feature/props-cohesion-surface` 🟢 (bloque surface completo)
+- `feature/props-cohesion-surface` → PR #489 🟢 (bloque surface completo)
+- `feature/props-cohesion-tone` 🟢 (tone sueltos + accordion) — apilada sobre surface
 
 ## Notas / aprendizajes
 - Renames `variant`→`theme`/`display`/`tone`: actualizar TAMBIÉN el JSDoc `@prop`/`@attr`, o CEM crea
