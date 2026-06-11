@@ -77,7 +77,7 @@ export const Social: Story = {
   name: '01 · Social Prominent',
   render: () => html`
     <lib-footer
-      variant="social"
+      theme="social"
       brand-name="shibui"
       brand-kanji="渋"
       brand-sub="Design System · Zaragoza"
@@ -100,7 +100,7 @@ export const Accordion: Story = {
   name: '02 · Accordion Mobile',
   render: () => html`
     <lib-footer
-      variant="accordion"
+      theme="accordion"
       brand-name="shibui"
       brand-kanji="渋"
       github-href="https://github.com"
@@ -120,7 +120,7 @@ export const Inverse: Story = {
   name: '03 · Inverse ✦',
   render: () => html`
     <lib-footer
-      variant="inverse"
+      theme="inverse"
       brand-name="shibui"
       brand-kanji="渋い"
       brand-sub="Design System · Zaragoza"
@@ -139,7 +139,7 @@ export const Glitch: Story = {
   name: '04 · Glitch Terminal ⌗',
   render: () => html`
     <lib-footer
-      variant="glitch"
+      theme="glitch"
       brand-name="shibui"
       brand-kanji="渋い"
       location="Zaragoza"
@@ -160,7 +160,7 @@ export const Celadon: Story = {
   name: '05 · Celadon 青',
   render: () => html`
     <lib-footer
-      variant="celadon"
+      theme="celadon"
       brand-name="shibui"
       brand-kanji="青磁"
       brand-sub="Design System · Zaragoza"
@@ -176,7 +176,7 @@ export const CeladonDecorated: Story = {
   name: '05b · Celadon — decoraciones (marea + condensación)',
   render: () => html`
     <lib-footer
-      variant="celadon"
+      theme="celadon"
       decoration="tide condensation depth"
       brand-name="shibui"
       brand-kanji="青磁"
@@ -196,7 +196,7 @@ export const Sabi: Story = {
   name: '06 · Sabi 寂',
   render: () => html`
     <lib-footer
-      variant="sabi"
+      theme="sabi"
       brand-name="shibui"
       brand-kanji="渋"
       brand-sub="Design System · Zaragoza"
@@ -215,7 +215,7 @@ export const Shizen: Story = {
   name: '07 · Shizen 自',
   render: () => html`
     <lib-footer
-      variant="shizen"
+      theme="shizen"
       brand-name="shibui"
       brand-kanji="渋"
       brand-sub="Design System · Zaragoza"
@@ -237,7 +237,7 @@ export const AllVariants: Story = {
     <div style="display:flex;flex-direction:column;">
       <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid #E5DDD3;">01 · Social prominent</p>
       <lib-footer
-        variant="social"
+        theme="social"
         brand-name="shibui"
         brand-kanji="渋"
         brand-sub="Design System · Zaragoza"
@@ -252,7 +252,7 @@ export const AllVariants: Story = {
 
       <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);background:#120E0A;">02 · Accordion móvil</p>
       <lib-footer
-        variant="accordion"
+        theme="accordion"
         brand-name="shibui"
         brand-kanji="渋"
         github-href="#"
@@ -264,7 +264,7 @@ export const AllVariants: Story = {
 
       <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);background:#120E0A;">03 · Inverse ✦</p>
       <lib-footer
-        variant="inverse"
+        theme="inverse"
         brand-name="shibui"
         brand-kanji="渋い"
         brand-sub="Design System · Zaragoza"
@@ -275,7 +275,7 @@ export const AllVariants: Story = {
 
       <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);background:#120E0A;">04 · Glitch Terminal ⌗</p>
       <lib-footer
-        variant="glitch"
+        theme="glitch"
         brand-name="shibui"
         brand-kanji="渋い"
         location="Zaragoza"
@@ -288,7 +288,7 @@ export const AllVariants: Story = {
 
       <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);background:oklch(15% 0.02 180deg);">05 · Celadon 青</p>
       <lib-footer
-        variant="celadon"
+        theme="celadon"
         brand-name="shibui"
         brand-kanji="青磁"
         brand-sub="Design System · Zaragoza"
@@ -299,7 +299,7 @@ export const AllVariants: Story = {
 
       <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#9A8878;padding:.75rem 1rem;border-bottom:2px solid #221C16;background:#FAF7F4;">06 · Sabi 寂</p>
       <lib-footer
-        variant="sabi"
+        theme="sabi"
         brand-name="shibui"
         brand-kanji="渋"
         brand-sub="Design System · Zaragoza"
@@ -310,7 +310,7 @@ export const AllVariants: Story = {
 
       <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid #E5DDD3;background:#fff;">07 · Shizen 自</p>
       <lib-footer
-        variant="shizen"
+        theme="shizen"
         brand-name="shibui"
         brand-kanji="渋"
         brand-sub="Design System · Zaragoza"
@@ -338,7 +338,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <!-- social variant -->
     <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;padding:var(--lib-space-xs) var(--lib-space-sm);background:var(--bg-base);border:1px solid var(--border-subtle);">01 · social</p>
     <lib-footer
-      variant="social"
+      theme="social"
       brand-name="shibui"
       brand-kanji="渋"
       brand-sub="Design System"
@@ -355,7 +355,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <!-- accordion variant -->
     <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;padding:var(--lib-space-xs) var(--lib-space-sm);background:var(--bg-base);border:1px solid var(--border-subtle);">02 · accordion</p>
     <lib-footer
-      variant="accordion"
+      theme="accordion"
       brand-name="shibui"
       brand-kanji="渋"
       github-href="#"
@@ -367,7 +367,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <!-- inverse variant -->
     <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;padding:var(--lib-space-xs) var(--lib-space-sm);background:var(--bg-base);border:1px solid var(--border-subtle);">03 · inverse</p>
     <lib-footer
-      variant="inverse"
+      theme="inverse"
       brand-name="shibui"
       brand-kanji="渋い"
       brand-sub="Design System"

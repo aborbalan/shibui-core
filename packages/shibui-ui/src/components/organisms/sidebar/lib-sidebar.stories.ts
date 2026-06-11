@@ -9,7 +9,7 @@ import { katachiContext, expectAccentMatchesToken } from '../../../stories/katac
 type StoryArgs = Partial<Pick<LibSidebar,
   'logoMark' | 'brandName' | 'showSearch' | 'active' |
   'userName' | 'userRole' | 'userAvatar' | 'showUserAction' |
-  'variant' | 'collapsed'
+  'theme' | 'collapsed'
 >>;
 
 /* ── Fixtures ── */
@@ -30,7 +30,7 @@ const meta: Meta<StoryArgs> = {
   component: 'lib-sidebar',
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    variant:        { control: 'select', options: ['dark', 'light'] },
+    theme:          { control: 'select', options: ['dark', 'light'] },
     showSearch:     { control: 'boolean' },
     showUserAction: { control: 'boolean' },
     collapsed:      { control: 'boolean' },
@@ -47,7 +47,7 @@ export const Playground: Story = {
     logoMark: '渋', brandName: 'shibui',
     showSearch: false, active: 'dashboard',
     userName: 'Shibui User', userRole: 'v0.1.0 · Pro',
-    showUserAction: true, variant: 'dark', collapsed: false,
+    showUserAction: true, theme: 'dark', collapsed: false,
   },
   render: (args): TemplateResult => html`
     <div style="display:flex;height:100vh;overflow:hidden;">
@@ -59,7 +59,7 @@ export const Playground: Story = {
         user-name="${args.userName}"
         user-role="${args.userRole}"
         ?show-user-action="${args.showUserAction}"
-        variant="${args.variant}"
+        theme="${args.theme}"
         ?collapsed="${args.collapsed}"
         .links="${LINKS}"
         @ui-lib-navigate="${(e: CustomEvent): void => console.log('navigate', e.detail)}"
@@ -67,7 +67,7 @@ export const Playground: Story = {
       ></lib-sidebar>
 
       <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;
-        background:${args.variant === 'dark' ? 'var(--color-washi-950)' : 'var(--bg-base)'};">
+        background:${args.theme === 'dark' ? 'var(--color-washi-950)' : 'var(--bg-base)'};">
         <div style="height:48px;border-bottom:1px solid var(--border-subtle);
           display:flex;align-items:center;padding:0 var(--lib-space-lg);gap:var(--lib-space-md);">
           <button style="width:32px;height:32px;background:none;border:1px solid var(--border-subtle);
@@ -106,7 +106,7 @@ export const Light: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex;height:100vh;overflow:hidden;">
       <lib-sidebar
-        variant="light"
+        theme="light"
         active="dashboard"
         user-name="Shibui User" user-role="v0.1.0 · Pro"
         show-user-action
@@ -158,7 +158,7 @@ export const Dark: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex;height:100vh;overflow:hidden;">
       <lib-sidebar
-        variant="dark"
+        theme="dark"
         active="dashboard"
         show-search
         user-name="Shibui User" user-role="Admin"
@@ -190,7 +190,7 @@ export const Collapsible: Story = {
     <div style="display:flex;height:100vh;overflow:hidden;">
       <lib-sidebar
         id="sb-collapsible"
-        variant="light"
+        theme="light"
         active="analytics"
         user-name="Shibui User" user-role="Pro"
         show-user-action
@@ -249,7 +249,7 @@ const _katachi = createKatachiStories<object>(() => html`
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">dark</p>
       <div style="display:flex;height:200px;border:1px solid var(--border-subtle);overflow:hidden;">
         <lib-sidebar
-          variant="dark"
+          theme="dark"
           active="dashboard"
           .links="${([
             { id: 'dashboard', label: 'Dashboard',  icon: 'home',       group: 'Principal' },
@@ -268,7 +268,7 @@ const _katachi = createKatachiStories<object>(() => html`
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">light</p>
       <div style="display:flex;height:200px;border:1px solid var(--border-subtle);overflow:hidden;">
         <lib-sidebar
-          variant="light"
+          theme="light"
           active="analytics"
           user-name="Shibui User"
           user-role="Pro"

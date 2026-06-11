@@ -17,7 +17,7 @@ const meta: Meta = {
     open:      { control: 'boolean' },
     placement: { control: 'select', options: ['right', 'left', 'top', 'bottom'] },
     size:      { control: 'select', options: ['sm', 'md', 'lg', 'xl', 'full'] },
-    variant:   { control: 'select', options: ['default', 'dark', 'inverse', 'inverse-dark', 'glitch', 'glitch-dark'] },
+    theme:     { control: 'select', options: ['default', 'dark', 'inverse', 'inverse-dark', 'glitch', 'glitch-dark'] },
     label:     { control: 'text' },
     eyebrow:   { control: 'text' },
     subtitle:  { control: 'text' },
@@ -55,7 +55,7 @@ export const Playground: Story = {
     open: false,
     placement: 'right',
     size: 'md',
-    variant: 'default',
+    theme: 'default',
     label: 'Panel lateral',
     eyebrow: 'Shibui DS',
     subtitle: '',
@@ -72,7 +72,7 @@ export const Playground: Story = {
       id="dr-playground"
       placement="${args.placement}"
       size="${args.size}"
-      variant="${args.variant}"
+      theme="${args.theme}"
       label="${args.label}"
       eyebrow="${args.eyebrow}"
       subtitle="${args.subtitle}"
@@ -389,7 +389,7 @@ export const Variants: Story = {
         }, v.accent)}
         <lib-drawer
           id="dr-v-${v.id}"
-          variant="${v.id}"
+          theme="${v.id}"
           label="${v.label}"
           eyebrow="${v.eyebrow}"
           @ui-lib-drawer-close="${(): void => { getDrawer(`#dr-v-${v.id}`).open = false; }}"

@@ -79,7 +79,7 @@ export type LibBackgroundCanvas =
   | 'ink-wash';   /* manchas de tinta expandiéndose sobre papel */
 
 /** Unión completa de las 55 variantes */
-export type LibBackgroundVariant =
+export type LibBackgroundTheme =
   | LibBackgroundLight
   | LibBackgroundDark
   | LibBackgroundGradient
@@ -88,18 +88,18 @@ export type LibBackgroundVariant =
 
 /** Props del template */
 export interface BackgroundTemplateProps {
-  variant:  LibBackgroundVariant;
+  theme:    LibBackgroundTheme;
   isCanvas: boolean;
 }
 
 /** Set de variantes canvas (requieren inicialización JS) */
-export const BG_CANVAS_VARIANTS = new Set<LibBackgroundVariant>([
+export const BG_CANVAS_VARIANTS = new Set<LibBackgroundTheme>([
   'particles', 'rain', 'wave-mesh', 'constellation',
   'fireflies', 'ink-wash',
 ]);
 
 /** Set de variantes oscuras (para decidir color de demo content) */
-export const BG_DARK_VARIANTS = new Set<LibBackgroundVariant>([
+export const BG_DARK_VARIANTS = new Set<LibBackgroundTheme>([
   'sumi', 'sumi-grain', 'kintsugi', 'ash-grid', 'ink-dot',
   'mokume', 'kumo', 'temari', 'dusk', 'embers',
   'obsidian', 'forge', 'void', 'yami', 'midnight', 'celadon',

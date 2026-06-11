@@ -4,7 +4,7 @@ import backgroundCss from './lib-background.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import { backgroundTemplate } from './lib-background.html';
 import { BG_CANVAS_VARIANTS } from './lib-background.types';
-import type { LibBackgroundVariant } from './lib-background.types';
+import type { LibBackgroundTheme } from './lib-background.types';
 
 /**
  * @element lib-background
@@ -13,7 +13,7 @@ import type { LibBackgroundVariant } from './lib-background.types';
  * de secciones, heroes, cards o paneles. El contenido se coloca
  * en el slot por defecto.
  *
- * @prop {LibBackgroundVariant} variant — Fondo activo (default: 'washi')
+ * @prop {LibBackgroundTheme} theme — Fondo activo (default: 'washi')
  * @prop {boolean}              paused  — Pausa animaciones CSS (a11y)
  *
  * @csspart base    — div de fondo CSS
@@ -33,7 +33,7 @@ export class LibBackground extends LitElement {
   /* ── Props públicas ── */
 
   @property({ type: String, reflect: true })
-  variant: LibBackgroundVariant = 'washi';
+  theme: LibBackgroundTheme = 'washi';
 
   @property({ type: Boolean, reflect: true })
   paused = false;
@@ -53,9 +53,9 @@ export class LibBackground extends LitElement {
   }
 
   protected override updated(changed: Map<PropertyKey, unknown>): void {
-    if (changed.has('variant')) {
+    if (changed.has('theme')) {
       this._stopCanvas();
-      if (BG_CANVAS_VARIANTS.has(this.variant)) {
+      if (BG_CANVAS_VARIANTS.has(this.theme)) {
         // Esperar al next tick para que el canvas exista en el DOM
         requestAnimationFrame((): void => this._startCanvas());
       }
@@ -73,7 +73,7 @@ export class LibBackground extends LitElement {
     const canvas = this._canvas;
     if (!canvas) return;
  
-    switch (this.variant) {
+    switch (this.theme) {
       case 'particles':     this._initParticles(canvas);     break;
       case 'rain':          this._initRain(canvas);           break;
       case 'wave-mesh':     this._initWaveMesh(canvas);       break;
@@ -472,8 +472,8 @@ export class LibBackground extends LitElement {
 
   protected override render(): TemplateResult {
     return backgroundTemplate({
-      variant:  this.variant,
-      isCanvas: BG_CANVAS_VARIANTS.has(this.variant),
+      theme:    this.theme,
+      isCanvas: BG_CANVAS_VARIANTS.has(this.theme),
     });
   }
 }

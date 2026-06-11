@@ -38,7 +38,7 @@ export function renderLogoMark(ctx: LibHeader): TemplateResult {
    ══════════════════════════════════════ */
 
 export function renderLogo(ctx: LibHeader): TemplateResult {
-  if (ctx.variant === 'minimal') {
+  if (ctx.theme === 'minimal') {
     return html`
       <a href="${ctx.logoHref}" class="hdr-logo">
         <span class="hdr-brand-name">${ctx.logoMark}</span>
@@ -50,19 +50,19 @@ export function renderLogo(ctx: LibHeader): TemplateResult {
       ${renderLogoMark(ctx)}
       <div>
         <div class="hdr-brand-name">${ctx.brandName}
-          ${ctx.variant === 'celadon'
+          ${ctx.theme === 'celadon'
             ? html` <em style="font-style:italic;color:var(--color-celadon-400);">青</em>`
-            : ctx.variant === 'sabi'
+            : ctx.theme === 'sabi'
               ? html` <em style="font-style:italic;color:var(--color-washi-400);">寂</em>`
-              : ctx.variant === 'shizen'
+              : ctx.theme === 'shizen'
                 ? html` <em style="font-style:italic;color:var(--color-kaki-400);">自</em>`
                 : nothing}
         </div>
-        ${ctx.brandTagline && ctx.variant === 'shrink'
+        ${ctx.brandTagline && ctx.theme === 'shrink'
           ? html`<div class="hdr-tagline">${ctx.brandTagline}</div>`
           : nothing}
       </div>
-      ${ctx.version && ctx.variant === 'dark'
+      ${ctx.version && ctx.theme === 'dark'
         ? html`<span class="hdr-version">${ctx.version}</span>`
         : nothing}
     </a>`;
@@ -139,7 +139,7 @@ export function renderActions(ctx: LibHeader): TemplateResult {
       ${ctx.actions.map((action: HeaderAction) => {
         const cls = action.variant
           ? `hdr-action--${action.variant}`
-          : `hdr-action--${ACTION_VARIANT_MAP[ctx.variant] || 'accent'}`;
+          : `hdr-action--${ACTION_VARIANT_MAP[ctx.theme] || 'accent'}`;
         return html`
           <a href="${action.href || '#'}"
             class="hdr-action ${cls}"
@@ -150,7 +150,7 @@ export function renderActions(ctx: LibHeader): TemplateResult {
           >${action.label}</a>`;
       })}
 
-      ${ctx.variant === 'minimal' && ctx.contactLabel ? html`
+      ${ctx.theme === 'minimal' && ctx.contactLabel ? html`
         <a href="${ctx.contactHref || '#'}" class="hdr-contact">${ctx.contactLabel} →</a>
       ` : nothing}
     </div>`;

@@ -10,7 +10,7 @@ const meta: Meta = {
   component: 'lib-header',
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    variant: { control: 'select', options: [
+    theme: { control: 'select', options: [
       'classic','dark','centered','transparent',
       'mega','minimal','shrink','app-bar','celadon','sabi','shizen',
     ]},
@@ -64,7 +64,7 @@ const nothing = html``;
 export const Classic: Story = {
   name: '01 · Classic — light · dropdown',
   render: (): TemplateResult => html`
-    <lib-header variant="classic"
+    <lib-header theme="classic"
       brand-name="shibui" login-label="Entrar"
       .links="${NAV}"
       .actions="${ACTIONS}"
@@ -79,7 +79,7 @@ export const Classic: Story = {
 export const Dark: Story = {
   name: '02 · Dark — washi-950 · blur',
   render: (): TemplateResult => html`
-    <lib-header variant="dark"
+    <lib-header theme="dark"
       brand-name="shibui" version="v0.1" login-label="Entrar"
       .links="${NAV_SIMPLE}"
       .actions="${[{ label: 'Empezar', href: '#', variant: 'accent' }]}"
@@ -94,7 +94,7 @@ export const Dark: Story = {
 export const Centered: Story = {
   name: '03 · Centered — editorial · logo central',
   render: (): TemplateResult => html`
-    <lib-header variant="centered"
+    <lib-header theme="centered"
       brand-name="shibui"
       announcement="✦ Componente 66 ya disponible — Header completo"
       announcement-href="#"
@@ -127,7 +127,7 @@ export const Transparent: Story = {
       <!-- Hero gradient -->
       <div style="position:absolute;inset:0;background:linear-gradient(160deg,var(--color-washi-800),var(--color-washi-950));z-index:0;height:400px;"></div>
       <div style="position:relative;z-index:1;">
-        <lib-header variant="transparent"
+        <lib-header theme="transparent"
           brand-name="shibui" login-label="Entrar"
           .links="${NAV_SIMPLE}"
           .actions="${[{ label: 'Ver componentes', href: '#', variant: 'accent' }]}"
@@ -157,7 +157,7 @@ export const Transparent: Story = {
 export const Mega: Story = {
   name: '05 · Mega-nav — panel full-width',
   render: (): TemplateResult => html`
-    <lib-header variant="mega"
+    <lib-header theme="mega"
       brand-name="shibui" login-label="Entrar"
       .links="${[
         { id: 'components', label: 'Componentes', href: '#', dropdown: [{}] },
@@ -201,7 +201,7 @@ export const Minimal: Story = {
   name: '06 · Minimal — sin borde · solo texto',
   render: (): TemplateResult => html`
     <div style="background:var(--color-washi-100);">
-      <lib-header variant="minimal"
+      <lib-header theme="minimal"
         logo-mark="渋い"
         contact-label="Contacto"
         contact-href="#"
@@ -231,7 +231,7 @@ export const Minimal: Story = {
 export const Shrink: Story = {
   name: '07 · Shrink — 72px → 48px al scroll',
   render: (): TemplateResult => html`
-    <lib-header variant="shrink"
+    <lib-header theme="shrink"
       brand-name="shibui" brand-tagline="Design System"
       .links="${NAV_SIMPLE}"
       .actions="${ACTIONS}"
@@ -252,7 +252,7 @@ export const AppBar: Story = {
   name: '08 · App-bar — breadcrumbs · search · acciones',
   render: (): TemplateResult => html`
     <!-- Default 56px light -->
-    <lib-header variant="app-bar"
+    <lib-header theme="app-bar"
       show-search search-placeholder="Buscar componentes…"
       user-name="Shibui" notifications
       .breadcrumbs="${[
@@ -273,7 +273,7 @@ export const AppBar: Story = {
     </div>
 
     <!-- Compact 44px dark -->
-    <lib-header variant="app-bar" compact
+    <lib-header theme="app-bar" compact
       user-name="S" notifications
       .breadcrumbs="${[
         { label: 'Shibui',  href: '#' },
@@ -299,7 +299,7 @@ export const AppBar: Story = {
 export const Celadon: Story = {
   name: '09 · Celadon — 青 jade · seam jade',
   render: (): TemplateResult => html`
-    <lib-header variant="celadon"
+    <lib-header theme="celadon"
       brand-name="shibui"
       login-label="Entrar"
       .links="${[
@@ -324,7 +324,7 @@ export const CeladonDecorated: Story = {
   parameters: { backgrounds: { default: 'dark' } },
   render: (): TemplateResult => html`
     <div data-katachi="celadon" style="background:var(--bg-base);padding:var(--lib-space-xl);">
-      <lib-header variant="celadon"
+      <lib-header theme="celadon"
         decoration="tide condensation depth"
         brand-name="shibui"
         login-label="Entrar"
@@ -350,7 +350,7 @@ export const CeladonDecorated: Story = {
 export const Sabi: Story = {
   name: '10 · Sabi — 寂 washi · tinta · brutal',
   render: (): TemplateResult => html`
-    <lib-header variant="sabi"
+    <lib-header theme="sabi"
       brand-name="shibui"
       login-label="Entrar"
       .links="${[
@@ -376,7 +376,7 @@ export const Sabi: Story = {
 export const Shizen: Story = {
   name: '11 · Shizen — 自 natural · limpio · aireado',
   render: (): TemplateResult => html`
-    <lib-header variant="shizen"
+    <lib-header theme="shizen"
       brand-name="shibui"
       login-label="Entrar"
       .links="${[
@@ -400,21 +400,21 @@ export const Shizen: Story = {
    PLAYGROUND
    ════════════════════════════════════════ */
 export const Playground: Story = {
-  args: { variant: 'classic' },
+  args: { theme: 'classic' },
   render: (args): TemplateResult => html`
     <lib-header
-      variant="${args.variant}"
+      theme="${args.theme}"
       brand-name="shibui"
       login-label="Entrar"
       .links="${NAV_SIMPLE}"
       .actions="${ACTIONS}"
     ></lib-header>
-    ${body(['dark','celadon'].includes(args.variant as string))}
+    ${body(['dark','celadon'].includes(args.theme as string))}
   `,
 };
 /* ═══════════════════════════════════════════════════════════════
    KATACHI · 形 · Las 6 historias estándar
-   lib-header (variant="classic") consume tokens semánticos y adapta
+   lib-header (theme="classic") consume tokens semánticos y adapta
    al katachi activo. Los efectos de katachi (seam dorado en kintsugi,
    scanlines en terminal) se activan automáticamente vía --lib-effect-*
    tokens sin prop adicional en el componente.
@@ -423,7 +423,7 @@ export const Playground: Story = {
 const _katachi = createKatachiStories<object>(() => html`
   <div style="display:flex;flex-direction:column;gap:0;">
     <lib-header
-      variant="classic"
+      theme="classic"
       brand-name="Shibui"
       login-label="Entrar"
       .links="${[

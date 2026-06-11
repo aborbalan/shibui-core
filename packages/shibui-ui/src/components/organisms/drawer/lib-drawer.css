@@ -339,7 +339,7 @@
   /* ════════════════════════════════
      DARK
      ════════════════════════════════ */
-  :host([variant="dark"]) {
+  :host([theme="dark"]) {
     & .dr {
       background: var(--lib-comp-bg, var(--color-washi-950));
       border-color: rgb(255, 255, 255, .07) !important;
@@ -400,7 +400,7 @@
   /* ════════════════════════════════
      KINTSUGI
      ════════════════════════════════ */
-  :host([variant="inverse"]) {
+  :host([theme="inverse"]) {
     & .dr {
       border-color: rgb(184, 90, 30, .3) !important;
     }
@@ -440,7 +440,7 @@
   }
 
   /* Gold seam — right */
-  :host([variant="inverse"][placement="right"]) .dr::after {
+  :host([theme="inverse"][placement="right"]) .dr::after {
     content: '';
     position: absolute;
     top: 0;
@@ -454,7 +454,7 @@
   }
 
   /* Gold seam — left */
-  :host([variant="inverse"][placement="left"]) .dr::after {
+  :host([theme="inverse"][placement="left"]) .dr::after {
     content: '';
     position: absolute;
     top: 0;
@@ -468,8 +468,8 @@
   }
 
   /* Gold seam — top/bottom */
-  :host([variant="inverse"][placement="top"]) .dr::after,
-  :host([variant="inverse"][placement="bottom"]) .dr::after {
+  :host([theme="inverse"][placement="top"]) .dr::after,
+  :host([theme="inverse"][placement="bottom"]) .dr::after {
     content: '';
     position: absolute;
     left: 0;
@@ -481,11 +481,11 @@
     pointer-events: none;
   }
 
-  :host([variant="inverse"][placement="top"]) .dr::after {
+  :host([theme="inverse"][placement="top"]) .dr::after {
     bottom: 0;
   }
 
-  :host([variant="inverse"][placement="bottom"]) .dr::after {
+  :host([theme="inverse"][placement="bottom"]) .dr::after {
     top: 0;
   }
 
@@ -519,7 +519,7 @@
   /* ════════════════════════════════
      KINTSUGI DARK
      ════════════════════════════════ */
-  :host([variant="inverse-dark"]) {
+  :host([theme="inverse-dark"]) {
     & .dr {
       background: var(--lib-comp-bg, var(--color-washi-950));
       border-color: rgb(184, 90, 30, .2) !important;
@@ -567,7 +567,7 @@
     }
   }
 
-  :host([variant="inverse-dark"][placement="right"]) .dr::after {
+  :host([theme="inverse-dark"][placement="right"]) .dr::after {
     content: '';
     position: absolute;
     top: 0;
@@ -580,7 +580,7 @@
     pointer-events: none;
   }
 
-  :host([variant="inverse-dark"][placement="left"]) .dr::after {
+  :host([theme="inverse-dark"][placement="left"]) .dr::after {
     content: '';
     position: absolute;
     top: 0;
@@ -596,7 +596,7 @@
   /* ════════════════════════════════
      GLITCH
      ════════════════════════════════ */
-  :host([variant="glitch"]) {
+  :host([theme="glitch"]) {
     & .dr {
       animation: dr-glitch-slide 7s steps(1) infinite;
     }
@@ -635,18 +635,18 @@
     }
   }
 
-  :host([variant="glitch"][open]) .dr {
+  :host([theme="glitch"][open]) .dr {
     animation: dr-flicker 7s steps(1) infinite;
   }
 
-  :host([variant="glitch"][open][placement="right"]) .dr {
+  :host([theme="glitch"][open][placement="right"]) .dr {
     animation:
       dr-glitch-open-r var(--duration-slow) var(--ease-out) forwards,
       dr-glitch-slide 7s steps(1) infinite 600ms;
   }
 
   /* Glitch seam */
-  :host([variant="glitch"][placement="right"]) .dr::after {
+  :host([theme="glitch"][placement="right"]) .dr::after {
     content: '';
     position: absolute;
     top: 0;
@@ -658,7 +658,7 @@
     pointer-events: none;
   }
 
-  :host([variant="glitch"][placement="left"]) .dr::after {
+  :host([theme="glitch"][placement="left"]) .dr::after {
     content: '';
     position: absolute;
     top: 0;
@@ -682,7 +682,7 @@
   /* ════════════════════════════════
      GLITCH DARK
      ════════════════════════════════ */
-  :host([variant="glitch-dark"]) {
+  :host([theme="glitch-dark"]) {
     & .dr {
       background: var(--lib-comp-bg, var(--color-washi-950));
       border-color: rgb(255, 255, 255, .06) !important;
@@ -754,11 +754,11 @@
     }
   }
 
-  :host([variant="glitch-dark"][open]) .dr {
+  :host([theme="glitch-dark"][open]) .dr {
     animation: dr-flicker 6s steps(1) infinite;
   }
 
-  :host([variant="glitch-dark"][placement="right"]) .dr::after {
+  :host([theme="glitch-dark"][placement="right"]) .dr::after {
     content: '';
     position: absolute;
     top: 0;
@@ -966,13 +966,13 @@
       transition: none;
     }
 
-    :host([variant="glitch"]) .dr,
-    :host([variant="glitch-dark"]) .dr {
+    :host([theme="glitch"]) .dr,
+    :host([theme="glitch-dark"]) .dr {
       animation: none;
     }
 
-    :host([variant="inverse"]) .dr::after,
-    :host([variant="inverse-dark"]) .dr::after {
+    :host([theme="inverse"]) .dr::after,
+    :host([theme="inverse-dark"]) .dr::after {
       animation: none;
     }
 
