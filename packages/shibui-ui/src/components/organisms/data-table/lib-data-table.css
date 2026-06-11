@@ -217,12 +217,12 @@
   ───────────────────────────────────────────────────────── */
 
   /* Lines (default) */
-  :host(:is([variant="lines"], :not([variant]))) tbody tr:hover {
+  :host(:is([display="lines"], :not([variant]))) tbody tr:hover {
     background: var(--color-washi-50);
   }
 
   /* Grid */
-  :host([variant="grid"]) {
+  :host([display="grid"]) {
     & thead th,
     & tbody td {
       border-right: 1px solid var(--border-subtle);
@@ -239,7 +239,7 @@
   }
 
   /* Striped */
-  :host([variant="striped"]) {
+  :host([display="striped"]) {
     & tbody tr:nth-child(even) {
       background: var(--bg-surface);
     }
@@ -254,7 +254,7 @@
   }
 
   /* Borderless */
-  :host([variant="borderless"]) {
+  :host([display="borderless"]) {
     & thead th {
       border-bottom: 1px solid var(--border-default);
     }

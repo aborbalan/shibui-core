@@ -2,7 +2,7 @@
 import { html, TemplateResult } from 'lit';
 import './lib-data-table.component';
 import type { LibDataTable } from './lib-data-table.component';
-import type { TableColumn, TableRowData, TableVariant, TableSize } from './lib-data-table.types';
+import type { TableColumn, TableRowData, TableDisplay, TableSize } from './lib-data-table.types';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 /* ════════════════════════════════════════════════════════════
@@ -55,7 +55,7 @@ const TEAM_COLS: TableColumn[] = [
    ════════════════════════════════════════════════════════════ */
 type LibDataTableArgs = Pick<
   LibDataTable,
-  'variant' | 'size' | 'dark' | 'loading' | 'selectable' | 'stickyHead'
+  'display' | 'size' | 'dark' | 'loading' | 'selectable' | 'stickyHead'
   | 'toolbar' | 'toolbarTitle' | 'pageSize' | 'caption'
 >;
 
@@ -64,7 +64,7 @@ const meta: Meta<LibDataTableArgs> = {
   tags:['autodocs'],
   component: 'lib-data-table',
   argTypes: {
-    variant:      { control: 'select', options: ['lines','grid','striped','borderless'] satisfies TableVariant[] },
+    display:      { control: 'select', options: ['lines','grid','striped','borderless'] satisfies TableDisplay[] },
     size:         { control: 'select', options: ['sm','md','lg'] satisfies TableSize[] },
     dark:         { control: 'boolean' },
     loading:      { control: 'boolean' },
@@ -85,7 +85,7 @@ type Story = StoryObj<LibDataTableArgs>;
    ════════════════════════════════════════════════════════════ */
 export const Playground: Story = {
   args: {
-    variant:      'lines',
+    display:      'lines',
     size:         'md',
     dark:         false,
     loading:      false,
@@ -99,7 +99,7 @@ export const Playground: Story = {
   render: (args): TemplateResult => html`
     <div style="padding:2rem;background:var(--bg-base);">
       <lib-data-table
-        variant="${args.variant}"
+        display="${args.display}"
         size="${args.size}"
         ?dark="${args.dark}"
         ?loading="${args.loading}"
@@ -123,8 +123,8 @@ export const Playground: Story = {
 export const Variants: Story = {
   name: 'Variants — lines · grid · striped · borderless',
   render: (): TemplateResult => {
-    const variants: TableVariant[] = ['lines', 'grid', 'striped', 'borderless'];
-    const descs: Record<TableVariant, string> = {
+    const variants: TableDisplay[] = ['lines', 'grid', 'striped', 'borderless'];
+    const descs: Record<TableDisplay, string> = {
       'lines':       'Solo separa filas. La más limpia. Default.',
       'grid':        'Cuadrícula completa. Tablas de datos densos.',
       'striped':     'Fondos alternos. Facilita el seguimiento ocular.',
@@ -140,7 +140,7 @@ export const Variants: Story = {
               .tbl-${v} — ${descs[v]}
             </p>
             <lib-data-table
-              variant="${v}"
+              display="${v}"
               .columns="${CATALOG_COLS.slice(0, 4)}"
               .data="${CATALOG.slice(0, 4)}"
             ></lib-data-table>
@@ -381,7 +381,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <div>
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">lines · sm</p>
       <lib-data-table
-        variant="lines"
+        display="lines"
         size="sm"
         .columns="${([
           { key: 'name',     header: 'Componente', sortable: true },
@@ -401,7 +401,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <div>
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">striped · md</p>
       <lib-data-table
-        variant="striped"
+        display="striped"
         size="md"
         .columns="${([
           { key: 'name',     header: 'Componente', sortable: true },
@@ -420,7 +420,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <div>
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">grid · lg · selectable</p>
       <lib-data-table
-        variant="grid"
+        display="grid"
         size="lg"
         ?selectable="${true}"
         .columns="${([

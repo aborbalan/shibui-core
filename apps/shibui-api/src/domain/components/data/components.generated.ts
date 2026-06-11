@@ -841,6 +841,7 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "theme",
           "type": "BurgerTheme",
           "default": "'filled'",
+          "description": "— 'filled' | 'kanji' | 'neutral' | 'framed' | 'inverse' | 'glitch'",
           "attribute": "theme",
           "options": [
             "filled",
@@ -890,11 +891,6 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "'Menú'",
           "description": "— aria-label del button (default: 'Menú')",
           "attribute": "aria-label"
-        },
-        {
-          "name": "variant",
-          "type": "unknown",
-          "description": "— 'filled' | 'kanji' | 'neutral' | 'framed' | 'inverse' | 'glitch'"
         }
       ],
       "slots": [],
@@ -2087,11 +2083,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "value"
         },
         {
-          "name": "variant",
-          "type": "ColorPickerVariant",
+          "name": "display",
+          "type": "ColorPickerDisplay",
           "default": "'inline'",
           "description": "— inline · trigger (default: inline)",
-          "attribute": "variant",
+          "attribute": "display",
           "options": [
             "inline",
             "trigger"
@@ -2726,11 +2722,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "data"
         },
         {
-          "name": "variant",
-          "type": "TableVariant",
+          "name": "display",
+          "type": "TableDisplay",
           "default": "'lines'",
           "description": "lines | grid | striped | borderless",
-          "attribute": "variant",
+          "attribute": "display",
           "options": [
             "lines",
             "grid",
@@ -6266,10 +6262,10 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "ReadingProgressVariant",
+          "name": "display",
+          "type": "ReadingProgressDisplay",
           "default": "'bar'",
-          "attribute": "variant",
+          "attribute": "display",
           "options": [
             "bar",
             "line",
@@ -6895,6 +6891,7 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "theme",
           "type": "SidebarTheme",
           "default": "'dark'",
+          "description": "— 'dark'(default) | 'light'",
           "attribute": "theme",
           "options": [
             "dark",
@@ -6907,11 +6904,6 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "false",
           "description": "— Estado inicial colapsado",
           "attribute": "collapsed"
-        },
-        {
-          "name": "variant",
-          "type": "unknown",
-          "description": "— 'dark'(default) | 'light'"
         }
       ],
       "slots": [],
@@ -7954,6 +7946,7 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "theme",
           "type": "TextGlitchTheme",
           "default": "'slice'",
+          "description": "Efecto visual: slice | scan | shift | decode | redact | noise.",
           "attribute": "theme",
           "options": [
             "slice",
@@ -7981,11 +7974,6 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "false",
           "description": "Activa el efecto programáticamente (reflectado en atributo).",
           "attribute": "active"
-        },
-        {
-          "name": "variant",
-          "type": "TextGlitchVariant",
-          "description": "Efecto visual: slice | scan | shift | decode | redact | noise."
         }
       ],
       "slots": [],
