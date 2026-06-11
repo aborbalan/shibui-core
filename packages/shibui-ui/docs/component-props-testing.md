@@ -15,9 +15,12 @@
 
 ## Nivel 1 — Tests de contrato sobre el manifest (los más valiosos)
 
+> ✅ **IMPLEMENTADO** en `scripts/__tests__/manifest-cohesion.test.ts`.
+> Ejecutar: `pnpm --filter @shibui-ui/ui test:cohesion`. Corre en CI (`ci-lib.yml`, job Quality Gate).
+> Aplica las reglas de abajo con un allowlist `KNOWN_PENDING` para los ejes aún en migración
+> (variant/theme/display/button cluster); ese allowlist debe vaciarse conforme se completen.
+
 Suite data-driven que carga el manifest y, por cada componente y prop, asevera reglas de cohesión.
-Ubicación sugerida: `packages/shibui-ui/scripts/__tests__/manifest-cohesion.test.ts` (vitest, ya hay
-`tsx`/test infra en `scripts/mappers/generate-react.test.ts`).
 
 Reglas a aseverar (cada una = un `test`/`it`):
 
