@@ -1,4 +1,4 @@
-export type FooterVariant =
+export type FooterTheme =
   | 'social'
   | 'accordion'
   | 'inverse'

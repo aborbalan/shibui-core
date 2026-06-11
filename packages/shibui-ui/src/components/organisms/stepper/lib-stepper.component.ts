@@ -1,6 +1,6 @@
 import { LitElement, css, unsafeCSS, TemplateResult, PropertyValues } from 'lit';
 import { customElement, property, queryAssignedElements } from 'lit/decorators.js';
-import type { LibStepperOrientation, LibStepperVariant, LibStepperSize } from './lib-stepper.html';
+import type { LibStepperOrientation, LibStepperTheme, LibStepperSize } from './lib-stepper.html';
 import { stepperTemplate } from './lib-stepper.html';
 import stepperCss from './lib-stepper.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
@@ -41,10 +41,10 @@ import type { LibStep } from '../../atoms/step/lib-step.component';
  * </lib-stepper>
  *
  * @example — minimal kaki
- * <lib-stepper variant="minimal" current="3">...</lib-stepper>
+ * <lib-stepper theme="minimal" current="3">...</lib-stepper>
  *
  * @example — inverse oscuro
- * <lib-stepper variant="inverse" current="2">...</lib-stepper>
+ * <lib-stepper theme="inverse" current="2">...</lib-stepper>
  */
 @customElement('lib-stepper')
 export class LibStepper extends LitElement {
@@ -75,7 +75,7 @@ export class LibStepper extends LitElement {
    * - inverse : venas doradas, pensado para superficies oscuras
    */
   @property({ type: String, reflect: true })
-  variant: LibStepperVariant = 'default';
+  theme: LibStepperTheme = 'default';
 
   /**
    * Tamaño de los nodos. Se propaga a todos los lib-step hijos.
@@ -91,7 +91,7 @@ export class LibStepper extends LitElement {
     if (
       changed.has('current') ||
       changed.has('orientation') ||
-      changed.has('variant') ||
+      changed.has('theme') ||
       changed.has('size')
     ) {
       this._syncSteps();
@@ -110,7 +110,7 @@ export class LibStepper extends LitElement {
       const pos = i + 1;
       step.index       = pos;
       step.orientation = this.orientation;
-      step.variant     = this.variant;
+      step.theme       = this.theme;
       step.size        = this.size;
       step.last        = pos === steps.length;
 

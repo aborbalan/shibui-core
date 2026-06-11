@@ -311,11 +311,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "LibBackgroundVariant",
+          "name": "theme",
+          "type": "LibBackgroundTheme",
           "default": "'washi'",
           "description": "— Fondo activo (default: 'washi')",
-          "attribute": "variant",
+          "attribute": "theme",
           "options": [
             "washi",
             "washi-grain",
@@ -838,11 +838,10 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "BurgerVariant",
+          "name": "theme",
+          "type": "BurgerTheme",
           "default": "'filled'",
-          "description": "— 'filled' | 'kanji' | 'neutral' | 'framed' | 'inverse' | 'glitch'",
-          "attribute": "variant",
+          "attribute": "theme",
           "options": [
             "filled",
             "kanji",
@@ -891,6 +890,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "'Menú'",
           "description": "— aria-label del button (default: 'Menú')",
           "attribute": "aria-label"
+        },
+        {
+          "name": "variant",
+          "type": "unknown",
+          "description": "— 'filled' | 'kanji' | 'neutral' | 'framed' | 'inverse' | 'glitch'"
         }
       ],
       "slots": [],
@@ -3231,11 +3235,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "variant",
-          "type": "DrawerVariant",
+          "name": "theme",
+          "type": "DrawerTheme",
           "default": "'default'",
           "description": "— 'default' | 'dark' | 'inverse' | 'inverse-dark' | 'glitch' | 'glitch-dark'",
-          "attribute": "variant",
+          "attribute": "theme",
           "options": [
             "default",
             "dark",
@@ -3883,15 +3887,18 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "FooterVariant",
+          "name": "theme",
+          "type": "FooterTheme",
           "default": "'social'",
-          "attribute": "variant",
+          "attribute": "theme",
           "options": [
             "social",
             "accordion",
-            "kintsugi",
-            "glitch"
+            "inverse",
+            "glitch",
+            "celadon",
+            "sabi",
+            "shizen"
           ]
         },
         {
@@ -4349,10 +4356,10 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "HeaderVariant",
+          "name": "theme",
+          "type": "HeaderTheme",
           "default": "'classic'",
-          "attribute": "variant",
+          "attribute": "theme",
           "options": [
             "classic",
             "dark",
@@ -6885,16 +6892,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "show-user-action"
         },
         {
-          "name": "variant",
-          "type": "SidebarVariant",
+          "name": "theme",
+          "type": "SidebarTheme",
           "default": "'dark'",
-          "description": "— 'dark'(default) | 'light'",
-          "attribute": "variant",
+          "attribute": "theme",
           "options": [
             "dark",
-            "light",
-            "kintsugi",
-            "glitch"
+            "light"
           ]
         },
         {
@@ -6903,6 +6907,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "false",
           "description": "— Estado inicial colapsado",
           "attribute": "collapsed"
+        },
+        {
+          "name": "variant",
+          "type": "unknown",
+          "description": "— 'dark'(default) | 'light'"
         }
       ],
       "slots": [],
@@ -7490,11 +7499,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "variant",
-          "type": "LibStepVariant",
+          "name": "theme",
+          "type": "LibStepTheme",
           "default": "'default'",
           "description": "Variante visual. Inyectada por lib-stepper.\n- default  : nodo circular washi\n- minimal  : nodo cuadrado kaki\n- inverse  : venas doradas sobre superficie oscura (era kintsugi)",
-          "attribute": "variant",
+          "attribute": "theme",
           "options": [
             "default",
             "minimal",
@@ -7555,11 +7564,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "variant",
-          "type": "LibStepperVariant",
+          "name": "theme",
+          "type": "LibStepperTheme",
           "default": "'default'",
           "description": "Variante visual. Se propaga a todos los lib-step hijos.\n- default  : nodo circular washi\n- minimal  : nodo cuadrado, acento kaki\n- inverse : venas doradas, pensado para superficies oscuras",
-          "attribute": "variant",
+          "attribute": "theme",
           "options": [
             "default",
             "minimal",

@@ -3,7 +3,7 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { burgerTemplate } from './lib-burger-button.html';
 import burgerCss from './lib-burger-button.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
-import type { BurgerVariant, BurgerSize } from './lib-burger-button.types';
+import type { BurgerTheme, BurgerSize } from './lib-burger-button.types';
 
 /**
  * lib-burger — Botón hamburguesa Shibui (SG-48)
@@ -25,7 +25,7 @@ export class LibBurger extends LitElement {
   ];
 
   @property({ type: String, reflect: true })
-  variant: BurgerVariant = 'filled';
+  theme: BurgerTheme = 'filled';
 
   @property({ type: String, reflect: true })
   size: BurgerSize = 'md';
@@ -72,7 +72,7 @@ export class LibBurger extends LitElement {
 
   /* ── Toggle principal ── */
   _handleClick(): void {
-    if (this.variant === 'glitch') {
+    if (this.theme === 'glitch') {
       this._glitchToggle();
     } else {
       this._toggle();

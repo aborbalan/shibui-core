@@ -23,7 +23,7 @@ import { renderAppBar   } from './templates/header-app-bar.html';
  * Móvil (hamburger + drawer)                       → header-mobile.html.ts
  */
 export function headerTemplate(ctx: LibHeader): TemplateResult {
-  switch (ctx.variant) {
+  switch (ctx.theme) {
     case 'centered': return renderCentered(ctx);
     case 'mega':     return renderMega(ctx);
     case 'app-bar':  return renderAppBar(ctx);

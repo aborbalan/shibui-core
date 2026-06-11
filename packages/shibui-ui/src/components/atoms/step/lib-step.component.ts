@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import type {
   LibStepStatus,
   LibStepOrientation,
-  LibStepVariant,
+  LibStepTheme,
   LibStepSize,
 } from './lib-step.types';
 import { stepTemplate } from './lib-step.html';
@@ -86,7 +86,7 @@ export class LibStep extends LitElement {
    * - inverse  : venas doradas sobre superficie oscura (era kintsugi)
    */
   @property({ type: String, reflect: true })
-  variant: LibStepVariant = 'default';
+  theme: LibStepTheme = 'default';
 
   /**
    * Tamaño del nodo. Inyectado por lib-stepper.

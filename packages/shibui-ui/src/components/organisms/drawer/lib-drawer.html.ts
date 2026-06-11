@@ -4,7 +4,7 @@ import type { LibDrawer } from './lib-drawer.component';
 
 export function drawerTemplate(ctx: LibDrawer): TemplateResult {
   const isHorizontal = ctx.placement === 'right' || ctx.placement === 'left';
-  const isGlitch     = ctx.variant === 'glitch' || ctx.variant === 'glitch-dark';
+  const isGlitch     = ctx.theme === 'glitch' || ctx.theme === 'glitch-dark';
 
   /* Clase CSS del panel según placement */
   const placementClass = `dr-${ctx.placement}`;
@@ -73,7 +73,7 @@ export function drawerTemplate(ctx: LibDrawer): TemplateResult {
           <lib-close-button
             class="dr-close"
             size="md"
-            variant="${(ctx.variant === 'dark' || ctx.variant === 'inverse' || ctx.variant === 'inverse-dark' || ctx.variant === 'glitch' || ctx.variant === 'glitch-dark') ? 'on-dark' : 'ghost'}"
+            variant="${(ctx.theme === 'dark' || ctx.theme === 'inverse' || ctx.theme === 'inverse-dark' || ctx.theme === 'glitch' || ctx.theme === 'glitch-dark') ? 'on-dark' : 'ghost'}"
             aria-label="Cerrar"
             @lib-close="${(): void => ctx._close()}"
           ></lib-close-button>

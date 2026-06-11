@@ -434,7 +434,7 @@ export function renderCeladon(ctx: LibFooter): TemplateResult {
    Dispatcher — decide qué template renderizar
    ──────────────────────────────────────────────────────────── */
 export function renderFooter(ctx: LibFooter): TemplateResult {
-  switch (ctx.variant) {
+  switch (ctx.theme) {
     case 'social':    return renderSocial(ctx);
     case 'accordion': return renderAccordion(ctx);
     case 'inverse':   return renderKintsugi(ctx);

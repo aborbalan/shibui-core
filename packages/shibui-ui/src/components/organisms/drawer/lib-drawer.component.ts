@@ -4,7 +4,7 @@ import '../../atoms/close-button/lib-close-button.component';
 import { drawerTemplate } from './lib-drawer.html';
 import drawerCss from './lib-drawer.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
-import type { DrawerPlacement, DrawerSize, DrawerVariant } from './lib-drawer.types';
+import type { DrawerPlacement, DrawerSize, DrawerTheme } from './lib-drawer.types';
 
 /**
  * lib-drawer — Shibui UI · SG-59
@@ -12,7 +12,7 @@ import type { DrawerPlacement, DrawerSize, DrawerVariant } from './lib-drawer.ty
  * @prop open         — Abre / cierra el drawer
  * @prop placement    — 'right'(default) | 'left' | 'top' | 'bottom'
  * @prop size         — 'sm' | 'md'(default) | 'lg' | 'xl' | 'full'
- * @prop variant      — 'default' | 'dark' | 'inverse' | 'inverse-dark' | 'glitch' | 'glitch-dark'
+ * @prop theme        — 'default' | 'dark' | 'inverse' | 'inverse-dark' | 'glitch' | 'glitch-dark'
  * @prop label        — Texto del título (también rellenable via slot[name="title"])
  * @prop eyebrow      — Texto del eyebrow (también via slot[name="eyebrow"])
  * @prop subtitle     — Texto del subtítulo (también via slot[name="subtitle"])
@@ -48,7 +48,7 @@ export class LibDrawer extends LitElement {
   size: DrawerSize = 'md';
 
   @property({ type: String, reflect: true })
-  variant: DrawerVariant = 'default';
+  theme: DrawerTheme = 'default';
 
   @property({ type: String })
   label = '';

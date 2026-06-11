@@ -116,7 +116,7 @@
     /* ══════════════════════════════════════
      01 · CLASSIC LIGHT
      ══════════════════════════════════════ */
-    :host([variant="classic"]) .hdr {
+    :host([theme="classic"]) .hdr {
         height: 64px;
         background: var(--bg-elevated);
         border-bottom: 1px solid var(--border-subtle);
@@ -127,7 +127,7 @@
     /* ══════════════════════════════════════
      02 · DARK
      ══════════════════════════════════════ */
-    :host([variant="dark"]) .hdr {
+    :host([theme="dark"]) .hdr {
         height: 64px;
         background: rgb(18, 14, 10, .85);
         backdrop-filter: blur(16px);
@@ -139,7 +139,7 @@
     /* ══════════════════════════════════════
      03 · CENTERED EDITORIAL
      ══════════════════════════════════════ */
-    :host([variant="centered"]) .hdr {
+    :host([theme="centered"]) .hdr {
         height: 64px;
         background: var(--bg-elevated);
         border-bottom: 1px solid var(--border-subtle);
@@ -175,7 +175,7 @@
     /* ══════════════════════════════════════
      04 · TRANSPARENT (over hero)
      ══════════════════════════════════════ */
-    :host([variant="transparent"]) .hdr {
+    :host([theme="transparent"]) .hdr {
         height: 68px;
         background: transparent;
         border-bottom: 1px solid transparent;
@@ -184,7 +184,7 @@
     }
 
     /* Scrolled state */
-    :host([variant="transparent"][scrolled]) .hdr {
+    :host([theme="transparent"][scrolled]) .hdr {
         background: rgb(18, 14, 10, .82);
         backdrop-filter: blur(16px);
         border-bottom-color: rgb(255, 255, 255, .07);
@@ -193,7 +193,7 @@
     /* ══════════════════════════════════════
      05 · MEGA-NAV
      ══════════════════════════════════════ */
-    :host([variant="mega"]) .hdr {
+    :host([theme="mega"]) .hdr {
         height: 64px;
         background: var(--bg-elevated);
         border-bottom: 1px solid var(--border-subtle);
@@ -310,7 +310,7 @@
     /* ══════════════════════════════════════
      08 · MINIMAL
      ══════════════════════════════════════ */
-    :host([variant="minimal"]) .hdr {
+    :host([theme="minimal"]) .hdr {
         height: 60px;
         background: transparent;
         border-bottom: none;
@@ -321,7 +321,7 @@
     /* ══════════════════════════════════════
      09 · SHRINK ON SCROLL
      ══════════════════════════════════════ */
-    :host([variant="shrink"]) .hdr {
+    :host([theme="shrink"]) .hdr {
         height: 72px;
         background: var(--bg-elevated);
         border-bottom: 1px solid transparent;
@@ -329,32 +329,32 @@
         gap: var(--lib-space-xl);
     }
 
-    :host([variant="shrink"][shrunk]) .hdr {
+    :host([theme="shrink"][shrunk]) .hdr {
         height: 48px;
         border-bottom-color: var(--border-subtle);
         box-shadow: 0 1px 8px rgb(26, 20, 14, .07);
     }
 
 
-    :host([variant="shrink"]) .hdr-logo-mark {
+    :host([theme="shrink"]) .hdr-logo-mark {
         width: 36px;
         height: 36px;
         font-size: 1.3rem;
     }
 
-    :host([variant="shrink"][shrunk]) .hdr-logo-mark {
+    :host([theme="shrink"][shrunk]) .hdr-logo-mark {
         width: 26px;
         height: 26px;
         font-size: .95rem;
     }
 
     /* Brand name shrink */
-    :host([variant="shrink"]) .hdr-brand-name {
+    :host([theme="shrink"]) .hdr-brand-name {
         font-size: 1.3rem;
         transition: font-size var(--duration-slow) var(--ease-out);
     }
 
-    :host([variant="shrink"][shrunk]) .hdr-brand-name {
+    :host([theme="shrink"][shrunk]) .hdr-brand-name {
         font-size: 1rem;
     }
 
@@ -375,7 +375,7 @@
             opacity var(--duration-slow) var(--ease-out);
     }
 
-    :host([variant="shrink"][shrunk]) .hdr-tagline {
+    :host([theme="shrink"][shrunk]) .hdr-tagline {
         max-height: 0;
         opacity: 0;
     }
@@ -383,7 +383,7 @@
     /* ══════════════════════════════════════
      10 · APP-BAR
      ══════════════════════════════════════ */
-    :host([variant="app-bar"]) .hdr {
+    :host([theme="app-bar"]) .hdr {
         height: 56px;
         background: var(--bg-elevated);
         border-bottom: 1px solid var(--border-subtle);
@@ -391,7 +391,7 @@
         gap: var(--lib-space-md);
     }
 
-    :host([variant="app-bar"][compact]) .hdr {
+    :host([theme="app-bar"][compact]) .hdr {
         height: 44px;
         background: rgb(18, 14, 10, .9);
         border-bottom-color: rgb(255, 255, 255, .07);
@@ -427,15 +427,15 @@
         text-transform: uppercase;
     }
 
-    :host([variant="app-bar"][compact]) .hdr-breadcrumb-link {
+    :host([theme="app-bar"][compact]) .hdr-breadcrumb-link {
         color: rgb(250, 247, 244, .25);
     }
 
-    :host([variant="app-bar"][compact]) .hdr-breadcrumb-sep {
+    :host([theme="app-bar"][compact]) .hdr-breadcrumb-sep {
         color: rgb(255, 255, 255, .12);
     }
 
-    :host([variant="app-bar"][compact]) .hdr-breadcrumb-current {
+    :host([theme="app-bar"][compact]) .hdr-breadcrumb-current {
         color: rgb(250, 247, 244, .5);
     }
 
@@ -452,7 +452,7 @@
         flex: 1;
     }
 
-    :host([variant="app-bar"][compact]) .hdr-search {
+    :host([theme="app-bar"][compact]) .hdr-search {
         border-color: rgb(255, 255, 255, .07);
         background: rgb(255, 255, 255, .03);
         height: 26px;
@@ -475,7 +475,7 @@
         color: var(--text-muted);
     }
 
-    :host([variant="app-bar"][compact]) .hdr-search input {
+    :host([theme="app-bar"][compact]) .hdr-search input {
         color: rgb(250, 247, 244, .6);
     }
 
@@ -489,7 +489,7 @@
         margin-left: auto;
     }
 
-    :host([variant="app-bar"][compact]) .hdr-search-kbd {
+    :host([theme="app-bar"][compact]) .hdr-search-kbd {
         display: none;
     }
 
@@ -521,17 +521,17 @@
         border: 1px solid var(--bg-elevated);
     }
 
-    :host([variant="app-bar"][compact]) .hdr-notif {
+    :host([theme="app-bar"][compact]) .hdr-notif {
         width: 26px;
         height: 26px;
         color: rgb(250, 247, 244, .25);
     }
 
-    :host([variant="app-bar"][compact]) .hdr-notif:hover {
+    :host([theme="app-bar"][compact]) .hdr-notif:hover {
         color: rgb(250, 247, 244, .7);
     }
 
-    :host([variant="app-bar"][compact]) .hdr-notif-dot {
+    :host([theme="app-bar"][compact]) .hdr-notif-dot {
         border-color: rgb(18, 14, 10, .9);
     }
 
@@ -551,7 +551,7 @@
         flex-shrink: 0;
     }
 
-    :host([variant="app-bar"][compact]) .hdr-avatar {
+    :host([theme="app-bar"][compact]) .hdr-avatar {
         width: 26px;
         height: 26px;
         font-size: .8rem;
@@ -611,15 +611,15 @@
     }
 
     /* Dark variant logo mark */
-    :host([variant="dark"]) .hdr-logo-mark,
-    :host([variant="transparent"]) .hdr-logo-mark {
+    :host([theme="dark"]) .hdr-logo-mark,
+    :host([theme="transparent"]) .hdr-logo-mark {
         background: rgb(184, 90, 30, .2);
         border: 1px solid rgb(184, 90, 30, .35);
         color: var(--color-kaki-400);
     }
 
     /* Transparent initial state */
-    :host([variant="transparent"]) .hdr-logo-mark {
+    :host([theme="transparent"]) .hdr-logo-mark {
         background: rgb(250, 247, 244, .15);
         border: 1px solid rgb(250, 247, 244, .25);
         color: rgb(250, 247, 244, .8);
@@ -634,32 +634,32 @@
     }
 
     /* Colors per variant */
-    :host([variant="classic"]) .hdr-brand-name,
-    :host([variant="mega"]) .hdr-brand-name,
-    :host([variant="shrink"]) .hdr-brand-name {
+    :host([theme="classic"]) .hdr-brand-name,
+    :host([theme="mega"]) .hdr-brand-name,
+    :host([theme="shrink"]) .hdr-brand-name {
         color: var(--lib-comp-fg, var(--color-washi-900));
     }
 
-    :host([variant="dark"]) .hdr-brand-name {
+    :host([theme="dark"]) .hdr-brand-name {
         color: rgb(250, 247, 244, .6);
     }
 
-    :host([variant="transparent"]) .hdr-brand-name {
+    :host([theme="transparent"]) .hdr-brand-name {
         color: rgb(250, 247, 244, .75);
         transition: color var(--duration-slow);
     }
 
-    :host([variant="transparent"][scrolled]) .hdr-brand-name {
+    :host([theme="transparent"][scrolled]) .hdr-brand-name {
         color: rgb(250, 247, 244, .65);
     }
 
-    :host([variant="centered"]) .hdr-brand-name {
+    :host([theme="centered"]) .hdr-brand-name {
         color: var(--lib-comp-fg, var(--color-washi-900));
         font-size: 1.35rem;
         letter-spacing: .1em;
     }
 
-    :host([variant="minimal"]) .hdr-brand-name {
+    :host([theme="minimal"]) .hdr-brand-name {
         font-family: var(--lib-font-display);
         font-size: 1.4rem;
         letter-spacing: .12em;
@@ -711,30 +711,30 @@
     }
 
     /* Classic / centered / mega / shrink */
-    :host([variant="classic"]) .hdr-link,
-    :host([variant="centered"]) .hdr-link,
-    :host([variant="mega"]) .hdr-link,
-    :host([variant="shrink"]) .hdr-link {
+    :host([theme="classic"]) .hdr-link,
+    :host([theme="centered"]) .hdr-link,
+    :host([theme="mega"]) .hdr-link,
+    :host([theme="shrink"]) .hdr-link {
         color: var(--lib-comp-fg-sec, var(--color-washi-600));
     }
 
     /* Dark */
-    :host([variant="dark"]) .hdr-link {
+    :host([theme="dark"]) .hdr-link {
         color: rgb(250, 247, 244, .3);
     }
 
     /* Transparent */
-    :host([variant="transparent"]) .hdr-link {
+    :host([theme="transparent"]) .hdr-link {
         color: rgb(250, 247, 244, .55);
         transition: color var(--duration-slow);
     }
 
-    :host([variant="transparent"][scrolled]) .hdr-link {
+    :host([theme="transparent"][scrolled]) .hdr-link {
         color: rgb(250, 247, 244, .45);
     }
 
     /* Minimal */
-    :host([variant="minimal"]) .hdr-link {
+    :host([theme="minimal"]) .hdr-link {
         font-family: var(--lib-font-body);
         font-size: var(--text-sm);
         letter-spacing: 0;
@@ -744,16 +744,16 @@
         padding-bottom: 2px;
     }
 
-    :host([variant="minimal"]) .hdr-link:hover {
+    :host([theme="minimal"]) .hdr-link:hover {
         opacity: 1;
         color: var(--lib-comp-fg, var(--color-washi-900));
     }
 
-    :host([variant="minimal"]) .hdr-link.is-active {
+    :host([theme="minimal"]) .hdr-link.is-active {
         color: var(--lib-comp-fg, var(--color-washi-900));
     }
 
-    :host([variant="minimal"]) .hdr-link.is-active::after {
+    :host([theme="minimal"]) .hdr-link.is-active::after {
         content: '';
         position: absolute;
         bottom: -1px;
@@ -797,7 +797,7 @@
     }
 
     /* Dark dropdown */
-    :host([variant="dark"]) .hdr-dd-menu {
+    :host([theme="dark"]) .hdr-dd-menu {
         background: var(--lib-comp-bg, var(--color-washi-900));
         border-color: rgb(255, 255, 255, .1);
     }
@@ -822,11 +822,11 @@
         border-top: 1px solid var(--lib-comp-border-subtle, var(--color-washi-100));
     }
 
-    :host([variant="dark"]) .hdr-dd-item {
+    :host([theme="dark"]) .hdr-dd-item {
         color: rgb(250, 247, 244, .35);
     }
 
-    :host([variant="dark"]) .hdr-dd-item:hover {
+    :host([theme="dark"]) .hdr-dd-item:hover {
         background: rgb(255, 255, 255, .06);
         color: rgb(250, 247, 244, .8);
     }
@@ -905,17 +905,17 @@
         white-space: nowrap;
     }
 
-    :host([variant="classic"]) .hdr-login,
-    :host([variant="shrink"]) .hdr-login,
-    :host([variant="mega"]) .hdr-login {
+    :host([theme="classic"]) .hdr-login,
+    :host([theme="shrink"]) .hdr-login,
+    :host([theme="mega"]) .hdr-login {
         color: var(--lib-comp-fg-sec, var(--color-washi-500));
     }
 
-    :host([variant="dark"]) .hdr-login {
+    :host([theme="dark"]) .hdr-login {
         color: rgb(250, 247, 244, .25);
     }
 
-    :host([variant="transparent"]) .hdr-login {
+    :host([theme="transparent"]) .hdr-login {
         color: rgb(250, 247, 244, .4);
         transition: color var(--duration-slow);
     }
@@ -951,7 +951,7 @@
         flex-shrink: 0;
     }
 
-    :host([variant="app-bar"][compact]) .hdr-divider {
+    :host([theme="app-bar"][compact]) .hdr-divider {
         background: rgb(255, 255, 255, .08);
         height: 16px;
     }
@@ -965,7 +965,7 @@
     @media (prefers-reduced-motion: reduce) {
         .hdr::after,
         .hdr::before,
-        :host([variant="celadon"]) .hdr::after {
+        :host([theme="celadon"]) .hdr::after {
             animation: none !important;
         }
 
@@ -977,7 +977,7 @@
     /* ══════════════════════════════════════
      11 · CELADON · jade oscuro, vidrioso
      ══════════════════════════════════════ */
-    :host([variant="celadon"]) .hdr {
+    :host([theme="celadon"]) .hdr {
         height: 64px;
         background: oklch(22% 0.03 175deg / .92);
         backdrop-filter: blur(14px);
@@ -987,7 +987,7 @@
     }
 
     /* Jade seam — bottom edge */
-    :host([variant="celadon"]) .hdr::after {
+    :host([theme="celadon"]) .hdr::after {
         content: '';
         position: absolute;
         bottom: 0;
@@ -1019,43 +1019,43 @@
     }
 
     /* Logo mark */
-    :host([variant="celadon"]) .hdr-logo-mark {
+    :host([theme="celadon"]) .hdr-logo-mark {
         background: color-mix(in oklch, var(--color-celadon-400), transparent 85%);
         border: 1px solid color-mix(in oklch, var(--color-celadon-400), transparent 65%);
         color: var(--color-celadon-300);
     }
 
     /* Brand name */
-    :host([variant="celadon"]) .hdr-brand-name {
+    :host([theme="celadon"]) .hdr-brand-name {
         color: oklch(90% 0.04 180deg / .7);
     }
 
     /* Nav links */
-    :host([variant="celadon"]) .hdr-link {
+    :host([theme="celadon"]) .hdr-link {
         color: oklch(75% 0.05 180deg / .45);
     }
 
-    :host([variant="celadon"]) .hdr-link:hover {
+    :host([theme="celadon"]) .hdr-link:hover {
         opacity: 1;
         color: var(--color-celadon-300);
     }
 
     /* Login */
-    :host([variant="celadon"]) .hdr-login {
+    :host([theme="celadon"]) .hdr-login {
         color: oklch(75% 0.05 180deg / .28);
     }
 
     /* Dropdown */
-    :host([variant="celadon"]) .hdr-dd-menu {
+    :host([theme="celadon"]) .hdr-dd-menu {
         background: oklch(18% 0.025 178deg);
         border-color: color-mix(in oklch, var(--color-celadon-500), transparent 75%);
     }
 
-    :host([variant="celadon"]) .hdr-dd-item {
+    :host([theme="celadon"]) .hdr-dd-item {
         color: oklch(75% 0.05 180deg / .45);
     }
 
-    :host([variant="celadon"]) .hdr-dd-item:hover {
+    :host([theme="celadon"]) .hdr-dd-item:hover {
         background: color-mix(in oklch, var(--color-celadon-400), transparent 92%);
         color: var(--color-celadon-300);
     }
@@ -1076,7 +1076,7 @@
     /* ══════════════════════════════════════
      12 · SABI · papel washi, tinta, brutal
      ══════════════════════════════════════ */
-    :host([variant="sabi"]) .hdr {
+    :host([theme="sabi"]) .hdr {
         height: 64px;
         background: var(--bg-elevated, #fff);
         border-bottom: 2px solid var(--lib-comp-fg, var(--color-washi-900));
@@ -1085,19 +1085,19 @@
     }
 
     /* Logo mark: sello de tinta */
-    :host([variant="sabi"]) .hdr-logo-mark {
+    :host([theme="sabi"]) .hdr-logo-mark {
         background: var(--lib-comp-fg, var(--color-washi-900));
         border: none;
         color: var(--bg-elevated, #fff);
     }
 
     /* Brand name */
-    :host([variant="sabi"]) .hdr-brand-name {
+    :host([theme="sabi"]) .hdr-brand-name {
         color: var(--lib-comp-fg, var(--color-washi-900));
     }
 
     /* Nav links — tipografía display, sin caps */
-    :host([variant="sabi"]) .hdr-link {
+    :host([theme="sabi"]) .hdr-link {
         font-family: var(--lib-font-display);
         font-size: var(--text-sm);
         letter-spacing: .04em;
@@ -1105,7 +1105,7 @@
         color: var(--lib-comp-fg-sec, var(--color-washi-600));
     }
 
-    :host([variant="sabi"]) .hdr-link:hover {
+    :host([theme="sabi"]) .hdr-link:hover {
         opacity: 1;
         color: var(--lib-comp-fg, var(--color-washi-900));
         text-decoration: underline;
@@ -1113,18 +1113,18 @@
     }
 
     /* Login */
-    :host([variant="sabi"]) .hdr-login {
+    :host([theme="sabi"]) .hdr-login {
         color: var(--lib-comp-fg-sec, var(--color-washi-400));
     }
 
     /* Dropdown: recuadro brutal */
-    :host([variant="sabi"]) .hdr-dd-menu {
+    :host([theme="sabi"]) .hdr-dd-menu {
         background: var(--bg-elevated, #fff);
         border: 2px solid var(--lib-comp-fg, var(--color-washi-900));
         box-shadow: 3px 3px 0 var(--lib-comp-fg, var(--color-washi-900));
     }
 
-    :host([variant="sabi"]) .hdr-dd-item {
+    :host([theme="sabi"]) .hdr-dd-item {
         font-family: var(--lib-font-display);
         font-size: var(--text-sm);
         letter-spacing: .02em;
@@ -1132,7 +1132,7 @@
         color: var(--lib-comp-fg-sec, var(--color-washi-600));
     }
 
-    :host([variant="sabi"]) .hdr-dd-item:hover {
+    :host([theme="sabi"]) .hdr-dd-item:hover {
         background: var(--color-washi-100);
         color: var(--lib-comp-fg, var(--color-washi-900));
     }
@@ -1159,7 +1159,7 @@
     /* ══════════════════════════════════════
      13 · SHIZEN · natural, limpio, aireado
      ══════════════════════════════════════ */
-    :host([variant="shizen"]) .hdr {
+    :host([theme="shizen"]) .hdr {
         height: 68px;
         background: var(--bg-elevated);
         border-bottom: 1px solid var(--border-subtle);
@@ -1168,7 +1168,7 @@
     }
 
     /* Logo mark: círculo natural neutro */
-    :host([variant="shizen"]) .hdr-logo-mark {
+    :host([theme="shizen"]) .hdr-logo-mark {
         background: var(--color-washi-100);
         border: 1px solid var(--lib-comp-border, var(--color-washi-300));
         color: var(--lib-comp-fg-sec, var(--color-washi-600));
@@ -1176,12 +1176,12 @@
     }
 
     /* Brand name */
-    :host([variant="shizen"]) .hdr-brand-name {
+    :host([theme="shizen"]) .hdr-brand-name {
         color: var(--lib-comp-fg, var(--color-washi-800));
     }
 
     /* Nav links — body font, sin caps */
-    :host([variant="shizen"]) .hdr-link {
+    :host([theme="shizen"]) .hdr-link {
         font-family: var(--lib-font-body);
         font-size: var(--text-sm);
         letter-spacing: .02em;
@@ -1189,13 +1189,13 @@
         color: var(--lib-comp-fg-sec, var(--color-washi-500));
     }
 
-    :host([variant="shizen"]) .hdr-link:hover {
+    :host([theme="shizen"]) .hdr-link:hover {
         opacity: 1;
         color: var(--lib-comp-fg, var(--color-washi-800));
     }
 
     /* Login */
-    :host([variant="shizen"]) .hdr-login {
+    :host([theme="shizen"]) .hdr-login {
         font-family: var(--lib-font-body);
         letter-spacing: 0;
         text-transform: none;
@@ -1203,12 +1203,12 @@
     }
 
     /* Dropdown */
-    :host([variant="shizen"]) .hdr-dd-menu {
+    :host([theme="shizen"]) .hdr-dd-menu {
         background: var(--bg-elevated);
         border-color: var(--border-subtle);
     }
 
-    :host([variant="shizen"]) .hdr-dd-item {
+    :host([theme="shizen"]) .hdr-dd-item {
         font-family: var(--lib-font-body);
         font-size: var(--text-sm);
         letter-spacing: 0;
@@ -1216,7 +1216,7 @@
         color: var(--lib-comp-fg-sec, var(--color-washi-500));
     }
 
-    :host([variant="shizen"]) .hdr-dd-item:hover {
+    :host([theme="shizen"]) .hdr-dd-item:hover {
         background: var(--color-washi-50);
         color: var(--lib-comp-fg, var(--color-washi-800));
     }
@@ -1279,10 +1279,10 @@
 }
 
 /* Variantes oscuras — líneas claras */
-:host([variant="dark"]) .hdr-burger,
-:host([variant="transparent"]) .hdr-burger,
-:host([variant="app-bar"]) .hdr-burger,
-:host([variant="celadon"]) .hdr-burger {
+:host([theme="dark"]) .hdr-burger,
+:host([theme="transparent"]) .hdr-burger,
+:host([theme="app-bar"]) .hdr-burger,
+:host([theme="celadon"]) .hdr-burger {
     color: rgb(250, 247, 244, 0.5);
 }
 
@@ -1509,36 +1509,36 @@
     }
 
     /* ── Centrado: colapsar a layout simple ── */
-    :host([variant="centered"]) .hdr {
+    :host([theme="centered"]) .hdr {
         display: flex;
         grid-template-columns: unset;
     }
 
-    :host([variant="centered"]) .hdr-nav--centered-left {
+    :host([theme="centered"]) .hdr-nav--centered-left {
         display: none !important;
     }
 
     /* ── App-bar: breadcrumbs compactos ── */
-    :host([variant="app-bar"]) .hdr-breadcrumbs {
+    :host([theme="app-bar"]) .hdr-breadcrumbs {
         max-width: 120px;
         overflow: hidden;
     }
 
     /* Solo el último breadcrumb visible */
-    :host([variant="app-bar"]) .hdr-breadcrumb-link,
-    :host([variant="app-bar"]) .hdr-breadcrumb-sep {
+    :host([theme="app-bar"]) .hdr-breadcrumb-link,
+    :host([theme="app-bar"]) .hdr-breadcrumb-sep {
         display: none;
     }
 
     /* Search colapsado a icono */
-    :host([variant="app-bar"]) .hdr-search {
+    :host([theme="app-bar"]) .hdr-search {
         max-width: 36px;
         overflow: hidden;
         padding: 0 var(--lib-space-xs, 0.25rem);
     }
 
-    :host([variant="app-bar"]) .hdr-search input,
-    :host([variant="app-bar"]) .hdr-search-kbd {
+    :host([theme="app-bar"]) .hdr-search input,
+    :host([theme="app-bar"]) .hdr-search-kbd {
         display: none;
     }
 
@@ -1549,18 +1549,18 @@
     }
 
     /* Reducir altura en algunas variantes */
-    :host([variant="classic"]) .hdr,
-    :host([variant="dark"]) .hdr,
-    :host([variant="centered"]) .hdr,
-    :host([variant="mega"]) .hdr {
+    :host([theme="classic"]) .hdr,
+    :host([theme="dark"]) .hdr,
+    :host([theme="centered"]) .hdr,
+    :host([theme="mega"]) .hdr {
         height: 56px;
     }
 
-    :host([variant="shrink"]) .hdr {
+    :host([theme="shrink"]) .hdr {
         height: 56px;
     }
 
-    :host([variant="shrink"][shrunk]) .hdr {
+    :host([theme="shrink"][shrunk]) .hdr {
         height: 44px;
     }
 

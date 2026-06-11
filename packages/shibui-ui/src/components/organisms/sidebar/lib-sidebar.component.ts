@@ -6,7 +6,7 @@ import type { SidebarLink }     from '../../../types';
 import { sidebarTemplate }      from './lib-sidebar.html';
 import componentCss              from './lib-sidebar.css?inline';
 import sharedTokens              from '../../../styles/shared/tokens.css?inline';
-import { SidebarVariant } from './lib-sidebar.types';
+import { SidebarTheme } from './lib-sidebar.types';
 
 export interface UiSidebarNavigateDetail {
   id: string;
@@ -85,7 +85,7 @@ export class LibSidebar extends LitElement {
 
   /* ── Variant & behavior ── */
   @property({ type: String, reflect: true })
-  variant: SidebarVariant = 'dark';
+  theme: SidebarTheme = 'dark';
 
   @property({ type: Boolean, reflect: true })
   collapsed = false;
@@ -118,7 +118,7 @@ export class LibSidebar extends LitElement {
       userAvatar:        this.userAvatar,
       userInitials:      this.userInitials,
       showUserAction:    this.showUserAction,
-      variant:           this.variant,
+      theme:             this.theme,
       collapsed:         this.collapsed,
       mobileOpen:        this._mobileOpen,
       onLinkClick:       this._handleLink.bind(this),
