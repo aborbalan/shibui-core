@@ -27,7 +27,7 @@
   /* ════════════════════════════════════
      BAR — borde inferior de nav
      ════════════════════════════════════ */
-  :host([variant="bar"]),
+  :host([display="bar"]),
   :host(:not([variant])) {
     display: block;
     position: absolute;
@@ -57,7 +57,7 @@
     }
   }
 
-  :host([variant="bar"][active])::after,
+  :host([display="bar"][active])::after,
   :host(:not([variant])[active])::after {
     opacity: 1;
   }
@@ -65,7 +65,7 @@
   /* ════════════════════════════════════
      LINE — borde inferior modulado, 1px
      ════════════════════════════════════ */
-  :host([variant="line"]) {
+  :host([display="line"]) {
     display: block;
     position: absolute;
     bottom: 0;
@@ -82,7 +82,7 @@
   /* ════════════════════════════════════
      DOTS — fila de puntos de capítulo
      ════════════════════════════════════ */
-  :host([variant="dots"]) {
+  :host([display="dots"]) {
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -114,7 +114,7 @@
   /* ════════════════════════════════════
      RING — anillo SVG
      ════════════════════════════════════ */
-  :host([variant="ring"]) {
+  :host([display="ring"]) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -144,7 +144,7 @@
   /* ════════════════════════════════════
      VERTICAL — margen izquierdo fijo
      ════════════════════════════════════ */
-  :host([variant="vertical"]) {
+  :host([display="vertical"]) {
     display: block;
     position: fixed;
     left: 0;
@@ -215,7 +215,7 @@
   }
 
   /* ── Gradiente kintsugi en bar ────────────────────────── */
-  :host([tone="gold"][variant="bar"]),
+  :host([tone="gold"][display="bar"]),
   :host([tone="gold"]:not([variant])) {
     background: linear-gradient(
       90deg,
@@ -245,7 +245,7 @@
   }
 
   /* Glow tip más cálido y pronunciado */
-  :host([tone="gold"][variant="bar"][active])::after,
+  :host([tone="gold"][display="bar"][active])::after,
   :host([tone="gold"]:not([variant])[active])::after {
     width: 24px;
     height: 8px;
@@ -254,7 +254,7 @@
   }
 
   /* ── Gradiente kintsugi en line ───────────────────────── */
-  :host([tone="gold"][variant="line"]) {
+  :host([tone="gold"][display="line"]) {
     background: linear-gradient(
       90deg,
       var(--color-kaki-600) 0%,
@@ -266,7 +266,7 @@
   }
 
   /* ── Gradiente kintsugi en vertical ──────────────────── */
-  :host([tone="gold"][variant="vertical"]) {
+  :host([tone="gold"][display="vertical"]) {
     background: linear-gradient(
       to bottom,
       var(--color-kaki-600) 0%,

@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import type {
   TableColumn,
   TableRowData,
-  TableVariant,
+  TableDisplay,
   TableSize,
   TableSortEventDetail,
   TableFilterEventDetail,
@@ -22,7 +22,7 @@ import { dataTableTemplate } from './lib-data-table.html';
  *
  * @prop {TableColumn[]} columns        - Definición de columnas
  * @prop {TableRowData[]} data          - Dataset de filas
- * @prop {TableVariant}  variant        - lines | grid | striped | borderless
+ * @prop {TableDisplay}  display        - lines | grid | striped | borderless
  * @prop {TableSize}     size           - sm | md | lg
  * @prop {boolean}       dark           - Superficie oscura
  * @prop {boolean}       loading        - Muestra skeleton de carga
@@ -55,7 +55,7 @@ export class LibDataTable extends LitElement {
   /* ── Props ── */
   @property({ type: Array })  columns:      TableColumn[]  = [];
   @property({ type: Array })  data:         TableRowData[] = [];
-  @property({ type: String, reflect: true }) variant:      TableVariant = 'lines';
+  @property({ type: String, reflect: true }) display:      TableDisplay = 'lines';
   @property({ type: String, reflect: true }) size:         TableSize    = 'md';
   @property({ type: Boolean, reflect: true }) dark         = false;
   @property({ type: Boolean, reflect: true }) loading      = false;
@@ -196,7 +196,7 @@ export class LibDataTable extends LitElement {
       data:          paged,
       filteredTotal: filtered.length,
       totalRows:     this.data.length,
-      variant:       this.variant,
+      display:       this.display,
       size:          this.size,
       dark:          this.dark,
       loading:       this.loading,

@@ -29,7 +29,7 @@ export interface UiSidebarNavigateDetail {
  * @prop user-avatar       — URL de imagen del avatar
  * @prop user-initials     — Iniciales de fallback
  * @prop show-user-action  — Muestra el botón de acción (logout icon)
- * @prop variant           — 'dark'(default) | 'light'
+ * @prop theme             — 'dark'(default) | 'light'
  * @prop collapsed         — Estado inicial colapsado
  *
  * @method toggle()     — Alterna collapsed/expanded (llamar desde topbar)

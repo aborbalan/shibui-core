@@ -8,7 +8,7 @@ import type { BurgerTheme, BurgerSize } from './lib-burger-button.types';
 /**
  * lib-burger — Botón hamburguesa Shibui (SG-48)
  *
- * @prop variant   — 'filled' | 'kanji' | 'neutral' | 'framed' | 'inverse' | 'glitch'
+ * @prop theme    — 'filled' | 'kanji' | 'neutral' | 'framed' | 'inverse' | 'glitch'
  * @prop size      — 'sm' | 'md' | 'lg'
  * @prop open      — estado abierto/cerrado (refleja en atributo)
  * @prop label     — texto opcional junto al botón ('menú' / labelOpen)

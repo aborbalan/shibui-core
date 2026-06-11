@@ -1,8 +1,8 @@
 import { html, nothing, svg, TemplateResult } from 'lit';
-import { ReadingProgressVariant } from './lib-reading-progress.component';
+import { ReadingProgressDisplay } from './lib-reading-progress.component';
 
 export interface ReadingProgressTemplateProps {
-  variant:    ReadingProgressVariant;
+  display:    ReadingProgressDisplay;
   progress:   number;   /* 0 – 100 */
   dotsCount:  number;
   ringSize:   number;
@@ -66,7 +66,7 @@ export function readingProgressTemplate(
 ): TemplateResult {
   /* bar + line + vertical → el host ES el elemento visual (CSS en :host)
      Solo necesitamos el aria progressbar */
-  if (p.variant === 'bar' || p.variant === 'line' || p.variant === 'vertical') {
+  if (p.display === 'bar' || p.display === 'line' || p.display === 'vertical') {
     return html`
       <span
         role="progressbar"
@@ -79,7 +79,7 @@ export function readingProgressTemplate(
     `;
   }
 
-  if (p.variant === 'dots') {
+  if (p.display === 'dots') {
     return html`
       <span role="progressbar" aria-label="Progreso de lectura" aria-valuenow="${p.progress}" aria-valuemin="0" aria-valuemax="100" style="display:contents">
         ${renderDots(p)}
@@ -87,7 +87,7 @@ export function readingProgressTemplate(
     `;
   }
 
-  if (p.variant === 'ring') {
+  if (p.display === 'ring') {
     return html`
       <span role="progressbar" aria-label="Progreso de lectura" aria-valuenow="${p.progress}" aria-valuemin="0" aria-valuemax="100" style="display:contents">
         ${renderRing(p)}

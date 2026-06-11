@@ -2,7 +2,7 @@ import { html, nothing, TemplateResult } from 'lit';
 import type {
   TableColumn,
   TableRowData,
-  TableVariant,
+  TableDisplay,
   TableSize,
   TableBadgeTone,
 } from './lib-data-table.types';
@@ -13,7 +13,7 @@ export interface DataTableTemplateProps {
   data:          TableRowData[];
   filteredTotal: number;
   totalRows:     number;
-  variant:       TableVariant;
+  display:       TableDisplay;
   size:          TableSize;
   dark:          boolean;
   loading:       boolean;

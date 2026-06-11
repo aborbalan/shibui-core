@@ -27,7 +27,7 @@ const KANA =
  * @element lib-text-glitch
  *
  * @prop {string}              text    - Texto a renderizar y distorsionar.
- * @prop {TextGlitchVariant}   variant - Efecto visual: slice | scan | shift | decode | redact | noise.
+ * @prop {TextGlitchTheme}   theme - Efecto visual: slice | scan | shift | decode | redact | noise.
  * @prop {TextGlitchTrigger}   trigger - Modo de activación: hover | always.
  * @prop {boolean}             active  - Activa el efecto programáticamente (reflectado en atributo).
  *

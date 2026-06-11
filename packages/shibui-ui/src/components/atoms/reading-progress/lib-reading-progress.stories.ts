@@ -11,7 +11,7 @@ const meta: Meta<LibReadingProgress> = {
   component: 'lib-reading-progress',
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    variant: {
+    display: {
       control: 'select',
       options: ['bar', 'line', 'dots', 'ring', 'vertical'],
     },
@@ -82,7 +82,7 @@ export const Bar: Story = {
         </span>
         <!-- BAR: posición absoluta, pegada al borde inferior del nav -->
         <lib-reading-progress
-          variant="bar"
+          display="bar"
           tone="accent"
           target="#article-bar"
         ></lib-reading-progress>
@@ -110,7 +110,7 @@ export const Line: Story = {
           ← prev · next →
         </span>
         <lib-reading-progress
-          variant="line"
+          display="line"
           tone="info"
           target="#article-line"
         ></lib-reading-progress>
@@ -135,7 +135,7 @@ export const Dots: Story = {
     <div style="display:flex;flex-direction:column;height:100vh;background:var(--bg-base);">
       ${mockNav(html`
         <lib-reading-progress
-          variant="dots"
+          display="dots"
           tone="accent"
           dots-count="7"
           target="#article-dots"
@@ -175,7 +175,7 @@ export const Ring: Story = {
         <!-- Brand + ring juntos -->
         <div style="display:flex;align-items:center;gap:0.75rem;">
           <lib-reading-progress
-            variant="ring"
+            display="ring"
             tone="accent"
             ring-size="32"
             target="#article-ring"
@@ -207,7 +207,7 @@ export const Vertical: Story = {
     <div style="display:flex;flex-direction:column;height:100vh;background:var(--bg-base);">
       <!-- La barra vertical se posiciona sola con position:fixed -->
       <lib-reading-progress
-        variant="vertical"
+        display="vertical"
         tone="accent"
         target="#article-vertical"
       ></lib-reading-progress>
@@ -243,7 +243,7 @@ export const Tones: Story = {
           <!-- Bar estática al 65% -->
           <div style="position:relative;overflow:hidden;height:2px;background:var(--bg-surface);width:100%;">
             <lib-reading-progress
-              variant="bar"
+              display="bar"
               tone="${tone}"
               style="width:65%;position:absolute;bottom:0;left:0;"
             ></lib-reading-progress>
@@ -251,13 +251,13 @@ export const Tones: Story = {
 
           <!-- Dots -->
           <div style="display:flex;align-items:center;gap:0.75rem;margin-top:0.5rem;">
-            <lib-reading-progress variant="dots" tone="${tone}" dots-count="7" style="--rp-progress:65%"></lib-reading-progress>
+            <lib-reading-progress display="dots" tone="${tone}" dots-count="7" style="--rp-progress:65%"></lib-reading-progress>
             <span style="font-family:var(--lib-font-mono);font-size:10px;color:var(--text-muted);">dots · 65%</span>
           </div>
 
           <!-- Ring -->
           <div style="display:flex;align-items:center;gap:0.75rem;margin-top:0.25rem;">
-            <lib-reading-progress variant="ring" tone="${tone}" ring-size="32" style="--rp-progress:65%"></lib-reading-progress>
+            <lib-reading-progress display="ring" tone="${tone}" ring-size="32" style="--rp-progress:65%"></lib-reading-progress>
             <span style="font-family:var(--lib-font-mono);font-size:10px;color:var(--text-muted);">ring · 65%</span>
           </div>
         </div>
@@ -291,17 +291,17 @@ export const FullDemo: Story = {
         z-index:2;
       ">
         <div style="display:flex;align-items:center;gap:0.75rem;">
-          <lib-reading-progress variant="ring" tone="accent" ring-size="32" target="#article-full"></lib-reading-progress>
+          <lib-reading-progress display="ring" tone="accent" ring-size="32" target="#article-full"></lib-reading-progress>
           <div style="font-family:var(--lib-font-display);font-size:1.5rem;letter-spacing:0.15em;font-weight:300;">
             shibui
             <span style="font-family:var(--lib-font-mono);font-size:0.6875rem;color:var(--text-muted);letter-spacing:0.25em;display:block;">渋い · artículo de prueba</span>
           </div>
         </div>
 
-        <lib-reading-progress variant="dots" tone="accent" dots-count="7" target="#article-full"></lib-reading-progress>
+        <lib-reading-progress display="dots" tone="accent" dots-count="7" target="#article-full"></lib-reading-progress>
 
         <!-- BAR: pegada al borde inferior -->
-        <lib-reading-progress variant="bar" tone="accent" target="#article-full"></lib-reading-progress>
+        <lib-reading-progress display="bar" tone="accent" target="#article-full"></lib-reading-progress>
       </div>
 
       <!-- Artículo scrollable -->
@@ -345,7 +345,7 @@ export const Kintsugi: Story = {
 
         <!-- Dots gold -->
         <lib-reading-progress
-          variant="dots"
+          display="dots"
           tone="gold"
           dots-count="7"
           target="#article-gold"
@@ -353,7 +353,7 @@ export const Kintsugi: Story = {
 
         <!-- BAR gold — pegada al borde inferior -->
         <lib-reading-progress
-          variant="bar"
+          display="bar"
           tone="gold"
           target="#article-gold"
         ></lib-reading-progress>
@@ -361,7 +361,7 @@ export const Kintsugi: Story = {
 
       <!-- Barra vertical gold -->
       <lib-reading-progress
-        variant="vertical"
+        display="vertical"
         tone="gold"
         target="#article-gold"
       ></lib-reading-progress>
@@ -407,21 +407,21 @@ export const KintsugiDark: Story = {
         </div>
 
         <lib-reading-progress
-          variant="dots"
+          display="dots"
           tone="gold"
           dots-count="5"
           target="#article-gold-dark"
         ></lib-reading-progress>
 
         <lib-reading-progress
-          variant="bar"
+          display="bar"
           tone="gold"
           target="#article-gold-dark"
         ></lib-reading-progress>
       </div>
 
       <lib-reading-progress
-        variant="vertical"
+        display="vertical"
         tone="gold"
         target="#article-gold-dark"
       ></lib-reading-progress>
@@ -463,24 +463,24 @@ const _katachi = createKatachiStories<object>(() => html`
     <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
       <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">bar · accent · 65%</span>
       <div style="position:relative;overflow:hidden;height:3px;background:var(--bg-surface);width:100%;">
-        <lib-reading-progress variant="bar" tone="accent" style="position:absolute;bottom:0;left:0;width:65%;"></lib-reading-progress>
+        <lib-reading-progress display="bar" tone="accent" style="position:absolute;bottom:0;left:0;width:65%;"></lib-reading-progress>
       </div>
     </div>
     <!-- Bar — celadon -->
     <div style="display:flex;flex-direction:column;gap:var(--lib-space-xs);">
       <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">bar · info · 40%</span>
       <div style="position:relative;overflow:hidden;height:3px;background:var(--bg-surface);width:100%;">
-        <lib-reading-progress variant="bar" tone="info" style="position:absolute;bottom:0;left:0;width:40%;"></lib-reading-progress>
+        <lib-reading-progress display="bar" tone="info" style="position:absolute;bottom:0;left:0;width:40%;"></lib-reading-progress>
       </div>
     </div>
     <!-- Dots + Ring -->
     <div style="display:flex;align-items:center;gap:var(--lib-space-lg);flex-wrap:wrap;">
       <div style="display:flex;align-items:center;gap:var(--lib-space-sm);">
-        <lib-reading-progress variant="dots" tone="accent" dots-count="7" style="--rp-progress:65%"></lib-reading-progress>
+        <lib-reading-progress display="dots" tone="accent" dots-count="7" style="--rp-progress:65%"></lib-reading-progress>
         <span style="font-family:monospace;font-size:10px;color:var(--text-muted);">dots · 65%</span>
       </div>
       <div style="display:flex;align-items:center;gap:var(--lib-space-sm);">
-        <lib-reading-progress variant="ring" tone="accent" ring-size="32" style="--rp-progress:65%"></lib-reading-progress>
+        <lib-reading-progress display="ring" tone="accent" ring-size="32" style="--rp-progress:65%"></lib-reading-progress>
         <span style="font-family:monospace;font-size:10px;color:var(--text-muted);">ring · 65%</span>
       </div>
     </div>
