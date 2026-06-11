@@ -4,7 +4,7 @@ import './lib-tooltip.component';
 import type { LibTooltip } from './lib-tooltip.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
-type LibTooltipArgs = Pick<LibTooltip, 'position' | 'variant' | 'size' | 'content' | 'instant' | 'open'>;
+type LibTooltipArgs = Pick<LibTooltip, 'position' | 'surface' | 'tone' | 'size' | 'content' | 'instant' | 'open'>;
 
 /* ── Trigger helpers ────────────────────────────────────────── */
 const btnLight  = (label: string): TemplateResult => html`
@@ -50,10 +50,15 @@ const meta: Meta<LibTooltipArgs> = {
       options: ['top','bottom','left','right','top-start','top-end','bottom-start','bottom-end'],
       description: 'Posición de la burbuja respecto al trigger',
     },
-    variant: {
+    surface: {
       control: 'select',
-      options: ['dark','light','accent','info','error'],
-      description: 'Variante de color',
+      options: ['dark','light'],
+      description: 'Superficie de la burbuja',
+    },
+    tone: {
+      control: 'select',
+      options: ['default','accent','info','error'],
+      description: 'Tinte semántico',
     },
     size: {
       control: 'select',
@@ -77,7 +82,8 @@ const meta: Meta<LibTooltipArgs> = {
     <div style="padding:5rem;background:var(--bg-base);display:flex;align-items:center;justify-content:center;min-height:12rem;">
       <lib-tooltip
         position=${args.position}
-        variant=${args.variant}
+        surface=${args.surface}
+        tone=${args.tone}
         size=${args.size}
         content=${args.content}
         ?instant=${args.instant}
@@ -99,7 +105,8 @@ type Story = StoryObj<LibTooltipArgs>;
 export const Playground: Story = {
   args: {
     position: 'top',
-    variant:  'dark',
+    surface:  'dark',
+    tone:     'default',
     size:     'md',
     content:  'Descripción de la acción',
     instant:  false,
@@ -172,17 +179,17 @@ export const Variants: Story = {
   render: (): TemplateResult => html`
     <!-- Light bg -->
     ${stage(false, html`
-      ${col(html`<lib-tooltip position="top" variant="dark" content="washi-900 · default">${btnLight('Dark')}</lib-tooltip>`, 'default')}
-      ${col(html`<lib-tooltip position="top" variant="light" content="Fondo blanco con borde">${btnLight('Light')}</lib-tooltip>`, '.tip-light')}
-      ${col(html`<lib-tooltip position="top" variant="accent" content="Acento naranja terracota">${btnLight('Accent')}</lib-tooltip>`, '.tip-accent')}
-      ${col(html`<lib-tooltip position="top" variant="info" content="Estado positivo confirmado">${btnLight('Info')}</lib-tooltip>`, '.tip-info')}
-      ${col(html`<lib-tooltip position="top" variant="error" content="Acción destructiva">${btnLight('Error')}</lib-tooltip>`, '.tip-error')}
+      ${col(html`<lib-tooltip position="top" surface="dark" content="washi-900 · default">${btnLight('Dark')}</lib-tooltip>`, 'default')}
+      ${col(html`<lib-tooltip position="top" surface="light" content="Fondo blanco con borde">${btnLight('Light')}</lib-tooltip>`, '.tip-light')}
+      ${col(html`<lib-tooltip position="top" tone="accent" content="Acento naranja terracota">${btnLight('Accent')}</lib-tooltip>`, '.tip-accent')}
+      ${col(html`<lib-tooltip position="top" tone="info" content="Estado positivo confirmado">${btnLight('Info')}</lib-tooltip>`, '.tip-info')}
+      ${col(html`<lib-tooltip position="top" tone="error" content="Acción destructiva">${btnLight('Error')}</lib-tooltip>`, '.tip-error')}
     `)}
     <!-- Dark bg — light variant -->
     ${stage(true, html`
-      ${col(html`<lib-tooltip position="top" variant="light" content="Ajustes del sistema">${btnLight('Configuración')}</lib-tooltip>`, 'light · dark bg', true)}
-      ${col(html`<lib-tooltip position="top" variant="light" content="3 notificaciones pendientes">${btnLight('Alertas')}</lib-tooltip>`, 'light · dark bg', true)}
-      ${col(html`<lib-tooltip position="bottom" variant="error" content="Acción destructiva">${btnLight('Eliminar')}</lib-tooltip>`, 'error · dark bg', true)}
+      ${col(html`<lib-tooltip position="top" surface="light" content="Ajustes del sistema">${btnLight('Configuración')}</lib-tooltip>`, 'light · dark bg', true)}
+      ${col(html`<lib-tooltip position="top" surface="light" content="3 notificaciones pendientes">${btnLight('Alertas')}</lib-tooltip>`, 'light · dark bg', true)}
+      ${col(html`<lib-tooltip position="bottom" tone="error" content="Acción destructiva">${btnLight('Eliminar')}</lib-tooltip>`, 'error · dark bg', true)}
     `)}
   `,
 };
@@ -220,7 +227,7 @@ export const RichContent: Story = {
 
     <!-- Light variant con título -->
     ${col(html`
-      <lib-tooltip position="top" variant="light" size="lg">
+      <lib-tooltip position="top" surface="light" size="lg">
         <span style="font-family:var(--lib-font-body);font-size:var(--text-sm);color:var(--text-secondary);border-bottom:1px dashed var(--border-default);cursor:default;padding-bottom:1px;">oklch</span>
         <span slot="content" style="padding:0.75rem 1rem;display:block;">
           <span class="tip-title" style="color:var(--text-primary);">oklch(L C H)</span>
@@ -277,11 +284,11 @@ export const Context: Story = {
         <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem;">Barra de iconos sobre fondo oscuro</p>
         <div style="background:oklch(18% 0.02 45);padding:1.5rem 2rem;border-radius:8px;display:inline-flex;gap:1px;">
           ${(['💾','🔗','⚙️'].map((ic, i) => html`
-            <lib-tooltip position="bottom" variant="light" content="${['Guardar ⌘S','Compartir','Configuración'][i]}">
+            <lib-tooltip position="bottom" surface="light" content="${['Guardar ⌘S','Compartir','Configuración'][i]}">
               ${iconBtn(ic)}
             </lib-tooltip>
           `))}
-          <lib-tooltip position="bottom-end" variant="error" content="Eliminar definitivamente">
+          <lib-tooltip position="bottom-end" tone="error" content="Eliminar definitivamente">
             ${iconBtn('🗑️')}
           </lib-tooltip>
         </div>
@@ -292,7 +299,7 @@ export const Context: Story = {
         <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem;">Glosario inline — texto con tooltip</p>
         <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:var(--leading-relaxed);max-width:440px;">
           El sistema de tokens usa
-          <lib-tooltip position="top" variant="light" size="lg" style="display:inline;">
+          <lib-tooltip position="top" surface="light" size="lg" style="display:inline;">
             <span style="border-bottom:1px dashed var(--border-default);cursor:default;color:var(--text-accent);">oklch</span>
             <span slot="content" style="padding:0.75rem 1rem;display:block;">
               <span class="tip-title" style="color:var(--text-primary);">oklch(L C H)</span>
@@ -362,10 +369,16 @@ const _katachi = createKatachiStories<object>(() => html`
         <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);">${size}</span>
       </div>
     `)}
-    <!-- Variants -->
-    ${(['dark','light','accent','info','error'] as const).map(v => html`
+    <!-- Surface + tone -->
+    ${([
+      { surface: 'dark',  tone: 'default', label: 'dark' },
+      { surface: 'light', tone: 'default', label: 'light' },
+      { surface: 'dark',  tone: 'accent',  label: 'accent' },
+      { surface: 'dark',  tone: 'info',    label: 'info' },
+      { surface: 'dark',  tone: 'error',   label: 'error' },
+    ] as const).map(({ surface, tone, label: v }) => html`
       <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-sm);">
-        <lib-tooltip position="top" variant=${v} content="Variante ${v}">
+        <lib-tooltip position="top" surface=${surface} tone=${tone} content="Variante ${v}">
           <button style="font-family:var(--lib-font-mono);font-size:0.6875rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-secondary);background:var(--bg-elevated);border:1px solid var(--border-default);padding:0.5rem 1rem;cursor:default;">${v}</button>
         </lib-tooltip>
         <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);">${v}</span>

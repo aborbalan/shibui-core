@@ -7,7 +7,8 @@
    ──────────────────────────────────────────────────────────
    position  top | bottom | left | right                      → data-pos en .tip-wrap
              top-start | top-end | bottom-start | bottom-end
-   variant   dark (default) | light | accent | info | error  → clase .tip-[variant] en .tip-wrap
+   surface   dark (default) | light                          → clase .tip-light en .tip-wrap
+   tone      default | accent | info | error                 → clase .tip-[tone] en .tip-wrap
    size      sm | md (default) | lg                           → clase .tip-[size] en .tip-wrap
    instant   boolean — elimina el delay de entrada            → clase .tip-instant en .tip-wrap
    open      boolean — abre programáticamente                 → clase .is-open en .tip-wrap

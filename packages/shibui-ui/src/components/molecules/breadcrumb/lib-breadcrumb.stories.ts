@@ -43,7 +43,7 @@ const meta: Meta<StoryArgs> = {
       control: 'select',
       options: ['sm', 'md', 'lg'],
     },
-    surface: {
+    variant: {
       control: 'select',
       options: ['default', 'filled', 'pill'],
     },
@@ -59,7 +59,7 @@ const meta: Meta<StoryArgs> = {
       <lib-breadcrumb
         separator="${args.separator}"
         size="${args.size}"
-        surface="${args.surface}"
+        variant="${args.variant}"
         accent="${args.accent}"
         ?dark="${args.dark}"
         max-visible="${args.maxVisible ?? 0}"
@@ -77,7 +77,7 @@ export const Playground: Story = {
   args: {
     separator:  'slash',
     size:       'md',
-    surface:    'default',
+    variant:    'default',
     accent:     'none',
     dark:       false,
     maxVisible: 0,
@@ -130,12 +130,12 @@ export const Surfaces: Story = {
   render: (): TemplateResult => html`
     <div style="padding: 24px; background: var(--bg-surface); display: flex; flex-direction: column; gap: 20px;">
       ${([
-        { surface: 'default', label: 'Default — sin contenedor' },
-        { surface: 'filled',  label: '.bc-filled — barra con fondo' },
-        { surface: 'pill',    label: '.bc-pill — crumbs individuales' },
-      ] as const).map(({ surface, label }) => html`
+        { variant: 'default', label: 'Default — sin contenedor' },
+        { variant: 'filled',  label: '.bc-filled — barra con fondo' },
+        { variant: 'pill',    label: '.bc-pill — crumbs individuales' },
+      ] as const).map(({ variant, label }) => html`
         <div style="display: flex; flex-direction: column; gap: 6px;">
-          <lib-breadcrumb separator="slash" surface="${surface}" .items="${BASE_ITEMS}"></lib-breadcrumb>
+          <lib-breadcrumb separator="slash" variant="${variant}" .items="${BASE_ITEMS}"></lib-breadcrumb>
           <span style="font-family: var(--lib-font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.25em; text-transform: uppercase;">${label}</span>
         </div>
       `)}
@@ -170,8 +170,8 @@ export const WithIcons: Story = {
   render: (): TemplateResult => html`
     <div style="padding: 24px; display: flex; flex-direction: column; gap: 12px;">
       <lib-breadcrumb separator="chevron" .items="${ICON_ITEMS}"></lib-breadcrumb>
-      <lib-breadcrumb separator="chevron" surface="filled" .items="${ICON_ITEMS}"></lib-breadcrumb>
-      <lib-breadcrumb separator="chevron" surface="pill"   .items="${ICON_ITEMS}"></lib-breadcrumb>
+      <lib-breadcrumb separator="chevron" variant="filled" .items="${ICON_ITEMS}"></lib-breadcrumb>
+      <lib-breadcrumb separator="chevron" variant="pill"   .items="${ICON_ITEMS}"></lib-breadcrumb>
     </div>
   `,
 };
@@ -193,7 +193,7 @@ export const Collapsed: Story = {
       <div style="display: flex; flex-direction: column; gap: 6px;">
         <lib-breadcrumb
           separator="chevron"
-          surface="filled"
+          variant="filled"
           accent="accent"
           max-visible="2"
           .items="${DEEP_ITEMS}"
@@ -213,8 +213,8 @@ export const DarkSurface: Story = {
     <div style="padding: 32px; background: var(--color-washi-950); display: flex; flex-direction: column; gap: 24px;">
 
       <lib-breadcrumb separator="slash"   dark .items="${BASE_ITEMS}"></lib-breadcrumb>
-      <lib-breadcrumb separator="slash"   dark surface="filled" .items="${BASE_ITEMS}"></lib-breadcrumb>
-      <lib-breadcrumb separator="chevron" dark surface="pill"   .items="${BASE_ITEMS}"></lib-breadcrumb>
+      <lib-breadcrumb separator="slash"   dark variant="filled" .items="${BASE_ITEMS}"></lib-breadcrumb>
+      <lib-breadcrumb separator="chevron" dark variant="pill"   .items="${BASE_ITEMS}"></lib-breadcrumb>
 
       <!-- En cabecera de página oscura -->
       <div style="padding-top: 24px; border-top: 1px solid oklch(16% 0.02 45); display: flex; flex-direction: column; gap: 12px;">
@@ -251,12 +251,12 @@ const _katachi = createKatachiStories<object>(() => html`
       { label: 'Diseño', href: '#' },
       { label: 'Katachi' },
     ]}"></lib-breadcrumb>
-    <lib-breadcrumb separator="chevron" size="md" surface="filled" .items="${[
+    <lib-breadcrumb separator="chevron" size="md" variant="filled" .items="${[
       { label: 'Inicio', href: '#' },
       { label: 'Diseño', href: '#' },
       { label: 'Katachi' },
     ]}"></lib-breadcrumb>
-    <lib-breadcrumb separator="dot" size="lg" surface="pill" accent="accent" .items="${[
+    <lib-breadcrumb separator="dot" size="lg" variant="pill" accent="accent" .items="${[
       { label: 'Inicio', href: '#' },
       { label: 'Diseño', href: '#' },
       { label: 'Katachi' },

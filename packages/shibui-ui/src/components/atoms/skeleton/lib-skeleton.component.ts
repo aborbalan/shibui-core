@@ -1,6 +1,6 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { LibSkeletonShape, LibSkeletonAnimation, LibSkeletonSurface } from './lib-skeleton.html';
+import type { LibSkeletonShape, LibSkeletonAnimation, LibSkeletonSurface, LibSkeletonTone } from './lib-skeleton.html';
 import { skeletonTemplate } from './lib-skeleton.html';
 import skeletonCss from './lib-skeleton.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
@@ -23,7 +23,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * <lib-skeleton shape="title" surface="dark" animation="wave" width="60%"></lib-skeleton>
  *
  * @example — accent + pulse
- * <lib-skeleton shape="img" surface="accent" animation="pulse"></lib-skeleton>
+ * <lib-skeleton shape="img" tone="accent" animation="pulse"></lib-skeleton>
  */
 @customElement('lib-skeleton')
 export class LibSkeleton extends LitElement {
@@ -59,16 +59,25 @@ export class LibSkeleton extends LitElement {
   animation: LibSkeletonAnimation = 'shimmer';
 
   /**
-   * Superficie de color.
-   * - light   : washi-200 → washi-100 (default)
+   * Superficie de fondo.
+   * - default : washi-200 → washi-100 (fondo claro)
    * - dark    : washi-800 → washi-700
-   * - accent  : kaki-200  → kaki-100
-   * - info    : jade oscuro  oklch(22%→32% / 175deg)
-   *   También se activa automáticamente cuando el ancestro tiene
-   *   data-katachi="celadon" sin necesidad de pasar este prop.
+   *
+   * El tinte semántico (accent/info) se controla aparte vía `tone`.
+   * Bajo `data-katachi="celadon"` el shimmer adopta el jade info
+   * automáticamente sin necesidad de pasar `tone`.
    */
   @property({ type: String, reflect: true })
-  surface: LibSkeletonSurface = 'light';
+  surface: LibSkeletonSurface = 'default';
+
+  /**
+   * Tinte semántico del shimmer.
+   * - default : sin tinte (usa la superficie)
+   * - accent  : kaki-200 → kaki-100
+   * - info    : jade oscuro oklch(22%→32% / 175deg)
+   */
+  @property({ type: String, reflect: true })
+  tone: LibSkeletonTone = 'default';
 
   /** Anchura del bloque. Default: 100% */
   @property({ type: String })
@@ -87,6 +96,7 @@ export class LibSkeleton extends LitElement {
       shape:     this.shape,
       animation: this.animation,
       surface:   this.surface,
+      tone:      this.tone,
       width:     this.width,
       height:    this.height,
     });

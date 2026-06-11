@@ -6,6 +6,8 @@ import { segmentedTemplate } from './lib-segmented-control.html';
 import type {
   SegmentedOption,
   SegmentedVariant,
+  SegmentedSurface,
+  SegmentedTone,
   SegmentedSize,
   SegmentedChangeDetail,
 } from './lib-segmented-control.types';
@@ -19,7 +21,9 @@ import type {
  *
  * @prop {SegmentedOption[]} options  — Array de opciones
  * @prop {string}            value    — Valor activo (reflected)
- * @prop {SegmentedVariant}  variant  — Superficie visual (reflected)
+ * @prop {SegmentedVariant}  variant  — Tratamiento visual: outline · underline · pill · ghost (reflected)
+ * @prop {SegmentedSurface}  surface  — Superficie: default · dark (reflected)
+ * @prop {SegmentedTone}     tone     — Tinte del thumb: default · accent · info (reflected)
  * @prop {SegmentedSize}     size     — Tamaño (reflected)
  * @prop {boolean}           full     — Ocupa el 100% del ancho (reflected)
  * @prop {boolean}           icon-only — Solo iconos, sin texto (reflected)
@@ -48,6 +52,12 @@ export class LibSegmentedControl extends LitElement {
 
   @property({ type: String, reflect: true })
   variant: SegmentedVariant = 'outline';
+
+  @property({ type: String, reflect: true })
+  surface: SegmentedSurface = 'default';
+
+  @property({ type: String, reflect: true })
+  tone: SegmentedTone = 'default';
 
   @property({ type: String, reflect: true })
   size: SegmentedSize = 'md';
@@ -95,8 +105,7 @@ export class LibSegmentedControl extends LitElement {
     const el = this._optionEls[idx];
     if (!el) return;
 
-    const isUnderline =
-      this.variant === 'underline' || this.variant === 'dark-underline';
+    const isUnderline = this.variant === 'underline';
 
     const w = el.offsetWidth;
     // Para underline el offset no necesita corrección de padding del track
@@ -190,6 +199,8 @@ export class LibSegmentedControl extends LitElement {
       options:    this.options,
       value:      this.value,
       variant:    this.variant,
+      surface:    this.surface,
+      tone:       this.tone,
       size:       this.size,
       full:       this.full,
       iconOnly:   this.iconOnly,

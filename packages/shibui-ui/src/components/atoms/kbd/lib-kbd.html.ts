@@ -1,9 +1,11 @@
 import { html, TemplateResult } from 'lit';
-import type { LibKbdSize, LibKbdVariant } from './lib-kbd.component';
+import type { LibKbdSize, LibKbdVariant, LibKbdSurface, LibKbdTone } from './lib-kbd.component';
 
 export interface KbdTemplateProps {
   size:     LibKbdSize;
   variant:  LibKbdVariant;
+  surface:  LibKbdSurface;
+  tone:     LibKbdTone;
   pressed:  boolean;
   onDown:   () => void;
   onUp:     () => void;
@@ -14,7 +16,7 @@ export interface KbdTemplateProps {
  * Template de lib-kbd.
  *
  * Estructura:
- *   kbd.kbd.kbd-{size}[.kbd-{variant}][.is-pressed]
+ *   kbd.kbd.kbd-{size}[.kbd-{variant}][.kbd-{surface}][.kbd-{tone}][.is-pressed]
  *     slot
  *
  * El `border-bottom` de 3px simula la pared lateral física.
@@ -22,11 +24,13 @@ export interface KbdTemplateProps {
  * — efecto pulsación real.
  */
 export function kbdTemplate(props: KbdTemplateProps): TemplateResult {
-  const { size, variant, pressed, onDown, onUp, onLeave } = props;
+  const { size, variant, surface, tone, pressed, onDown, onUp, onLeave } = props;
 
   const variantClass = variant !== 'default' ? ` kbd-${variant}` : '';
+  const surfaceClass = surface !== 'default' ? ` kbd-${surface}` : '';
+  const toneClass    = tone    !== 'default' ? ` kbd-${tone}`    : '';
   const pressedClass = pressed ? ' is-pressed' : '';
-  const cls          = `kbd kbd-${size}${variantClass}${pressedClass}`;
+  const cls          = `kbd kbd-${size}${variantClass}${surfaceClass}${toneClass}${pressedClass}`;
 
   return html`
     <kbd

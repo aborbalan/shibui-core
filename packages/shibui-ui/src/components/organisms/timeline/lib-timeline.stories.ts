@@ -220,7 +220,8 @@ interface TooltipArgs {
   tooltip: string;
   tooltipPosition: 'top' | 'bottom' | 'left' | 'right'
     | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end';
-  tooltipVariant: 'dark' | 'light' | 'accent' | 'info' | 'error';
+  tooltipSurface: 'dark' | 'light';
+  tooltipTone: 'default' | 'accent' | 'info' | 'error';
 }
 
 export const TooltipPlayground: StoryObj<TooltipArgs> = {
@@ -228,7 +229,8 @@ export const TooltipPlayground: StoryObj<TooltipArgs> = {
   args: {
     tooltip: 'Entregado a las 10:32 por mensajero · Firma: A. García',
     tooltipPosition: 'right',
-    tooltipVariant: 'dark',
+    tooltipSurface: 'dark',
+    tooltipTone: 'default',
   },
   argTypes: {
     tooltip: { control: 'text' },
@@ -237,9 +239,13 @@ export const TooltipPlayground: StoryObj<TooltipArgs> = {
       options: ['top', 'bottom', 'left', 'right',
         'top-start', 'top-end', 'bottom-start', 'bottom-end'],
     },
-    tooltipVariant: {
+    tooltipSurface: {
       control: 'select',
-      options: ['dark', 'light', 'accent', 'info', 'error'],
+      options: ['dark', 'light'],
+    },
+    tooltipTone: {
+      control: 'select',
+      options: ['default', 'accent', 'info', 'error'],
     },
   },
   render: (args): TemplateResult => html`
@@ -266,7 +272,8 @@ export const TooltipPlayground: StoryObj<TooltipArgs> = {
           body="Este nodo tiene el tooltip controlado por los args."
           tooltip="${args.tooltip ?? ''}"
           tooltip-position="${args.tooltipPosition ?? 'right'}"
-          tooltip-variant="${args.tooltipVariant ?? 'dark'}"
+          tooltip-surface="${args.tooltipSurface ?? 'dark'}"
+          tooltip-tone="${args.tooltipTone ?? 'default'}"
         ></lib-timeline-item>
 
         <lib-timeline-item
@@ -314,7 +321,7 @@ export const NodeTooltips: Story = {
           title="En tránsito"
           body="Tooltip con variante accent."
           tooltip="Salida de delegación Madrid · ETA 18:00"
-          tooltip-variant="accent"
+          tooltip-tone="accent"
         ></lib-timeline-item>
 
         <!-- Contenido rico via slot -->
@@ -324,7 +331,7 @@ export const NodeTooltips: Story = {
           timestamp="12 Feb 2025"
           title="Pedido registrado"
           body="Tooltip con contenido rico (slot)."
-          tooltip-variant="light"
+          tooltip-surface="light"
           ?hide-line="${true}"
         >
           <span slot="tooltip">

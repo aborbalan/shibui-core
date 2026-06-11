@@ -1,12 +1,12 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { generateUniqueId } from '../../../core/a11y';
-import type { LibSwitchVariant, LibSwitchSize } from './lib-switch.html';
+import type { LibSwitchSurface, LibSwitchSize } from './lib-switch.html';
 import { switchTemplate } from './lib-switch.html';
 import switchCss from './lib-switch.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
-export type { LibSwitchVariant, LibSwitchSize };
+export type { LibSwitchSurface, LibSwitchSize };
 
 /**
  * @element lib-switch
@@ -22,7 +22,7 @@ export type { LibSwitchVariant, LibSwitchSize };
  * <lib-switch label="Acceso premium" sub="Funciones exclusivas" checked></lib-switch>
  *
  * @example — inverse (superficie oscura)
- * <lib-switch variant="inverse" label="Modo ceremonial" sub="Activa el tema inverse"></lib-switch>
+ * <lib-switch surface="inverse" label="Modo ceremonial" sub="Activa el tema inverse"></lib-switch>
  *
  * @example — tamaños
  * <lib-switch size="sm"></lib-switch>
@@ -56,7 +56,7 @@ export class LibSwitch extends LitElement {
    * - inverse  : cerámica oscura, venas doradas, thumb de oro al activar
    */
   @property({ type: String, reflect: true })
-  variant: LibSwitchVariant = 'default';
+  surface: LibSwitchSurface = 'default';
 
   /**
    * Tamaño del switch.

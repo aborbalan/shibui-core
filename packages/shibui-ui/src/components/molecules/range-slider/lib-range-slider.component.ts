@@ -88,7 +88,7 @@ export class LibRangeSlider extends LitElement {
   @property({ type: String, reflect: true })
   tone: RsTone = 'default';
 
-  /** Superficie/contexto (p.ej. 'inverse'/'on-dark' para fondos oscuros). */
+  /** Superficie/contexto (p.ej. 'inverse'/'dark' para fondos oscuros). */
   @property({ type: String, reflect: true })
   surface: LibSurface = 'default';
 

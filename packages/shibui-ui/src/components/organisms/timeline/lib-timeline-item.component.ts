@@ -11,7 +11,8 @@ import type {
   TimelineItemStatus,
   TimelineLineVariant,
   TooltipPosition,
-  TooltipVariant,
+  TooltipSurface,
+  TooltipTone,
   TimelineItemClickDetail,
 } from './lib-timeline-item.types';
 
@@ -35,7 +36,8 @@ import type {
  * @prop {boolean}             collapsible   — Muestra botón de expandir/contraer
  * @prop {string}              tooltip          — Texto que muestra el nodo en hover (lib-tooltip)
  * @prop {TooltipPosition}     tooltip-position — Posición de la burbuja (default: 'right')
- * @prop {TooltipVariant}      tooltip-variant  — Variante de color de la burbuja (default: 'dark')
+ * @prop {TooltipSurface}      tooltip-surface  — Superficie de la burbuja (default: 'dark')
+ * @prop {TooltipTone}         tooltip-tone     — Tinte semántico de la burbuja (default: 'default')
  * @prop {boolean}             clickable        — Hace la card/contenido interactivo y emite evento al click
  * @prop {string}              href             — URL de navegación; navega de forma nativa salvo preventDefault
  * @prop {string}              target           — Target del enlace (p.ej. '_blank') cuando hay href
@@ -115,8 +117,11 @@ export class LibTimelineItem extends LitElement {
   @property({ type: String, attribute: 'tooltip-position' })
   tooltipPosition: TooltipPosition = 'right';
 
-  @property({ type: String, attribute: 'tooltip-variant' })
-  tooltipVariant: TooltipVariant = 'dark';
+  @property({ type: String, attribute: 'tooltip-surface' })
+  tooltipSurface: TooltipSurface = 'dark';
+
+  @property({ type: String, attribute: 'tooltip-tone' })
+  tooltipTone: TooltipTone = 'default';
 
   /* ── Clickable / navegación ── */
 
@@ -215,7 +220,8 @@ export class LibTimelineItem extends LitElement {
       collapsible: this.collapsible,
       tooltip:         this.tooltip,
       tooltipPosition: this.tooltipPosition,
-      tooltipVariant:  this.tooltipVariant,
+      tooltipSurface:  this.tooltipSurface,
+      tooltipTone:     this.tooltipTone,
       hasTooltipSlot:  this.querySelector(':scope > [slot="tooltip"]') !== null,
       clickable:       this.clickable,
       href:            this.href,

@@ -10,7 +10,9 @@
      → efecto de pulsación real
 
    Sizes    : xs (18px) · sm (22px) · md (28px, default) · lg (36px)
-   Variants : default · inverse · ghost · accent · subtle
+   Variant  : default · ghost
+   Surface  : default · inverse
+   Tone     : default · accent · info
    ============================================================ */
 
 @layer reset {
@@ -106,8 +108,8 @@
     }
   }
 
-  /* ── Variant: inverse ──────────────────────────────────── */
-  :host([variant="inverse"]) .kbd {
+  /* ── Surface: inverse ──────────────────────────────────── */
+  :host([surface="inverse"]) .kbd {
     background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     color: var(--lib-comp-fg-inverse, var(--text-inverse));
     border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
@@ -137,8 +139,8 @@
     }
   }
 
-  /* ── Variant: accent ───────────────────────────────────── */
-  :host([variant="accent"]) .kbd {
+  /* ── Tone: accent ──────────────────────────────────────── */
+  :host([tone="accent"]) .kbd {
     background: var(--color-kaki-50);
     color: var(--color-kaki-600);
     border-color: var(--color-kaki-400);
@@ -148,8 +150,8 @@
       inset 0 1px 0 0 rgb(255, 255, 255, 0.6);
   }
 
-  /* ── Variant: subtle ───────────────────────────────────── */
-  :host([variant="subtle"]) .kbd {
+  /* ── Tone: info ────────────────────────────────────────── */
+  :host([tone="info"]) .kbd {
     background: var(--info-bg-2);
     color: var(--info-text);
     border-color: var(--info);
