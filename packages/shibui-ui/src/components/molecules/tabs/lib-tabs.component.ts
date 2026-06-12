@@ -6,7 +6,7 @@ import tabsCss from "./lib-tabs.css?inline";
 import sharedTokens from "../../../styles/shared/tokens.css?inline";
 import type {
   TabItem,
-  TabsVariant,
+  TabsDisplay,
   TabsTone,
   TabsSize,
 } from "./lib-tabs.types";
@@ -14,7 +14,7 @@ import type {
 /**
  * lib-tabs — Componente de pestañas Shibui (SG-60)
  *
- * @prop variant    — 'underline' | 'pill' | 'card' | 'outline' | 'vertical'
+ * @prop display    — 'underline' | 'pill' | 'card' | 'outline' | 'vertical'
  * @prop tone       — 'default' | 'accent' | 'info'
  * @prop size       — 'sm' | 'md' | 'lg'
  * @prop dark       — surface oscura
@@ -51,7 +51,7 @@ export class LibTabs extends LitElement {
   ];
 
   @property({ type: String, reflect: true })
-  variant: TabsVariant = "underline";
+  display: TabsDisplay = "underline";
 
   @property({ type: String, reflect: true })
   tone: TabsTone = "default";
@@ -118,7 +118,7 @@ export class LibTabs extends LitElement {
     if (
       changed.has("active") ||
       changed.has("items") ||
-      changed.has("variant")
+      changed.has("display")
     ) {
       requestAnimationFrame((): void => this._positionInk());
     }
@@ -134,13 +134,13 @@ export class LibTabs extends LitElement {
 
   private _positionInk(): void {
     /* Solo aplica a variantes con ink bar */
-    const noInkVariants: TabsVariant[] = [
+    const noInkDisplays: TabsDisplay[] = [
       "pill",
       "card",
       "outline",
       "vertical",
     ];
-    if (noInkVariants.includes(this.variant)) return;
+    if (noInkDisplays.includes(this.display)) return;
 
     const list = this.shadowRoot?.querySelector<HTMLElement>(".tb-list");
     const activeTab =
@@ -280,7 +280,7 @@ export class LibTabs extends LitElement {
   /* ── Keyboard navigation ── */
 
   _handleKey(e: KeyboardEvent): void {
-    const isVertical = this.variant === "vertical";
+    const isVertical = this.display === "vertical";
     const tabs = Array.from(
       this.shadowRoot?.querySelectorAll<HTMLButtonElement>(
         ".tb-tab:not(.is-disabled)",

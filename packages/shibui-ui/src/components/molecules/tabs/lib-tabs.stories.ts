@@ -20,7 +20,7 @@ const meta: Meta = {
   tags:['autodocs'],
   component: 'lib-tabs',
   argTypes: {
-    variant:  { control: 'select', options: ['underline', 'pill', 'card', 'outline', 'vertical'] },
+    display:  { control: 'select', options: ['underline', 'pill', 'card', 'outline', 'vertical'] },
     tone:     { control: 'select', options: ['default', 'accent', 'info'] },
     size:     { control: 'select', options: ['', 'sm', 'lg'] },
     dark:     { control: 'boolean' },
@@ -47,7 +47,7 @@ const svgSend  = `<svg viewBox="0 0 16 16"><line x1="15" y1="1" x2="8" y2="8"/><
    ──────────────────────────────────────────── */
 export const Playground: Story = {
   args: {
-    variant:  'underline',
+    display:  'underline',
     tone:     'default',
     size:     '',
     dark:     false,
@@ -63,7 +63,7 @@ export const Playground: Story = {
   render: (args): TemplateResult => html`
     <div style="padding: 2rem; ${args.dark ? 'background: var(--color-washi-950); padding: 2rem;' : ''}">
       <lib-tabs
-        variant="${args.variant}"
+        display="${args.display}"
         tone="${args.tone}"
         size="${args.size}"
         ?dark="${args.dark}"
@@ -88,7 +88,7 @@ export const Playground: Story = {
           <strong style="color: var(--text-primary);">Overview</strong> — Contenido del primer panel.
         </div>
         <div slot="code" style="padding: 0.5rem 0; font-family: var(--lib-font-mono); font-size: 11px; color: var(--color-kaki-500); line-height: 1.9;">
-          &lt;lib-tabs variant="underline" active="code"&gt;&lt;/lib-tabs&gt;
+          &lt;lib-tabs display="underline" active="code"&gt;&lt;/lib-tabs&gt;
         </div>
         <div slot="docs" style="padding: 0.5rem 0; font-family: var(--lib-font-body); font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.8;">
           Documentación — Navegación por teclado: ← → mueve entre tabs.
@@ -108,7 +108,7 @@ export const Underline: Story = {
 
       <div>
         <p class="clabel" style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Kaki (default)</p>
-        <lib-tabs variant="underline" active="u1-overview"
+        <lib-tabs display="underline" active="u1-overview"
           .items="${[
             { id: 'u1-overview', label: 'Overview' },
             { id: 'u1-code',     label: 'Código' },
@@ -123,7 +123,7 @@ export const Underline: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Celadon</p>
-        <lib-tabs variant="underline" tone="info" active="u2-general"
+        <lib-tabs display="underline" tone="info" active="u2-general"
           .items="${[
             { id: 'u2-general',  label: 'General' },
             { id: 'u2-security', label: 'Seguridad' },
@@ -139,7 +139,7 @@ export const Underline: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Con iconos y badges</p>
-        <lib-tabs variant="underline" active="u3-all"
+        <lib-tabs display="underline" active="u3-all"
           .items="${[
             { id: 'u3-all',     label: 'Todos',    icon: svgInbox, badge: 24 },
             { id: 'u3-unread',  label: 'Sin leer', icon: svgAlert, badge: 7  },
@@ -155,12 +155,12 @@ export const Underline: Story = {
 
       <div style="display: flex; flex-direction: column; gap: 1.5rem;">
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted);">sm · lg</p>
-        <lib-tabs variant="underline" size="sm" active="sz-sm-a"
+        <lib-tabs display="underline" size="sm" active="sz-sm-a"
           .items="${[{ id: 'sz-sm-a', label: 'Activos' }, { id: 'sz-sm-b', label: 'Inactivos' }, { id: 'sz-sm-c', label: 'Archivados' }]}">
           <div slot="sz-sm-a"><p style="font-size: var(--text-sm); color: var(--text-secondary); padding-top: 0.75rem;">sm — 36px, texto 10px.</p></div>
           <div slot="sz-sm-b"></div><div slot="sz-sm-c"></div>
         </lib-tabs>
-        <lib-tabs variant="underline" size="lg" active="sz-lg-a"
+        <lib-tabs display="underline" size="lg" active="sz-lg-a"
           .items="${[{ id: 'sz-lg-a', label: 'Diseño' }, { id: 'sz-lg-b', label: 'Desarrollo' }, { id: 'sz-lg-c', label: 'Deploy' }]}">
           <div slot="sz-lg-a"><p style="font-size: var(--text-sm); color: var(--text-secondary); padding-top: 1rem;">lg — 52px, tracking amplio.</p></div>
           <div slot="sz-lg-b"></div><div slot="sz-lg-c"></div>
@@ -181,7 +181,7 @@ export const Pill: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Default</p>
-        <lib-tabs variant="pill" active="p1-a"
+        <lib-tabs display="pill" active="p1-a"
           .items="${[{ id: 'p1-a', label: 'Día' }, { id: 'p1-b', label: 'Semana' }, { id: 'p1-c', label: 'Mes' }, { id: 'p1-d', label: 'Año' }]}">
           <div slot="p1-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Vista diaria.</p></div>
           <div slot="p1-b"></div><div slot="p1-c"></div><div slot="p1-d"></div>
@@ -190,7 +190,7 @@ export const Pill: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Kaki</p>
-        <lib-tabs variant="pill" tone="accent" active="p2-a"
+        <lib-tabs display="pill" tone="accent" active="p2-a"
           .items="${[{ id: 'p2-a', label: 'Grid' }, { id: 'p2-b', label: 'Lista' }, { id: 'p2-c', label: 'Mosaic' }]}">
           <div slot="p2-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Vista grid.</p></div>
           <div slot="p2-b"></div><div slot="p2-c"></div>
@@ -199,7 +199,7 @@ export const Pill: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Celadon</p>
-        <lib-tabs variant="pill" tone="info" active="p3-a"
+        <lib-tabs display="pill" tone="info" active="p3-a"
           .items="${[{ id: 'p3-a', label: 'Componentes' }, { id: 'p3-b', label: 'Tokens' }, { id: 'p3-c', label: 'Motion' }]}">
           <div slot="p3-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Componentes.</p></div>
           <div slot="p3-b"></div><div slot="p3-c"></div>
@@ -220,7 +220,7 @@ export const CardAndOutline: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Card</p>
-        <lib-tabs variant="card" active="c1-html"
+        <lib-tabs display="card" active="c1-html"
           .items="${[
             { id: 'c1-html',    label: 'HTML' },
             { id: 'c1-css',     label: 'CSS' },
@@ -235,7 +235,7 @@ export const CardAndOutline: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Outline</p>
-        <lib-tabs variant="outline" active="o1-docs"
+        <lib-tabs display="outline" active="o1-docs"
           .items="${[
             { id: 'o1-docs',     label: 'Docs' },
             { id: 'o1-api',      label: 'API' },
@@ -259,7 +259,7 @@ export const Vertical: Story = {
   render: (): TemplateResult => html`
     <div style="padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
 
-      <lib-tabs variant="vertical" active="v1-profile"
+      <lib-tabs display="vertical" active="v1-profile"
         .items="${[
           { id: 'v1-profile',  label: 'Perfil',          group: 'Cuenta' },
           { id: 'v1-security', label: 'Seguridad' },
@@ -276,7 +276,7 @@ export const Vertical: Story = {
       </lib-tabs>
 
       <div style="background: var(--color-washi-950); padding: 1.5rem;">
-        <lib-tabs variant="vertical" dark active="v2-status"
+        <lib-tabs display="vertical" dark active="v2-status"
           .items="${[
             { id: 'v2-status',  label: 'Estado',   group: 'Sistema' },
             { id: 'v2-logs',    label: 'Logs' },
@@ -307,7 +307,7 @@ export const Dark: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">Underline dark · kaki</p>
-        <lib-tabs variant="underline" dark active="dk1-overview"
+        <lib-tabs display="underline" dark active="dk1-overview"
           .items="${[
             { id: 'dk1-overview', label: 'Overview' },
             { id: 'dk1-commits',  label: 'Commits' },
@@ -323,7 +323,7 @@ export const Dark: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">Pill dark · kaki</p>
-        <lib-tabs variant="pill" tone="accent" dark active="dk2-live"
+        <lib-tabs display="pill" tone="accent" dark active="dk2-live"
           .items="${[{ id: 'dk2-live', label: 'Live' }, { id: 'dk2-staging', label: 'Staging' }, { id: 'dk2-preview', label: 'Preview' }]}">
           <div slot="dk2-live"><p    style="padding-top: 1rem; font-size: var(--text-sm); color: rgba(250,247,244,.4);">Entorno live.</p></div>
           <div slot="dk2-staging"></div><div slot="dk2-preview"></div>
@@ -332,7 +332,7 @@ export const Dark: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">Card dark</p>
-        <lib-tabs variant="card" dark active="dk3-terminal"
+        <lib-tabs display="card" dark active="dk3-terminal"
           .items="${[{ id: 'dk3-terminal', label: 'Terminal' }, { id: 'dk3-output', label: 'Output' }, { id: 'dk3-problems', label: 'Problemas' }]}">
           <div slot="dk3-terminal"><pre style="font-family: var(--lib-font-mono); font-size: 9px; line-height: 1.9; color: rgba(250,247,244,.35);">✔ Build compiled in 2.4s&#10;✔ Chunks: main.js 248kB&#10;⚠ Bundle size warning: &gt;500kB</pre></div>
           <div slot="dk3-output"><p   style="font-size: var(--text-sm); color: rgba(250,247,244,.4);">Output del build.</p></div>
@@ -354,7 +354,7 @@ export const Kintsugi: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Underline · light</p>
-        <lib-tabs variant="underline" gold active="ki1-wabi"
+        <lib-tabs display="underline" gold active="ki1-wabi"
           .items="${[
             { id: 'ki1-wabi', label: 'Wabi' },
             { id: 'ki1-sabi', label: 'Sabi' },
@@ -370,7 +370,7 @@ export const Kintsugi: Story = {
 
       <div style="background: var(--color-washi-950); padding: 1.5rem;">
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">Underline · dark</p>
-        <lib-tabs variant="underline" gold dark active="ki2-edo"
+        <lib-tabs display="underline" gold dark active="ki2-edo"
           .items="${[{ id: 'ki2-edo', label: 'Edo' }, { id: 'ki2-meiji', label: 'Meiji' }, { id: 'ki2-showa', label: 'Shōwa' }]}">
           <div slot="ki2-edo"><p   style="padding-top: 1rem; font-size: var(--text-sm); color: rgba(250,247,244,.4);">Era Edo — 1603–1868.</p></div>
           <div slot="ki2-meiji"><p style="padding-top: 1rem; font-size: var(--text-sm); color: rgba(250,247,244,.4);">Era Meiji — 1868–1912.</p></div>
@@ -392,7 +392,7 @@ export const Glitch: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Glitch · light</p>
-        <lib-tabs variant="underline" glitch active="gl1-system"
+        <lib-tabs display="underline" glitch active="gl1-system"
           .items="${[
             { id: 'gl1-system',   label: 'System' },
             { id: 'gl1-network',  label: 'Network' },
@@ -408,7 +408,7 @@ export const Glitch: Story = {
 
       <div style="background: var(--color-washi-950); padding: 1.5rem;">
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">Glitch · dark</p>
-        <lib-tabs variant="underline" glitch dark active="gl2-proc"
+        <lib-tabs display="underline" glitch dark active="gl2-proc"
           .items="${[{ id: 'gl2-proc', label: 'Processes' }, { id: 'gl2-mem', label: 'Memory' }, { id: 'gl2-io', label: 'I/O' }]}">
           <div slot="gl2-proc"><p style="padding-top: 1rem; font-size: var(--text-sm); color: rgba(250,247,244,.4);">Procesos activos.</p></div>
           <div slot="gl2-mem"><p  style="padding-top: 1rem; font-size: var(--text-sm); color: rgba(250,247,244,.4);">Uso de heap y RAM.</p></div>
@@ -430,7 +430,7 @@ export const Extras: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Scrollable</p>
-        <lib-tabs variant="underline" scroll active="sc-01"
+        <lib-tabs display="underline" scrollable active="sc-01"
           .items="${[
             { id: 'sc-01', label: 'Componentes' },
             { id: 'sc-02', label: 'Tokens' },
@@ -450,7 +450,7 @@ export const Extras: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Full-width · grid de columnas iguales</p>
-        <lib-tabs variant="underline" full active="fw-login"
+        <lib-tabs display="underline" full active="fw-login"
           .items="${[{ id: 'fw-login', label: 'Iniciar sesión' }, { id: 'fw-register', label: 'Registrarse' }, { id: 'fw-recover', label: 'Recuperar' }]}">
           <div slot="fw-login"><p    style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Formulario de inicio de sesión.</p></div>
           <div slot="fw-register"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Formulario de registro.</p></div>
@@ -472,7 +472,7 @@ export const WithDirty: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Underline — dot kaki en tabs modificados</p>
-        <lib-tabs variant="underline" active="d1-html"
+        <lib-tabs display="underline" active="d1-html"
           .items="${[
             { id: 'd1-html',  label: 'index.html', dirty: true  },
             { id: 'd1-css',   label: 'styles.css', dirty: true  },
@@ -488,7 +488,7 @@ export const WithDirty: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Card — formulario con secciones modificadas</p>
-        <lib-tabs variant="card" active="d2-general"
+        <lib-tabs display="card" active="d2-general"
           .items="${[
             { id: 'd2-general',  label: 'General',    dirty: true  },
             { id: 'd2-security', label: 'Seguridad'               },
@@ -516,7 +516,7 @@ export const Closable: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">closable global — cierra el tab al pulsar ×</p>
-        <lib-tabs variant="underline" closable active="cl1-a"
+        <lib-tabs display="underline" closable active="cl1-a"
           .items="${[
             { id: 'cl1-a', label: 'Dashboard' },
             { id: 'cl1-b', label: 'Reportes' },
@@ -533,7 +533,7 @@ export const Closable: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">closable por tab — item.closable: true</p>
-        <lib-tabs variant="pill" active="cl2-a"
+        <lib-tabs display="pill" active="cl2-a"
           .items="${[
             { id: 'cl2-a', label: 'Inicio',    closable: false },
             { id: 'cl2-b', label: 'Búsqueda',  closable: true  },
@@ -561,7 +561,7 @@ export const EditorLike: Story = {
       <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">
         Multi-documento — card dark · closable · dirty por tab · cierra al pulsar ×
       </p>
-      <lib-tabs variant="card" dark closable active="ed-main"
+      <lib-tabs display="card" dark closable active="ed-main"
         .items="${[
           { id: 'ed-main',    label: 'main.ts',        dirty: true   },
           { id: 'ed-types',   label: 'types.ts'                      },
@@ -621,7 +621,7 @@ export const IdeTabs: Story = {
         Arrastra para reordenar · "+" añade pestaña · × o click central cierra
       </p>
       <lib-tabs
-        variant="card" dark closable new-tab reorderable active="ide-a"
+        display="card" dark closable new-tab reorderable active="ide-a"
         .items="${[
           { id: 'ide-a', label: 'index.ts',  dirty: true },
           { id: 'ide-b', label: 'app.tsx'                 },
@@ -647,7 +647,7 @@ export const IdeTabs: Story = {
 
 const _katachi = createKatachiStories<object>(() => html`
   <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-xl);">
-    <lib-tabs variant="underline" active="t1"
+    <lib-tabs display="underline" active="t1"
       .items="${[
         { id: 't1', label: 'Diseño' },
         { id: 't2', label: 'Tokens' },
@@ -659,7 +659,7 @@ const _katachi = createKatachiStories<object>(() => html`
       <div slot="t3" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Implementación Lit.</div>
       <div slot="t4"></div>
     </lib-tabs>
-    <lib-tabs variant="pill" active="p1"
+    <lib-tabs display="pill" active="p1"
       .items="${[
         { id: 'p1', label: 'Día' },
         { id: 'p2', label: 'Semana' },
@@ -669,7 +669,7 @@ const _katachi = createKatachiStories<object>(() => html`
       <div slot="p1" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Vista diaria.</div>
       <div slot="p2"></div><div slot="p3"></div><div slot="p4"></div>
     </lib-tabs>
-    <lib-tabs variant="card" active="c1"
+    <lib-tabs display="card" active="c1"
       .items="${[
         { id: 'c1', label: 'HTML' },
         { id: 'c2', label: 'CSS' },
@@ -678,7 +678,7 @@ const _katachi = createKatachiStories<object>(() => html`
       <div slot="c1" style="padding:var(--lib-space-sm);font-size:var(--text-sm);color:var(--text-secondary);">Estructura HTML.</div>
       <div slot="c2"></div><div slot="c3"></div>
     </lib-tabs>
-    <lib-tabs variant="outline" full active="o1"
+    <lib-tabs display="outline" full active="o1"
       .items="${[
         { id: 'o1', label: 'Vista' },
         { id: 'o2', label: 'Editar' },

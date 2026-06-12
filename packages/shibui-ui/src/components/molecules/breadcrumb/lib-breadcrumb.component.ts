@@ -5,7 +5,7 @@ import type {
   BreadcrumbItem,
   BreadcrumbSeparator,
   BreadcrumbSize,
-  BreadcrumbVariant,
+  BreadcrumbDisplay,
   BreadcrumbTone,
 } from "./lib-breadcrumb.types";
 import { breadcrumbTemplate } from "./lib-breadcrumb.html";
@@ -23,7 +23,7 @@ export interface UiNavigateEventDetail {
  *
  * @attr {BreadcrumbSeparator} separator - Tipo de separador: slash · chevron · dot · line
  * @attr {BreadcrumbSize}      size      - Tamaño: sm · md · lg
- * @attr {BreadcrumbVariant}   variant   - Tratamiento del contenedor: default · filled · pill
+ * @attr {BreadcrumbDisplay}   display   - Modo de presentación del contenedor: default · filled · pill
  * @attr {BreadcrumbTone}      tone      - Tono del ítem activo: default · accent · info · strong
  * @attr {boolean}             dark      - Modo superficie oscura
  * @attr {number}              max-visible - Si > 0, colapsa ítems intermedios cuando items.length > N
@@ -51,7 +51,7 @@ export class LibBreadcrumb extends LitElement {
   size: BreadcrumbSize = "md";
 
   @property({ type: String, reflect: true })
-  variant: BreadcrumbVariant = "default";
+  display: BreadcrumbDisplay = "default";
 
   @property({ type: String, reflect: true })
   tone: BreadcrumbTone = "default";
@@ -74,7 +74,7 @@ export class LibBreadcrumb extends LitElement {
       items: this.items,
       separator: this.separator,
       size: this.size,
-      variant: this.variant,
+      display: this.display,
       tone: this.tone,
       dark: this.dark,
       maxVisible: this.maxVisible,

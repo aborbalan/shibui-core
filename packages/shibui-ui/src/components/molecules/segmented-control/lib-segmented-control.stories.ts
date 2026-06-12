@@ -53,10 +53,10 @@ const meta: Meta<Args> = {
   component: 'lib-segmented-control',
 
   argTypes: {
-    variant: {
+    display: {
       control: 'select',
       options: ['outline', 'underline', 'pill', 'ghost'],
-      description: 'Tratamiento visual',
+      description: 'Modo de presentación',
     },
     surface: {
       control: 'select',
@@ -81,7 +81,7 @@ const meta: Meta<Args> = {
   render: (args): TemplateResult => html`
     <div style="padding: var(--lib-space-lg);">
       <lib-segmented-control
-        variant="${args.variant ?? 'outline'}"
+        display="${args.display ?? 'outline'}"
         surface="${args.surface ?? 'default'}"
         tone="${args.tone ?? 'default'}"
         size="${args.size ?? 'md'}"
@@ -104,7 +104,7 @@ type Story = StoryObj<Args>;
    ================================================================ */
 export const Playground: Story = {
   args: {
-    variant:  'outline',
+    display:  'outline',
     surface:  'default',
     tone:     'default',
     size:     'md',
@@ -130,17 +130,17 @@ export const LightVariants: Story = {
       background: var(--bg-base);
     ">
       ${([
-        { variant: 'outline',   tone: 'default', label: 'outline' },
-        { variant: 'underline', tone: 'default', label: 'underline' },
-        { variant: 'pill',      tone: 'default', label: 'pill' },
-        { variant: 'ghost',     tone: 'default', label: 'ghost' },
-        { variant: 'outline',   tone: 'accent',  label: 'accent (tone)' },
-        { variant: 'outline',   tone: 'info',    label: 'info (tone)' },
-      ] as const).map(({ variant, tone, label: v }) => html`
+        { display: 'outline',   tone: 'default', label: 'outline' },
+        { display: 'underline', tone: 'default', label: 'underline' },
+        { display: 'pill',      tone: 'default', label: 'pill' },
+        { display: 'ghost',     tone: 'default', label: 'ghost' },
+        { display: 'outline',   tone: 'accent',  label: 'accent (tone)' },
+        { display: 'outline',   tone: 'info',    label: 'info (tone)' },
+      ] as const).map(({ display, tone, label: v }) => html`
         <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm)">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">${v}</p>
           <lib-segmented-control
-            variant="${variant}"
+            display="${display}"
             tone="${tone}"
             .options="${VIEW_OPTS}"
             value="view"
@@ -168,16 +168,16 @@ export const DarkVariants: Story = {
       background: var(--color-washi-950);
     ">
       ${([
-        { variant: 'outline',   tone: 'default', label: 'dark · outline' },
-        { variant: 'pill',      tone: 'default', label: 'dark · pill' },
-        { variant: 'outline',   tone: 'accent',  label: 'dark · accent' },
-        { variant: 'underline', tone: 'default', label: 'dark · underline' },
-      ] as const).map(({ variant, tone, label: v }) => html`
+        { display: 'outline',   tone: 'default', label: 'dark · outline' },
+        { display: 'pill',      tone: 'default', label: 'dark · pill' },
+        { display: 'outline',   tone: 'accent',  label: 'dark · accent' },
+        { display: 'underline', tone: 'default', label: 'dark · underline' },
+      ] as const).map(({ display, tone, label: v }) => html`
         <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm)">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(250,247,244,.3)">${v}</p>
           <lib-segmented-control
             surface="dark"
-            variant="${variant}"
+            display="${display}"
             tone="${tone}"
             .options="${VIEW_OPTS}"
             value="view"
@@ -205,13 +205,13 @@ export const Sizes: Story = {
         <div style="display:flex;align-items:center;gap:var(--lib-space-lg)">
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);width:24px">${s}</span>
           <lib-segmented-control
-            variant="outline"
+            display="outline"
             size="${s}"
             .options="${VIEW_OPTS}"
             value="view"
           ></lib-segmented-control>
           <lib-segmented-control
-            variant="pill"
+            display="pill"
             size="${s}"
             .options="${VIEW_OPTS}"
             value="view"
@@ -230,13 +230,13 @@ export const FullWidth: Story = {
   render: (): TemplateResult => html`
     <div style="padding: var(--lib-space-xl); display:flex; flex-direction:column; gap: var(--lib-space-lg);">
       <lib-segmented-control
-        variant="outline"
+        display="outline"
         ?full="${true}"
         .options="${NAV_OPTS}"
         value="week"
       ></lib-segmented-control>
       <lib-segmented-control
-        variant="pill"
+        display="pill"
         ?full="${true}"
         .options="${NAV_OPTS}"
         value="month"
@@ -253,18 +253,18 @@ export const WithIcons: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex;flex-direction:column;gap:var(--lib-space-lg);padding:var(--lib-space-xl);">
       <lib-segmented-control
-        variant="outline"
+        display="outline"
         .options="${ICON_OPTS}"
         value="map"
       ></lib-segmented-control>
       <lib-segmented-control
-        variant="pill"
+        display="pill"
         .options="${ICON_OPTS}"
         value="list"
       ></lib-segmented-control>
       <!-- Solo iconos -->
       <lib-segmented-control
-        variant="outline"
+        display="outline"
         ?icon-only="${true}"
         .options="${ICON_OPTS}"
         value="grid"
@@ -281,12 +281,12 @@ export const WithBadges: Story = {
   render: (): TemplateResult => html`
     <div style="padding:var(--lib-space-xl);display:flex;flex-direction:column;gap:var(--lib-space-lg);">
       <lib-segmented-control
-        variant="outline"
+        display="outline"
         .options="${BADGE_OPTS}"
         value="inbox"
       ></lib-segmented-control>
       <lib-segmented-control
-        variant="outline"
+        display="outline"
         tone="accent"
         .options="${BADGE_OPTS}"
         value="inbox"
@@ -304,7 +304,7 @@ export const DisabledStates: Story = {
     <div style="padding:var(--lib-space-xl);display:flex;flex-direction:column;gap:var(--lib-space-lg);">
       <!-- Control completamente deshabilitado -->
       <lib-segmented-control
-        variant="outline"
+        display="outline"
         ?disabled="${true}"
         .options="${VIEW_OPTS}"
         value="view"
@@ -312,7 +312,7 @@ export const DisabledStates: Story = {
 
       <!-- Una opción individual deshabilitada -->
       <lib-segmented-control
-        variant="outline"
+        display="outline"
         .options="${DISABLED_OPTS}"
         value="view"
       ></lib-segmented-control>
@@ -348,7 +348,7 @@ export const GlitchVariant: Story = {
       ></lib-segmented-control>
       <lib-segmented-control
         surface="dark"
-        variant="outline"
+        display="outline"
         ?glitch="${true}"
         .options="${NAV_OPTS}"
         value="week"
@@ -366,31 +366,31 @@ export const GlitchVariant: Story = {
 const _katachi = createKatachiStories<object>(() => html`
   <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-md);">
     <lib-segmented-control
-      variant="outline"
+      display="outline"
       size="sm"
       .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi' }, { value: 'c', label: 'Shizen' }]}"
       value="a"
     ></lib-segmented-control>
     <lib-segmented-control
-      variant="pill"
+      display="pill"
       size="md"
       .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi' }, { value: 'c', label: 'Shizen' }]}"
       value="b"
     ></lib-segmented-control>
     <lib-segmented-control
-      variant="underline"
+      display="underline"
       size="lg"
       .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi' }, { value: 'c', label: 'Shizen' }]}"
       value="c"
     ></lib-segmented-control>
     <lib-segmented-control
-      variant="ghost"
+      display="ghost"
       ?full="${true}"
       .options="${[{ value: 'a', label: 'Día' }, { value: 'b', label: 'Semana' }, { value: 'c', label: 'Mes' }, { value: 'd', label: 'Año' }]}"
       value="a"
     ></lib-segmented-control>
     <lib-segmented-control
-      variant="outline"
+      display="outline"
       tone="accent"
       .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi', disabled: true }, { value: 'c', label: 'Shizen' }]}"
       value="a"
@@ -422,7 +422,7 @@ export const DemoPanel: Story = {
         connectedCallback() {
           this.innerHTML = '';
           const seg = document.createElement('lib-segmented-control');
-          seg.setAttribute('variant','outline');
+          seg.setAttribute('display','outline');
           const opts = [
             { label:'Vista',   value:'view'    },
             { label:'Código',  value:'code'    },

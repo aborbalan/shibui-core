@@ -9,5 +9,5 @@ export interface BreadcrumbItem {
 
 export type BreadcrumbSeparator = 'slash' | 'chevron' | 'dot' | 'line';
 export type BreadcrumbSize      = 'sm' | 'md' | 'lg';
-export type BreadcrumbVariant   = 'default' | 'filled' | 'pill';
+export type BreadcrumbDisplay   = 'default' | 'filled' | 'pill';
 export type BreadcrumbTone      = 'default' | 'accent' | 'info' | 'strong';

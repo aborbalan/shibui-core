@@ -419,11 +419,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "LibBadgeVariant",
+          "name": "tone",
+          "type": "LibBadgeTone",
           "default": "'default'",
-          "description": "Variante visual del badge",
-          "attribute": "variant",
+          "description": "Tono semántico del badge",
+          "attribute": "tone",
           "options": [
             "default",
             "accent",
@@ -708,10 +708,10 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "variant",
-          "type": "BreadcrumbVariant",
+          "name": "display",
+          "type": "BreadcrumbDisplay",
           "default": "\"default\"",
-          "attribute": "variant",
+          "attribute": "display",
           "options": [
             "default",
             "filled",
@@ -4108,14 +4108,14 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "minimized"
         },
         {
-          "name": "variant",
-          "type": "GadgetFrameVariant",
-          "default": "'card'",
-          "description": "— 'glass' (default) | 'card'",
-          "attribute": "variant",
+          "name": "theme",
+          "type": "GadgetFrameTheme",
+          "default": "'default'",
+          "description": "— 'default' (card) | 'glass'",
+          "attribute": "theme",
           "options": [
-            "glass",
-            "card"
+            "default",
+            "glass"
           ]
         }
       ],
@@ -6559,11 +6559,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "value"
         },
         {
-          "name": "variant",
-          "type": "SegmentedVariant",
+          "name": "display",
+          "type": "SegmentedDisplay",
           "default": "'outline'",
-          "description": "— Tratamiento visual: outline · underline · pill · ghost (reflected)",
-          "attribute": "variant",
+          "description": "— Modo de presentación: outline · underline · pill · ghost (reflected)",
+          "attribute": "display",
           "options": [
             "outline",
             "underline",
@@ -7756,11 +7756,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "TabsVariant",
+          "name": "display",
+          "type": "TabsDisplay",
           "default": "\"underline\"",
           "description": "— 'underline' | 'pill' | 'card' | 'outline' | 'vertical'",
-          "attribute": "variant",
+          "attribute": "display",
           "options": [
             "underline",
             "pill",

@@ -1,4 +1,4 @@
-export type TabsVariant = 'underline' | 'pill' | 'card' | 'outline' | 'vertical';
+export type TabsDisplay = 'underline' | 'pill' | 'card' | 'outline' | 'vertical';
 export type TabsTone    = 'default' | 'accent' | 'info';
 export type TabsSize    = 'sm' | 'md' | 'lg';
 

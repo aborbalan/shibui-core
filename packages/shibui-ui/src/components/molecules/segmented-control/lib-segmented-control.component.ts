@@ -5,7 +5,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import { segmentedTemplate } from './lib-segmented-control.html';
 import type {
   SegmentedOption,
-  SegmentedVariant,
+  SegmentedDisplay,
   SegmentedSurface,
   SegmentedTone,
   SegmentedSize,
@@ -21,7 +21,7 @@ import type {
  *
  * @prop {SegmentedOption[]} options  — Array de opciones
  * @prop {string}            value    — Valor activo (reflected)
- * @prop {SegmentedVariant}  variant  — Tratamiento visual: outline · underline · pill · ghost (reflected)
+ * @prop {SegmentedDisplay}  display  — Modo de presentación: outline · underline · pill · ghost (reflected)
  * @prop {SegmentedSurface}  surface  — Superficie: default · dark (reflected)
  * @prop {SegmentedTone}     tone     — Tinte del thumb: default · accent · info (reflected)
  * @prop {SegmentedSize}     size     — Tamaño (reflected)
@@ -51,7 +51,7 @@ export class LibSegmentedControl extends LitElement {
   value = '';
 
   @property({ type: String, reflect: true })
-  variant: SegmentedVariant = 'outline';
+  display: SegmentedDisplay = 'outline';
 
   @property({ type: String, reflect: true })
   surface: SegmentedSurface = 'default';
@@ -89,7 +89,7 @@ export class LibSegmentedControl extends LitElement {
   }
 
   protected override updated(changed: Map<PropertyKey, unknown>): void {
-    if (changed.has('value') || changed.has('variant') || changed.has('options')) {
+    if (changed.has('value') || changed.has('display') || changed.has('options')) {
       // next microtask — el DOM ya refleja el nuevo estado
       Promise.resolve().then((): void => this._updateThumb());
     }
@@ -105,7 +105,7 @@ export class LibSegmentedControl extends LitElement {
     const el = this._optionEls[idx];
     if (!el) return;
 
-    const isUnderline = this.variant === 'underline';
+    const isUnderline = this.display === 'underline';
 
     const w = el.offsetWidth;
     // Para underline el offset no necesita corrección de padding del track
@@ -198,7 +198,7 @@ export class LibSegmentedControl extends LitElement {
     return segmentedTemplate({
       options:    this.options,
       value:      this.value,
-      variant:    this.variant,
+      display:    this.display,
       surface:    this.surface,
       tone:       this.tone,
       size:       this.size,

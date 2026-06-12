@@ -1,6 +1,6 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { LibBadgeVariant, LibBadgeSize } from './lib-badge.html';
+import type { LibBadgeTone, LibBadgeSize } from './lib-badge.html';
 import { badgeTemplate } from './lib-badge.html';
 import badgeCss from './lib-badge.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
@@ -14,9 +14,9 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * @csspart badge - El elemento <span> raíz del badge
  *
  * @example
- * <lib-badge variant="success" dot>Activo</lib-badge>
- * <lib-badge variant="error">Error</lib-badge>
- * <lib-badge variant="accent" pill>Nuevo</lib-badge>
+ * <lib-badge tone="success" dot>Activo</lib-badge>
+ * <lib-badge tone="error">Error</lib-badge>
+ * <lib-badge tone="accent" pill>Nuevo</lib-badge>
  */
 @customElement('lib-badge')
 export class LibBadge extends LitElement {
@@ -29,9 +29,9 @@ export class LibBadge extends LitElement {
     `,
   ];
 
-  /** Variante visual del badge */
+  /** Tono semántico del badge */
   @property({ type: String, reflect: true })
-  variant: LibBadgeVariant = 'default';
+  tone: LibBadgeTone = 'default';
 
   /** Tamaño del badge */
   @property({ type: String, reflect: true })
@@ -47,7 +47,7 @@ export class LibBadge extends LitElement {
 
   override render(): TemplateResult {
     return badgeTemplate({
-      variant: this.variant,
+      tone: this.tone,
       size: this.size,
       dot: this.dot,
       pill: this.pill,
