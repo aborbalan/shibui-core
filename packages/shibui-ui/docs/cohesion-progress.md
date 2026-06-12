@@ -29,22 +29,25 @@ _Última actualización: 2026-06-12_
 | **color/accent → tone** | 🟢 | feature/props-cohesion-color-types | parallax-text-stack·checkbox-card·tabs (rename color→tone) · rating (gold→default·neutral→muted) · breadcrumb (accent→tone, bold→strong) |
 | **normalizaciones de tipo** | 🟢 | feature/props-cohesion-color-types | ariaLabel `string\|null`→`string` (button·close-button·progress) · button.customPadding · editor-toolbar.filename · **tabs.scroll(unknown)→scrollable** (attr alineado a la prop) |
 | **flag-o-valor `string\|boolean`** | ✅ n/a | — | 0 en el manifest — eje ya limpio |
-| **variant → variant+tone+surface+display** | ⏳ | — | 16 comp · canon `LibVariant`=solid·outlined·ghost·subtle + extensiones (`VARIANT_EXTRA`: card→featured, modal→editorial, close-button→filled-round). badge→tone · tabs/breadcrumb/segmented→display · gadget-frame→theme. `filled`→`solid` |
-| **button cluster** | ⏳ | — | button + button-split · split variant+tone · danger→error · ⚠️ alto impacto |
+| **variant → variant+tone+surface+display** | 🟢 | feature/props-cohesion-variant | canon `LibVariant`=solid·outlined·ghost·subtle + `VARIANT_EXTRA` (card→featured · modal→editorial · close-button→filled-round). Reclasif.: badge→tone · tabs/breadcrumb/segmented→display · gadget-frame→theme. Canon: select·pagination·dropdown·liquid-button·copy-button (`filled`→`solid`, `outline`→`outlined`) · kbd/code-block `default`→`solid`. Splits: card (variant+surface+tone) · close-button (variant+tone+surface) · dialog (tone+surface) · modal (variant+tone) · dropdown/liquid-button (+tone) |
+| **button cluster** | 🟢 | feature/props-cohesion-variant | button + button-split: `variant`(solid/outlined/ghost) + `tone`(default/accent/error). primary→solid · secondary→outlined · danger→tone=error · accent→tone=accent. Sweep kaki del solid scopeado a tone default. 114 usos internos migrados (stories/templates) |
 | **Phase 2: apps + wrappers** | ⏳ | — | react/angular/svelte/cv usan atributos viejos · regenerar wrappers ⚠️ |
 | **Phase 4: tests + cleanup** | ⏳ | — | tests Nivel 2/3 · arreglar test:unit pre-existente (generate-react, icon-registry) · `--strict` extractor · borrar huérfanos `SidebarVariant`/`FooterVariant` en src/types |
 
 ## KNOWN_PENDING actual (allowlist del test:cohesion)
-🎉 **VACÍO.** Todos los ejes activos (size · tone · surface · tint · sin-unknown ·
-sin-empty) están migrados. Las reglas `it.todo` (C4 variant · C5 danger · C10 theme ·
-C11 display · C12 flag-o-valor) se activarán al cerrar la tanda variant + button cluster.
+🎉 **VACÍO — y las 12 reglas (C1–C12) ACTIVAS.** Cero `it.todo`. El test cubre:
+size · tone · surface · tint · **variant** (canon + `VARIANT_EXTRA`) · **danger
+prohibido** · **estéticas solo en theme/katachi** · **modos render fuera de
+variant** · sin unknown · sin empty · default∈options · sin flag-o-valor.
+**Phase 1 (componentes) COMPLETA.**
 
 ## PRs
 - #484 ✅ merged · #485 ✅ merged · #486 ✅ merged · #487 ✅ merged
 - #488 🟢 open (display + fix fantasmas)
 - `feature/props-cohesion-surface` → PR #489 🟢 (bloque surface completo)
 - `feature/props-cohesion-tone` → PR #490 🟢 (tone sueltos + accordion) — apilada sobre surface
-- `feature/props-cohesion-color-types` 🟢 (color→tone + normalizaciones de tipo) — apilada sobre tone
+- `feature/props-cohesion-color-types` → PR #492 🟢 (color→tone + tipos) — apilada sobre tone
+- `feature/props-cohesion-variant` 🟢 (variant completo + button cluster + reglas C4–C12 activas) — apilada sobre color-types
 
 ## Notas / aprendizajes
 - Renames `variant`→`theme`/`display`/`tone`: actualizar TAMBIÉN el JSDoc `@prop`/`@attr`, o CEM crea

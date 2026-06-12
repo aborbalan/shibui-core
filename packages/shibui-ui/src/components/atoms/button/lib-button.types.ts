@@ -1,6 +1,10 @@
+/** Tratamiento visual (subconjunto canónico de `LibVariant`). */
 export type LibButtonVariant =
-  | 'primary'
-  | 'secondary'
-  | 'ghost'
+  | 'solid'      // era 'primary'
+  | 'outlined'   // era 'secondary'
+  | 'ghost';
+/** Tinte semántico (subconjunto canónico de `LibTone`). */
+export type LibButtonTone =
+  | 'default'
   | 'accent'
-  | 'danger';
+  | 'error';      // era variant 'danger'

@@ -1,8 +1,11 @@
+/** Tratamiento visual (LibVariant + extensión documentada `featured`). */
 export type LibCardVariant =
-  | 'default'   // superficie elevada neutra — adapta al katachi activo
-  | 'inverse'   // fondo invertido — siempre contrasta con el base de página
-  | 'accent'    // borde izquierdo de énfasis — color vía prop `accent-color`
+  | 'solid'     // superficie elevada neutra (era 'default') — adapta al katachi
   | 'featured'; // destacada, título grande — pensada para 2 cols en grid
+/** Superficie (subconjunto canónico de `LibSurface`). */
+export type LibCardSurface = 'default' | 'inverse';
+/** Tinte semántico (subconjunto canónico de `LibTone`). */
+export type LibCardTone    = 'default' | 'accent';
 
 export interface ComponentCardTag {
   label: string;

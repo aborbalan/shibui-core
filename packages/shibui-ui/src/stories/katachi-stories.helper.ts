@@ -14,8 +14,8 @@ import type { StoryObj } from '@storybook/web-components-vite';
      //    Siempre acceder via propiedad explícita:
 
      const _katachi = createKatachiStories<MyArgs>(() => html`
-       <mi-componente variant="primary">Primary</mi-componente>
-       <mi-componente variant="secondary">Secondary</mi-componente>
+       <mi-componente variant="solid">Primary</mi-componente>
+       <mi-componente variant="outlined">Secondary</mi-componente>
      `);
      export const KatachiShizen   = _katachi.KatachiShizen;
      export const KatachiWabi     = _katachi.KatachiWabi;

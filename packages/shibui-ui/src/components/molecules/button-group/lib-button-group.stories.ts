@@ -47,10 +47,10 @@ export const Playground: Story = {
         size="${args.size}"
         @ui-lib-group-change="${(e: CustomEvent): void => console.log('change', e.detail)}"
       >
-        <lib-button variant="secondary" active>Todos</lib-button>
-        <lib-button variant="secondary">Activos</lib-button>
-        <lib-button variant="secondary">Borrador</lib-button>
-        <lib-button variant="secondary">Archivado</lib-button>
+        <lib-button variant="outlined" active>Todos</lib-button>
+        <lib-button variant="outlined">Activos</lib-button>
+        <lib-button variant="outlined">Borrador</lib-button>
+        <lib-button variant="outlined">Archivado</lib-button>
       </lib-button-group>
     </div>
   `,
@@ -65,24 +65,24 @@ export const ActionShapes: Story = {
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">flat (default)</p>
         <lib-button-group shape="flat">
-          <lib-button variant="secondary">Anterior</lib-button>
-          <lib-button variant="secondary">Siguiente</lib-button>
+          <lib-button variant="outlined">Anterior</lib-button>
+          <lib-button variant="outlined">Siguiente</lib-button>
         </lib-button-group>
       </div>
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">rounded</p>
         <lib-button-group shape="rounded">
-          <lib-button variant="secondary">Anterior</lib-button>
-          <lib-button variant="secondary">Siguiente</lib-button>
+          <lib-button variant="outlined">Anterior</lib-button>
+          <lib-button variant="outlined">Siguiente</lib-button>
         </lib-button-group>
       </div>
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">pill</p>
         <lib-button-group shape="pill">
-          <lib-button variant="secondary">Anterior</lib-button>
-          <lib-button variant="secondary">Siguiente</lib-button>
+          <lib-button variant="outlined">Anterior</lib-button>
+          <lib-button variant="outlined">Siguiente</lib-button>
         </lib-button-group>
       </div>
 
@@ -102,8 +102,8 @@ export const ActionShapes: Story = {
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">mixto · accent · secondary · ghost</p>
         <lib-button-group shape="rounded">
-          <lib-button variant="accent">Publicar</lib-button>
-          <lib-button variant="secondary">Vista previa</lib-button>
+          <lib-button tone="accent">Publicar</lib-button>
+          <lib-button variant="outlined">Vista previa</lib-button>
           <lib-button variant="ghost">Descartar</lib-button>
         </lib-button-group>
       </div>
@@ -120,25 +120,25 @@ export const Sizes: Story = {
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">sm</p>
         <lib-button-group shape="rounded" size="sm">
-          <lib-button variant="secondary">Copiar</lib-button>
-          <lib-button variant="secondary">Cortar</lib-button>
-          <lib-button variant="secondary">Pegar</lib-button>
+          <lib-button variant="outlined">Copiar</lib-button>
+          <lib-button variant="outlined">Cortar</lib-button>
+          <lib-button variant="outlined">Pegar</lib-button>
         </lib-button-group>
       </div>
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">md (default)</p>
         <lib-button-group shape="rounded">
-          <lib-button variant="secondary">Copiar</lib-button>
-          <lib-button variant="secondary">Cortar</lib-button>
-          <lib-button variant="secondary">Pegar</lib-button>
+          <lib-button variant="outlined">Copiar</lib-button>
+          <lib-button variant="outlined">Cortar</lib-button>
+          <lib-button variant="outlined">Pegar</lib-button>
         </lib-button-group>
       </div>
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">lg</p>
         <lib-button-group shape="rounded" size="lg">
-          <lib-button variant="secondary">Copiar</lib-button>
-          <lib-button variant="secondary">Cortar</lib-button>
-          <lib-button variant="secondary">Pegar</lib-button>
+          <lib-button variant="outlined">Copiar</lib-button>
+          <lib-button variant="outlined">Cortar</lib-button>
+          <lib-button variant="outlined">Pegar</lib-button>
         </lib-button-group>
       </div>
     </div>
@@ -155,10 +155,10 @@ export const ToggleSingle: Story = {
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">outline · filtro de estado</p>
         <lib-button-group shape="rounded" toggle
           @ui-lib-group-change="${(e: CustomEvent): void => console.log(e.detail)}">
-          <lib-button variant="secondary" active>Todos</lib-button>
-          <lib-button variant="secondary">Activos</lib-button>
-          <lib-button variant="secondary">Borrador</lib-button>
-          <lib-button variant="secondary">Archivado</lib-button>
+          <lib-button variant="outlined" active>Todos</lib-button>
+          <lib-button variant="outlined">Activos</lib-button>
+          <lib-button variant="outlined">Borrador</lib-button>
+          <lib-button variant="outlined">Archivado</lib-button>
         </lib-button-group>
       </div>
 
@@ -174,10 +174,10 @@ export const ToggleSingle: Story = {
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">kaki · gold · rango temporal</p>
         <lib-button-group shape="rounded" toggle gold>
-          <lib-button variant="accent" active>Día</lib-button>
-          <lib-button variant="accent">Semana</lib-button>
-          <lib-button variant="accent">Mes</lib-button>
-          <lib-button variant="accent">Año</lib-button>
+          <lib-button tone="accent" active>Día</lib-button>
+          <lib-button tone="accent">Semana</lib-button>
+          <lib-button tone="accent">Mes</lib-button>
+          <lib-button tone="accent">Año</lib-button>
         </lib-button-group>
       </div>
 
@@ -194,23 +194,23 @@ export const ToggleMulti: Story = {
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">formato de texto</p>
         <lib-button-group shape="rounded" toggle multi>
-          <lib-button variant="secondary" active>Bold</lib-button>
-          <lib-button variant="secondary">Italic</lib-button>
-          <lib-button variant="secondary" active>Under</lib-button>
-          <lib-button variant="secondary">Strike</lib-button>
+          <lib-button variant="outlined" active>Bold</lib-button>
+          <lib-button variant="outlined">Italic</lib-button>
+          <lib-button variant="outlined" active>Under</lib-button>
+          <lib-button variant="outlined">Strike</lib-button>
         </lib-button-group>
       </div>
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">días recurrentes</p>
         <lib-button-group shape="rounded" toggle multi>
-          <lib-button variant="secondary">Lun</lib-button>
-          <lib-button variant="secondary" active>Mar</lib-button>
-          <lib-button variant="secondary" active>Mié</lib-button>
-          <lib-button variant="secondary">Jue</lib-button>
-          <lib-button variant="secondary" active>Vie</lib-button>
-          <lib-button variant="secondary">Sáb</lib-button>
-          <lib-button variant="secondary">Dom</lib-button>
+          <lib-button variant="outlined">Lun</lib-button>
+          <lib-button variant="outlined" active>Mar</lib-button>
+          <lib-button variant="outlined" active>Mié</lib-button>
+          <lib-button variant="outlined">Jue</lib-button>
+          <lib-button variant="outlined" active>Vie</lib-button>
+          <lib-button variant="outlined">Sáb</lib-button>
+          <lib-button variant="outlined">Dom</lib-button>
         </lib-button-group>
       </div>
 
@@ -227,9 +227,9 @@ export const Vertical: Story = {
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">outline · toggle vertical</p>
         <lib-button-group orientation="vertical" shape="rounded" toggle>
-          <lib-button variant="secondary" active>Grid</lib-button>
-          <lib-button variant="secondary">Lista</lib-button>
-          <lib-button variant="secondary">Gráfico</lib-button>
+          <lib-button variant="outlined" active>Grid</lib-button>
+          <lib-button variant="outlined">Lista</lib-button>
+          <lib-button variant="outlined">Gráfico</lib-button>
         </lib-button-group>
       </div>
 
@@ -246,10 +246,10 @@ export const Vertical: Story = {
       <div style="width: 180px;">
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">kaki · block · menú lateral</p>
         <lib-button-group orientation="vertical" shape="rounded" toggle block>
-          <lib-button variant="accent" active>Componentes</lib-button>
-          <lib-button variant="accent">Tokens</lib-button>
-          <lib-button variant="accent">Motion</lib-button>
-          <lib-button variant="accent">Guía</lib-button>
+          <lib-button tone="accent" active>Componentes</lib-button>
+          <lib-button tone="accent">Tokens</lib-button>
+          <lib-button tone="accent">Motion</lib-button>
+          <lib-button tone="accent">Guía</lib-button>
         </lib-button-group>
       </div>
 
@@ -266,7 +266,7 @@ export const Split: Story = {
       <div style="display: flex; flex-direction: column; gap: 0.75rem;">
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted);">primary</p>
         <lib-button-split
-          variant="primary"
+          variant="solid"
           label="Publicar"
           items='[{"label":"Publicar ahora","value":"now"},{"label":"Programar","value":"schedule"},{"label":"Guardar borrador","value":"draft"}]'
           @ui-lib-split-action="${(): void => console.log('acción principal')}"
@@ -277,7 +277,7 @@ export const Split: Story = {
       <div style="display: flex; flex-direction: column; gap: 0.75rem;">
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted);">accent</p>
         <lib-button-split
-          variant="accent"
+          tone="accent"
           label="Exportar"
           items='[{"label":"PDF","value":"pdf"},{"label":"CSV","value":"csv"},{"label":"JSON","value":"json"},{"label":"Markdown","value":"md"}]'
           @ui-lib-split-select="${(e: CustomEvent): void => console.log('formato', e.detail)}"
@@ -287,7 +287,7 @@ export const Split: Story = {
       <div style="display: flex; flex-direction: column; gap: 0.75rem;">
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted);">secondary</p>
         <lib-button-split
-          variant="secondary"
+          variant="outlined"
           label="Enviar"
           items='[{"label":"Enviar ahora","value":"now"},{"label":"Enviar con copia","value":"cc"},{"label":"Programar envío","value":"schedule"}]'
         ></lib-button-split>
@@ -295,7 +295,7 @@ export const Split: Story = {
 
       <div style="display: flex; flex-direction: column; gap: 0.75rem;">
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted);">slot menu</p>
-        <lib-button-split variant="primary" label="Acción">
+        <lib-button-split variant="solid" label="Acción">
           <button slot="menu">Opción A</button>
           <button slot="menu">Opción B</button>
           <button slot="menu" disabled>Opción C (off)</button>
@@ -316,9 +316,9 @@ export const Dark: Story = {
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,0.2); margin-bottom: 0.75rem;">dark primary · toggle</p>
         <lib-button-group shape="rounded" toggle dark>
-          <lib-button variant="primary" active>Sistema</lib-button>
-          <lib-button variant="primary">Monitor</lib-button>
-          <lib-button variant="primary">Señal</lib-button>
+          <lib-button variant="solid" active>Sistema</lib-button>
+          <lib-button variant="solid">Monitor</lib-button>
+          <lib-button variant="solid">Señal</lib-button>
         </lib-button-group>
       </div>
 
@@ -334,10 +334,10 @@ export const Dark: Story = {
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,0.2); margin-bottom: 0.75rem;">kaki · gold · sobre dark</p>
         <lib-button-group shape="rounded" toggle gold>
-          <lib-button variant="accent" active>1d</lib-button>
-          <lib-button variant="accent">7d</lib-button>
-          <lib-button variant="accent">30d</lib-button>
-          <lib-button variant="accent">1a</lib-button>
+          <lib-button tone="accent" active>1d</lib-button>
+          <lib-button tone="accent">7d</lib-button>
+          <lib-button tone="accent">30d</lib-button>
+          <lib-button tone="accent">1a</lib-button>
         </lib-button-group>
       </div>
 
@@ -354,7 +354,7 @@ export const Dark: Story = {
         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
           <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,0.2);">split dark</p>
           <lib-button-split
-            variant="accent"
+            tone="accent"
             dark
             label="Exportar"
             items='[{"label":"CSV","value":"csv"},{"label":"JSON","value":"json"},{"label":"PDF","value":"pdf"}]'
@@ -383,11 +383,11 @@ export const InContext: Story = {
         </div>
         <div style="display:flex;align-items:center;gap:0.75rem;">
           <lib-button-group shape="rounded" toggle multi size="sm">
-            <lib-button variant="secondary" active icon-only aria-label="Bold">B</lib-button>
-            <lib-button variant="secondary" icon-only aria-label="Italic">I</lib-button>
-            <lib-button variant="secondary" icon-only aria-label="Link">↗</lib-button>
+            <lib-button variant="outlined" active icon-only aria-label="Bold">B</lib-button>
+            <lib-button variant="outlined" icon-only aria-label="Italic">I</lib-button>
+            <lib-button variant="outlined" icon-only aria-label="Link">↗</lib-button>
           </lib-button-group>
-          <lib-button-split variant="accent" size="sm" label="Publicar"
+          <lib-button-split tone="accent" size="sm" label="Publicar"
             items='[{"label":"Publicar ahora","value":"now"},{"label":"Programar","value":"schedule"},{"label":"Guardar borrador","value":"draft"}]'>
           </lib-button-split>
         </div>
@@ -410,28 +410,28 @@ export const InContext: Story = {
 const _katachi = createKatachiStories<object>(() => html`
   <div style="padding:var(--lib-space-lg);display:flex;flex-direction:column;gap:var(--lib-space-md);align-items:flex-start;">
     <lib-button-group shape="flat">
-      <lib-button variant="secondary">Anterior</lib-button>
-      <lib-button variant="secondary">Siguiente</lib-button>
+      <lib-button variant="outlined">Anterior</lib-button>
+      <lib-button variant="outlined">Siguiente</lib-button>
     </lib-button-group>
     <lib-button-group shape="rounded">
-      <lib-button variant="secondary">Copiar</lib-button>
-      <lib-button variant="secondary">Cortar</lib-button>
-      <lib-button variant="secondary">Pegar</lib-button>
+      <lib-button variant="outlined">Copiar</lib-button>
+      <lib-button variant="outlined">Cortar</lib-button>
+      <lib-button variant="outlined">Pegar</lib-button>
     </lib-button-group>
     <lib-button-group shape="pill" toggle>
-      <lib-button variant="secondary" active>Grid</lib-button>
-      <lib-button variant="secondary">Lista</lib-button>
-      <lib-button variant="secondary">Chart</lib-button>
+      <lib-button variant="outlined" active>Grid</lib-button>
+      <lib-button variant="outlined">Lista</lib-button>
+      <lib-button variant="outlined">Chart</lib-button>
     </lib-button-group>
     <lib-button-group shape="rounded" toggle multi size="sm">
-      <lib-button variant="secondary" active>Bold</lib-button>
-      <lib-button variant="secondary">Italic</lib-button>
-      <lib-button variant="secondary">Under</lib-button>
+      <lib-button variant="outlined" active>Bold</lib-button>
+      <lib-button variant="outlined">Italic</lib-button>
+      <lib-button variant="outlined">Under</lib-button>
     </lib-button-group>
     <lib-button-group orientation="vertical" shape="rounded" toggle>
-      <lib-button variant="secondary" active>Día</lib-button>
-      <lib-button variant="secondary">Semana</lib-button>
-      <lib-button variant="secondary">Mes</lib-button>
+      <lib-button variant="outlined" active>Día</lib-button>
+      <lib-button variant="outlined">Semana</lib-button>
+      <lib-button variant="outlined">Mes</lib-button>
     </lib-button-group>
   </div>
 `);

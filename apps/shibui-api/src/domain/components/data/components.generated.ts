@@ -933,15 +933,24 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
       "props": [
         {
           "name": "variant",
-          "type": "\"primary\" | \"secondary\" | \"ghost\" | \"accent\" | \"danger\"",
-          "default": "'primary'",
+          "type": "\"solid\" | \"outlined\" | \"ghost\"",
+          "default": "'solid'",
           "attribute": "variant",
           "options": [
-            "primary",
-            "secondary",
-            "ghost",
+            "solid",
+            "outlined",
+            "ghost"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "\"default\" | \"accent\" | \"error\"",
+          "default": "'default'",
+          "attribute": "tone",
+          "options": [
+            "default",
             "accent",
-            "danger"
+            "error"
           ]
         },
         {
@@ -1244,14 +1253,23 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "LibButtonVariant",
-          "default": "'primary'",
+          "default": "'solid'",
           "attribute": "variant",
           "options": [
-            "primary",
-            "secondary",
-            "ghost",
+            "solid",
+            "outlined",
+            "ghost"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "LibButtonTone",
+          "default": "'default'",
+          "attribute": "tone",
+          "options": [
+            "default",
             "accent",
-            "danger"
+            "error"
           ]
         },
         {
@@ -1389,13 +1407,31 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "LibCardVariant",
-          "default": "\"default\"",
+          "default": "\"solid\"",
           "attribute": "variant",
           "options": [
-            "default",
-            "inverse",
-            "accent",
+            "solid",
             "featured"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "LibCardSurface",
+          "default": "\"default\"",
+          "attribute": "surface",
+          "options": [
+            "default",
+            "inverse"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "LibCardTone",
+          "default": "\"default\"",
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent"
           ]
         },
         {
@@ -1941,16 +1977,36 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "variant",
           "type": "LibCloseVariant",
           "default": "'ghost'",
-          "description": "Variante visual",
+          "description": "Tratamiento visual",
           "attribute": "variant",
           "options": [
             "ghost",
             "subtle",
             "outlined",
-            "filled",
-            "filled-round",
-            "error",
-            "on-dark"
+            "solid",
+            "filled-round"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "LibCloseTone",
+          "default": "'default'",
+          "description": "Tinte semántico (default · error)",
+          "attribute": "tone",
+          "options": [
+            "default",
+            "error"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "LibCloseSurface",
+          "default": "'default'",
+          "description": "Superficie (default · dark)",
+          "attribute": "surface",
+          "options": [
+            "default",
+            "dark"
           ]
         },
         {
@@ -2060,11 +2116,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "LibCodeBlockVariant",
-          "default": "'default'",
-          "description": "Variante visual: default (oscuro) | ghost (claro)",
+          "default": "'solid'",
+          "description": "Tratamiento visual: solid (oscuro, default) | ghost (claro)",
           "attribute": "variant",
           "options": [
-            "default",
+            "solid",
             "ghost"
           ]
         }
@@ -2464,14 +2520,24 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "variant",
           "type": "LibCopyVariant",
           "default": "'ghost'",
-          "description": "Variante visual",
+          "description": "Tratamiento visual",
           "attribute": "variant",
           "options": [
             "ghost",
             "outlined",
-            "filled",
-            "subtle",
-            "on-dark"
+            "solid",
+            "subtle"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "LibCopySurface",
+          "default": "'default'",
+          "description": "Superficie (default · dark)",
+          "attribute": "surface",
+          "options": [
+            "default",
+            "dark"
           ]
         },
         {
@@ -2919,15 +2985,25 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "dlg-title"
         },
         {
-          "name": "variant",
-          "type": "DialogVariant",
+          "name": "tone",
+          "type": "DialogTone",
           "default": "'default'",
-          "description": "— default · danger · warning · dark",
-          "attribute": "variant",
+          "description": "— default · error · warning",
+          "attribute": "tone",
           "options": [
             "default",
             "error",
-            "warning",
+            "warning"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "DialogSurface",
+          "default": "'default'",
+          "description": "— default · dark",
+          "attribute": "surface",
+          "options": [
+            "default",
             "dark"
           ]
         },
@@ -4789,11 +4865,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "LibKbdVariant",
-          "default": "'default'",
-          "description": "Tratamiento visual (default · ghost).",
+          "default": "'solid'",
+          "description": "Tratamiento visual (solid · ghost).",
           "attribute": "variant",
           "options": [
-            "default",
+            "solid",
             "ghost"
           ]
         },
@@ -5187,12 +5263,22 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "ModalVariant",
-          "default": "'default'",
-          "description": "— default · editorial · danger.",
+          "default": "'solid'",
+          "description": "— solid · editorial.",
           "attribute": "variant",
           "options": [
+            "solid",
+            "editorial"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "ModalTone",
+          "default": "'default'",
+          "description": "— default · error.",
+          "attribute": "tone",
+          "options": [
             "default",
-            "editorial",
             "error"
           ]
         },

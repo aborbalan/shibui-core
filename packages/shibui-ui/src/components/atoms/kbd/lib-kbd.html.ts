@@ -26,7 +26,7 @@ export interface KbdTemplateProps {
 export function kbdTemplate(props: KbdTemplateProps): TemplateResult {
   const { size, variant, surface, tone, pressed, onDown, onUp, onLeave } = props;
 
-  const variantClass = variant !== 'default' ? ` kbd-${variant}` : '';
+  const variantClass = variant !== 'solid' ? ` kbd-${variant}` : '';
   const surfaceClass = surface !== 'default' ? ` kbd-${surface}` : '';
   const toneClass    = tone    !== 'default' ? ` kbd-${tone}`    : '';
   const pressedClass = pressed ? ' is-pressed' : '';

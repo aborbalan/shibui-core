@@ -176,7 +176,7 @@
   }
 
   /* ── VARIANTE — Filled ─────────────────────────────────────── */
-  :host([variant="filled"]) .copy-btn {
+  :host([variant="solid"]) .copy-btn {
     background: var(--color-washi-900);
     color: var(--color-washi-50);
     border: 1px solid transparent;
@@ -213,7 +213,7 @@
   }
 
   /* ── VARIANTE — On dark ────────────────────────────────────── */
-  :host([variant="on-dark"]) .copy-btn {
+  :host([surface="dark"]) .copy-btn {
     background: oklch(100% 0 0deg / 0.07);
     color: oklch(100% 0 0deg / 0.45);
     border: 1px solid oklch(100% 0 0deg / 0.10);

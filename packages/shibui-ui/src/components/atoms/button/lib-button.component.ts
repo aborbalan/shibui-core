@@ -2,7 +2,7 @@ import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { generateUniqueId } from '../../../core/a11y';
 import type { LibSize, UiClickEventDetail } from '../../../types';
-import type { LibButtonVariant } from './lib-button.types';
+import type { LibButtonVariant, LibButtonTone } from './lib-button.types';
 import buttonCss from './lib-button.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import { buttonTemplate } from './lib-button.html';
@@ -33,10 +33,16 @@ export class LibButton extends LitElement {
   }
 
   /**
- * @type {"primary" | "secondary" | "ghost" | "accent" | "danger"}
+ * @type {"solid" | "outlined" | "ghost"}
  */
   @property({ type: String, reflect: true })
-  variant: LibButtonVariant = 'primary';
+  variant: LibButtonVariant = 'solid';
+
+  /**
+ * @type {"default" | "accent" | "error"}
+ */
+  @property({ type: String, reflect: true })
+  tone: LibButtonTone = 'default';
 
   /**
  * @type {"sm" | "md" | "lg" | "xl"}

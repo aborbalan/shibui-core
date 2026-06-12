@@ -200,10 +200,10 @@ const _katachi = createKatachiStories<object>(() => html`
   <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);max-width:360px;">
     <lib-canvas display="block" pad="lg">
       <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;margin:0 0 var(--lib-space-sm);color:var(--text-muted);">display="block"</p>
-      <lib-button variant="primary">Primary</lib-button>
+      <lib-button variant="solid">Primary</lib-button>
     </lib-canvas>
     <lib-canvas display="flex" pad="lg" style="gap:var(--lib-space-sm);">
-      <lib-button variant="secondary">Secondary</lib-button>
+      <lib-button variant="outlined">Secondary</lib-button>
       <lib-button variant="ghost">Ghost</lib-button>
       <lib-badge variant="default">Beta</lib-badge>
     </lib-canvas>

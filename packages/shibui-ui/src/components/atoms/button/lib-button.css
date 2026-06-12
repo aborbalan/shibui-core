@@ -88,8 +88,10 @@
      a través de --bg-inverse/--text-inverse y --lib-comp-*.
      ============================================================ */
 
-  /* ── Primary — acción principal ── */
-  :host([variant="primary"]) .btn {
+  /* ── Solid (era primary) — acción principal ──
+     Scopeado a tone default: los tones accent/error definen su propia
+     superficie y no deben heredar el sweep kaki del solid. */
+  :host([variant="solid"]:not([tone="accent"], [tone="error"])) .btn {
     background: var(--bg-inverse);
     color: var(--text-inverse);
 
@@ -115,7 +117,7 @@
   }
 
   /* ── Secondary — acción secundaria ── */
-  :host([variant="secondary"]) .btn {
+  :host([variant="outlined"]) .btn {
     background: transparent;
     color: var(--text-primary);
     border-color: var(--border-strong);
@@ -139,7 +141,7 @@
   }
 
   /* ── Accent — kaki sólido ── */
-  :host([variant="accent"]) .btn {
+  :host([tone="accent"]) .btn {
     background: var(--color-kaki-400);
     color: var(--color-white);
 
@@ -150,7 +152,7 @@
   }
 
   /* ── Danger — acción destructiva (semántico puro) ── */
-  :host([variant="danger"]) .btn {
+  :host([tone="error"]) .btn {
     background: transparent;
     color: var(--color-error);
     border-color: var(--color-error);
@@ -191,8 +193,8 @@
     }
   }
 
-  /* Glass + Primary → variante water */
-  :host([glass][variant="primary"]) .btn {
+  /* Glass + Solid → variante water (scopeado a tone default) */
+  :host([glass][variant="solid"]:not([tone="accent"], [tone="error"])) .btn {
     background: var(--lib-glass-bg-water);
     border-color: oklch(100% 0 0deg / 0.25);
 
@@ -203,7 +205,7 @@
   }
 
   /* Glass + Accent → variante kaki */
-  :host([glass][variant="accent"]) .btn {
+  :host([glass][tone="accent"]) .btn {
     background: var(--lib-glass-bg-kaki);
     border-color: oklch(45% 0.05 45deg / 0.35);
   }
@@ -233,7 +235,7 @@
   }
 
   /* Sobre superficies claras → gradiente kaki */
-  :host(:is([variant="secondary"], [variant="ghost"])) .spotlight-layer {
+  :host(:is([variant="outlined"], [variant="ghost"])) .spotlight-layer {
     background: var(--lib-spotlight-gradient);
   }
 

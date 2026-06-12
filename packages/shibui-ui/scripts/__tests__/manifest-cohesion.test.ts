@@ -59,6 +59,26 @@ const TONE_EXTRA: Record<string, string[]> = {
 };
 const SIZE_FREEFORM = new Set(['lib-icon']); // size: string (acepta px/tokens)
 
+// C4 — variant ⊆ tratamiento canónico + extensiones documentadas (lista cerrada)
+const LIB_VARIANT = ['solid', 'outlined', 'ghost', 'subtle'];
+const VARIANT_EXTRA: Record<string, string[]> = {
+  'lib-card':         ['featured'],     // destacada 2-col, no es un tono ni un modo
+  'lib-modal':        ['editorial'],    // header sin separador, título expandido
+  'lib-close-button': ['filled-round'], // solid + radius full + rotación
+};
+
+// C10 — estéticas/signature: solo pueden vivir en el eje `theme`
+const AESTHETIC_VALUES = new Set([
+  'kintsugi', 'glitch', 'celadon', 'sabi', 'shizen', 'enso', 'sumi',
+  'kin', 'shizuku', 'glass', 'gold', 'classic', 'mega',
+]);
+
+// C11 — modos de render: no pueden colarse en `variant` (van en `display`)
+const DISPLAY_VALUES = new Set([
+  'underline', 'pill', 'card', 'vertical', 'flush', 'separated',
+  'bar', 'line', 'dots', 'ring', 'filled',
+]);
+
 // ── Allowlist de migración pendiente (Tanda 5+). SHRINK conforme avanza. ──
 // Cada entrada = `${slug}.${prop}`. Quitar cuando el componente se migre.
 // 🎉 Vacío: todos los ejes activos (size · tone · surface · tint) están
@@ -83,6 +103,10 @@ function collect(): Violation[] {
       // C8 — sin type 'unknown'
       if (p.type === 'unknown') push(c.slug, p.name, 'unknown-type', key);
 
+      // C12 — sin uniones flag-o-valor (string|boolean bajo el mismo prop)
+      if (p.type && /\bstring\b/.test(p.type) && /\bboolean\b/.test(p.type))
+        push(c.slug, p.name, 'flag-or-value', p.type);
+
       if (p.options) {
         // C7 — sin literal vacío
         if (p.options.includes('')) push(c.slug, p.name, 'empty-option', `[${p.options}]`);
@@ -104,6 +128,25 @@ function collect(): Violation[] {
         // C3 — tint ⊆ LibTint
         if (p.name === 'tint' && !p.options.every((o) => LIB_TINT.includes(o)))
           push(c.slug, 'tint', 'tint-canon', `[${p.options}]`);
+
+        // C4 — variant ⊆ tratamiento canónico (+ extensiones documentadas)
+        if (p.name === 'variant' &&
+            !p.options.every((o) => allowed(LIB_VARIANT, VARIANT_EXTRA).includes(o)))
+          push(c.slug, 'variant', 'variant-canon', `[${p.options}]`);
+
+        // C5 — `danger` está prohibido en todo el sistema (es `error`)
+        if (p.options.includes('danger'))
+          push(c.slug, p.name, 'danger-banned', `[${p.options}]`);
+
+        // C10 — estéticas solo en `theme` (o `katachi`, el theme-de-contexto
+        // raíz del sistema que expone lib-canvas)
+        if (p.name !== 'theme' && p.name !== 'katachi' &&
+            p.options.some((o) => AESTHETIC_VALUES.has(o)))
+          push(c.slug, p.name, 'aesthetic-outside-theme', `[${p.options}]`);
+
+        // C11 — modos de render no van en `variant` (van en `display`)
+        if (p.name === 'variant' && p.options.some((o) => DISPLAY_VALUES.has(o)))
+          push(c.slug, 'variant', 'display-inside-variant', `[${p.options}]`);
 
         // C9 — default ∈ options (ignora null/'' = nullable/sin set)
         if (p.default !== undefined) {
@@ -145,10 +188,7 @@ describe('manifest cohesion (props contract)', () => {
     ).toEqual([]);
   });
 
-  // ── Ejes aún no migrados: se activarán al completar la migración ──
-  it.todo('C4 — variant ⊆ tratamiento (solid/outlined/ghost/subtle) [tras Tanda variant]');
-  it.todo('C10 — estéticas solo en `theme` [tras Tanda theme]');
-  it.todo('C11 — modos de render solo en `display` [tras Tanda display]');
-  it.todo('C5 — sin valor `danger` en ningún prop [tras button cluster]');
-  it.todo('C12 — sin uniones flag-o-valor (string|boolean) [tras Tanda flag-o-valor]');
+  // ✅ Todas las reglas del contrato (C1–C12) están activas dentro de
+  // `collect()` — la migración de ejes (size · tone · surface · tint ·
+  // variant · display · theme + button cluster) está completa.
 });

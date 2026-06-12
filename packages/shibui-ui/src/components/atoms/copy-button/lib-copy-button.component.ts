@@ -1,7 +1,7 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import '../../atoms/icon/lib-icon.component';
-import type { LibCopyVariant, LibCopySize } from './lib-copy-button.html';
+import type { LibCopyVariant, LibCopySurface, LibCopySize } from './lib-copy-button.html';
 import { copyButtonTemplate } from './lib-copy-button.html';
 import copyButtonCss from './lib-copy-button.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
@@ -35,9 +35,13 @@ export class LibCopyButton extends LitElement {
   @property({ type: String })
   value = '';
 
-  /** Variante visual */
+  /** Tratamiento visual */
   @property({ type: String, reflect: true })
   variant: LibCopyVariant = 'ghost';
+
+  /** Superficie (default · dark) */
+  @property({ type: String, reflect: true })
+  surface: LibCopySurface = 'default';
 
   /** Tamaño */
   @property({ type: String, reflect: true })

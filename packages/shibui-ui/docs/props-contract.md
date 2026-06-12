@@ -94,10 +94,15 @@ type LibSurface = 'default' | 'light' | 'dark' | 'inverse';   // default 'defaul
 type LibVariant = 'solid' | 'outlined' | 'ghost' | 'subtle';   // default 'solid'
 ```
 - **Por qué**: `variant` queda **exclusivamente** para el tratamiento de relleno/borde.
-  `filled` → `solid`, `outline` → `outlined`. Cualquier otro significado migra a su eje.
+  `filled` → `solid`, `outline` → `outlined`, `primary` → `solid`, `secondary` → `outlined`.
+  Cualquier otro significado migra a su eje.
 - **Regla**: si un valor de `variant` es un color (accent/error) → va a `tone`; si es una
   piel de marca (kintsugi/glitch) → va a `theme`; si es un modo de render
   (lines/grid) → va a `display`.
+- **Extensiones documentadas** (`VARIANT_EXTRA`, lista cerrada — como en `size`):
+  - `lib-card` → `featured` (destacada 2-col; no es tono ni modo)
+  - `lib-modal` → `editorial` (header sin separador, título expandido)
+  - `lib-close-button` → `filled-round` (solid + radius full + rotación al hover)
 
 ### `theme` — estética signature
 - **Por qué**: las variantes estéticas de marca (kintsugi, celadon, sabi, shizen, enso,
