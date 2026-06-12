@@ -4,8 +4,8 @@
    LIB-BREADCRUMB — Shibui UI
    Separadores : slash · chevron · dot · line
    Tamaños     : sm · md (default) · lg
-   Superficies : default · filled · pill
-   Acentos     : accent · info · bold
+   Variant     : default · filled · pill
+   Tone        : default · accent · info · strong (clase .bc-bold)
    Modificador : dark
    Truncado    : .bc-item.bc-hidden → oculto / bc-revealed → visible
    ============================================================ */

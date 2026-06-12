@@ -48,7 +48,7 @@ export class LibCloseButton extends LitElement {
 
   /** Texto accesible del boton */
   @property({ type: String, attribute: 'aria-label' })
-  override ariaLabel: string | null = 'Cerrar';
+  override ariaLabel = 'Cerrar';
 
   private _handleClick(e: Event): void {
     if (this.disabled) {
@@ -71,7 +71,7 @@ export class LibCloseButton extends LitElement {
       size: this.size,
       icon: this.icon,
       disabled: this.disabled,
-      ariaLabel: this.ariaLabel ?? 'Cerrar',
+      ariaLabel: this.ariaLabel || 'Cerrar',
       onClick: this._handleClick.bind(this),
     });
   }

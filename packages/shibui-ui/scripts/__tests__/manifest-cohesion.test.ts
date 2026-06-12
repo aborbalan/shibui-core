@@ -55,16 +55,16 @@ const SIZE_EXTRA: Record<string, string[]> = {
   'lib-avatar': ['2xl'], 'lib-parallax-text-stack': ['2xl'],
 };
 const TONE_EXTRA: Record<string, string[]> = {
-  'lib-chip': ['strong'], 'lib-badge': ['strong'],
+  'lib-chip': ['strong'], 'lib-badge': ['strong'], 'lib-breadcrumb': ['strong'],
 };
 const SIZE_FREEFORM = new Set(['lib-icon']); // size: string (acepta px/tokens)
 
 // ── Allowlist de migración pendiente (Tanda 5+). SHRINK conforme avanza. ──
 // Cada entrada = `${slug}.${prop}`. Quitar cuando el componente se migre.
-const KNOWN_PENDING = new Set<string>([
-  // tipo sin resolver (scrollable reflejado como atributo `scroll`):
-  'lib-tabs.scroll',
-]);
+// 🎉 Vacío: todos los ejes activos (size · tone · surface · tint) están
+// migrados. Las próximas tandas (variant/display/theme + button cluster)
+// activarán las reglas C4/C5/C10/C11/C12 que hoy son `it.todo`.
+const KNOWN_PENDING = new Set<string>([]);
 
 // ── Recolector de violaciones ──────────────────────────────────
 type Violation = { key: string; rule: string; detail: string };

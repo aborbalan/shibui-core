@@ -10,7 +10,7 @@ const meta: Meta = {
   argTypes: {
     speed: { control: { type: 'range', min: 0.05, max: 0.5, step: 0.05 } },
     size:  { control: 'select', options: ['sm', 'md', 'lg', 'xl', '2xl'] },
-    color: { control: 'select', options: ['default', 'muted', 'accent', 'info'] },
+    tone: { control: 'select', options: ['default', 'muted', 'accent', 'info'] },
   },
 };
 export default meta;
@@ -43,7 +43,7 @@ export const Playground: Story = {
     lines: ['The beauty of', 'IMPERFECTION', 'Wabi Sabi', 'DESIGN SYSTEM'],
     speed: 0.15,
     size: 'lg',
-    color: 'default',
+    tone: 'default',
   },
   render: (args): TemplateResult => page(html`
     ${scrollHint()}
@@ -51,7 +51,7 @@ export const Playground: Story = {
       .lines=${args.lines}
       speed="${args.speed}"
       size="${args.size}"
-      color="${args.color}"
+      tone="${args.tone}"
     ></lib-parallax-text-stack>
     ${spacer()}
   `),
@@ -89,13 +89,13 @@ export const Colors: Story = {
   render: (): TemplateResult => page(html`
     ${scrollHint()}
     <lib-parallax-text-stack .lines=${['Default', 'Color']}
-      speed="0.12" size="xl" color="default"></lib-parallax-text-stack>
+      speed="0.12" size="xl" tone="default"></lib-parallax-text-stack>
     <lib-parallax-text-stack .lines=${['Muted', 'Subtle']}
-      speed="0.12" size="xl" color="muted"></lib-parallax-text-stack>
+      speed="0.12" size="xl" tone="muted"></lib-parallax-text-stack>
     <lib-parallax-text-stack .lines=${['Kaki', 'Terracota']}
-      speed="0.12" size="xl" color="accent"></lib-parallax-text-stack>
+      speed="0.12" size="xl" tone="accent"></lib-parallax-text-stack>
     <lib-parallax-text-stack .lines=${['Celadón', 'Verde']}
-      speed="0.12" size="xl" color="info"></lib-parallax-text-stack>
+      speed="0.12" size="xl" tone="info"></lib-parallax-text-stack>
     ${spacer()}
   `),
 };
@@ -155,7 +155,7 @@ export const HeroLanding: Story = {
         .lines=${['Design', 'SYSTEM', '渋い', 'SHIBUI']}
         speed="0.18"
         size="2xl"
-        color="muted"
+        tone="muted"
         style="flex:1;"
       ></lib-parallax-text-stack>
 
@@ -181,7 +181,7 @@ const _katachi = createKatachiStories<object>(() => html`
       .lines=${['Shibui · 渋い · Wabi · 侘 · Kintsugi · 金継ぎ · Sabi · 寂 · ']}
       speed="0.1"
       size="sm"
-      color="default"
+      tone="default"
     ></lib-parallax-text-stack>
 
     <!-- md — muted -->
@@ -192,7 +192,7 @@ const _katachi = createKatachiStories<object>(() => html`
       .lines=${['Design System · 形 · Katachi · Washi · ']}
       speed="0.12"
       size="md"
-      color="muted"
+      tone="muted"
     ></lib-parallax-text-stack>
 
     <!-- lg — kaki -->
@@ -203,7 +203,7 @@ const _katachi = createKatachiStories<object>(() => html`
       .lines=${['Kaki · 柿 · Terracota · Acento · ']}
       speed="0.15"
       size="lg"
-      color="accent"
+      tone="accent"
     ></lib-parallax-text-stack>
 
     <!-- xl — celadon -->
@@ -214,7 +214,7 @@ const _katachi = createKatachiStories<object>(() => html`
       .lines=${['Celadón · 青磁 · Celadon · 寒色 · ']}
       speed="0.18"
       size="xl"
-      color="info"
+      tone="info"
     ></lib-parallax-text-stack>
 
   </div>

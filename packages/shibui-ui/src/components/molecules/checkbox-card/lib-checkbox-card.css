@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-CHECKBOX-CARD — Shibui UI · SG-57
-   Colores  : accent (default) · info
+   Tone     : accent (default) · info
    Layouts  : vertical · horizontal · compact
    Input    : checkbox · radio
    Estados  : checked · disabled · error · dark
@@ -392,46 +392,46 @@
     /* ════════════════════════════════════════
      COLOR · INFO
      ════════════════════════════════════════ */
-    :host([color="info"]) .cc-input:checked~.cc-body {
+    :host([tone="info"]) .cc-input:checked~.cc-body {
         border-color: var(--color-celadon-500);
         background: var(--color-celadon-50);
     }
 
-    :host([color="info"]) .cc-input:checked~.cc-body::after {
+    :host([tone="info"]) .cc-input:checked~.cc-body::after {
         background: linear-gradient(90deg, transparent, var(--color-celadon-400), transparent);
     }
 
-    :host([color="info"]) .cc-input:checked~.cc-body .cc-check {
+    :host([tone="info"]) .cc-input:checked~.cc-body .cc-check {
         border-color: var(--color-celadon-500);
         background: var(--color-celadon-500);
     }
 
-    :host([color="info"]) .cc-input:checked~.cc-body .cc-title {
+    :host([tone="info"]) .cc-input:checked~.cc-body .cc-title {
         color: var(--color-celadon-500);
     }
 
-    :host([color="info"]) .cc-input:checked~.cc-body .cc-icon svg {
+    :host([tone="info"]) .cc-input:checked~.cc-body .cc-icon svg {
         color: var(--color-celadon-500);
     }
 
-    :host([color="info"]) .cc-input:checked~.cc-body .cc-badge {
+    :host([tone="info"]) .cc-input:checked~.cc-body .cc-badge {
         border-color: rgb(53, 113, 100, .3);
         color: var(--color-celadon-500);
     }
 
-    :host([color="info"]) .cc-input:checked~.cc-body .cc-features li::before {
+    :host([tone="info"]) .cc-input:checked~.cc-body .cc-features li::before {
         background: var(--color-celadon-400);
     }
 
-    :host([color="info"]) .cc-input:checked~.cc-body .cc-divider {
+    :host([tone="info"]) .cc-input:checked~.cc-body .cc-divider {
         background: rgb(53, 113, 100, .2);
     }
 
-    :host([color="info"]) .cc-ripple-dot {
+    :host([tone="info"]) .cc-ripple-dot {
         background: var(--color-celadon-400);
     }
 
-    :host([color="info"]) .cc:focus-within .cc-body {
+    :host([tone="info"]) .cc:focus-within .cc-body {
         outline-color: var(--color-celadon-400);
     }
 
@@ -610,7 +610,7 @@
        El estado checked default usa acento kaki (cálido). Bajo
        data-katachi="celadon" (jade frío) ese acento chocaba; ahora
        el seleccionado adopta la paleta celadon de forma ambiental
-       —igual que color="info"— sin pedir el prop (ver bloque celadon
+       —igual que tone="info"— sin pedir el prop (ver bloque celadon
        más abajo y celadon-audit.md § Inconsistencias). El attribute
        `[dark]` (rgba blanco) sigue siendo una capa ortogonal.
 

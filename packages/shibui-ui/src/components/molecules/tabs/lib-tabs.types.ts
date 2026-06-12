@@ -1,5 +1,5 @@
 export type TabsVariant = 'underline' | 'pill' | 'card' | 'outline' | 'vertical';
-export type TabsColor   = 'accent' | 'info';
+export type TabsTone    = 'default' | 'accent' | 'info';
 export type TabsSize    = 'sm' | 'md' | 'lg';
 
 export interface TabItem {

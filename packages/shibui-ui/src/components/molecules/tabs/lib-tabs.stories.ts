@@ -21,12 +21,12 @@ const meta: Meta = {
   component: 'lib-tabs',
   argTypes: {
     variant:  { control: 'select', options: ['underline', 'pill', 'card', 'outline', 'vertical'] },
-    color:    { control: 'select', options: ['', 'accent', 'info'] },
+    tone:     { control: 'select', options: ['default', 'accent', 'info'] },
     size:     { control: 'select', options: ['', 'sm', 'lg'] },
     dark:     { control: 'boolean' },
     gold: { control: 'boolean' },
     glitch:   { control: 'boolean' },
-    scroll:   { control: 'boolean' },
+    scrollable: { control: 'boolean' },
     full:     { control: 'boolean' },
     closable: { control: 'boolean' },
     newTab:      { control: 'boolean', name: 'new-tab' },
@@ -48,12 +48,12 @@ const svgSend  = `<svg viewBox="0 0 16 16"><line x1="15" y1="1" x2="8" y2="8"/><
 export const Playground: Story = {
   args: {
     variant:  'underline',
-    color:    '',
+    tone:     'default',
     size:     '',
     dark:     false,
     gold: false,
     glitch:   false,
-    scroll:   false,
+    scrollable: false,
     full:     false,
     closable: false,
     newTab:      false,
@@ -64,12 +64,12 @@ export const Playground: Story = {
     <div style="padding: 2rem; ${args.dark ? 'background: var(--color-washi-950); padding: 2rem;' : ''}">
       <lib-tabs
         variant="${args.variant}"
-        color="${args.color}"
+        tone="${args.tone}"
         size="${args.size}"
         ?dark="${args.dark}"
         ?gold="${args.gold}"
         ?glitch="${args.glitch}"
-        ?scroll="${args.scroll}"
+        ?scrollable="${args.scrollable}"
         ?full="${args.full}"
         ?closable="${args.closable}"
         ?new-tab="${args.newTab}"
@@ -123,7 +123,7 @@ export const Underline: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Celadon</p>
-        <lib-tabs variant="underline" color="info" active="u2-general"
+        <lib-tabs variant="underline" tone="info" active="u2-general"
           .items="${[
             { id: 'u2-general',  label: 'General' },
             { id: 'u2-security', label: 'Seguridad' },
@@ -190,7 +190,7 @@ export const Pill: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Kaki</p>
-        <lib-tabs variant="pill" color="accent" active="p2-a"
+        <lib-tabs variant="pill" tone="accent" active="p2-a"
           .items="${[{ id: 'p2-a', label: 'Grid' }, { id: 'p2-b', label: 'Lista' }, { id: 'p2-c', label: 'Mosaic' }]}">
           <div slot="p2-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Vista grid.</p></div>
           <div slot="p2-b"></div><div slot="p2-c"></div>
@@ -199,7 +199,7 @@ export const Pill: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Celadon</p>
-        <lib-tabs variant="pill" color="info" active="p3-a"
+        <lib-tabs variant="pill" tone="info" active="p3-a"
           .items="${[{ id: 'p3-a', label: 'Componentes' }, { id: 'p3-b', label: 'Tokens' }, { id: 'p3-c', label: 'Motion' }]}">
           <div slot="p3-a"><p style="padding-top: 1rem; font-size: var(--text-sm); color: var(--text-secondary);">Componentes.</p></div>
           <div slot="p3-b"></div><div slot="p3-c"></div>
@@ -323,7 +323,7 @@ export const Dark: Story = {
 
       <div>
         <p style="font-family: var(--lib-font-mono); font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(250,247,244,.2); margin-bottom: 1.5rem;">Pill dark · kaki</p>
-        <lib-tabs variant="pill" color="accent" dark active="dk2-live"
+        <lib-tabs variant="pill" tone="accent" dark active="dk2-live"
           .items="${[{ id: 'dk2-live', label: 'Live' }, { id: 'dk2-staging', label: 'Staging' }, { id: 'dk2-preview', label: 'Preview' }]}">
           <div slot="dk2-live"><p    style="padding-top: 1rem; font-size: var(--text-sm); color: rgba(250,247,244,.4);">Entorno live.</p></div>
           <div slot="dk2-staging"></div><div slot="dk2-preview"></div>

@@ -4,8 +4,8 @@
    LIB-TABS — Shibui UI · SG-60
    ============================================================
    Variantes de lista : underline · pill · card · outline · vertical
-   Colores            : (default accent) · info
-   Modificadores      : dark · gold · glitch · scroll · full
+   Tone               : default · accent · info
+   Modificadores      : dark · gold · glitch · scrollable · full
    Tamaños            : sm · (base) · lg
    ============================================================ */
 
@@ -217,15 +217,15 @@
   }
 
   /* Celadon underline */
-  :host([variant="underline"][color="info"]) .tb-tab.is-active {
+  :host([variant="underline"][tone="info"]) .tb-tab.is-active {
     color: var(--info);
   }
 
-  :host([variant="underline"][color="info"]) .tb-ink {
+  :host([variant="underline"][tone="info"]) .tb-ink {
     background: var(--info);
   }
 
-  :host([variant="underline"][color="info"]) .tb-tab.is-active .tb-badge {
+  :host([variant="underline"][tone="info"]) .tb-tab.is-active .tb-badge {
     background: var(--info);
   }
 
@@ -262,18 +262,18 @@
   }
 
   /* Pill accent */
-  :host([variant="pill"][color="accent"]) .tb-tab.is-active {
+  :host([variant="pill"][tone="accent"]) .tb-tab.is-active {
     background: var(--color-kaki-500);
     color: #fff;
   }
 
-  :host([variant="pill"][color="accent"]) .tb-tab.is-active .tb-badge {
+  :host([variant="pill"][tone="accent"]) .tb-tab.is-active .tb-badge {
     background: rgb(255, 255, 255, .3);
     color: #fff;
   }
 
   /* Pill info */
-  :host([variant="pill"][color="info"]) .tb-tab.is-active {
+  :host([variant="pill"][tone="info"]) .tb-tab.is-active {
     background: var(--info);
     color: #fff;
   }
@@ -496,7 +496,7 @@
     box-shadow: 0 1px 4px rgb(0, 0, 0, .3);
   }
 
-  :host([dark][variant="pill"][color="accent"]) .tb-tab.is-active {
+  :host([dark][variant="pill"][tone="accent"]) .tb-tab.is-active {
     background: var(--color-kaki-500);
     color: #fff;
   }

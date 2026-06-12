@@ -12,7 +12,7 @@ const meta: Meta = {
     value:     { control: { type: 'number', min: 0, max: 10, step: 0.5 } },
     max:       { control: { type: 'number', min: 1, max: 10 } },
     size:      { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-    color:     { control: 'select', options: ['gold', 'accent', 'neutral', 'info'] },
+    tone:      { control: 'select', options: ['default', 'accent', 'info', 'muted'] },
     icon:      { control: 'select', options: ['star', 'heart', 'diamond'] },
     readonly:  { control: 'boolean' },
     disabled:  { control: 'boolean' },
@@ -40,14 +40,14 @@ const row = (label: string, content: TemplateResult): TemplateResult => html`
    Playground
    ────────────────────────────────────────────── */
 export const Playground: Story = {
-  args: { value: 3, max: 5, size: 'md', color: 'gold', icon: 'star', readonly: false, disabled: false, showCount: false },
+  args: { value: 3, max: 5, size: 'md', tone: 'default', icon: 'star', readonly: false, disabled: false, showCount: false },
   render: (args): TemplateResult => html`
     <div style="padding:2rem;">
       <lib-rating
         value="${args.value}"
         max="${args.max}"
         size="${args.size}"
-        color="${args.color}"
+        tone="${args.tone}"
         icon="${args.icon}"
         ?readonly="${args.readonly}"
         ?disabled="${args.disabled}"
@@ -100,21 +100,21 @@ export const Icons: Story = {
   name: 'Icons — star · heart · diamond',
   render: (): TemplateResult => wrap('var(--bg-surface)', html`
     ${row('ph-star — valoración genérica',   html`<lib-rating icon="star"    value="4" size="lg"></lib-rating>`)}
-    ${row('ph-heart — favoritos · accent',   html`<lib-rating icon="heart"   value="3" size="lg" color="accent"></lib-rating>`)}
-    ${row('ph-diamond — calidad · neutral',  html`<lib-rating icon="diamond" value="5" size="lg" color="neutral"></lib-rating>`)}
+    ${row('ph-heart — favoritos · accent',   html`<lib-rating icon="heart"   value="3" size="lg" tone="accent"></lib-rating>`)}
+    ${row('ph-diamond — calidad · muted',  html`<lib-rating icon="diamond" value="5" size="lg" tone="muted"></lib-rating>`)}
   `),
 };
 
 /* ──────────────────────────────────────────────
-   Colors — gold · accent · neutral · info
+   Tones — default(gold) · accent · info · muted
    ────────────────────────────────────────────── */
-export const Colors: Story = {
-  name: 'Colors — gold · accent · neutral · info',
+export const Tones: Story = {
+  name: 'Tones — default · accent · info · muted',
   render: (): TemplateResult => wrap('var(--bg-surface)', html`
-    ${row('Gold (default)',    html`<lib-rating color="gold"    value="4"></lib-rating>`)}
-    ${row('Accent',           html`<lib-rating color="accent"  value="4"></lib-rating>`)}
-    ${row('Neutral (mono)',   html`<lib-rating color="neutral" value="4"></lib-rating>`)}
-    ${row('Info',             html`<lib-rating color="info"    value="4"></lib-rating>`)}
+    ${row('Default (gold)',   html`<lib-rating tone="default"    value="4"></lib-rating>`)}
+    ${row('Accent',           html`<lib-rating tone="accent"  value="4"></lib-rating>`)}
+    ${row('Muted (mono)',     html`<lib-rating tone="muted" value="4"></lib-rating>`)}
+    ${row('Info',             html`<lib-rating tone="info"    value="4"></lib-rating>`)}
   `),
 };
 
@@ -276,10 +276,10 @@ const _katachi = createKatachiStories<object>(() => html`
     </div>
     <!-- Colors -->
     <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
-      <lib-rating color="gold"    value="4" size="sm" readonly show-count count="214"></lib-rating>
-      <lib-rating color="accent"    value="4" size="sm" icon="heart" readonly></lib-rating>
-      <lib-rating color="neutral"   value="4" size="sm" icon="diamond" readonly></lib-rating>
-      <lib-rating color="info" value="4" size="sm" readonly></lib-rating>
+      <lib-rating tone="default"    value="4" size="sm" readonly show-count count="214"></lib-rating>
+      <lib-rating tone="accent"    value="4" size="sm" icon="heart" readonly></lib-rating>
+      <lib-rating tone="muted"   value="4" size="sm" icon="diamond" readonly></lib-rating>
+      <lib-rating tone="info" value="4" size="sm" readonly></lib-rating>
     </div>
     <!-- States -->
     <div style="display:flex;gap:var(--lib-space-lg);align-items:center;flex-wrap:wrap;">

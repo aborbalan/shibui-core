@@ -719,15 +719,15 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "accent",
-          "type": "BreadcrumbAccent",
-          "default": "\"none\"",
-          "attribute": "accent",
+          "name": "tone",
+          "type": "BreadcrumbTone",
+          "default": "\"default\"",
+          "attribute": "tone",
           "options": [
-            "none",
+            "default",
             "accent",
             "info",
-            "bold"
+            "strong"
           ]
         },
         {
@@ -987,14 +987,14 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         },
         {
           "name": "customPadding",
-          "type": "string | null",
-          "default": "null",
+          "type": "string",
+          "default": "''",
           "attribute": "custom-padding"
         },
         {
           "name": "ariaLabel",
-          "type": "string | null",
-          "default": "null",
+          "type": "string",
+          "default": "''",
           "attribute": "aria-label"
         }
       ],
@@ -1681,11 +1681,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "value"
         },
         {
-          "name": "color",
-          "type": "CheckboxCardColor",
+          "name": "tone",
+          "type": "CheckboxCardTone",
           "default": "'accent'",
           "description": "— 'accent' | 'info'",
-          "attribute": "color",
+          "attribute": "tone",
           "options": [
             "accent",
             "info"
@@ -1978,7 +1978,7 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         },
         {
           "name": "ariaLabel",
-          "type": "string | null",
+          "type": "string",
           "default": "'Cerrar'",
           "description": "Texto accesible del boton",
           "attribute": "aria-label"
@@ -3442,9 +3442,9 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
       "props": [
         {
           "name": "filename",
-          "type": "string | null",
-          "default": "null",
-          "description": "— Nombre del fichero activo. `null` → \"Sin título\".",
+          "type": "string",
+          "default": "''",
+          "description": "— Nombre del fichero activo. Vacío → \"Sin título\".",
           "attribute": "filename"
         },
         {
@@ -5449,11 +5449,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "color",
-          "type": "ParallaxTextColor",
+          "name": "tone",
+          "type": "ParallaxTextTone",
           "default": "'default'",
           "description": "— 'default' | 'muted' | 'accent' | 'info' IMPORTANTE: el padre debe llevar overflow-x:hidden. El componente NO lo aplica en :host — si lo hiciera, el translateX quedaría clipado y el efecto sería invisible.",
-          "attribute": "color",
+          "attribute": "tone",
           "options": [
             "default",
             "muted",
@@ -5640,8 +5640,8 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         },
         {
           "name": "ariaLabel",
-          "type": "string | null",
-          "default": "null",
+          "type": "string",
+          "default": "''",
           "attribute": "aria-label"
         }
       ],
@@ -6214,16 +6214,16 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "color",
-          "type": "RatingColor",
-          "default": "'gold'",
-          "description": "— 'gold'(default) | 'accent' | 'neutral' | 'info'",
-          "attribute": "color",
+          "name": "tone",
+          "type": "RatingTone",
+          "default": "'default'",
+          "description": "— 'default'(gold) | 'accent' | 'info' | 'muted'",
+          "attribute": "tone",
           "options": [
-            "gold",
+            "default",
             "accent",
-            "neutral",
-            "info"
+            "info",
+            "muted"
           ]
         },
         {
@@ -7770,12 +7770,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "color",
-          "type": "TabsColor | \"\"",
-          "default": "\"\"",
-          "description": "— 'accent' | 'info'",
-          "attribute": "color",
+          "name": "tone",
+          "type": "TabsTone",
+          "default": "\"default\"",
+          "description": "— 'default' | 'accent' | 'info'",
+          "attribute": "tone",
           "options": [
+            "default",
             "accent",
             "info"
           ]
@@ -7816,7 +7817,8 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "scrollable",
           "type": "boolean",
           "default": "false",
-          "attribute": "scroll"
+          "description": "— overflow-x scroll en la lista",
+          "attribute": "scrollable"
         },
         {
           "name": "full",
@@ -7866,11 +7868,6 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "[]",
           "description": "— array de TabItem Panels: cada TabItem con id=\"X\" se muestra via <slot name=\"X\">. El usuario añade <div slot=\"X\">contenido</div> como hijo de lib-tabs.",
           "attribute": "items"
-        },
-        {
-          "name": "scroll",
-          "type": "unknown",
-          "description": "— overflow-x scroll en la lista"
         }
       ],
       "slots": [],

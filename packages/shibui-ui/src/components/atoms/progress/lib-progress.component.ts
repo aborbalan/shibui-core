@@ -56,7 +56,7 @@ export class LibProgress extends LitElement {
   @property({ type: String }) segments = '';
 
   /* ── a11y ── */
-  @property({ type: String, attribute: 'aria-label' }) override ariaLabel: string | null = null;
+  @property({ type: String, attribute: 'aria-label' }) override ariaLabel = '';
 
   override render(): TemplateResult {
     const percent = this.indeterminate
@@ -87,7 +87,7 @@ export class LibProgress extends LitElement {
 
       segments: parsedSegments,
 
-      ariaLabel: this.ariaLabel ?? this.label,
+      ariaLabel: this.ariaLabel || this.label,
       rawValue:  this.value,
       max:       this.max,
     });

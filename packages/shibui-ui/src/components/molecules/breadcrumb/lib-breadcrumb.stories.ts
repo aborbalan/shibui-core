@@ -47,9 +47,9 @@ const meta: Meta<StoryArgs> = {
       control: 'select',
       options: ['default', 'filled', 'pill'],
     },
-    accent: {
+    tone: {
       control: 'select',
-      options: ['none', 'accent', 'info', 'bold'],
+      options: ['default', 'accent', 'info', 'strong'],
     },
     dark: { control: 'boolean' },
     maxVisible: { control: 'number' },
@@ -60,7 +60,7 @@ const meta: Meta<StoryArgs> = {
         separator="${args.separator}"
         size="${args.size}"
         variant="${args.variant}"
-        accent="${args.accent}"
+        tone="${args.tone}"
         ?dark="${args.dark}"
         max-visible="${args.maxVisible ?? 0}"
         .items="${args.items ?? BASE_ITEMS}"
@@ -78,7 +78,7 @@ export const Playground: Story = {
     separator:  'slash',
     size:       'md',
     variant:    'default',
-    accent:     'none',
+    tone:       'default',
     dark:       false,
     maxVisible: 0,
     items:      BASE_ITEMS,
@@ -146,17 +146,17 @@ export const Surfaces: Story = {
 
 /* ── Acentos ───────────────────────────────────────────── */
 export const Accents: Story = {
-  name: 'Acentos en ítem activo — accent · info · bold',
+  name: 'Tono en ítem activo — accent · info · strong',
   render: (): TemplateResult => html`
     <div style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
       ${([
-        { accent: 'accent',    label: '.bc-accent' },
-        { accent: 'info', label: '.bc-info' },
-        { accent: 'bold',    label: '.bc-bold' },
-      ] as const).map(({ accent, label }) => html`
+        { tone: 'accent',    label: '.bc-accent' },
+        { tone: 'info', label: '.bc-info' },
+        { tone: 'strong',    label: '.bc-bold' },
+      ] as const).map(({ tone, label }) => html`
         <div style="display: grid; grid-template-columns: 100px 1fr; align-items: center; gap: 16px;">
           <span style="font-family: var(--lib-font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">${label}</span>
-          <lib-breadcrumb separator="slash" accent="${accent}" .items="${BASE_ITEMS}"></lib-breadcrumb>
+          <lib-breadcrumb separator="slash" tone="${tone}" .items="${BASE_ITEMS}"></lib-breadcrumb>
         </div>
       `)}
     </div>
@@ -194,7 +194,7 @@ export const Collapsed: Story = {
         <lib-breadcrumb
           separator="chevron"
           variant="filled"
-          accent="accent"
+          tone="accent"
           max-visible="2"
           .items="${DEEP_ITEMS}"
         ></lib-breadcrumb>
@@ -222,7 +222,7 @@ export const DarkSurface: Story = {
           separator="dot"
           size="sm"
           dark
-          accent="accent"
+          tone="accent"
           .items="${[
             { label: 'Dashboard',       href: '/' },
             { label: 'Configuración',   href: '/settings' },
@@ -256,7 +256,7 @@ const _katachi = createKatachiStories<object>(() => html`
       { label: 'Diseño', href: '#' },
       { label: 'Katachi' },
     ]}"></lib-breadcrumb>
-    <lib-breadcrumb separator="dot" size="lg" variant="pill" accent="accent" .items="${[
+    <lib-breadcrumb separator="dot" size="lg" variant="pill" tone="accent" .items="${[
       { label: 'Inicio', href: '#' },
       { label: 'Diseño', href: '#' },
       { label: 'Katachi' },

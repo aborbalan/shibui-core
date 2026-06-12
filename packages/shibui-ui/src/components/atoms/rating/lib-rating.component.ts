@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { ratingTemplate } from './lib-rating.html';
 import ratingCss from './lib-rating.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
-import type { RatingSize, RatingColor, RatingIcon } from './lib-rating.types';
+import type { RatingSize, RatingTone, RatingIcon } from './lib-rating.types';
 
 /**
  * lib-rating — Shibui UI · SG-19
@@ -11,7 +11,7 @@ import type { RatingSize, RatingColor, RatingIcon } from './lib-rating.types';
  * @prop value       — Valor actual (0–max). Soporta decimales en readonly para half-star.
  * @prop max         — Máximo de items (default 5)
  * @prop size        — 'xs' | 'sm' | 'md'(default) | 'lg' | 'xl'
- * @prop color       — 'gold'(default) | 'accent' | 'neutral' | 'info'
+ * @prop tone        — 'default'(gold) | 'accent' | 'info' | 'muted'
  * @prop icon        — 'star'(default) | 'heart' | 'diamond'
  * @prop readonly    — Solo display, sin interacción
  * @prop disabled    — Opacity 0.4, sin interacción
@@ -37,7 +37,7 @@ export class LibRating extends LitElement {
   size: RatingSize = 'md';
 
   @property({ type: String, reflect: true })
-  color: RatingColor = 'gold';
+  tone: RatingTone = 'default';
 
   @property({ type: String })
   icon: RatingIcon = 'star';

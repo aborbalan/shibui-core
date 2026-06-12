@@ -97,16 +97,16 @@ export class LibButton extends LitElement {
   type: 'button' | 'submit' | 'reset' = 'button';
 
   /**
- * @type {string | null}
+ * @type {string}
  */
   @property({ type: String, attribute: 'custom-padding' })
-  customPadding: string | null = null;
+  customPadding = '';
 
   /**
- * @type {string | null}
+ * @type {string}
  */
   @property({ type: String, attribute: 'aria-label' })
-  override ariaLabel: string | null = null;
+  override ariaLabel = '';
 
   /**
    * Implementación del renderizado siguiendo la regla de tipado explícito.
@@ -116,13 +116,13 @@ export class LibButton extends LitElement {
       buttonId: this._buttonId,
       type: this.type,
       disabled: this.disabled,
-      ariaLabel: this.ariaLabel ?? undefined,
+      ariaLabel: this.ariaLabel || undefined,
       handleClick: this._handleClick.bind(this),
       variant: this.variant,
       size: this.size,
       glass: this.glass,
       spotlight: this.spotlight,
-      customPadding: this.customPadding ?? undefined,
+      customPadding: this.customPadding || undefined,
     });
   }
 

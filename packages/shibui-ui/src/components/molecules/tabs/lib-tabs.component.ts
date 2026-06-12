@@ -7,20 +7,20 @@ import sharedTokens from "../../../styles/shared/tokens.css?inline";
 import type {
   TabItem,
   TabsVariant,
-  TabsColor,
+  TabsTone,
   TabsSize,
 } from "./lib-tabs.types";
 
 /**
  * lib-tabs — Componente de pestañas Shibui (SG-60)
  *
- * @prop variant  — 'underline' | 'pill' | 'card' | 'outline' | 'vertical'
- * @prop color    — 'accent' | 'info'
- * @prop size     — 'sm' | 'md' | 'lg'
- * @prop dark     — surface oscura
- * @prop gold     — ink bar animada dorada (era kintsugi)
- * @prop glitch   — efecto RGB split en tab activo
- * @prop scroll   — overflow-x scroll en la lista
+ * @prop variant    — 'underline' | 'pill' | 'card' | 'outline' | 'vertical'
+ * @prop tone       — 'default' | 'accent' | 'info'
+ * @prop size       — 'sm' | 'md' | 'lg'
+ * @prop dark       — surface oscura
+ * @prop gold       — ink bar animada dorada (era kintsugi)
+ * @prop glitch     — efecto RGB split en tab activo
+ * @prop scrollable — overflow-x scroll en la lista
  * @prop full     — tabs en grid de columnas iguales
  * @prop active   — id del tab activo
  * @prop items    — array de TabItem
@@ -54,7 +54,7 @@ export class LibTabs extends LitElement {
   variant: TabsVariant = "underline";
 
   @property({ type: String, reflect: true })
-  color: TabsColor | "" = "";
+  tone: TabsTone = "default";
 
   @property({ type: String, reflect: true })
   size?: TabsSize;
@@ -68,7 +68,7 @@ export class LibTabs extends LitElement {
   @property({ type: Boolean, reflect: true })
   glitch = false;
 
-  @property({ type: Boolean, reflect: true, attribute: "scroll" })
+  @property({ type: Boolean, reflect: true })
   scrollable = false;
 
   @property({ type: Boolean, reflect: true })
