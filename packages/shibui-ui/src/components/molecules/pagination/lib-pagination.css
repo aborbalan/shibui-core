@@ -3,7 +3,7 @@
 /* ============================================================
    LIB-PAGINATION — Shibui UI
    Tamaños  : sm · md · lg
-   Variantes: default · outline · ghost
+   Variant  : solid (default) · outlined · ghost
    ============================================================ */
 
 @layer reset {
@@ -173,15 +173,15 @@
      ──────────────────────────────────────── */
 
   /* Outline — sin fondo, solo borde */
-  :host([variant="outline"]) .pg-btn {
+  :host([variant="outlined"]) .pg-btn {
     background: transparent;
   }
 
-  :host([variant="outline"]) .pg-btn:hover:not(:disabled, .pg-btn--active) {
+  :host([variant="outlined"]) .pg-btn:hover:not(:disabled, .pg-btn--active) {
     background: var(--bg-surface);
   }
 
-  :host([variant="outline"]) .pg-btn--active {
+  :host([variant="outlined"]) .pg-btn--active {
     background: transparent;
     border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
     color: var(--lib-comp-bg-inverse, var(--bg-inverse));

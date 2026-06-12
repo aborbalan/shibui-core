@@ -8,7 +8,8 @@ const meta: Meta = {
   tags:['autodocs'],
   component: 'lib-dropdown',
   argTypes: {
-    variant: { control: 'select', options: ['default', 'ghost', 'filled', 'accent'] },
+    variant: { control: 'select', options: ['solid', 'outlined', 'ghost'] },
+    tone:    { control: 'select', options: ['default', 'accent'] },
     align:   { control: 'select', options: ['left', 'right'] },
     open:    { control: 'boolean' },
     dark:    { control: 'boolean' },
@@ -43,12 +44,13 @@ const item = (label: string, opts: {
 
 /* ── Playground ── */
 export const Playground: Story = {
-  args: { label: 'Opciones', variant: 'default', align: 'left', open: false, dark: false },
+  args: { label: 'Opciones', variant: 'outlined', tone: 'default', align: 'left', open: false, dark: false },
   render: (args): TemplateResult => html`
     <div style="padding:4rem;min-height:280px;">
       <lib-dropdown
         label="${args.label}"
         variant="${args.variant}"
+        tone="${args.tone ?? 'default'}"
         align="${args.align}"
         ?open="${args.open}"
         ?dark="${args.dark}"
@@ -96,11 +98,11 @@ export const Base: Story = {
 
 /* ── Triggers ── */
 export const Triggers: Story = {
-  name: 'Triggers — default · ghost · filled · accent',
+  name: 'Triggers — outlined · ghost · solid · accent',
   render: (): TemplateResult => html`
     <div style="padding:2rem;min-height:280px;display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap;background:var(--bg-surface);">
 
-      <lib-dropdown label="Default" variant="default">
+      <lib-dropdown label="Default" variant="outlined">
         ${item('Editar',    { icon: iconPencil })}
         ${item('Duplicar',  { icon: iconCopy })}
         ${sep()}
@@ -114,14 +116,14 @@ export const Triggers: Story = {
         ${item('Eliminar',  { icon: iconTrash, danger: true })}
       </lib-dropdown>
 
-      <lib-dropdown label="Filled" variant="filled">
+      <lib-dropdown label="Filled" variant="solid">
         ${item('Editar',    { icon: iconPencil })}
         ${item('Duplicar',  { icon: iconCopy })}
         ${sep()}
         ${item('Eliminar',  { icon: iconTrash, danger: true })}
       </lib-dropdown>
 
-      <lib-dropdown label="Kaki" variant="accent">
+      <lib-dropdown label="Kaki" tone="accent">
         ${item('Editar',    { icon: iconPencil })}
         ${item('Duplicar',  { icon: iconCopy })}
         ${sep()}
@@ -202,7 +204,7 @@ export const Dark: Story = {
     <div style="padding:2rem;min-height:320px;display:flex;gap:3rem;
       align-items:flex-start;background:var(--color-washi-900);">
 
-      <lib-dropdown label="Mi cuenta" variant="filled" dark min-width="200px">
+      <lib-dropdown label="Mi cuenta" variant="solid" dark min-width="200px">
         ${grp('Sesión')}
         ${item('Perfil',        { icon: iconGear })}
         ${item('Ajustes',       { icon: iconGear, hint: '⌘,' })}
@@ -315,7 +317,7 @@ export const InTableRow: Story = {
 
 const _katachi = createKatachiStories<object>(() => html`
   <div style="padding:var(--lib-space-lg);min-height:280px;background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;gap:var(--lib-space-lg);align-items:flex-start;flex-wrap:wrap;">
-    <lib-dropdown label="Default" variant="default">
+    <lib-dropdown label="Default" variant="outlined">
       ${item('Wabi-Sabi', { icon: iconGear })}
       ${item('Kintsugi',  { icon: iconGear })}
       <div class="dd-sep"></div>
@@ -328,13 +330,13 @@ const _katachi = createKatachiStories<object>(() => html`
       <div class="dd-sep"></div>
       ${item('Eliminar', { icon: iconTrash, danger: true })}
     </lib-dropdown>
-    <lib-dropdown label="Filled" variant="filled">
+    <lib-dropdown label="Filled" variant="solid">
       ${item('Vista',      { icon: iconGear, active: true })}
       ${item('Ajustes',    { icon: iconGear, hint: '⌘,' })}
       <div class="dd-sep"></div>
       ${item('Salir',      { icon: iconSignOut, danger: true })}
     </lib-dropdown>
-    <lib-dropdown label="Kaki" variant="accent">
+    <lib-dropdown label="Kaki" tone="accent">
       ${item('Exportar',  { icon: iconCopy })}
       ${item('Duplicar',  { icon: iconCopy, disabled: true })}
       <div class="dd-sep"></div>

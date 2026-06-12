@@ -1125,15 +1125,25 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "LiquidVariant",
-          "default": "'filled'",
-          "description": "— 'filled' | 'outlined' | 'accent' | 'info' | 'ghost' | 'error'",
+          "default": "'solid'",
+          "description": "— 'solid' | 'outlined' | 'ghost'",
           "attribute": "variant",
           "options": [
-            "filled",
+            "solid",
             "outlined",
+            "ghost"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "LiquidTone",
+          "default": "'default'",
+          "description": "— 'default' | 'accent' | 'info' | 'error'",
+          "attribute": "tone",
+          "options": [
+            "default",
             "accent",
             "info",
-            "ghost",
             "error"
           ]
         },
@@ -3343,13 +3353,23 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "DropdownTriggerVariant",
-          "default": "'default'",
-          "description": "— 'default' | 'ghost' | 'filled' | 'accent'",
+          "default": "'outlined'",
+          "description": "— 'solid' | 'outlined' (default) | 'ghost'",
           "attribute": "variant",
           "options": [
+            "solid",
+            "outlined",
+            "ghost"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "DropdownTone",
+          "default": "'default'",
+          "description": "— 'default' | 'accent'",
+          "attribute": "tone",
+          "options": [
             "default",
-            "ghost",
-            "filled",
             "accent"
           ]
         },
@@ -5309,12 +5329,12 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "PaginationVariant",
-          "default": "'default'",
-          "description": "— 'default' | 'outline' | 'ghost'",
+          "default": "'solid'",
+          "description": "— 'solid' | 'outlined' | 'ghost'",
           "attribute": "variant",
           "options": [
-            "default",
-            "outline",
+            "solid",
+            "outlined",
             "ghost"
           ]
         },
@@ -6742,11 +6762,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "SelectVariant",
-          "default": "'default'",
+          "default": "'outlined'",
           "attribute": "variant",
           "options": [
-            "default",
-            "filled",
+            "solid",
+            "outlined",
             "ghost"
           ]
         },

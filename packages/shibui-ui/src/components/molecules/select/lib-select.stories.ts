@@ -16,7 +16,7 @@ interface SelectArgs {
   error:        boolean;
   dark:         boolean;
   size:         'sm' | 'md' | 'lg';
-  variant:      'default' | 'filled' | 'ghost';
+  variant:      'solid' | 'outlined' | 'ghost';
   multi:        boolean;
   searchable:   boolean;
   value:        string;
@@ -44,8 +44,8 @@ const meta: Meta<SelectArgs> = {
     },
     variant: {
       control: 'select',
-      options: ['default', 'filled', 'ghost'],
-      description: 'Variante de superficie',
+      options: ['solid', 'outlined', 'ghost'],
+      description: 'Tratamiento visual',
     },
     multi:      { control: 'boolean' },
     searchable: { control: 'boolean' },
@@ -72,7 +72,7 @@ export const Playground: Story = {
     error:        false,
     dark:         false,
     size:         'md',
-    variant:      'default',
+    variant:      'outlined',
     multi:        false,
     searchable:   false,
     value:        '',
@@ -120,7 +120,7 @@ export const Variants: Story = {
         <lib-select-option value="c">Japón</lib-select-option>
       </lib-select>
 
-      <lib-select label="Filled" variant="filled" hint="Fondo washi, borde al enfocar">
+      <lib-select label="Filled" variant="solid" hint="Fondo washi, borde al enfocar">
         <lib-select-option value="a">Componentes</lib-select-option>
         <lib-select-option value="b">Tokens</lib-select-option>
         <lib-select-option value="c">Patrones</lib-select-option>
@@ -320,7 +320,7 @@ export const FormContext: Story = {
             <lib-select-option value="jp">Japón</lib-select-option>
           </lib-select>
 
-          <lib-select label="Idioma" required variant="filled">
+          <lib-select label="Idioma" required variant="solid">
             <lib-select-option value="es" selected>Español</lib-select-option>
             <lib-select-option value="en">English</lib-select-option>
             <lib-select-option value="ja">日本語</lib-select-option>
@@ -329,7 +329,7 @@ export const FormContext: Story = {
 
         <lib-select
           label="Zona horaria"
-          variant="filled"
+          variant="solid"
           hint="Se usa para fechas relativas en la interfaz"
         >
           <lib-select-option value="eu">UTC+01:00 — Madrid, París, Roma</lib-select-option>
@@ -372,7 +372,7 @@ const _katachi = createKatachiStories<object>(() => html`
         <lib-select-option value="b">Kintsugi</lib-select-option>
         <lib-select-option value="c">Shizen</lib-select-option>
       </lib-select>
-      <lib-select label="Filled" variant="filled" size="md" placeholder="Selecciona…">
+      <lib-select label="Filled" variant="solid" size="md" placeholder="Selecciona…">
         <lib-select-option value="a">Wabi-Sabi</lib-select-option>
         <lib-select-option value="b">Kintsugi</lib-select-option>
         <lib-select-option value="c">Shizen</lib-select-option>

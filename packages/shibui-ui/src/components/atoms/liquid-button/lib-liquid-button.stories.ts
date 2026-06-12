@@ -8,7 +8,8 @@ const meta: Meta = {
   tags:['autodocs'],
   component: 'lib-button-liquid',
   argTypes: {
-    variant:  { control: 'select', options: ['filled', 'outlined', 'accent', 'info', 'ghost', 'error'] },
+    variant:  { control: 'select', options: ['solid', 'outlined', 'ghost'] },
+    tone:     { control: 'select', options: ['default', 'accent', 'info', 'error'] },
     size:     { control: 'select', options: ['sm', 'md', 'lg'] },
     disabled: { control: 'boolean' },
     loading:  { control: 'boolean' },
@@ -22,7 +23,8 @@ type Story = StoryObj;
 /* ── Playground ── */
 export const Playground: Story = {
   args: {
-    variant:  'filled',
+    variant:  'solid',
+    tone:     'default',
     size:     'md',
     disabled: false,
     loading:  false,
@@ -33,6 +35,7 @@ export const Playground: Story = {
     <div style="padding: 3rem; ${args.dark ? 'background: var(--color-washi-950);' : ''}">
       <lib-button-liquid
         variant="${args.variant}"
+        tone="${args.tone ?? 'default'}"
         size="${args.size}"
         ?disabled="${args.disabled}"
         ?loading="${args.loading}"
@@ -46,12 +49,12 @@ export const Playground: Story = {
 
 /* ── Variantes ── */
 export const Variants: Story = {
-  name: 'Variantes — filled · outlined · accent · info · ghost · danger',
+  name: 'Variantes — solid · outlined · ghost × tone accent · info · error',
   render: (): TemplateResult => html`
     <div style="padding: 3rem; display: flex; flex-wrap: wrap; align-items: center; gap: 2rem;">
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="filled">Filled</lib-button-liquid>
+        <lib-button-liquid variant="solid">Filled</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">filled</span>
       </div>
 
@@ -61,12 +64,12 @@ export const Variants: Story = {
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="accent">Accent</lib-button-liquid>
+        <lib-button-liquid tone="accent">Accent</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">accent</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="info">Info</lib-button-liquid>
+        <lib-button-liquid tone="info">Info</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">info</span>
       </div>
 
@@ -76,7 +79,7 @@ export const Variants: Story = {
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="error">Eliminar</lib-button-liquid>
+        <lib-button-liquid tone="error">Eliminar</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">danger</span>
       </div>
 
@@ -91,27 +94,27 @@ export const Sizes: Story = {
     <div style="padding: 3rem; display: flex; align-items: center; gap: 2rem;">
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="filled" size="sm">Pequeño</lib-button-liquid>
+        <lib-button-liquid variant="solid" size="sm">Pequeño</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">sm</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="filled" size="md">Default</lib-button-liquid>
+        <lib-button-liquid variant="solid" size="md">Default</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">md</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="filled" size="lg">Grande</lib-button-liquid>
+        <lib-button-liquid variant="solid" size="lg">Grande</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">lg</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="accent" size="lg">Kaki lg</lib-button-liquid>
+        <lib-button-liquid tone="accent" size="lg">Kaki lg</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">accent lg</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="info" size="lg">Celadón lg</lib-button-liquid>
+        <lib-button-liquid tone="info" size="lg">Celadón lg</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">info lg</span>
       </div>
 
@@ -125,7 +128,7 @@ export const WithIcons: Story = {
   render: (): TemplateResult => html`
     <div style="padding: 3rem; display: flex; flex-wrap: wrap; align-items: center; gap: 2rem;">
 
-      <lib-button-liquid variant="filled">
+      <lib-button-liquid variant="solid">
         <svg slot="prefix" width="11" height="11" viewBox="0 0 16 16" fill="none"
           stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
           <path d="M2 8h12M9 3l5 5-5 5"/>
@@ -141,7 +144,7 @@ export const WithIcons: Story = {
         </svg>
       </lib-button-liquid>
 
-      <lib-button-liquid variant="info">
+      <lib-button-liquid tone="info">
         <svg slot="prefix" width="11" height="11" viewBox="0 0 16 16" fill="none"
           stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
           <path d="M8 2l1.9 3.8L14 6.3l-3 2.9.7 4.1L8 11.1l-3.7 2.2.7-4.1-3-2.9 4.1-.5z"/>
@@ -149,7 +152,7 @@ export const WithIcons: Story = {
         Guardar
       </lib-button-liquid>
 
-      <lib-button-liquid variant="accent" size="lg">
+      <lib-button-liquid tone="accent" size="lg">
         <svg slot="prefix" width="13" height="13" viewBox="0 0 16 16" fill="none"
           stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
           <path d="M2 8h12M9 3l5 5-5 5"/>
@@ -168,22 +171,22 @@ export const States: Story = {
     <div style="padding: 3rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="filled">Default</lib-button-liquid>
+        <lib-button-liquid variant="solid">Default</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">default</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="filled" disabled>Disabled</lib-button-liquid>
+        <lib-button-liquid variant="solid" disabled>Disabled</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">disabled</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="filled" loading>Enviando</lib-button-liquid>
+        <lib-button-liquid variant="solid" loading>Enviando</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">loading</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="accent" loading>Guardando</lib-button-liquid>
+        <lib-button-liquid tone="accent" loading>Guardando</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">accent loading</span>
       </div>
 
@@ -204,17 +207,17 @@ export const Dark: Story = {
     <div style="padding: 3rem; background: var(--color-washi-950); display: flex; flex-wrap: wrap; align-items: center; gap: 2rem;">
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="filled" dark>Filled</lib-button-liquid>
+        <lib-button-liquid variant="solid" dark>Filled</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-washi-700);">filled</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="accent" dark>Accent</lib-button-liquid>
+        <lib-button-liquid tone="accent" dark>Accent</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-washi-700);">accent</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="info" dark>Info</lib-button-liquid>
+        <lib-button-liquid tone="info" dark>Info</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-washi-700);">info</span>
       </div>
 
@@ -232,9 +235,9 @@ export const Block: Story = {
   name: 'Block — ancho completo',
   render: (): TemplateResult => html`
     <div style="padding: 3rem; max-width: 480px; display: flex; flex-direction: column; gap: 1rem;">
-      <lib-button-liquid variant="filled" block>Confirmar pedido</lib-button-liquid>
+      <lib-button-liquid variant="solid" block>Confirmar pedido</lib-button-liquid>
       <lib-button-liquid variant="outlined" block>Cancelar</lib-button-liquid>
-      <lib-button-liquid variant="accent" size="lg" block>
+      <lib-button-liquid tone="accent" size="lg" block>
         <svg slot="prefix" width="13" height="13" viewBox="0 0 16 16" fill="none"
           stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
           <path d="M2 8h12M9 3l5 5-5 5"/>
@@ -254,21 +257,21 @@ export const Block: Story = {
 const _katachi = createKatachiStories<object>(() => html`
   <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);padding:var(--lib-space-lg);">
     <div style="display:flex;gap:var(--lib-space-md);align-items:center;flex-wrap:wrap;">
-      <lib-button-liquid variant="filled" size="sm">Pequeño</lib-button-liquid>
-      <lib-button-liquid variant="filled" size="md">Default</lib-button-liquid>
-      <lib-button-liquid variant="filled" size="lg">Grande</lib-button-liquid>
+      <lib-button-liquid variant="solid" size="sm">Pequeño</lib-button-liquid>
+      <lib-button-liquid variant="solid" size="md">Default</lib-button-liquid>
+      <lib-button-liquid variant="solid" size="lg">Grande</lib-button-liquid>
     </div>
     <div style="display:flex;gap:var(--lib-space-md);align-items:center;flex-wrap:wrap;">
-      <lib-button-liquid variant="filled">Filled</lib-button-liquid>
+      <lib-button-liquid variant="solid">Filled</lib-button-liquid>
       <lib-button-liquid variant="outlined">Outlined</lib-button-liquid>
-      <lib-button-liquid variant="accent">Accent</lib-button-liquid>
-      <lib-button-liquid variant="info">Info</lib-button-liquid>
+      <lib-button-liquid tone="accent">Accent</lib-button-liquid>
+      <lib-button-liquid tone="info">Info</lib-button-liquid>
       <lib-button-liquid variant="ghost">Ghost</lib-button-liquid>
-      <lib-button-liquid variant="error">Danger</lib-button-liquid>
+      <lib-button-liquid tone="error">Danger</lib-button-liquid>
     </div>
     <div style="display:flex;gap:var(--lib-space-md);align-items:center;flex-wrap:wrap;">
-      <lib-button-liquid variant="filled" disabled>Disabled</lib-button-liquid>
-      <lib-button-liquid variant="filled" loading>Loading</lib-button-liquid>
+      <lib-button-liquid variant="solid" disabled>Disabled</lib-button-liquid>
+      <lib-button-liquid variant="solid" loading>Loading</lib-button-liquid>
     </div>
   </div>
 `);
