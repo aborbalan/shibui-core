@@ -1,7 +1,7 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { generateUniqueId } from '../../../core/a11y';
-import type { LibRadioSize, LibRadioVariant } from './lib-radio.html';
+import type { LibRadioSize, LibRadioTone } from './lib-radio.html';
 import { radioTemplate } from './lib-radio.html';
 import radioCss from './lib-radio.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
@@ -73,9 +73,9 @@ export class LibRadio extends LitElement {
   @property({ type: String, reflect: true })
   size: LibRadioSize = 'md';
 
-  /** Variante de color */
+  /** Tono de color */
   @property({ type: String, reflect: true })
-  variant: LibRadioVariant = 'default';
+  tone: LibRadioTone = 'default';
 
   private _handleChange(e: Event): void {
     const input = e.target as HTMLInputElement;
@@ -100,7 +100,7 @@ export class LibRadio extends LitElement {
       label: this.label,
       sublabel: this.sublabel,
       size: this.size,
-      variant: this.variant,
+      tone: this.tone,
       onChange: this._handleChange.bind(this),
     });
   }

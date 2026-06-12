@@ -9,7 +9,7 @@ interface StepArgs {
   index:       number;
   status:      'pending' | 'active' | 'completed' | 'error';
   orientation: 'horizontal' | 'vertical';
-  variant:     'default' | 'minimal' | 'inverse' | 'brutal';
+  theme:       'default' | 'minimal' | 'inverse' | 'brutal';
   size:        'sm' | 'md' | 'lg';
 }
 
@@ -20,7 +20,7 @@ const meta: Meta<StepArgs> = {
   argTypes: {
     status:      { control: 'select', options: ['pending', 'active', 'completed', 'error'] },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
-    variant:     { control: 'select', options: ['default', 'minimal', 'inverse', 'brutal'] },
+    theme:       { control: 'select', options: ['default', 'minimal', 'inverse', 'brutal'] },
     size:        { control: 'select', options: ['sm', 'md', 'lg'] },
     label:       { control: 'text' },
     sub:         { control: 'text' },
@@ -34,7 +34,7 @@ const meta: Meta<StepArgs> = {
         index=${args.index}
         status=${args.status}
         orientation=${args.orientation}
-        variant=${args.variant}
+        theme=${args.theme}
         size=${args.size}
         ?last=${true}
       ></lib-step>
@@ -50,7 +50,7 @@ export const Playground: Story = {
   args: {
     label: 'Información', sub: 'Datos personales',
     index: 1, status: 'pending',
-    orientation: 'horizontal', variant: 'default', size: 'md',
+    orientation: 'horizontal', theme: 'default', size: 'md',
   },
 };
 
@@ -66,7 +66,7 @@ export const Kintsugi: Story = {
         { status: 'pending',   index: 3, label: '完成',   desc: '待機' },
       ] as const).map(({ status, index, label, desc }) => html`
         <lib-step
-          variant="inverse"
+          theme="inverse"
           status=${status}
           index=${index}
           label=${label}
@@ -91,7 +91,7 @@ export const Brutal: Story = {
         { status: 'error',     index: 4, label: 'TEST',   desc: 'Failed' },
       ] as const).map(({ status, index, label, desc }) => html`
         <lib-step
-          variant="brutal"
+          theme="brutal"
           status=${status}
           index=${index}
           label=${label}
@@ -140,16 +140,16 @@ const _katachi = createKatachiStories<object>(() => html`
   <div style="display:flex;flex-direction:column;gap:var(--lib-space-xl);padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
     <!-- default variant — 4 statuses -->
     <div style="display:inline-flex;flex-wrap:wrap;">
-      <lib-step label="Completado" sub="Done"   index="1" status="completed" variant="default"></lib-step>
-      <lib-step label="Activo"     sub="Now"    index="2" status="active"    variant="default"></lib-step>
-      <lib-step label="Pendiente"  sub="Waiting"index="3" status="pending"   variant="default"></lib-step>
-      <lib-step label="Error"      sub="Failed" index="4" status="error"     variant="default" last></lib-step>
+      <lib-step label="Completado" sub="Done"   index="1" status="completed" theme="default"></lib-step>
+      <lib-step label="Activo"     sub="Now"    index="2" status="active"    theme="default"></lib-step>
+      <lib-step label="Pendiente"  sub="Waiting"index="3" status="pending"   theme="default"></lib-step>
+      <lib-step label="Error"      sub="Failed" index="4" status="error"     theme="default" last></lib-step>
     </div>
     <!-- minimal variant -->
     <div style="display:inline-flex;flex-wrap:wrap;">
-      <lib-step label="Step 1" index="1" status="completed" variant="minimal"></lib-step>
-      <lib-step label="Step 2" index="2" status="active"    variant="minimal"></lib-step>
-      <lib-step label="Step 3" index="3" status="pending"   variant="minimal" last></lib-step>
+      <lib-step label="Step 1" index="1" status="completed" theme="minimal"></lib-step>
+      <lib-step label="Step 2" index="2" status="active"    theme="minimal"></lib-step>
+      <lib-step label="Step 3" index="3" status="pending"   theme="minimal" last></lib-step>
     </div>
     <!-- sizes sm · md · lg -->
     <div style="display:flex;gap:var(--lib-space-xl);align-items:center;flex-wrap:wrap;">

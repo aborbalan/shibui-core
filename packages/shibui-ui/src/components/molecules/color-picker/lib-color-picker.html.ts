@@ -1,5 +1,5 @@
 import { html, nothing, TemplateResult } from 'lit';
-import type { ColorPickerVariant, ColorInputMode, SwatchRow, SwatchColor } from './lib-color-picker.types';
+import type { ColorPickerDisplay, ColorInputMode, SwatchRow, SwatchColor } from './lib-color-picker.types';
 
 /* ── Icono ↺ inline para el mode button ── */
 const ROTATE_SVG = html`<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor"
@@ -187,22 +187,22 @@ export function pickerPanelTemplate(p: PickerPanelProps): TemplateResult {
    ──────────────────────────────────────────── */
 
 export interface ColorPickerRootProps extends PickerPanelProps {
-  variant:    ColorPickerVariant;
+  display:    ColorPickerDisplay;
   label:      string;
   panelOpen:  boolean;
   onTriggerClick: () => void;
 }
 
 export function colorPickerTemplate(props: ColorPickerRootProps): TemplateResult {
-  const { variant, /*label,*/ hex, alpha, panelOpen, onTriggerClick } = props;
+  const { display, /*label,*/ hex, alpha, panelOpen, onTriggerClick } = props;
 
   const panel = html`
-    <div class="cp ${variant === 'trigger' && panelOpen ? 'is-open' : ''}">
+    <div class="cp ${display === 'trigger' && panelOpen ? 'is-open' : ''}">
       ${pickerPanelTemplate(props)}
     </div>
   `;
 
-  if (variant === 'inline') {
+  if (display === 'inline') {
     return panel;
   }
 

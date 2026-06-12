@@ -6,7 +6,7 @@ import headerCss             from './lib-header.css?inline';
 import celadonDecorations    from '../../../styles/shared/celadon-decorations.css?inline';
 import sharedTokens          from '../../../styles/shared/tokens.css?inline';
 import type {
-  HeaderVariant, NavLink, HeaderAction, BreadcrumbItem,
+  HeaderTheme, NavLink, HeaderAction, BreadcrumbItem,
 } from './lib-header.types';
 
 export interface MegaColumn {
@@ -37,7 +37,7 @@ export class LibHeader extends LitElement {
 
   /* ── Variant ── */
   @property({ type: String, reflect: true })
-  variant: HeaderVariant = 'classic';
+  theme: HeaderTheme = 'classic';
 
   /**
    * Decoraciones celadon opt-in (Bar), separadas por espacio
@@ -133,7 +133,7 @@ export class LibHeader extends LitElement {
   /* ── Lifecycle ── */
   override connectedCallback(): void {
     super.connectedCallback();
-    if (this.variant === 'transparent' || this.variant === 'shrink') {
+    if (this.theme === 'transparent' || this.theme === 'shrink') {
       window.addEventListener('scroll', this._onScroll, { passive: true });
     }
   }
@@ -146,8 +146,8 @@ export class LibHeader extends LitElement {
   /* ── Scroll handler ── */
   private _onScroll = (): void => {
     const y = window.scrollY;
-    if (this.variant === 'transparent') this.scrolled = y > 20;
-    if (this.variant === 'shrink')      this.shrunk   = y > 60;
+    if (this.theme === 'transparent') this.scrolled = y > 20;
+    if (this.theme === 'shrink')      this.shrunk   = y > 60;
   };
 
   /* ── Mega-nav ── */

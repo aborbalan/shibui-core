@@ -8,7 +8,7 @@ const meta: Meta = {
   tags:['autodocs'],
   component: 'lib-button-liquid',
   argTypes: {
-    variant:  { control: 'select', options: ['filled', 'outlined', 'accent', 'info', 'ghost', 'danger'] },
+    variant:  { control: 'select', options: ['filled', 'outlined', 'accent', 'info', 'ghost', 'error'] },
     size:     { control: 'select', options: ['sm', 'md', 'lg'] },
     disabled: { control: 'boolean' },
     loading:  { control: 'boolean' },
@@ -76,7 +76,7 @@ export const Variants: Story = {
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
-        <lib-button-liquid variant="danger">Eliminar</lib-button-liquid>
+        <lib-button-liquid variant="error">Eliminar</lib-button-liquid>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);">danger</span>
       </div>
 
@@ -264,7 +264,7 @@ const _katachi = createKatachiStories<object>(() => html`
       <lib-button-liquid variant="accent">Accent</lib-button-liquid>
       <lib-button-liquid variant="info">Info</lib-button-liquid>
       <lib-button-liquid variant="ghost">Ghost</lib-button-liquid>
-      <lib-button-liquid variant="danger">Danger</lib-button-liquid>
+      <lib-button-liquid variant="error">Danger</lib-button-liquid>
     </div>
     <div style="display:flex;gap:var(--lib-space-md);align-items:center;flex-wrap:wrap;">
       <lib-button-liquid variant="filled" disabled>Disabled</lib-button-liquid>

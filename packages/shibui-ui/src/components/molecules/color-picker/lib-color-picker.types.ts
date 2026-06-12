@@ -1,5 +1,5 @@
 /** Modo de visualización del componente */
-export type ColorPickerVariant = 'inline' | 'trigger';
+export type ColorPickerDisplay = 'inline' | 'trigger';
 
 /** Modo de los inputs de texto */
 export type ColorInputMode = 'hex' | 'rgb' | 'hsl';

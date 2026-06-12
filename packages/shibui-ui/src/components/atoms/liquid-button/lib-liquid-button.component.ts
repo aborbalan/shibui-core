@@ -231,7 +231,7 @@ class WaterPhysics {
 /**
  * Botón con física de agua en canvas.
  *
- * @prop variant  — 'filled' | 'outlined' | 'accent' | 'info' | 'ghost' | 'danger'
+ * @prop variant  — 'filled' | 'outlined' | 'accent' | 'info' | 'ghost' | 'error'
  * @prop size     — 'sm' | 'md' | 'lg'
  * @prop disabled — bloquea interacción y detiene el canvas
  * @prop loading  — muestra spinner, bloquea interacción

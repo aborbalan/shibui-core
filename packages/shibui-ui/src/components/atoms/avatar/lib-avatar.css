@@ -123,22 +123,22 @@
   }
 
   /* Tone: warm (terracota kaki)  — era color="kaki" */
-  :host([tone="warm"]) .avatar__face      { background: var(--color-kaki-100);
+  :host([tint="warm"]) .avatar__face      { background: var(--color-kaki-100);
      border-color: var(--color-kaki-200); }
-  :host([tone="warm"]) .avatar__initials  { color: var(--color-kaki-600); }
-  :host([tone="warm"]) .avatar__icon      { color: var(--color-kaki-500); }
+  :host([tint="warm"]) .avatar__initials  { color: var(--color-kaki-600); }
+  :host([tint="warm"]) .avatar__icon      { color: var(--color-kaki-500); }
 
   /* Tone: cool (jade celadón)    — era color="celadon" */
-  :host([tone="cool"]) .avatar__face     { background: var(--color-celadon-100);
+  :host([tint="cool"]) .avatar__face     { background: var(--color-celadon-100);
      border-color: var(--color-celadon-200); }
-  :host([tone="cool"]) .avatar__initials { color: var(--color-celadon-600); }
-  :host([tone="cool"]) .avatar__icon     { color: var(--color-celadon-500); }
+  :host([tint="cool"]) .avatar__initials { color: var(--color-celadon-600); }
+  :host([tint="cool"]) .avatar__icon     { color: var(--color-celadon-500); }
 
   /* Tone: inverse (oscuro)       — era color="dark" */
-  :host([tone="inverse"]) .avatar__face      { background: var(--color-washi-900);
+  :host([tint="inverse"]) .avatar__face      { background: var(--color-washi-900);
     border-color: var(--color-washi-800); }
-  :host([tone="inverse"]) .avatar__initials  { color: var(--color-washi-300); }
-  :host([tone="inverse"]) .avatar__icon      { color: var(--color-washi-500); }
+  :host([tint="inverse"]) .avatar__initials  { color: var(--color-washi-300); }
+  :host([tint="inverse"]) .avatar__icon      { color: var(--color-washi-500); }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
      lib-avatar usa `tone` (neutral · warm · cool · inverse) para

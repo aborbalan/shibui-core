@@ -1,10 +1,11 @@
 import { LitElement, css, unsafeCSS, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { renderEyebrow } from './lib-eyebrow.html';
+import type { LibSurface } from '../../../types';
 import componentCss from './lib-eyebrow.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
-export type EyebrowTone = 'accent' | 'neutral' | 'inverse' | 'muted';
+export type EyebrowTone = 'default' | 'accent' | 'muted';
 export type EyebrowLine = 'left' | 'right' | 'both' | 'none';
 export type EyebrowSize = 'sm' | 'md' | 'lg';
 
@@ -17,7 +18,8 @@ export type EyebrowSize = 'sm' | 'md' | 'lg';
  *
  * @tag lib-eyebrow
  *
- * @attr {'accent'|'neutral'|'inverse'|'muted'} tone
+ * @attr {'default'|'accent'|'muted'} tone
+ * @attr {'default'|'inverse'|'on-dark'} surface
  *   Rol semántico del color. Default: `'accent'`.
  *   - accent  → acento del katachi activo (kaki/dorado/phosphor según contexto)
  *   - neutral → cálido-neutro (tono washi)
@@ -43,7 +45,7 @@ export type EyebrowSize = 'sm' | 'md' | 'lg';
  *
  * @example
  * <lib-eyebrow>Design System · v0.1.0</lib-eyebrow>
- * <lib-eyebrow tone="neutral" size="sm" dot>Sistema online</lib-eyebrow>
+ * <lib-eyebrow tone="default" size="sm" dot>Sistema online</lib-eyebrow>
  * <div data-katachi="kintsugi">
  *   <lib-eyebrow line="both">✦ Featured</lib-eyebrow>
  * </div>
@@ -60,6 +62,10 @@ export class LibEyebrow extends LitElement {
   /** Rol semántico del color del texto y la línea decorativa */
   @property({ type: String, reflect: true })
   tone: EyebrowTone = 'accent';
+
+  /** Superficie/contexto (p.ej. 'inverse' para fondos oscuros). */
+  @property({ type: String, reflect: true })
+  surface: LibSurface = 'default';
 
   /** Posición de la línea decorativa */
   @property({ type: String, reflect: true })

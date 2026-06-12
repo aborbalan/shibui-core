@@ -15,4 +15,6 @@ export type ChipSize  = 'xs' | 'sm' | 'md' | 'lg';
  * - error   → estado de error
  * - strong  → contraste máximo (inverso)         — era 'dark'
  */
-export type ChipColor = 'default' | 'accent' | 'info' | 'error' | 'strong';
+// `strong` = emphasis de contraste máximo; extensión documentada de chip/badge
+// (no es un LibTone canónico).
+export type ChipTone = 'default' | 'accent' | 'info' | 'error' | 'strong';

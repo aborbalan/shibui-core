@@ -1,6 +1,6 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { LibProgressCircleSize, LibProgressCircleVariant } from './lib-progress-circle.component.html';
+import type { LibProgressCircleSize, LibProgressCircleTone } from './lib-progress-circle.component.html';
 import { progressCircleTemplate } from './lib-progress-circle.component.html';
 import progressCss from './lib-progress-circle.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
@@ -15,13 +15,13 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * <lib-progress-circle value="72"></lib-progress-circle>
  *
  * @example — kaki con subtítulo
- * <lib-progress-circle value="61" variant="accent" sub="61 GB"></lib-progress-circle>
+ * <lib-progress-circle value="61" tone="accent" sub="61 GB"></lib-progress-circle>
  *
  * @example — celadon completado con icono
- * <lib-progress-circle value="100" variant="info" icon="check" size="lg"></lib-progress-circle>
+ * <lib-progress-circle value="100" tone="info" icon="check" size="lg"></lib-progress-circle>
  *
  * @example — indeterminate
- * <lib-progress-circle indeterminate variant="accent"></lib-progress-circle>
+ * <lib-progress-circle indeterminate tone="accent"></lib-progress-circle>
  *
  * @example — sin label (bare)
  * <lib-progress-circle value="38" size="xs" bare></lib-progress-circle>
@@ -61,15 +61,15 @@ export class LibProgressCircle extends LitElement {
   strokeWidth: number | null = null;
 
   /**
-   * Paleta de color del arco.
-   * El track toma automáticamente el tono -100 de cada variante.
+   * Tono de color del arco.
+   * El track toma automáticamente el tono -100 de cada tono.
    * - default : washi-900 (tinta)
    * - accent  : persimmon orgánico (kaki)
    * - info    : jade sereno (celadon)
    * - error   : estado crítico
    */
   @property({ type: String, reflect: true })
-  variant: LibProgressCircleVariant = 'default';
+  tone: LibProgressCircleTone = 'default';
 
   /**
    * Modo de carga de duración desconocida.
@@ -101,7 +101,7 @@ export class LibProgressCircle extends LitElement {
       max:           this.max,
       size:          this.size,
       strokeWidth:   this.strokeWidth,
-      variant:       this.variant,
+      tone:          this.tone,
       indeterminate: this.indeterminate,
       bare:          this.bare,
       sub:           this.sub,

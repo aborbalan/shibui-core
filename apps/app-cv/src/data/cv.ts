@@ -97,7 +97,7 @@ export const experience: ExperienceItem[] = [
     role: 'Desarrollador Front-End',
     location: 'Zaragoza',
     period: 'oct 2019 – ago 2020',
-    stack: ['Angular', 'NgRx', 'TypeScript'],
+    stack: ['Angular', 'NgRx', 'TypeScript', 'Sass', 'SCSS'],
     achievements: [
       'Desarrollo de una app bancaria de gran tamaño (Angular + NgRx) en un entorno corporativo donde la cobertura de tests y la consistencia entre equipos eran requisitos no negociables.',
     ],
@@ -143,6 +143,7 @@ export const experience: ExperienceItem[] = [
 // ─────────────────────────────────────────────────────────────
 export const skills: SkillGroup[] = [
   { label: 'Core', items: ['Angular', 'TypeScript', 'RxJS', 'SCSS', 'Lit Elements'], primary: true },
+  { label: 'Styling', items: ['CSS', 'SCSS', 'Sass', 'Ant Design', 'Material'] },
   { label: 'Tooling', items: ['Nx', 'Storybook'] },
   { label: 'Familiar', items: ['React', 'Svelte', 'NestJS'] },
 ];

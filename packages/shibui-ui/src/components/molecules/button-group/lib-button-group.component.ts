@@ -1,6 +1,7 @@
 import { LitElement, css, unsafeCSS, TemplateResult, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { LibVariant, LibSize } from '../../../types';
+import type { LibSize } from '../../../types';
+import type { LibButtonVariant } from '../../atoms/button/lib-button.types';
 import groupCss from './lib-button-group.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import { buttonGroupTemplate, buttonSplitTemplate } from './lib-button-group.html';
@@ -56,9 +57,9 @@ export class LibButtonGroup extends LitElement {
   @property({ type: Boolean, reflect: true })
   gold = false;
 
-  /** Tamaño propagado a todos los hijos */
+  /** Tamaño propagado a todos los hijos (sin set = no propaga) */
   @property({ type: String, reflect: true })
-  size: LibSize | '' = '';
+  size?: LibSize;
 
   /* ── Lifecycle ── */
 
@@ -239,7 +240,7 @@ export class LibButtonSplit extends LitElement {
   ];
 
   @property({ type: String, reflect: true })
-  variant: LibVariant = 'primary';
+  variant: LibButtonVariant = 'primary';
 
   @property({ type: String, reflect: true })
   size: LibSize = 'md';

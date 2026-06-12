@@ -2,6 +2,7 @@ import { LitElement, css, unsafeCSS, TemplateResult, PropertyValues } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js';
 import { counterTemplate } from './lib-counter.html';
 import type { LibCounterSize, LibCounterTone, LibCounterDeltaDir } from './lib-counter.html';
+import type { LibSurface } from '../../../types';
 import counterCss from './lib-counter.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
@@ -68,6 +69,10 @@ export class LibCounter extends LitElement {
   /** Tono de color. */
   @property({ type: String, reflect: true })
   tone: LibCounterTone = 'default';
+
+  /** Superficie/contexto (p.ej. 'on-dark' para fondos oscuros). */
+  @property({ type: String, reflect: true })
+  surface: LibSurface = 'default';
 
   /** Etiqueta inferior en font-mono uppercase. */
   @property({ type: String })

@@ -6,7 +6,7 @@ import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type LibRadioStoryArgs = Pick<
   LibRadio,
-  'checked' | 'disabled' | 'label' | 'sublabel' | 'name' | 'value' | 'size' | 'variant'
+  'checked' | 'disabled' | 'label' | 'sublabel' | 'name' | 'value' | 'size' | 'tone'
 >;
 
 const meta: Meta<LibRadioStoryArgs> = {
@@ -25,7 +25,7 @@ const meta: Meta<LibRadioStoryArgs> = {
       control: 'select',
       options: ['sm', 'md', 'lg'],
     },
-    variant: {
+    tone: {
       control: 'select',
       options: ['default', 'accent', 'error'],
     },
@@ -39,7 +39,7 @@ const meta: Meta<LibRadioStoryArgs> = {
         name=${args.name}
         value=${args.value}
         size=${args.size}
-        variant=${args.variant}
+        tone=${args.tone}
         ?checked=${args.checked}
         ?disabled=${args.disabled}
       ></lib-radio>
@@ -58,7 +58,7 @@ export const Playground: Story = {
     name: 'playground',
     value: 'option',
     size: 'md',
-    variant: 'default',
+    tone: 'default',
     checked: false,
     disabled: false,
   },
@@ -96,7 +96,7 @@ export const States: Story = {
         name="states-err"
         label="Error"
         sublabel="Campo requerido"
-        variant="error"
+        tone="error"
       ></lib-radio>
     </div>
   `,
@@ -117,9 +117,9 @@ export const Sizes: Story = {
 export const Variants: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex; flex-direction:column; gap:20px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
-      <lib-radio variant="default" name="v-default" label="Default" sublabel="Fondo washi-900" checked></lib-radio>
-      <lib-radio variant="accent"    name="v-accent"  label="Accent"  sublabel="Fondo kaki-500"  checked></lib-radio>
-      <lib-radio variant="error"   name="v-error"   label="Error"   sublabel="Borde y label en color-error"></lib-radio>
+      <lib-radio tone="default" name="v-default" label="Default" sublabel="Fondo washi-900" checked></lib-radio>
+      <lib-radio tone="accent"    name="v-accent"  label="Accent"  sublabel="Fondo kaki-500"  checked></lib-radio>
+      <lib-radio tone="error"   name="v-error"   label="Error"   sublabel="Borde y label en color-error"></lib-radio>
     </div>
   `,
 };
@@ -182,16 +182,16 @@ export const GroupKaki: Story = {
         Variante accent
       </p>
       <div style="display:flex; flex-direction:column; gap:16px;">
-        <lib-radio variant="accent" name="plan-kaki" value="starter"
+        <lib-radio tone="accent" name="plan-kaki" value="starter"
           label="Starter"
           sublabel="Hasta 3 proyectos activos">
         </lib-radio>
-        <lib-radio variant="accent" name="plan-kaki" value="pro"
+        <lib-radio tone="accent" name="plan-kaki" value="pro"
           label="Pro"
           sublabel="Proyectos ilimitados"
           checked>
         </lib-radio>
-        <lib-radio variant="accent" name="plan-kaki" value="enterprise"
+        <lib-radio tone="accent" name="plan-kaki" value="enterprise"
           label="Enterprise"
           sublabel="SSO, SLA garantizado">
         </lib-radio>
@@ -221,13 +221,13 @@ const _katachi = createKatachiStories<object>(() => html`
       <lib-radio name="kt-state" value="a" label="Unselected"></lib-radio>
       <lib-radio name="kt-state2" value="b" label="Selected" checked></lib-radio>
       <lib-radio name="kt-state3" value="c" label="Disabled" disabled></lib-radio>
-      <lib-radio name="kt-state4" value="d" label="Error" variant="error"></lib-radio>
+      <lib-radio name="kt-state4" value="d" label="Error" tone="error"></lib-radio>
     </div>
     <!-- Variants -->
     <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
       <span style="font-family:monospace;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.15em;">variants</span>
-      <lib-radio name="kt-var1" value="d" variant="default" label="Default" checked></lib-radio>
-      <lib-radio name="kt-var2" value="k" variant="accent" label="Accent" checked></lib-radio>
+      <lib-radio name="kt-var1" value="d" tone="default" label="Default" checked></lib-radio>
+      <lib-radio name="kt-var2" value="k" tone="accent" label="Accent" checked></lib-radio>
     </div>
   </div>
 `);

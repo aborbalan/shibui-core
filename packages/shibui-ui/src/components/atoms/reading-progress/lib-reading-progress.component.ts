@@ -4,7 +4,7 @@ import { readingProgressTemplate }                          from './lib-reading-
 import componentCss                                         from './lib-reading-progress.css?inline';
 import sharedTokens                                         from '../../../styles/shared/tokens.css?inline';
 
-export type ReadingProgressVariant = 'bar' | 'line' | 'dots' | 'ring' | 'vertical';
+export type ReadingProgressDisplay = 'bar' | 'line' | 'dots' | 'ring' | 'vertical';
 export type ReadingProgressTone    = 'accent' | 'info' | 'filled' | 'gold';
 
 
@@ -29,7 +29,7 @@ export type ReadingProgressTone    = 'accent' | 'info' | 'filled' | 'gold';
  * vertical → barra fija en el margen izquierdo de la ventana.
  *            Se posiciona sola con position:fixed.
  *
- * @attr {ReadingProgressVariant} variant    — bar · line · dots · ring · vertical
+ * @attr {ReadingProgressDisplay} display    — bar · line · dots · ring · vertical
  * @attr {ReadingProgressTone}    tone       — accent · info · filled · gold
  * @attr {string}                 target     — selector CSS del contenedor scrollable.
  *                                             Si se omite, trackea window.
@@ -46,7 +46,7 @@ export class LibReadingProgress extends LitElement {
   /* ── Props ───────────────────────────────────────────── */
 
   @property({ type: String, reflect: true })
-  variant: ReadingProgressVariant = 'bar';
+  display: ReadingProgressDisplay = 'bar';
 
   @property({ type: String, reflect: true })
   tone: ReadingProgressTone = 'accent';
@@ -148,7 +148,7 @@ export class LibReadingProgress extends LitElement {
   /* Aplica width / height al host en lugar de forzar un re-render
      para las variantes cuyo elemento visual ES el host */
   private _applyHostStyle(): void {
-    const v = this.variant;
+    const v = this.display;
     if (v === 'bar' || v === 'line') {
       this.style.width = `${this._progress}%`;
       /* Activa el destello solo cuando hay progreso real y no está al 100% */
@@ -163,7 +163,7 @@ export class LibReadingProgress extends LitElement {
 
   override render(): TemplateResult {
     return readingProgressTemplate({
-      variant:   this.variant,
+      display:   this.display,
       progress:  this._progress,
       dotsCount: this.dotsCount,
       ringSize:  this.ringSize,

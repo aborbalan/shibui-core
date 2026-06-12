@@ -52,8 +52,8 @@
      El mix-blend-mode funciona correctamente sobre fondos washi.
      ════════════════════════════════════════════════════════════ */
 
-  :host([variant="slice"]) .tg-inner::before,
-  :host([variant="slice"]) .tg-inner::after {
+  :host([theme="slice"]) .tg-inner::before,
+  :host([theme="slice"]) .tg-inner::after {
     content: attr(data-text);
     position: absolute;
     inset: 0;
@@ -61,26 +61,26 @@
     opacity: 0;
   }
 
-  :host([variant="slice"]) .tg-inner::before {
+  :host([theme="slice"]) .tg-inner::before {
     color: var(--tg-ghost-warm);
     mix-blend-mode: multiply;
   }
 
-  :host([variant="slice"]) .tg-inner::after {
+  :host([theme="slice"]) .tg-inner::after {
     color: var(--tg-ghost-cool);
     mix-blend-mode: multiply;
   }
 
-  :host([variant="slice"]:hover) .tg-inner::before,
-  :host([variant="slice"][active]) .tg-inner::before,
-  :host([variant="slice"][trigger="always"]) .tg-inner::before {
+  :host([theme="slice"]:hover) .tg-inner::before,
+  :host([theme="slice"][active]) .tg-inner::before,
+  :host([theme="slice"][trigger="always"]) .tg-inner::before {
     opacity: 1;
     animation: tg-slice-before 420ms steps(1) infinite;
   }
 
-  :host([variant="slice"]:hover) .tg-inner::after,
-  :host([variant="slice"][active]) .tg-inner::after,
-  :host([variant="slice"][trigger="always"]) .tg-inner::after {
+  :host([theme="slice"]:hover) .tg-inner::after,
+  :host([theme="slice"][active]) .tg-inner::after,
+  :host([theme="slice"][trigger="always"]) .tg-inner::after {
     opacity: 1;
     animation: tg-slice-after 420ms steps(1) infinite;
     animation-delay: 60ms;
@@ -163,7 +163,7 @@
      trigger="always" → infinite para efecto continuo.
      ════════════════════════════════════════════════════════════ */
 
-  :host([variant="scan"]) .tg-inner::before {
+  :host([theme="scan"]) .tg-inner::before {
     content: attr(data-text);
     position: absolute;
     inset: 0;
@@ -174,13 +174,13 @@
   }
 
   /* Hover / active → plays once (forwards) */
-  :host([variant="scan"]:hover) .tg-inner::before,
-  :host([variant="scan"][active]) .tg-inner::before {
+  :host([theme="scan"]:hover) .tg-inner::before,
+  :host([theme="scan"][active]) .tg-inner::before {
     opacity: 1;
     animation: tg-scan-sweep 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
   /* always → loops */
-  :host([variant="scan"][trigger="always"]) .tg-inner::before {
+  :host([theme="scan"][trigger="always"]) .tg-inner::before {
     opacity: 1;
     animation: tg-scan-sweep 600ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
@@ -213,8 +213,8 @@
      Más sutil que slice — no usa multiply, solo opacity baja.
      ════════════════════════════════════════════════════════════ */
 
-  :host([variant="shift"]) .tg-inner::before,
-  :host([variant="shift"]) .tg-inner::after {
+  :host([theme="shift"]) .tg-inner::before,
+  :host([theme="shift"]) .tg-inner::after {
     content: attr(data-text);
     position: absolute;
     inset: 0;
@@ -223,17 +223,17 @@
     color: inherit;
   }
 
-  :host([variant="shift"]:hover) .tg-inner::before,
-  :host([variant="shift"][active]) .tg-inner::before,
-  :host([variant="shift"][trigger="always"]) .tg-inner::before {
+  :host([theme="shift"]:hover) .tg-inner::before,
+  :host([theme="shift"][active]) .tg-inner::before,
+  :host([theme="shift"][trigger="always"]) .tg-inner::before {
     opacity: 0.55;
     color: var(--tg-ghost-warm);
     animation: tg-shift-a 380ms steps(1) infinite;
   }
 
-  :host([variant="shift"]:hover) .tg-inner::after,
-  :host([variant="shift"][active]) .tg-inner::after,
-  :host([variant="shift"][trigger="always"]) .tg-inner::after {
+  :host([theme="shift"]:hover) .tg-inner::after,
+  :host([theme="shift"][active]) .tg-inner::after,
+  :host([theme="shift"][trigger="always"]) .tg-inner::after {
     opacity: 0.35;
     color: var(--tg-ghost-cool);
     animation: tg-shift-b 380ms steps(1) infinite;
@@ -287,12 +287,12 @@
      Los .char son <span> individuales renderizados por Lit.
      ════════════════════════════════════════════════════════════ */
 
-  :host([variant="decode"]) .char {
+  :host([theme="decode"]) .char {
     display: inline-block;
     will-change: transform;
   }
 
-  :host([variant="decode"]) .char.is-scrambling {
+  :host([theme="decode"]) .char.is-scrambling {
     color: var(--tg-ghost-warm);
     animation: tg-char-jitter 60ms steps(1) infinite;
   }
@@ -310,7 +310,7 @@
      Plays once per hover. trigger="always" → loops.
      ════════════════════════════════════════════════════════════ */
 
-  :host([variant="redact"]) .tg-inner::before {
+  :host([theme="redact"]) .tg-inner::before {
     content: '';
     position: absolute;
     inset: 0 -3px;
@@ -321,12 +321,12 @@
   }
 
   /* Hover / active → plays once */
-  :host([variant="redact"]:hover) .tg-inner::before,
-  :host([variant="redact"][active]) .tg-inner::before {
+  :host([theme="redact"]:hover) .tg-inner::before,
+  :host([theme="redact"][active]) .tg-inner::before {
     animation: tg-redact 700ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
   /* always → loops */
-  :host([variant="redact"][trigger="always"]) .tg-inner::before {
+  :host([theme="redact"][trigger="always"]) .tg-inner::before {
     animation: tg-redact 700ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 
@@ -354,8 +354,8 @@
      Dos fantasmas con skewX + translate en steps(1), ∞ hover.
      ════════════════════════════════════════════════════════════ */
 
-  :host([variant="noise"]) .tg-inner::before,
-  :host([variant="noise"]) .tg-inner::after {
+  :host([theme="noise"]) .tg-inner::before,
+  :host([theme="noise"]) .tg-inner::after {
     content: attr(data-text);
     position: absolute;
     inset: 0;
@@ -363,24 +363,24 @@
     opacity: 0;
   }
 
-  :host([variant="noise"]) .tg-inner::before {
+  :host([theme="noise"]) .tg-inner::before {
     color: color-mix(in oklch, var(--tg-ghost-warm), transparent 20%);   /* cálido — acento del katachi */
   }
 
-  :host([variant="noise"]) .tg-inner::after {
+  :host([theme="noise"]) .tg-inner::after {
     color: color-mix(in oklch, var(--tg-ghost-cool), transparent 30%);  /* frío — enlace del katachi */
   }
 
-  :host([variant="noise"]:hover) .tg-inner::before,
-  :host([variant="noise"][active]) .tg-inner::before,
-  :host([variant="noise"][trigger="always"]) .tg-inner::before {
+  :host([theme="noise"]:hover) .tg-inner::before,
+  :host([theme="noise"][active]) .tg-inner::before,
+  :host([theme="noise"][trigger="always"]) .tg-inner::before {
     opacity: 1;
     animation: tg-noise-a 280ms steps(1) infinite;
   }
 
-  :host([variant="noise"]:hover) .tg-inner::after,
-  :host([variant="noise"][active]) .tg-inner::after,
-  :host([variant="noise"][trigger="always"]) .tg-inner::after {
+  :host([theme="noise"]:hover) .tg-inner::after,
+  :host([theme="noise"][active]) .tg-inner::after,
+  :host([theme="noise"][trigger="always"]) .tg-inner::after {
     opacity: 1;
     animation: tg-noise-b 280ms steps(1) infinite;
     animation-delay: 40ms;

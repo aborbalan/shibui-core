@@ -2,7 +2,7 @@ import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import type {
   LibDividerStyle,
-  LibDividerColor,
+  LibDividerTone,
   LibDividerAlign,
   LibDividerOrnament,
   LibDividerLabelStyle,
@@ -31,7 +31,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * <lib-divider style-variant="gradient" ornament="diamond"></lib-divider>
  *
  * @example — accent con dot
- * <lib-divider color="accent" ornament="dot"></lib-divider>
+ * <lib-divider tone="accent" ornament="dot"></lib-divider>
  *
  * @example — vertical en nav
  * <lib-divider orientation="vertical" style="height:14px"></lib-divider>
@@ -55,9 +55,9 @@ export class LibDivider extends LitElement {
   @property({ type: String, reflect: true, attribute: 'style-variant' })
   styleVariant: LibDividerStyle = 'hairline';
 
-  /** Color de acento de la línea */
+  /** Tono de acento de la línea */
   @property({ type: String, reflect: true })
-  color: LibDividerColor = 'default';
+  tone: LibDividerTone = 'default';
 
   /**
    * Alineación del label u ornamento.
@@ -94,7 +94,7 @@ export class LibDivider extends LitElement {
     return dividerTemplate({
       orientation: this.orientation,
       style: this.styleVariant,
-      color: this.color,
+      tone: this.tone,
       align: this.align,
       ornament: this.ornament,
       labelStyle: this.labelStyle,

@@ -1,5 +1,6 @@
 import { html, svg, TemplateResult } from 'lit';
-import type { LibVariant, LibSize } from '../../../types';
+import type { LibSize } from '../../../types';
+import type { LibButtonVariant } from '../../atoms/button/lib-button.types';
 import type { SplitMenuItem } from './lib-button-group.types';
 
 /* ── Caret SVG (va dentro del slot del lib-button flecha) ── */
@@ -25,7 +26,7 @@ export function buttonGroupTemplate(): TemplateResult {
    ──────────────────────────────────────────── */
 export interface SplitTemplateProps {
   label:       string;
-  variant:     LibVariant;
+  variant:     LibButtonVariant;
   size:        LibSize;
   dark:        boolean;
   disabled:    boolean;

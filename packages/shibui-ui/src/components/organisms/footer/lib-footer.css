@@ -48,9 +48,9 @@
        de Storybook (data-katachi="shizen") siempre define esa
        variable en modo claro, sobreescribiendo el fondo oscuro.
        Las variantes explícitas son opinionadas sobre su superficie. */
-    :host([variant='accordion']),
-    :host([variant='inverse']),
-    :host([variant='glitch']) {
+    :host([theme='accordion']),
+    :host([theme='inverse']),
+    :host([theme='glitch']) {
         --ft-bg: var(--color-washi-950, #120E0A);
         --ft-border: rgb(255, 255, 255, 0.07);
         --ft-text: rgb(250, 247, 244, 0.85);
@@ -61,7 +61,7 @@
     }
 
     /* Sabi surface override — papel washi, tinta */
-    :host([variant='sabi']) {
+    :host([theme='sabi']) {
         --ft-bg: var(--lib-comp-bg, var(--color-washi-50, #FAF7F4));
         --ft-border: var(--lib-comp-border, var(--color-washi-900, #221C16));
         --ft-text: var(--lib-comp-fg, var(--color-washi-900, #221C16));
@@ -74,7 +74,7 @@
     }
 
     /* Shizen surface override — natural, blanco, limpio */
-    :host([variant='shizen']) {
+    :host([theme='shizen']) {
         --ft-bg: var(--lib-comp-bg, #fff);
         --ft-border: var(--lib-comp-border-subtle, var(--color-washi-200, #E5DDD3));
         --ft-text: var(--lib-comp-fg, var(--color-washi-800, #3D332A));
@@ -87,7 +87,7 @@
     }
 
     /* Celadon surface override — jade oscuro, auto-contenido */
-    :host([variant='celadon']) {
+    :host([theme='celadon']) {
         --ft-bg: oklch(22% 0.03 175deg);
         --ft-border: oklch(45.54% 0.059 173.23deg / 0.15);
         --ft-text: oklch(90% 0.04 180deg);
@@ -213,7 +213,7 @@
     /* ══════════════════════════════════════════
         VARIANTE 01 — SOCIAL PROMINENT
         ══════════════════════════════════════════ */
-    :host([variant='social']) footer {
+    :host([theme='social']) footer {
         background: #fff;
     }
 
@@ -469,7 +469,7 @@
     /* ══════════════════════════════════════════
         VARIANTE 04 — GLITCH
         ══════════════════════════════════════════ */
-    :host([variant='glitch']) footer {
+    :host([theme='glitch']) footer {
         position: relative;
         overflow: hidden;
         animation: glitch-border 7s ease-in-out infinite;
@@ -702,7 +702,7 @@
         ══════════════════════════════════════════ */
 
     /* La stripe de tinta ya actúa como borde superior — sin duplicado */
-    :host([variant='sabi']) footer {
+    :host([theme='sabi']) footer {
         border-top: none;
     }
 
@@ -873,7 +873,7 @@
        La variante celadon ES un contexto celadon en sí misma, así que
        habilita el gate localmente (independiente de data-katachi). Las
        capas van en un wrapper a z-index:-1, detrás del contenido. */
-    :host([variant="celadon"]) {
+    :host([theme="celadon"]) {
         --lib-celadon-fx-display: block;
     }
 

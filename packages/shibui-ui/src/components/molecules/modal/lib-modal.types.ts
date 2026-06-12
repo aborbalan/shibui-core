@@ -6,9 +6,9 @@ export type ModalSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
  * Variante visual del panel.
  * - `default`    — header con borde y fondo neutro.
  * - `editorial`  — sin separador de header, título expandido.
- * - `danger`     — header tintado en rojo para acciones destructivas.
+ * - `error`      — header tintado en rojo para acciones destructivas.
  */
-export type ModalVariant = 'default' | 'editorial' | 'danger';
+export type ModalVariant = 'default' | 'editorial' | 'error';
 
 /**
  * Animación de entrada del panel.

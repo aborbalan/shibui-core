@@ -22,7 +22,7 @@ const meta: Meta<DialogStoryArgs> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'danger', 'warning', 'dark'],
+      options: ['default', 'error', 'warning', 'dark'],
     },
     size: {
       control: 'select',
@@ -150,7 +150,7 @@ export const Danger: Story = {
       id="dlg-danger"
       eyebrow="Acción irreversible"
       dlg-title="Eliminar componente"
-      variant="danger"
+      variant="error"
       size="sm"
       layout="alert"
     >
@@ -352,7 +352,7 @@ const _katachi = createKatachiStories<object>(() => html`
 
     <!-- Variant badges showing the available variants -->
     <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;">
-      ${(['default', 'danger', 'warning', 'dark'] as const).map(v => html`
+      ${(['default', 'error', 'warning', 'dark'] as const).map(v => html`
         <div style="
           padding:var(--lib-space-xs) var(--lib-space-sm);
           border:1px solid var(--border-default);

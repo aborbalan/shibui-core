@@ -14,7 +14,7 @@ const meta: Meta<EmptyStateArgs> = {
   tags:['autodocs'],
   component: 'lib-empty-state',
   argTypes: {
-    tone:    { control: 'select', options: ['neutral', 'accent', 'info', 'error'] },
+    tone:    { control: 'select', options: ['default', 'accent', 'info', 'error'] },
     layout:  { control: 'select', options: ['default', 'inline'] },
     size:    { control: 'select', options: ['md', 'sm'] },
     bordered: { control: 'boolean' },
@@ -51,7 +51,7 @@ export const Playground: Story = {
   args: {
     heading: 'Esta carpeta está vacía',
     description: 'Todavía no hay ningún archivo aquí. Sube tu primer documento para empezar.',
-    kanji: '', tone: 'neutral', layout: 'default', size: 'md',
+    kanji: '', tone: 'default', layout: 'default', size: 'md',
     bordered: false, ghost: false,
   },
 };

@@ -1,4 +1,4 @@
-export type DialogVariant = 'default' | 'danger' | 'warning' | 'dark';
+export type DialogVariant = 'default' | 'error' | 'warning' | 'dark';
 export type DialogSize     = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 export type DialogLayout   = 'dialog' | 'drawer-right' | 'drawer-bottom' | 'alert';
 

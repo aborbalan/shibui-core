@@ -1,22 +1,15 @@
 import { html, nothing, TemplateResult } from 'lit';
+import type { LibTint } from '../../../types';
 
 export type LibAvatarSize  = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 export type LibAvatarShape = 'circle' | 'squircle' | 'square';
-/**
- * Tono semántico del avatar (fondo de iniciales / icono).
- * - `neutral` — papel washi cálido (default)       era 'washi'
- * - `warm`    — terracota kaki                      era 'kaki'
- * - `cool`    — jade celadón                        era 'celadon'
- * - `inverse` — oscuro / sobre fondos claros        era 'dark'
- */
-export type LibAvatarTone = 'neutral' | 'warm' | 'cool' | 'inverse';
 
 export interface AvatarTemplateProps {
   src: string;
   name: string;
   size: LibAvatarSize;
   shape: LibAvatarShape;
-  tone: LibAvatarTone;
+  tint: LibTint;
   showImage: boolean;
   initials: string;
   onError: () => void;

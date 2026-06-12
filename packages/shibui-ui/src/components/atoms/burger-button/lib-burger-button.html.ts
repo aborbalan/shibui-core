@@ -34,7 +34,7 @@ function burgerBtn(ctx: LibBurger): TemplateResult {
       aria-expanded="${ctx.open}"
       @click="${(): void => ctx._handleClick()}"
     >
-      ${ctx.variant === 'glitch' ? glitchGhost : nothing}
+      ${ctx.theme === 'glitch' ? glitchGhost : nothing}
       ${lines}
     </button>`;
 }
@@ -57,7 +57,7 @@ export function burgerTemplate(ctx: LibBurger): TemplateResult {
         aria-expanded="${ctx.open}"
         @click="${(e: MouseEvent): void => e.stopPropagation()}"
       >
-        ${ctx.variant === 'glitch' ? glitchGhost : nothing}
+        ${ctx.theme === 'glitch' ? glitchGhost : nothing}
         ${lines}
       </button>
       <span class="burger-label" part="label">${ctx._labelText}</span>

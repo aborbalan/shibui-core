@@ -20,5 +20,5 @@ export interface SidebarLink {
    * Los efectos de katachi (seam dorado, scanlines) se activan
    * automáticamente vía --lib-effect-* tokens del contexto data-katachi.
    */
-  export type SidebarVariant = 'dark' | 'light';
+  export type SidebarTheme = 'dark' | 'light';
    

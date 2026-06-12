@@ -83,29 +83,29 @@ dark     boolean — optimiza colores para fondos oscuros
   y uno nítido encima — simula la sangría del pincel mojado.
   ════════════════════════════════════════════════════════════ */
 
-  :host([variant="enso"]) svg,
-  :host(:not([variant])) svg {
+  :host([theme="enso"]) svg,
+  :host(:not([theme])) svg {
     display: block;
     animation: sp-rotate 2.2s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
   }
 
   /* Tamaños — SVG hereda width/height vía style en el template */
-  :host([variant="enso"][size="sm"]) svg,
-  :host(:not([variant])[size="sm"]) svg {
+  :host([theme="enso"][size="sm"]) svg,
+  :host(:not([theme])[size="sm"]) svg {
     width: 24px;
     height: 24px;
   }
 
-  :host([variant="enso"][size="md"]) svg,
-  :host(:not([variant])[size="md"]) svg,
-  :host([variant="enso"]:not([size])) svg,
+  :host([theme="enso"][size="md"]) svg,
+  :host(:not([theme])[size="md"]) svg,
+  :host([theme="enso"]:not([size])) svg,
   :host(:not([variant], [size])) svg {
     width: 48px;
     height: 48px;
   }
 
-  :host([variant="enso"][size="lg"]) svg,
-  :host(:not([variant])[size="lg"]) svg {
+  :host([theme="enso"][size="lg"]) svg,
+  :host(:not([theme])[size="lg"]) svg {
     width: 72px;
     height: 72px;
   }
@@ -145,7 +145,7 @@ dark     boolean — optimiza colores para fondos oscuros
   }
 
   /* ── Tono cool — posiciones de stop distintas ── */
-  :host([variant="sumi"][tone="cool"]) .sp-sumi {
+  :host([theme="sumi"][tone="cool"]) .sp-sumi {
     background: conic-gradient(from 0deg,
         color-mix(in oklch, var(--_sp-color), transparent 100%) 0deg,
         color-mix(in oklch, var(--_sp-color), transparent 92%)  30deg,
@@ -160,7 +160,7 @@ dark     boolean — optimiza colores para fondos oscuros
   /* ── Dark — --_sp-color ya es claro (ver :host([dark])); mismo gradiente ── */
 
   /* ── Dark + accent — posiciones de stop distintas + glow ── */
-  :host([variant="sumi"][dark][tone="accent"]) .sp-sumi {
+  :host([theme="sumi"][dark][tone="accent"]) .sp-sumi {
     background: conic-gradient(from 0deg,
         color-mix(in oklch, var(--_sp-color), transparent 100%) 0deg,
         color-mix(in oklch, var(--_sp-color), transparent 90%)  30deg,
@@ -174,19 +174,19 @@ dark     boolean — optimiza colores para fondos oscuros
   }
 
   /* ── Tamaños sumi ── */
-  :host([variant="sumi"][size="sm"]) .sp-sumi {
+  :host([theme="sumi"][size="sm"]) .sp-sumi {
     width: 24px;
     height: 24px;
     mask: radial-gradient(circle at center, transparent 52%, black 53%);
   }
 
-  :host([variant="sumi"]:not([size])) .sp-sumi,
-  :host([variant="sumi"][size="md"]) .sp-sumi {
+  :host([theme="sumi"]:not([size])) .sp-sumi,
+  :host([theme="sumi"][size="md"]) .sp-sumi {
     width: 48px;
     height: 48px;
   }
 
-  :host([variant="sumi"][size="lg"]) .sp-sumi {
+  :host([theme="sumi"][size="lg"]) .sp-sumi {
     width: 72px;
     height: 72px;
     mask: radial-gradient(circle at center, transparent 58%, black 59%);
@@ -215,7 +215,7 @@ dark     boolean — optimiza colores para fondos oscuros
   }
 
   /* ── Dark — oro más vivo ── */
-  :host([variant="kin"][dark]) .sp-kintsugi {
+  :host([theme="kin"][dark]) .sp-kintsugi {
     background: conic-gradient(from 0deg,
         oklch(45% 0.05 45deg / 0) 0deg,
         oklch(55% 0.08 50deg / 0.20) 30deg,
@@ -228,19 +228,19 @@ dark     boolean — optimiza colores para fondos oscuros
   }
 
   /* ── Tamaños kintsugi ── */
-  :host([variant="kin"][size="sm"]) .sp-kintsugi {
+  :host([theme="kin"][size="sm"]) .sp-kintsugi {
     width: 24px;
     height: 24px;
     mask: radial-gradient(circle at center, transparent 52%, black 53%);
   }
 
-  :host([variant="kin"]:not([size])) .sp-kintsugi,
-  :host([variant="kin"][size="md"]) .sp-kintsugi {
+  :host([theme="kin"]:not([size])) .sp-kintsugi,
+  :host([theme="kin"][size="md"]) .sp-kintsugi {
     width: 48px;
     height: 48px;
   }
 
-  :host([variant="kin"][size="lg"]) .sp-kintsugi {
+  :host([theme="kin"][size="lg"]) .sp-kintsugi {
     width: 72px;
     height: 72px;
     mask: radial-gradient(circle at center, transparent 58%, black 59%);
@@ -272,8 +272,8 @@ dark     boolean — optimiza colores para fondos oscuros
   }
 
   /* ── Tono accent/kaki (también activo en dark) ── */
-  :host([variant="shizuku"][tone="accent"]) .sp-shizuku span,
-  :host([variant="shizuku"][dark]) .sp-shizuku span {
+  :host([theme="shizuku"][tone="accent"]) .sp-shizuku span,
+  :host([theme="shizuku"][dark]) .sp-shizuku span {
     background: oklch(65% 0.12 60deg);
   }
 
@@ -434,8 +434,8 @@ dark     boolean — optimiza colores para fondos oscuros
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :host([variant="enso"]) svg,
-    :host(:not([variant])) svg,
+    :host([theme="enso"]) svg,
+    :host(:not([theme])) svg,
     .sp-sumi,
     .sp-kintsugi,
     .sp-shizuku {

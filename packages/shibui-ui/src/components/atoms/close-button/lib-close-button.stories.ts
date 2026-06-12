@@ -17,7 +17,7 @@ const meta: Meta<LibCloseButtonStoryArgs> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['ghost', 'subtle', 'outlined', 'filled', 'filled-round', 'danger', 'on-dark'],
+      options: ['ghost', 'subtle', 'outlined', 'filled', 'filled-round', 'error', 'on-dark'],
     },
     size: {
       control: 'select',
@@ -87,7 +87,7 @@ export const AllVariants: Story = {
       </div>
 
       <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
-        <lib-close-button variant="danger" size="md"></lib-close-button>
+        <lib-close-button variant="error" size="md"></lib-close-button>
         <span style="font-family:monospace; font-size:10px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em;">Danger</span>
       </div>
 
@@ -237,7 +237,7 @@ const _katachi = createKatachiStories<object>(() => html`
       <lib-close-button variant="outlined"     size="md"></lib-close-button>
       <lib-close-button variant="filled"       size="md"></lib-close-button>
       <lib-close-button variant="filled-round" size="md"></lib-close-button>
-      <lib-close-button variant="danger"       size="md"></lib-close-button>
+      <lib-close-button variant="error"       size="md"></lib-close-button>
     </div>
     <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
       <lib-close-button variant="ghost" size="sm"></lib-close-button>
