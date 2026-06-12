@@ -1,6 +1,6 @@
 import { html, nothing, TemplateResult } from 'lit';
 
-export type LibSwitchVariant = 'default' | 'inverse';
+export type LibSwitchSurface = 'default' | 'inverse';
 export type LibSwitchSize    = 'sm' | 'md' | 'lg';
 
 export interface SwitchTemplateProps {
@@ -24,7 +24,7 @@ export interface SwitchTemplateProps {
  *       span.sw-label-text
  *       span.sw-label-sub    — (opcional) si hay sub
  *
- * El estado visual (checked, disabled, variant, size) se controla
+ * El estado visual (checked, disabled, surface, size) se controla
  * íntegramente desde :host([attr]) en el CSS — el template es estático.
  */
 export function switchTemplate(props: SwitchTemplateProps): TemplateResult {

@@ -46,7 +46,7 @@ const components = loadComponents();
 // ── Vocabulario canónico (src/types/index.ts) ──────────────────
 const LIB_SIZE = ['xs', 'sm', 'md', 'lg', 'xl'];
 const LIB_TONE = ['default', 'accent', 'info', 'success', 'warning', 'error', 'muted'];
-const LIB_SURFACE = ['default', 'inverse', 'on-dark'];
+const LIB_SURFACE = ['default', 'light', 'dark', 'inverse'];
 const LIB_TINT = ['neutral', 'warm', 'cool', 'inverse'];
 
 // ── Excepciones documentadas (props-contract.md, lista cerrada) ─
@@ -65,12 +65,6 @@ const KNOWN_PENDING = new Set<string>([
   // tone decorativo / no-semántico aún sin migrar:
   'lib-spinner.tone',          // ink|accent|cool → revisar (¿tint? ¿theme?)
   'lib-reading-progress.tone', // accent|info|filled|gold → filled/gold fuera de canon
-  // surface con vocabulario pre-canónico (dark/light/filled/pill/accent/info):
-  'lib-breadcrumb.surface',
-  'lib-content-pillar.surface',
-  'lib-display-heading.surface',
-  'lib-quote.surface',
-  'lib-skeleton.surface',
   // tipo sin resolver (scrollable reflejado como atributo `scroll`):
   'lib-tabs.scroll',
 ]);

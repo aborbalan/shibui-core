@@ -4,7 +4,7 @@ import './lib-kbd.component';
 import type { LibKbd } from './lib-kbd.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
-type KbdArgs = Pick<LibKbd, 'size' | 'variant' | 'pressed'>;
+type KbdArgs = Pick<LibKbd, 'size' | 'variant' | 'surface' | 'tone' | 'pressed'>;
 
 const meta: Meta<KbdArgs> = {
   title: 'Universal/Content/Kbd',
@@ -12,7 +12,9 @@ const meta: Meta<KbdArgs> = {
   component: 'lib-kbd',
   argTypes: {
     size:    { control: 'select', options: ['xs', 'sm', 'md', 'lg'] },
-    variant: { control: 'select', options: ['default', 'inverse', 'ghost', 'accent', 'subtle'] },
+    variant: { control: 'select', options: ['default', 'ghost'] },
+    surface: { control: 'select', options: ['default', 'inverse'] },
+    tone:    { control: 'select', options: ['default', 'accent', 'info'] },
     pressed: { control: 'boolean' },
   },
 };
@@ -27,10 +29,10 @@ const sepStyle = 'font-family:var(--lib-font-mono);font-size:10px;color:var(--te
 
 /* ── Playground ── */
 export const Playground: Story = {
-  args: { size: 'md', variant: 'default', pressed: false },
+  args: { size: 'md', variant: 'default', surface: 'default', tone: 'default', pressed: false },
   render: (args): TemplateResult => html`
     <div style="padding:40px;">
-      <lib-kbd size=${args.size} variant=${args.variant} ?pressed=${args.pressed}>⌘</lib-kbd>
+      <lib-kbd size=${args.size} variant=${args.variant} surface=${args.surface} tone=${args.tone} ?pressed=${args.pressed}>⌘</lib-kbd>
     </div>
   `,
 };
@@ -69,14 +71,20 @@ export const ModifierSymbols: Story = {
 
 /* ── Variants ── */
 export const Variants: Story = {
-  name: 'Variants — Default · Inverse · Ghost · Accent · Subtle',
+  name: 'Variants — Default · Inverse · Ghost · Accent · Info',
   render: (): TemplateResult => html`
     <div style=${stage}>
-      ${(['default','inverse','ghost','accent','subtle'] as const).map(v => html`
+      ${([
+        { variant: 'default', surface: 'default', tone: 'default', label: 'default' },
+        { variant: 'default', surface: 'inverse', tone: 'default', label: 'inverse' },
+        { variant: 'ghost',   surface: 'default', tone: 'default', label: 'ghost' },
+        { variant: 'default', surface: 'default', tone: 'accent',  label: 'accent' },
+        { variant: 'default', surface: 'default', tone: 'info',    label: 'info' },
+      ] as const).map(({ variant, surface, tone, label: v }) => html`
         <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
           <div style="display:flex;align-items:center;gap:4px;">
-            <lib-kbd size="md" variant=${v}>⌘</lib-kbd>
-            <lib-kbd size="md" variant=${v}>K</lib-kbd>
+            <lib-kbd size="md" variant=${variant} surface=${surface} tone=${tone}>⌘</lib-kbd>
+            <lib-kbd size="md" variant=${variant} surface=${surface} tone=${tone}>K</lib-kbd>
           </div>
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">${v}</span>
         </div>
@@ -91,11 +99,11 @@ export const DarkSurface: Story = {
   parameters: { backgrounds: { default: 'dark' } },
   render: (): TemplateResult => html`
     <div style=${stageDk}>
-      <lib-kbd size="md" variant="inverse">⌘</lib-kbd>
-      <lib-kbd size="md" variant="inverse">⇧</lib-kbd>
-      <lib-kbd size="md" variant="inverse">P</lib-kbd>
-      <lib-kbd size="md" variant="inverse" pressed>Esc</lib-kbd>
-      <lib-kbd size="md" variant="inverse">Space</lib-kbd>
+      <lib-kbd size="md" surface="inverse">⌘</lib-kbd>
+      <lib-kbd size="md" surface="inverse">⇧</lib-kbd>
+      <lib-kbd size="md" surface="inverse">P</lib-kbd>
+      <lib-kbd size="md" surface="inverse" pressed>Esc</lib-kbd>
+      <lib-kbd size="md" surface="inverse">Space</lib-kbd>
     </div>
   `,
 };
@@ -239,9 +247,15 @@ const _katachi = createKatachiStories<object>(() => html`
     </div>
     <!-- Variants -->
     <div style="display:flex;align-items:center;gap:var(--lib-space-md);flex-wrap:wrap;">
-      ${(['default','inverse','ghost','accent','subtle'] as const).map(v => html`
+      ${([
+        { variant: 'default', surface: 'default', tone: 'default', label: 'default' },
+        { variant: 'default', surface: 'inverse', tone: 'default', label: 'inverse' },
+        { variant: 'ghost',   surface: 'default', tone: 'default', label: 'ghost' },
+        { variant: 'default', surface: 'default', tone: 'accent',  label: 'accent' },
+        { variant: 'default', surface: 'default', tone: 'info',    label: 'info' },
+      ] as const).map(({ variant, surface, tone, label: v }) => html`
         <div style="display:flex;flex-direction:column;align-items:center;gap:var(--lib-space-xs);">
-          <lib-kbd size="md" variant=${v}>⌘</lib-kbd>
+          <lib-kbd size="md" variant=${variant} surface=${surface} tone=${tone}>⌘</lib-kbd>
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;color:var(--text-muted);text-transform:uppercase;">${v}</span>
         </div>
       `)}

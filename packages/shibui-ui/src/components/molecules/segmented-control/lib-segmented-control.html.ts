@@ -16,8 +16,6 @@ export function segmentedTemplate(props: SegmentedTemplateProps): TemplateResult
   } = props;
 
   const isGhost      = variant === 'ghost';
-  //const isUnderline  = variant === 'underline' || variant === 'dark-underline';
-  //const isPill       = variant === 'pill' || variant === 'dark-pill';
 
   const trackCls = [
     'seg',

@@ -4,7 +4,7 @@ import type {
   BreadcrumbItem,
   BreadcrumbSeparator,
   BreadcrumbSize,
-  BreadcrumbSurface,
+  BreadcrumbVariant,
   BreadcrumbAccent,
 } from './lib-breadcrumb.types';
 
@@ -12,7 +12,7 @@ export interface BreadcrumbTemplateProps {
   items: BreadcrumbItem[];
   separator: BreadcrumbSeparator;
   size: BreadcrumbSize;
-  surface: BreadcrumbSurface;
+  variant: BreadcrumbVariant;
   accent: BreadcrumbAccent;
   dark: boolean;
   /** Si > 0 y items.length > maxVisible, colapsa los crumbs intermedios. */
@@ -133,8 +133,8 @@ export function breadcrumbTemplate(p: BreadcrumbTemplateProps): TemplateResult {
     'bc-line':       p.separator === 'line',
     'bc-sm':         p.size === 'sm',
     'bc-lg':         p.size === 'lg',
-    'bc-filled':     p.surface === 'filled',
-    'bc-pill':       p.surface === 'pill',
+    'bc-filled':     p.variant === 'filled',
+    'bc-pill':       p.variant === 'pill',
     'bc-accent':     p.accent === 'accent',
     'bc-info':       p.accent === 'info',
     'bc-bold':       p.accent === 'bold',

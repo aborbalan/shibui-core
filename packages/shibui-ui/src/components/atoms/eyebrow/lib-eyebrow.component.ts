@@ -19,7 +19,7 @@ export type EyebrowSize = 'sm' | 'md' | 'lg';
  * @tag lib-eyebrow
  *
  * @attr {'default'|'accent'|'muted'} tone
- * @attr {'default'|'inverse'|'on-dark'} surface
+ * @attr {'default'|'light'|'dark'|'inverse'} surface
  *   Rol semántico del color. Default: `'accent'`.
  *   - accent  → acento del katachi activo (kaki/dorado/phosphor según contexto)
  *   - neutral → cálido-neutro (tono washi)

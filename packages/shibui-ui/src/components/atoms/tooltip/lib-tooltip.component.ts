@@ -19,15 +19,23 @@ export type TooltipPosition =
   | 'bottom-start' | 'bottom-end';
 
 /**
- * Variante de color.
+ * Superficie de la burbuja.
  * - `dark`   — washi-900, máximo contraste (default).
  * - `light`  — fondo blanco con borde, para superficies oscuras
  *              o cuando el contenido necesita estructura visible.
- * - `accent` — acento naranja terracota (era `kaki`).
- * - `info`   — estado positivo / informativo (era `celadon`).
- * - `error`  — validación fallida o acción destructiva.
+ *
+ * El color semántico se controla aparte vía `tone`.
  */
-export type TooltipVariant = 'dark' | 'light' | 'accent' | 'info' | 'error';
+export type TooltipSurface = 'dark' | 'light';
+
+/**
+ * Tinte semántico de la burbuja.
+ * - `default` — sin tinte (usa la superficie).
+ * - `accent`  — acento naranja terracota (era `kaki`).
+ * - `info`    — estado positivo / informativo (era `celadon`).
+ * - `error`   — validación fallida o acción destructiva.
+ */
+export type TooltipTone = 'default' | 'accent' | 'info' | 'error';
 
 /** Tamaño de la burbuja. */
 export type TooltipSize = 'sm' | 'md' | 'lg';
@@ -48,7 +56,7 @@ export type TooltipSize = 'sm' | 'md' | 'lg';
  *
  * ## Contenido rico (slot="content")
  * ```html
- * <lib-tooltip position="top" variant="light" size="lg">
+ * <lib-tooltip position="top" surface="light" size="lg">
  *   <button>...</button>
  *   <span slot="content">
  *     <span class="tip-title">Tokens de color</span>
@@ -60,7 +68,8 @@ export type TooltipSize = 'sm' | 'md' | 'lg';
  * ```
  *
  * @prop {TooltipPosition} position - Posición de la burbuja (default: top).
- * @prop {TooltipVariant}  variant  - Variante de color (default: dark).
+ * @prop {TooltipSurface}  surface  - Superficie dark | light (default: dark).
+ * @prop {TooltipTone}     tone     - Tinte semántico default | accent | info | error (default: default).
  * @prop {TooltipSize}     size     - Tamaño sm | md | lg (default: md).
  * @prop {string}          content  - Texto simple. Para contenido rico usa slot="content".
  * @prop {boolean}         instant  - Elimina el delay de entrada de 300ms.
@@ -90,7 +99,10 @@ export class LibTooltip extends LitElement {
   position: TooltipPosition = 'top';
 
   @property({ type: String, reflect: true })
-  variant: TooltipVariant = 'dark';
+  surface: TooltipSurface = 'dark';
+
+  @property({ type: String, reflect: true })
+  tone: TooltipTone = 'default';
 
   @property({ type: String, reflect: true })
   size: TooltipSize = 'md';
@@ -108,7 +120,8 @@ export class LibTooltip extends LitElement {
   override render(): TemplateResult {
     return tooltipTemplate({
       position: this.position,
-      variant:  this.variant,
+      surface:  this.surface,
+      tone:     this.tone,
       size:     this.size,
       content:  this.content,
       instant:  this.instant,

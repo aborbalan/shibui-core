@@ -79,13 +79,15 @@ type LibTint = 'neutral' | 'warm' | 'cool' | 'inverse';   // default 'neutral'
 
 ### `surface` — contexto de fondo
 ```ts
-type LibSurface = 'default' | 'inverse' | 'on-dark';   // default 'default'
+type LibSurface = 'default' | 'light' | 'dark' | 'inverse';   // default 'default'
 ```
-- **Por qué**: el "modo oscuro/invertido" de un componente es **ortogonal** a su tono y a
-  su tratamiento. Antes se colaba como valores `dark`/`inverse`/`on-dark` dentro de
-  `tone` o `variant`, mezclando ejes.
-- **Mapeo**: `dark`/`on-dark` → `on-dark`; `inverse` → `inverse`.
-- **Cuándo**: el componente necesita adaptarse a una superficie oscura sin cambiar su tono.
+- **Por qué**: el "modo oscuro/claro/invertido" de un componente es **ortogonal** a su tono
+  y a su tratamiento. Antes se colaba como valores `dark`/`light`/`neutral`/`on-dark` dentro
+  de `tone` o `variant`, mezclando ejes.
+- **Mapeo**: `light` → `light`; `dark`/`on-dark` → `dark`; `neutral` (washi paper) → `default`;
+  `inverse` → `inverse`. Un componente puede soportar un **subconjunto** (p.ej. switch
+  `default·inverse`; quote `default·light·dark`).
+- **Cuándo**: el componente necesita adaptarse a una superficie distinta sin cambiar su tono.
 
 ### `variant` — tratamiento visual
 ```ts

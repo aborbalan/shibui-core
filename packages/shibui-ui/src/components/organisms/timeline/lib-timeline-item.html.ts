@@ -8,7 +8,7 @@ export function timelineItemTemplate(props: TimelineItemTemplateProps): Template
     nodeType, nodeColor, icon, avatar,
     status, lineVariant, lineProgress, hideLine,
     timestamp, title, body, card, collapsed, collapsible,
-    tooltip, tooltipPosition, tooltipVariant, hasTooltipSlot,
+    tooltip, tooltipPosition, tooltipSurface, tooltipTone, hasTooltipSlot,
     clickable, href,
     onToggleCollapse, onActivate, onKeydown,
   } = props;
@@ -42,7 +42,8 @@ export function timelineItemTemplate(props: TimelineItemTemplateProps): Template
         <lib-tooltip
           class="tl-node-tip"
           position="${tooltipPosition}"
-          variant="${tooltipVariant}"
+          surface="${tooltipSurface}"
+          tone="${tooltipTone}"
           content="${tooltip}"
         >
           ${nodeBare}

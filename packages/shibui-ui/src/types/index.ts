@@ -49,8 +49,12 @@ export type LibTone = LibSemanticTone | 'muted';
 export type LibVariant = 'solid' | 'outlined' | 'ghost' | 'subtle';
 
 /* ── SUPERFICIE / CONTEXTO (modificadores no-tone) ─────────────
-   Para casos hoy llamados surface/inverse/on-dark. No son tones. */
-export type LibSurface = 'default' | 'inverse' | 'on-dark';
+   Contexto de fondo sobre el que vive el componente. No son tones.
+   - default : superficie natural del tema
+   - light   : forzar variante clara
+   - dark    : forzar variante oscura (antes 'on-dark')
+   - inverse : colores invertidos respecto a la superficie */
+export type LibSurface = 'default' | 'light' | 'dark' | 'inverse';
 
 /* ── TINT (color DECORATIVO, no semántico) ─────────────────────
    Para avatar/glass-card: tintes cálidos/fríos sin significado de

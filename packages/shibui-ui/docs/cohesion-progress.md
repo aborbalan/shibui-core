@@ -3,7 +3,7 @@
 > Estado vivo de la migración de cohesión de props (`docs/props-contract.md` = contrato).
 > Actualizar al cerrar cada tanda. Leyenda: ✅ hecho (merged) · 🟢 PR abierto · ⏳ pendiente.
 
-_Última actualización: 2026-06-10_
+_Última actualización: 2026-06-12_
 
 ## Fundación y tooling
 - ✅ Contrato de tipos `src/types/index.ts` (dedup `public.ts`) — #484
@@ -24,7 +24,7 @@ _Última actualización: 2026-06-10_
 | **estéticas → theme** | ✅ | #484/#487 | spinner·text-glitch (#484) · sidebar·footer·header·burger·drawer·step·stepper·background (#487) |
 | **display** (modos render) | 🟢 | #488 | data-table·reading-progress·color-picker · (+fix fantasmas variant burger/sidebar/text-glitch) |
 | **accordion** (split display+tone) | ⏳ | — | flush/separated→display, accent→tone |
-| **surface resto** | ⏳ | — | tooltip·kbd·switch·segmented-control·breadcrumb·content-pillar·display-heading·quote·skeleton |
+| **surface resto** | 🟢 | feature/props-cohesion-surface | switch·counter·range-slider·eyebrow (on-dark→dark) · quote·display-heading (neutral→default) · content-pillar (ya canónico) · breadcrumb (surface→variant) · skeleton (split surface/tone) · tooltip·kbd·segmented-control (split variant/surface/tone) · timeline (tooltip-variant→tooltip-surface/tone). `LibSurface`=default·light·dark·inverse |
 | **tone sueltos** | ⏳ | — | spinner(ink/cool→¿tint?) · reading-progress(filled/gold) |
 | **flag-o-valor + tipos** | ⏳ | — | label/error/tooltip/active/spotlight/counter · uniones `string\|number` · ariaLabel · tabs.scroll(unknown) |
 | **button cluster** | ⏳ | — | button + button-split + button-group · split variant+tone · ⚠️ alto impacto |
@@ -34,12 +34,12 @@ _Última actualización: 2026-06-10_
 ## KNOWN_PENDING actual (allowlist del test:cohesion)
 Vaciar conforme se migren. Hoy:
 - `lib-spinner.tone`, `lib-reading-progress.tone` (tone sueltos)
-- `lib-breadcrumb.surface`, `lib-content-pillar.surface`, `lib-display-heading.surface`, `lib-quote.surface`, `lib-skeleton.surface` (surface resto)
 - `lib-tabs.scroll` (unknown — scrollable reflejada como attr `scroll`)
 
 ## PRs
 - #484 ✅ merged · #485 ✅ merged · #486 ✅ merged · #487 ✅ merged
 - #488 🟢 open (display + fix fantasmas)
+- `feature/props-cohesion-surface` 🟢 (bloque surface completo)
 
 ## Notas / aprendizajes
 - Renames `variant`→`theme`/`display`/`tone`: actualizar TAMBIÉN el JSDoc `@prop`/`@attr`, o CEM crea

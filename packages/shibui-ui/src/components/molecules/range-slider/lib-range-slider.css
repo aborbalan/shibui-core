@@ -212,17 +212,17 @@
   }
   :host([surface="inverse"]) .rs-label { color: oklch(42% 0.02 50deg); }
   :host([surface="inverse"]) .rs-value { color: oklch(65% 0.02 55deg); }
-  :host([surface="on-dark"]) .rs-limit { color: oklch(28% 0.02 50deg); }
-  :host([surface="on-dark"]) .rs-mark  { background: oklch(22% 0.02 45deg); }
-  :host([surface="on-dark"]) .rs-mark.is-filled { background: oklch(65% 0.02 55deg); }
-  :host([surface="on-dark"]) .rs-mark-label { color: oklch(28% 0.02 50deg); }
+  :host([surface="dark"]) .rs-limit { color: oklch(28% 0.02 50deg); }
+  :host([surface="dark"]) .rs-mark  { background: oklch(22% 0.02 45deg); }
+  :host([surface="dark"]) .rs-mark.is-filled { background: oklch(65% 0.02 55deg); }
+  :host([surface="dark"]) .rs-mark-label { color: oklch(28% 0.02 50deg); }
 
-  :host([surface="on-dark"]) .rs input[type="range"]::-webkit-slider-thumb {
+  :host([surface="dark"]) .rs input[type="range"]::-webkit-slider-thumb {
     background:    oklch(13% 0.015 45deg);
     border-color:  oklch(60% 0.02 55deg);
   }
 
-  :host([surface="on-dark"]) .rs input[type="range"]::-moz-range-thumb {
+  :host([surface="dark"]) .rs input[type="range"]::-moz-range-thumb {
     background:   oklch(13% 0.015 45deg);
     border-color: oklch(60% 0.02 55deg);
   }

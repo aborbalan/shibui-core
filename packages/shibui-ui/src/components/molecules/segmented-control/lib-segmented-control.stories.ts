@@ -55,11 +55,18 @@ const meta: Meta<Args> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: [
-        'outline', 'underline', 'pill', 'ghost', 'accent', 'info',
-        'dark-outline', 'dark-pill', 'dark-accent', 'dark-underline',
-      ],
-      description: 'Variante de superficie',
+      options: ['outline', 'underline', 'pill', 'ghost'],
+      description: 'Tratamiento visual',
+    },
+    surface: {
+      control: 'select',
+      options: ['default', 'dark'],
+      description: 'Superficie',
+    },
+    tone: {
+      control: 'select',
+      options: ['default', 'accent', 'info'],
+      description: 'Tinte del thumb',
     },
     size: {
       control: 'select',
@@ -75,6 +82,8 @@ const meta: Meta<Args> = {
     <div style="padding: var(--lib-space-lg);">
       <lib-segmented-control
         variant="${args.variant ?? 'outline'}"
+        surface="${args.surface ?? 'default'}"
+        tone="${args.tone ?? 'default'}"
         size="${args.size ?? 'md'}"
         ?disabled="${args.disabled}"
         ?full="${args.full}"
@@ -96,6 +105,8 @@ type Story = StoryObj<Args>;
 export const Playground: Story = {
   args: {
     variant:  'outline',
+    surface:  'default',
+    tone:     'default',
     size:     'md',
     disabled: false,
     full:     false,
@@ -118,11 +129,19 @@ export const LightVariants: Story = {
       padding: var(--lib-space-xl);
       background: var(--bg-base);
     ">
-      ${(['outline', 'underline', 'pill', 'ghost', 'accent', 'info'] as const).map(v => html`
+      ${([
+        { variant: 'outline',   tone: 'default', label: 'outline' },
+        { variant: 'underline', tone: 'default', label: 'underline' },
+        { variant: 'pill',      tone: 'default', label: 'pill' },
+        { variant: 'ghost',     tone: 'default', label: 'ghost' },
+        { variant: 'outline',   tone: 'accent',  label: 'accent (tone)' },
+        { variant: 'outline',   tone: 'info',    label: 'info (tone)' },
+      ] as const).map(({ variant, tone, label: v }) => html`
         <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm)">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)">${v}</p>
           <lib-segmented-control
-            variant="${v}"
+            variant="${variant}"
+            tone="${tone}"
             .options="${VIEW_OPTS}"
             value="view"
           ></lib-segmented-control>
@@ -148,11 +167,18 @@ export const DarkVariants: Story = {
       padding: var(--lib-space-xl);
       background: var(--color-washi-950);
     ">
-      ${(['dark-outline', 'dark-pill', 'dark-accent', 'dark-underline'] as const).map(v => html`
+      ${([
+        { variant: 'outline',   tone: 'default', label: 'dark · outline' },
+        { variant: 'pill',      tone: 'default', label: 'dark · pill' },
+        { variant: 'outline',   tone: 'accent',  label: 'dark · accent' },
+        { variant: 'underline', tone: 'default', label: 'dark · underline' },
+      ] as const).map(({ variant, tone, label: v }) => html`
         <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm)">
           <p style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(250,247,244,.3)">${v}</p>
           <lib-segmented-control
-            variant="${v}"
+            surface="dark"
+            variant="${variant}"
+            tone="${tone}"
             .options="${VIEW_OPTS}"
             value="view"
           ></lib-segmented-control>
@@ -260,7 +286,8 @@ export const WithBadges: Story = {
         value="inbox"
       ></lib-segmented-control>
       <lib-segmented-control
-        variant="accent"
+        variant="outline"
+        tone="accent"
         .options="${BADGE_OPTS}"
         value="inbox"
       ></lib-segmented-control>
@@ -313,13 +340,15 @@ export const GlitchVariant: Story = {
         Haz clic para ver el efecto glitch
       </p>
       <lib-segmented-control
-        variant="dark-accent"
+        surface="dark"
+        tone="accent"
         ?glitch="${true}"
         .options="${VIEW_OPTS}"
         value="view"
       ></lib-segmented-control>
       <lib-segmented-control
-        variant="dark-outline"
+        surface="dark"
+        variant="outline"
         ?glitch="${true}"
         .options="${NAV_OPTS}"
         value="week"
@@ -361,7 +390,8 @@ const _katachi = createKatachiStories<object>(() => html`
       value="a"
     ></lib-segmented-control>
     <lib-segmented-control
-      variant="accent"
+      variant="outline"
+      tone="accent"
       .options="${[{ value: 'a', label: 'Wabi' }, { value: 'b', label: 'Sabi', disabled: true }, { value: 'c', label: 'Shizen' }]}"
       value="a"
     ></lib-segmented-control>

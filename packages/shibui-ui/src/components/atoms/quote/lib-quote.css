@@ -28,8 +28,8 @@
         --q-cite-color: var(--color-washi-400, #B8A99A);
     }
 
-    /* Superficie neutral */
-    :host([surface='neutral']) {
+    /* Superficie default (washi paper) */
+    :host([surface='default']) {
         --q-text-color: var(--color-washi-800, #3D332A);
         --q-accent-color: var(--color-kaki-500, #B85A1E);
         --q-cite-color: var(--color-washi-500, #9A8878);

@@ -39,7 +39,7 @@
         --dh-color-desc: rgb(250, 247, 244, 0.28);
     }
 
-    :host([surface='neutral']) {
+    :host([surface='default']) {
         --dh-color-heading: var(--color-washi-800, #3D332A);
         --dh-color-desc: var(--color-washi-600, #7A6A5C);
     }

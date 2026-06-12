@@ -2,8 +2,9 @@
 
 /* ============================================================
    LIB-SEGMENTED-CONTROL — Shibui UI
-   Variantes: outline · underline · pill · ghost · accent · info
-              dark-outline · dark-pill · dark-accent · dark-underline
+   Variant:   outline · underline · pill · ghost
+   Surface:   default · dark
+   Tone:      default · accent · info
    Tamaños:   sm · md (default) · lg
    Extras:    full · icon-only · glitch · badge
    ============================================================ */
@@ -279,30 +280,30 @@
      Thumb en color acento
      ================================================================ */
 
-  :host([variant="accent"]) .seg {
+  :host([tone="accent"]) .seg {
     border: 1.5px solid var(--border-default);
     background: var(--bg-elevated);
     padding: 3px;
     gap: 0;
   }
 
-  :host([variant="accent"]) .seg-thumb {
+  :host([tone="accent"]) .seg-thumb {
     background: var(--color-kaki-500);
     top: 3px;
     bottom: 3px;
   }
 
-  :host([variant="accent"]) .seg-option {
+  :host([tone="accent"]) .seg-option {
     padding: var(--lib-space-sm) var(--lib-space-md);
     color: var(--text-muted);
     min-width: 80px;
   }
 
-  :host([variant="accent"]) .seg-option:hover {
+  :host([tone="accent"]) .seg-option:hover {
     color: var(--text-primary);
   }
 
-  :host([variant="accent"]) .seg-option.is-active {
+  :host([tone="accent"]) .seg-option.is-active {
     color: var(--color-white);
   }
 
@@ -311,30 +312,30 @@
      Thumb en color celadón
      ================================================================ */
 
-  :host([variant="info"]) .seg {
+  :host([tone="info"]) .seg {
     border: 1.5px solid var(--border-default);
     background: var(--bg-elevated);
     padding: 3px;
     gap: 0;
   }
 
-  :host([variant="info"]) .seg-thumb {
+  :host([tone="info"]) .seg-thumb {
     background: var(--info);
     top: 3px;
     bottom: 3px;
   }
 
-  :host([variant="info"]) .seg-option {
+  :host([tone="info"]) .seg-option {
     padding: var(--lib-space-sm) var(--lib-space-md);
     color: var(--text-muted);
     min-width: 80px;
   }
 
-  :host([variant="info"]) .seg-option:hover {
+  :host([tone="info"]) .seg-option:hover {
     color: var(--text-primary);
   }
 
-  :host([variant="info"]) .seg-option.is-active {
+  :host([tone="info"]) .seg-option.is-active {
     color: var(--color-white);
   }
 
@@ -342,34 +343,34 @@
      DARK VARIANTS
      ================================================================ */
 
-  :host([variant="dark-outline"]) .seg {
+  :host([surface="dark"][variant="outline"]) .seg {
     border: 1px solid rgb(255, 255, 255, 0.10);
     background: rgb(255, 255, 255, 0.04);
     padding: 3px;
     gap: 0;
   }
 
-  :host([variant="dark-outline"]) .seg-thumb {
+  :host([surface="dark"][variant="outline"]) .seg-thumb {
     background: rgb(250, 247, 244, 0.12);
     top: 3px;
     bottom: 3px;
   }
 
-  :host([variant="dark-outline"]) .seg-option {
+  :host([surface="dark"][variant="outline"]) .seg-option {
     padding: var(--lib-space-sm) var(--lib-space-md);
     color: rgb(250, 247, 244, 0.28);
     min-width: 80px;
   }
 
-  :host([variant="dark-outline"]) .seg-option:hover {
+  :host([surface="dark"][variant="outline"]) .seg-option:hover {
     color: rgb(250, 247, 244, 0.65);
   }
 
-  :host([variant="dark-outline"]) .seg-option.is-active {
+  :host([surface="dark"][variant="outline"]) .seg-option.is-active {
     color: rgb(250, 247, 244, 0.80);
   }
 
-  :host([variant="dark-pill"]) .seg {
+  :host([surface="dark"][variant="pill"]) .seg {
     background: rgb(255, 255, 255, 0.06);
     border: 1px solid rgb(255, 255, 255, 0.07);
     border-radius: var(--radius-full);
@@ -377,63 +378,63 @@
     gap: 0;
   }
 
-  :host([variant="dark-pill"]) .seg-thumb {
+  :host([surface="dark"][variant="pill"]) .seg-thumb {
     background: rgb(250, 247, 244, 0.12);
     border-radius: var(--radius-full);
     top: 4px;
     bottom: 4px;
   }
 
-  :host([variant="dark-pill"]) .seg-option {
+  :host([surface="dark"][variant="pill"]) .seg-option {
     padding: var(--lib-space-sm) calc(var(--lib-space-md) + var(--lib-space-sm));
     color: rgb(250, 247, 244, 0.28);
     border-radius: var(--radius-full);
     min-width: 80px;
   }
 
-  :host([variant="dark-pill"]) .seg-option:hover {
+  :host([surface="dark"][variant="pill"]) .seg-option:hover {
     color: rgb(250, 247, 244, 0.65);
   }
 
-  :host([variant="dark-pill"]) .seg-option.is-active {
+  :host([surface="dark"][variant="pill"]) .seg-option.is-active {
     color: rgb(250, 247, 244, 0.85);
   }
 
-  :host([variant="dark-accent"]) .seg {
+  :host([surface="dark"][tone="accent"]) .seg {
     border: 1px solid rgb(255, 255, 255, 0.07);
     background: rgb(255, 255, 255, 0.03);
     padding: 3px;
     gap: 0;
   }
 
-  :host([variant="dark-accent"]) .seg-thumb {
+  :host([surface="dark"][tone="accent"]) .seg-thumb {
     background: var(--color-kaki-500);
     top: 3px;
     bottom: 3px;
   }
 
-  :host([variant="dark-accent"]) .seg-option {
+  :host([surface="dark"][tone="accent"]) .seg-option {
     padding: var(--lib-space-sm) var(--lib-space-md);
     color: rgb(250, 247, 244, 0.30);
     min-width: 80px;
   }
 
-  :host([variant="dark-accent"]) .seg-option:hover {
+  :host([surface="dark"][tone="accent"]) .seg-option:hover {
     color: rgb(250, 247, 244, 0.65);
   }
 
-  :host([variant="dark-accent"]) .seg-option.is-active {
+  :host([surface="dark"][tone="accent"]) .seg-option.is-active {
     color: var(--color-white);
   }
 
-  :host([variant="dark-underline"]) .seg {
+  :host([surface="dark"][variant="underline"]) .seg {
     background: transparent;
     border-bottom: 1px solid rgb(255, 255, 255, 0.07);
     gap: 0;
     padding: 0;
   }
 
-  :host([variant="dark-underline"]) .seg-thumb {
+  :host([surface="dark"][variant="underline"]) .seg-thumb {
     height: 2px;
     top: auto;
     bottom: -1px;
@@ -441,16 +442,16 @@
     transition: transform var(--duration-slow) var(--ease-bounce);
   }
 
-  :host([variant="dark-underline"]) .seg-option {
+  :host([surface="dark"][variant="underline"]) .seg-option {
     padding: var(--lib-space-sm) calc(var(--lib-space-md) + var(--lib-space-sm));
     color: rgb(250, 247, 244, 0.28);
   }
 
-  :host([variant="dark-underline"]) .seg-option:hover {
+  :host([surface="dark"][variant="underline"]) .seg-option:hover {
     color: rgb(250, 247, 244, 0.65);
   }
 
-  :host([variant="dark-underline"]) .seg-option.is-active {
+  :host([surface="dark"][variant="underline"]) .seg-option.is-active {
     color: rgb(250, 247, 244, 0.80);
   }
 
@@ -475,12 +476,12 @@
     bottom: 3px;
   }
 
-  :host([size="sm"][variant="dark-pill"]) .seg {
+  :host([size="sm"][surface="dark"][variant="pill"]) .seg {
     padding: 3px;
     border-radius: var(--radius-full);
   }
 
-  :host([size="sm"][variant="dark-pill"]) .seg-thumb {
+  :host([size="sm"][surface="dark"][variant="pill"]) .seg-thumb {
     top: 3px;
     bottom: 3px;
   }
@@ -494,11 +495,11 @@
     bottom: 2px;
   }
 
-  :host([size="sm"][variant="accent"]) .seg {
+  :host([size="sm"][tone="accent"]) .seg {
     padding: 2px;
   }
 
-  :host([size="sm"][variant="accent"]) .seg-thumb {
+  :host([size="sm"][tone="accent"]) .seg-thumb {
     top: 2px;
     bottom: 2px;
   }
@@ -519,11 +520,11 @@
     bottom: 5px;
   }
 
-  :host([size="lg"][variant="dark-pill"]) .seg {
+  :host([size="lg"][surface="dark"][variant="pill"]) .seg {
     padding: 5px;
   }
 
-  :host([size="lg"][variant="dark-pill"]) .seg-thumb {
+  :host([size="lg"][surface="dark"][variant="pill"]) .seg-thumb {
     top: 5px;
     bottom: 5px;
   }
@@ -641,11 +642,11 @@
     box-shadow: var(--lib-effect-ring, none);
   }
 
-  :host([variant="outline"]) .seg-thumb {
+  :host([variant="outline"]:not([surface="dark"])) .seg-thumb {
     background: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
-  :host([variant="outline"]) .seg-option.is-active {
+  :host([variant="outline"]:not([surface="dark"])) .seg-option.is-active {
     color: var(--lib-comp-fg-inverse, var(--text-inverse));
   }
 
