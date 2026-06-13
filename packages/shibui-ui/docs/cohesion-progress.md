@@ -32,7 +32,8 @@ _Última actualización: 2026-06-12_
 | **variant → variant+tone+surface+display** | 🟢 | feature/props-cohesion-variant | canon `LibVariant`=solid·outlined·ghost·subtle + `VARIANT_EXTRA` (card→featured · modal→editorial · close-button→filled-round). Reclasif.: badge→tone · tabs/breadcrumb/segmented→display · gadget-frame→theme. Canon: select·pagination·dropdown·liquid-button·copy-button (`filled`→`solid`, `outline`→`outlined`) · kbd/code-block `default`→`solid`. Splits: card (variant+surface+tone) · close-button (variant+tone+surface) · dialog (tone+surface) · modal (variant+tone) · dropdown/liquid-button (+tone) |
 | **button cluster** | 🟢 | feature/props-cohesion-variant | button + button-split: `variant`(solid/outlined/ghost) + `tone`(default/accent/error). primary→solid · secondary→outlined · danger→tone=error · accent→tone=accent. Sweep kaki del solid scopeado a tone default. 114 usos internos migrados (stories/templates) |
 | **Phase 2: apps + wrappers** | 🟢 | feature/props-cohesion-apps | wrappers regenerados · react/angular/svelte/tauri/api migrados al canon (button primary→solid·danger→tone=error · badge variant→tone · burger-button→lib-burger+theme · liquid→lib-button-liquid+variant/tone · card variant→surface/tone · header/footer/sidebar variant→theme · status-dot variant→status · divider variant→style-variant · avatar color→tint · alert variant→type · background variant→theme · CardsShowcase kintsugi/glitch→data-katachi). consumer-tests fixtures+specs migrados (btn-danger→btn-error, tone="error"). Mapas dinámicos (badge tone) en about/componentes |
-| **Phase 4: tests + cleanup** | ⏳ | — | tests Nivel 2/3 · arreglar test:unit pre-existente (generate-react, icon-registry) · ⚠️ wrappers de charts rotos pre-existentes (LibBubbleChart… no exportados en índice) · `--strict` extractor · borrar huérfanos `SidebarVariant`/`FooterVariant` en src/types |
+| **Phase 4: cleanup** | 🟢 | feature/props-cohesion-cleanup | borrados huérfanos `SidebarVariant`/`FooterVariant` en src/types · arreglado `test:unit` pre-existente (generate-react: +types.ts en conteos y comentario sin literal `@ts-nocheck`; icon-registry: add/new alias de plus) · `test:unit` cableado en ci-lib · **charts "rotos" = falsa alarma** (dist stale; build limpio → app-react/tauri tsc verde) |
+| **Phase 4: extras (opcional)** | ⏳ | — | tests Nivel 2/3 · `--strict` en extractor |
 
 ## KNOWN_PENDING actual (allowlist del test:cohesion)
 🎉 **VACÍO — y las 12 reglas (C1–C12) ACTIVAS.** Cero `it.todo`. El test cubre:
@@ -48,7 +49,8 @@ variant** · sin unknown · sin empty · default∈options · sin flag-o-valor.
 - `feature/props-cohesion-tone` → PR #490 🟢 (tone sueltos + accordion) — apilada sobre surface
 - `feature/props-cohesion-color-types` → PR #492 🟢 (color→tone + tipos) — apilada sobre tone
 - `feature/props-cohesion-variant` → PR #494 🟢 (variant completo + button cluster + reglas C4–C12 activas) — apilada sobre color-types
-- `feature/props-cohesion-apps` 🟢 (Phase 2: apps + wrappers + consumer-tests) — apilada sobre variant. **Cierra la migración de extremo a extremo.**
+- `feature/props-cohesion-apps` → PR #495 🟢 (Phase 2: apps + wrappers + consumer-tests) — apilada sobre variant
+- `feature/props-cohesion-cleanup` 🟢 (Phase 4: huérfanos + test:unit verde + cableado CI) — apilada sobre apps. **Cierra la migración de extremo a extremo.**
 
 ## Notas / aprendizajes
 - Renames `variant`→`theme`/`display`/`tone`: actualizar TAMBIÉN el JSDoc `@prop`/`@attr`, o CEM crea

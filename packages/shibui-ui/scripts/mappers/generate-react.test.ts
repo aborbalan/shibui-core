@@ -290,18 +290,20 @@ describe('generateReact', () => {
       generateReact(manifestMultiple);
       const content = getWrittenContent('index.ts');
       const lines = content.split('\n').filter(Boolean);
-      expect(lines).toHaveLength(2);
+      // 1 línea export del tipo base (WebComponentBaseProps) + 2 componentes
+      expect(lines).toHaveLength(3);
+      expect(content).toContain("export type { WebComponentBaseProps } from './types.js';");
     });
   });
 
   // ── Llamadas a writeFileSync ──────────────────────────────────────────────
   describe('ficheros escritos', () => {
-    it('escribe exactamente 2 ficheros para un componente (el wrapper + index.ts)', () => {
+    it('escribe exactamente 3 ficheros para un componente (wrapper + types.ts + index.ts)', () => {
       generateReact(buildManifest());
-      expect(fs.writeFileSync).toHaveBeenCalledTimes(2);
+      expect(fs.writeFileSync).toHaveBeenCalledTimes(3);
     });
 
-    it('escribe N+1 ficheros para N componentes', () => {
+    it('escribe N+2 ficheros para N componentes (N wrappers + types.ts + index.ts)', () => {
       const manifestMultiple = {
         modules: [
           {
@@ -315,8 +317,8 @@ describe('generateReact', () => {
       };
 
       generateReact(manifestMultiple);
-      // 3 wrappers + 1 index.ts
-      expect(fs.writeFileSync).toHaveBeenCalledTimes(4);
+      // 3 wrappers + types.ts + index.ts
+      expect(fs.writeFileSync).toHaveBeenCalledTimes(5);
     });
 
     it('escribe los wrappers en la ruta dist/react/', () => {
