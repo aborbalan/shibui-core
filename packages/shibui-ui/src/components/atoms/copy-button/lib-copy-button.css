@@ -187,8 +187,8 @@
     }
   }
 
-  /* Filled copied → fondo celadón */
-  :host([variant="filled"][copied]) .copy-btn {
+  /* Solid copied → fondo celadón */
+  :host([variant="solid"][copied]) .copy-btn {
     background: var(--info) !important;
     border-color: transparent !important;
     color: white !important;
@@ -230,7 +230,7 @@
     }
   }
 
-  :host([variant="on-dark"][copied]) .copy-btn {
+  :host([surface="dark"][copied]) .copy-btn {
     color: oklch(70% 0.08 165deg) !important;
     border-color: oklch(70% 0.08 165deg) !important;
     background: oklch(100% 0 0deg / 0.07) !important;

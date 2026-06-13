@@ -81,32 +81,46 @@ describe('manifest cohesion', () => {
 
 El Nivel 1 valida la **forma declarada** del API en el manifest, pero éste puede estar
 impecable y el componente seguir roto: tras los renames (`variant`→`tone`/`tint`/`display`/
-`theme`) puede quedar un selector `:host([variant=…])` **huérfano**, un `reflect` perdido,
-o un atributo que ya no pinta nada. El Nivel 2 cierra ese hueco instanciando cada componente
-en un browser real, **data-driven desde el mismo manifest** (el manifest es también aquí el
-fixture). Cubre los **7 ejes canónicos** que la migración tocó: `size · tone · surface ·
-theme · variant · display · tint` (filtrados por nombre de atributo; las props enum
-funcionales —type/mode/icon/language…— quedan fuera a propósito).
+`theme`) puede quedar un selector `:host([variant=…])` **huérfano** o un `reflect` perdido —y
+el manifest no lo ve—. El Nivel 2 cierra ese hueco con dos comprobaciones **estructurales**,
+**data-driven desde el mismo manifest** (el manifest es también aquí el fixture), sobre los
+**7 ejes canónicos** que la migración tocó: `size · tone · surface · theme · variant ·
+display · tint` (filtrados por nombre de atributo; las props enum funcionales
+—type/mode/icon/language…— quedan fuera a propósito). La corrección **visual** del render ya
+la cubre el Nivel 3 (snapshots Storybook por katachi) — aquí **no** se duplica.
 
-Dos aserciones por cada `(componente, prop, opción)`:
+- **2a · reflejo** (runtime, browser) — instancia el componente, `el[prop] = opt` ⇒
+  `el.getAttribute(attr) === opt`. Si el `reflect` se perdió, **todo** `:host([attr=…])` muere
+  en silencio: es el guardián más barato.
+- **2b · sin selectores huérfanos** (CSS ⇒ manifest) — lee el CSS que el componente realmente
+  envía (`ctor.styles[].cssText`, ya con el `.css` inlineado) y verifica que ningún selector
+  `:host([eje="valor"])` de un **eje vivo** use un valor **fuera** de sus opciones declaradas.
+  Caza el `:host([variant="filled"])` que quedó tras un rename (`filled`→`solid`). Dirección
+  **inversa** a propósito: la forward ("cada opción debe tener selector") da falsos positivos
+  en componentes estilados por token o JS-driven (`lib-background`), porque no todo eje usa
+  `:host([attr=v])`. Y un delta de computed-style no sirve aquí: en el entorno bare los tokens
+  `:root` no resuelven y todo render colapsa a "sin estilar".
 
-- **2a · reflejo** — `el[prop] = opt` ⇒ `el.getAttribute(attr) === opt`. Si el `reflect` se
-  perdió, **todo** `:host([attr=…])` muere en silencio: es el guardián más barato.
-- **2c · delta visual** — el computed-style del subárbol shadow con `opt` **difiere** del
-  render con el default. Atrapa el selector huérfano/muerto (refleja pero no pinta).
-  Motion congelado (`transition/animation: none`) dentro del shadow para determinismo.
-
-Allowlists estilo `KNOWN_PENDING` (`NO_REFLECT`, `NO_VISUAL_DELTA`): hoy **vacías**. Cada
+Allowlists estilo `KNOWN_PENDING` (`NO_REFLECT`, `ORPHAN_EXEMPT`): hoy **vacías**. Cada
 excepción es una decisión consciente y documentada — que crezcan debe doler.
 
+> **Primera corrida = valor inmediato:** 2b destapó 3 selectores huérfanos que la migración
+> dejó (estados compuestos `[copied]`/`[open]` con el valor viejo): `lib-copy-button`
+> (`[variant="filled"]`, `[variant="on-dark"]`) y `lib-select` (`[variant="filled"]`).
+> Corregidos en este mismo PR.
+
 ```ts
-// patrón (extracto)
+// 2a — reflejo (runtime)
 const el = document.createElement('lib-avatar');
 document.body.appendChild(el);
 (el as any).tint = 'warm';
 await el.updateComplete;
-expect(el.getAttribute('tint')).toBe('warm');          // 2a
-expect(snapshot(el)).not.toBe(snapshotDefault);        // 2c
+expect(el.getAttribute('tint')).toBe('warm');
+
+// 2b — sin huérfanos (CSS real ⇒ opciones del manifest)
+const css = componentCss('lib-copy-button');           // ctor.styles[].cssText
+// 'filled' ya no es opción de variant ⇒ no debe quedar selector que lo use
+expect(css).not.toMatch(/\[variant\s*=\s*["']?filled["']?\]/);
 ```
 
 ## Nivel 3 — Consumer-contract + visual (ya existe infra)
