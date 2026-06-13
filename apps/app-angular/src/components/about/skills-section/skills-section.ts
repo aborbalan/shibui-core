@@ -1,7 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
 import { SkillGroupDto } from '../about.models';
 
-type BadgeVariant = 'default' | 'accent' | 'celadon' | 'dark' | 'warning';
+type BadgeTone = 'default' | 'accent' | 'info' | 'strong' | 'warning';
 
 @Component({
   selector: 'app-skills-section',
@@ -13,12 +13,12 @@ type BadgeVariant = 'default' | 'accent' | 'celadon' | 'dark' | 'warning';
 export class SkillsSectionComponent {
   skillGroups = input.required<SkillGroupDto[]>();
 
-  readonly CATEGORY_VARIANT: Record<string, BadgeVariant> = {
+  readonly CATEGORY_TONE: Record<string, BadgeTone> = {
     frontend: 'accent',
     expanding: 'warning',
-    backend: 'celadon',
+    backend: 'info',
     architecture: 'default',
-    testing: 'dark',
+    testing: 'strong',
   };
 
   readonly CATEGORY_KANJI: Record<string, string> = {
@@ -29,8 +29,8 @@ export class SkillsSectionComponent {
     testing: '試',
   };
 
-  getVariant(category: string): BadgeVariant {
-    return this.CATEGORY_VARIANT[category] ?? 'dark';
+  getTone(category: string): BadgeTone {
+    return this.CATEGORY_TONE[category] ?? 'strong';
   }
 
   getKanji(category: string): string {

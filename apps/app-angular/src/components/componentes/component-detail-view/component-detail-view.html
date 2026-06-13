@@ -4,7 +4,7 @@
   <div class="detail-header">
     <div class="meta-row">
       <span class="tag-name">{{ component().tagName }}</span>
-      <lib-badge [variant]="component().status === 'stable' ? 'celadon' : component().status === 'deprecated' ? 'warning' : 'dark'">
+      <lib-badge [tone]="component().status === 'stable' ? 'info' : component().status === 'deprecated' ? 'warning' : 'strong'">
         {{ component().status }}
       </lib-badge>
       @if (component().version) {
@@ -24,7 +24,7 @@
       <lib-eyebrow tone="accent" size="sm" class="eyebrow">Tags</lib-eyebrow>
       <div class="tags">
         @for (tag of component().tags; track tag) {
-          <lib-badge variant="strong">{{ tag }}</lib-badge>
+          <lib-badge tone="strong">{{ tag }}</lib-badge>
         }
       </div>
     </div>

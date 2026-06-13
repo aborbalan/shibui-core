@@ -36,7 +36,7 @@ export function AdminLayout() {
         user-role="Admin"
         user-name="Shibui Dev"
         brand-name="shibui"
-        variant="dark"
+        theme="dark"
         colapsed="true"
         logo-mark="渋"
         show-search="false"

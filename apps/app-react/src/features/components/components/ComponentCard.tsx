@@ -16,13 +16,12 @@ const statusVariant: Record<string, string> = {
 export const ComponentCard: React.FC<ComponentCardProps> = ({ component, onSelect }) => {
   return (
     <LibCard
-      variant="default"
       style={{ cursor: "pointer" }}
       onClick={() => onSelect(component.slug)}
     >
       <LibBadge
         slot="tag"
-        variant={statusVariant[component.status] ?? "default"}
+        tone={statusVariant[component.status] ?? "default"}
         size="sm"
         pill
       >

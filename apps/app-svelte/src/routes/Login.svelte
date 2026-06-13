@@ -43,7 +43,7 @@
             onui-lib-input={(e: Event) => { password = (e as CustomEvent).detail.value; error = false; }}
           ></lib-input>
 
-          <lib-button variant="primary" onui-lib-click={handleLogin}>
+          <lib-button variant="solid" onui-lib-click={handleLogin}>
             Entrar
           </lib-button>
 

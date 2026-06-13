@@ -4,7 +4,7 @@
 
 <main>
   <h1>Prueba en Svelte</h1>
-  <lib-button variant="primary">Botón Shibui</lib-button>
+  <lib-button variant="solid">Botón Shibui</lib-button>
 
   <h1>Vite + Svelte</h1>
 

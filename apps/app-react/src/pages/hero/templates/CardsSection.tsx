@@ -7,7 +7,7 @@ interface CardItem {
   titleAccent?: string;
   description: string;
   footer?: string;
-  variant?: 'default' | 'inverse' | 'accent' | 'featured';
+  variant?: 'solid' | 'featured';
   /** Cuando es featured, ocupa 2 columnas */
   featured?: boolean;
 }
@@ -27,21 +27,21 @@ const DEFAULT_CARDS: CardItem[] = [
     footer:       'Featured · 2 columnas',
   },
   {
-    variant:     'default',
+    variant:     'solid',
     tag:         '01–05 · Botones',
     title:       'Buttons',
     description: 'Primary, outline, ghost, liquid, group y speed dial. Kintsugi y glitch como variantes adicionales.',
     footer:      'Atom',
   },
   {
-    variant:     'default',
+    variant:     'solid',
     tag:         '28–29 · Formularios',
     title:       'Inputs',
     description: 'Text inputs, select, checkbox, radio, switch, pin code y rich text editor.',
     footer:      'Molecule',
   },
   {
-    variant:     'default',
+    variant:     'solid',
     tag:         '53 · 65 · 66 · Layout',
     title:       'Nav',
     description: 'Header, sidebar y tabs. Mega-nav, colapsable, icon rail, centrado editorial y kintsugi.',
@@ -65,7 +65,7 @@ export const CardsSection: React.FC<CardsSectionProps> = ({
         {cards.map((card, i) => (
           <LibCard
             key={i}
-            variant={card.variant ?? 'default'}
+            variant={card.variant ?? 'solid'}
             style={card.featured ? { gridColumn: 'span 2' } : undefined}
           >
             <span slot="tag">{card.tag}</span>
