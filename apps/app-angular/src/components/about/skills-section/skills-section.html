@@ -19,7 +19,7 @@
         </div>
         <div class="skill-badges">
           @for (skill of sortedSkills(group); track skill.id) {
-            <lib-badge [variant]="getVariant(group.category)">{{ skill.name }}</lib-badge>
+            <lib-badge [tone]="getTone(group.category)">{{ skill.name }}</lib-badge>
           }
         </div>
       </div>

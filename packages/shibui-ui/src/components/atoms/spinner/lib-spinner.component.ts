@@ -19,22 +19,22 @@ export type SpinnerTheme = 'enso' | 'sumi' | 'kin' | 'shizuku';
 export type SpinnerSize = 'sm' | 'md' | 'lg';
 
 /**
- * Tono de color.
+ * Tono de color (subconjunto canónico de `LibTone`).
  * Afecta a `enso` (stroke) y `sumi` (gradiente).
  * En `shizuku`, `tone="accent"` activa las gotas doradas.
  * No tiene efecto sobre `kin` (siempre oro).
- * - `ink`    — tinta oscura (default)
- * - `accent` — cálido kaki/persimón       era 'kaki'
- * - `cool`   — jade celadón sereno         era 'celadon'
+ * - `default` — tinta oscura (era 'ink')
+ * - `accent`  — cálido kaki/persimón       era 'kaki'
+ * - `info`    — jade celadón sereno         era 'celadon'/'cool'
  */
-export type SpinnerTone = 'ink' | 'accent' | 'cool';
+export type SpinnerTone = 'default' | 'accent' | 'info';
 
 /**
  * @element lib-spinner
  *
  * @prop {SpinnerTheme}   theme    - Variante estética (default: enso).
  * @prop {SpinnerSize}    size     - Tamaño sm | md | lg (default: md).
- * @prop {SpinnerTone}    tone     - Tono de color (default: ink).
+ * @prop {SpinnerTone}    tone     - Tono de color (default: default).
  * @prop {boolean}        dark     - Optimiza colores para fondos oscuros.
  * @prop {string}         label    - Texto accesible (default: 'Cargando').
  *
@@ -54,7 +54,7 @@ export class LibSpinner extends LitElement {
   size: SpinnerSize = 'md';
 
   @property({ type: String, reflect: true })
-  tone: SpinnerTone = 'ink';
+  tone: SpinnerTone = 'default';
 
   @property({ type: Boolean, reflect: true })
   dark: boolean = false;

@@ -24,7 +24,7 @@ const warningSvg = html`
 
 export function dialogTemplate(props: DialogTemplateProps): TemplateResult {
   const {
-    eyebrow, dlgTitle, variant, size,
+    eyebrow, dlgTitle, tone, size,
     layout, footerMeta, onClose,
   } = props;
 
@@ -38,10 +38,10 @@ export function dialogTemplate(props: DialogTemplateProps): TemplateResult {
   const dlgCls   = `dlg ${sizeCls} ${layoutCls} ${alertCls}`.trim();
 
   /* ── Icono de header (solo danger / warning) ── */
-  const hasIcon = variant === 'error' || variant === 'warning';
+  const hasIcon = tone === 'error' || tone === 'warning';
   const headerIcon = hasIcon
     ? html`<div class="dlg-header-icon">
-        ${ variant === 'error' ? dangerSvg : warningSvg }
+        ${ tone === 'error' ? dangerSvg : warningSvg }
       </div>`
     : null;
 

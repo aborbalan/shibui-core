@@ -44,8 +44,8 @@ const _${componentName} = createComponent({
 });
 
 // Cast necesario para resolver la incompatibilidad entre el tipo de retorno
-// de createComponent y las restricciones de JSX. Evita @ts-nocheck manteniendo
-// type-safety en el consumidor mediante ${componentName}Props.
+// de createComponent y las restricciones de JSX. Evita silenciar el compilador
+// con directivas y mantiene type-safety en el consumidor vía ${componentName}Props.
 // WebComponentBaseProps omite React.HTMLAttributes intencionadamente — ver types.ts.
 export const ${componentName} = _${componentName} as unknown as React.ComponentType<
   WebComponentBaseProps & Record<string, unknown>

@@ -126,7 +126,7 @@
   }
 
   /* ── VARIANT — FILLED ─────────────────────────────────────── */
-  :host([variant="filled"]) .close-btn {
+  :host([variant="solid"]) .close-btn {
     color: var(--lib-comp-fg-inverse, var(--text-inverse));
     background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     border-radius: var(--radius-sm);
@@ -158,7 +158,7 @@
   }
 
   /* ── VARIANT — ERROR ──────────────────────────────────────── */
-  :host([variant="error"]) .close-btn {
+  :host([tone="error"]) .close-btn {
     color: var(--color-error);
     border-radius: var(--radius-sm);
 
@@ -177,7 +177,7 @@
   }
 
   /* ── VARIANT — ON-DARK ────────────────────────────────────── */
-  :host([variant="on-dark"]) .close-btn {
+  :host([surface="dark"]) .close-btn {
     color: oklch(100% 0 0deg / 0.45);
     border-radius: var(--radius-full);
 

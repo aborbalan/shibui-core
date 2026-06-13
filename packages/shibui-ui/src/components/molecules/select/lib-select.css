@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-SELECT — Shibui UI
-   Variantes : default · filled · ghost
+   Variant   : solid · outlined (default) · ghost
    Tamaños   : sm · md (default) · lg
    Modos     : single · multi · searchable
    Estados   : open · disabled · error · dark
@@ -204,12 +204,12 @@
   ───────────────────────────────────────────────────────── */
 
   /* Filled */
-  :host([variant="filled"]) .sel-trigger {
+  :host([variant="solid"]) .sel-trigger {
     background: var(--bg-surface);
     border-color: transparent;
   }
 
-  :host([variant="filled"]) .sel-trigger:hover:not([disabled]) {
+  :host([variant="solid"]) .sel-trigger:hover:not([disabled]) {
     background: var(--color-washi-200);
     border-color: transparent;
   }

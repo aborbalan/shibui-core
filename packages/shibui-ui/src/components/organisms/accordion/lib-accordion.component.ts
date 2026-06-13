@@ -5,7 +5,10 @@ import type { LibAccordionItem } from '../../atoms/accordion-item/lib-accordion-
 import accordionCss from './lib-accordion.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
-export type LibAccordionVariant = 'default' | 'flush' | 'separated' | 'accent';
+/** Modo de presentación del accordion (eje `display`). */
+export type LibAccordionDisplay = 'default' | 'flush' | 'separated';
+/** Tinte semántico (subconjunto canónico de `LibTone`). */
+export type LibAccordionTone    = 'default' | 'accent';
 
 /**
  * @element lib-accordion
@@ -17,7 +20,7 @@ export type LibAccordionVariant = 'default' | 'flush' | 'separated' | 'accent';
  * @slot - lib-accordion-item elements
  *
  * @example
- * <lib-accordion variant="accent" exclusive>
+ * <lib-accordion tone="accent" exclusive>
  *   <lib-accordion-item label="Pregunta 1">Respuesta 1</lib-accordion-item>
  *   <lib-accordion-item label="Pregunta 2" open>Respuesta 2</lib-accordion-item>
  * </lib-accordion>
@@ -29,9 +32,13 @@ export class LibAccordion extends LitElement {
     css`${unsafeCSS(accordionCss)}`,
   ];
 
-  /** Variante visual del accordion */
+  /** Modo de presentación (default · flush · separated) */
   @property({ type: String, reflect: true })
-  variant: LibAccordionVariant = 'default';
+  display: LibAccordionDisplay = 'default';
+
+  /** Tinte semántico (default · accent) */
+  @property({ type: String, reflect: true })
+  tone: LibAccordionTone = 'default';
 
   /**
    * Si true, solo un item puede estar abierto a la vez.

@@ -28,7 +28,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
                    user-name="Shibui User"
                    role="Frontend Developer"
                    brand-name="shibui"
-                   variant="dark"
+                   theme="dark"
                    colapsed="true"
                    logo-mark="渋"
                    show-search="true"

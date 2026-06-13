@@ -15,7 +15,7 @@ import type { EditorToolbarTemplateProps }    from './lib-editor-toolbar.types';
  *
  * Categoría: Molecule · `app/editor`.
  *
- * @prop {string | null} filename  — Nombre del fichero activo. `null` → "Sin título".
+ * @prop {string}        filename  — Nombre del fichero activo. Vacío → "Sin título".
  * @prop {boolean}       dirty     — Indica cambios sin guardar (muestra `·` en el nombre).
  * @prop {boolean}       saving    — Estado de guardado en curso (deshabilita el botón Save).
  * @prop {boolean}       show-open — Muestra el botón "Abrir fichero".
@@ -37,9 +37,9 @@ export class LibEditorToolbar extends LitElement {
     css`${unsafeCSS(componentCss)}`,
   ];
 
-  /** Nombre del fichero activo. `null` muestra "Sin título". */
+  /** Nombre del fichero activo. Vacío muestra "Sin título". */
   @property({ type: String })
-  filename: string | null = null;
+  filename = '';
 
   /** Indica cambios sin guardar — muestra un punto junto al nombre. */
   @property({ type: Boolean, reflect: true })

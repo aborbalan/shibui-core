@@ -12,26 +12,26 @@ import { KitchenItem } from './kitchen-item';
       <div class="grid">
 
         <app-kitchen-item name="lib-button">
-          <lib-button variant="default">default</lib-button>
-          <lib-button variant="primary">primary</lib-button>
-          <lib-button variant="secondary">secondary</lib-button>
+          <lib-button>solid (default)</lib-button>
+          <lib-button variant="solid">solid</lib-button>
+          <lib-button variant="outlined">outlined</lib-button>
           <lib-button variant="ghost">ghost</lib-button>
-          <lib-button variant="accent">accent</lib-button>
-          <lib-button variant="danger">danger</lib-button>
+          <lib-button tone="accent">accent</lib-button>
+          <lib-button tone="error">error</lib-button>
         </app-kitchen-item>
 
-        <app-kitchen-item name="lib-liquid-button">
-          <lib-liquid-button>liquid</lib-liquid-button>
-          <lib-liquid-button variant="ink">ink</lib-liquid-button>
+        <app-kitchen-item name="lib-button-liquid">
+          <lib-button-liquid>liquid</lib-button-liquid>
+          <lib-button-liquid variant="outlined">outlined</lib-button-liquid>
         </app-kitchen-item>
 
-        <app-kitchen-item name="lib-burger-button">
-          <lib-burger-button variant="ink"></lib-burger-button>
-          <lib-burger-button variant="kanji"></lib-burger-button>
-          <lib-burger-button variant="washi"></lib-burger-button>
-          <lib-burger-button variant="framed"></lib-burger-button>
-          <lib-burger-button variant="kintsugi"></lib-burger-button>
-          <lib-burger-button variant="glitch"></lib-burger-button>
+        <app-kitchen-item name="lib-burger">
+          <lib-burger theme="filled"></lib-burger>
+          <lib-burger theme="kanji"></lib-burger>
+          <lib-burger theme="neutral"></lib-burger>
+          <lib-burger theme="framed"></lib-burger>
+          <lib-burger theme="inverse"></lib-burger>
+          <lib-burger theme="glitch"></lib-burger>
         </app-kitchen-item>
 
         <app-kitchen-item name="lib-close-button"><lib-close-button></lib-close-button></app-kitchen-item>
@@ -39,35 +39,35 @@ import { KitchenItem } from './kitchen-item';
         <app-kitchen-item name="lib-copy-button"><lib-copy-button text="hello-world"></lib-copy-button></app-kitchen-item>
 
         <app-kitchen-item name="lib-badge">
-          <lib-badge variant="default">default</lib-badge>
-          <lib-badge variant="accent">accent</lib-badge>
-          <lib-badge variant="celadon">celadon</lib-badge>
-          <lib-badge variant="dark">dark</lib-badge>
-          <lib-badge variant="error">error</lib-badge>
-          <lib-badge variant="success">success</lib-badge>
-          <lib-badge variant="warning">warning</lib-badge>
-          <lib-badge variant="default" dot>dot</lib-badge>
-          <lib-badge variant="default" pill>pill</lib-badge>
+          <lib-badge tone="default">default</lib-badge>
+          <lib-badge tone="accent">accent</lib-badge>
+          <lib-badge tone="info">info</lib-badge>
+          <lib-badge tone="strong">strong</lib-badge>
+          <lib-badge tone="error">error</lib-badge>
+          <lib-badge tone="success">success</lib-badge>
+          <lib-badge tone="warning">warning</lib-badge>
+          <lib-badge tone="default" dot>dot</lib-badge>
+          <lib-badge tone="default" pill>pill</lib-badge>
         </app-kitchen-item>
 
         <app-kitchen-item name="lib-card">
-          <lib-card variant="default" style="padding: var(--lib-space-md); min-width: 140px"><p>default</p></lib-card>
-          <lib-card variant="kintsugi" style="padding: var(--lib-space-md); min-width: 140px"><p>kintsugi</p></lib-card>
+          <lib-card style="padding: var(--lib-space-md); min-width: 140px"><p>default</p></lib-card>
+          <lib-card variant="featured" style="padding: var(--lib-space-md); min-width: 140px"><p>featured</p></lib-card>
         </app-kitchen-item>
 
         <app-kitchen-item name="lib-canvas" note="wrapper Katachi propagator">
           <lib-canvas katachi="kintsugi" style="padding: var(--lib-space-sm); border: 1px dashed var(--border-default)">
-            <lib-badge variant="default">kintsugi inner</lib-badge>
+            <lib-badge tone="default">kintsugi inner</lib-badge>
           </lib-canvas>
         </app-kitchen-item>
 
         <app-kitchen-item name="lib-checkbox">
-          <lib-checkbox variant="default"></lib-checkbox>
-          <lib-checkbox variant="kaki"></lib-checkbox>
-          <lib-checkbox variant="error"></lib-checkbox>
-          <lib-checkbox variant="default" indeterminate="true"></lib-checkbox>
-          <lib-checkbox variant="default" disabled="true"></lib-checkbox>
-          <lib-checkbox variant="default" label="label" sublabel="sublabel"></lib-checkbox>
+          <lib-checkbox tone="default"></lib-checkbox>
+          <lib-checkbox tone="accent"></lib-checkbox>
+          <lib-checkbox tone="error"></lib-checkbox>
+          <lib-checkbox tone="default" indeterminate="true"></lib-checkbox>
+          <lib-checkbox tone="default" disabled="true"></lib-checkbox>
+          <lib-checkbox tone="default" label="label" sublabel="sublabel"></lib-checkbox>
         </app-kitchen-item>
 
         <app-kitchen-item name="lib-radio">
@@ -107,8 +107,8 @@ import { KitchenItem } from './kitchen-item';
           <lib-avatar name="Alejandro Borbalan"></lib-avatar>
           <lib-avatar shape="squircle" name="Alejandro Borbalan"></lib-avatar>
           <lib-avatar shape="square" name="Alejandro Borbalan"></lib-avatar>
-          <lib-avatar color="kaki" name="K K"></lib-avatar>
-          <lib-avatar color="celadon" name="C C"></lib-avatar>
+          <lib-avatar tint="warm" name="K K"></lib-avatar>
+          <lib-avatar tint="cool" name="C C"></lib-avatar>
         </app-kitchen-item>
 
         <app-kitchen-item name="lib-icon">
@@ -118,14 +118,14 @@ import { KitchenItem } from './kitchen-item';
         </app-kitchen-item>
 
         <app-kitchen-item name="lib-status-dot">
-          <lib-status-dot variant="online"></lib-status-dot>
-          <lib-status-dot variant="offline"></lib-status-dot>
-          <lib-status-dot variant="busy"></lib-status-dot>
+          <lib-status-dot status="online"></lib-status-dot>
+          <lib-status-dot status="offline"></lib-status-dot>
+          <lib-status-dot status="busy"></lib-status-dot>
         </app-kitchen-item>
 
         <app-kitchen-item name="lib-divider">
           <lib-divider style="width: 100%"></lib-divider>
-          <lib-divider variant="dashed" style="width: 100%"></lib-divider>
+          <lib-divider style-variant="dashed" style="width: 100%"></lib-divider>
         </app-kitchen-item>
 
         <app-kitchen-item name="lib-spacer" note="invisible — borde dashed para verlo">
@@ -201,7 +201,7 @@ import { KitchenItem } from './kitchen-item';
 
         <app-kitchen-item name="lib-ripple" note="overlay effect — hover/click el botón">
           <div style="position: relative; display: inline-block">
-            <lib-button variant="primary">click ripple</lib-button>
+            <lib-button variant="solid">click ripple</lib-button>
             <lib-ripple></lib-ripple>
           </div>
         </app-kitchen-item>
@@ -217,7 +217,7 @@ import { KitchenItem } from './kitchen-item';
 
         <app-kitchen-item name="lib-background" note="producer — variante washi como demo">
           <div style="position: relative; width: 100%; min-height: 80px; overflow: hidden; border: 1px solid var(--border-subtle)">
-            <lib-background variant="washi-grain"></lib-background>
+            <lib-background theme="washi-grain"></lib-background>
           </div>
         </app-kitchen-item>
 

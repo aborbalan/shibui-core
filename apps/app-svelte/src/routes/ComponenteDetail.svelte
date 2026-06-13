@@ -59,7 +59,7 @@
   {:else}
     <header class="detail-header">
       <div class="meta-row">
-        <lib-badge variant={STATUS_VARIANT[component.status] ?? 'default'} size="sm" pill>
+        <lib-badge tone={STATUS_VARIANT[component.status] ?? 'default'} size="sm" pill>
           {component.status.toUpperCase()}
         </lib-badge>
         <span class="meta">v{component.version}</span>

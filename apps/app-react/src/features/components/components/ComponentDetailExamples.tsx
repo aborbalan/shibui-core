@@ -66,7 +66,7 @@ export const ComponentDetailExamples: React.FC<ComponentDetailExamplesProps> = (
       {availableFrameworks.length > 1 && (
         <div style={{ marginBottom: "1.25rem" }}>
           <LibSegmentedControl
-            variant="outline"
+            display="outline"
             size="sm"
             options={options}
             value={activeFramework ?? availableFrameworks[0]}

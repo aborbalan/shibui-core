@@ -3,7 +3,7 @@
 /* ============================================================
    LIB-RATING — Shibui UI · SG-19
    Sizes   : xs · sm · md · lg · xl
-   Colors  : gold · accent · neutral · info
+   Tone    : default (gold) · accent · info · muted (era 'neutral')
    Icons   : star · heart · diamond (SVG inline)
    Extras  : half-star (readonly) · numeric display · disabled
    ============================================================ */
@@ -141,31 +141,31 @@
      ──────────────────────────────────────── */
 
   /* Kaki */
-  :host([color="accent"]) .rt-item.is-filled {
+  :host([tone="accent"]) .rt-item.is-filled {
     color: var(--color-kaki-500);
   }
 
-  :host([color="accent"]) .rt-item.is-preview {
+  :host([tone="accent"]) .rt-item.is-preview {
     color: var(--color-kaki-400);
     opacity: 0.6;
   }
 
   /* Washi — monocromático */
-  :host([color="neutral"]) .rt-item.is-filled {
+  :host([tone="muted"]) .rt-item.is-filled {
     color: var(--color-washi-900);
   }
 
-  :host([color="neutral"]) .rt-item.is-preview {
+  :host([tone="muted"]) .rt-item.is-preview {
     color: var(--color-washi-600);
     opacity: 0.5;
   }
 
   /* Celadon */
-  :host([color="info"]) .rt-item.is-filled {
+  :host([tone="info"]) .rt-item.is-filled {
     color: var(--info);
   }
 
-  :host([color="info"]) .rt-item.is-preview {
+  :host([tone="info"]) .rt-item.is-preview {
     color: var(--info-line);
     opacity: 0.45;
   }
@@ -197,15 +197,15 @@
     flex-shrink: 0;
   }
 
-  :host([color="accent"]) .rt-half-fill {
+  :host([tone="accent"]) .rt-half-fill {
     color: var(--color-kaki-500);
   }
 
-  :host([color="neutral"]) .rt-half-fill {
+  :host([tone="muted"]) .rt-half-fill {
     color: var(--color-washi-900);
   }
 
-  :host([color="info"]) .rt-half-fill {
+  :host([tone="info"]) .rt-half-fill {
     color: var(--info);
   }
 
@@ -240,9 +240,9 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     lib-rating tiene multiples color="..." variants (washi, celadon,
-     kaki, ink). El base empty-star washi-300 es intencionalmente
-     sutil. Color variants tienen paleta deliberada.
+     lib-rating tiene multiples tone="..." (washi, celadon, kaki,
+     gold). El base empty-star washi-300 es intencionalmente
+     sutil. Los tones tienen paleta deliberada.
 
      Sin overrides ambient. Bloque marcador para discoverability.
      ─────────────────────────────────────────────────────────── */

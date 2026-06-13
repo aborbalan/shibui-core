@@ -3,10 +3,10 @@
    ============================================================ */
 
 /**
- * Tratamiento visual del control (subconjunto canónico de `LibVariant`).
+ * Modo de presentación del control (eje `display`).
  * outline · underline · pill · ghost
  */
-export type SegmentedVariant =
+export type SegmentedDisplay =
   | 'outline'
   | 'underline'
   | 'pill'
@@ -45,7 +45,7 @@ export interface SegmentedChangeDetail {
 export interface SegmentedTemplateProps {
   options:     SegmentedOption[];
   value:       string;
-  variant:     SegmentedVariant;
+  display:     SegmentedDisplay;
   surface:     SegmentedSurface;
   tone:        SegmentedTone;
   size:        SegmentedSize;

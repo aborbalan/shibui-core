@@ -29,7 +29,7 @@
       @for (lang of sortedLang(); track lang.id) {
         <div class="lang-item">
           <span class="lang-name">{{ lang.name }}</span>
-          <lib-badge [variant]="getLevelVariant(lang.level)">{{ lang.level }}</lib-badge>
+          <lib-badge [tone]="getLevelTone(lang.level)">{{ lang.level }}</lib-badge>
         </div>
       }
     </div>

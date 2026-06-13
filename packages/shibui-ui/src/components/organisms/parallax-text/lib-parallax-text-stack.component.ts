@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { parallaxTextStackTemplate } from './lib-parallax-text-stack.html';
 import stackCss from './lib-parallax-text-stack.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
-import type { ParallaxTextSize, ParallaxTextColor } from './lib-parallax-text-stack.types';
+import type { ParallaxTextSize, ParallaxTextTone } from './lib-parallax-text-stack.types';
 
 /**
  * lib-parallax-text-stack — Shibui UI
@@ -15,7 +15,7 @@ import type { ParallaxTextSize, ParallaxTextColor } from './lib-parallax-text-st
  * @prop lines  — Array de strings, una por capa
  * @prop speed  — Factor de velocidad (default 0.15)
  * @prop size   — 'sm' | 'md' | 'lg'(default) | 'xl' | '2xl'
- * @prop color  — 'default' | 'muted' | 'accent' | 'info'
+ * @prop tone   — 'default' | 'muted' | 'accent' | 'info'
  *
  * IMPORTANTE: el padre debe llevar overflow-x:hidden.
  * El componente NO lo aplica en :host — si lo hiciera, el
@@ -38,7 +38,7 @@ export class LibParallaxTextStack extends LitElement {
   size: ParallaxTextSize = 'lg';
 
   @property({ type: String, reflect: true })
-  color: ParallaxTextColor = 'default';
+  tone: ParallaxTextTone = 'default';
 
   /* ── Estado interno ── */
   private _ticking = false;

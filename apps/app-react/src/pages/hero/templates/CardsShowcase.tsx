@@ -1,13 +1,20 @@
 import React from 'react';
 import { LibCard, LibComponentGrid } from '@shibui-ui/ui/react';
 
+/** Cada card demuestra un look del sistema: surface canónica o contexto katachi. */
 interface VariantCard {
-  variant:     'inverse' | 'default' | 'kintsugi' | 'glitch' | 'celadon' | 'washi';
+  look:        'inverse' | 'default' | 'kintsugi' | 'glitch' | 'celadon' | 'washi';
   kanji:       string;
   tag:         string;
   title:       string;
   description: string;
 }
+
+/** Looks estéticos → se activan por contexto data-katachi, no por prop. */
+const KATACHI_BY_LOOK: Record<string, string | undefined> = {
+  kintsugi: 'kintsugi',
+  glitch:   'terminal',
+};
 
 interface CardsShowcaseProps {
   cards?: VariantCard[];
@@ -15,42 +22,42 @@ interface CardsShowcaseProps {
 
 const DEFAULT_CARDS: VariantCard[] = [
   {
-    variant:     'inverse',
+    look:        'inverse',
     kanji:       '渋',
     tag:         'Dark',
     title:       'Dark',
     description: 'Fondo washi-950. La base nocturna del sistema. Texto en rgba-blanco escalado por función.',
   },
   {
-    variant:     'default',
+    look:        'default',
     kanji:       '白',
     tag:         'Light',
     title:       'Light',
     description: 'Fondo blanco o washi-50. Bordes en washi-200. Acento kaki para elementos interactivos.',
   },
   {
-    variant:     'kintsugi',
+    look:        'kintsugi',
     kanji:       '金',
     tag:         'Kintsugi',
     title:       'Kintsugi',
     description: 'Seam animada kaki → gold. Anillo cónico rotante. Gradiente dorado en títulos y barras.',
   },
   {
-    variant:     'glitch',
+    look:        'glitch',
     kanji:       '⌗',
     tag:         '⌗ Glitch',
     title:       'Glitch',
     description: 'Scanlines CRT. RGB shadow split en ráfagas. Micro-drift en X. Terminal aesthetic.',
   },
   {
-    variant:     'celadon',
+    look:        'celadon',
     kanji:       '青',
     tag:         'Celadón',
     title:       'Celadón',
     description: 'Acento verde-gris japonés. Para estados de éxito, confirmación o elementos secundarios de énfasis.',
   },
   {
-    variant:     'washi',
+    look:        'washi',
     kanji:       '和',
     tag:         'Washi',
     title:       'Washi',
@@ -67,7 +74,7 @@ export const CardsShowcase: React.FC<CardsShowcaseProps> = ({
         {cards.map((card, i) => {
           /* La tarjeta Celadón estrena el efecto signature del katachi:
              spotlight-water (foco jade reactivo al cursor) bajo data-katachi="celadon". */
-          if (card.variant === 'celadon') {
+          if (card.look === 'celadon') {
             return (
               <div key={i} data-katachi="celadon">
                 <lib-spotlight-card spotlight="water" style={{ display: 'block', height: '100%' }}>
@@ -82,17 +89,21 @@ export const CardsShowcase: React.FC<CardsShowcaseProps> = ({
               </div>
             );
           }
-          return (
+          /* Estéticas (kintsugi/glitch) → contexto katachi; superficies → prop surface. */
+          const katachi = KATACHI_BY_LOOK[card.look];
+          const inner = (
             <LibCard
-              key={i}
-              variant={card.variant}
+              key={katachi ? undefined : i}
+              surface={card.look === 'inverse' ? 'inverse' : 'default'}
               kanji={card.kanji}
+              style={katachi ? { display: 'block', height: '100%' } : undefined}
             >
               <span slot="tag">{card.tag}</span>
               <h3 slot="title">{card.title}</h3>
               <p>{card.description}</p>
             </LibCard>
           );
+          return katachi ? <div key={i} data-katachi={katachi}>{inner}</div> : inner;
         })}
       </LibComponentGrid>
     </section>

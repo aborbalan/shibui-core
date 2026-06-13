@@ -6,7 +6,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
 export type LibKbdSize    = 'xs' | 'sm' | 'md' | 'lg';
 /** Tratamiento visual de la tecla (subconjunto canónico de `LibVariant`). */
-export type LibKbdVariant = 'default' | 'ghost';
+export type LibKbdVariant = 'solid' | 'ghost';
 /** Superficie de la tecla (subconjunto canónico de `LibSurface`). */
 export type LibKbdSurface = 'default' | 'inverse';
 /** Tinte semántico de la tecla (subconjunto canónico de `LibTone`). */
@@ -43,9 +43,9 @@ export class LibKbd extends LitElement {
   @property({ type: String, reflect: true })
   size: LibKbdSize = 'md';
 
-  /** Tratamiento visual (default · ghost). */
+  /** Tratamiento visual (solid · ghost). */
   @property({ type: String, reflect: true })
-  variant: LibKbdVariant = 'default';
+  variant: LibKbdVariant = 'solid';
 
   /** Superficie (default · inverse). */
   @property({ type: String, reflect: true })

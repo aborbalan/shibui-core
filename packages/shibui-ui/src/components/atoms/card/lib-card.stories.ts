@@ -6,7 +6,9 @@ import './card-grid/lib-card-grid.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type LibCardArgs = {
-  variant: 'default' | 'inverse' | 'accent' | 'featured';
+  variant: 'solid' | 'featured';
+  surface: 'default' | 'inverse';
+  tone: 'default' | 'accent';
   accentColor: string;
   kanji: string;
   decoration: string;
@@ -19,8 +21,18 @@ const meta: Meta<LibCardArgs> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'inverse', 'accent', 'featured'],
-      description: 'Variante semántica de la card. Los efectos katachi (seam, scanlines, brutal shadow) se activan automáticamente por contexto.',
+      options: ['solid', 'featured'],
+      description: 'Tratamiento visual. Los efectos katachi (seam, scanlines, brutal shadow) se activan automáticamente por contexto.',
+    },
+    surface: {
+      control: 'select',
+      options: ['default', 'inverse'],
+      description: 'Superficie (inverse = fondo invertido).',
+    },
+    tone: {
+      control: 'select',
+      options: ['default', 'accent'],
+      description: 'Tinte (accent = borde izquierdo de énfasis).',
     },
     accentColor: {
       control: 'color',
@@ -37,8 +49,8 @@ const meta: Meta<LibCardArgs> = {
     },
   },
   render: (args): TemplateResult => html`
-    <div style="width:320px;padding:var(--lib-space-xl);background:${args.variant === 'inverse' ? 'var(--color-washi-950,#120E0A)' : 'var(--color-washi-100,#F2EDE6)'};">
-      <lib-card variant="${args.variant}" accent-color="${args.accentColor}" kanji="${args.kanji}" decoration="${args.decoration}">
+    <div style="width:320px;padding:var(--lib-space-xl);background:${args.surface === 'inverse' ? 'var(--color-washi-950,#120E0A)' : 'var(--color-washi-100,#F2EDE6)'};">
+      <lib-card variant="${args.variant}" surface="${args.surface}" tone="${args.tone}" accent-color="${args.accentColor}" kanji="${args.kanji}" decoration="${args.decoration}">
         <span slot="tag">Etiqueta</span>
         <h2 slot="title">Título de la card</h2>
         <p>Contenido de ejemplo para visualizar el componente con texto representativo.</p>
@@ -58,7 +70,9 @@ type Story = StoryObj<LibCardArgs>;
 
 export const Playground: Story = {
   args: {
-    variant:     'default',
+    variant:     'solid',
+    surface:     'default',
+    tone:        'default',
     accentColor: '',
     kanji:       '渋',
     decoration:  '',
@@ -76,7 +90,7 @@ export const Variants: Story = {
       padding: var(--lib-space-xl);
       background: var(--color-washi-100, #F2EDE6);
     ">
-      <lib-card variant="default" kanji="渋">
+      <lib-card variant="solid" kanji="渋">
         <span slot="tag">Default</span>
         <h2 slot="title">Default</h2>
         <p>Superficie elevada neutra. Adapta fondo, borde y texto al katachi activo en el ancestro.</p>
@@ -86,7 +100,7 @@ export const Variants: Story = {
         </div>
       </lib-card>
 
-      <lib-card variant="inverse" kanji="影">
+      <lib-card surface="inverse" kanji="影">
         <span slot="tag">Inverse</span>
         <h2 slot="title">Inverse</h2>
         <p>Fondo invertido respecto a la base de página. Siempre contrasta con el contexto circundante.</p>
@@ -96,13 +110,13 @@ export const Variants: Story = {
         </div>
       </lib-card>
 
-      <lib-card variant="accent" kanji="和">
+      <lib-card tone="accent" kanji="和">
         <span slot="tag">Accent</span>
         <h2 slot="title">Accent</h2>
         <p>Borde izquierdo de énfasis. Color configurable vía prop <code>accent-color</code>.</p>
         <div slot="footer">
           <span>border-left</span>
-          <lib-button variant="primary" size="sm">Explore</lib-button>
+          <lib-button variant="solid" size="sm">Explore</lib-button>
         </div>
       </lib-card>
 
@@ -135,14 +149,14 @@ export const Featured: Story = {
           <div slot="footer"><span>Featured · span 2</span></div>
         </lib-card>
 
-        <lib-card variant="default" kanji="金">
+        <lib-card variant="solid" kanji="金">
           <span slot="tag">01 · Katachi</span>
           <h2 slot="title">Kintsugi</h2>
           <p>Seam dorado animado activado por contexto. No necesita variant prop.</p>
           <div slot="footer"><span>context-driven</span></div>
         </lib-card>
 
-        <lib-card variant="default" kanji="間">
+        <lib-card variant="solid" kanji="間">
           <span slot="tag">02 · Katachi</span>
           <h2 slot="title">Sabi</h2>
           <p>Brutal shadow activado por contexto. No necesita variant prop.</p>
@@ -163,21 +177,21 @@ export const CustomAccent: Story = {
       padding: var(--lib-space-xl);
       background: var(--color-washi-100, #F2EDE6);
     ">
-      <lib-card variant="accent" accent-color="var(--color-kaki-400)" kanji="柿">
+      <lib-card tone="accent" accent-color="var(--color-kaki-400)" kanji="柿">
         <span slot="tag">Kaki</span>
         <h2 slot="title">Persimón</h2>
         <p>El acento por defecto del sistema Shibui.</p>
         <div slot="footer"><span>Highlight</span><lib-button variant="ghost" size="sm">Ver más</lib-button></div>
       </lib-card>
 
-      <lib-card variant="accent" accent-color="var(--color-celadon-400)" kanji="青">
+      <lib-card tone="accent" accent-color="var(--color-celadon-400)" kanji="青">
         <span slot="tag">Celadón</span>
         <h2 slot="title">Jade</h2>
         <p>El segundo acento del sistema, más sereno.</p>
         <div slot="footer"><span>Sereno</span><lib-button variant="ghost" size="sm">Ver más</lib-button></div>
       </lib-card>
 
-      <lib-card variant="accent" accent-color="var(--color-washi-500)" kanji="和">
+      <lib-card tone="accent" accent-color="var(--color-washi-500)" kanji="和">
         <span slot="tag">Washi</span>
         <h2 slot="title">Neutro</h2>
         <p>Acento sutil para contenido sin jerarquía especial.</p>
@@ -197,7 +211,7 @@ export const KanjiWatermark: Story = {
       background: oklch(0% 0 0deg / 0.1);
     ">
       <div style="background:var(--color-washi-100);">
-        <lib-card variant="default" kanji="渋">
+        <lib-card variant="solid" kanji="渋">
           <span slot="tag">Light (shizen) · 渋</span>
           <h2 slot="title">Tinta oscura</h2>
           <p>Sin katachi: marca de agua con tinta al 4%. Casi imperceptible sobre fondo claro.</p>
@@ -205,7 +219,7 @@ export const KanjiWatermark: Story = {
       </div>
 
       <div data-katachi="kintsugi" style="background:var(--bg-base);">
-        <lib-card variant="default" kanji="金">
+        <lib-card variant="solid" kanji="金">
           <span slot="tag">kintsugi · 金</span>
           <h2 slot="title">Tinte dorado</h2>
           <p>En contexto kintsugi el kanji toma un tinte kaki-dorado al 6%.</p>
@@ -213,7 +227,7 @@ export const KanjiWatermark: Story = {
       </div>
 
       <div data-katachi="terminal" style="background:var(--bg-base);">
-        <lib-card variant="default" kanji="⌗">
+        <lib-card variant="solid" kanji="⌗">
           <span slot="tag">terminal · ⌗</span>
           <h2 slot="title">Phosphor</h2>
           <p>En contexto terminal el kanji adopta el verde fósforo al 6%.</p>
@@ -221,7 +235,7 @@ export const KanjiWatermark: Story = {
       </div>
 
       <div data-katachi="wabi" style="background:var(--bg-base);">
-        <lib-card variant="default" kanji="侘">
+        <lib-card variant="solid" kanji="侘">
           <span slot="tag">wabi · 侘</span>
           <h2 slot="title">Silencio</h2>
           <p>En contexto wabi el kanji es blanco puro al 4% sobre la oscuridad.</p>
@@ -229,7 +243,7 @@ export const KanjiWatermark: Story = {
       </div>
 
       <div data-katachi="celadon" style="background:var(--bg-base);">
-        <lib-card variant="default" kanji="青">
+        <lib-card variant="solid" kanji="青">
           <span slot="tag">celadon · 青</span>
           <h2 slot="title">Jade pálido</h2>
           <p>En contexto celadon el kanji usa tinta oscura al 4% sobre fondo jade.</p>
@@ -237,7 +251,7 @@ export const KanjiWatermark: Story = {
       </div>
 
       <div data-katachi="sabi" style="background:var(--bg-base);">
-        <lib-card variant="default" kanji="寂">
+        <lib-card variant="solid" kanji="寂">
           <span slot="tag">sabi · 寂</span>
           <h2 slot="title">Papel envejecido</h2>
           <p>En contexto sabi el kanji usa tinta oscura al 4% sobre fondo washi-100.</p>
@@ -266,14 +280,14 @@ export const KintsugiContext: Story = {
           <div slot="footer"><span>context-driven</span></div>
         </lib-card>
 
-        <lib-card variant="accent" accent-color="var(--color-kaki-400)" kanji="侘">
+        <lib-card tone="accent" accent-color="var(--color-kaki-400)" kanji="侘">
           <span slot="tag">01 · Accent</span>
           <h2 slot="title">Accent</h2>
           <p>El borde izquierdo toma el acento dorado del katachi.</p>
           <div slot="footer"><span>Atom</span></div>
         </lib-card>
 
-        <lib-card variant="inverse" kanji="間">
+        <lib-card surface="inverse" kanji="間">
           <span slot="tag">02 · Inverse</span>
           <h2 slot="title">Inverse</h2>
           <p>Fondo invertido: --bg-inverse resuelto por kintsugi → washi-50.</p>
@@ -345,14 +359,14 @@ export const TerminalContext: Story = {
         <div slot="footer"><span>context-driven</span></div>
       </lib-card>
 
-      <lib-card variant="accent" accent-color="var(--katachi-accent)" kanji="⌗">
+      <lib-card tone="accent" accent-color="var(--katachi-accent)" kanji="⌗">
         <span slot="tag">⌗ Accent</span>
         <h2 slot="title">Accent</h2>
         <p>Borde izquierdo en phosphor green usando el acento del katachi terminal.</p>
         <div slot="footer"><span>accent + drift</span></div>
       </lib-card>
 
-      <lib-card variant="inverse" kanji="⌗">
+      <lib-card surface="inverse" kanji="⌗">
         <span slot="tag">⌗ Inverse</span>
         <h2 slot="title">Inverse</h2>
         <p>Fondo invertido: --bg-inverse en terminal es el verde phosphor 300.</p>
@@ -378,28 +392,28 @@ export const CeladonDecorations: Story = {
       padding: var(--lib-space-xl);
       background: var(--bg-base);
     ">
-      <lib-card variant="default" decoration="craquelure mist depth reflejo" kanji="青">
+      <lib-card variant="solid" decoration="craquelure mist depth reflejo" kanji="青">
         <span slot="tag">Surface · completo</span>
         <h2 slot="title">Craquelé + niebla</h2>
         <p>Combinación rica para superficies grandes: craquelé cerámico, bruma jade que deriva, profundidad en la base y reflejo que barre.</p>
         <div slot="footer"><span>craquelure · mist · depth · reflejo</span></div>
       </lib-card>
 
-      <lib-card variant="default" decoration="craquelure" kanji="氷">
+      <lib-card variant="solid" decoration="craquelure" kanji="氷">
         <span slot="tag">Craquelure</span>
         <h2 slot="title">Ice-crackle</h2>
         <p>Red de grietas estática: fisura jade oscura + realce claro. El centro queda despejado para no competir con el contenido.</p>
         <div slot="footer"><span>decoration="craquelure"</span></div>
       </lib-card>
 
-      <lib-card variant="default" decoration="condensation depth" kanji="露">
+      <lib-card variant="solid" decoration="condensation depth" kanji="露">
         <span slot="tag">Condensación</span>
         <h2 slot="title">Micro-gotas frías</h2>
         <p>Gotas dispersas como lentes refractivas sobre el vidriado, ancladas por la masa de agua de la base.</p>
         <div slot="footer"><span>condensation · depth</span></div>
       </lib-card>
 
-      <lib-card variant="default" decoration="mist reflejo" kanji="霧">
+      <lib-card variant="solid" decoration="mist reflejo" kanji="霧">
         <span slot="tag">Niebla + reflejo</span>
         <h2 slot="title">Bruma viva</h2>
         <p>Bruma jade que oscurece levemente (multiply) y deriva, con la banda de luz del reflejo barriendo la superficie.</p>
@@ -414,19 +428,19 @@ export const CeladonDecorations: Story = {
 
 const _katachi = createKatachiStories<object>(() => html`
   <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);width:320px;">
-    <lib-card variant="default" kanji="渋">
+    <lib-card variant="solid" kanji="渋">
       <span slot="tag">default</span>
       <h2 slot="title">Shibui Card</h2>
       <p>Superficie que adapta fondo, borde y texto al contexto estético ambient. Los efectos se activan automáticamente.</p>
       <div slot="footer"><span>Default</span></div>
     </lib-card>
-    <lib-card variant="accent" kanji="和">
+    <lib-card tone="accent" kanji="和">
       <span slot="tag">accent</span>
       <h2 slot="title">Accent</h2>
       <p>Borde izquierdo en el acento del katachi activo.</p>
       <div slot="footer"><span>Accent</span></div>
     </lib-card>
-    <lib-card variant="inverse" kanji="影">
+    <lib-card surface="inverse" kanji="影">
       <span slot="tag">inverse</span>
       <h2 slot="title">Inverse</h2>
       <p>Fondo invertido respecto a la base del katachi.</p>

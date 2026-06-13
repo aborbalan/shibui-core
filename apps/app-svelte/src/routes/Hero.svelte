@@ -37,7 +37,7 @@
 
   <lib-button-group dark>
     <lib-button
-      variant="primary"
+      variant="solid"
       size="lg"
       onui-lib-click={() => navigate('/componentes')}
     >
@@ -91,7 +91,7 @@
 </section>
 
 <!-- ── CardsSection ──────────────────────────────────────────────────────── -->
-<section class="cards-bg">
+<section class="cards-bg" data-katachi="kintsugi">
   <lib-component-grid>
     <lib-card variant="featured" style="grid-column:span 2;">
       <span slot="tag">✦ Kintsugi · Firma</span>
@@ -99,19 +99,19 @@
       <p>El principio japonés de reparar con oro. En Shibui, la variante kintsugi aplica gradientes dorados animados, anillos cónicos y seams que convierten el borde en el elemento más bello del componente.</p>
       <span slot="footer">Featured · 2 columnas</span>
     </lib-card>
-    <lib-card variant="kintsugi">
+    <lib-card>
       <span slot="tag">01–05 · Botones</span>
       <h3 slot="title">Buttons</h3>
       <p>Primary, outline, ghost, liquid, group y speed dial. Kintsugi y glitch como variantes adicionales.</p>
       <span slot="footer">Atom</span>
     </lib-card>
-    <lib-card variant="kintsugi">
+    <lib-card>
       <span slot="tag">28–29 · Formularios</span>
       <h3 slot="title">Inputs</h3>
       <p>Text inputs, select, checkbox, radio, switch, pin code y rich text editor.</p>
       <span slot="footer">Molecule</span>
     </lib-card>
-    <lib-card variant="kintsugi">
+    <lib-card>
       <span slot="tag">53 · 65 · 66 · Layout</span>
       <h3 slot="title">Nav</h3>
       <p>Header, sidebar y tabs. Mega-nav, colapsable, icon rail, centrado editorial y kintsugi.</p>
@@ -158,7 +158,7 @@
 </section>
 
 <!-- ── CardsShowcase ─────────────────────────────────────────────────────── -->
-<section class="cards-bg">
+<section class="cards-bg" data-katachi="kintsugi">
   <lib-component-grid style="--cg-cols:repeat(3,1fr);">
     {#each SHOWCASE_CARDS as card}
       <lib-card variant={card.variant} kanji={card.kanji}>

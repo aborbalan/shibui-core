@@ -3,7 +3,7 @@
    ============================================================ */
 
 export interface EditorToolbarTemplateProps {
-  filename:  string | null;
+  filename:  string;
   dirty:     boolean;
   saving:    boolean;
   showOpen:  boolean;

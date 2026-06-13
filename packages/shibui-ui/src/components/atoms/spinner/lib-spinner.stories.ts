@@ -24,7 +24,7 @@ const meta: Meta<LibSpinnerArgs> = {
     },
     tone: {
       control: 'select',
-      options: ['ink', 'accent', 'cool'],
+      options: ['default', 'accent', 'info'],
       description: 'Tono de color (afecta a enso y sumi)',
     },
     dark: {
@@ -60,7 +60,7 @@ export const Playground: Story = {
   args: {
     theme: 'enso',
     size:    'md',
-    tone:    'ink',
+    tone:    'default',
     dark:    false,
     label:   'Cargando',
   },
@@ -80,7 +80,7 @@ export const Enso: Story = {
         ${(['sm','md','lg'] as const).map(s => html`
           <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
             <lib-spinner theme="enso" size="${s}"></lib-spinner>
-            <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;">${s} · ink</span>
+            <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;">${s} · default</span>
           </div>
         `)}
         <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
@@ -88,8 +88,8 @@ export const Enso: Story = {
           <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;">md · accent</span>
         </div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-          <lib-spinner theme="enso" size="md" tone="cool"></lib-spinner>
-          <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;">md · cool</span>
+          <lib-spinner theme="enso" size="md" tone="info"></lib-spinner>
+          <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;">md · info</span>
         </div>
       </div>
 
@@ -124,12 +124,12 @@ export const Sumi: Story = {
         ${(['sm','md','lg'] as const).map(s => html`
           <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
             <lib-spinner theme="sumi" size="${s}"></lib-spinner>
-            <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;">${s} · ink</span>
+            <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;">${s} · default</span>
           </div>
         `)}
         <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-          <lib-spinner theme="sumi" size="md" tone="cool"></lib-spinner>
-          <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;">md · cool</span>
+          <lib-spinner theme="sumi" size="md" tone="info"></lib-spinner>
+          <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;">md · info</span>
         </div>
       </div>
 
@@ -196,7 +196,7 @@ export const Shizuku: Story = {
         ${(['sm','md','lg'] as const).map(s => html`
           <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
             <lib-spinner theme="shizuku" size="${s}"></lib-spinner>
-            <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;">${s} · ink</span>
+            <span style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;">${s} · default</span>
           </div>
         `)}
       </div>

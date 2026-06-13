@@ -1,7 +1,7 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '../../atoms/icon/lib-icon.component';
-import type { LibCloseVariant, LibCloseSize, LibCloseIcon } from './lib-close-button.html';
+import type { LibCloseVariant, LibCloseTone, LibCloseSurface, LibCloseSize, LibCloseIcon } from './lib-close-button.html';
 import { closeButtonTemplate } from './lib-close-button.html';
 import closeButtonCss from './lib-close-button.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
@@ -18,7 +18,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * @example
  * <lib-close-button variant="ghost" size="md"></lib-close-button>
  * <lib-close-button variant="subtle" size="lg"></lib-close-button>
- * <lib-close-button variant="on-dark" size="md"></lib-close-button>
+ * <lib-close-button surface="dark" size="md"></lib-close-button>
  */
 @customElement('lib-close-button')
 export class LibCloseButton extends LitElement {
@@ -27,9 +27,17 @@ export class LibCloseButton extends LitElement {
     css`${unsafeCSS(closeButtonCss)}`,
   ];
 
-  /** Variante visual */
+  /** Tratamiento visual */
   @property({ type: String, reflect: true })
   variant: LibCloseVariant = 'ghost';
+
+  /** Tinte semántico (default · error) */
+  @property({ type: String, reflect: true })
+  tone: LibCloseTone = 'default';
+
+  /** Superficie (default · dark) */
+  @property({ type: String, reflect: true })
+  surface: LibCloseSurface = 'default';
 
   /** Tamaño: sm (24px) · md (32px) · lg (40px) · xl (48px) */
   @property({ type: String, reflect: true })
@@ -48,7 +56,7 @@ export class LibCloseButton extends LitElement {
 
   /** Texto accesible del boton */
   @property({ type: String, attribute: 'aria-label' })
-  override ariaLabel: string | null = 'Cerrar';
+  override ariaLabel = 'Cerrar';
 
   private _handleClick(e: Event): void {
     if (this.disabled) {
@@ -71,7 +79,7 @@ export class LibCloseButton extends LitElement {
       size: this.size,
       icon: this.icon,
       disabled: this.disabled,
-      ariaLabel: this.ariaLabel ?? 'Cerrar',
+      ariaLabel: this.ariaLabel || 'Cerrar',
       onClick: this._handleClick.bind(this),
     });
   }

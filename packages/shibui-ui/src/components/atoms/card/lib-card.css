@@ -284,26 +284,26 @@
   /* ── Inverse ── */
   /* Fondo invertido: siempre contrasta con el base de la página */
 
-  :host([variant="inverse"]) .card {
+  :host([surface="inverse"]) .card {
     background: var(--bg-inverse);
     border-color: var(--border-default);
   }
 
-  :host([variant="inverse"]) ::slotted([slot="title"]) {
+  :host([surface="inverse"]) ::slotted([slot="title"]) {
     color: var(--text-inverse);
   }
 
-  :host([variant="inverse"]) .card-body {
+  :host([surface="inverse"]) .card-body {
     color: var(--text-inverse);
     opacity: 0.7;
   }
 
-  :host([variant="inverse"]) .card-footer {
+  :host([surface="inverse"]) .card-footer {
     border-top-color: var(--border-default);
     color: var(--text-muted);
   }
 
-  :host([variant="inverse"]) ::slotted([slot="tag"]) {
+  :host([surface="inverse"]) ::slotted([slot="tag"]) {
     color: var(--text-muted);
   }
 
@@ -311,7 +311,7 @@
   /* Borde izquierdo de énfasis — el color viene de la prop accent-color
      o del acento activo del katachi */
 
-  :host([variant="accent"]) .card {
+  :host([tone="accent"]) .card {
     border-left: 3px solid var(--card-accent-color, var(--color-kaki-400));
     padding-left: calc(var(--lib-space-lg) - 3px);
   }

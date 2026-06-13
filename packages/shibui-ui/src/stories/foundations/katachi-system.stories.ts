@@ -191,9 +191,9 @@ export const Celadon: Story = {
           </p>
           <div style="display:flex;flex-wrap:wrap;gap:8px;">
             <lib-button>Primary</lib-button>
-            <lib-button variant="secondary">Secondary</lib-button>
+            <lib-button variant="outlined">Secondary</lib-button>
             <lib-button variant="ghost">Ghost</lib-button>
-            <lib-button variant="accent">Accent</lib-button>
+            <lib-button tone="accent">Accent</lib-button>
           </div>
         </div>
 

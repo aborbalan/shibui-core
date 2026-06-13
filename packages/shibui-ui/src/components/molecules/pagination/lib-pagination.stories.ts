@@ -13,7 +13,7 @@ const meta: Meta = {
     currentPage:  { control: { type: 'number' } },
     siblings:     { control: { type: 'range', min: 0, max: 3, step: 1 } },
     size:         { control: 'select', options: ['sm', 'md', 'lg'] },
-    variant:      { control: 'select', options: ['default', 'outline', 'ghost'] },
+    variant:      { control: 'select', options: ['solid', 'outlined', 'ghost'] },
     dark:         { control: 'boolean' },
     showInfo:     { control: 'boolean' },
   },
@@ -38,7 +38,7 @@ const label = (text: string): TemplateResult => html`
 export const Playground: Story = {
   args: {
     totalItems: 120, itemsPerPage: 10, currentPage: 5,
-    siblings: 1, size: 'md', variant: 'default', dark: false, showInfo: false,
+    siblings: 1, size: 'md', variant: 'solid', dark: false, showInfo: false,
   },
   render: (args): TemplateResult => html`
     <div style="padding:2rem;">
@@ -75,13 +75,13 @@ export const Sizes: Story = {
 
 /* ── Variantes ── */
 export const Variants: Story = {
-  name: 'Variantes — default · outline · ghost',
+  name: 'Variantes — solid · outlined · ghost',
   render: (): TemplateResult => wrap('var(--bg-surface)', html`
-    ${label('default')}
-    <lib-pagination total-items="100" current-page="5" variant="default"></lib-pagination>
+    ${label('solid')}
+    <lib-pagination total-items="100" current-page="5" variant="solid"></lib-pagination>
 
-    ${label('outline')}
-    <lib-pagination total-items="100" current-page="5" variant="outline"></lib-pagination>
+    ${label('outlined')}
+    <lib-pagination total-items="100" current-page="5" variant="outlined"></lib-pagination>
 
     ${label('ghost')}
     <lib-pagination total-items="100" current-page="5" variant="ghost"></lib-pagination>
@@ -97,8 +97,8 @@ export const Dark: Story = {
       ${label('dark + default')}
       <lib-pagination total-items="100" current-page="5" dark></lib-pagination>
 
-      ${label('dark + outline')}
-      <lib-pagination total-items="100" current-page="5" dark variant="outline"></lib-pagination>
+      ${label('dark + outlined')}
+      <lib-pagination total-items="100" current-page="5" dark variant="outlined"></lib-pagination>
     </div>
   `,
 };
@@ -218,9 +218,9 @@ export const InTable: Story = {
 const _katachi = createKatachiStories<object>(() => html`
   <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-md);">
     ${label('sm · default')}
-    <lib-pagination total-items="100" current-page="3" size="sm" variant="default"></lib-pagination>
-    ${label('md · outline')}
-    <lib-pagination total-items="100" current-page="5" size="md" variant="outline"></lib-pagination>
+    <lib-pagination total-items="100" current-page="3" size="sm" variant="solid"></lib-pagination>
+    ${label('md · outlined')}
+    <lib-pagination total-items="100" current-page="5" size="md" variant="outlined"></lib-pagination>
     ${label('lg · ghost')}
     <lib-pagination total-items="100" current-page="7" size="lg" variant="ghost"></lib-pagination>
     ${label('show-info')}

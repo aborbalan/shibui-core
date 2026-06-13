@@ -42,7 +42,7 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
       <header style={{ marginBottom: "2.5rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
           <LibBadge
-            variant={statusVariant[component.status] ?? "default"}
+            tone={statusVariant[component.status] ?? "default"}
             size="sm"
             pill
           >

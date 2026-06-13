@@ -63,12 +63,12 @@ test.describe('React 19 × @shibui-ui/ui — consumer contract', () => {
 
   // ── 2b. Properties — string enum ──────────────────────────────────────────
 
-  test('prop string: variant="danger" se refleja como atributo en el host', async ({ page }) => {
-    const btn = page.locator('[data-testid="btn-danger"]');
+  test('prop string: tone="error" se refleja como atributo en el host', async ({ page }) => {
+    const btn = page.locator('[data-testid="btn-error"]');
     // Lit reflect:true asegura que la propiedad se refleja como atributo.
-    // React envía "danger" como atributo directamente (valor string).
-    const attr = await btn.getAttribute('variant');
-    expect(attr).toBe('danger');
+    // React envía "error" como atributo directamente (valor string).
+    const attr = await btn.getAttribute('tone');
+    expect(attr).toBe('error');
   });
 
   // ── 3. Eventos ─────────────────────────────────────────────────────────────

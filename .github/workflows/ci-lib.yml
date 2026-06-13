@@ -47,10 +47,14 @@ jobs:
       - name: 🧹 Lint
         run: pnpm --filter @shibui-ui/ui lint
       - name: 🎯 Cohesión de props (contrato del DS)
-        # Valida que el manifest cumple docs/props-contract.md (size/tone/tint/
-        # surface canónicos, sin '' ni unknown, defaults válidos). El allowlist
-        # KNOWN_PENDING cubre ejes aún en migración.
+        # Valida que el manifest cumple docs/props-contract.md (C1–C12: size/tone/
+        # tint/surface/variant canónicos, danger prohibido, estéticas solo en theme,
+        # sin '' ni unknown, defaults válidos). KNOWN_PENDING vacío = DS 100% cohesivo.
         run: pnpm --filter @shibui-ui/ui test:cohesion
+      - name: 🧪 Unit tests (extractor wrappers · icon-registry · utils)
+        # Suite unitaria completa (vitest). Antes solo corría test:stories, lo que
+        # ocultaba drift en el generador de wrappers y en el registro de iconos.
+        run: pnpm --filter @shibui-ui/ui test:unit
 
   build-ui:
     name: 🏗️ Build UI Library

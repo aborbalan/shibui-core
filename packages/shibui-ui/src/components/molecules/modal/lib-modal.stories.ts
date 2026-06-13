@@ -2,13 +2,13 @@
 import { html, TemplateResult } from 'lit';
 import './lib-modal.component';
 import type { LibModal } from './lib-modal.component';
-import type { ModalAnimate, ModalIconTone, ModalSize, ModalVariant } from './lib-modal.types';
+import type { ModalAnimate, ModalIconTone, ModalSize, ModalVariant, ModalTone } from './lib-modal.types';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 /* ── Tipos de args ──────────────────────────────────────────── */
 type LibModalArgs = Pick<
   LibModal,
-  'open' | 'size' | 'variant' | '_animate' | 'dark' |
+  'open' | 'size' | 'variant' | 'tone' | '_animate' | 'dark' |
   'heading' | 'subtitle' | 'footerInfo' | 'noBackdropClose'
 > & { iconTone: ModalIconTone | null };
 
@@ -71,7 +71,8 @@ const meta: Meta<LibModalArgs> = {
   component: 'lib-modal',
   argTypes: {
     size:    { control: 'select', options: ['xs','sm','md','lg','xl','full'] satisfies ModalSize[] },
-    variant: { control: 'select', options: ['default','editorial','error'] satisfies ModalVariant[] },
+    variant: { control: 'select', options: ['solid','editorial'] satisfies ModalVariant[] },
+    tone:    { control: 'select', options: ['default','error'] satisfies ModalTone[] },
     _animate: { control: 'select', options: ['scale','slide-up','slide-down'] satisfies ModalAnimate[] },
     iconTone:        { control: 'select', options: [null,'default','accent','secondary','error','info'] },
     open:            { control: 'boolean' },
@@ -95,7 +96,8 @@ export const Playground: Story = {
     subtitle:        'table · #32 · v0.1.0',
     iconTone:        'accent',
     size:            'md',
-    variant:         'default',
+    variant:         'solid',
+    tone:            'default',
     _animate:         'scale',
     dark:            false,
     footerInfo:      '* campos obligatorios',
@@ -113,6 +115,7 @@ export const Playground: Story = {
         .iconTone="${args.iconTone}"
         size="${args.size}"
         variant="${args.variant}"
+        tone="${args.tone}"
         _animate="${args._animate}"
         ?dark="${args.dark}"
         footer-info="${args.footerInfo}"
@@ -211,7 +214,7 @@ export const Variants: Story = {
       ${trigger('Danger', 'mo-v-danger', true)}
       <lib-modal id="mo-v-danger"
         heading="Eliminar proyecto" subtitle="acción irreversible"
-        icon-tone="error" variant="error" size="sm"
+        icon-tone="error" tone="error" size="sm"
         @ui-lib-modal-close="${closeOnEvent}"
       >
         <span slot="icon">🗑</span>

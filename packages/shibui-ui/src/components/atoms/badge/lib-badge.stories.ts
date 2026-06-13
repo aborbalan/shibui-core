@@ -5,7 +5,7 @@ import './lib-badge.component';
 import type { LibBadge } from './lib-badge.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
-type LibBadgeStoryArgs = Pick<LibBadge, 'variant' | 'size' | 'dot' | 'pill'> & {
+type LibBadgeStoryArgs = Pick<LibBadge, 'tone' | 'size' | 'dot' | 'pill'> & {
   slotContent?: string;
 };
 
@@ -15,10 +15,10 @@ const meta: Meta<LibBadgeStoryArgs> = {
   component: 'lib-badge',
 
   argTypes: {
-    variant: {
+    tone: {
       control: 'select',
       options: ['default', 'accent', 'info', 'strong', 'error', 'success', 'warning'],
-      description: 'Variante semántica del badge',
+      description: 'Tono semántico del badge',
     },
     size: {
       control: 'select',
@@ -41,7 +41,7 @@ const meta: Meta<LibBadgeStoryArgs> = {
 
   render: (args): TemplateResult => html`
     <lib-badge
-      variant=${args.variant}
+      tone=${args.tone}
       size=${args.size}
       ?dot=${args.dot}
       ?pill=${args.pill}
@@ -56,7 +56,7 @@ type Story = StoryObj<LibBadgeStoryArgs>;
 
 export const Playground: Story = {
   args: {
-    variant: 'default',
+    tone: 'default',
     size: 'md',
     dot: false,
     pill: false,
@@ -67,13 +67,13 @@ export const Playground: Story = {
 export const AllVariants: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; padding:24px;">
-      <lib-badge variant="default">Default</lib-badge>
-      <lib-badge variant="accent">Accent</lib-badge>
-      <lib-badge variant="info">Info</lib-badge>
-      <lib-badge variant="strong">Strong</lib-badge>
-      <lib-badge variant="error">Error</lib-badge>
-      <lib-badge variant="success">Success</lib-badge>
-      <lib-badge variant="warning">Warning</lib-badge>
+      <lib-badge tone="default">Default</lib-badge>
+      <lib-badge tone="accent">Accent</lib-badge>
+      <lib-badge tone="info">Info</lib-badge>
+      <lib-badge tone="strong">Strong</lib-badge>
+      <lib-badge tone="error">Error</lib-badge>
+      <lib-badge tone="success">Success</lib-badge>
+      <lib-badge tone="warning">Warning</lib-badge>
     </div>
   `,
 };
@@ -81,11 +81,11 @@ export const AllVariants: Story = {
 export const WithDot: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; padding:24px;">
-      <lib-badge variant="default" dot>Pendiente</lib-badge>
-      <lib-badge variant="success" dot>Activo</lib-badge>
-      <lib-badge variant="error"   dot>Critico</lib-badge>
-      <lib-badge variant="warning" dot>Atencion</lib-badge>
-      <lib-badge variant="info"    dot>Info</lib-badge>
+      <lib-badge tone="default" dot>Pendiente</lib-badge>
+      <lib-badge tone="success" dot>Activo</lib-badge>
+      <lib-badge tone="error"   dot>Critico</lib-badge>
+      <lib-badge tone="warning" dot>Atencion</lib-badge>
+      <lib-badge tone="info"    dot>Info</lib-badge>
     </div>
   `,
 };
@@ -93,10 +93,10 @@ export const WithDot: Story = {
 export const Pill: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; padding:24px;">
-      <lib-badge variant="accent"  pill>Nuevo</lib-badge>
-      <lib-badge variant="success" pill dot>Online</lib-badge>
-      <lib-badge variant="strong"  pill>v1.2.0</lib-badge>
-      <lib-badge variant="info"    pill>Beta</lib-badge>
+      <lib-badge tone="accent"  pill>Nuevo</lib-badge>
+      <lib-badge tone="success" pill dot>Online</lib-badge>
+      <lib-badge tone="strong"  pill>v1.2.0</lib-badge>
+      <lib-badge tone="info"    pill>Beta</lib-badge>
     </div>
   `,
 };
@@ -104,8 +104,8 @@ export const Pill: Story = {
 export const Sizes: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:center; padding:24px;">
-      <lib-badge variant="accent" size="sm">Small</lib-badge>
-      <lib-badge variant="accent" size="md">Medium</lib-badge>
+      <lib-badge tone="accent" size="sm">Small</lib-badge>
+      <lib-badge tone="accent" size="md">Medium</lib-badge>
     </div>
   `,
 };
@@ -122,24 +122,24 @@ export const InContext: Story = {
     ">
       <div style="display:flex; align-items:center; gap:var(--lib-space-sm);">
         <span style="font-size:var(--text-base); color:var(--text-primary);">Componente lib-badge</span>
-        <lib-badge variant="info" size="sm">Nuevo</lib-badge>
+        <lib-badge tone="info" size="sm">Nuevo</lib-badge>
       </div>
       <div style="display:flex; flex-direction:column; gap:var(--lib-space-sm);">
         <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--lib-space-sm) 0; border-bottom:1px solid var(--border-subtle);">
           <span style="font-size:var(--text-sm); color:var(--text-secondary);">Deploy #142</span>
-          <lib-badge variant="success" dot>Completado</lib-badge>
+          <lib-badge tone="success" dot>Completado</lib-badge>
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--lib-space-sm) 0; border-bottom:1px solid var(--border-subtle);">
           <span style="font-size:var(--text-sm); color:var(--text-secondary);">Deploy #141</span>
-          <lib-badge variant="error" dot>Fallido</lib-badge>
+          <lib-badge tone="error" dot>Fallido</lib-badge>
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--lib-space-sm) 0; border-bottom:1px solid var(--border-subtle);">
           <span style="font-size:var(--text-sm); color:var(--text-secondary);">Deploy #140</span>
-          <lib-badge variant="warning" dot>En revision</lib-badge>
+          <lib-badge tone="warning" dot>En revision</lib-badge>
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--lib-space-sm) 0;">
           <span style="font-size:var(--text-sm); color:var(--text-secondary);">Deploy #139</span>
-          <lib-badge variant="default">Archivado</lib-badge>
+          <lib-badge tone="default">Archivado</lib-badge>
         </div>
       </div>
     </div>
@@ -148,32 +148,32 @@ export const InContext: Story = {
 
 /* ═══════════════════════════════════════════════════════════════
    KATACHI · 形 · Las 6 historias estándar
-   lib-badge variant="default" usa --lib-comp-bg-subtle y
+   lib-badge tone="default" usa --lib-comp-bg-subtle y
    --lib-comp-fg — adapta al katachi activo sin CSS adicional.
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
   <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);">
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-sm);">
-      <lib-badge variant="default">Default</lib-badge>
-      <lib-badge variant="accent">Accent</lib-badge>
-      <lib-badge variant="info">Info</lib-badge>
-      <lib-badge variant="strong">Strong</lib-badge>
-      <lib-badge variant="error">Error</lib-badge>
-      <lib-badge variant="success">Success</lib-badge>
-      <lib-badge variant="warning">Warning</lib-badge>
+      <lib-badge tone="default">Default</lib-badge>
+      <lib-badge tone="accent">Accent</lib-badge>
+      <lib-badge tone="info">Info</lib-badge>
+      <lib-badge tone="strong">Strong</lib-badge>
+      <lib-badge tone="error">Error</lib-badge>
+      <lib-badge tone="success">Success</lib-badge>
+      <lib-badge tone="warning">Warning</lib-badge>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-sm);">
-      <lib-badge variant="default" dot size="sm">sm</lib-badge>
-      <lib-badge variant="accent" dot size="sm">sm</lib-badge>
-      <lib-badge variant="success" dot size="md">md</lib-badge>
-      <lib-badge variant="error" dot size="md">md</lib-badge>
+      <lib-badge tone="default" dot size="sm">sm</lib-badge>
+      <lib-badge tone="accent" dot size="sm">sm</lib-badge>
+      <lib-badge tone="success" dot size="md">md</lib-badge>
+      <lib-badge tone="error" dot size="md">md</lib-badge>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-sm);">
-      <lib-badge variant="accent" pill>Nuevo</lib-badge>
-      <lib-badge variant="success" pill dot>Online</lib-badge>
-      <lib-badge variant="strong" pill>v1.2.0</lib-badge>
-      <lib-badge variant="info" pill>Beta</lib-badge>
+      <lib-badge tone="accent" pill>Nuevo</lib-badge>
+      <lib-badge tone="success" pill dot>Online</lib-badge>
+      <lib-badge tone="strong" pill>v1.2.0</lib-badge>
+      <lib-badge tone="info" pill>Beta</lib-badge>
     </div>
   </div>
 `);
@@ -194,8 +194,8 @@ export const KatachiExplicitOverride: Story = {
           <strong style="font-family:'Shippori Mincho',serif;font-size:1.5rem;color:var(--katachi-accent);">金</strong>&nbsp;katachi="kintsugi" · default
         </header>
         <div style="display:flex;gap:var(--lib-space-sm);">
-          <lib-badge variant="default">Ambient</lib-badge>
-          <lib-badge variant="default" dot>Inherits</lib-badge>
+          <lib-badge tone="default">Ambient</lib-badge>
+          <lib-badge tone="default" dot>Inherits</lib-badge>
         </div>
       </section>
 
@@ -204,10 +204,10 @@ export const KatachiExplicitOverride: Story = {
           <strong style="font-family:'Shippori Mincho',serif;font-size:1.5rem;color:var(--katachi-accent);">金</strong>&nbsp;katachi="kintsugi" · variants explícitos
         </header>
         <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;">
-          <lib-badge variant="accent">Accent</lib-badge>
-          <lib-badge variant="info">Info</lib-badge>
-          <lib-badge variant="success">Success</lib-badge>
-          <lib-badge variant="error">Error</lib-badge>
+          <lib-badge tone="accent">Accent</lib-badge>
+          <lib-badge tone="info">Info</lib-badge>
+          <lib-badge tone="success">Success</lib-badge>
+          <lib-badge tone="error">Error</lib-badge>
         </div>
       </section>
     </div>
@@ -222,7 +222,7 @@ export const KatachiExplicitOverride: Story = {
 export const TestDotRenders: Story = {
   name: 'Test · dot=true renderiza el indicador visual',
   tags: ['test'],
-  args: { variant: 'success', dot: true, slotContent: 'Activo' },
+  args: { tone: 'success', dot: true, slotContent: 'Activo' },
   play: async ({ canvasElement }): Promise<void> => {
     const el = canvasElement.querySelector('lib-badge') as HTMLElement;
     const dot = el.shadowRoot!.querySelector('.badge__dot');
@@ -235,7 +235,7 @@ export const TestDotRenders: Story = {
 export const TestNoDotByDefault: Story = {
   name: 'Test · dot=false no renderiza el indicador',
   tags: ['test'],
-  args: { variant: 'default', dot: false, slotContent: 'Badge' },
+  args: { tone: 'default', dot: false, slotContent: 'Badge' },
   play: async ({ canvasElement }): Promise<void> => {
     const el = canvasElement.querySelector('lib-badge') as HTMLElement;
     const dot = el.shadowRoot!.querySelector('.badge__dot');

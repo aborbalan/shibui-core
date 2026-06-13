@@ -89,8 +89,6 @@ export interface SidebarLink {
   disabled?: boolean;
 }
 
-export type SidebarVariant = 'dark' | 'light' | 'kintsugi' | 'glitch';
-
 export interface SidebarSocial {
   /** URL de destino */
   href: string;
@@ -103,12 +101,6 @@ export interface SidebarSocial {
 export interface ActiveElement extends HTMLElement {
   active: string | number; // Define el tipo real de tu ID
 }
-
-export type FooterVariant =
-  | 'social'
-  | 'accordion'
-  | 'kintsugi'
-  | 'glitch';
 
 export interface FooterLink {
   /** Texto visible del enlace */

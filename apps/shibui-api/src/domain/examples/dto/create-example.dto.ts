@@ -36,7 +36,7 @@ export class CreateExampleDto {
   description?: string;
 
   @ApiProperty({
-    example: '<shibui-button variant="primary">Click me</shibui-button>',
+    example: '<shibui-button variant="solid">Click me</shibui-button>',
     description: 'Source code snippet',
   })
   @IsString()
