@@ -113,6 +113,12 @@ jobs:
         run: pnpm --filter @shibui-ui/ui exec playwright install chromium --with-deps
       - name: 🧪 Run Story Tests
         run: pnpm --filter @shibui-ui/ui test:stories
+      - name: 🔬 Props Conformance (Nivel 2 — reflect + delta visual)
+        # Instancia cada componente en Chromium y verifica que los 7 ejes de
+        # cohesión (size/tone/surface/theme/variant/display/tint) reflejan su
+        # atributo y que cada opción cambia el render. Caza selectores
+        # :host([attr=…]) huérfanos tras los renames que el Nivel 1 no ve.
+        run: pnpm --filter @shibui-ui/ui test:conformance
 
   # ─────────────────────────────────────────────────────────────────────────
   # Consumer Contract Tests
