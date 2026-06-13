@@ -1,33 +1,33 @@
 # Mapa de migración de props — cohesión del design system
 
-> Keystone de la refactorización de cohesión (`feature/manifest-prop-cohesion`).
-> Estado: **borrador ejecutable**. Cada fila indica el estado ACTUAL y el DESTINO canónico.
+> Keystone de la refactorización de cohesión. Conserva el **plan y las decisiones**
+> (tablas históricas abajo); el estado vivo está en `cohesion-progress.md`.
 > El manifest (`components.generated.ts`) es el byproduct verificable, no el objetivo.
 
-## Progreso (log de tandas)
+## ✅ MIGRACIÓN COMPLETA (en `develop`, hasta #497)
 
-- ✅ **Phase 0**: contrato `src/types/index.ts` (dedup `public.ts`) + este mapa.
-- ✅ **Extractor** (`generate-components-api.ts`): resolución recursiva de alias, filtra `''`, ignora `undefined`.
-- ✅ **SIZE**: sentinels `''` (button-group, tabs). Resto ya canónico.
-- ✅ **Tanda 1 — tone/tint atoms**: avatar→tint, glass-card→tint, empty-state(neutral→default),
-  checkbox/radio/progress-circle (variant→tone).
-- ✅ **Tanda 2 — tone+surface**: counter (on-dark→surface, +muted), range-slider (neutral→muted,
-  inverse/dark→surface), eyebrow (neutral→default, inverse→surface), gauge/sparkline → `LibSemanticTone`.
-  Contrato ampliado: `LibSemanticTone` + `LibTone=…|muted` + `LibSurface` en uso.
-- ✅ **Tanda 3 — color→tone**: chip (color→tone, `strong` extensión documentada), divider (color→tone).
-- ✅ **Tanda 4 — danger→error**: close-button, button-liquid, dialog, modal (valor `danger`→`error` en `variant`).
-  Pendiente button/button-split (en su batch de split). NO tocados: tokens `--*danger`, clases slotted `is-danger`.
-- 🔵 **Tanda 5 — estéticas→theme (EN CURSO)**: spinner (variant→theme), text-glitch (variant→theme).
-  Pendientes del bloque: step, stepper, burger, sidebar, footer, header, drawer, background.
-  Nota: stepper.css no tiene selectores `[variant=]` (revisar cómo aplica variant); step vive en `atoms/step`.
-- ⏳ **Pendiente**: ver tabla VARIANT+THEME (header/sidebar/footer/spinner/burger/text-glitch/background/
-  drawer/step/stepper → `theme`), button cluster (split variant+tone), display (data-table/reading-progress/
-  color-picker/accordion), dialog/modal/close-button/button-liquid (`danger`→`error`), surface en
-  tooltip/kbd/switch/segmented/content-pillar/display-heading/quote/skeleton/breadcrumb, status (step/
-  timeline-item), flag-o-valor (label/error/tooltip/active/spotlight/counter), normalizaciones de tipo,
-  spinner tone (ink/cool decorativo), rating color, checkbox-card color, parallax color.
-- ⏳ **Phase 2**: wrappers + apps. **Phase 4**: descriptions + `--strict` extractor + suite de tests
-  (`docs/component-props-testing.md`).
+Todas las tandas mergeadas. El contrato **C1–C12** está activo en `test:cohesion`
+(CI) y `KNOWN_PENDING` está vacío. Las tablas de abajo son el registro del plan
+ejecutado; algunos destinos tentativos cambiaron al ejecutar (ver notas).
+
+**Desviaciones del plan original** (lo de abajo refleja el plan, no siempre el resultado):
+- `LibSurface` final = `'default' | 'light' | 'dark' | 'inverse'` (no `…|on-dark`; `on-dark`→`dark`).
+- `reading-progress.gold` → `theme="kintsugi"` (no `accent`); `filled` → `tone="default"`.
+- `spinner.tone` ink/cool → `default`/`info` (LibTone), no theme.
+- `card.featured` se quedó como **extensión de `variant`** (`VARIANT_EXTRA`), no `theme`.
+- `gadget-frame` glass/card → `theme` (no `variant`).
+- `tabs/breadcrumb/segmented-control` shape variants → `display` (no `variant`).
+- `VARIANT_EXTRA` (lista cerrada): card→`featured`, modal→`editorial`, close-button→`filled-round`.
+
+**Ítems que el plan listaba y NO eran deuda real** (verificado en fuente):
+- **flag-o-valor** (`label/error/tooltip/active/spotlight/counter` como `string\|boolean`): **0 en el
+  manifest y en fuente** — nunca existieron como tal. `spotlight-card.spotlight` es enum string.
+- **`number\|string`**: sólo en campos internos no-prop (`TabItem.badge`, param de `renderValue`) — no
+  son atributos del host, no aplican al contrato.
+- **`status`** (step/timeline-item): se deja como **dominio propio** (vocabularios `pending/completed/
+  done` con significado propio, distintos de `LibStatus`); nunca fue decisión RESUELTA de migrar.
+
+**Opcional (no bloqueante, no es cohesión de vocabulario):** tests Nivel 2/3 visuales · `--strict` en el extractor.
 
 ## Tipos canónicos (fuente: `src/types/index.ts`)
 
@@ -36,7 +36,9 @@
 - `LibAvatarSize = LibSize | '2xl'` · `LibDisplaySize = LibSize | '2xl'` (extensiones documentadas).
 - `LibTone = 'default' | 'accent' | 'info' | 'success' | 'warning' | 'error'` · default `default`.
 - `LibVariant = 'solid' | 'outlined' | 'ghost' | 'subtle'` · default `solid` (tratamiento visual).
-- `LibSurface = 'default' | 'inverse' | 'on-dark'` (modificadores de superficie, NO tone).
+  Extensiones documentadas vía `VARIANT_EXTRA` (lista cerrada): card→`featured`, modal→`editorial`,
+  close-button→`filled-round`.
+- `LibSurface = 'default' | 'light' | 'dark' | 'inverse'` (modificadores de superficie, NO tone).
 - `theme` → eje estético signature por componente (`Lib<Comp>Theme`). **Fuera del mandato de cohesión.**
 
 ## Reglas globales de renombrado
