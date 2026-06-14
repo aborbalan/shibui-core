@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hanko · Fases de desarrollo</title>
+<style>
+  :root{
+    --bg:#14110f;--bg-soft:#1c1815;--panel:#221d19;--panel-2:#2a241f;
+    --ink:#ece4d8;--ink-soft:#bcae9c;--ink-faint:#8c8072;--line:#3a3128;
+    --celadon:#7fae9b;--celadon-deep:#4f7d6c;--kintsugi:#d9a441;--kintsugi-soft:#e8c27a;
+    --kaki:#c8623a;--sabi:#9a6f4e;--info:#6f9fc4;--error:#c0573f;--shuniku:#c5402f;
+    --radius:14px;
+    --mono:"SFMono-Regular",ui-monospace,"Cascadia Code","Fira Code",Consolas,monospace;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --serif:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(217,164,65,.07), transparent 60%),
+      radial-gradient(900px 500px at -10% 25%, rgba(127,174,155,.06), transparent 55%),
+      var(--bg);
+    color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:60px 28px 120px}
+
+  /* hero */
+  header.hero{margin-bottom:40px}
+  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--kintsugi);margin:0 0 14px}
+  h1{font-family:var(--serif);font-weight:600;font-size:2.5rem;line-height:1.12;margin:0 0 16px;letter-spacing:-.01em}
+  h1 .stamp{color:var(--shuniku)}
+  .lede{font-size:1.08rem;color:var(--ink-soft);max-width:64ch;margin:0}
+
+  /* overview strip */
+  .overview{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:34px 0 10px}
+  .ov{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px;position:relative;overflow:hidden}
+  .ov:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+  .ov.h1:before{background:var(--celadon)}.ov.h2:before{background:var(--kintsugi)}.ov.h3:before{background:var(--shuniku)}
+  .ov .hl{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .ov h3{margin:6px 0 4px;font-size:1.05rem;font-weight:650}
+  .ov p{margin:0;font-size:.84rem;color:var(--ink-soft)}
+  .ov .ph{font-family:var(--mono);font-size:.72rem;color:var(--kintsugi);margin-top:8px;display:block}
+
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 0}
+  .chip{font-family:var(--mono);font-size:.76rem;background:var(--panel-2);border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;color:var(--ink-soft)}
+  .chip b{color:var(--kintsugi-soft);font-weight:600}
+
+  .seam{height:2px;border:0;margin:38px 0 30px;
+    background:linear-gradient(90deg,transparent,var(--kintsugi) 22%,var(--kintsugi-soft) 50%,var(--kintsugi) 78%,transparent);opacity:.5}
+
+  /* legend */
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin:0 0 30px;font-size:.8rem;color:var(--ink-soft)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .badge{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:6px;border:1px solid}
+  .b-done{color:var(--celadon);border-color:var(--celadon-deep);background:rgba(127,174,155,.1)}
+  .b-wip{color:var(--kintsugi);border-color:#6e5a2e;background:rgba(217,164,65,.1)}
+  .b-todo{color:var(--ink-faint);border-color:var(--line);background:transparent}
+
+  /* timeline */
+  .timeline{position:relative;margin-left:8px}
+  .spine{position:absolute;left:23px;top:8px;bottom:8px;width:2px;
+    background:linear-gradient(180deg,var(--celadon),var(--kintsugi) 50%,var(--shuniku))}
+
+  .milestone{margin:34px 0 14px;display:flex;align-items:center;gap:14px;position:relative;z-index:2}
+  .milestone .ring{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
+    font-family:var(--serif);font-size:1.2rem;font-weight:700;background:var(--bg);flex:none}
+  .milestone.h1 .ring{border:2px solid var(--celadon);color:var(--celadon)}
+  .milestone.h2 .ring{border:2px solid var(--kintsugi);color:var(--kintsugi)}
+  .milestone.h3 .ring{border:2px solid var(--shuniku);color:var(--shuniku)}
+  .milestone .mt{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .milestone h2{font-family:var(--serif);font-size:1.4rem;font-weight:600;margin:2px 0 0;letter-spacing:-.01em}
+
+  .phase{position:relative;margin:0 0 14px 0;padding-left:64px}
+  .phase .node{position:absolute;left:15px;top:20px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:3px solid var(--sabi);z-index:2}
+  .phase.h1 .node{border-color:var(--celadon)}.phase.h2 .node{border-color:var(--kintsugi)}.phase.h3 .node{border-color:var(--shuniku)}
+  .phase.done .node{background:var(--celadon);border-color:var(--celadon)}
+  .phase.wip .node{background:var(--kintsugi);border-color:var(--kintsugi)}
+
+  .pcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;transition:.2s}
+  .pcard:hover{border-color:var(--celadon-deep);transform:translateX(2px)}
+  .pcard .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .pcard .fno{font-family:var(--mono);font-weight:700;font-size:1.05rem}
+  .phase.h1 .fno{color:var(--celadon)}.phase.h2 .fno{color:var(--kintsugi)}.phase.h3 .fno{color:var(--shuniku)}
+  .pcard h4{margin:0;font-size:1.12rem;font-weight:650;color:var(--ink)}
+  .pcard .body{margin:8px 0 0;color:var(--ink-soft);font-size:.92rem}
+  .pcard .deliv{margin:12px 0 0;font-size:.82rem;color:var(--ink-faint);font-family:var(--mono);display:flex;gap:8px;align-items:flex-start}
+  .pcard .deliv b{color:var(--kintsugi-soft);font-weight:600;flex:none}
+  .pcard .badge{margin-left:auto}
+  code{font-family:var(--mono);font-size:.85em;background:var(--panel-2);color:var(--kintsugi-soft);padding:.1em .38em;border-radius:5px;border:1px solid var(--line)}
+
+  .thesis-flag{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--shuniku);border:1px solid var(--shuniku);border-radius:6px;padding:3px 9px;margin-top:10px;background:rgba(197,64,47,.08)}
+
+  .firstbatch{border:1px dashed var(--kintsugi);border-radius:var(--radius);background:rgba(217,164,65,.05);
+    padding:16px 20px;margin:26px 0 0 64px}
+  .firstbatch .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--kintsugi);display:block;margin-bottom:5px}
+  .firstbatch p{margin:0;font-size:.9rem;color:var(--ink-soft)}
+
+  footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:.82rem;font-family:var(--mono)}
+  footer .gold{color:var(--kintsugi)}
+
+  @media(max-width:680px){
+    .wrap{padding:40px 16px 80px}h1{font-size:1.95rem}
+    .overview{grid-template-columns:1fr}
+    .phase{padding-left:54px}.firstbatch{margin-left:54px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">hanko · 判子 · plan de obra</p>
+  <h1>Fases de desarrollo <span class="stamp">F0 → F7</span></h1>
+  <p class="lede">Ocho fases en tres hitos. Cada fase tiene su criterio de cierre y solo arranca cuando la
+  anterior está estable. El primer sello (F2) valida la tesis del producto antes de invertir en profundidad.</p>
+
+  <div class="overview">
+    <div class="ov h1">
+      <span class="hl">Hito 1</span>
+      <h3>Cimientos e ingestión</h3>
+      <p>Esqueleto, modelo de datos, lectura del manifest y el primer sello a escala real.</p>
+      <span class="ph">F0 · F1 · F2</span>
+    </div>
+    <div class="ov h2">
+      <span class="hl">Hito 2</span>
+      <h3>Capas de verificación</h3>
+      <p>Contrato, accesibilidad y resiliencia: las tres dimensiones que sella hanko.</p>
+      <span class="ph">F3 · F4 · F5</span>
+    </div>
+    <div class="ov h3">
+      <span class="hl">Hito 3</span>
+      <h3>Reporte y desacople</h3>
+      <p>Trust Report + gates de CI, y la publicación npm (diferida).</p>
+      <span class="ph">F6 · F7</span>
+    </div>
+  </div>
+
+  <div class="meta">
+    <span class="chip">Esfuerzo F0–F6 ≈ <b>12–16 días</b></span>
+    <span class="chip">Primera tanda = <b>F0 + F1 + F2</b></span>
+    <span class="chip">Construido <b>desde 0</b> (no hereda infra de @shibui-ui/ui)</span>
+    <span class="chip">F0 <b>en main</b> (PR #502) · F1 <b>en curso</b></span>
+    <span class="chip">Actualizado <b>2026-06-14</b></span>
+  </div>
+</header>
+
+<hr class="seam">
+
+<div class="legend">
+  <span><i class="badge b-done">hecho</i> completado</span>
+  <span><i class="badge b-wip">en curso</i> en progreso</span>
+  <span><i class="badge b-todo">pendiente</i> no iniciada</span>
+</div>
+
+<div class="timeline">
+  <div class="spine"></div>
+
+  <!-- ===== HITO 1 ===== -->
+  <div class="milestone h1">
+    <div class="ring">壱</div>
+    <div>
+      <div class="mt">Hito 1</div>
+      <h2>Cimientos e ingestión</h2>
+    </div>
+  </div>
+
+  <div class="phase h1 done">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F0</span>
+        <h4>Cimientos + modelo de datos</h4>
+        <span class="badge b-done">hecho</span>
+      </div>
+      <p class="body">Esqueleto del paquete y tooling de test desde cero. El núcleo de esta fase es el
+      <strong>modelo de datos del contrato</strong>: la forma normalizada con la que hanko representa internamente
+      un componente leído del CEM. Todo lo demás cuelga de aquí.</p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span>modelo <code>src/core/contract.ts</code> + spec · <code>tsconfig</code> · Vitest + primer test · ADR-001 / ADR-002</span></p>
+      <p class="deliv"><b>✓ Mergeado ▸</b> <span>en <code>main</code> vía PR #502</span></p>
+    </div>
+  </div>
+
+  <div class="phase h1 wip">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F1</span>
+        <h4>Ingestión del manifest</h4>
+        <span class="badge b-wip">en curso</span>
+      </div>
+      <p class="body">Lectura del <code>custom-elements.json</code> (CEM) → modelo de datos interno. Aquí se define
+      el <strong>borde de ingestión</strong>, donde más adelante encajarán los adapters de formatos no estándar.</p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>ingestCem</code> (CEM → ContractSet) + <code>parseType</code> · <code>src/ingest/</code> · spec <code>ingest.md</code> · tests</span></p>
+      <p class="deliv"><b>▸ Falta ▸</b> <span>ejecutar <code>type-check</code> + <code>test</code> desde el repo principal</span></p>
+    </div>
+  </div>
+
+  <div class="phase h1 todo">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F2</span>
+        <h4>Smoke · primer sello</h4>
+        <span class="badge b-todo">pendiente</span>
+      </div>
+      <p class="body">Validación mínima end-to-end sobre <strong>10 → 99 componentes</strong> de shibui-ui. Emite el
+      primer sello, aunque sea básico. Responde la pregunta clave: ¿el flujo <em>manifest → verificación → sello</em>
+      funciona a escala real?</p>
+      <span class="thesis-flag">★ valida la tesis del producto</span>
+    </div>
+  </div>
+
+  <div class="firstbatch">
+    <span class="tag">Primera tanda acordada</span>
+    <p>F0 + F1 + F2 se abordan juntas. Llegar a un sello real sobre componentes reales es el hito que justifica
+    seguir invirtiendo en las capas profundas del Hito 2.</p>
+  </div>
+
+  <!-- ===== HITO 2 ===== -->
+  <div class="milestone h2">
+    <div class="ring">弐</div>
+    <div>
+      <div class="mt">Hito 2</div>
+      <h2>Capas de verificación</h2>
+    </div>
+  </div>
+
+  <div class="phase h2 todo">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F3</span>
+        <h4>Contrato</h4>
+        <span class="badge b-todo">pendiente</span>
+      </div>
+      <p class="body">Verifica props / eventos / slots / métodos declarados contra el runtime. Aquí vive la
+      <strong>regla de oro</strong> (<em>ausencia ≠ incumplimiento</em>) y los niveles Floor → Conformance → Strict
+      del ADR-001.</p>
+      <p class="deliv"><b>Entregable ▸</b> <span>checks de contrato + spec <code>checks-contract.md</code></span></p>
+    </div>
+  </div>
+
+  <div class="phase h2 todo">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F4</span>
+        <h4>Accesibilidad (a11y)</h4>
+        <span class="badge b-todo">pendiente</span>
+      </div>
+      <p class="body">axe + navegación por teclado + foco + ARIA. Pruebas <strong>universales</strong>: aplican a
+      cualquier componente, declare lo que declare su manifest.</p>
+      <p class="deliv"><b>Entregable ▸</b> <span>suite a11y + spec <code>checks-a11y.md</code></span></p>
+    </div>
+  </div>
+
+  <div class="phase h2 todo">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F5</span>
+        <h4>Resiliencia</h4>
+        <span class="badge b-todo">pendiente</span>
+      </div>
+      <p class="body">Props basura / vacías, SSR, RTL. El componente no debe romperse ante entradas adversas.
+      También universal, no depende del contrato.</p>
+      <p class="deliv"><b>Entregable ▸</b> <span>suite de resiliencia + spec <code>checks-resilience.md</code></span></p>
+    </div>
+  </div>
+
+  <!-- ===== HITO 3 ===== -->
+  <div class="milestone h3">
+    <div class="ring">参</div>
+    <div>
+      <div class="mt">Hito 3</div>
+      <h2>Reporte y desacople</h2>
+    </div>
+  </div>
+
+  <div class="phase h3 todo">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F6</span>
+        <h4>Trust Report + gates de CI</h4>
+        <span class="badge b-todo">pendiente</span>
+      </div>
+      <p class="body">Reporte de confianza (<strong>JSON + HTML</strong>) que declara <em>procedencia</em> y
+      <em>cobertura</em> del sello. Gates que fallan el build cuando un componente no cumple su nivel exigido.</p>
+      <p class="deliv"><b>Entregable ▸</b> <span>Trust Report + integración CI + spec <code>trust-report.md</code></span></p>
+    </div>
+  </div>
+
+  <div class="phase h3 todo">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F7</span>
+        <h4>Desacople + publicación npm</h4>
+        <span class="badge b-todo">pendiente · diferida</span>
+      </div>
+      <p class="body">Garantizar que el <code>core</code> no depende de shibui y publicar
+      <code>@shibui-ui/hanko</code> como paquete independiente. <strong>Diferida</strong> hasta validar el uso local.</p>
+      <p class="deliv"><b>Entregable ▸</b> <span>paquete publicable + verificación de genericidad del core</span></p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>hanko · plan de obra F0–F7 · índice en <span class="gold">docs/phases/README.md</span></p>
+  <p>Relacionado: <span class="gold">docs/decisions/adr-001-baseline-minima-viable.md</span> · <span class="gold">docs/specs/</span></p>
+  <p>Estado: F0 en curso (esqueleto creado). Sin código de implementación aún.</p>
+</footer>
+
+</div>
+</body>
+</html>
