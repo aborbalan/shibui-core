@@ -141,7 +141,7 @@
     <span class="chip">Esfuerzo F0–F6 ≈ <b>12–16 días</b></span>
     <span class="chip">Primera tanda = <b>F0 + F1 + F2</b></span>
     <span class="chip">Construido <b>desde 0</b> (no hereda infra de @shibui-ui/ui)</span>
-    <span class="chip">Rama <b>feature/hanko</b> · pushed · pend. verificación</span>
+    <span class="chip">F0 <b>en main</b> (PR #502) · F1 <b>en curso</b></span>
     <span class="chip">Actualizado <b>2026-06-14</b></span>
   </div>
 </header>
@@ -166,34 +166,34 @@
     </div>
   </div>
 
-  <div class="phase h1 wip">
+  <div class="phase h1 done">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F0</span>
         <h4>Cimientos + modelo de datos</h4>
-        <span class="badge b-wip">en curso</span>
+        <span class="badge b-done">hecho</span>
       </div>
       <p class="body">Esqueleto del paquete y tooling de test desde cero. El núcleo de esta fase es el
       <strong>modelo de datos del contrato</strong>: la forma normalizada con la que hanko representa internamente
       un componente leído del CEM. Todo lo demás cuelga de aquí.</p>
-      <p class="deliv"><b>✓ Hecho ▸</b> <span>esqueleto · spec <code>data-model.md</code> · tipos <code>src/core/contract.ts</code> · <code>tsconfig</code> · Vitest (<code>vitest.config.ts</code> + primer test) · ADR-002 testing</span></p>
-      <p class="deliv"><b>▸ Commiteado ▸</b> <span>todo en <code>feature/hanko</code> (commit <code>d08bc3e</code>, 15 ficheros)</span></p>
-      <p class="deliv"><b>▸ Falta ▸</b> <span>ejecutar <code>type-check</code> + <code>test</code> desde el repo principal para cerrar F0 (worktree sin <code>node_modules</code>)</span></p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span>modelo <code>src/core/contract.ts</code> + spec · <code>tsconfig</code> · Vitest + primer test · ADR-001 / ADR-002</span></p>
+      <p class="deliv"><b>✓ Mergeado ▸</b> <span>en <code>main</code> vía PR #502</span></p>
     </div>
   </div>
 
-  <div class="phase h1 todo">
+  <div class="phase h1 wip">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F1</span>
         <h4>Ingestión del manifest</h4>
-        <span class="badge b-todo">pendiente</span>
+        <span class="badge b-wip">en curso</span>
       </div>
       <p class="body">Lectura del <code>custom-elements.json</code> (CEM) → modelo de datos interno. Aquí se define
       el <strong>borde de ingestión</strong>, donde más adelante encajarán los adapters de formatos no estándar.</p>
-      <p class="deliv"><b>Entregable ▸</b> <span>parser CEM → modelo + spec <code>ingest.md</code></span></p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>ingestCem</code> (CEM → ContractSet) + <code>parseType</code> · <code>src/ingest/</code> · spec <code>ingest.md</code> · tests</span></p>
+      <p class="deliv"><b>▸ Falta ▸</b> <span>ejecutar <code>type-check</code> + <code>test</code> desde el repo principal</span></p>
     </div>
   </div>
 

@@ -17,6 +17,7 @@ Hogar único de toda la documentación de hanko: specs, decisiones, fases de des
 - ✅ `decisions/adr-001-baseline-minima-viable.md` — estrategia de validación (Floor + niveles).
 - ✅ `decisions/adr-002-estrategia-testing.md` — tooling de test (Vitest, dos niveles, desde 0).
 - ✅ `specs/data-model.md` — modelo de datos del contrato (F0).
+- ✅ `specs/ingest.md` — ingestión CEM → modelo (F1).
 - ✅ `special-cases/manifest-ausente-o-custom.html` — sin manifest / formato custom (decisión **abierta**).
 - ✅ `reference/web-components-vs-lit-y-manifest.html` — fundamentos.
 - 🟡 `phases/` — índice F0–F7 + tracker visual `development-phases.html`.

@@ -57,7 +57,8 @@ Garantizar que el `core` no depende de shibui y publicar `@shibui-ui/hanko` como
 
 | Fase | Estado |
 |---|---|
-| F0 | 🟡 piezas completas (modelo de datos + tsconfig + Vitest + primer test + [ADR-002](../decisions/adr-002-estrategia-testing.md)); falta solo ejecutar `type-check`/`test` desde el repo principal |
-| F1–F7 | ⬜ no iniciadas |
+| F0 | ✅ mergeado a `main` (PR #502) — modelo de datos + tsconfig + Vitest + [ADR-001](../decisions/adr-001-baseline-minima-viable.md)/[ADR-002](../decisions/adr-002-estrategia-testing.md) |
+| F1 | 🟡 implementado — `ingestCem` + `parseType` en `src/ingest/` + [spec](../specs/ingest.md) + tests; falta ejecutar `type-check`/`test` |
+| F2–F7 | ⬜ no iniciadas |
 
 > El detalle de cada fase se desarrollará en `phases/fN-titulo.md` conforme la abordemos.

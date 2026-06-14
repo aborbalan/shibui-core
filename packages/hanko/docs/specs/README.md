@@ -7,8 +7,8 @@ criterios de aceptación** antes de escribir implementación.
 
 | Spec | Subsistema | Estado |
 |---|---|---|
-| `data-model.md` | Modelo de datos del contrato (forma normalizada interna) | ⬜ por escribir (F0) |
-| `ingest.md` | Ingestión y normalización del manifest (CEM + adapters) | ⬜ por escribir (F1) |
+| [`data-model.md`](data-model.md) | Modelo de datos del contrato (forma normalizada interna) | ✅ v0 (F0) |
+| [`ingest.md`](ingest.md) | Ingestión y normalización del manifest (CEM + adapters) | ✅ v0 (F1) |
 | `checks-contract.md` | Verificación de contrato (props/eventos/slots/métodos) | ⬜ por escribir (F3) |
 | `checks-a11y.md` | Verificación de accesibilidad | ⬜ por escribir (F4) |
 | `checks-resilience.md` | Verificación de resiliencia | ⬜ por escribir (F5) |
