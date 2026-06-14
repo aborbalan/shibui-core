@@ -104,6 +104,24 @@ const config: UserConfig & { test?: InlineConfig } = {
         },
         setupFiles: [path.join(dirname, '../.storybook/vitest.setup.ts')]
       }
+    },
+    // Conformidad runtime de props de cohesión (Nivel 2). Browser real,
+    // pero NO atado a Storybook: instancia los componentes desde el barrel.
+    // Ver tests/conformance/props-conformance.test.ts y docs/component-props-testing.md.
+    {
+      extends: true,
+      test: {
+        name: 'conformance',
+        include: [path.join(dirname, '../tests/conformance/**/*.test.ts').replace(/\\/g, '/')],
+        browser: {
+          enabled: true,
+          headless: true,
+          provider: playwright(),
+          instances: [{
+            browser: 'chromium'
+          }]
+        }
+      }
     }]
   }
 }

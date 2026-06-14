@@ -38,7 +38,8 @@ corre en `ci-lib`, y `KNOWN_PENDING` está vacío. Sólo quedan extras opcionale
 | **Phase 2: apps + wrappers** | ✅ | #495 | wrappers regenerados · react/angular/svelte/tauri/api + consumer-tests migrados al canon · estéticas kintsugi/glitch→data-katachi · mapas dinámicos badge tone |
 | **Phase 4: cleanup** | ✅ | #496 | huérfanos `SidebarVariant`/`FooterVariant` borrados · `test:unit` pre-existente arreglado y cableado en ci-lib · charts "rotos" = falsa alarma (dist stale) |
 | **Consolidación a develop** | ✅ | #497 | lleva a develop las tandas que quedaron apiladas tras #489 |
-| **Phase 4: extras (opcional)** | ⏳ | — | tests Nivel 2/3 · `--strict` en extractor |
+| **Nivel 2: conformidad runtime** | ✅ | — | `test:conformance` (browser): 2a reflect + 2b sin selectores huérfanos (CSS⇒manifest, `ctor.styles.cssText`) de los 7 ejes · `tests/conformance/` · CI en job test-stories. Destapó 3 huérfanos `[variant="filled"/"on-dark"]` en copy-button/select (rename `filled`→`solid` sin limpiar estados `[copied]`/`[open]`) → corregidos. El delta de computed-style se descartó (tokens `:root` no resuelven en el entorno bare → render colapsa a sin-estilar; lo visual lo cubre Nivel 3) |
+| **Phase 4: extras (opcional)** | ⏳ | — | tests Nivel 3 visuales · `--strict` en extractor |
 
 ## KNOWN_PENDING actual (allowlist del test:cohesion)
 🎉 **VACÍO — y las 12 reglas (C1–C12) ACTIVAS.** Cero `it.todo`. El test cubre:
