@@ -10,9 +10,9 @@ define cada fase con detalle suficiente para continuar en frío.
 
 ## ▶ Cómo retomar este proyecto en una sesión nueva
 
-**Estado a 2026-06-14:** Hito 1 en curso. **F0 mergeado a `main`** (PR #502). **F1 implementado** en
-`feature/hanko`, **pendiente de validar** (`type-check` + `test`). Próxima fase real: **F2**, bloqueada hasta
-validar F1.
+**Estado a 2026-06-14:** Hito 1 avanzado. **F0 y F1 mergeados a `develop` y `main`** (PR #502/#503/#504;
+GitFlow reconciliado). **F2 en curso** en rama `feature/hanko-smoke` (incremento 1: check Floor + motor
+`smoke` con sello y cobertura). Falta el runner sobre el CEM real de shibui-ui para cerrar F2.
 
 **Orden de lectura recomendado:**
 1. Memoria `project_hanko.md` (se autocarga) — contexto y decisiones vivas.
@@ -26,18 +26,18 @@ validar F1.
   → **No se pueden ejecutar `tsc`/`vitest` desde el worktree.** El código se escribe a ciegas para el tsconfig
   estricto (`exactOptionalPropertyTypes`, `noUncheckedIndexedAccess`…) y **lo valida el usuario desde el repo principal**:
   ```bash
-  git checkout feature/hanko && pnpm install
+  git checkout <rama-actual> && pnpm install
   pnpm --filter @shibui-ui/hanko type-check
   pnpm --filter @shibui-ui/hanko test
   ```
 - **Commits con `--no-verify`** — obligado, porque los hooks pre-commit (type-check/lint) y commit-msg
   (commitlint) necesitan `node_modules` que el worktree no tiene. No es saltarse calidad: los gates los corre
   el usuario. Mantener mensajes en formato Conventional Commits igualmente.
-- **GitFlow — atención:** F0 se mergeó `feature/hanko → main` **directo** (PR #502), saltándose `develop`.
-  Por eso **`origin/develop` no tiene hanko**. Si se quiere volver al flujo `feature → develop`, sincronizar
-  `develop` con `main` primero. F1+ se siguen construyendo sobre `feature/hanko`.
+- **GitFlow:** ya **reconciliado**. F0 fue directo a `main` (PR #502), pero después se alineó `develop`
+  (PR #503) y se sincronizó `develop ↔ main` (PR #504 + back-merge). A partir de aquí, **cada fase = rama
+  `feature/hanko-*` desde `develop`** y PR a `develop` (flujo correcto).
 
-**Próximo paso accionable:** validar F1; si pasa, arrancar **F2**.
+**Próximo paso accionable:** cerrar F2 (runner sobre el CEM real de shibui-ui) tras validar `type-check`/`test`.
 
 ---
 
@@ -69,7 +69,7 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 - **Dependencias:** ninguna.
 - **Estado:** ✅ completa y mergeada.
 
-### F1 · Ingestión del manifest — 🟡 implementado, sin validar
+### F1 · Ingestión del manifest — ✅ mergeado (develop + main)
 - **Objetivo:** convertir un CEM ya parseado en `ContractSet`. Definir el **borde de ingestión** (donde luego
   enchufarán adapters de formatos custom).
 - **Entregables:** `src/ingest/` (`ingestCem`, `parseType`, `cem-types.ts`) · spec [`ingest.md`](../specs/ingest.md) · tests.
@@ -77,18 +77,18 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
   `reflect`/`attribute`/`default` raw/`inheritedFrom`; preserva presencia (ausente → `undefined`); `parseType`
   resuelve primitivos + uniones de literales y degrada a `unknown` con `raw` intacto.
 - **Dependencias:** F0.
-- **Estado:** 🟡 código + spec + tests en `feature/hanko`; **falta ejecutar** `type-check`/`test`.
+- **Estado:** ✅ mergeado a `develop` (PR #503) y `main` (PR #504).
 
-### F2 · Smoke · primer sello — ⬜ no iniciada · ★ valida la tesis
+### F2 · Smoke · primer sello — 🟡 en curso · ★ valida la tesis
 - **Objetivo:** primer flujo end-to-end *manifest → verificación → sello* sobre componentes reales de shibui-ui
   (10 → 99). Responder: ¿el modelo funciona a escala real?
-- **Entregables (previstos):** un orquestador mínimo que ingiere el `custom-elements.json` real de shibui-ui
-  (producido por `cem analyze`), aplica el **Floor** del ADR-001 (schema válido + `tagName` registrable) y emite
-  un sello básico por componente. Spec `smoke.md`.
+- **Entregables:** check **Floor** (`src/checks/floor.ts`: tagName de custom element válido) · motor
+  `smoke()` (`src/smoke/smoke.ts`: ingestión + Floor + **cobertura** por componente) · spec
+  [`smoke.md`](../specs/smoke.md) · tests. **Pendiente:** runner que lea el CEM real de shibui-ui.
 - **Criterios:** se emite sello para N componentes reales sin caídas; el Floor distingue pasa/no-pasa; queda
   demostrado que el flujo escala de 10 a 99.
-- **Dependencias:** F1 validado · acceso al CEM real de shibui-ui (`packages/shibui-ui/dist/custom-elements.json`).
-- **Estado:** ⬜ bloqueada por validación de F1.
+- **Dependencias:** F1 · acceso al CEM real de shibui-ui (`packages/shibui-ui/dist/custom-elements.json`).
+- **Estado:** 🟡 incremento 1 hecho (lógica + tests); falta el runner sobre shibui real (cierre de F2).
 
 ### F3 · Contrato — ⬜ no iniciada
 - **Objetivo:** verificar lo declarado (props/eventos/slots/métodos) contra el **runtime** del elemento vivo.
@@ -136,9 +136,9 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 
 | Fase | Estado |
 |---|---|
-| F0 | ✅ mergeado a `main` (PR #502) |
-| F1 | 🟡 implementado; falta validar (`type-check`/`test`) |
-| F2 | ⬜ bloqueada por validación de F1 |
+| F0 | ✅ mergeado (develop + main) |
+| F1 | ✅ mergeado (develop + main) |
+| F2 | 🟡 en curso — Floor + `smoke` + cobertura; falta runner sobre shibui real |
 | F3–F7 | ⬜ no iniciadas |
 
 > Caso especial fuera de este plan (componentes sin manifest / formato custom): ver
