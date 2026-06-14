@@ -46,8 +46,12 @@ const COHESION_AXES = new Set(['size', 'tone', 'surface', 'theme', 'variant', 'd
 
 // ── Allowlists (vaciar/justificar; estilo KNOWN_PENDING) ───────────
 // `${slug}.${prop}` — props de cohesión que legítimamente NO reflejan
-// (p.ej. estilados vía clase interna en vez de `:host([attr])`).
-const NO_REFLECT = new Set<string>([]);
+// (estilados por otro mecanismo, no por `:host([attr=…])`).
+const NO_REFLECT = new Set<string>([
+  // size se consume en JS — `var(--lib-space-${size})` en el render — y NO hay
+  // ningún `:host([size=…])`, así que reflejar el atributo es innecesario.
+  'lib-spacer.size',
+]);
 // `${slug}.${attr}=${value}` — selector de eje vivo con un valor fuera de
 // opciones que es intencional (alias back-compat, etc.). Documentar el porqué.
 const ORPHAN_EXEMPT = new Set<string>([]);
