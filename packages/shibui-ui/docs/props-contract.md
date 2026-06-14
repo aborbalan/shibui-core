@@ -79,23 +79,30 @@ type LibTint = 'neutral' | 'warm' | 'cool' | 'inverse';   // default 'neutral'
 
 ### `surface` — contexto de fondo
 ```ts
-type LibSurface = 'default' | 'inverse' | 'on-dark';   // default 'default'
+type LibSurface = 'default' | 'light' | 'dark' | 'inverse';   // default 'default'
 ```
-- **Por qué**: el "modo oscuro/invertido" de un componente es **ortogonal** a su tono y a
-  su tratamiento. Antes se colaba como valores `dark`/`inverse`/`on-dark` dentro de
-  `tone` o `variant`, mezclando ejes.
-- **Mapeo**: `dark`/`on-dark` → `on-dark`; `inverse` → `inverse`.
-- **Cuándo**: el componente necesita adaptarse a una superficie oscura sin cambiar su tono.
+- **Por qué**: el "modo oscuro/claro/invertido" de un componente es **ortogonal** a su tono
+  y a su tratamiento. Antes se colaba como valores `dark`/`light`/`neutral`/`on-dark` dentro
+  de `tone` o `variant`, mezclando ejes.
+- **Mapeo**: `light` → `light`; `dark`/`on-dark` → `dark`; `neutral` (washi paper) → `default`;
+  `inverse` → `inverse`. Un componente puede soportar un **subconjunto** (p.ej. switch
+  `default·inverse`; quote `default·light·dark`).
+- **Cuándo**: el componente necesita adaptarse a una superficie distinta sin cambiar su tono.
 
 ### `variant` — tratamiento visual
 ```ts
 type LibVariant = 'solid' | 'outlined' | 'ghost' | 'subtle';   // default 'solid'
 ```
 - **Por qué**: `variant` queda **exclusivamente** para el tratamiento de relleno/borde.
-  `filled` → `solid`, `outline` → `outlined`. Cualquier otro significado migra a su eje.
+  `filled` → `solid`, `outline` → `outlined`, `primary` → `solid`, `secondary` → `outlined`.
+  Cualquier otro significado migra a su eje.
 - **Regla**: si un valor de `variant` es un color (accent/error) → va a `tone`; si es una
   piel de marca (kintsugi/glitch) → va a `theme`; si es un modo de render
   (lines/grid) → va a `display`.
+- **Extensiones documentadas** (`VARIANT_EXTRA`, lista cerrada — como en `size`):
+  - `lib-card` → `featured` (destacada 2-col; no es tono ni modo)
+  - `lib-modal` → `editorial` (header sin separador, título expandido)
+  - `lib-close-button` → `filled-round` (solid + radius full + rotación al hover)
 
 ### `theme` — estética signature
 - **Por qué**: las variantes estéticas de marca (kintsugi, celadon, sabi, shizen, enso,

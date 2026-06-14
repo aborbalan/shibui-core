@@ -22,7 +22,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * @attr {string} line2-prefix  - Texto antes del acento en la segunda línea.
  * @attr {string} accent        - Texto en itálica kaki (acento).
  * @attr {string} description   - Párrafo de descripción (alternativa al slot).
- * @attr {'dark'|'light'|'neutral'} surface - Superficie sobre la que se muestra.
+ * @attr {'default'|'light'|'dark'} surface - Superficie sobre la que se muestra.
  * @attr {'sm'|'md'|'lg'}       size    - Tamaño tipográfico fluido.
  * @attr {'h1'|'h2'|'h3'|'h4'} tag     - Tag semántico del heading.
  * @attr {boolean}              centered - Centra el bloque.

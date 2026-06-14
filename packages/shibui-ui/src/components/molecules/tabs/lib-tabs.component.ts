@@ -6,21 +6,21 @@ import tabsCss from "./lib-tabs.css?inline";
 import sharedTokens from "../../../styles/shared/tokens.css?inline";
 import type {
   TabItem,
-  TabsVariant,
-  TabsColor,
+  TabsDisplay,
+  TabsTone,
   TabsSize,
 } from "./lib-tabs.types";
 
 /**
  * lib-tabs — Componente de pestañas Shibui (SG-60)
  *
- * @prop variant  — 'underline' | 'pill' | 'card' | 'outline' | 'vertical'
- * @prop color    — 'accent' | 'info'
- * @prop size     — 'sm' | 'md' | 'lg'
- * @prop dark     — surface oscura
- * @prop gold     — ink bar animada dorada (era kintsugi)
- * @prop glitch   — efecto RGB split en tab activo
- * @prop scroll   — overflow-x scroll en la lista
+ * @prop display    — 'underline' | 'pill' | 'card' | 'outline' | 'vertical'
+ * @prop tone       — 'default' | 'accent' | 'info'
+ * @prop size       — 'sm' | 'md' | 'lg'
+ * @prop dark       — surface oscura
+ * @prop gold       — ink bar animada dorada (era kintsugi)
+ * @prop glitch     — efecto RGB split en tab activo
+ * @prop scrollable — overflow-x scroll en la lista
  * @prop full     — tabs en grid de columnas iguales
  * @prop active   — id del tab activo
  * @prop items    — array de TabItem
@@ -51,10 +51,10 @@ export class LibTabs extends LitElement {
   ];
 
   @property({ type: String, reflect: true })
-  variant: TabsVariant = "underline";
+  display: TabsDisplay = "underline";
 
   @property({ type: String, reflect: true })
-  color: TabsColor | "" = "";
+  tone: TabsTone = "default";
 
   @property({ type: String, reflect: true })
   size?: TabsSize;
@@ -68,7 +68,7 @@ export class LibTabs extends LitElement {
   @property({ type: Boolean, reflect: true })
   glitch = false;
 
-  @property({ type: Boolean, reflect: true, attribute: "scroll" })
+  @property({ type: Boolean, reflect: true })
   scrollable = false;
 
   @property({ type: Boolean, reflect: true })
@@ -118,7 +118,7 @@ export class LibTabs extends LitElement {
     if (
       changed.has("active") ||
       changed.has("items") ||
-      changed.has("variant")
+      changed.has("display")
     ) {
       requestAnimationFrame((): void => this._positionInk());
     }
@@ -134,13 +134,13 @@ export class LibTabs extends LitElement {
 
   private _positionInk(): void {
     /* Solo aplica a variantes con ink bar */
-    const noInkVariants: TabsVariant[] = [
+    const noInkDisplays: TabsDisplay[] = [
       "pill",
       "card",
       "outline",
       "vertical",
     ];
-    if (noInkVariants.includes(this.variant)) return;
+    if (noInkDisplays.includes(this.display)) return;
 
     const list = this.shadowRoot?.querySelector<HTMLElement>(".tb-list");
     const activeTab =
@@ -280,7 +280,7 @@ export class LibTabs extends LitElement {
   /* ── Keyboard navigation ── */
 
   _handleKey(e: KeyboardEvent): void {
-    const isVertical = this.variant === "vertical";
+    const isVertical = this.display === "vertical";
     const tabs = Array.from(
       this.shadowRoot?.querySelectorAll<HTMLButtonElement>(
         ".tb-tab:not(.is-disabled)",

@@ -50,7 +50,7 @@ const savingSpinnerSvg = html`
 export function editorToolbarTemplate(props: EditorToolbarTemplateProps): TemplateResult {
   const { filename, dirty, saving, showOpen, onNew, onOpen, onSave } = props;
 
-  const displayName = filename ?? 'Sin título';
+  const displayName = filename || 'Sin título';
   const canSave     = !saving;
 
   return html`

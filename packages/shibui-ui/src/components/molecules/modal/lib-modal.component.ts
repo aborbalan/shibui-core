@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import modalCss from './lib-modal.css?inline';
 import { modalTemplate } from './lib-modal.html';
-import { ModalAnimate, ModalCloseEventDetail, ModalIconTone, ModalSize, ModalVariant } from './lib-modal.types';
+import { ModalAnimate, ModalCloseEventDetail, ModalIconTone, ModalSize, ModalVariant, ModalTone } from './lib-modal.types';
 
 
 /**
@@ -42,7 +42,8 @@ import { ModalAnimate, ModalCloseEventDetail, ModalIconTone, ModalSize, ModalVar
  *
  * @prop {boolean}        open              — Abre el modal. Reflected.
  * @prop {ModalSize}      size              — xs · sm · md · lg · xl · full (default md).
- * @prop {ModalVariant}   variant           — default · editorial · danger.
+ * @prop {ModalVariant}   variant           — solid · editorial.
+ * @prop {ModalTone}      tone              — default · error.
  * @prop {ModalAnimate}   _animate           — scale · slide-up · slide-down.
  * @prop {boolean}        dark              — Surface oscura.
  * @prop {string}         heading           — Título del modal (requerido para a11y).
@@ -82,7 +83,10 @@ export class LibModal extends LitElement {
   size: ModalSize = 'md';
 
   @property({ type: String, reflect: true })
-  variant: ModalVariant = 'default';
+  variant: ModalVariant = 'solid';
+
+  @property({ type: String, reflect: true })
+  tone: ModalTone = 'default';
 
   @property({ type: String, reflect: true })
   _animate: ModalAnimate = 'scale';
@@ -200,6 +204,7 @@ export class LibModal extends LitElement {
       open:            this.open,
       size:            this.size,
       variant:         this.variant,
+      tone:            this.tone,
       _animate:         this._animate,
       dark:            this.dark,
       heading:         this.heading,

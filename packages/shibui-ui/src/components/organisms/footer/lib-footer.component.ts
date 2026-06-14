@@ -42,7 +42,7 @@ export class LibFooter extends LitElement {
 
   /* ── Props principales ── */
 
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   theme: FooterTheme = 'social';
 
   /**

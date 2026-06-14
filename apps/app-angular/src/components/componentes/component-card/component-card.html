@@ -1,7 +1,7 @@
 <div class="component-card" (click)="onSelect()" (keydown.enter)="onSelect()" tabindex="0" role="button">
   <div class="card-header">
     <span class="tag-name">{{ component().tagName }}</span>
-    <lib-badge [variant]="component().status === 'stable' ? 'celadon' : component().status === 'deprecated' ? 'warning' : 'dark'">
+    <lib-badge [tone]="component().status === 'stable' ? 'info' : component().status === 'deprecated' ? 'warning' : 'strong'">
       {{ component().status }}
     </lib-badge>
   </div>
@@ -15,7 +15,7 @@
   @if (component().tags.length > 0) {
     <div class="card-tags">
       @for (tag of component().tags.slice(0, 3); track tag) {
-        <lib-badge variant="strong">{{ tag }}</lib-badge>
+        <lib-badge tone="strong">{{ tag }}</lib-badge>
       }
     </div>
   }

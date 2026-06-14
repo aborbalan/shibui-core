@@ -54,7 +54,7 @@
   {/if}
 {:else}
   <Header />
-  <lib-background variant="washi" style="min-height:100vh;">
+  <lib-background theme="washi" style="min-height:100vh;">
     {#if path === '/about'}
       <About />
     {:else if path === '/philosophy'}

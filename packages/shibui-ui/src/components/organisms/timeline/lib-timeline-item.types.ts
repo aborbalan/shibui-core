@@ -2,10 +2,10 @@
    LIB-TIMELINE — Tipos públicos
    ============================================================ */
 
-import type { TooltipPosition, TooltipVariant } from '../../atoms/tooltip/lib-tooltip.component';
+import type { TooltipPosition, TooltipSurface, TooltipTone } from '../../atoms/tooltip/lib-tooltip.component';
 
 /** Re-export de los tipos del tooltip que consume el ítem en su nodo */
-export type { TooltipPosition, TooltipVariant };
+export type { TooltipPosition, TooltipSurface, TooltipTone };
 
 /** Tamaño del timeline — aplica en el contenedor */
 export type TimelineSize = 'sm' | 'md' | 'lg';
@@ -65,7 +65,8 @@ export interface TimelineItemTemplateProps {
   /* Tooltip en el nodo */
   tooltip:         string;
   tooltipPosition: TooltipPosition;
-  tooltipVariant:  TooltipVariant;
+  tooltipSurface:  TooltipSurface;
+  tooltipTone:     TooltipTone;
   hasTooltipSlot:  boolean;
   /* Clickable / navegación */
   clickable:   boolean;

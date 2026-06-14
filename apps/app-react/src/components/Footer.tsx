@@ -2,10 +2,10 @@ import React from 'react';
 import { LibFooter } from '@shibui-ui/ui/react';
 import { FooterColumn, FooterLink } from '@shibui-ui/ui';
 
-type FooterVariant = 'social' | 'accordion' | 'inverse' | 'glitch' | 'celadon' | 'sabi' | 'shizen';
+type FooterTheme = 'social' | 'accordion' | 'inverse' | 'glitch' | 'celadon' | 'sabi' | 'shizen';
 
 interface FooterProps {
-  variant?: FooterVariant;
+  theme?: FooterTheme;
   brandName?: string;
   brandKanji?: string;
   brandSub?: string;
@@ -76,7 +76,7 @@ const GLITCH_NAV_LINKS: FooterLink[] = [
 ];
 
 export const Footer: React.FC<FooterProps> = ({
-  variant      = 'celadon',
+  theme        = 'celadon',
   brandName    = 'shibui',
   brandKanji   = '渋い',
   brandSub     = 'Design System · Zaragoza',
@@ -93,11 +93,11 @@ export const Footer: React.FC<FooterProps> = ({
   runtimeLines = DEFAULT_RUNTIME_LINES,
 }) => {
   /* La variante glitch usa nav-links distintos por convención */
-  const resolvedNavLinks = variant === 'glitch' ? GLITCH_NAV_LINKS : navLinks;
+  const resolvedNavLinks = theme === 'glitch' ? GLITCH_NAV_LINKS : navLinks;
 
   return (
     <LibFooter
-      variant={variant}
+      theme={theme}
       brand-name={brandName}
       brand-kanji={brandKanji}
       brand-sub={brandSub}

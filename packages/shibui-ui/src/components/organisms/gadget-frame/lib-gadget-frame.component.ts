@@ -5,7 +5,7 @@ import '../../atoms/close-button/lib-close-button.component';
 import { gadgetFrameTemplate }    from './lib-gadget-frame.html';
 import componentCss               from './lib-gadget-frame.css?inline';
 import sharedTokens               from '../../../styles/shared/tokens.css?inline';
-import type { GadgetFrameVariant } from './lib-gadget-frame.types';
+import type { GadgetFrameTheme } from './lib-gadget-frame.types';
 
 /**
  * @element lib-gadget-frame
@@ -22,7 +22,7 @@ import type { GadgetFrameVariant } from './lib-gadget-frame.types';
  * @prop {boolean}            minimizable  — Muestra botón minimizar (default: true)
  * @prop {boolean}            closable     — Muestra botón cerrar (default: true)
  * @prop {boolean}            minimized    — Estado minimizado (reflect)
- * @prop {GadgetFrameVariant} variant      — 'glass' (default) | 'card'
+ * @prop {GadgetFrameTheme}   theme        — 'default' (card) | 'glass'
  *
  * @slot — Contenido del gadget (oculto cuando minimized)
  *
@@ -34,8 +34,8 @@ import type { GadgetFrameVariant } from './lib-gadget-frame.types';
  *   <p>Contenido del gadget</p>
  * </lib-gadget-frame>
  *
- * @example — variante card sin cierre
- * <lib-gadget-frame gadget-title="Logs" icon="terminal" variant="card" closable="false">
+ * @example — tema default (card) sin cierre
+ * <lib-gadget-frame gadget-title="Logs" icon="terminal" theme="default" closable="false">
  *   <p>...</p>
  * </lib-gadget-frame>
  */
@@ -70,9 +70,9 @@ export class LibGadgetFrame extends LitElement {
   @property({ type: Boolean, reflect: true })
   minimized = false;
 
-  /** Superficie del contenedor: 'card' (semántico, default) | 'glass' (glassmorphism). */
+  /** Estética del contenedor: 'default' (card semántico) | 'glass' (glassmorphism). */
   @property({ type: String, reflect: true })
-  variant: GadgetFrameVariant = 'card';
+  theme: GadgetFrameTheme = 'default';
 
   override render(): TemplateResult {
     return gadgetFrameTemplate({
@@ -81,7 +81,7 @@ export class LibGadgetFrame extends LitElement {
       minimizable: this.minimizable,
       closable:    this.closable,
       minimized:   this.minimized,
-      variant:     this.variant,
+      theme:       this.theme,
       onMinimize:  this._handleMinimize.bind(this),
       onClose:     this._handleClose.bind(this),
     });

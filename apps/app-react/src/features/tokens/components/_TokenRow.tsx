@@ -64,7 +64,7 @@ interface SubHeaderProps {
 
 export const SubHeader: React.FC<SubHeaderProps> = ({ label, first }) => (
   <LibDivider
-    color="kaki"
+    tone="accent"
     label-style="mono"
     align="left"
     style={{ marginBottom: '0.75rem', marginTop: first ? '0' : '2rem' }}

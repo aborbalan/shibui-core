@@ -7,7 +7,7 @@ import type { LibCopyButton } from './lib-copy-button.component';
 
 type LibCopyButtonStoryArgs = Pick<
   LibCopyButton,
-  'value' | 'variant' | 'size' | 'iconOnly' | 'label' | 'successLabel' | 'tooltip' | 'disabled'
+  'value' | 'variant' | 'surface' | 'size' | 'iconOnly' | 'label' | 'successLabel' | 'tooltip' | 'disabled'
 >;
 
 const meta: Meta<LibCopyButtonStoryArgs> = {
@@ -18,8 +18,9 @@ const meta: Meta<LibCopyButtonStoryArgs> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['ghost', 'outlined', 'filled', 'subtle', 'on-dark'],
+      options: ['ghost', 'outlined', 'solid', 'subtle'],
     },
+    surface: { control: 'select', options: ['default', 'dark'] },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
@@ -37,6 +38,7 @@ const meta: Meta<LibCopyButtonStoryArgs> = {
       <lib-copy-button
         value=${args.value}
         variant=${args.variant}
+        surface=${args.surface ?? 'default'}
         size=${args.size}
         label=${args.label}
         success-label=${args.successLabel}
@@ -72,11 +74,11 @@ export const AllVariants: Story = {
     <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; padding:24px; background:#FFFFFF; border:1px solid #E5DDD3;">
       <lib-copy-button variant="ghost"    value="ghost"    label="Ghost"    size="md"></lib-copy-button>
       <lib-copy-button variant="outlined" value="outlined" label="Outlined" size="md"></lib-copy-button>
-      <lib-copy-button variant="filled"   value="filled"   label="Filled"   size="md"></lib-copy-button>
+      <lib-copy-button variant="solid"   value="filled"   label="Filled"   size="md"></lib-copy-button>
       <lib-copy-button variant="subtle"   value="subtle"   label="Subtle"   size="md"></lib-copy-button>
     </div>
     <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; padding:24px; background:#221C16; border:1px solid #3D332A; margin-top:1px;">
-      <lib-copy-button variant="on-dark" value="on-dark" label="On Dark" size="md"></lib-copy-button>
+      <lib-copy-button surface="dark" value="on-dark" label="On Dark" size="md"></lib-copy-button>
     </div>
   `,
 };
@@ -95,7 +97,7 @@ export const AllVariantsIconOnly: Story = {
         <span style="font-family:monospace; font-size:10px; color:#9A8878;">Outlined</span>
       </div>
       <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
-        <lib-copy-button variant="filled"   value="filled"   icon-only size="md"></lib-copy-button>
+        <lib-copy-button variant="solid"   value="filled"   icon-only size="md"></lib-copy-button>
         <span style="font-family:monospace; font-size:10px; color:#9A8878;">Filled</span>
       </div>
       <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
@@ -123,7 +125,7 @@ export const WithTooltip: Story = {
     <div style="display:flex; align-items:center; gap:16px; padding:40px 24px 24px; background:#FFFFFF; border:1px solid #E5DDD3;">
       <lib-copy-button variant="ghost"    value="ghost"    icon-only tooltip size="sm"></lib-copy-button>
       <lib-copy-button variant="outlined" value="outlined" icon-only tooltip size="md"></lib-copy-button>
-      <lib-copy-button variant="filled"   value="filled"   icon-only tooltip size="lg"></lib-copy-button>
+      <lib-copy-button variant="solid"   value="filled"   icon-only tooltip size="lg"></lib-copy-button>
     </div>
   `,
 };
@@ -187,7 +189,7 @@ export const ContextCodeBlock: Story = {
       <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.06);">
         <span style="font-family:monospace; font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:rgba(255,255,255,0.25);">CSS</span>
         <lib-copy-button
-          variant="on-dark"
+          surface="dark"
           value=":root { --color-kaki-500: #B85A1E; }"
           label="Copiar"
           size="md"
@@ -218,7 +220,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;align-items:center;">
       <lib-copy-button variant="ghost"    value="ghost"    label="Ghost"    size="sm"></lib-copy-button>
       <lib-copy-button variant="outlined" value="outlined" label="Outlined" size="sm"></lib-copy-button>
-      <lib-copy-button variant="filled"   value="filled"   label="Filled"   size="sm"></lib-copy-button>
+      <lib-copy-button variant="solid"   value="filled"   label="Filled"   size="sm"></lib-copy-button>
       <lib-copy-button variant="subtle"   value="subtle"   label="Subtle"   size="sm"></lib-copy-button>
     </div>
     <div style="display:flex;gap:var(--lib-space-sm);align-items:center;">

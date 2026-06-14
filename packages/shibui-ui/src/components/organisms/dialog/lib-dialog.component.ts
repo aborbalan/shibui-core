@@ -4,7 +4,7 @@ import '../../atoms/close-button/lib-close-button.component';
 import { dialogTemplate } from './lib-dialog.html';
 import dialogCss from './lib-dialog.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
-import type { DialogVariant, DialogSize, DialogLayout } from './lib-dialog.types';
+import type { DialogTone, DialogSurface, DialogSize, DialogLayout } from './lib-dialog.types';
 
 /**
  * @element lib-dialog
@@ -13,7 +13,8 @@ import type { DialogVariant, DialogSize, DialogLayout } from './lib-dialog.types
  *
  * @prop {string}        eyebrow     — Texto pequeño encima del título
  * @prop {string}        dlg-title   — Título principal del header
- * @prop {DialogVariant} variant     — default · danger · warning · dark
+ * @prop {DialogTone}    tone        — default · error · warning
+ * @prop {DialogSurface} surface     — default · dark
  * @prop {DialogSize}    size        — sm · md · lg · xl · full (default: md)
  * @prop {DialogLayout}  layout      — dialog · drawer-right · drawer-bottom · alert (default: dialog)
  * @prop {boolean}       open        — Estado controlado del panel
@@ -47,7 +48,10 @@ export class LibDialog extends LitElement {
   dlgTitle = '';
 
   @property({ type: String, reflect: true })
-  variant: DialogVariant = 'default';
+  tone: DialogTone = 'default';
+
+  @property({ type: String, reflect: true })
+  surface: DialogSurface = 'default';
 
   @property({ type: String, reflect: true })
   size: DialogSize = 'md';
@@ -101,7 +105,7 @@ export class LibDialog extends LitElement {
     return dialogTemplate({
       eyebrow:    this.eyebrow,
       dlgTitle:   this.dlgTitle,
-      variant:    this.variant,
+      tone:       this.tone,
       size:       this.size,
       layout:     this.layout,
       footerMeta: this.footerMeta,

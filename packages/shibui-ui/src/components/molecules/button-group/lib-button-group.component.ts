@@ -1,7 +1,7 @@
 import { LitElement, css, unsafeCSS, TemplateResult, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { LibSize } from '../../../types';
-import type { LibButtonVariant } from '../../atoms/button/lib-button.types';
+import type { LibButtonVariant, LibButtonTone } from '../../atoms/button/lib-button.types';
 import groupCss from './lib-button-group.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import { buttonGroupTemplate, buttonSplitTemplate } from './lib-button-group.html';
@@ -221,7 +221,8 @@ export class LibButtonSep extends LitElement {
    ══════════════════════════════════════════════════════════════
    Botón de acción principal + flecha que despliega menú.
 
-   @prop variant  — variante visual (igual que lib-button)
+   @prop variant  — tratamiento visual (igual que lib-button: solid · outlined · ghost)
+   @prop tone     — tinte semántico (igual que lib-button: default · accent · error)
    @prop size     — tamaño
    @prop dark     — surface oscura
    @prop disabled
@@ -240,7 +241,10 @@ export class LibButtonSplit extends LitElement {
   ];
 
   @property({ type: String, reflect: true })
-  variant: LibButtonVariant = 'primary';
+  variant: LibButtonVariant = 'solid';
+
+  @property({ type: String, reflect: true })
+  tone: LibButtonTone = 'default';
 
   @property({ type: String, reflect: true })
   size: LibSize = 'md';
@@ -282,6 +286,7 @@ export class LibButtonSplit extends LitElement {
     return buttonSplitTemplate({
       label:       this.label,
       variant:     this.variant,
+      tone:        this.tone,
       size:        this.size,
       dark:        this.dark,
       disabled:    this.disabled,

@@ -226,18 +226,18 @@ export const DarkSurface: Story = {
   render: (): TemplateResult => html`
     <div style=${wrapDark}>
 
-      <lib-range-slider surface="on-dark" label="Volumen master" value="78" unit="%"></lib-range-slider>
+      <lib-range-slider surface="dark" label="Volumen master" value="78" unit="%"></lib-range-slider>
 
       <lib-range-slider
-        surface="on-dark" label="Temperatura" value="4200"
+        surface="dark" label="Temperatura" value="4200"
         min="2200" max="6500" unit="K"
         show-limits limit-min="2200K" limit-max="6500K"
       ></lib-range-slider>
 
-      <lib-range-slider surface="on-dark" label="Saturación" value="110" min="0" max="200" unit="%"></lib-range-slider>
+      <lib-range-slider surface="dark" label="Saturación" value="110" min="0" max="200" unit="%"></lib-range-slider>
 
       <lib-range-slider
-        dual surface="on-dark" label="Rango de frecuencia"
+        dual surface="dark" label="Rango de frecuencia"
         value-min="200" value-max="8000"
         min="20" max="20000" unit=" Hz"
         show-limits limit-min="20 Hz" limit-max="20k Hz"

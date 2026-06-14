@@ -106,12 +106,12 @@
   :host([tone="muted"])    .cnt-row { color: var(--text-muted); }
 
   /* On dark — colores OKLCH para superficies oscuras */
-  :host([surface="on-dark"]) .cnt-row    { color: oklch(82% 0.03 62deg); }
+  :host([surface="dark"]) .cnt-row    { color: oklch(82% 0.03 62deg); }
 
-  :host([surface="on-dark"]) .cnt-prefix,
-  :host([surface="on-dark"]) .cnt-suffix,
-  :host([surface="on-dark"]) .cnt-sep    { color: oklch(35% 0.02 50deg); }
-  :host([surface="on-dark"]) .cnt-label  { color: oklch(30% 0.02 50deg); }
+  :host([surface="dark"]) .cnt-prefix,
+  :host([surface="dark"]) .cnt-suffix,
+  :host([surface="dark"]) .cnt-sep    { color: oklch(35% 0.02 50deg); }
+  :host([surface="dark"]) .cnt-label  { color: oklch(30% 0.02 50deg); }
 
   /* ── Meta row: label + delta ───────────────────────────── */
   .cnt-meta {

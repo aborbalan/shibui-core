@@ -5,7 +5,7 @@ import type { LibGadgetFrame }  from './lib-gadget-frame.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 type StoryArgs = Partial<Pick<LibGadgetFrame,
-  'gadgetTitle' | 'icon' | 'minimizable' | 'closable' | 'minimized' | 'variant'
+  'gadgetTitle' | 'icon' | 'minimizable' | 'closable' | 'minimized' | 'theme'
 >>;
 
 /* ── Meta ─────────────────────────────────────────────────── */
@@ -17,7 +17,7 @@ const meta: Meta<StoryArgs> = {
     backgrounds: { default: 'paper' },
   },
   argTypes: {
-    variant:     { control: 'select', options: ['glass', 'card'] },
+    theme:       { control: 'select', options: ['default', 'glass'] },
     minimizable: { control: 'boolean' },
     closable:    { control: 'boolean' },
     minimized:   { control: 'boolean' },
@@ -38,7 +38,7 @@ export const Playground: Story = {
     minimizable: true,
     closable:    true,
     minimized:   false,
-    variant:     'card',
+    theme:       'default',
   },
   render: (args): TemplateResult => html`
     <div style="
@@ -55,7 +55,7 @@ export const Playground: Story = {
         ?minimizable="${args.minimizable}"
         ?closable="${args.closable}"
         ?minimized="${args.minimized}"
-        variant="${args.variant}"
+        theme="${args.theme}"
         style="width: 320px; height: 220px;"
         @ui-lib-gadget-minimize="${(e: CustomEvent): void =>
           console.log('minimize', e.detail)}"
@@ -198,7 +198,7 @@ export const Card: Story = {
       <lib-gadget-frame
         gadget-title="Actividad"
         icon="chart-line"
-        variant="card"
+        theme="default"
         style="width: 280px; height: 200px;"
       >
         <div style="padding:var(--lib-space-md);">
@@ -224,7 +224,7 @@ export const Card: Story = {
       <lib-gadget-frame
         gadget-title="Estado"
         icon="heartbeat"
-        variant="card"
+        theme="default"
         style="width: 280px; height: 200px;"
       >
         <div style="padding:var(--lib-space-md);display:flex;flex-direction:column;
@@ -421,7 +421,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <lib-gadget-frame
       gadget-title="Estado"
       icon="heartbeat"
-      variant="card"
+      theme="default"
       style="width:220px;height:160px;"
     >
       <div style="padding:var(--lib-space-md);display:flex;flex-direction:column;gap:var(--lib-space-sm);">
@@ -443,7 +443,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <lib-gadget-frame
       gadget-title="CPU Monitor"
       icon="cpu"
-      variant="card"
+      theme="default"
       minimized
       style="width:220px;"
     ></lib-gadget-frame>
@@ -452,7 +452,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <lib-gadget-frame
       gadget-title="Recursos"
       icon="chart-line"
-      variant="card"
+      theme="default"
       ?minimizable="${true}"
       ?closable="${true}"
       style="width:220px;height:160px;"
@@ -474,7 +474,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <lib-gadget-frame
       gadget-title="Gadget fijo"
       icon="lock"
-      variant="card"
+      theme="default"
       minimizable="false"
       closable="false"
       style="width:220px;height:100px;"

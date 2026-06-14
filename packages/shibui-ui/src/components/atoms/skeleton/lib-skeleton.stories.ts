@@ -4,7 +4,7 @@ import './lib-skeleton.component';
 import type { LibSkeleton } from './lib-skeleton.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
-type LibSkeletonStoryArgs = Pick<LibSkeleton, 'shape' | 'animation' | 'surface' | 'width' | 'height'>;
+type LibSkeletonStoryArgs = Pick<LibSkeleton, 'shape' | 'animation' | 'surface' | 'tone' | 'width' | 'height'>;
 
 const preview = (bg: string, content: TemplateResult): TemplateResult => html`
   <div style="background:${bg}; padding:32px; border:1px solid var(--border-subtle);">
@@ -28,7 +28,11 @@ const meta: Meta<LibSkeletonStoryArgs> = {
     },
     surface: {
       control: 'select',
-      options: ['light', 'dark', 'accent', 'info'],
+      options: ['default', 'dark'],
+    },
+    tone: {
+      control: 'select',
+      options: ['default', 'accent', 'info'],
     },
     width:  { control: 'text' },
     height: { control: 'text' },
@@ -39,6 +43,7 @@ const meta: Meta<LibSkeletonStoryArgs> = {
       shape=${args.shape}
       animation=${args.animation}
       surface=${args.surface}
+      tone=${args.tone}
       width=${args.width}
       height=${args.height || ''}
     ></lib-skeleton>
@@ -50,7 +55,7 @@ type Story = StoryObj<LibSkeletonStoryArgs>;
 
 /* ── Playground ── */
 export const Playground: Story = {
-  args: { shape: 'line', animation: 'shimmer', surface: 'light', width: '80%', height: '' },
+  args: { shape: 'line', animation: 'shimmer', surface: 'default', tone: 'default', width: '80%', height: '' },
 };
 
 /* ── Todos los primitivos — light ── */
@@ -142,11 +147,11 @@ export const Surfaces: Story = {
 
       <!-- accent -->
       <div style="flex:1; min-width:220px; background:var(--color-kaki-50); border:1px solid var(--color-kaki-200); padding:24px; display:flex; flex-direction:column; gap:16px;">
-        <lib-skeleton shape="img"   surface="accent" width="100%"></lib-skeleton>
-        <lib-skeleton shape="title" surface="accent" width="65%"></lib-skeleton>
-        <lib-skeleton shape="line"  surface="accent" width="100%"></lib-skeleton>
-        <lib-skeleton shape="line"  surface="accent" width="75%"></lib-skeleton>
-        <lib-skeleton shape="btn"   surface="accent" width="96px"></lib-skeleton>
+        <lib-skeleton shape="img"   tone="accent" width="100%"></lib-skeleton>
+        <lib-skeleton shape="title" tone="accent" width="65%"></lib-skeleton>
+        <lib-skeleton shape="line"  tone="accent" width="100%"></lib-skeleton>
+        <lib-skeleton shape="line"  tone="accent" width="75%"></lib-skeleton>
+        <lib-skeleton shape="btn"   tone="accent" width="96px"></lib-skeleton>
         <span style="font-family:monospace; font-size:10px; color:var(--color-kaki-500); text-transform:uppercase; letter-spacing:0.25em; margin-top:4px;">Accent</span>
       </div>
 
@@ -370,7 +375,7 @@ export const KatachiCeladon: Story = {
         </div>
       </div>
 
-      <!-- ── Sección 2: surface="info" explícito · 3 animaciones ── -->
+      <!-- ── Sección 2: tone="info" explícito · 3 animaciones ── -->
       <div style="display:flex; flex-direction:column; gap:12px;">
         <span style="
           font-family: monospace;
@@ -378,7 +383,7 @@ export const KatachiCeladon: Story = {
           letter-spacing: 0.25em;
           text-transform: uppercase;
           color: var(--color-celadon-400);
-        ">surface="info" · shimmer · wave · pulse</span>
+        ">tone="info" · shimmer · wave · pulse</span>
 
         <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;">
           ${(['shimmer', 'wave', 'pulse'] as const).map(anim => html`
@@ -394,16 +399,16 @@ export const KatachiCeladon: Story = {
               gap: 14px;
             ">
               <div style="display:flex; align-items:center; gap:10px;">
-                <lib-skeleton shape="avatar" surface="info" animation=${anim} width="36px" height="36px"></lib-skeleton>
+                <lib-skeleton shape="avatar" tone="info" animation=${anim} width="36px" height="36px"></lib-skeleton>
                 <div style="flex:1; display:flex; flex-direction:column; gap:7px;">
-                  <lib-skeleton shape="title" surface="info" animation=${anim} width="65%"></lib-skeleton>
-                  <lib-skeleton shape="line"  surface="info" animation=${anim} width="40%"></lib-skeleton>
+                  <lib-skeleton shape="title" tone="info" animation=${anim} width="65%"></lib-skeleton>
+                  <lib-skeleton shape="line"  tone="info" animation=${anim} width="40%"></lib-skeleton>
                 </div>
               </div>
-              <lib-skeleton shape="line" surface="info" animation=${anim} width="100%"></lib-skeleton>
-              <lib-skeleton shape="line" surface="info" animation=${anim} width="82%"></lib-skeleton>
-              <lib-skeleton shape="line" surface="info" animation=${anim} width="58%"></lib-skeleton>
-              <lib-skeleton shape="btn"  surface="info" animation=${anim} width="100%"></lib-skeleton>
+              <lib-skeleton shape="line" tone="info" animation=${anim} width="100%"></lib-skeleton>
+              <lib-skeleton shape="line" tone="info" animation=${anim} width="82%"></lib-skeleton>
+              <lib-skeleton shape="line" tone="info" animation=${anim} width="58%"></lib-skeleton>
+              <lib-skeleton shape="btn"  tone="info" animation=${anim} width="100%"></lib-skeleton>
               <span style="
                 font-family: monospace;
                 font-size: 9px;

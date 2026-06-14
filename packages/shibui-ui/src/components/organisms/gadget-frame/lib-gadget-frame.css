@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-GADGET-FRAME — Shibui UI · Dashboard Widget Container
-   Variant  : glass (default) · card
+   Theme    : default (card) · glass
    Controls : minimizable · closable
    ============================================================
 
@@ -132,12 +132,12 @@
   }
 
   /* ============================================================
-     VARIANT · card
+     THEME · default (card)
      Superficie semántica: bg-elevated + border-subtle + shadow.
      Adapta con cada katachi (semantic coverage).
      ============================================================ */
 
-  :host([variant="card"]) .gadget {
+  :host([theme="default"]) .gadget {
     background: var(--bg-elevated);
     border:     1px solid var(--border-subtle);
     box-shadow: var(--shadow-md);
@@ -147,17 +147,17 @@
     }
   }
 
-  :host([variant="card"]) .gadget-header {
+  :host([theme="default"]) .gadget-header {
     border-bottom: 1px solid var(--border-subtle);
   }
 
   /* ============================================================
-     VARIANT · glass (default)
+     THEME · glass
      Glassmorphism — requiere fondo oscuro en el elemento padre.
      Compatible con los overrides de katachi en --lib-glass-*.
      ============================================================ */
 
-  :host([variant="glass"]) .gadget {
+  :host([theme="glass"]) .gadget {
     background:      var(--lib-glass-bg);
     backdrop-filter: var(--lib-glass-filter);
     border:          var(--lib-glass-border);
@@ -180,7 +180,7 @@
     }
   }
 
-  :host([variant="glass"]) .gadget-header {
+  :host([theme="glass"]) .gadget-header {
     border-bottom: 1px solid rgb(255, 255, 255, .07);
   }
 

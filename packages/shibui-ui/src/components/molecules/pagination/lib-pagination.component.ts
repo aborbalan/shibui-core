@@ -13,7 +13,7 @@ import type { PaginationSize, PaginationVariant } from './lib-pagination.types';
  * @prop current-page   — Página activa (1-indexed, default 1)
  * @prop siblings       — Páginas visibles a cada lado de la actual (default 1)
  * @prop size           — 'sm' | 'md' | 'lg' (default 'md')
- * @prop variant        — 'default' | 'outline' | 'ghost'
+ * @prop variant        — 'solid' | 'outlined' | 'ghost'
  * @prop dark           — Tema oscuro
  * @prop show-info      — Muestra "X–Y de Z resultados"
  * @prop aria-label     — Etiqueta accesible del nav (default 'Paginación')
@@ -46,7 +46,7 @@ export class LibPagination extends LitElement {
   size: PaginationSize = 'md';
 
   @property({ type: String, reflect: true })
-  variant: PaginationVariant = 'default';
+  variant: PaginationVariant = 'solid';
 
   @property({ type: Boolean, reflect: true })
   dark = false;

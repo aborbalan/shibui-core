@@ -1,9 +1,10 @@
 # Plan de tests — Cohesión de propiedades de componentes
 
-> Para ejecutar **cuando termine** la migración de cohesión (`feature/manifest-prop-cohesion`).
-> Objetivo: convertir el contrato canónico en una **red automática** que falle si un componente
-> (o una futura PR) reintroduce fragmentación. El manifest es el byproduct y aquí es también el
-> **fixture de test**.
+> Migración de cohesión **completa** (en `develop`). Objetivo de esta red: que falle si un
+> componente o una futura PR reintroduce fragmentación. El manifest es el byproduct y aquí es
+> también el **fixture de test**.
+>
+> Estado: **Nivel 1** ✅ (`test:cohesion`) · **Nivel 2** ✅ (`test:conformance`) · **Nivel 3** ⏳ (extras).
 
 ## Fuentes de verdad para los tests
 
@@ -71,20 +72,55 @@ describe('manifest cohesion', () => {
 > Mantener `VARIANT_ALLOW` y demás allowlists **explícitas y comentadas**: cada excepción es una
 > decisión de diseño consciente, no un escape. Que el allowlist crezca debe doler.
 
-## Nivel 2 — Tests unitarios de reflejo de atributo (Lit)
+## Nivel 2 — Conformidad runtime de props de cohesión
 
-Por componente migrado, verificar que la propiedad refleja el atributo correcto (clave tras los renames):
+> ✅ **IMPLEMENTADO** en `tests/conformance/props-conformance.test.ts` (vitest browser
+> mode · Chromium). Ejecutar: `pnpm --filter @shibui-ui/ui test:conformance`.
+> Corre en CI (`ci-lib.yml`, job `test-stories`, tras los Story Tests — reusa el mismo
+> Playwright Chromium).
 
-- `lib-avatar`: set `tint='warm'` → `getAttribute('tint') === 'warm'`, y `:host([tint="warm"])` aplica.
-- `lib-checkbox`/`lib-radio`/`lib-progress-circle`: `tone` reflejado, atributo `tone` presente.
-- Props opcionales sin default (`size?`): sin set → atributo ausente (no `size=""`).
+El Nivel 1 valida la **forma declarada** del API en el manifest, pero éste puede estar
+impecable y el componente seguir roto: tras los renames (`variant`→`tone`/`tint`/`display`/
+`theme`) puede quedar un selector `:host([variant=…])` **huérfano** o un `reflect` perdido —y
+el manifest no lo ve—. El Nivel 2 cierra ese hueco con dos comprobaciones **estructurales**,
+**data-driven desde el mismo manifest** (el manifest es también aquí el fixture), sobre los
+**7 ejes canónicos** que la migración tocó: `size · tone · surface · theme · variant ·
+display · tint` (filtrados por nombre de atributo; las props enum funcionales
+—type/mode/icon/language…— quedan fuera a propósito). La corrección **visual** del render ya
+la cubre el Nivel 3 (snapshots Storybook por katachi) — aquí **no** se duplica.
 
-Infra: `@open-wc/testing` o vitest + jsdom/`@web/test-runner`. Patrón:
+- **2a · reflejo** (runtime, browser) — instancia el componente, `el[prop] = opt` ⇒
+  `el.getAttribute(attr) === opt`. Si el `reflect` se perdió, **todo** `:host([attr=…])` muere
+  en silencio: es el guardián más barato.
+- **2b · sin selectores huérfanos** (CSS ⇒ manifest) — lee el CSS que el componente realmente
+  envía (`ctor.styles[].cssText`, ya con el `.css` inlineado) y verifica que ningún selector
+  `:host([eje="valor"])` de un **eje vivo** use un valor **fuera** de sus opciones declaradas.
+  Caza el `:host([variant="filled"])` que quedó tras un rename (`filled`→`solid`). Dirección
+  **inversa** a propósito: la forward ("cada opción debe tener selector") da falsos positivos
+  en componentes estilados por token o JS-driven (`lib-background`), porque no todo eje usa
+  `:host([attr=v])`. Y un delta de computed-style no sirve aquí: en el entorno bare los tokens
+  `:root` no resuelven y todo render colapsa a "sin estilar".
+
+Allowlists estilo `KNOWN_PENDING` (`NO_REFLECT`, `ORPHAN_EXEMPT`): hoy **vacías**. Cada
+excepción es una decisión consciente y documentada — que crezcan debe doler.
+
+> **Primera corrida = valor inmediato:** 2b destapó 3 selectores huérfanos que la migración
+> dejó (estados compuestos `[copied]`/`[open]` con el valor viejo): `lib-copy-button`
+> (`[variant="filled"]`, `[variant="on-dark"]`) y `lib-select` (`[variant="filled"]`).
+> Corregidos en este mismo PR.
 
 ```ts
-const el = await fixture<LibAvatar>(html`<lib-avatar tint="warm"></lib-avatar>`);
-expect(el.tint).toBe('warm');
+// 2a — reflejo (runtime)
+const el = document.createElement('lib-avatar');
+document.body.appendChild(el);
+(el as any).tint = 'warm';
+await el.updateComplete;
 expect(el.getAttribute('tint')).toBe('warm');
+
+// 2b — sin huérfanos (CSS real ⇒ opciones del manifest)
+const css = componentCss('lib-copy-button');           // ctor.styles[].cssText
+// 'filled' ya no es opción de variant ⇒ no debe quedar selector que lo use
+expect(css).not.toMatch(/\[variant\s*=\s*["']?filled["']?\]/);
 ```
 
 ## Nivel 3 — Consumer-contract + visual (ya existe infra)
@@ -96,17 +132,19 @@ expect(el.getAttribute('tint')).toBe('warm');
 
 ## Integración CI
 
-- Añadir la suite Nivel 1 al pipeline `ci-lib.yml` (corre en cambios de `packages/shibui-ui/**`).
+- ✅ Nivel 1 (`test:cohesion`) cableado en `ci-lib.yml`, job `quality`.
+- ✅ Nivel 2 (`test:conformance`) cableado en `ci-lib.yml`, job `test-stories` (reusa el
+  Playwright Chromium del story-testing).
 - El **drift-guard** ya existente (`git diff --exit-code` sobre `components.generated.ts`) sigue siendo
   el guardián de que el manifest está regenerado; los tests de cohesión validan su *contenido*.
-- Endurecer el extractor con flag `--strict` (Phase 4): que `generate-components-api` **falle** si un prop
-  resuelve a `unknown` o cuela `''` → primera línea de defensa antes incluso de los tests.
+- ⏳ Endurecer el extractor con flag `--strict` (extra opcional): que `generate-components-api` **falle**
+  si un prop resuelve a `unknown` o cuela `''` → primera línea de defensa antes incluso de los tests.
 
-## Checklist de cierre (rellenar al terminar la migración)
+## Checklist de cierre
 
-- [ ] Suite Nivel 1 (C1–C15) verde sobre el manifest final.
-- [ ] Allowlists (VARIANT_ALLOW, overlays, avatar/display) revisadas y justificadas.
-- [ ] Tests Nivel 2 para todos los componentes con rename de prop (tint/tone/theme/display).
-- [ ] Consumer-tests actualizados a los nuevos atributos.
-- [ ] Snapshots visuales regenerados y revisados.
+- [x] Suite Nivel 1 (C1–C12) verde sobre el manifest final, `KNOWN_PENDING` vacío.
+- [x] Allowlists del Nivel 1 (VARIANT_EXTRA, overlays, avatar/display) revisadas y justificadas.
+- [x] Nivel 2 (reflect + delta visual) sobre los 7 ejes de cohesión, allowlists vacías, en CI.
+- [ ] Nivel 3: consumer-tests con asserts de propagación de `tint/tone/theme/display`.
+- [ ] Nivel 3: snapshots visuales por componente migrado revisados.
 - [ ] `--strict` activado en el extractor + en CI.

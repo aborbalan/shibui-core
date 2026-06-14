@@ -57,7 +57,7 @@
 
   <!-- 2b. Property — string enum -->
   <section data-scenario="string-prop">
-    <lib-button variant="danger" data-testid="btn-danger">Danger</lib-button>
+    <lib-button tone="error" data-testid="btn-error">Error</lib-button>
   </section>
 
   <!-- 3. Eventos -->

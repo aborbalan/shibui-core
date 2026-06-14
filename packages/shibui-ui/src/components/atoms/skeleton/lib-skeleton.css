@@ -4,7 +4,8 @@
    LIB-SKELETON — Shibui UI · 骨格
    Shape     : line · title · h1 · avatar · icon · btn · badge · pill · img · rect
    Animation : shimmer (default) · wave · pulse
-   Surface   : light (default) · dark · accent · info
+   Surface   : default (claro) · dark
+   Tone      : default · accent · info
    ============================================================
 
    Arquitectura de animación:
@@ -95,7 +96,7 @@
   }
 
   /* info — jade oscuro para superficies data-katachi="celadon" */
-  :host([surface="info"]) .sk {
+  :host([tone="info"]) .sk {
     background: linear-gradient(
       90deg,
       oklch(22% 0.030 175deg) 25%,
@@ -106,18 +107,18 @@
     animation: sk-shimmer 1.8s ease-in-out infinite;
   }
 
-  :host([surface="info"][animation="wave"]) .sk {
+  :host([tone="info"][animation="wave"]) .sk {
     animation-duration: 2.4s;
     animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
   }
 
-  :host([surface="info"][animation="pulse"]) .sk {
+  :host([tone="info"][animation="pulse"]) .sk {
     background: oklch(22% 0.030 175deg);
     animation: sk-pulse 1.8s ease-in-out infinite;
   }
 
   /* accent — tinte cálido para superficies premium */
-  :host([surface="accent"]) .sk {
+  :host([tone="accent"]) .sk {
     background: linear-gradient(
       90deg,
       var(--color-kaki-200) 25%,
@@ -128,12 +129,12 @@
     animation: sk-shimmer 1.8s ease-in-out infinite;
   }
 
-  :host([surface="accent"][animation="wave"]) .sk {
+  :host([tone="accent"][animation="wave"]) .sk {
     animation-duration: 2.4s;
     animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
   }
 
-  :host([surface="accent"][animation="pulse"]) .sk {
+  :host([tone="accent"][animation="pulse"]) .sk {
     background: var(--color-kaki-200);
     animation: sk-pulse 1.8s ease-in-out infinite;
   }
@@ -207,22 +208,22 @@
     }
 
     :host([surface="dark"])    .sk { background: var(--color-washi-700); }
-    :host([surface="accent"])    .sk { background: var(--color-kaki-200); }
-    :host([surface="info"]) .sk { background: oklch(22% 0.030 175deg); }
+    :host([tone="accent"])    .sk { background: var(--color-kaki-200); }
+    :host([tone="info"]) .sk { background: oklch(22% 0.030 175deg); }
   }
 
   /* ─── KATACHI · celadon · auto-adaptación ambient ─────────────
      Cuando el skeleton no lleva [surface] explícito (o lleva
-     [surface="light"]) pero reside dentro de un ancestro con
+     [surface="default"]) pero reside dentro de un ancestro con
      data-katachi="celadon", cambia automáticamente a jade oscuro.
-     El consumidor no necesita pasar surface="info" — basta
+     El consumidor no necesita pasar tone="info" — basta
      con que el lib-canvas o cualquier wrapper tenga el katachi.
 
-     Se excluyen dark, accent y info propios para no sobreescribir
+     Se excluyen surface="dark" y tone="accent"/"info" propios para no sobreescribir
      elecciones explícitas del consumidor.
      ─────────────────────────────────────────────────────────── */
 
-  :host-context([data-katachi="celadon"]):not([surface="dark"], [surface="accent"], [surface="info"]) .sk {
+  :host-context([data-katachi="celadon"]):not([surface="dark"], [tone="accent"], [tone="info"]) .sk {
     background: linear-gradient(
       90deg,
       oklch(22% 0.030 175deg) 25%,
@@ -233,18 +234,18 @@
     animation: sk-shimmer 1.8s ease-in-out infinite;
   }
 
-  :host-context([data-katachi="celadon"]):not([surface="dark"], [surface="accent"], [surface="info"])[animation="wave"] .sk {
+  :host-context([data-katachi="celadon"]):not([surface="dark"], [tone="accent"], [tone="info"])[animation="wave"] .sk {
     animation-duration: 2.4s;
     animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
   }
 
-  :host-context([data-katachi="celadon"]):not([surface="dark"], [surface="accent"], [surface="info"])[animation="pulse"] .sk {
+  :host-context([data-katachi="celadon"]):not([surface="dark"], [tone="accent"], [tone="info"])[animation="pulse"] .sk {
     background: oklch(22% 0.030 175deg);
     animation: sk-pulse 1.8s ease-in-out infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :host-context([data-katachi="celadon"]):not([surface="dark"], [surface="accent"], [surface="info"]) .sk {
+    :host-context([data-katachi="celadon"]):not([surface="dark"], [tone="accent"], [tone="info"]) .sk {
       background: oklch(22% 0.030 175deg);
       background-size: unset;
     }

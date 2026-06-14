@@ -1,4 +1,7 @@
-export type DialogVariant = 'default' | 'error' | 'warning' | 'dark';
+/** Tinte semántico (subconjunto canónico de `LibTone`). */
+export type DialogTone     = 'default' | 'error' | 'warning';
+/** Superficie (subconjunto canónico de `LibSurface`). */
+export type DialogSurface  = 'default' | 'dark';
 export type DialogSize     = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 export type DialogLayout   = 'dialog' | 'drawer-right' | 'drawer-bottom' | 'alert';
 
@@ -7,8 +10,8 @@ export interface DialogTemplateProps {
   eyebrow:          string;
   /** Título principal del header */
   dlgTitle:         string;
-  /** Variante de color */
-  variant:          DialogVariant;
+  /** Tinte semántico (decide el icono) */
+  tone:             DialogTone;
   /** Ancho del panel */
   size:             DialogSize;
   /** Posicionamiento del panel */

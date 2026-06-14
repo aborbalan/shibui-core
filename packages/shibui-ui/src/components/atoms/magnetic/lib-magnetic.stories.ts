@@ -19,7 +19,7 @@ export const Default: StoryObj = {
   render: (args) => html`
     <div style="height: 300px; display: flex; align-items: center; justify-content: center;">
       <lib-magnetic .shift=${args.shift}>
-        <lib-button variant="primary">¡Acércate!</lib-button>
+        <lib-button variant="solid">¡Acércate!</lib-button>
       </lib-magnetic>
     </div>
   `,
@@ -34,13 +34,13 @@ export const Default: StoryObj = {
 const _katachi = createKatachiStories<object>(() => html`
   <div style="height:200px;display:flex;align-items:center;justify-content:center;gap:var(--lib-space-xl);background:var(--bg-elevated);border:1px solid var(--border-subtle);">
     <lib-magnetic shift="0.3">
-      <lib-button variant="primary" size="sm">Sutil</lib-button>
+      <lib-button variant="solid" size="sm">Sutil</lib-button>
     </lib-magnetic>
     <lib-magnetic shift="0.5">
-      <lib-button variant="primary" size="md">Acércate</lib-button>
+      <lib-button variant="solid" size="md">Acércate</lib-button>
     </lib-magnetic>
     <lib-magnetic shift="0.8">
-      <lib-button variant="primary" size="lg">Intenso</lib-button>
+      <lib-button variant="solid" size="lg">Intenso</lib-button>
     </lib-magnetic>
   </div>
 `);

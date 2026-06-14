@@ -102,7 +102,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
                                 {[...group.skills]
                                     .sort((a, b) => a.order - b.order)
                                     .map((skill) => (
-                                        <LibBadge key={skill.id} variant={variant}>
+                                        <LibBadge key={skill.id} tone={variant}>
                                             {skill.name}
                                         </LibBadge>
                                     ))}

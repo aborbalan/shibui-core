@@ -14,20 +14,24 @@ export type LibSkeletonShape =
   | 'rect';   // sin altura propia — bloque libre
 
 export type LibSkeletonAnimation = 'shimmer' | 'wave' | 'pulse';
-export type LibSkeletonSurface   = 'light' | 'dark' | 'accent' | 'info';
+/** Superficie de fondo (subconjunto canónico de `LibSurface`). */
+export type LibSkeletonSurface   = 'default' | 'dark';
+/** Tinte semántico del shimmer (subconjunto canónico de `LibTone`). */
+export type LibSkeletonTone      = 'default' | 'accent' | 'info';
 
 export interface SkeletonTemplateProps {
   shape:     LibSkeletonShape;
   animation: LibSkeletonAnimation;
   surface:   LibSkeletonSurface;
+  tone:      LibSkeletonTone;
   width:     string;
   height:    string;
 }
 
 /**
  * Renderiza un único bloque skeleton.
- * La forma, animación y superficie se controlan vía clases CSS
- * que mapean a :host([shape]) / :host([animation]) / :host([surface]).
+ * La forma, animación, superficie y tinte se controlan vía clases CSS
+ * que mapean a :host([shape]) / :host([animation]) / :host([surface]) / :host([tone]).
  * Width y height opcionales se aplican como inline style.
  */
 export function skeletonTemplate(props: SkeletonTemplateProps): TemplateResult {

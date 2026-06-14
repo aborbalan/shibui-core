@@ -176,7 +176,7 @@
   }
 
   /* ── VARIANTE — Filled ─────────────────────────────────────── */
-  :host([variant="filled"]) .copy-btn {
+  :host([variant="solid"]) .copy-btn {
     background: var(--color-washi-900);
     color: var(--color-washi-50);
     border: 1px solid transparent;
@@ -187,8 +187,8 @@
     }
   }
 
-  /* Filled copied → fondo celadón */
-  :host([variant="filled"][copied]) .copy-btn {
+  /* Solid copied → fondo celadón */
+  :host([variant="solid"][copied]) .copy-btn {
     background: var(--info) !important;
     border-color: transparent !important;
     color: white !important;
@@ -213,7 +213,7 @@
   }
 
   /* ── VARIANTE — On dark ────────────────────────────────────── */
-  :host([variant="on-dark"]) .copy-btn {
+  :host([surface="dark"]) .copy-btn {
     background: oklch(100% 0 0deg / 0.07);
     color: oklch(100% 0 0deg / 0.45);
     border: 1px solid oklch(100% 0 0deg / 0.10);
@@ -230,7 +230,7 @@
     }
   }
 
-  :host([variant="on-dark"][copied]) .copy-btn {
+  :host([surface="dark"][copied]) .copy-btn {
     color: oklch(70% 0.08 165deg) !important;
     border-color: oklch(70% 0.08 165deg) !important;
     background: oklch(100% 0 0deg / 0.07) !important;

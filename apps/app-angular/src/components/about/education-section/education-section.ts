@@ -1,7 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, computed, input } from '@angular/core';
 import { EducationDto, LanguageDto } from '../about.models';
 
-type BadgeVariant = 'default' | 'accent' | 'celadon' | 'dark';
+type BadgeTone = 'default' | 'accent' | 'info' | 'strong';
 
 @Component({
   selector: 'app-education-section',
@@ -17,14 +17,14 @@ export class EducationSectionComponent {
   sortedEdu = computed(() => [...this.education()].sort((a, b) => a.order - b.order));
   sortedLang = computed(() => [...this.languages()].sort((a, b) => a.order - b.order));
 
-  readonly LEVEL_VARIANT: Record<string, BadgeVariant> = {
+  readonly LEVEL_TONE: Record<string, BadgeTone> = {
     Nativo: 'accent',
-    Profesional: 'celadon',
+    Profesional: 'info',
     Intermedio: 'default',
-    Básico: 'dark',
+    Básico: 'strong',
   };
 
-  getLevelVariant(level: string): BadgeVariant {
-    return this.LEVEL_VARIANT[level] ?? 'dark';
+  getLevelTone(level: string): BadgeTone {
+    return this.LEVEL_TONE[level] ?? 'strong';
   }
 }

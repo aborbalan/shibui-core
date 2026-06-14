@@ -41,6 +41,8 @@ const ALIAS_PAIRS: ReadonlyArray<readonly [string, string]> = [
   ['thermometer',   'temp'],
   ['map-pin',       'location'],
   ['list',          'menu'],
+  ['add',           'plus'],
+  ['new',           'plus'],
 ] as const;
 
 /** Claves críticas: usadas hardcoded en templates de componentes. */

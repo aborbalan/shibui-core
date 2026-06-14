@@ -38,7 +38,7 @@ export class LibSelect extends LitElement {
 
   /* ── Appearance ── */
   @property({ type: String, reflect: true }) size:    SelectSize    = 'md';
-  @property({ type: String, reflect: true }) variant: SelectVariant = 'default';
+  @property({ type: String, reflect: true }) variant: SelectVariant = 'outlined';
 
   /* ── Single value ── */
   @property({ type: String }) value = '';

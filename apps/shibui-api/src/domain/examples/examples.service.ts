@@ -13,7 +13,7 @@ export class ExamplesService {
       componentId: 'cmp-0001-0000-0000-000000000001',
       title: 'Basic usage',
       description: 'Default button with primary variant.',
-      code: `<shibui-button variant="primary">Click me</shibui-button>`,
+      code: `<shibui-button variant="solid">Click me</shibui-button>`,
       framework: ExampleFramework.VANILLA,
       order: 0,
       isDefault: true,
@@ -26,10 +26,10 @@ export class ExamplesService {
       title: 'All variants',
       description:
         'Button supports primary, secondary, ghost and danger variants.',
-      code: `<shibui-button variant="primary">Primary</shibui-button>
-<shibui-button variant="secondary">Secondary</shibui-button>
+      code: `<shibui-button variant="solid">Solid</shibui-button>
+<shibui-button variant="outlined">Outlined</shibui-button>
 <shibui-button variant="ghost">Ghost</shibui-button>
-<shibui-button variant="danger">Danger</shibui-button>`,
+<shibui-button tone="error">Danger</shibui-button>`,
       framework: ExampleFramework.VANILLA,
       order: 1,
       isDefault: false,
@@ -44,7 +44,7 @@ export class ExamplesService {
         'Binding click events and disabled state in an Angular component.',
       code: `<!-- template -->
 <shibui-button
-  variant="primary"
+  variant="solid"
   [disabled]="isLoading"
   (click)="handleSubmit()">
   {{ isLoading ? 'Saving...' : 'Save' }}
@@ -144,11 +144,11 @@ get emailError() {
       componentId: 'cmp-0007-0000-0000-000000000007',
       title: 'Semantic variants',
       description: 'All available color variants for communicating status.',
-      code: `<shibui-badge variant="neutral">Draft</shibui-badge>
-<shibui-badge variant="info">In review</shibui-badge>
-<shibui-badge variant="success">Published</shibui-badge>
-<shibui-badge variant="warning">Needs changes</shibui-badge>
-<shibui-badge variant="danger">Rejected</shibui-badge>`,
+      code: `<shibui-badge tone="default">Draft</shibui-badge>
+<shibui-badge tone="info">In review</shibui-badge>
+<shibui-badge tone="success">Published</shibui-badge>
+<shibui-badge tone="warning">Needs changes</shibui-badge>
+<shibui-badge tone="error">Rejected</shibui-badge>`,
       framework: ExampleFramework.VANILLA,
       order: 0,
       isDefault: true,

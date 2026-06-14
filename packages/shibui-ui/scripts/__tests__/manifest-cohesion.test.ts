@@ -46,7 +46,7 @@ const components = loadComponents();
 // ── Vocabulario canónico (src/types/index.ts) ──────────────────
 const LIB_SIZE = ['xs', 'sm', 'md', 'lg', 'xl'];
 const LIB_TONE = ['default', 'accent', 'info', 'success', 'warning', 'error', 'muted'];
-const LIB_SURFACE = ['default', 'inverse', 'on-dark'];
+const LIB_SURFACE = ['default', 'light', 'dark', 'inverse'];
 const LIB_TINT = ['neutral', 'warm', 'cool', 'inverse'];
 
 // ── Excepciones documentadas (props-contract.md, lista cerrada) ─
@@ -55,25 +55,36 @@ const SIZE_EXTRA: Record<string, string[]> = {
   'lib-avatar': ['2xl'], 'lib-parallax-text-stack': ['2xl'],
 };
 const TONE_EXTRA: Record<string, string[]> = {
-  'lib-chip': ['strong'], 'lib-badge': ['strong'],
+  'lib-chip': ['strong'], 'lib-badge': ['strong'], 'lib-breadcrumb': ['strong'],
 };
 const SIZE_FREEFORM = new Set(['lib-icon']); // size: string (acepta px/tokens)
 
+// C4 — variant ⊆ tratamiento canónico + extensiones documentadas (lista cerrada)
+const LIB_VARIANT = ['solid', 'outlined', 'ghost', 'subtle'];
+const VARIANT_EXTRA: Record<string, string[]> = {
+  'lib-card':         ['featured'],     // destacada 2-col, no es un tono ni un modo
+  'lib-modal':        ['editorial'],    // header sin separador, título expandido
+  'lib-close-button': ['filled-round'], // solid + radius full + rotación
+};
+
+// C10 — estéticas/signature: solo pueden vivir en el eje `theme`
+const AESTHETIC_VALUES = new Set([
+  'kintsugi', 'glitch', 'celadon', 'sabi', 'shizen', 'enso', 'sumi',
+  'kin', 'shizuku', 'glass', 'gold', 'classic', 'mega',
+]);
+
+// C11 — modos de render: no pueden colarse en `variant` (van en `display`)
+const DISPLAY_VALUES = new Set([
+  'underline', 'pill', 'card', 'vertical', 'flush', 'separated',
+  'bar', 'line', 'dots', 'ring', 'filled',
+]);
+
 // ── Allowlist de migración pendiente (Tanda 5+). SHRINK conforme avanza. ──
 // Cada entrada = `${slug}.${prop}`. Quitar cuando el componente se migre.
-const KNOWN_PENDING = new Set<string>([
-  // tone decorativo / no-semántico aún sin migrar:
-  'lib-spinner.tone',          // ink|accent|cool → revisar (¿tint? ¿theme?)
-  'lib-reading-progress.tone', // accent|info|filled|gold → filled/gold fuera de canon
-  // surface con vocabulario pre-canónico (dark/light/filled/pill/accent/info):
-  'lib-breadcrumb.surface',
-  'lib-content-pillar.surface',
-  'lib-display-heading.surface',
-  'lib-quote.surface',
-  'lib-skeleton.surface',
-  // tipo sin resolver (scrollable reflejado como atributo `scroll`):
-  'lib-tabs.scroll',
-]);
+// 🎉 Vacío: todos los ejes activos (size · tone · surface · tint) están
+// migrados. Las próximas tandas (variant/display/theme + button cluster)
+// activarán las reglas C4/C5/C10/C11/C12 que hoy son `it.todo`.
+const KNOWN_PENDING = new Set<string>([]);
 
 // ── Recolector de violaciones ──────────────────────────────────
 type Violation = { key: string; rule: string; detail: string };
@@ -91,6 +102,10 @@ function collect(): Violation[] {
 
       // C8 — sin type 'unknown'
       if (p.type === 'unknown') push(c.slug, p.name, 'unknown-type', key);
+
+      // C12 — sin uniones flag-o-valor (string|boolean bajo el mismo prop)
+      if (p.type && /\bstring\b/.test(p.type) && /\bboolean\b/.test(p.type))
+        push(c.slug, p.name, 'flag-or-value', p.type);
 
       if (p.options) {
         // C7 — sin literal vacío
@@ -113,6 +128,25 @@ function collect(): Violation[] {
         // C3 — tint ⊆ LibTint
         if (p.name === 'tint' && !p.options.every((o) => LIB_TINT.includes(o)))
           push(c.slug, 'tint', 'tint-canon', `[${p.options}]`);
+
+        // C4 — variant ⊆ tratamiento canónico (+ extensiones documentadas)
+        if (p.name === 'variant' &&
+            !p.options.every((o) => allowed(LIB_VARIANT, VARIANT_EXTRA).includes(o)))
+          push(c.slug, 'variant', 'variant-canon', `[${p.options}]`);
+
+        // C5 — `danger` está prohibido en todo el sistema (es `error`)
+        if (p.options.includes('danger'))
+          push(c.slug, p.name, 'danger-banned', `[${p.options}]`);
+
+        // C10 — estéticas solo en `theme` (o `katachi`, el theme-de-contexto
+        // raíz del sistema que expone lib-canvas)
+        if (p.name !== 'theme' && p.name !== 'katachi' &&
+            p.options.some((o) => AESTHETIC_VALUES.has(o)))
+          push(c.slug, p.name, 'aesthetic-outside-theme', `[${p.options}]`);
+
+        // C11 — modos de render no van en `variant` (van en `display`)
+        if (p.name === 'variant' && p.options.some((o) => DISPLAY_VALUES.has(o)))
+          push(c.slug, 'variant', 'display-inside-variant', `[${p.options}]`);
 
         // C9 — default ∈ options (ignora null/'' = nullable/sin set)
         if (p.default !== undefined) {
@@ -154,10 +188,7 @@ describe('manifest cohesion (props contract)', () => {
     ).toEqual([]);
   });
 
-  // ── Ejes aún no migrados: se activarán al completar la migración ──
-  it.todo('C4 — variant ⊆ tratamiento (solid/outlined/ghost/subtle) [tras Tanda variant]');
-  it.todo('C10 — estéticas solo en `theme` [tras Tanda theme]');
-  it.todo('C11 — modos de render solo en `display` [tras Tanda display]');
-  it.todo('C5 — sin valor `danger` en ningún prop [tras button cluster]');
-  it.todo('C12 — sin uniones flag-o-valor (string|boolean) [tras Tanda flag-o-valor]');
+  // ✅ Todas las reglas del contrato (C1–C12) están activas dentro de
+  // `collect()` — la migración de ejes (size · tone · surface · tint ·
+  // variant · display · theme + button cluster) está completa.
 });

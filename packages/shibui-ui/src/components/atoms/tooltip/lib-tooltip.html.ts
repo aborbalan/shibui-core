@@ -1,9 +1,10 @@
 import { html, nothing, TemplateResult } from 'lit';
-import type { TooltipPosition, TooltipVariant, TooltipSize } from './lib-tooltip.component';
+import type { TooltipPosition, TooltipSurface, TooltipTone, TooltipSize } from './lib-tooltip.component';
 
 export interface TooltipTemplateProps {
   position: TooltipPosition;
-  variant:  TooltipVariant;
+  surface:  TooltipSurface;
+  tone:     TooltipTone;
   size:     TooltipSize;
   instant:  boolean;
   open:     boolean;
@@ -14,9 +15,10 @@ export interface TooltipTemplateProps {
 /** Calcula las clases del wrapper a partir de las props. */
 function wrapperClass(props: TooltipTemplateProps): string {
   const parts = ['tip-wrap'];
-  if (props.size    !== 'md')   parts.push(`tip-${props.size}`);
-  if (props.variant !== 'dark') parts.push(`tip-${props.variant}`);
-  if (props.instant)            parts.push('tip-instant');
+  if (props.size    !== 'md')      parts.push(`tip-${props.size}`);
+  if (props.surface === 'light')   parts.push('tip-light');
+  if (props.tone    !== 'default') parts.push(`tip-${props.tone}`);
+  if (props.instant)               parts.push('tip-instant');
   if (props.open)               parts.push('is-open');
   return parts.join(' ');
 }

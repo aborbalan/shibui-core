@@ -83,28 +83,28 @@
     color: var(--text-primary);
   }
 
-  /* ── Variantes de color ── */
-  :host([color="muted"]) .pts-layer--outline {
+  /* ── Variantes de tono ── */
+  :host([tone="muted"]) .pts-layer--outline {
     -webkit-text-stroke-color: var(--text-muted);
   }
 
-  :host([color="muted"]) .pts-layer--italic {
+  :host([tone="muted"]) .pts-layer--italic {
     color: var(--text-muted);
   }
 
-  :host([color="accent"]) .pts-layer--outline {
+  :host([tone="accent"]) .pts-layer--outline {
     -webkit-text-stroke-color: var(--color-kaki-500);
   }
 
-  :host([color="accent"]) .pts-layer--italic {
+  :host([tone="accent"]) .pts-layer--italic {
     color: var(--color-kaki-500);
   }
 
-  :host([color="info"]) .pts-layer--outline {
+  :host([tone="info"]) .pts-layer--outline {
     -webkit-text-stroke-color: var(--info);
   }
 
-  :host([color="info"]) .pts-layer--italic {
+  :host([tone="info"]) .pts-layer--italic {
     color: var(--info);
   }
 

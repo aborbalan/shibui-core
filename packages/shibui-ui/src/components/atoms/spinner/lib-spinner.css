@@ -14,8 +14,8 @@ Props
 ──────────
 variant  enso | sumi | kin | shizuku        (default: enso)
 size     sm | md | lg                        (default: md)
-tone     ink | accent | cool                 (default: ink)
-         accent era 'kaki', cool era 'celadon'
+tone     default | accent | info             (default: default)
+         default era 'ink', accent era 'kaki', info era 'celadon'/'cool'
 → afecta enso y sumi en modo claro
 → en shizuku, tone=accent activa las gotas doradas
 dark     boolean — optimiza colores para fondos oscuros
@@ -46,7 +46,7 @@ dark     boolean — optimiza colores para fondos oscuros
     --_sp-color: var(--text-accent, oklch(55% 0.08 45deg));
   }
 
-  :host([tone="cool"]) {
+  :host([tone="info"]) {
     color: oklch(48% 0.06 180deg);
     --_sp-color: oklch(55% 0.06 180deg);
   }
@@ -127,7 +127,7 @@ dark     boolean — optimiza colores para fondos oscuros
   }
 
 
-  /* ── Tono ink (default) — color vía --_sp-color → se adapta al katachi ── */
+  /* ── Tono default (era ink) — color vía --_sp-color → se adapta al katachi ── */
   .sp-sumi {
     border-radius: 50%;
     filter: blur(0.6px);
@@ -144,8 +144,8 @@ dark     boolean — optimiza colores para fondos oscuros
     mask: radial-gradient(circle at center, transparent 56%, black 57%);
   }
 
-  /* ── Tono cool — posiciones de stop distintas ── */
-  :host([theme="sumi"][tone="cool"]) .sp-sumi {
+  /* ── Tono info — posiciones de stop distintas ── */
+  :host([theme="sumi"][tone="info"]) .sp-sumi {
     background: conic-gradient(from 0deg,
         color-mix(in oklch, var(--_sp-color), transparent 100%) 0deg,
         color-mix(in oklch, var(--_sp-color), transparent 92%)  30deg,
@@ -265,7 +265,7 @@ dark     boolean — optimiza colores para fondos oscuros
     position: absolute;
     border-radius: 50%;
     background: var(--text-primary, oklch(25% 0.02 45deg));
-    /* ink — default; hereda --text-primary del katachi activo */
+    /* tono default (era ink); hereda --text-primary del katachi activo */
     top: 50%;
     left: 50%;
     transform-origin: 0 0;

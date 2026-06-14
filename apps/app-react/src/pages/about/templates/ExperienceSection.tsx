@@ -155,7 +155,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                             {item.tags.length > 0 && (
                                 <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                                     {item.tags.map((tag) => (
-                                        <LibBadge key={tag} variant="strong">
+                                        <LibBadge key={tag} tone="strong">
                                             {tag}
                                         </LibBadge>
                                     ))}

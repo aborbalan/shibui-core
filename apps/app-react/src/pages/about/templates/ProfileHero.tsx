@@ -78,7 +78,7 @@ export const ProfileHero: React.FC<ProfileHeroProps> = ({ profile, openToWork = 
                         Perfil · About Me
                     </LibEyebrow>
                     {openToWork && (
-                        <LibBadge variant="success" dot>
+                        <LibBadge tone="success" dot>
                             Open to Work
                         </LibBadge>
                     )}

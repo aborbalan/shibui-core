@@ -131,7 +131,7 @@ export const HeroIntro: React.FC<HeroIntroProps> = ({
         }}
       >
         <LibButton
-          variant="primary"
+          variant="solid"
           size="lg"
           onUiLibClick={onPrimary}
         >

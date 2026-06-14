@@ -1,5 +1,5 @@
 import { html, nothing, TemplateResult } from 'lit';
-import { ModalAnimate, ModalIconTone, ModalSize, ModalVariant } from './lib-modal.types';
+import { ModalAnimate, ModalIconTone, ModalSize, ModalVariant, ModalTone } from './lib-modal.types';
 
 export interface ModalTemplateProps {
   /* Estado */
@@ -7,6 +7,7 @@ export interface ModalTemplateProps {
   /* Panel */
   size:             ModalSize;
   variant:          ModalVariant;
+  tone:             ModalTone;
   _animate:          ModalAnimate;
   dark:             boolean;
   /* Header */
@@ -31,10 +32,10 @@ function panelWrapClass(p: ModalTemplateProps): string {
 }
 
 /** Clases del panel (.mo-panel). */
-function panelClass(variant: ModalVariant): string {
+function panelClass(variant: ModalVariant, tone: ModalTone): string {
   const classes = ['mo-panel'];
   if (variant === 'editorial') classes.push('is-editorial');
-  if (variant === 'error')     classes.push('is-error');
+  if (tone === 'error')        classes.push('is-error');
   return classes.join(' ');
 }
 
@@ -60,7 +61,7 @@ export function modalTemplate(p: ModalTemplateProps): TemplateResult {
         aria-labelledby="mo-title"
         @click="${(e: MouseEvent):void => e.stopPropagation()}"
       >
-        <div class="${panelClass(p.variant)}" part="panel">
+        <div class="${panelClass(p.variant, p.tone)}" part="panel">
 
           <!-- ── HEADER ── -->
           <div class="mo-header" part="header">

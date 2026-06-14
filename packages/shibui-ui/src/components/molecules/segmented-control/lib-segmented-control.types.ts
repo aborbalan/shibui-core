@@ -3,21 +3,20 @@
    ============================================================ */
 
 /**
- * Variantes de superficie del control.
- * Light: outline · underline · pill · ghost · accent · info
- * Dark:  dark-outline · dark-pill · dark-accent · dark-underline
+ * Modo de presentación del control (eje `display`).
+ * outline · underline · pill · ghost
  */
-export type SegmentedVariant =
+export type SegmentedDisplay =
   | 'outline'
   | 'underline'
   | 'pill'
-  | 'ghost'
-  | 'accent'
-  | 'info'
-  | 'dark-outline'
-  | 'dark-pill'
-  | 'dark-accent'
-  | 'dark-underline';
+  | 'ghost';
+
+/** Superficie del control (subconjunto canónico de `LibSurface`). */
+export type SegmentedSurface = 'default' | 'dark';
+
+/** Tinte semántico del thumb (subconjunto canónico de `LibTone`). */
+export type SegmentedTone = 'default' | 'accent' | 'info';
 
 /** Tamaños */
 export type SegmentedSize = 'sm' | 'md' | 'lg';
@@ -46,7 +45,9 @@ export interface SegmentedChangeDetail {
 export interface SegmentedTemplateProps {
   options:     SegmentedOption[];
   value:       string;
-  variant:     SegmentedVariant;
+  display:     SegmentedDisplay;
+  surface:     SegmentedSurface;
+  tone:        SegmentedTone;
   size:        SegmentedSize;
   full:        boolean;
   iconOnly:    boolean;

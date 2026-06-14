@@ -31,25 +31,25 @@
 
   .spark-line {
     fill:            none;
-    stroke:          currentColor;
+    stroke:          currentcolor;
     stroke-width:    1.5;
     stroke-linejoin: round;
     stroke-linecap:  round;
   }
 
   .spark-area {
-    fill:         currentColor;
+    fill:         currentcolor;
     fill-opacity: 0.18;
     stroke:       none;
   }
 
   .spark-bar {
-    fill:    currentColor;
+    fill:    currentcolor;
     opacity: 0.85;
   }
 
   .spark-dot {
-    fill: currentColor;
+    fill: currentcolor;
   }
 
   /* ─── Tonos semánticos → color del host ───────────────

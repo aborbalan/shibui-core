@@ -49,8 +49,12 @@ export type LibTone = LibSemanticTone | 'muted';
 export type LibVariant = 'solid' | 'outlined' | 'ghost' | 'subtle';
 
 /* ── SUPERFICIE / CONTEXTO (modificadores no-tone) ─────────────
-   Para casos hoy llamados surface/inverse/on-dark. No son tones. */
-export type LibSurface = 'default' | 'inverse' | 'on-dark';
+   Contexto de fondo sobre el que vive el componente. No son tones.
+   - default : superficie natural del tema
+   - light   : forzar variante clara
+   - dark    : forzar variante oscura (antes 'on-dark')
+   - inverse : colores invertidos respecto a la superficie */
+export type LibSurface = 'default' | 'light' | 'dark' | 'inverse';
 
 /* ── TINT (color DECORATIVO, no semántico) ─────────────────────
    Para avatar/glass-card: tintes cálidos/fríos sin significado de
@@ -85,8 +89,6 @@ export interface SidebarLink {
   disabled?: boolean;
 }
 
-export type SidebarVariant = 'dark' | 'light' | 'kintsugi' | 'glitch';
-
 export interface SidebarSocial {
   /** URL de destino */
   href: string;
@@ -99,12 +101,6 @@ export interface SidebarSocial {
 export interface ActiveElement extends HTMLElement {
   active: string | number; // Define el tipo real de tu ID
 }
-
-export type FooterVariant =
-  | 'social'
-  | 'accordion'
-  | 'kintsugi'
-  | 'glitch';
 
 export interface FooterLink {
   /** Texto visible del enlace */

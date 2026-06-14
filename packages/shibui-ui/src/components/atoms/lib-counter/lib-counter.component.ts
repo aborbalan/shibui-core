@@ -70,7 +70,7 @@ export class LibCounter extends LitElement {
   @property({ type: String, reflect: true })
   tone: LibCounterTone = 'default';
 
-  /** Superficie/contexto (p.ej. 'on-dark' para fondos oscuros). */
+  /** Superficie/contexto (p.ej. 'dark' para fondos oscuros). */
   @property({ type: String, reflect: true })
   surface: LibSurface = 'default';
 

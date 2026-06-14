@@ -42,15 +42,25 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "LibAccordionVariant",
+          "name": "display",
+          "type": "LibAccordionDisplay",
           "default": "'default'",
-          "description": "Variante visual del accordion",
-          "attribute": "variant",
+          "description": "Modo de presentación (default · flush · separated)",
+          "attribute": "display",
           "options": [
             "default",
             "flush",
-            "separated",
+            "separated"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "LibAccordionTone",
+          "default": "'default'",
+          "description": "Tinte semántico (default · accent)",
+          "attribute": "tone",
+          "options": [
+            "default",
             "accent"
           ]
         },
@@ -409,11 +419,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "LibBadgeVariant",
+          "name": "tone",
+          "type": "LibBadgeTone",
           "default": "'default'",
-          "description": "Variante visual del badge",
-          "attribute": "variant",
+          "description": "Tono semántico del badge",
+          "attribute": "tone",
           "options": [
             "default",
             "accent",
@@ -698,10 +708,10 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "surface",
-          "type": "BreadcrumbSurface",
+          "name": "display",
+          "type": "BreadcrumbDisplay",
           "default": "\"default\"",
-          "attribute": "surface",
+          "attribute": "display",
           "options": [
             "default",
             "filled",
@@ -709,15 +719,15 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "accent",
-          "type": "BreadcrumbAccent",
-          "default": "\"none\"",
-          "attribute": "accent",
+          "name": "tone",
+          "type": "BreadcrumbTone",
+          "default": "\"default\"",
+          "attribute": "tone",
           "options": [
-            "none",
+            "default",
             "accent",
             "info",
-            "bold"
+            "strong"
           ]
         },
         {
@@ -923,15 +933,24 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
       "props": [
         {
           "name": "variant",
-          "type": "\"primary\" | \"secondary\" | \"ghost\" | \"accent\" | \"danger\"",
-          "default": "'primary'",
+          "type": "\"solid\" | \"outlined\" | \"ghost\"",
+          "default": "'solid'",
           "attribute": "variant",
           "options": [
-            "primary",
-            "secondary",
-            "ghost",
+            "solid",
+            "outlined",
+            "ghost"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "\"default\" | \"accent\" | \"error\"",
+          "default": "'default'",
+          "attribute": "tone",
+          "options": [
+            "default",
             "accent",
-            "danger"
+            "error"
           ]
         },
         {
@@ -977,14 +996,14 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         },
         {
           "name": "customPadding",
-          "type": "string | null",
-          "default": "null",
+          "type": "string",
+          "default": "''",
           "attribute": "custom-padding"
         },
         {
           "name": "ariaLabel",
-          "type": "string | null",
-          "default": "null",
+          "type": "string",
+          "default": "''",
           "attribute": "aria-label"
         }
       ],
@@ -1115,15 +1134,25 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "LiquidVariant",
-          "default": "'filled'",
-          "description": "— 'filled' | 'outlined' | 'accent' | 'info' | 'ghost' | 'error'",
+          "default": "'solid'",
+          "description": "— 'solid' | 'outlined' | 'ghost'",
           "attribute": "variant",
           "options": [
-            "filled",
+            "solid",
             "outlined",
+            "ghost"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "LiquidTone",
+          "default": "'default'",
+          "description": "— 'default' | 'accent' | 'info' | 'error'",
+          "attribute": "tone",
+          "options": [
+            "default",
             "accent",
             "info",
-            "ghost",
             "error"
           ]
         },
@@ -1224,14 +1253,23 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "LibButtonVariant",
-          "default": "'primary'",
+          "default": "'solid'",
           "attribute": "variant",
           "options": [
-            "primary",
-            "secondary",
-            "ghost",
+            "solid",
+            "outlined",
+            "ghost"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "LibButtonTone",
+          "default": "'default'",
+          "attribute": "tone",
+          "options": [
+            "default",
             "accent",
-            "danger"
+            "error"
           ]
         },
         {
@@ -1369,13 +1407,31 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "LibCardVariant",
-          "default": "\"default\"",
+          "default": "\"solid\"",
           "attribute": "variant",
           "options": [
-            "default",
-            "inverse",
-            "accent",
+            "solid",
             "featured"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "LibCardSurface",
+          "default": "\"default\"",
+          "attribute": "surface",
+          "options": [
+            "default",
+            "inverse"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "LibCardTone",
+          "default": "\"default\"",
+          "attribute": "tone",
+          "options": [
+            "default",
+            "accent"
           ]
         },
         {
@@ -1671,11 +1727,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "value"
         },
         {
-          "name": "color",
-          "type": "CheckboxCardColor",
+          "name": "tone",
+          "type": "CheckboxCardTone",
           "default": "'accent'",
           "description": "— 'accent' | 'info'",
-          "attribute": "color",
+          "attribute": "tone",
           "options": [
             "accent",
             "info"
@@ -1921,16 +1977,36 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "variant",
           "type": "LibCloseVariant",
           "default": "'ghost'",
-          "description": "Variante visual",
+          "description": "Tratamiento visual",
           "attribute": "variant",
           "options": [
             "ghost",
             "subtle",
             "outlined",
-            "filled",
-            "filled-round",
-            "error",
-            "on-dark"
+            "solid",
+            "filled-round"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "LibCloseTone",
+          "default": "'default'",
+          "description": "Tinte semántico (default · error)",
+          "attribute": "tone",
+          "options": [
+            "default",
+            "error"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "LibCloseSurface",
+          "default": "'default'",
+          "description": "Superficie (default · dark)",
+          "attribute": "surface",
+          "options": [
+            "default",
+            "dark"
           ]
         },
         {
@@ -1968,7 +2044,7 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         },
         {
           "name": "ariaLabel",
-          "type": "string | null",
+          "type": "string",
           "default": "'Cerrar'",
           "description": "Texto accesible del boton",
           "attribute": "aria-label"
@@ -2040,11 +2116,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "LibCodeBlockVariant",
-          "default": "'default'",
-          "description": "Variante visual: default (oscuro) | ghost (claro)",
+          "default": "'solid'",
+          "description": "Tratamiento visual: solid (oscuro, default) | ghost (claro)",
           "attribute": "variant",
           "options": [
-            "default",
+            "solid",
             "ghost"
           ]
         }
@@ -2444,14 +2520,24 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "variant",
           "type": "LibCopyVariant",
           "default": "'ghost'",
-          "description": "Variante visual",
+          "description": "Tratamiento visual",
           "attribute": "variant",
           "options": [
             "ghost",
             "outlined",
-            "filled",
-            "subtle",
-            "on-dark"
+            "solid",
+            "subtle"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "LibCopySurface",
+          "default": "'default'",
+          "description": "Superficie (default · dark)",
+          "attribute": "surface",
+          "options": [
+            "default",
+            "dark"
           ]
         },
         {
@@ -2595,12 +2681,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "surface",
           "type": "LibSurface",
           "default": "'default'",
-          "description": "Superficie/contexto (p.ej. 'on-dark' para fondos oscuros).",
+          "description": "Superficie/contexto (p.ej. 'dark' para fondos oscuros).",
           "attribute": "surface",
           "options": [
             "default",
-            "inverse",
-            "on-dark"
+            "light",
+            "dark",
+            "inverse"
           ]
         },
         {
@@ -2898,15 +2985,25 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "dlg-title"
         },
         {
-          "name": "variant",
-          "type": "DialogVariant",
+          "name": "tone",
+          "type": "DialogTone",
           "default": "'default'",
-          "description": "— default · danger · warning · dark",
-          "attribute": "variant",
+          "description": "— default · error · warning",
+          "attribute": "tone",
           "options": [
             "default",
             "error",
-            "warning",
+            "warning"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "DialogSurface",
+          "default": "'default'",
+          "description": "— default · dark",
+          "attribute": "surface",
+          "options": [
+            "default",
             "dark"
           ]
         },
@@ -3026,9 +3123,9 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "description": "Superficie sobre la que aparece",
           "attribute": "surface",
           "options": [
-            "dark",
+            "default",
             "light",
-            "neutral"
+            "dark"
           ]
         },
         {
@@ -3332,13 +3429,23 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "DropdownTriggerVariant",
-          "default": "'default'",
-          "description": "— 'default' | 'ghost' | 'filled' | 'accent'",
+          "default": "'outlined'",
+          "description": "— 'solid' | 'outlined' (default) | 'ghost'",
           "attribute": "variant",
           "options": [
+            "solid",
+            "outlined",
+            "ghost"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "DropdownTone",
+          "default": "'default'",
+          "description": "— 'default' | 'accent'",
+          "attribute": "tone",
+          "options": [
             "default",
-            "ghost",
-            "filled",
             "accent"
           ]
         },
@@ -3431,9 +3538,9 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
       "props": [
         {
           "name": "filename",
-          "type": "string | null",
-          "default": "null",
-          "description": "— Nombre del fichero activo. `null` → \"Sin título\".",
+          "type": "string",
+          "default": "''",
+          "description": "— Nombre del fichero activo. Vacío → \"Sin título\".",
           "attribute": "filename"
         },
         {
@@ -3615,8 +3722,9 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "surface",
           "options": [
             "default",
-            "inverse",
-            "on-dark"
+            "light",
+            "dark",
+            "inverse"
           ]
         },
         {
@@ -4096,14 +4204,14 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "minimized"
         },
         {
-          "name": "variant",
-          "type": "GadgetFrameVariant",
-          "default": "'card'",
-          "description": "— 'glass' (default) | 'card'",
-          "attribute": "variant",
+          "name": "theme",
+          "type": "GadgetFrameTheme",
+          "default": "'default'",
+          "description": "— 'default' (card) | 'glass'",
+          "attribute": "theme",
           "options": [
-            "glass",
-            "card"
+            "default",
+            "glass"
           ]
         }
       ],
@@ -4757,15 +4865,35 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "LibKbdVariant",
-          "default": "'default'",
-          "description": "Variante visual de color.",
+          "default": "'solid'",
+          "description": "Tratamiento visual (solid · ghost).",
           "attribute": "variant",
           "options": [
+            "solid",
+            "ghost"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "LibKbdSurface",
+          "default": "'default'",
+          "description": "Superficie (default · inverse).",
+          "attribute": "surface",
+          "options": [
             "default",
-            "inverse",
-            "ghost",
+            "inverse"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "LibKbdTone",
+          "default": "'default'",
+          "description": "Tinte semántico (default · accent · info).",
+          "attribute": "tone",
+          "options": [
+            "default",
             "accent",
-            "subtle"
+            "info"
           ]
         },
         {
@@ -5135,12 +5263,22 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "ModalVariant",
-          "default": "'default'",
-          "description": "— default · editorial · danger.",
+          "default": "'solid'",
+          "description": "— solid · editorial.",
           "attribute": "variant",
           "options": [
+            "solid",
+            "editorial"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "ModalTone",
+          "default": "'default'",
+          "description": "— default · error.",
+          "attribute": "tone",
+          "options": [
             "default",
-            "editorial",
             "error"
           ]
         },
@@ -5277,12 +5415,12 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "PaginationVariant",
-          "default": "'default'",
-          "description": "— 'default' | 'outline' | 'ghost'",
+          "default": "'solid'",
+          "description": "— 'solid' | 'outlined' | 'ghost'",
           "attribute": "variant",
           "options": [
-            "default",
-            "outline",
+            "solid",
+            "outlined",
             "ghost"
           ]
         },
@@ -5417,11 +5555,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "color",
-          "type": "ParallaxTextColor",
+          "name": "tone",
+          "type": "ParallaxTextTone",
           "default": "'default'",
           "description": "— 'default' | 'muted' | 'accent' | 'info' IMPORTANTE: el padre debe llevar overflow-x:hidden. El componente NO lo aplica en :host — si lo hiciera, el translateX quedaría clipado y el efecto sería invisible.",
-          "attribute": "color",
+          "attribute": "tone",
           "options": [
             "default",
             "muted",
@@ -5608,8 +5746,8 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         },
         {
           "name": "ariaLabel",
-          "type": "string | null",
-          "default": "null",
+          "type": "string",
+          "default": "''",
           "attribute": "aria-label"
         }
       ],
@@ -5755,14 +5893,14 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         },
         {
           "name": "surface",
-          "type": "'dark' | 'light' | 'neutral'",
+          "type": "'default' | 'light' | 'dark'",
           "default": "'dark'",
           "description": "Superficie de fondo",
           "attribute": "surface",
           "options": [
-            "dark",
+            "default",
             "light",
-            "neutral"
+            "dark"
           ]
         },
         {
@@ -6063,12 +6201,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "surface",
           "type": "LibSurface",
           "default": "'default'",
-          "description": "Superficie/contexto (p.ej. 'inverse'/'on-dark' para fondos oscuros).",
+          "description": "Superficie/contexto (p.ej. 'inverse'/'dark' para fondos oscuros).",
           "attribute": "surface",
           "options": [
             "default",
-            "inverse",
-            "on-dark"
+            "light",
+            "dark",
+            "inverse"
           ]
         },
         {
@@ -6181,16 +6320,16 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "color",
-          "type": "RatingColor",
-          "default": "'gold'",
-          "description": "— 'gold'(default) | 'accent' | 'neutral' | 'info'",
-          "attribute": "color",
+          "name": "tone",
+          "type": "RatingTone",
+          "default": "'default'",
+          "description": "— 'default'(gold) | 'accent' | 'info' | 'muted'",
+          "attribute": "tone",
           "options": [
-            "gold",
+            "default",
             "accent",
-            "neutral",
-            "info"
+            "info",
+            "muted"
           ]
         },
         {
@@ -6280,10 +6419,19 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "'accent'",
           "attribute": "tone",
           "options": [
+            "default",
             "accent",
-            "info",
-            "filled",
-            "gold"
+            "info"
+          ]
+        },
+        {
+          "name": "theme",
+          "type": "ReadingProgressTheme",
+          "default": "'default'",
+          "attribute": "theme",
+          "options": [
+            "default",
+            "kintsugi"
           ]
         },
         {
@@ -6517,22 +6665,39 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "value"
         },
         {
-          "name": "variant",
-          "type": "SegmentedVariant",
+          "name": "display",
+          "type": "SegmentedDisplay",
           "default": "'outline'",
-          "description": "— Superficie visual (reflected)",
-          "attribute": "variant",
+          "description": "— Modo de presentación: outline · underline · pill · ghost (reflected)",
+          "attribute": "display",
           "options": [
             "outline",
             "underline",
             "pill",
-            "ghost",
+            "ghost"
+          ]
+        },
+        {
+          "name": "surface",
+          "type": "SegmentedSurface",
+          "default": "'default'",
+          "description": "— Superficie: default · dark (reflected)",
+          "attribute": "surface",
+          "options": [
+            "default",
+            "dark"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "SegmentedTone",
+          "default": "'default'",
+          "description": "— Tinte del thumb: default · accent · info (reflected)",
+          "attribute": "tone",
+          "options": [
+            "default",
             "accent",
-            "info",
-            "dark-outline",
-            "dark-pill",
-            "dark-accent",
-            "dark-underline"
+            "info"
           ]
         },
         {
@@ -6683,11 +6848,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "variant",
           "type": "SelectVariant",
-          "default": "'default'",
+          "default": "'outlined'",
           "attribute": "variant",
           "options": [
-            "default",
-            "filled",
+            "solid",
+            "outlined",
             "ghost"
           ]
         },
@@ -6977,12 +7142,22 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "surface",
           "type": "LibSkeletonSurface",
-          "default": "'light'",
-          "description": "Superficie de color.\n- light   : washi-200 → washi-100 (default)\n- dark    : washi-800 → washi-700\n- accent  : kaki-200  → kaki-100\n- info    : jade oscuro  oklch(22%→32% / 175deg)\n  También se activa automáticamente cuando el ancestro tiene\n  data-katachi=\"celadon\" sin necesidad de pasar este prop.",
+          "default": "'default'",
+          "description": "Superficie de fondo.\n- default : washi-200 → washi-100 (fondo claro)\n- dark    : washi-800 → washi-700\n\nEl tinte semántico (accent/info) se controla aparte vía `tone`.\nBajo `data-katachi=\"celadon\"` el shimmer adopta el jade info\nautomáticamente sin necesidad de pasar `tone`.",
           "attribute": "surface",
           "options": [
-            "light",
-            "dark",
+            "default",
+            "dark"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "LibSkeletonTone",
+          "default": "'default'",
+          "description": "Tinte semántico del shimmer.\n- default : sin tinte (usa la superficie)\n- accent  : kaki-200 → kaki-100\n- info    : jade oscuro oklch(22%→32% / 175deg)",
+          "attribute": "tone",
+          "options": [
+            "default",
             "accent",
             "info"
           ]
@@ -7195,13 +7370,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
         {
           "name": "tone",
           "type": "SpinnerTone",
-          "default": "'ink'",
-          "description": "Tono de color (default: ink).",
+          "default": "'default'",
+          "description": "Tono de color (default: default).",
           "attribute": "tone",
           "options": [
-            "ink",
+            "default",
             "accent",
-            "cool"
+            "info"
           ]
         },
         {
@@ -7622,11 +7797,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "attribute": "disabled"
         },
         {
-          "name": "variant",
-          "type": "LibSwitchVariant",
+          "name": "surface",
+          "type": "LibSwitchSurface",
           "default": "'default'",
           "description": "Variante visual.\n- default   : track washi, thumb blanco\n- inverse  : cerámica oscura, venas doradas, thumb de oro al activar",
-          "attribute": "variant",
+          "attribute": "surface",
           "options": [
             "default",
             "inverse"
@@ -7687,11 +7862,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     "api": {
       "props": [
         {
-          "name": "variant",
-          "type": "TabsVariant",
+          "name": "display",
+          "type": "TabsDisplay",
           "default": "\"underline\"",
           "description": "— 'underline' | 'pill' | 'card' | 'outline' | 'vertical'",
-          "attribute": "variant",
+          "attribute": "display",
           "options": [
             "underline",
             "pill",
@@ -7701,12 +7876,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "color",
-          "type": "TabsColor | \"\"",
-          "default": "\"\"",
-          "description": "— 'accent' | 'info'",
-          "attribute": "color",
+          "name": "tone",
+          "type": "TabsTone",
+          "default": "\"default\"",
+          "description": "— 'default' | 'accent' | 'info'",
+          "attribute": "tone",
           "options": [
+            "default",
             "accent",
             "info"
           ]
@@ -7747,7 +7923,8 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "name": "scrollable",
           "type": "boolean",
           "default": "false",
-          "attribute": "scroll"
+          "description": "— overflow-x scroll en la lista",
+          "attribute": "scrollable"
         },
         {
           "name": "full",
@@ -7797,11 +7974,6 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "[]",
           "description": "— array de TabItem Panels: cada TabItem con id=\"X\" se muestra via <slot name=\"X\">. El usuario añade <div slot=\"X\">contenido</div> como hijo de lib-tabs.",
           "attribute": "items"
-        },
-        {
-          "name": "scroll",
-          "type": "unknown",
-          "description": "— overflow-x scroll en la lista"
         }
       ],
       "slots": [],
@@ -8345,14 +8517,24 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "tooltipVariant",
-          "type": "TooltipVariant",
+          "name": "tooltipSurface",
+          "type": "TooltipSurface",
           "default": "'dark'",
-          "description": "— Variante de color de la burbuja (default: 'dark')",
-          "attribute": "tooltip-variant",
+          "description": "— Superficie de la burbuja (default: 'dark')",
+          "attribute": "tooltip-surface",
           "options": [
             "dark",
-            "light",
+            "light"
+          ]
+        },
+        {
+          "name": "tooltipTone",
+          "type": "TooltipTone",
+          "default": "'default'",
+          "description": "— Tinte semántico de la burbuja (default: 'default')",
+          "attribute": "tooltip-tone",
+          "options": [
+            "default",
             "accent",
             "info",
             "error"
@@ -8471,14 +8653,24 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
-          "name": "variant",
-          "type": "TooltipVariant",
+          "name": "surface",
+          "type": "TooltipSurface",
           "default": "'dark'",
-          "description": "Variante de color (default: dark).",
-          "attribute": "variant",
+          "description": "Superficie dark | light (default: dark).",
+          "attribute": "surface",
           "options": [
             "dark",
-            "light",
+            "light"
+          ]
+        },
+        {
+          "name": "tone",
+          "type": "TooltipTone",
+          "default": "'default'",
+          "description": "Tinte semántico default | accent | info | error (default: default).",
+          "attribute": "tone",
+          "options": [
+            "default",
             "accent",
             "info",
             "error"

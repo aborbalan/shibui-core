@@ -4,7 +4,7 @@ import { checkboxCardTemplate } from './lib-checkbox-card.html';
 import checkboxCardCss from './lib-checkbox-card.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import type {
-  CheckboxCardColor,
+  CheckboxCardTone,
   CheckboxCardLayout,
   CheckboxCardInputType,
 } from './lib-checkbox-card.types';
@@ -20,7 +20,7 @@ import type {
  * @prop input-type   — 'checkbox' | 'radio'
  * @prop name         — Nombre del grupo (requerido en radio)
  * @prop value        — Valor del input
- * @prop color        — 'accent' | 'info'
+ * @prop tone         — 'accent' | 'info'
  * @prop layout       — 'vertical' | 'horizontal' | 'compact'
  * @prop card-title   — Título (alternativa a slot)
  * @prop desc         — Descripción (alternativa a slot)
@@ -62,7 +62,7 @@ export class LibCheckboxCard extends LitElement {
   value = '';
 
   @property({ type: String, reflect: true })
-  color: CheckboxCardColor = 'accent';
+  tone: CheckboxCardTone = 'accent';
 
   @property({ type: String, reflect: true })
   layout: CheckboxCardLayout = 'vertical';

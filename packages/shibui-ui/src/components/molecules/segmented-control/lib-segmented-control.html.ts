@@ -11,17 +11,15 @@ import type { SegmentedOption, SegmentedTemplateProps } from './lib-segmented-co
  */
 export function segmentedTemplate(props: SegmentedTemplateProps): TemplateResult {
   const {
-    options, value, variant, size, full,
+    options, value, display, size, full,
     iconOnly, disabled, glitch, thumbStyle, onSelect,
   } = props;
 
-  const isGhost      = variant === 'ghost';
-  //const isUnderline  = variant === 'underline' || variant === 'dark-underline';
-  //const isPill       = variant === 'pill' || variant === 'dark-pill';
+  const isGhost      = display === 'ghost';
 
   const trackCls = [
     'seg',
-    `seg-${variant}`,
+    `seg-${display}`,
     size !== 'md' ? `seg-${size}` : '',
     full     ? 'seg-full'      : '',
     iconOnly ? 'seg-icon-only' : '',

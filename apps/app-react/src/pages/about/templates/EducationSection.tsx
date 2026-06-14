@@ -170,7 +170,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                                 >
                                     {lang.name}
                                 </span>
-                                <LibBadge variant={badgeVariant}>
+                                <LibBadge tone={badgeVariant}>
                                     {lang.level}
                                 </LibBadge>
                             </div>

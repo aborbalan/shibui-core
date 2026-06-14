@@ -202,7 +202,7 @@ export const WithStatusDot: Story = {
         <lib-status-dot slot="status" variant="warning"></lib-status-dot>
       </lib-avatar>
       <lib-avatar size="lg" name="Davide R" tint="cool">
-        <lib-status-dot slot="status" variant="danger" pulse></lib-status-dot>
+        <lib-status-dot slot="status" tone="error" pulse></lib-status-dot>
       </lib-avatar>
       <lib-avatar size="lg" name="Eva P" tint="inverse">
         <lib-status-dot slot="status" variant="neutral"></lib-status-dot>
