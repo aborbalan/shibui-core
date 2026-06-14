@@ -52,9 +52,20 @@ de tener verificación profunda (F3+).
 3. El sello lleva `source` (procedencia) y `coverage` (presencia por faceta).
 4. Tests verdes en `src/checks/floor.test.ts` y `src/smoke/smoke.test.ts`.
 
-## Próximo incremento (F2 · incremento 2)
+## Incremento 2 — runner + integración CI (hecho, pendiente de validar)
 
-- **Runner consumible:** leer el `custom-elements.json` real de shibui-ui (producido por `cem analyze`) y
-  emitir el `SmokeReport` por consola/fichero. Requiere `@types/node` + un runner de TS (p.ej. `tsx`).
-- **Correr sobre los 99 componentes reales** de shibui-ui → es el cierre real de F2 (valida la tesis a escala).
-  Este paso lo ejecuta el usuario desde el repo principal.
+- **Runner consumible:** `src/smoke/run.ts` lee el `custom-elements.json` (por defecto el de shibui-ui),
+  corre `smoke()` e imprime el `SmokeReport`. Sale con código ≠ 0 si algún componente no pasa el Floor
+  (gate-ready). Script: `pnpm --filter @shibui-ui/hanko smoke`. Deps: `@types/node` + `tsx`.
+- **Integración en la pipe:** job `hanko-seal` en `.github/workflows/ci-lib.yml` (needs `build-ui`): descarga el
+  artefacto `ui-dist` (con el CEM) y corre el smoke. **`continue-on-error: true`** (report-only) hasta validar;
+  quitarlo lo convierte en gate duro. El filtro `ui` del orchestrator ya incluye `packages/hanko/**`.
+
+### Comunicación hanko ↔ shibui-ui
+Solo vía el **artefacto** `custom-elements.json` (que produce el build de shibui-ui). hanko **no importa** shibui
+ni depende de él en npm. Detalle visual en [`../reference/runner-y-comunicacion.html`](../reference/runner-y-comunicacion.html).
+
+### ⚠️ Prerrequisito para CI
+El `pnpm-lock.yaml` committeado **no incluye `@shibui-ui/hanko`**. CI usa `--frozen-lockfile`, así que hay que
+**regenerar y commitear el lockfile** (`pnpm install` desde el repo principal) antes de que el job —o cualquier
+run de ci-lib— pase el paso de instalación.

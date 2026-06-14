@@ -88,7 +88,8 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 - **Criterios:** se emite sello para N componentes reales sin caídas; el Floor distingue pasa/no-pasa; queda
   demostrado que el flujo escala de 10 a 99.
 - **Dependencias:** F1 · acceso al CEM real de shibui-ui (`packages/shibui-ui/dist/custom-elements.json`).
-- **Estado:** 🟡 incremento 1 hecho (lógica + tests); falta el runner sobre shibui real (cierre de F2).
+- **Estado:** 🟡 incrementos 1+2 hechos (Floor + smoke + runner `src/smoke/run.ts` + job CI `hanko-seal`
+  report-only). **Bloqueante para CI:** regenerar `pnpm-lock.yaml` para incluir hanko (`pnpm install` + commit).
 
 ### F3 · Contrato — ⬜ no iniciada
 - **Objetivo:** verificar lo declarado (props/eventos/slots/métodos) contra el **runtime** del elemento vivo.
