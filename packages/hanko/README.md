@@ -3,8 +3,13 @@
 > Motor de verificación de **confianza** (*trust*) **manifest-driven** para Web Components.
 > El sello que estampa cada componente que cumple su contrato declarado.
 
-**Estado:** definición temprana — esqueleto del paquete creado, **sin código de implementación aún**.
+**Estado:** Hito 1 en curso — F0 mergeado a `main`, F1 implementado (pend. validación).
 Construido **desde 0** (no hereda la infra de test de `@shibui-ui/ui`, que es a medida).
+
+> 🔄 **¿Retomando en una sesión nueva de Claude?** Empieza por
+> [`docs/phases/README.md → Cómo retomar este proyecto`](docs/phases/README.md): tiene el estado actual,
+> el orden de lectura, las reglas del flujo (worktree sin node_modules, commits `--no-verify`, GitFlow) y el
+> próximo paso accionable.
 
 ---
 
