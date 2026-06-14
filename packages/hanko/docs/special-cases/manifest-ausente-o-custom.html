@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hanko · Web Components sin manifest o con formato custom</title>
+<style>
+  :root{
+    --bg:#14110f;--bg-soft:#1c1815;--panel:#221d19;--panel-2:#2a241f;
+    --ink:#ece4d8;--ink-soft:#bcae9c;--ink-faint:#8c8072;--line:#3a3128;
+    --celadon:#7fae9b;--celadon-deep:#4f7d6c;--kintsugi:#d9a441;--kintsugi-soft:#e8c27a;
+    --kaki:#c8623a;--sabi:#9a6f4e;--info:#6f9fc4;--error:#c0573f;--shuniku:#c5402f;
+    --radius:14px;
+    --mono:"SFMono-Regular",ui-monospace,"Cascadia Code","Fira Code",Consolas,monospace;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --serif:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(197,64,47,.08), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(127,174,155,.06), transparent 55%),
+      var(--bg);
+    color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto;padding:64px 28px 120px}
+  header.hero{margin-bottom:52px}
+  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--shuniku);margin:0 0 14px}
+  h1{font-family:var(--serif);font-weight:600;font-size:2.5rem;line-height:1.14;margin:0 0 18px;letter-spacing:-.01em}
+  h1 .accent{color:var(--celadon)}
+  .lede{font-size:1.1rem;color:var(--ink-soft);max-width:64ch;margin:0}
+  .seam{height:2px;border:0;margin:42px 0;
+    background:linear-gradient(90deg,transparent,var(--kintsugi) 22%,var(--kintsugi-soft) 50%,var(--kintsugi) 78%,transparent);opacity:.55}
+  h2{font-family:var(--serif);font-size:1.62rem;font-weight:600;margin:54px 0 8px;letter-spacing:-.01em}
+  h2 .num{font-family:var(--mono);font-size:.92rem;color:var(--kintsugi);margin-right:.6em}
+  h3{font-size:1.1rem;font-weight:650;margin:30px 0 6px;color:var(--ink)}
+  p{margin:12px 0;color:var(--ink-soft)}
+  strong{color:var(--ink);font-weight:650}
+  em{color:var(--kintsugi-soft);font-style:normal}
+  code{font-family:var(--mono);font-size:.85em;background:var(--panel-2);color:var(--kintsugi-soft);
+    padding:.12em .4em;border-radius:6px;border:1px solid var(--line)}
+  a{color:var(--celadon)}
+  .toc{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 0}
+  .toc a{font-family:var(--mono);font-size:.78rem;text-decoration:none;color:var(--ink-soft);
+    border:1px solid var(--line);background:var(--panel);padding:8px 14px;border-radius:999px;transition:.2s}
+  .toc a:hover{border-color:var(--celadon);color:var(--celadon);transform:translateY(-1px)}
+  pre{background:#100d0b;border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;overflow:auto;margin:18px 0;font-size:.83rem;line-height:1.55}
+  pre code{background:none;border:0;padding:0;color:#d7cdbd}
+  .tok-key{color:#c98ac0}.tok-fn{color:var(--celadon)}.tok-str{color:var(--kintsugi-soft)}
+  .tok-com{color:var(--ink-faint);font-style:italic}.tok-dec{color:var(--kaki)}.tok-tag{color:var(--info)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin:20px 0}
+  table{width:100%;border-collapse:collapse;margin:22px 0;font-size:.9rem}
+  th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+  td:first-child{color:var(--ink);font-weight:600}
+  tbody tr:hover{background:rgba(127,174,155,.04)}
+  .yes{color:var(--celadon);font-weight:600}.no{color:var(--error);font-weight:600}.partial{color:var(--kintsugi);font-weight:600}
+  .cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:22px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+  .card h4{margin:0 0 8px;font-size:.98rem;display:flex;align-items:center;gap:8px}
+  .card p{font-size:.86rem;margin:6px 0 0}
+  .card .verdict{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-top:10px;display:block}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .callout{border-left:3px solid var(--kintsugi);background:rgba(217,164,65,.06);
+    border-radius:0 10px 10px 0;padding:16px 20px;margin:22px 0}
+  .callout.celadon{border-left-color:var(--celadon);background:rgba(127,174,155,.06)}
+  .callout.shuniku{border-left-color:var(--shuniku);background:rgba(197,64,47,.07)}
+  .callout .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--kintsugi);display:block;margin-bottom:6px}
+  .callout.celadon .tag{color:var(--celadon)}.callout.shuniku .tag{color:var(--shuniku)}
+  .flow svg{width:100%;height:auto;display:block;margin:8px 0}
+  footer{margin-top:70px;padding-top:24px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:.82rem;font-family:var(--mono)}
+  footer .gold{color:var(--kintsugi)}
+  @media(max-width:680px){.wrap{padding:40px 18px 80px}h1{font-size:1.9rem}.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">hanko · CASO ESPECIAL · fuera del camino principal CEM/manifest</p>
+  <h1>Web Components <span class="accent">sin manifest</span><br>o con un manifest <span class="accent">custom</span></h1>
+  <p class="lede">hanko vive en el contrato. ¿Qué ocurre cuando el contrato no existe, o existe pero habla
+  otro idioma? Este report disecciona los dos casos límite y propone cómo debe comportarse el motor sin
+  traicionar su tesis de confianza.</p>
+  <div class="callout shuniku" style="margin-top:24px">
+    <span class="tag">Alcance de este documento</span>
+    <p style="margin:0"><strong>Esto NO forma parte del planning del núcleo de hanko.</strong> El camino principal
+    —fases F0–F7 y ADR-001— asume que el componente trae un <strong>CEM</strong> (o un manifest normalizable a CEM).
+    Este documento trata los componentes que se salen de ese supuesto: <em>sin manifest</em> o con un
+    <em>formato custom no estándar</em>. Es un <strong>caso especial deliberadamente separado</strong>, documentado
+    aquí para no contaminar el camino feliz y para tener una decisión lista cuando toque abordarlo. Decisión aún
+    <strong>abierta</strong>; lo que sigue es la propuesta, no la resolución cerrada.</p>
+  </div>
+  <nav class="toc">
+    <a href="#lente">0 · La pregunta única</a>
+    <a href="#sin">A · Sin manifest</a>
+    <a href="#circular">A.2 · La trampa circular</a>
+    <a href="#custom">B · Formato custom</a>
+    <a href="#ingesta">Modelo de ingestión</a>
+    <a href="#integridad">Integridad del sello</a>
+    <a href="#bootstrap">El giro constructivo</a>
+    <a href="#decision">Decisión propuesta</a>
+  </nav>
+</header>
+
+<hr class="seam">
+
+<!-- 0 -->
+<section id="lente">
+  <h2><span class="num">00</span>Todo se reduce a una sola pregunta</h2>
+  <p>Ambos casos —sin manifest y con manifest ajeno— son la misma pregunta vista desde dos ángulos:</p>
+  <div class="callout shuniku">
+    <span class="tag">La lente</span>
+    <p style="margin:0;font-size:1.05rem"><strong>¿Tiene hanko un contrato <em>independiente</em> y <em>declarado</em>
+    contra el que verificar la implementación?</strong></p>
+  </div>
+  <p>Esto importa porque la tesis de hanko es: <em>el humano revisa el contrato (pequeño); hanko verifica que
+  la implementación lo honra (grande)</em>. Si no hay contrato, no hay nada que honrar — y el motor pierde su razón de ser,
+  no por incapacidad técnica, sino porque <strong>la conformidad necesita dos partes que comparar</strong>.</p>
+  <table>
+    <thead><tr><th>Caso</th><th>¿Hay contrato?</th><th>¿En qué idioma?</th><th>Estrategia</th></tr></thead>
+    <tbody>
+      <tr><td>CEM nativo</td><td class="yes">Sí</td><td>CEM (el de hanko)</td><td>Pipeline completo</td></tr>
+      <tr><td>Manifest custom</td><td class="yes">Sí</td><td class="partial">Otro dialecto</td><td>Adaptar → CEM en el borde</td></tr>
+      <tr><td>Sin manifest</td><td class="no">No</td><td>—</td><td>Sondeo runtime · sin sello de conformidad</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<hr class="seam">
+
+<!-- A -->
+<section id="sin">
+  <h2><span class="num">A</span>Web Component sin manifest alguno</h2>
+  <p>Existe un Custom Element registrado con <code>customElements.define('mi-comp', …)</code>, vive en el DOM,
+  pero <strong>no trae CEM</strong>. La entrada principal de hanko falta. ¿Qué se puede hacer?</p>
+
+  <h3>Qué pierde hanko inmediatamente</h3>
+  <p>Sin contrato declarado, desaparecen de golpe las dos capas más valiosas:</p>
+  <div class="panel">
+    <p style="margin:0 0 6px">✗ <strong>Validación de contrato</strong> — no hay props/eventos/slots declarados que comprobar.</p>
+    <p style="margin:0 0 6px">✗ <strong>Detección de drift</strong> — no hay un "lo prometido" del que la implementación pueda desviarse.</p>
+    <p style="margin:0">✓ <strong>Sobreviven</strong> las pruebas <em>universales</em> que no dependen de un contrato:
+    a11y (axe, foco, teclado, ARIA) y resiliencia (no peta con props basura, SSR, RTL). Son expectativas
+    que aplican a <em>cualquier</em> componente, declare lo que declare.</p>
+  </div>
+  <p>Es decir: hanko <strong>degrada de verificador-de-conformidad a sonda-de-comportamiento</strong>.
+  Puede decir "este componente no se rompe y es accesible", pero <strong>no</strong> "este componente cumple lo que promete"
+  — porque no promete nada.</p>
+
+  <h3>Qué se puede inferir interrogando el runtime</h3>
+  <p>Se podría reconstruir un contrato mínimo introspeccionando el elemento vivo. Pero la recuperación es
+  <strong>desigual y, sobre todo, conductual</strong> — hay que manipular el elemento y observar, no leer una declaración:</p>
+  <table>
+    <thead><tr><th>Aspecto del contrato</th><th>¿Recuperable?</th><th>Cómo</th><th>Fiabilidad</th></tr></thead>
+    <tbody>
+      <tr><td>tagName</td><td class="yes">Sí</td><td>el propio registro</td><td>Alta</td></tr>
+      <tr><td>Atributos observados</td><td class="yes">Sí</td><td><code>static observedAttributes</code></td><td>Alta — pero solo los <em>observados</em></td></tr>
+      <tr><td>Propiedades</td><td class="partial">Parcial</td><td>recorrer prototipo / instancia</td><td>Baja — sin tipos ni defaults</td></tr>
+      <tr><td>Tipos de prop</td><td class="no">No</td><td>JS es dinámico</td><td>—</td></tr>
+      <tr><td>Eventos</td><td class="no">No (estáticamente)</td><td>se disparan imperativamente; solo visibles al <em>provocarlos</em></td><td>Muy baja</td></tr>
+      <tr><td>Slots</td><td class="partial">Parcial</td><td>renderizar + buscar <code>&lt;slot&gt;</code> en shadowRoot</td><td>Media — exige render</td></tr>
+      <tr><td>CSS parts</td><td class="partial">Parcial</td><td>render + query <code>[part]</code></td><td>Media</td></tr>
+      <tr><td>Reflect (attr⇄prop)</td><td class="partial">Parcial</td><td>setear prop y observar el atributo</td><td>Media — sonda conductual</td></tr>
+    </tbody>
+  </table>
+
+  <pre><code><span class="tok-com">// Lo máximo que da la introspección estática — y se queda corto</span>
+<span class="tok-key">const</span> Ctor = customElements.<span class="tok-fn">get</span>(<span class="tok-str">'mi-comp'</span>);
+<span class="tok-key">const</span> attrs = Ctor?.observedAttributes ?? [];   <span class="tok-com">// ['size','disabled'] — solo los observados</span>
+<span class="tok-com">// ❌ eventos: invisibles. ❌ tipos: inexistentes. ❌ defaults: desconocidos.</span>
+<span class="tok-com">// Slots/parts solo aparecen tras renderizar e inspeccionar el shadowRoot.</span></code></pre>
+</section>
+
+<!-- A.2 -->
+<section id="circular">
+  <h3 style="font-size:1.25rem;color:var(--ink);margin-top:40px">A.2 · La trampa: un contrato inferido es circular</h3>
+  <div class="callout shuniku">
+    <span class="tag">El defecto fatal de la inferencia</span>
+    <p style="margin:0">Si el contrato lo <strong>derivas de la implementación</strong>, ya no puedes "verificar que la
+    implementación honra el contrato" — porque el contrato <em>es</em> la implementación. Es un razonamiento
+    <strong>circular y autocumplido</strong>: por definición coinciden. <strong>Un contrato inferido nunca detecta drift</strong>,
+    porque no existe nada independiente de lo que desviarse.</p>
+  </div>
+  <p>Esta es la diferencia profunda entre un manifest <em>declarado por un humano</em> (intención, independiente del código)
+  y uno <em>inferido del runtime</em> (eco del código). Solo el primero genera confianza real; el segundo solo confirma
+  que el componente es consistente consigo mismo — útil, pero <strong>no es un sello de confianza</strong>.</p>
+
+  <h3>Las tres salidas posibles</h3>
+  <div class="cards">
+    <div class="card" style="border-top:3px solid var(--error)">
+      <h4><span class="dot" style="background:var(--error)"></span>a) Rechazo</h4>
+      <p>Exigir CEM como condición de entrada. Limpio y honesto, pero excluye a muchísimos componentes reales
+      (gran parte de las librerías no envían CEM).</p>
+      <span class="verdict" style="color:var(--error)">Estricto · poca adopción</span>
+    </div>
+    <div class="card" style="border-top:3px solid var(--kintsugi)">
+      <h4><span class="dot" style="background:var(--kintsugi)"></span>b) Inferencia runtime</h4>
+      <p>Derivar un contrato del DOM vivo. Recupera poco y es circular para drift. Sirve para <em>onboarding</em>,
+      no para sellar confianza por sí solo.</p>
+      <span class="verdict" style="color:var(--kintsugi)">Útil como borrador, no como sello</span>
+    </div>
+    <div class="card" style="border-top:3px solid var(--celadon)">
+      <h4><span class="dot" style="background:var(--celadon)"></span>c) Híbrido (recomendado)</h4>
+      <p>Aceptar, correr solo las pruebas universales (a11y/resiliencia) y emitir un sello <strong>degradado y
+      etiquetado</strong> "sin manifest declarado". Nunca al nivel de un CEM real.</p>
+      <span class="verdict" style="color:var(--celadon)">Adopción + honestidad</span>
+    </div>
+  </div>
+</section>
+
+<hr class="seam">
+
+<!-- B -->
+<section id="custom">
+  <h2><span class="num">B</span>Manifest en formato custom / no estándar</h2>
+  <p>Aquí <strong>sí hay contrato</strong> —el componente se describe a sí mismo— pero <strong>no en CEM</strong>.
+  Existen muchos dialectos reales en la naturaleza:</p>
+  <table>
+    <thead><tr><th>Formato</th><th>Origen</th><th>Qué cubre</th></tr></thead>
+    <tbody>
+      <tr><td><code>docs.json</code></td><td>Stencil (formato propio)</td><td>props, eventos, métodos — rico (aunque Stencil <em>también</em> puede emitir CEM)</td></tr>
+      <tr><td><code>web-types.json</code></td><td>JetBrains (IDEs)</td><td>atributos, slots, eventos para autocompletado</td></tr>
+      <tr><td><code>html-custom-data.json</code></td><td>VS Code custom data</td><td>tags y atributos para IntelliSense</td></tr>
+      <tr><td><code>argTypes</code></td><td>Storybook</td><td>controles/props, parcial y orientado a UI</td></tr>
+      <tr><td><code>components.json</code> a medida</td><td>equipo interno</td><td>lo que el equipo haya decidido</td></tr>
+    </tbody>
+  </table>
+
+  <h3>La respuesta arquitectónica: adapter en el borde de ingestión</h3>
+  <p>La regla es la misma que ya rige el core de hanko (<em>el core nunca importa de shibui; recibe config + manifest</em>):
+  <strong>el core habla un único idioma, CEM, y todo lo ajeno se normaliza en la frontera</strong>.
+  Cada formato extranjero pasa por un <em>adapter</em> que emite CEM (posiblemente parcial):</p>
+
+  <pre><code><span class="tok-com">// El core nunca conoce formatos ajenos. Solo el borde traduce.</span>
+<span class="tok-key">interface</span> <span class="tok-fn">ManifestAdapter</span> {
+  <span class="tok-fn">detect</span>(input: unknown): <span class="tok-key">boolean</span>;        <span class="tok-com">// ¿es mi formato?</span>
+  <span class="tok-fn">toCEM</span>(input: unknown): <span class="tok-fn">CEMResult</span>;      <span class="tok-com">// → CEM + reporte de cobertura</span>
+}
+
+<span class="tok-key">interface</span> <span class="tok-fn">CEMResult</span> {
+  manifest: CustomElementsManifest;   <span class="tok-com">// lo que SÍ se pudo traducir</span>
+  coverage: { mapped: <span class="tok-key">string</span>[]; dropped: <span class="tok-key">string</span>[] };  <span class="tok-com">// honestidad sobre la pérdida</span>
+}
+
+<span class="tok-com">// hanko core recibe SIEMPRE CEM, venga de donde venga.</span></code></pre>
+
+  <p>Esto encaja de forma natural con la <strong>regla de oro del ADR-001</strong> (<em>ausencia ≠ incumplimiento</em>):
+  si un adapter solo recupera props pero no eventos, emite un CEM con props y sin eventos → hanko valida props y
+  omite eventos. <strong>La misma maquinaria, sin código especial.</strong></p>
+
+  <div class="callout">
+    <span class="tag">La preocupación real: traducción con pérdida</span>
+    <p style="margin:0">Un formato ajeno puede codificar cosas que CEM no expresa, o al revés. El adapter
+    <strong>debe reportar su cobertura</strong> (<code>mapped</code> / <code>dropped</code>), porque eso alimenta
+    la <em>cobertura del sello</em>: el Trust Report dirá "validado a partir de web-types: se mapearon atributos y
+    slots; se descartaron tipos de unión que el formato no expresa".</p>
+  </div>
+</section>
+
+<hr class="seam">
+
+<!-- Ingesta -->
+<section id="ingesta">
+  <h2><span class="num">★</span>Modelo de ingestión en tres niveles</h2>
+  <p>Los dos casos colapsan en un único embudo de entrada. CEM es el <em>lingua franca</em> interno; lo demás
+  se resuelve en el borde o cae a sondeo:</p>
+  <div class="flow">
+    <svg viewBox="0 0 860 430" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#9a6f4e"/></marker>
+        <marker id="ag" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#d9a441"/></marker>
+        <marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#c0573f"/></marker>
+      </defs>
+
+      <!-- inputs -->
+      <text x="120" y="30" text-anchor="middle" fill="#8c8072" font-size="11" font-family="monospace">ENTRADA</text>
+      <rect x="20" y="45"  width="200" height="48" rx="10" fill="#221d19" stroke="#7fae9b" stroke-width="1.5"/>
+      <text x="120" y="74" text-anchor="middle" fill="#ece4d8" font-size="13">① CEM nativo</text>
+      <rect x="20" y="190" width="200" height="48" rx="10" fill="#221d19" stroke="#d9a441" stroke-width="1.5"/>
+      <text x="120" y="219" text-anchor="middle" fill="#ece4d8" font-size="13">② Manifest custom</text>
+      <rect x="20" y="335" width="200" height="48" rx="10" fill="#221d19" stroke="#c0573f" stroke-width="1.5"/>
+      <text x="120" y="364" text-anchor="middle" fill="#ece4d8" font-size="13">③ Sin manifest</text>
+
+      <!-- middle transforms -->
+      <line x1="220" y1="69"  x2="350" y2="69"  stroke="#7fae9b" stroke-width="2" marker-end="url(#a)"/>
+      <line x1="220" y1="214" x2="350" y2="214" stroke="#d9a441" stroke-width="2" marker-end="url(#ag)"/>
+      <line x1="220" y1="359" x2="350" y2="359" stroke="#c0573f" stroke-width="2" marker-end="url(#ar)"/>
+
+      <text x="285" y="60"  text-anchor="middle" fill="#7fae9b" font-size="9.5" font-family="monospace">directo</text>
+      <rect x="350" y="192" width="150" height="44" rx="9" fill="#2a241f" stroke="#d9a441"/>
+      <text x="425" y="219" text-anchor="middle" fill="#e8c27a" font-size="12">Adapter → CEM</text>
+      <rect x="350" y="337" width="150" height="44" rx="9" fill="#2a241f" stroke="#c0573f"/>
+      <text x="425" y="358" text-anchor="middle" fill="#ece4d8" font-size="11">Sonda runtime</text>
+      <text x="425" y="373" text-anchor="middle" fill="#8c8072" font-size="9.5" font-family="monospace">(circular)</text>
+
+      <!-- converge to core -->
+      <line x1="220" y1="69"  x2="600" y2="150" stroke="#7fae9b" stroke-width="2" marker-end="url(#a)" opacity=".9"/>
+      <line x1="500" y1="214" x2="600" y2="170" stroke="#d9a441" stroke-width="2" marker-end="url(#ag)"/>
+
+      <!-- core -->
+      <rect x="605" y="120" width="170" height="80" rx="12" fill="#221d19" stroke="#7fae9b" stroke-width="2"/>
+      <text x="690" y="152" text-anchor="middle" fill="#ece4d8" font-size="14" font-weight="700">hanko core</text>
+      <text x="690" y="172" text-anchor="middle" fill="#bcae9c" font-size="11">habla solo CEM</text>
+      <text x="690" y="188" text-anchor="middle" fill="#8c8072" font-size="10">contrato + drift + a11y</text>
+
+      <!-- runtime path goes to a separate weaker box -->
+      <line x1="500" y1="359" x2="605" y2="320" stroke="#c0573f" stroke-width="2" marker-end="url(#ar)"/>
+      <rect x="605" y="290" width="170" height="62" rx="12" fill="#1c1815" stroke="#c0573f" stroke-dasharray="4 3"/>
+      <text x="690" y="316" text-anchor="middle" fill="#ece4d8" font-size="12.5" font-weight="700">Sello degradado</text>
+      <text x="690" y="334" text-anchor="middle" fill="#bcae9c" font-size="10">solo a11y/resiliencia</text>
+
+      <text x="690" y="240" text-anchor="middle" fill="#7fae9b" font-size="10" font-family="monospace">SELLO PLENO</text>
+    </svg>
+  </div>
+  <p>① y ② confluyen en el <strong>mismo core</strong> y obtienen sello pleno (② con su cobertura anotada).
+  ③ se desvía a un <strong>carril aparte</strong>: nunca toca la validación de contrato y solo puede aspirar a un sello degradado.</p>
+</section>
+
+<hr class="seam">
+
+<!-- Integridad -->
+<section id="integridad">
+  <h2><span class="num">!</span>Salvaguarda: el sello debe declarar su procedencia</h2>
+  <p>El riesgo más serio no es técnico: es de <strong>integridad</strong>. Un sello derivado de un contrato inferido
+  o de una traducción con pérdida <strong>no puede parecer tan fuerte</strong> como uno nacido de un CEM declarado por
+  un humano. Si todos los sellos se ven iguales, hanko miente.</p>
+  <div class="callout celadon">
+    <span class="tag">Regla de honestidad</span>
+    <p style="margin:0">Todo Trust Report declara la <strong>procedencia</strong> y la <strong>cobertura</strong> del contrato:
+    <em>"sello basado en CEM nativo"</em> · <em>"adaptado de web-types (sin tipos)"</em> · <em>"inferido del runtime — sin conformidad"</em>.
+    La confianza exige transparencia sobre <strong>de dónde salió el contrato</strong>, no solo si se cumplió.</p>
+  </div>
+  <table>
+    <thead><tr><th>Procedencia</th><th>Drift detectable</th><th>Nivel de sello</th></tr></thead>
+    <tbody>
+      <tr><td>CEM declarado (humano)</td><td class="yes">Sí</td><td>Pleno</td></tr>
+      <tr><td>Adaptado de formato custom</td><td class="partial">Parcial (según cobertura)</td><td>Pleno con asteriscos</td></tr>
+      <tr><td>Inferido del runtime</td><td class="no">No (circular)</td><td>Degradado / smoke</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<hr class="seam">
+
+<!-- Bootstrap -->
+<section id="bootstrap">
+  <h2><span class="num">↻</span>El giro constructivo: bootstrap de CEM</h2>
+  <p>La debilidad del caso "sin manifest" se convierte en <strong>una función de onboarding</strong>. hanko puede
+  inferir un <strong>borrador</strong> de CEM del runtime y proponérselo al humano para que lo <strong>ratifique y corrija</strong>.
+  En cuanto un humano lo bendice, ese borrador deja de ser un eco del código y pasa a ser un <strong>contrato independiente</strong>.</p>
+  <div class="flow">
+    <svg viewBox="0 0 820 90" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="b" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7fae9b"/></marker></defs>
+      <rect x="10" y="25" width="160" height="42" rx="9" fill="#1c1815" stroke="#c0573f" stroke-dasharray="4 3"/>
+      <text x="90" y="51" text-anchor="middle" fill="#ece4d8" font-size="12">Sin manifest</text>
+      <line x1="170" y1="46" x2="225" y2="46" stroke="#7fae9b" stroke-width="2" marker-end="url(#b)"/>
+      <rect x="227" y="25" width="160" height="42" rx="9" fill="#221d19" stroke="#d9a441"/>
+      <text x="307" y="51" text-anchor="middle" fill="#e8c27a" font-size="12">Borrador inferido</text>
+      <line x1="387" y1="46" x2="442" y2="46" stroke="#7fae9b" stroke-width="2" marker-end="url(#b)"/>
+      <rect x="444" y="25" width="170" height="42" rx="9" fill="#221d19" stroke="#7fae9b"/>
+      <text x="529" y="51" text-anchor="middle" fill="#ece4d8" font-size="12">Humano ratifica ✎</text>
+      <line x1="614" y1="46" x2="669" y2="46" stroke="#7fae9b" stroke-width="2" marker-end="url(#b)"/>
+      <rect x="671" y="25" width="140" height="42" rx="9" fill="#221d19" stroke="#7fae9b" stroke-width="2"/>
+      <text x="741" y="46" text-anchor="middle" fill="#ece4d8" font-size="12">CEM real</text>
+      <text x="741" y="60" text-anchor="middle" fill="#8c8072" font-size="9" font-family="monospace">drift ON</text>
+    </svg>
+  </div>
+  <p>Tras la ratificación, la detección de drift <strong>vuelve a funcionar</strong>, porque ya existe algo independiente
+  de lo que desviarse. Convertiste un componente opaco en uno gobernado — sin pedirle al autor que escriba el CEM desde cero.</p>
+</section>
+
+<hr class="seam">
+
+<!-- Decisión -->
+<section id="decision">
+  <h2><span class="num">✓</span>Decisión propuesta (para ADR futuro)</h2>
+  <div class="panel">
+    <p style="margin:0 0 10px"><strong>1. CEM es el único idioma del core.</strong> Nada ajeno lo cruza sin normalizar.</p>
+    <p style="margin:0 0 10px"><strong>2. Formatos custom → adapters en el borde,</strong> que emiten CEM + reporte de cobertura
+    (<code>mapped</code>/<code>dropped</code>). Encaja con <em>ausencia ≠ incumplimiento</em> sin código especial.</p>
+    <p style="margin:0 0 10px"><strong>3. Sin manifest → carril degradado:</strong> solo pruebas universales (a11y/resiliencia),
+    <strong>jamás</strong> sello de conformidad. La inferencia es circular y no detecta drift.</p>
+    <p style="margin:0 0 10px"><strong>4. Bootstrap opcional:</strong> ofrecer borrador inferido para que un humano lo ratifique
+    y lo promueva a CEM real. Onboarding, no atajo.</p>
+    <p style="margin:0"><strong>5. Honestidad obligatoria:</strong> el Trust Report siempre declara procedencia y cobertura.
+    Tres orígenes ⇒ tres fuerzas de sello distintas y visibles.</p>
+  </div>
+  <div class="callout celadon">
+    <span class="tag">En una frase</span>
+    <p style="margin:0">hanko acepta a todos, pero <strong>no sella a todos por igual</strong>: traduce lo que puede,
+    sondea lo que no, y nunca disfraza un eco del código de contrato verificado. <em>La confianza no se finge — se procedencia.</em></p>
+  </div>
+</section>
+
+<footer>
+  <p>hanko · <span class="gold">CASO ESPECIAL</span> separado del camino principal CEM/manifest (referenciado desde ADR-001).</p>
+  <p>Relacionado: <span class="gold">../decisions/adr-001-baseline-minima-viable.md</span> · <span class="gold">../reference/web-components-vs-lit-y-manifest.html</span></p>
+  <p>Estado: planificación. Sin código aún.</p>
+</footer>
+
+</div>
+</body>
+</html>
