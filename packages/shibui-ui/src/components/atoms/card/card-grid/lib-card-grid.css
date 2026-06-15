@@ -9,7 +9,10 @@
     :host {
         display: block;
 
-        --cg-cols: repeat(auto-fill, minmax(280px, 1fr));
+        /* auto-fit (no auto-fill): colapsa las pistas vacías y estira las
+           cards existentes — sin celdas fantasma cuando el contenido no
+           llena la última fila (showcase hero, grid de componentes…). */
+        --cg-cols: repeat(auto-fit, minmax(280px, 1fr));
         --cg-gap: 1.5px;
         --cg-bg: rgb(255, 255, 255, 0.04);
         --cg-border: rgb(255, 255, 255, 0.04);
