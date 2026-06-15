@@ -68,7 +68,7 @@ export const PillarsSection: React.FC = () => {
               fontFamily: 'var(--lib-font-display, "Cormorant Garamond", serif)',
               fontSize: 'clamp(5rem, 10vw, 8rem)',
               fontWeight: 300,
-              color: 'rgba(184, 90, 30, 0.08)',
+              color: 'color-mix(in oklch, var(--text-accent), transparent 92%)',
               lineHeight: 1,
               userSelect: 'none',
               pointerEvents: 'none',
@@ -82,7 +82,7 @@ export const PillarsSection: React.FC = () => {
               fontSize: '0.62rem',
               letterSpacing: '0.2em',
               textTransform: 'uppercase' as const,
-              color: 'rgba(184, 90, 30, 0.6)',
+              color: 'color-mix(in oklch, var(--text-accent), transparent 40%)',
               margin: '0 0 1rem 0',
             }}>
               {pillar.label}

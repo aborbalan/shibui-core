@@ -70,7 +70,7 @@ export const PrinciplesSection: React.FC = () => {
               fontFamily: 'var(--lib-font-mono, "DM Mono", monospace)',
               fontSize: '0.6rem',
               letterSpacing: '0.15em',
-              color: 'rgba(184, 90, 30, 0.55)',
+              color: 'color-mix(in oklch, var(--text-accent), transparent 45%)',
               lineHeight: 1,
               flexShrink: 0,
               paddingTop: '0.2rem',
