@@ -14,6 +14,18 @@
            llena la última fila (showcase hero, grid de componentes…). */
         --cg-cols: repeat(auto-fit, minmax(280px, 1fr));
         --cg-gap: 1.5px;
+
+        /* Sin superficie propia: fondo y borde transparentes por defecto,
+           para que una pista vacía de la última fila no dibuje una celda
+           fantasma. Las cards proyectadas aportan su propia superficie.
+           El atributo `transparent` queda como alias explícito. */
+        --cg-bg: transparent;
+        --cg-border: transparent;
+    }
+
+    :host([transparent]) {
+        --cg-bg: transparent;
+        --cg-border: transparent;
     }
 }
 
@@ -32,11 +44,8 @@
         display: grid;
         grid-template-columns: var(--cg-cols);
         gap: var(--cg-gap);
-        /* Sin superficie propia: ni fondo ni borde. Evita que las pistas
-           vacías de la última fila dibujen una celda fantasma. Las cards
-           proyectadas aportan su propia superficie. */
-        background: none;
-        border: none;
+        background: var(--cg-bg);
+        border: 1px solid var(--cg-border);
     }
 
     /*
@@ -64,8 +73,8 @@
 
     /* ─── KATACHI · ambient context ──────────────────────────────
        lib-card-grid es un componente de layout puro (display: grid
-       + span management para featured cards). No tiene superficie
-       propia: ni fondo ni borde — solo gestiona el grid.
+       + span management para featured cards). Sin superficie propia
+       (fondo y borde transparentes) — solo gestiona el grid.
 
        Las cards proyectadas vía slot heredan el katachi del ancestro
        común — el grid en sí no necesita override.
