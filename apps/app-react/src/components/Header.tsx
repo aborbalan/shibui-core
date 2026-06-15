@@ -19,7 +19,7 @@ export interface DropdownItem {
 export interface HeaderAction {
   label: string;
   href?: string;
-  variant?: 'accent' | 'secondary' | 'ghost';
+  variant?: 'accent' | 'secondary' | 'ghost' | 'celadon';
 }
 
 export type HeaderTheme =
@@ -79,7 +79,7 @@ const DEFAULT_LINKS: NavLink[] = [
 ];
 
 const DEFAULT_ACTIONS: HeaderAction[] = [
-  { label: 'Empezar →', href: '#', variant: 'accent' },
+  { label: 'Empezar →', href: '#', variant: 'celadon' },
 ];
 
 // ─── Componente ───────────────────────────────────────────────────────────────
@@ -88,7 +88,7 @@ export const ShibuiHeader: React.FC<ShibuiHeaderProps> = ({
   logoMark = '渋',
   brandName = 'shibui',
   brandTagline,
-  logoHref = '#',
+  logoHref = '/',
   version,
   links = DEFAULT_LINKS,
   actions = DEFAULT_ACTIONS,
