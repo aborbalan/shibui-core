@@ -9,7 +9,7 @@
  * HUÉRFANO, o un `reflect` perdido — y el manifest no lo ve.
  *
  * Esta suite cierra ese hueco, data-driven desde el MISMO manifest que es el
- * fixture del Nivel 1, aseverando dos cosas ESTRUCTURALES por cada eje de
+ * fixture del Nivel 1, aseverando tres cosas ESTRUCTURALES por cada eje de
  * cohesión (la corrección VISUAL del render ya la cubre el Nivel 3: snapshots
  * de Storybook por katachi — aquí no la duplicamos):
  *
@@ -25,6 +25,12 @@
  *                    forward (cada opción debe tener selector) da falsos
  *                    positivos en componentes estilados por token o JS-driven
  *                    (lib-background), porque no todo eje usa `:host([attr=v])`.
+ *   2c · SIN FANTASMAS — el 2b solo mira ejes DECLARADOS, así que un rename
+ *                    del EJE ENTERO (`variant`→`theme`) que deja el viejo
+ *                    `:host([variant=…])` se le escapa. Verifica que el CSS no
+ *                    use ningún eje canónico que el componente NO declara.
+ *                    Caza exactamente el bug que el 2b no vio: lib-background
+ *                    migrado a `theme` con el CSS aún en `variant`.
  *
  * Los 7 ejes canónicos (reflect:true + `:host([attr="value"])`) son los que la
  * migración de cohesión tocó. El resto de props enum (type/mode/icon/language…)
@@ -55,6 +61,16 @@ const NO_REFLECT = new Set<string>([
 // `${slug}.${attr}=${value}` — selector de eje vivo con un valor fuera de
 // opciones que es intencional (alias back-compat, etc.). Documentar el porqué.
 const ORPHAN_EXEMPT = new Set<string>([]);
+// `${slug}.${attr}` — eje de cohesión presente en el CSS de un componente que
+// NO lo declara como prop. Excepción consciente (p.ej. un átomo que reusa el
+// nombre de un eje canónico para otra cosa interna). Documentar el porqué.
+const PHANTOM_EXEMPT = new Set<string>([
+  // lib-timeline-item comparte la MISMA hoja (`lib-timeline.css?inline`) que su
+  // padre lib-timeline, que SÍ declara `size` (sm·md·lg) y es dueño de los
+  // `:host([size=…])`. El item nunca recibe `size`, así que esas reglas son
+  // no-ops inocuas en él — no CSS muerto. El dueño real las cubre en 2b.
+  'lib-timeline-item.size',
+]);
 
 interface Prop {
   name: string;
@@ -169,6 +185,58 @@ describe('Nivel 2b — sin selectores de cohesión huérfanos', () => {
       expect(
         [...new Set(orphans)],
         `${c.slug}: selectores con valor fuera de opciones declaradas (¿rename sin limpiar?)`,
+      ).toEqual([]);
+    });
+  }
+});
+
+// ════════════════════════════════════════════════════════════════════
+// 2c · SIN ejes FANTASMA (CSS ⇒ manifest)
+// El 2b solo mira ejes que el componente DECLARA: si renombras el VALOR
+// (`filled`→`solid`) lo caza, pero si renombras el EJE ENTERO
+// (`variant`→`theme`) y dejas el viejo `:host([variant=…])`, ese eje ya no
+// está en el mapa de declarados y el 2b pasa en silencio. Este guardián
+// cierra ese hueco: cualquier `:host([X=…])` cuyo X sea un eje de cohesión
+// CANÓNICO que el componente NO declara como prop = CSS muerto tras un
+// rename de eje. (Caso real: lib-background tras `variant`→`theme`.)
+// Sigue siendo inverse (CSS⇒manifest), así que no reintroduce los falsos
+// positivos de la dirección forward en componentes token/JS-driven: un
+// componente legítimo no tiene selectores de ejes que no declara.
+// ════════════════════════════════════════════════════════════════════
+/** Nombres de atributo de eje de cohesión que el componente declara como prop. */
+function declaredAxisNames(c: Comp): Set<string> {
+  const names = new Set<string>();
+  for (const p of c.api.props ?? []) {
+    const attr = p.attribute ?? p.name;
+    if (COHESION_AXES.has(attr)) names.add(attr);
+  }
+  return names;
+}
+
+describe('Nivel 2c — sin selectores de eje de cohesión fantasma', () => {
+  for (const c of components) {
+    const declared = declaredAxisNames(c);
+    // Ejes canónicos que este componente NO declara: si aparecen en su CSS,
+    // son fantasmas de un rename a medias.
+    const phantomAxes = [...COHESION_AXES].filter((a) => !declared.has(a));
+    if (phantomAxes.length === 0) continue;
+
+    it(`${c.slug}: el CSS no usa ejes de cohesión que no declara`, () => {
+      const css = componentCss(c.tagName);
+      const phantoms: string[] = [];
+      for (const attr of phantomAxes) {
+        if (PHANTOM_EXEMPT.has(`${c.slug}.${attr}`)) continue;
+        // [attr="v"] | [attr='v'] | [attr=v]
+        const re = new RegExp(`\\[${attr}\\s*=\\s*(?:"([^"]+)"|'([^']+)'|([\\w-]+))\\]`, 'g');
+        let m: RegExpExecArray | null;
+        while ((m = re.exec(css)) !== null) {
+          const val = m[1] ?? m[2] ?? m[3];
+          phantoms.push(`[${attr}="${val}"]`);
+        }
+      }
+      expect(
+        [...new Set(phantoms)],
+        `${c.slug}: selectores de un eje canónico que el componente no declara (¿rename de eje sin limpiar el CSS?)`,
       ).toEqual([]);
     });
   }
