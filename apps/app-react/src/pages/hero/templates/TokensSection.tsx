@@ -264,7 +264,7 @@ export const TokensSection: React.FC<TokensSectionProps> = ({
         display:              'grid',
         gridTemplateColumns:  '1fr 1fr 1fr',
         gap:                  '1px',
-        background:           'rgba(255,255,255,0.05)',
+        background:           'transparent',
       }}>
 
         {/* ── Col 1: Color ── */}
