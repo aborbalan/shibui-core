@@ -18,6 +18,10 @@
 | **F4** | Patrones decorativos | covers generativos (seigaiha, asanoha, sashiko, mon, moiré); capas con cover | — |
 | **F5** | Weaves multi-motivo | distintos emparejamientos de capas revelan distintos motivos | — |
 | **F6** | (stretch) Refinado | capas con cover + métrica de contraste y *fallback* | — |
+| **F4½** | (opcional) Deformación uzumaki | warp en remolino: covers en espiral + deformar/des-deformar capas con Ω | — |
+| **F7** | (opcional) Semilla del cielo | sembrar los patrones desde una foto del cielo (kumo), mezclada con la semilla del sistema | — |
+
+> Los adaptadores **opcionales** (F4½, F7) son enchufables: el núcleo solo depende de las interfaces (`SeedSource` y el punto de enganche del transform), nunca de la cámara ni del warp. Ninguno está en el camino crítico.
 
 ---
 
@@ -29,6 +33,7 @@ Crear el paquete (espejo del estilo de `packages/hanko`): `package.json` (`@shib
 
 ### F1 — Núcleo de composición de capas
 `Bitmap` (matriz binaria), tabla de patrones base 2×2, *weave* de 2 capas y `compose` (superposición = OR por bloque), `render` a SVG y Canvas/PNG con fondo transparente y marcas de registro.
+Incluye el *seam* `SeedSource` (semilla; default = `systemSeed`) que alimenta el *weave*, y un punto de enganche para transformar capas — preparan los adaptadores opcionales (uzumaki, kumo) sin acoplarlos al núcleo.
 **Hecho cuando:** `compose(weave(motivo))` reproduce el motivo dentro de tolerancia; test de independencia (una capa aislada no correlaciona con el motivo) en verde.
 
 ### F2 — Ingestión de motivo
@@ -49,3 +54,11 @@ Construcción de 3 capas donde el emparejamiento (pivote + capa B) revela un mot
 
 ### F6 — (stretch) Refinado
 Combinar covers (F4) con multi-motivo (F5). Exponer una **métrica de contraste**; bajo umbral → *fallback* y aviso. Reporte HTML en `docs/contrast-report.html`.
+
+### F4½ — (opcional) Deformación uzumaki (渦)
+Módulo `src/warp/`: un campo de deflexión en remolino parametrizado por Ω que (1) genera covers en espiral —hermana de seigaiha/moiré— y (2) **deforma** cada capa, reversible des-deformando con −Ω. Una capa deformada solo "encaja" con el Ω correcto.
+**Hecho cuando:** `warp(layer, Ω)` y su inverso son fieles dentro de tolerancia; integrado como transform opcional en el render.
+
+### F7 — (opcional) Semilla del cielo (kumo 雲)
+Módulo `src/entropy/`: un `SeedSource` alternativo que toma una foto del cielo, la condensa y la **mezcla** con `systemSeed` (nunca lo reemplaza), con *health-test* (detectar imagen congelada) y *fallback* a la semilla del sistema. Da a las capas un origen físico y poético.
+**Hecho cuando:** `skySeed` produce semilla mezclada y cae a `systemSeed` si la cámara falla; el `weave` funciona idéntico con cualquiera de los dos.
