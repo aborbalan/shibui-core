@@ -13,6 +13,10 @@ storybook-static/
 /playwright/.cache/
 /playwright/.auth/
 
+# Vitest browser-mode run artifacts (conformance suite)
+packages/shibui-ui/.vitest-attachments/
+packages/shibui-ui/tests/conformance/__screenshots__/
+
 
 *.claude/*
 .nx/cache
