@@ -49,7 +49,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                         }}
                     >
                         Base{' '}
-                        <em style={{ fontStyle: 'italic', color: 'var(--color-kaki-400, #D97234)' }}>
+                        <em style={{ fontStyle: 'italic', color: 'var(--text-accent)' }}>
                             académica
                         </em>
                     </h2>
@@ -137,7 +137,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                         }}
                     >
                         Comunicación{' '}
-                        <em style={{ fontStyle: 'italic', color: 'var(--color-kaki-400, #D97234)' }}>
+                        <em style={{ fontStyle: 'italic', color: 'var(--text-accent)' }}>
                             global
                         </em>
                     </h2>

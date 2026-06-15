@@ -43,13 +43,13 @@ const GlassSection: React.FC = () => {
             style={{
               position: 'relative',
               height: '110px',
-              background: 'linear-gradient(135deg, var(--color-celadon-400), var(--color-kaki-400) 50%, var(--color-celadon-600))',
+              background: 'linear-gradient(135deg, var(--color-celadon-400), var(--color-celadon-300) 50%, var(--color-celadon-600))',
               borderRadius: '4px',
               overflow: 'hidden',
               marginBottom: '2rem',
             }}
           >
-            <div style={{ position: 'absolute', width: '90px', height: '90px', borderRadius: '50%', background: 'var(--color-kaki-300)', top: '-20px', left: '8%', filter: 'blur(24px)', opacity: 0.5 }} />
+            <div style={{ position: 'absolute', width: '90px', height: '90px', borderRadius: '50%', background: 'var(--text-accent)', top: '-20px', left: '8%', filter: 'blur(24px)', opacity: 0.5 }} />
             <div style={{ position: 'absolute', width: '70px', height: '70px', borderRadius: '50%', background: 'var(--color-celadon-300)', bottom: '-15px', right: '15%', filter: 'blur(18px)', opacity: 0.45 }} />
             {GLASS_VARIANTS.map(({ label, bg }, i) => (
               <div

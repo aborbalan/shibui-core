@@ -23,7 +23,7 @@ export const TokenRow: React.FC<TokenRowProps> = ({ token, preview }) => (
       style={{
         fontFamily: 'var(--lib-font-mono)',
         fontSize: '0.68rem',
-        color: 'var(--color-kaki-300)',
+        color: 'var(--text-accent)',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',

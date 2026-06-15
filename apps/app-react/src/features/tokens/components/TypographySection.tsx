@@ -40,7 +40,7 @@ const TypographySection: React.FC = () => {
                 <div style={{ fontFamily: t.value, fontSize: '1.4rem', fontWeight: 300, color: 'var(--text-primary)', lineHeight: 1.3, marginBottom: '0.5rem' }}>
                   El zorro ágil
                 </div>
-                <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.6rem', color: 'var(--color-kaki-300)' }}>
+                <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.6rem', color: 'var(--text-accent)' }}>
                   {t.cssVar}
                 </code>
                 <div style={{ fontFamily: 'var(--lib-font-body)', fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
@@ -63,7 +63,7 @@ const TypographySection: React.FC = () => {
                 borderBottom: '1px solid color-mix(in oklch, var(--color-washi-700) 20%, transparent)',
               }}
             >
-              <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--color-kaki-300)' }}>
+              <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--text-accent)' }}>
                 {t.cssVar}
               </code>
               <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.65rem', color: 'var(--text-secondary)', opacity: 0.7 }}>
@@ -88,7 +88,7 @@ const TypographySection: React.FC = () => {
                 borderBottom: '1px solid color-mix(in oklch, var(--color-washi-700) 20%, transparent)',
               }}
             >
-              <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--color-kaki-300)' }}>
+              <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--text-accent)' }}>
                 {t.cssVar}
               </code>
               <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.65rem', color: 'var(--text-secondary)', opacity: 0.7 }}>
@@ -113,7 +113,7 @@ const TypographySection: React.FC = () => {
                 borderBottom: '1px solid color-mix(in oklch, var(--color-washi-700) 20%, transparent)',
               }}
             >
-              <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--color-kaki-300)' }}>
+              <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--text-accent)' }}>
                 {t.cssVar}
               </code>
               <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.65rem', color: 'var(--text-secondary)', opacity: 0.7 }}>
@@ -138,7 +138,7 @@ const TypographySection: React.FC = () => {
                 borderBottom: '1px solid color-mix(in oklch, var(--color-washi-700) 20%, transparent)',
               }}
             >
-              <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--color-kaki-300)' }}>
+              <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--text-accent)' }}>
                 {t.cssVar}
               </code>
               <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.65rem', color: 'var(--text-secondary)', opacity: 0.7 }}>
