@@ -143,7 +143,7 @@
     <span class="chip">Construido <b>desde 0</b> (no hereda infra de @shibui-ui/ui)</span>
     <span class="chip">F0·F1·F2 <b>en develop + main</b> (PR #502 → #510)</span>
     <span class="chip">Sello a escala: <b>102 / 102</b> pasan el Floor</span>
-    <span class="chip">F3 <b>en curso</b> · rama feature/hanko-contract</span>
+    <span class="chip">Hito 2 arrancado: <b>F3 + F4 en curso</b> (incr. 1)</span>
     <span class="chip">Actualizado <b>2026-06-16</b></span>
   </div>
 </header>
@@ -249,17 +249,18 @@
     </div>
   </div>
 
-  <div class="phase h2 todo">
+  <div class="phase h2 wip">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F4</span>
         <h4>Accesibilidad (a11y)</h4>
-        <span class="badge b-todo">pendiente</span>
+        <span class="badge b-wip">en curso</span>
       </div>
-      <p class="body">axe + navegación por teclado + foco + ARIA. Pruebas <strong>universales</strong>: aplican a
-      cualquier componente, declare lo que declare su manifest.</p>
-      <p class="deliv"><b>Entregable ▸</b> <span>suite a11y + spec <code>checks-a11y.md</code></span></p>
+      <p class="body">axe + navegación por teclado + foco + nombre accesible. Pruebas <strong>universales</strong>:
+      aplican a cualquier componente, declare lo que declare su manifest — F4 no lee el contrato.</p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span>motor de política puro <code>a11yCheck()</code> + observación <code>A11yObservation</code> · umbral de severidad (<code>failOn</code>) + teclado/foco/nombre exigidos a interactivos · spec <code>checks-a11y.md</code> + tests</span></p>
+      <p class="deliv"><b>▸ Falta ▸</b> <span>incremento 2: harness <code>@vitest/browser</code> + <code>axe-core</code> que renderice y sondee cada componente real de shibui-ui</span></p>
     </div>
   </div>
 
@@ -319,7 +320,7 @@
 <footer>
   <p>hanko · plan de obra F0–F7 · índice en <span class="gold">docs/phases/README.md</span></p>
   <p>Relacionado: <span class="gold">docs/decisions/adr-001-baseline-minima-viable.md</span> · <span class="gold">docs/specs/</span></p>
-  <p>Estado (2026-06-16): Hito 1 cerrado (F0·F1·F2 en <span class="gold">develop + main</span>). Hito 2 arrancado: <span class="gold">F3 en curso</span> — incremento 1 (motor de conformidad) hecho en <span class="gold">feature/hanko-contract</span>; falta el harness browser. F4–F7 sin empezar.</p>
+  <p>Estado (2026-06-16): Hito 1 cerrado (F0·F1·F2 en <span class="gold">develop + main</span>). Hito 2 arrancado: <span class="gold">F3 (contrato) y F4 (a11y) en curso</span> — incremento 1 (motores puros) hecho en <span class="gold">feature/hanko-contract</span> → <span class="gold">feature/hanko-a11y</span>; falta en ambas el harness browser. F5–F7 sin empezar.</p>
 </footer>
 
 </div>

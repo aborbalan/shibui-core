@@ -20,6 +20,7 @@ Hogar único de toda la documentación de hanko: specs, decisiones, fases de des
 - ✅ `specs/ingest.md` — ingestión CEM → modelo (F1).
 - ✅ `specs/smoke.md` — smoke / primer sello: Floor + cobertura (F2).
 - 🟡 `specs/checks-contract.md` — verificación de contrato declarado ↔ runtime (F3, incr. 1).
+- 🟡 `specs/checks-a11y.md` — verificación de accesibilidad universal: axe + teclado/foco/nombre (F4, incr. 1).
 - ✅ `special-cases/manifest-ausente-o-custom.html` — sin manifest / formato custom (decisión **abierta**).
 - ✅ `reference/web-components-vs-lit-y-manifest.html` — fundamentos (WC vs Lit y el manifest).
 - ✅ `reference/runner-y-comunicacion.html` — cómo funciona el runner y cómo se comunican hanko ↔ shibui-ui.

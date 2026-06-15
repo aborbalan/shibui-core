@@ -11,9 +11,10 @@ define cada fase con detalle suficiente para continuar en frío.
 ## ▶ Cómo retomar este proyecto en una sesión nueva
 
 **Estado a 2026-06-16:** Hito 1 **cerrado** — F0·F1·F2 mergeados a `develop` y `main` (PR #502 → #510); el
-job CI `hanko-seal` selló 102/102 componentes (report-only). **Hito 2 arrancado: F3 (contrato) en curso** en
-rama `feature/hanko-contract` (incremento 1: motor `contractCheck` + límite `ComponentRuntime`, node-testable).
-Falta el incremento 2 (harness `@vitest/browser` que observe elementos vivos).
+job CI `hanko-seal` selló 102/102 componentes (report-only). **Hito 2 arrancado: F3 (contrato) y F4 (a11y) en
+curso**, cada una con su incremento 1 (motor puro, node-testable): F3 en `feature/hanko-contract`
+(`contractCheck` + `ComponentRuntime`), F4 apilada en `feature/hanko-a11y` (`a11yCheck` + `A11yObservation`).
+Falta en ambas el incremento 2 (harness `@vitest/browser`; F4 añade `axe-core`).
 
 **Orden de lectura recomendado:**
 1. Memoria `project_hanko.md` (se autocarga) — contexto y decisiones vivas.
@@ -38,9 +39,10 @@ Falta el incremento 2 (harness `@vitest/browser` que observe elementos vivos).
   (PR #503) y se sincronizó `develop ↔ main` (PR #504 + back-merge). A partir de aquí, **cada fase = rama
   `feature/hanko-*` desde `develop`** y PR a `develop` (flujo correcto).
 
-**Próximo paso accionable:** F3 incremento 2 — montar el harness `@vitest/browser` que construya el
-`ComponentRuntime` real de cada componente de shibui-ui y corra `contractCheck` sobre ellos (validar antes
-`type-check`/`test` del incremento 1 desde el repo principal).
+**Próximo paso accionable:** el **harness `@vitest/browser`** (incremento 2, compartido por F3 y F4): renderizar
+cada componente real de shibui-ui, construir su `ComponentRuntime` (F3) y su `A11yObservation` vía `axe-core`
+(F4), y correr `contractCheck` + `a11yCheck` sobre ellos. Antes, validar `type-check`/`test` de los incrementos 1
+desde el repo principal. Después, **F5 (resiliencia)**.
 
 ---
 
@@ -107,12 +109,16 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 - **Dependencias:** F2 · (incr. 2) entorno de navegador (custom elements + Shadow DOM).
 - **Estado:** 🟡 incremento 1 hecho (motor puro, node-testable) en `feature/hanko-contract`; falta incr. 2.
 
-### F4 · Accesibilidad (a11y) — ⬜ no iniciada
-- **Objetivo:** verificación universal de a11y (no depende del contrato declarado): axe + teclado + foco + ARIA.
-- **Entregables (previstos):** suite a11y sobre el elemento renderizado; spec `checks-a11y.md`.
-- **Criterios:** axe sin violaciones críticas; foco y orden de tabulación correctos; roles/labels presentes.
-- **Dependencias:** F3 (entorno browser).
-- **Estado:** ⬜.
+### F4 · Accesibilidad (a11y) — 🟡 en curso (incremento 1)
+- **Objetivo:** verificación **universal** de a11y (no lee el contrato): axe + teclado + foco + nombre accesible.
+- **Entregables:** motor de política `a11yCheck` (`src/checks/a11y.ts`) + observación `A11yObservation` ·
+  umbral de severidad (`failOn`) + checks de teclado/foco/nombre exigidos a interactivos · spec
+  [`checks-a11y.md`](../specs/checks-a11y.md) · tests. **Incremento 2 (falta):** harness `@vitest/browser` +
+  `axe-core` que renderice y sondee cada componente real.
+- **Criterios:** violaciones axe `>= failOn` fallan; interactivos exigen teclado/foco/nombre; lo no observado se
+  omite (cobertura transparente vía `checked`/`skipped`).
+- **Dependencias:** F3 (entorno browser; el incr. 1 de F4 es independiente en código).
+- **Estado:** 🟡 incremento 1 hecho (motor puro, node-testable) en `feature/hanko-a11y`; falta incr. 2.
 
 ### F5 · Resiliencia — ⬜ no iniciada
 - **Objetivo:** el componente no se rompe ante entradas adversas: props basura/vacías, SSR, RTL.
@@ -148,7 +154,8 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 | F1 | ✅ mergeado (develop + main) |
 | F2 | ✅ mergeado (develop + main) — Floor + `smoke` + runner + job CI `hanko-seal` (102/102) |
 | F3 | 🟡 en curso — motor `contractCheck` + `ComponentRuntime` (incr. 1); falta harness browser (incr. 2) |
-| F4–F7 | ⬜ no iniciadas |
+| F4 | 🟡 en curso — motor `a11yCheck` + `A11yObservation` (incr. 1); falta harness axe (incr. 2) |
+| F5–F7 | ⬜ no iniciadas |
 
 > Caso especial fuera de este plan (componentes sin manifest / formato custom): ver
 > [`../special-cases/manifest-ausente-o-custom.html`](../special-cases/manifest-ausente-o-custom.html). Decisión **abierta**.
