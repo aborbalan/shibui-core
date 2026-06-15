@@ -3,7 +3,7 @@
 > Patrones decorativos por capas (*sukashi-e* / moiré) para shibui-ui.
 > Genera capas con texturas tradicionales que, al superponerse, revelan un motivo emergente.
 
-**Estado:** diseño aprobado (2026-06-15), F0 (scaffold) pendiente. Sin código aún.
+**Estado:** F0 (andamiaje) hecha. Fase actual en [`STATUS.md`](STATUS.md).
 
 > 🔄 **¿Retomando en una sesión nueva?** Empieza por
 > [`docs/phases/README.md`](phases/README.md): tiene el estado actual, el orden de fases y el próximo paso accionable.
