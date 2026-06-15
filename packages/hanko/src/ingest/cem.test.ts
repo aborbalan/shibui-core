@@ -42,10 +42,10 @@ describe('ingestCem', () => {
     expect([...set.components.keys()]).toEqual(['lib-button']);
   });
 
-  it('mapea props públicas; excluye privadas y métodos', () => {
+  it('separa miembros: campos públicos a properties, métodos públicos a methods (F3)', () => {
     const c = ingestCem(manifest).components.get('lib-button')!;
-    expect(c.properties?.map((p) => p.property)).toEqual(['variant', 'disabled']);
-    expect(c.methods).toBeUndefined(); // deferido a F3
+    expect(c.properties?.map((p) => p.property)).toEqual(['variant', 'disabled']); // sin _internal ni focus
+    expect(c.methods?.map((m) => m.name)).toEqual(['focus']); // poblados desde F3
   });
 
   it('respeta reflect, attribute, default raw y tipo parseado', () => {

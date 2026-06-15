@@ -18,6 +18,7 @@ import type {
   CssPartContract,
   CssPropContract,
   EventContract,
+  MethodContract,
   PropertyContract,
   SlotContract,
 } from '../core/contract';
@@ -64,9 +65,11 @@ function toComponent(
   if (decl.description !== undefined) component.description = decl.description;
 
   // Semántica de presencia: faceta ausente en el CEM → undefined (no verificable);
-  // presente → se mapea (puede quedar []).
+  // presente → se mapea (puede quedar []). `members` alimenta dos facetas:
+  // campos → properties, métodos → methods (poblados desde F3).
   if (decl.members !== undefined) {
     component.properties = decl.members.filter(isPublicField).map(toProperty);
+    component.methods = decl.members.filter(isPublicMethod).map(toMethod);
   }
   if (decl.events !== undefined) component.events = decl.events.map(toEvent);
   if (decl.slots !== undefined) component.slots = decl.slots.map(toSlot);
@@ -74,7 +77,6 @@ function toComponent(
   if (decl.cssProperties !== undefined) {
     component.cssProps = decl.cssProperties.map(toCssProp);
   }
-  // `methods` deferido a F3 (decisión del modelo): no se pueblan aún.
 
   return component;
 }
@@ -83,6 +85,16 @@ function toComponent(
 function isPublicField(m: CemMember): boolean {
   return (
     m.kind === 'field' &&
+    m.privacy !== 'private' &&
+    m.privacy !== 'protected' &&
+    m.static !== true
+  );
+}
+
+/** Métodos públicos de instancia (excluye campos, privados/protegidos y estáticos). */
+function isPublicMethod(m: CemMember): boolean {
+  return (
+    m.kind === 'method' &&
     m.privacy !== 'private' &&
     m.privacy !== 'protected' &&
     m.static !== true
@@ -100,6 +112,13 @@ function toProperty(m: CemMember): PropertyContract {
   if (m.description !== undefined) prop.description = m.description;
   if (m.inheritedFrom?.name !== undefined) prop.inheritedFrom = m.inheritedFrom.name;
   return prop;
+}
+
+/** Método público. Sin `signature` aún: el CEM parcial no modela parámetros/retorno. */
+function toMethod(m: CemMember): MethodContract {
+  const method: MethodContract = { name: m.name };
+  if (m.description !== undefined) method.description = m.description;
+  return method;
 }
 
 function toEvent(e: CemEvent): EventContract {
