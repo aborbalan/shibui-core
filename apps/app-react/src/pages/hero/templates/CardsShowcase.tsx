@@ -59,7 +59,7 @@ export const CardsShowcase: React.FC<CardsShowcaseProps> = ({
     /* Provisional: 6 cards normales bajo contexto celadon. Más adelante cada
        card mostrará su katachi real (algo más complejo, fuera de este alcance). */
     <section data-katachi="celadon" style={{ background: 'var(--color-washi-950, #120E0A)' }}>
-      <LibComponentGrid transparent style={{ '--cg-cols': 'repeat(3, 1fr)' } as React.CSSProperties}>
+      <LibComponentGrid transparent style={{ '--cg-cols': 'repeat(3, 1fr)', '--cg-gap': '0' } as React.CSSProperties}>
         {cards.map((card, i) => (
           <LibCard key={i} variant="solid" kanji={card.kanji}>
             <span slot="tag">{card.tag}</span>
