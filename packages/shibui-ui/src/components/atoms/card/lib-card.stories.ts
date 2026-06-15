@@ -268,6 +268,39 @@ export const KanjiWatermark: Story = {
 /* Estas stories muestran cómo los efectos se activan automáticamente
    por contexto, sin ningún variant prop en la card. */
 
+export const TransparentGrid: Story = {
+  name: 'Grid · fondo transparente',
+  render: (): TemplateResult => html`
+    <div style="
+      padding: var(--lib-space-xl);
+      background: linear-gradient(135deg, var(--color-kaki-300, #c97a3a) 0%, var(--color-celadon-300, #6aab9e) 100%);
+    ">
+      <lib-component-grid transparent>
+        <lib-card kanji="渋">
+          <span slot="tag">01 · Transparente</span>
+          <h2 slot="title">Sin fondo de grid</h2>
+          <p>El atributo <code>transparent</code> elimina el fondo y el borde del grid, dejando visible el fondo del contenedor.</p>
+          <div slot="footer"><span>transparent</span></div>
+        </lib-card>
+
+        <lib-card kanji="間">
+          <span slot="tag">02 · Transparente</span>
+          <h2 slot="title">Útil sobre imágenes</h2>
+          <p>Ideal cuando el grid se coloca sobre un fondo con color propio, imagen o gradiente.</p>
+          <div slot="footer"><span>transparent</span></div>
+        </lib-card>
+
+        <lib-card kanji="和">
+          <span slot="tag">03 · Transparente</span>
+          <h2 slot="title">Sin separador</h2>
+          <p>El gap entre celdas no muestra ningún color: las cards flotan directamente sobre el fondo.</p>
+          <div slot="footer"><span>transparent</span></div>
+        </lib-card>
+      </lib-component-grid>
+    </div>
+  `,
+};
+
 export const KintsugiContext: Story = {
   name: 'Kintsugi context — seam automático',
   render: (): TemplateResult => html`

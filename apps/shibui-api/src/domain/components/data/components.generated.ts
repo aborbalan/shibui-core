@@ -2424,7 +2424,15 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     ],
     "docsUrl": null,
     "api": {
-      "props": [],
+      "props": [
+        {
+          "name": "transparent",
+          "type": "boolean",
+          "default": "false",
+          "description": "Elimina el fondo y borde del grid (útil sobre fondos con imagen o color propio).",
+          "attribute": "transparent"
+        }
+      ],
       "slots": [
         {
           "name": "",
