@@ -20,7 +20,7 @@ const headingStyle: React.CSSProperties = {
   fontSize: "0.7rem",
   letterSpacing: "0.12em",
   textTransform: "uppercase",
-  color: "var(--color-kaki-700)",
+  color: "var(--color-celadon-300)",
   marginBottom: "0.75rem",
 };
 
