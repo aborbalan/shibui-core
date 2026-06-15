@@ -40,7 +40,7 @@ const sectionTitleStyle: React.CSSProperties = {
   fontSize: "0.7rem",
   letterSpacing: "0.1em",
   textTransform: "uppercase",
-  color: "var(--color-kaki-700)",
+  color: "var(--text-accent)",
   marginBottom: "0.75rem",
 };
 
@@ -48,7 +48,7 @@ const subTitleStyle: React.CSSProperties = {
   fontFamily: "var(--lib-font-mono)",
   fontSize: "0.72rem",
   letterSpacing: "0.05em",
-  color: "var(--color-kaki-600)",
+  color: "var(--text-accent)",
   margin: "1.75rem 0 0.6rem",
 };
 

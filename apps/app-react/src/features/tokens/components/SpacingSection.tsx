@@ -38,7 +38,7 @@ const SpacingSection: React.FC = () => {
               borderBottom: '1px solid color-mix(in oklch, var(--color-washi-700) 25%, transparent)',
             }}
           >
-            <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--color-kaki-300)' }}>
+            <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--text-accent)' }}>
               {t.cssVar}
             </code>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
@@ -46,7 +46,7 @@ const SpacingSection: React.FC = () => {
                 style={{
                   height: '18px',
                   width: `${barWidth}px`,
-                  background: 'var(--color-kaki-500)',
+                  background: 'var(--text-accent)',
                   opacity: 0.65,
                   borderRadius: '1px',
                   flexShrink: 0,

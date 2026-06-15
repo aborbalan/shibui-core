@@ -83,7 +83,7 @@ export const ComponentDetailExamples: React.FC<ComponentDetailExamplesProps> = (
             <p style={{
               fontFamily: "var(--lib-font-mono)",
               fontSize: "0.72rem",
-              color: "var(--color-kaki-400)",
+              color: "var(--text-accent)",
               marginBottom: "0.5rem",
             }}>
               {example.title}

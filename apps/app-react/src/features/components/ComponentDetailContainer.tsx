@@ -14,7 +14,7 @@ const errorStyle: React.CSSProperties = {
 };
 
 const loadingStyle: React.CSSProperties = {
-  color: "var(--color-kaki-700)",
+  color: "var(--text-accent)",
   fontFamily: "var(--lib-font-mono)",
   fontSize: "0.8rem",
   padding: "4rem clamp(1.5rem, 4vw, 3.5rem)",

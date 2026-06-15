@@ -29,12 +29,12 @@ const RadiusSection: React.FC = () => {
                   style={{
                     width: '80px',
                     height: '56px',
-                    background: 'color-mix(in oklch, var(--color-kaki-600) 25%, transparent)',
-                    border: '1.5px solid color-mix(in oklch, var(--color-kaki-400) 35%, transparent)',
+                    background: 'color-mix(in oklch, var(--text-accent) 25%, transparent)',
+                    border: '1.5px solid color-mix(in oklch, var(--text-accent) 35%, transparent)',
                     borderRadius: t.value,
                   }}
                 />
-                <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.62rem', color: 'var(--color-kaki-300)' }}>
+                <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.62rem', color: 'var(--text-accent)' }}>
                   {t.name.replace('radius-', '')}
                 </code>
                 <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.58rem', color: 'var(--text-muted)' }}>
@@ -55,8 +55,8 @@ const RadiusSection: React.FC = () => {
                     width: '32px',
                     height: '32px',
                     flexShrink: 0,
-                    background: 'color-mix(in oklch, var(--color-kaki-600) 25%, transparent)',
-                    border: '1.5px solid color-mix(in oklch, var(--color-kaki-400) 35%, transparent)',
+                    background: 'color-mix(in oklch, var(--text-accent) 25%, transparent)',
+                    border: '1.5px solid color-mix(in oklch, var(--text-accent) 35%, transparent)',
                     borderRadius: t.value,
                   }}
                 />

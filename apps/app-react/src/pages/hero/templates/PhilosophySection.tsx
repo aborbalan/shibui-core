@@ -79,7 +79,7 @@ export const PhilosophySection: React.FC<PhilosophySectionProps> = ({
             <em style={{
               display:    'block',
               fontStyle:  'italic',
-              color:      'var(--color-kaki-400, #D97234)',
+              color:      'var(--text-accent)',
               marginTop:  '0.25rem',
             }}>
               {quoteAccent}
@@ -118,7 +118,7 @@ export const PhilosophySection: React.FC<PhilosophySectionProps> = ({
                 fontFamily: 'var(--lib-font-display, "Cormorant Garamond", serif)',
                 fontSize:   '2rem',
                 fontWeight: 300,
-                color:      'rgba(184, 90, 30, 0.35)',
+                color:      'color-mix(in oklch, var(--text-accent), transparent 60%)',
                 lineHeight: 1,
                 flexShrink: 0,
                 width:      '2.5rem',
@@ -134,7 +134,7 @@ export const PhilosophySection: React.FC<PhilosophySectionProps> = ({
                   fontSize:      '0.65rem',
                   letterSpacing: '0.2em',
                   textTransform: 'uppercase' as const,
-                  color:         'rgba(184, 90, 30, 0.5)',
+                  color:         'color-mix(in oklch, var(--text-accent), transparent 45%)',
                   marginBottom:  '0.35rem',
                 }}>
                   {pillar.label}
