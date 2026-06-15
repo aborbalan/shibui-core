@@ -13,12 +13,10 @@ import sharedTokens from '../../../../styles/shared/tokens.css?inline';
  *
  * @slot - Acepta uno o más `<lib-component-card>`.
  *
- * @prop {boolean} transparent - Elimina el fondo y borde del grid (útil sobre fondos con imagen o color propio).
+ * @prop {boolean} transparent - Sin efecto (el grid ya no dibuja fondo ni borde). Se mantiene por compatibilidad.
  *
- * @cssprop --cg-cols   - Grid template columns. Default: `repeat(auto-fill, minmax(280px, 1fr))`.
+ * @cssprop --cg-cols   - Grid template columns. Default: `repeat(auto-fit, minmax(280px, 1fr))`.
  * @cssprop --cg-gap    - Gap entre celdas. Default: `1.5px`.
- * @cssprop --cg-bg     - Fondo del grid (visible en el gap). Default: `rgb(255 255 255 / 0.04)`.
- * @cssprop --cg-border - Color del borde exterior. Default: `rgb(255 255 255 / 0.04)`.
  *
  * @example
  * <lib-component-grid>
@@ -38,7 +36,7 @@ import sharedTokens from '../../../../styles/shared/tokens.css?inline';
 @customElement('lib-component-grid')
 export class LibComponentGrid extends LitElement {
 
-  /** Elimina el fondo y borde del grid. */
+  /** Sin efecto: el grid ya no dibuja fondo ni borde. Se mantiene por compatibilidad. */
   @property({ type: Boolean, reflect: true }) transparent = false;
 
   static override styles = [
