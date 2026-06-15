@@ -18,8 +18,10 @@ Hogar único de toda la documentación de hanko: specs, decisiones, fases de des
 - ✅ `decisions/adr-002-estrategia-testing.md` — tooling de test (Vitest, dos niveles, desde 0).
 - ✅ `specs/data-model.md` — modelo de datos del contrato (F0).
 - ✅ `specs/ingest.md` — ingestión CEM → modelo (F1).
+- 🟡 `specs/smoke.md` — smoke / primer sello: Floor + cobertura (F2, en curso).
 - ✅ `special-cases/manifest-ausente-o-custom.html` — sin manifest / formato custom (decisión **abierta**).
-- ✅ `reference/web-components-vs-lit-y-manifest.html` — fundamentos.
+- ✅ `reference/web-components-vs-lit-y-manifest.html` — fundamentos (WC vs Lit y el manifest).
+- ✅ `reference/runner-y-comunicacion.html` — cómo funciona el runner y cómo se comunican hanko ↔ shibui-ui.
 - 🟡 `phases/` — índice F0–F7 + tracker visual `development-phases.html`.
 
 ## Convención
