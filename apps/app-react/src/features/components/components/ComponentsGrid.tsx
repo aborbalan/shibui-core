@@ -68,7 +68,7 @@ export const ComponentsGrid: React.FC<ComponentsGridProps> = ({
             </span>
           </h2>
           <LibDivider style={{ marginBottom: "1rem" }} />
-          <LibComponentGrid>
+          <LibComponentGrid transparent>
             {category.components.map((component) => (
               <ComponentCard
                 key={component.id}

@@ -61,7 +61,7 @@ export const CardsSection: React.FC<CardsSectionProps> = ({
         background: 'var(--color-washi-950, #120E0A)',
       }}
     >
-      <LibComponentGrid>
+      <LibComponentGrid transparent>
         {cards.map((card, i) => (
           <LibCard
             key={i}
