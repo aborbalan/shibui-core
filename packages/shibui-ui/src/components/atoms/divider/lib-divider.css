@@ -43,6 +43,12 @@
     gap: var(--lib-space-sm);
   }
 
+  /* Divider vacío (sin label ni ornamento): las dos líneas se unen
+     en una sola continua — sin hueco central que la parta en dos. */
+  .dv--bare {
+    gap: 0;
+  }
+
   /* ── Línea base ────────────────────────────────────────────── */
   .dv__line {
     flex: 1;
