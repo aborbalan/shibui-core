@@ -43,7 +43,7 @@ const DEFAULT_SPACING: SpacingItem[] = [
 ];
 
 const DEFAULT_EASING: EasingItem[] = [
-  { name: 'ease-out',    color: '#B85A1E', curve: 'cubic-bezier(0,0,0.2,1)' },
+  { name: 'ease-out',    color: '#4E9482', curve: 'cubic-bezier(0,0,0.2,1)' },
   { name: 'ease-bounce', color: '#4E9482', curve: 'cubic-bezier(0.34,1.4,0.64,1)' },
 ];
 
@@ -53,7 +53,7 @@ const LABEL_MONO: React.CSSProperties = {
   fontSize:      '0.6rem',
   letterSpacing: '0.18em',
   textTransform: 'uppercase',
-  color:         'rgba(184,90,30,0.5)',
+  color:         'color-mix(in oklch, var(--text-accent), transparent 50%)',
   marginBottom:  '0.75rem',
   display:       'block',
 };
@@ -86,7 +86,7 @@ const TypographyColumn: React.FC<{
       margin:        '0 0 1.25rem 0',
     }}>
       {displaySample}{' '}
-      <em style={{ fontStyle: 'italic', color: 'var(--color-kaki-400, #D97234)' }}>
+      <em style={{ fontStyle: 'italic', color: 'var(--text-accent)' }}>
         {displayAccent}
       </em>
     </p>
@@ -164,7 +164,7 @@ const SpacingColumn: React.FC<{
           <div style={{
             width:      item.width,
             height:     '5px',
-            background: 'rgba(184,90,30,0.35)',
+            background: 'color-mix(in oklch, var(--text-accent), transparent 65%)',
             flexShrink: 0,
           }} />
           {/* Label */}
@@ -193,7 +193,7 @@ const SpacingColumn: React.FC<{
           <div style={{
             width:    '64px',
             height:   '5px',
-            background: `rgba(${item.color === '#B85A1E' ? '184,90,30' : '78,148,130'},0.2)`,
+            background: 'rgba(78,148,130,0.2)',
             position: 'relative',
             overflow: 'hidden',
             flexShrink: 0,
