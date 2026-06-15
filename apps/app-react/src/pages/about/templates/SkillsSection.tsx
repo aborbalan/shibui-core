@@ -52,7 +52,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
                     gap: '1px',
-                    background: 'var(--border-subtle)',
+                    background: 'transparent',
                 }}
             >
                 {skillGroups.map((group) => {
