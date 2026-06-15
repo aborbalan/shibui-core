@@ -9,7 +9,7 @@ export function PublicLayout() {
   const activeId = pathname.replace('/', '') || 'home';
 
   return (
-    <LibBackground theme="celadon-wash">
+    <LibBackground theme="jade-deep">
       <div style={{ width: '100%', minHeight: '100vh' }}>
         <ShibuiHeader
           showSearch={activeId === 'componentes'}
