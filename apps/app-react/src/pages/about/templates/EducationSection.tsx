@@ -65,7 +65,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                                 flexDirection: 'column',
                                 gap: '0.35rem',
                                 paddingLeft: '1rem',
-                                borderLeft: '1px solid rgba(184,90,30,0.25)',
+                                borderLeft: '1px solid color-mix(in oklch, var(--text-accent), transparent 75%)',
                             }}
                         >
                             <p
@@ -74,7 +74,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                                     fontSize: '0.6rem',
                                     letterSpacing: '0.18em',
                                     textTransform: 'uppercase',
-                                    color: 'rgba(184,90,30,0.5)',
+                                    color: 'color-mix(in oklch, var(--text-accent), transparent 50%)',
                                     margin: 0,
                                 }}
                             >
