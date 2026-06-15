@@ -46,8 +46,12 @@ function dividerCenter(props: DividerTemplateProps): TemplateResult | typeof not
 }
 
 export function dividerTemplate(props: DividerTemplateProps): TemplateResult {
+  // Sin label ni ornamento las dos líneas deben unirse en una sola
+  // continua: colapsamos el gap central que de otro modo parte la
+  // línea en dos segmentos visibles.
+  const isBare = props.ornament === 'none' && !props.hasSlotContent;
   return html`
-    <div class="dv">
+    <div class="dv ${isBare ? 'dv--bare' : ''}">
       <span class="dv__line"></span>
       ${dividerCenter(props)}
       <span class="dv__line"></span>

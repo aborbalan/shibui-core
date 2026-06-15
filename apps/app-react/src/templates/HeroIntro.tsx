@@ -68,7 +68,7 @@ export const HeroIntro: React.FC<HeroIntroProps> = ({
         fontSize:      'var(--text-xs)',
         letterSpacing: 'var(--tracking-widest)',
         textTransform: 'uppercase',
-        color:         'color-mix(in oklch, var(--color-kaki-500), transparent 45%)',
+        color:         'color-mix(in oklch, var(--text-accent), transparent 45%)',
         marginBottom:  'var(--lib-space-2xl)',
         display:       'flex',
         alignItems:    'center',
@@ -79,7 +79,7 @@ export const HeroIntro: React.FC<HeroIntroProps> = ({
         <span style={{
           width:      32,
           height:     1,
-          background: 'linear-gradient(90deg, transparent, var(--color-kaki-400))',
+          background: 'linear-gradient(90deg, transparent, var(--text-accent))',
           display:    'block',
           flexShrink: 0,
         }} />
@@ -101,7 +101,7 @@ export const HeroIntro: React.FC<HeroIntroProps> = ({
         {titleLine1}<br />{titleLine2}{' '}
         <em style={{
           fontStyle: 'italic',
-          color:     'var(--color-kaki-400)',
+          color:     'var(--text-accent)',
           display:   'block',
         }}>
           {titleEm}

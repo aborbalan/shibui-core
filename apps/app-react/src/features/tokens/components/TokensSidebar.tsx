@@ -80,7 +80,7 @@ export const TokensSidebar: React.FC = () => {
                 padding: '0.3rem 0.4rem',
                 background: 'transparent',
                 border: 'none',
-                borderLeft: `2px solid ${isActive ? 'var(--color-kaki-500)' : 'transparent'}`,
+                borderLeft: `2px solid ${isActive ? 'var(--text-accent)' : 'transparent'}`,
                 cursor: 'pointer',
                 fontFamily: 'var(--lib-font-mono)',
                 fontSize: '0.68rem',
@@ -89,7 +89,7 @@ export const TokensSidebar: React.FC = () => {
                 textAlign: 'left',
                 transition: 'all var(--duration-base)',
                 backgroundColor: isActive
-                  ? 'color-mix(in oklch, var(--color-kaki-500) 6%, transparent)'
+                  ? 'color-mix(in oklch, var(--text-accent) 6%, transparent)'
                   : 'transparent',
               }}
             >
@@ -99,7 +99,7 @@ export const TokensSidebar: React.FC = () => {
                   height: '4px',
                   borderRadius: '50%',
                   flexShrink: 0,
-                  background: isActive ? 'var(--color-kaki-400)' : 'var(--border-default)',
+                  background: isActive ? 'var(--text-accent)' : 'var(--border-default)',
                   transition: 'background var(--duration-base)',
                 }}
               />

@@ -75,6 +75,7 @@ jobs:
           filters: |
             ui:
               - 'packages/shibui-ui/**'
+              - 'packages/hanko/**'
               - 'packages/consumer-tests/**'
               - 'packages/consumer-tests-angular/**'
             # ui_behavior: cambios que afectan el CONTRATO observable desde fuera

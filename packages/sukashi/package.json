@@ -1,0 +1,17 @@
+{
+  "name": "@shibui-ui/sukashi",
+  "version": "0.0.0",
+  "description": "透かし — patrones decorativos por capas (sukashi-e / moiré) para shibui-ui.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

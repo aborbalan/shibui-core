@@ -20,7 +20,7 @@ const statusVariant: Record<string, string> = {
 const metaStyle: React.CSSProperties = {
   fontFamily: "var(--lib-font-mono)",
   fontSize: "0.65rem",
-  color: "var(--color-kaki-700)",
+  color: "var(--text-accent)",
 };
 
 export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
@@ -68,7 +68,7 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
           {component.name}
         </h1>
 
-        <p style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.85rem", color: "var(--color-kaki-600)", marginBottom: "1rem" }}>
+        <p style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.85rem", color: "var(--text-accent)", marginBottom: "1rem" }}>
           {"<"}{component.tagName}{">"}
         </p>
 
@@ -93,7 +93,7 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
 
       {/* Examples */}
       <section>
-        <h2 style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--color-kaki-700)", marginBottom: "0.75rem" }}>
+        <h2 style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-accent)", marginBottom: "0.75rem" }}>
           Ejemplos
         </h2>
         <LibDivider style={{ marginBottom: "1.25rem" }} />

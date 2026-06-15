@@ -20,10 +20,10 @@ const DEFAULT_CARDS: CardItem[] = [
   {
     variant:      'featured',
     featured:     true,
-    tag:          '✦ Kintsugi · Firma',
-    title:        'La cicatriz',
-    titleAccent:  'de oro',
-    description:  'El principio japonés de reparar con oro. En Shibui, la variante kintsugi aplica gradientes dorados animados, anillos cónicos y seams que convierten el borde en el elemento más bello del componente.',
+    tag:          '青 Celadón · Firma',
+    title:        'La glasura',
+    titleAccent:  'de jade',
+    description:  'La cerámica celadon coreana (青磁): una glasura jade honda y serena sobre la que la luz, el agua y el craquelé del esmalte cobran protagonismo. En Shibui, la variante celadon tiñe la superficie de jade frío, proyecta una sombra jade ambiental y ofrece diez decoraciones cerámicas —craquelé, marea, niebla, reflejo— activadas por contexto.',
     footer:       'Featured · 2 columnas',
   },
   {
@@ -53,10 +53,10 @@ export const CardsSection: React.FC<CardsSectionProps> = ({
   cards = DEFAULT_CARDS,
 }) => {
   return (
-    /* Sección kintsugi: el seam dorado se activa por contexto (data-katachi),
-       no por prop. Las cards adaptan automáticamente (Tier B). */
+    /* Sección celadon: el tema jade + la sombra jade ambiental se activan por
+       contexto (data-katachi), no por prop. Las cards adaptan automáticamente. */
     <section
-      data-katachi="kintsugi"
+      data-katachi="celadon"
       style={{
         background: 'var(--color-washi-950, #120E0A)',
       }}

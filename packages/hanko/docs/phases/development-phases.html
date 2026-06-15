@@ -141,7 +141,7 @@
     <span class="chip">Esfuerzo F0–F6 ≈ <b>12–16 días</b></span>
     <span class="chip">Primera tanda = <b>F0 + F1 + F2</b></span>
     <span class="chip">Construido <b>desde 0</b> (no hereda infra de @shibui-ui/ui)</span>
-    <span class="chip">F0 <b>en main</b> (PR #502) · F1 <b>en curso</b></span>
+    <span class="chip">F0+F1 <b>en main</b> (PR #502/#503/#504) · F2 <b>en curso</b></span>
     <span class="chip">Actualizado <b>2026-06-14</b></span>
   </div>
 </header>
@@ -182,33 +182,35 @@
     </div>
   </div>
 
-  <div class="phase h1 wip">
+  <div class="phase h1 done">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F1</span>
         <h4>Ingestión del manifest</h4>
-        <span class="badge b-wip">en curso</span>
+        <span class="badge b-done">hecho</span>
       </div>
       <p class="body">Lectura del <code>custom-elements.json</code> (CEM) → modelo de datos interno. Aquí se define
       el <strong>borde de ingestión</strong>, donde más adelante encajarán los adapters de formatos no estándar.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span><code>ingestCem</code> (CEM → ContractSet) + <code>parseType</code> · <code>src/ingest/</code> · spec <code>ingest.md</code> · tests</span></p>
-      <p class="deliv"><b>▸ Falta ▸</b> <span>ejecutar <code>type-check</code> + <code>test</code> desde el repo principal</span></p>
+      <p class="deliv"><b>✓ Mergeado ▸</b> <span>en <code>develop</code> (PR #503) y <code>main</code> (PR #504)</span></p>
     </div>
   </div>
 
-  <div class="phase h1 todo">
+  <div class="phase h1 wip">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F2</span>
         <h4>Smoke · primer sello</h4>
-        <span class="badge b-todo">pendiente</span>
+        <span class="badge b-wip">en curso</span>
       </div>
       <p class="body">Validación mínima end-to-end sobre <strong>10 → 99 componentes</strong> de shibui-ui. Emite el
       primer sello, aunque sea básico. Responde la pregunta clave: ¿el flujo <em>manifest → verificación → sello</em>
       funciona a escala real?</p>
       <span class="thesis-flag">★ valida la tesis del producto</span>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span>Floor + <code>smoke()</code> + cobertura · runner <code>src/smoke/run.ts</code> (script <code>smoke</code>) · job CI <code>hanko-seal</code> en <code>ci-lib</code> (report-only) · spec + tests</span></p>
+      <p class="deliv"><b>▸ Falta ▸</b> <span>regenerar <code>pnpm-lock.yaml</code> (incluir hanko) + validar el job en CI sobre los 99 componentes</span></p>
     </div>
   </div>
 

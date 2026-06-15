@@ -71,7 +71,7 @@ export const TokensIntro: React.FC<TokensIntroProps> = ({
         {headingLine2Prefix}{' '}
         <em style={{
           fontStyle: 'italic',
-          color:     'var(--color-kaki-400, #D97234)',
+          color:     'var(--text-accent)',
         }}>
           {headingAccent}
         </em>

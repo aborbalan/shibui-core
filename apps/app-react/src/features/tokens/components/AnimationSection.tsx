@@ -43,7 +43,7 @@ const AnimationSection: React.FC = () => {
                 borderBottom: '1px solid color-mix(in oklch, var(--color-washi-700) 25%, transparent)',
               }}
             >
-              <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--color-kaki-300)' }}>
+              <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--text-accent)' }}>
                 {t.cssVar}
               </code>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
@@ -55,7 +55,7 @@ const AnimationSection: React.FC = () => {
                       width: '8px',
                       height: '8px',
                       borderRadius: '50%',
-                      background: 'var(--color-kaki-400)',
+                      background: 'var(--text-accent)',
                       animation: `tk-slide ${t.value} cubic-bezier(0.4,0,0.2,1) infinite`,
                     }}
                   />
