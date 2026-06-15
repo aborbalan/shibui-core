@@ -14,6 +14,11 @@
         --cg-bg: rgb(255, 255, 255, 0.04);
         --cg-border: rgb(255, 255, 255, 0.04);
     }
+
+    :host([transparent]) {
+        --cg-bg: transparent;
+        --cg-border: transparent;
+    }
 }
 
 @layer reset {
