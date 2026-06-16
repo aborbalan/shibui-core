@@ -254,7 +254,7 @@
       Aquí viven la <strong>regla de oro</strong> (<em>ausencia ≠ incumplimiento</em>, ahora en ambos sentidos) y los
       niveles Conformance → Strict del ADR-001 —más la registrabilidad que F2 difirió.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor puro <code>contractCheck()</code> + límite <code>ComponentRuntime</code> · registrabilidad + props + atributos + reflect + métodos · <code>methods</code> poblados en la ingestión · spec <code>checks-contract.md</code> + tests</span></p>
-      <p class="deliv"><b>✗ Falta ▸</b> <span><strong>incremento 2 ausente de este PR (#526)</strong>: el harness que observa el runtime (<code>observeRuntime</code>) vive centralizado en #528, no en esta rama — y <strong>sin validar en navegador</strong> · pendientes también eventos y slots</span></p>
+      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span><code>observeRuntime</code> ampliado: monta el elemento y <strong>observa los slots del shadow DOM → nueva faceta <code>slot</code></strong> en <code>contractCheck</code> (declarado ↔ shadow DOM), con tests node + navegador. Vive en #528 (no en #526) y <strong>sin validar en navegador</strong>. Eventos: no observables por inspección estática → <em>declarados-only</em>.</span></p>
     </div>
   </div>
 

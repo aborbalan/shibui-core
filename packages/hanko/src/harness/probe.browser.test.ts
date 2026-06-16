@@ -22,6 +22,9 @@ class HankoProbeButton extends HTMLElement {
       const sr = this.attachShadow({ mode: 'open' });
       const btn = document.createElement('button');
       btn.textContent = this.getAttribute('aria-label') ?? 'ok';
+      const icon = document.createElement('slot');
+      icon.setAttribute('name', 'icon');
+      btn.append(icon, document.createElement('slot')); // slot "icon" + slot por defecto
       sr.appendChild(btn);
     }
   }
@@ -45,6 +48,11 @@ describe('harness · observeRuntime', () => {
     expect(rt.observedAttributes).toEqual(['variant', 'disabled']);
   });
 
+  it('observa los slots del shadow DOM (named + por defecto)', () => {
+    const rt = observeRuntime('hanko-probe-button');
+    expect(rt.slots).toEqual(expect.arrayContaining(['icon', '']));
+  });
+
   it('alimenta contractCheck sin violaciones para un contrato fiel', () => {
     const declared: ComponentContract = {
       tagName: 'hanko-probe-button',
@@ -55,9 +63,23 @@ describe('harness · observeRuntime', () => {
         { property: 'disabled', attribute: 'disabled', reflects: false, type: { raw: 'boolean', kind: 'boolean' } },
       ],
       methods: [{ name: 'reset' }],
+      slots: [{ name: 'icon' }, { name: '' }],
     };
     const r = contractCheck(declared, observeRuntime('hanko-probe-button'));
     expect(r.violations).toHaveLength(0);
+    expect(r.checked.slots).toBe(2);
+  });
+
+  it('detecta un slot declarado que el elemento no expone', () => {
+    const declared: ComponentContract = {
+      tagName: 'hanko-probe-button',
+      modulePath: 'm',
+      source: { kind: 'cem' },
+      slots: [{ name: 'icon' }, { name: 'footer' }],
+    };
+    const r = contractCheck(declared, observeRuntime('hanko-probe-button'));
+    expect(r.violations.some((v) => v.facet === 'slot' && v.member === 'footer')).toBe(true);
+    expect(r.violations.some((v) => v.facet === 'slot' && v.member === 'icon')).toBe(false);
   });
 
   it('detecta un método declarado que el elemento no tiene', () => {

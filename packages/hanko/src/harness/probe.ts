@@ -96,6 +96,13 @@ function probeReflect(
   return reflecting;
 }
 
+/** Nombres de slot del shadow DOM (`''` = slot por defecto). `undefined` sin shadow root. */
+function readSlots(el: HTMLElement): string[] | undefined {
+  const sr = el.shadowRoot;
+  if (!sr) return undefined;
+  return [...sr.querySelectorAll('slot')].map((s) => s.name);
+}
+
 /** Observa el runtime de un custom element registrado. */
 export function observeRuntime(tagName: string): ComponentRuntime {
   const ctor = customElements.get(tagName);
@@ -104,11 +111,27 @@ export function observeRuntime(tagName: string): ComponentRuntime {
   const el = document.createElement(tagName);
   const { properties, methods } = publicApiOf(el, HTMLElement.prototype);
   const observedAttributes = readObservedAttributes(ctor);
-  const reflectingProperties = probeReflect(el, properties, observedAttributes);
+
+  // Montar: `connectedCallback` construye el shadow DOM (necesario para los slots)
+  // y deja la instancia en su estado real antes de sondear la reflexión. Se retira
+  // siempre. Si el componente no monta limpio, slots/reflect quedan sin observar
+  // (se omiten en el check, no son fallo de contrato).
+  let slots: string[] | undefined;
+  let reflectingProperties: string[] | undefined;
+  try {
+    document.body.appendChild(el);
+    slots = readSlots(el);
+    reflectingProperties = probeReflect(el, properties, observedAttributes);
+  } catch {
+    /* observación parcial: lo no observado se omite por la regla de oro */
+  } finally {
+    el.remove();
+  }
 
   const runtime: ComponentRuntime = { tagName, registered: true, properties, methods };
   if (observedAttributes !== undefined) runtime.observedAttributes = observedAttributes;
   if (reflectingProperties !== undefined) runtime.reflectingProperties = reflectingProperties;
+  if (slots !== undefined) runtime.slots = slots;
   return runtime;
 }
 
