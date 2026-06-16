@@ -19,3 +19,11 @@ export type {
   AxeViolation,
   AxeImpact,
 } from './a11y';
+export { resilienceCheck } from './resilience';
+export type {
+  ResilienceObservation,
+  ResilienceTrial,
+  ResilienceResult,
+  ResilienceFinding,
+  ResilienceOptions,
+} from './resilience';
