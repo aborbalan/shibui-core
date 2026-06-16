@@ -143,7 +143,8 @@
     <span class="chip">Construido <b>desde 0</b> (no hereda infra de @shibui-ui/ui)</span>
     <span class="chip">F0·F1·F2 <b>en develop + main</b> (PR #502 → #510)</span>
     <span class="chip">Sello a escala: <b>102 / 102</b> pasan el Floor</span>
-    <span class="chip">Hito 2 arrancado: <b>F3 + F4 en curso</b> (incr. 1)</span>
+    <span class="chip">Hito 2: <b>F3·F4·F5 en curso</b> · motores hechos</span>
+    <span class="chip">Harness (incr. 2) <b>escrito</b> · pend. validar</span>
     <span class="chip">Actualizado <b>2026-06-16</b></span>
   </div>
 </header>
@@ -245,7 +246,7 @@
       Aquí viven la <strong>regla de oro</strong> (<em>ausencia ≠ incumplimiento</em>, ahora en ambos sentidos) y los
       niveles Conformance → Strict del ADR-001 —más la registrabilidad que F2 difirió.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor puro <code>contractCheck()</code> + límite <code>ComponentRuntime</code> · registrabilidad + props + atributos + reflect + métodos · <code>methods</code> poblados en la ingestión · spec <code>checks-contract.md</code> + tests</span></p>
-      <p class="deliv"><b>▸ Falta ▸</b> <span>incremento 2: harness <code>@vitest/browser</code> que observe elementos vivos y corra el check sobre shibui-ui real · eventos y slots</span></p>
+      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span>harness <code>src/harness/</code> <strong>escrito</strong> (observa elementos vivos) — pendiente de validar en navegador y correr sobre shibui real · eventos y slots</span></p>
     </div>
   </div>
 
@@ -260,21 +261,22 @@
       <p class="body">axe + navegación por teclado + foco + nombre accesible. Pruebas <strong>universales</strong>:
       aplican a cualquier componente, declare lo que declare su manifest — F4 no lee el contrato.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor de política puro <code>a11yCheck()</code> + observación <code>A11yObservation</code> · umbral de severidad (<code>failOn</code>) + teclado/foco/nombre exigidos a interactivos · spec <code>checks-a11y.md</code> + tests</span></p>
-      <p class="deliv"><b>▸ Falta ▸</b> <span>incremento 2: harness <code>@vitest/browser</code> + <code>axe-core</code> que renderice y sondee cada componente real de shibui-ui</span></p>
+      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span>harness <code>src/harness/</code> <strong>escrito</strong> (axe + sondeos inyectados) — pendiente de validar en navegador y correr sobre shibui real</span></p>
     </div>
   </div>
 
-  <div class="phase h2 todo">
+  <div class="phase h2 wip">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F5</span>
         <h4>Resiliencia</h4>
-        <span class="badge b-todo">pendiente</span>
+        <span class="badge b-wip">en curso</span>
       </div>
       <p class="body">Props basura / vacías, SSR, RTL. El componente no debe romperse ante entradas adversas.
-      También universal, no depende del contrato.</p>
-      <p class="deliv"><b>Entregable ▸</b> <span>suite de resiliencia + spec <code>checks-resilience.md</code></span></p>
+      También <strong>universal</strong>, no depende del contrato.</p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span>motor de política puro <code>resilienceCheck()</code> + observación <code>ResilienceObservation</code> · escenarios obligatorios vs tolerables (<code>optional</code>) · spec <code>checks-resilience.md</code> + tests</span></p>
+      <p class="deliv"><b>▸ Falta ▸</b> <span>incremento 2 (harness compartido): montar cada componente bajo los escenarios adversos en navegador</span></p>
     </div>
   </div>
 
@@ -320,7 +322,7 @@
 <footer>
   <p>hanko · plan de obra F0–F7 · índice en <span class="gold">docs/phases/README.md</span></p>
   <p>Relacionado: <span class="gold">docs/decisions/adr-001-baseline-minima-viable.md</span> · <span class="gold">docs/specs/</span></p>
-  <p>Estado (2026-06-16): Hito 1 cerrado (F0·F1·F2 en <span class="gold">develop + main</span>). Hito 2 arrancado: <span class="gold">F3 (contrato) y F4 (a11y) en curso</span> — incremento 1 (motores puros) hecho en <span class="gold">feature/hanko-contract</span> → <span class="gold">feature/hanko-a11y</span>; falta en ambas el harness browser. F5–F7 sin empezar.</p>
+  <p>Estado (2026-06-16): Hito 1 cerrado (F0·F1·F2 en <span class="gold">develop + main</span>). Hito 2 a fondo: <span class="gold">F3·F4·F5 en curso</span> — los tres motores puros hechos (contrato, a11y, resiliencia) en ramas apiladas <span class="gold">contract → a11y → resilience</span>. El <span class="gold">harness de runtime (incr. 2)</span> está escrito pero pendiente de validar en navegador. F6–F7 sin empezar.</p>
 </footer>
 
 </div>
