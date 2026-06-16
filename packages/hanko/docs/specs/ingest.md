@@ -39,7 +39,7 @@ parseType(raw: string | undefined): TypeModel              // src/ingest/parse-t
 | CEM | Modelo | Regla |
 |---|---|---|
 | `members[]` (field) | `properties[]` | Campos `kind:'field'`, no `private`/`protected`, no `static`. |
-| `members[]` (method) | `methods[]` | **Deferido a F3** — no se pueblan aún. |
+| `members[]` (method) | `methods[]` | Métodos `kind:'method'` públicos (no `private`/`protected`/`static`). **Poblados desde F3.** |
 | `member.attribute` | `property.attribute` | Solo si está presente. |
 | `member.reflects` | `property.reflects` | `=== true` → `true`; ausente → `false`. |
 | `member.default` | `property.default` | **Raw**, sin parsear. |
@@ -93,7 +93,7 @@ no se lanza. `modules`/`declarations`/`members` ausentes se tratan como vacíos.
 ## Criterios de aceptación (F1)
 
 1. `ingestCem` filtra correctamente a custom elements con `tagName`.
-2. Props públicas mapeadas; privadas/protegidas/estáticas y métodos excluidos.
+2. Campos públicos a `properties[]` y métodos públicos a `methods[]`; privadas/protegidas/estáticas excluidas.
 3. `reflect`, `attribute`, `default` (raw) e `inheritedFrom` preservados.
 4. Semántica de presencia respetada (faceta ausente → `undefined`).
 5. `parseType` resuelve primitivos y uniones de literales; degrada a `unknown` con `raw` intacto.

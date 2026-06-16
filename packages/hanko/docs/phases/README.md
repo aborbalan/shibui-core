@@ -10,9 +10,11 @@ define cada fase con detalle suficiente para continuar en frío.
 
 ## ▶ Cómo retomar este proyecto en una sesión nueva
 
-**Estado a 2026-06-14:** Hito 1 avanzado. **F0 y F1 mergeados a `develop` y `main`** (PR #502/#503/#504;
-GitFlow reconciliado). **F2 en curso** en rama `feature/hanko-smoke` (incremento 1: check Floor + motor
-`smoke` con sello y cobertura). Falta el runner sobre el CEM real de shibui-ui para cerrar F2.
+**Estado a 2026-06-16:** Hito 1 **cerrado** — F0·F1·F2 en `develop` y `main` (PR #502 → #510); `hanko-seal`
+selló 102/102 (report-only). **Hito 2 a fondo: F3·F4·F5 en curso** — los tres motores puros (incr. 1) hechos en
+ramas apiladas `feature/hanko-contract` → `feature/hanko-a11y` → `feature/hanko-resilience`. El **harness de
+runtime (incr. 2, `src/harness/`)** que cierra los tres está **escrito pero pendiente de validar en navegador**
+(deps `@vitest/browser`/`axe-core`/Playwright + build de shibui). Ninguna rama mergeada aún.
 
 **Orden de lectura recomendado:**
 1. Memoria `project_hanko.md` (se autocarga) — contexto y decisiones vivas.
@@ -37,7 +39,11 @@ GitFlow reconciliado). **F2 en curso** en rama `feature/hanko-smoke` (incremento
   (PR #503) y se sincronizó `develop ↔ main` (PR #504 + back-merge). A partir de aquí, **cada fase = rama
   `feature/hanko-*` desde `develop`** y PR a `develop` (flujo correcto).
 
-**Próximo paso accionable:** cerrar F2 (runner sobre el CEM real de shibui-ui) tras validar `type-check`/`test`.
+**Próximo paso accionable:** **validar el harness (incr. 2) en navegador** desde el repo principal:
+`pnpm install` (regenera el lockfile con las nuevas deps), `pnpm --filter @shibui-ui/hanko exec playwright
+install chromium`, luego `pnpm --filter @shibui-ui/hanko test` (node) y `… test:browser`. Después, añadir el
+dogfood sobre shibui real (snippet en [`../specs/harness.md`](../specs/harness.md)) y calibrar las heurísticas
+v0 (reflect, interactividad, nombre accesible). Tras eso, **F6 (Trust Report)**.
 
 ---
 
@@ -91,28 +97,40 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 - **Estado:** 🟡 incrementos 1+2 hechos (Floor + smoke + runner `src/smoke/run.ts` + job CI `hanko-seal`
   report-only). **Bloqueante para CI:** regenerar `pnpm-lock.yaml` para incluir hanko (`pnpm install` + commit).
 
-### F3 · Contrato — ⬜ no iniciada
-- **Objetivo:** verificar lo declarado (props/eventos/slots/métodos) contra el **runtime** del elemento vivo.
-  Aquí se introduce el **nivel browser** de test (`@vitest/browser`, ver ADR-002) y se **pueblan los `methods`**
-  (deferidos desde F0).
-- **Entregables (previstos):** checks de contrato con los niveles Floor → Conformance → Strict; spec `checks-contract.md`.
-- **Criterios:** detecta drift declarado↔runtime; respeta *ausencia ≠ incumplimiento*; Strict opt-in exige completitud.
-- **Dependencias:** F2 · entorno de navegador (custom elements + Shadow DOM).
-- **Estado:** ⬜.
+### F3 · Contrato — 🟡 en curso (incremento 1)
+- **Objetivo:** verificar lo declarado (props/atributos/métodos/reflect) contra el **runtime** del elemento vivo.
+  Se **pueblan los `methods`** (deferidos desde F0) y se introduce el **nivel browser** de test
+  (`@vitest/browser`, ver ADR-002) en el incremento 2.
+- **Entregables:** motor `contractCheck` (`src/checks/contract.ts`) + límite `ComponentRuntime`
+  (`src/core/runtime.ts`) · niveles Conformance/Strict + registrabilidad runtime · spec
+  [`checks-contract.md`](../specs/checks-contract.md) · tests. **Incremento 2 (escrito, pend. validar):** harness
+  `src/harness/` que observa elementos vivos y corre el check sobre shibui-ui real; eventos y slots.
+- **Criterios:** detecta drift declarado↔runtime; respeta *ausencia ≠ incumplimiento* en ambos sentidos;
+  Strict opt-in exige completitud; cobertura (`checked`/`skipped`) transparente.
+- **Dependencias:** F2 · (incr. 2) entorno de navegador (custom elements + Shadow DOM).
+- **Estado:** 🟡 incremento 1 hecho (motor puro, node-testable) en `feature/hanko-contract`; harness incr. 2 escrito.
 
-### F4 · Accesibilidad (a11y) — ⬜ no iniciada
-- **Objetivo:** verificación universal de a11y (no depende del contrato declarado): axe + teclado + foco + ARIA.
-- **Entregables (previstos):** suite a11y sobre el elemento renderizado; spec `checks-a11y.md`.
-- **Criterios:** axe sin violaciones críticas; foco y orden de tabulación correctos; roles/labels presentes.
-- **Dependencias:** F3 (entorno browser).
-- **Estado:** ⬜.
+### F4 · Accesibilidad (a11y) — 🟡 en curso (incremento 1)
+- **Objetivo:** verificación **universal** de a11y (no lee el contrato): axe + teclado + foco + nombre accesible.
+- **Entregables:** motor de política `a11yCheck` (`src/checks/a11y.ts`) + observación `A11yObservation` ·
+  umbral de severidad (`failOn`) + checks de teclado/foco/nombre exigidos a interactivos · spec
+  [`checks-a11y.md`](../specs/checks-a11y.md) · tests. **Incremento 2 (escrito, pend. validar):** harness
+  `src/harness/` con `axe-core` inyectado que renderiza y sondea cada componente real.
+- **Criterios:** violaciones axe `>= failOn` fallan; interactivos exigen teclado/foco/nombre; lo no observado se
+  omite (cobertura transparente vía `checked`/`skipped`).
+- **Dependencias:** F3 (entorno browser; el incr. 1 de F4 es independiente en código).
+- **Estado:** 🟡 incremento 1 hecho (motor puro, node-testable) en `feature/hanko-a11y`; falta incr. 2.
 
-### F5 · Resiliencia — ⬜ no iniciada
-- **Objetivo:** el componente no se rompe ante entradas adversas: props basura/vacías, SSR, RTL.
-- **Entregables (previstos):** suite de resiliencia; spec `checks-resilience.md`.
-- **Criterios:** sin excepciones no controladas ante fuzzing de props; render estable en SSR y RTL.
-- **Dependencias:** F3 (entorno browser).
-- **Estado:** ⬜.
+### F5 · Resiliencia — 🟡 en curso (incremento 1)
+- **Objetivo:** el componente no se rompe ante entradas adversas: props basura/vacías, SSR, RTL. **Universal**
+  (no lee el contrato, como a11y).
+- **Entregables:** motor de política `resilienceCheck` (`src/checks/resilience.ts`) + observación
+  `ResilienceObservation` · escenarios obligatorios vs tolerables (`optional`) · spec
+  [`checks-resilience.md`](../specs/checks-resilience.md) · tests. **Incremento 2 (escrito):** parte del harness
+  compartido — montar bajo escenarios adversos.
+- **Criterios:** un escenario obligatorio roto → violación; tolerable roto → warning; lo no probado se omite.
+- **Dependencias:** F3 (entorno browser; el incr. 1 es independiente en código).
+- **Estado:** 🟡 incremento 1 hecho (motor puro) en `feature/hanko-resilience`; falta validar el harness.
 
 ### F6 · Trust Report + gates de CI — ⬜ no iniciada
 - **Objetivo:** consolidar resultados en un **Trust Report** (JSON + HTML) que declara **procedencia** y
@@ -139,8 +157,11 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 |---|---|
 | F0 | ✅ mergeado (develop + main) |
 | F1 | ✅ mergeado (develop + main) |
-| F2 | 🟡 en curso — Floor + `smoke` + cobertura; falta runner sobre shibui real |
-| F3–F7 | ⬜ no iniciadas |
+| F2 | ✅ mergeado (develop + main) — Floor + `smoke` + runner + job CI `hanko-seal` (102/102) |
+| F3 | 🟡 en curso — `contractCheck` + `ComponentRuntime` (incr. 1); harness escrito, pend. validar (incr. 2) |
+| F4 | 🟡 en curso — `a11yCheck` + `A11yObservation` (incr. 1); harness escrito, pend. validar (incr. 2) |
+| F5 | 🟡 en curso — `resilienceCheck` + `ResilienceObservation` (incr. 1); harness escrito (incr. 2) |
+| F6–F7 | ⬜ no iniciadas |
 
 > Caso especial fuera de este plan (componentes sin manifest / formato custom): ver
 > [`../special-cases/manifest-ausente-o-custom.html`](../special-cases/manifest-ausente-o-custom.html). Decisión **abierta**.
