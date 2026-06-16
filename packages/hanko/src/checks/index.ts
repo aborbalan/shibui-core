@@ -10,3 +10,12 @@ export type {
   ContractChecked,
   ContractOptions,
 } from './contract';
+export { a11yCheck } from './a11y';
+export type {
+  A11yObservation,
+  A11yResult,
+  A11yFinding,
+  A11yOptions,
+  AxeViolation,
+  AxeImpact,
+} from './a11y';
