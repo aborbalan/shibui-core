@@ -3,7 +3,8 @@
 > Motor de verificación de **confianza** (*trust*) **manifest-driven** para Web Components.
 > El sello que estampa cada componente que cumple su contrato declarado.
 
-**Estado:** Hito 1 en curso — F0 mergeado a `main`, F1 implementado (pend. validación).
+**Estado:** Hito 1 cerrado (F0·F1·F2 en `develop` + `main`; sello CI 102/102). Hito 2 arrancado —
+**F3 (contrato) en curso** (incremento 1: motor `contractCheck` + `ComponentRuntime`).
 Construido **desde 0** (no hereda la infra de test de `@shibui-ui/ui`, que es a medida).
 
 > 🔄 **¿Retomando en una sesión nueva de Claude?** Empieza por

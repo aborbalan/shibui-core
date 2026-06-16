@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hanko · Cómo funciona el check de contrato (F3)</title>
+<style>
+  :root{
+    --bg:#14110f;--bg-soft:#1c1815;--panel:#221d19;--panel-2:#2a241f;
+    --ink:#ece4d8;--ink-soft:#bcae9c;--ink-faint:#8c8072;--line:#3a3128;
+    --celadon:#7fae9b;--celadon-deep:#4f7d6c;--kintsugi:#d9a441;--kintsugi-soft:#e8c27a;
+    --kaki:#c8623a;--sabi:#9a6f4e;--info:#6f9fc4;--error:#c0573f;--shuniku:#c5402f;
+    --radius:14px;
+    --mono:"SFMono-Regular",ui-monospace,"Cascadia Code","Fira Code",Consolas,monospace;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --serif:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(217,164,65,.07), transparent 60%),
+      radial-gradient(900px 500px at -10% 25%, rgba(127,174,155,.06), transparent 55%),
+      var(--bg);
+    color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:56px 28px 100px}
+
+  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.26em;text-transform:uppercase;color:var(--kintsugi);margin:0 0 14px}
+  h1{font-family:var(--serif);font-weight:600;font-size:2.3rem;line-height:1.12;margin:0 0 16px;letter-spacing:-.01em}
+  h1 .stamp{color:var(--shuniku)}
+  .lede{font-size:1.06rem;color:var(--ink-soft);max-width:66ch;margin:0}
+
+  h2{font-family:var(--serif);font-weight:600;font-size:1.5rem;margin:0 0 6px;letter-spacing:-.01em}
+  .sec{margin:48px 0 0}
+  .sec > .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:10px}
+  .sec > p{color:var(--ink-soft);font-size:.96rem;margin:8px 0 0;max-width:68ch}
+
+  .seam{height:2px;border:0;margin:36px 0 0;background:linear-gradient(90deg,transparent,var(--kintsugi) 22%,var(--kintsugi-soft) 50%,var(--kintsugi) 78%,transparent);opacity:.45}
+
+  code{font-family:var(--mono);font-size:.85em;background:var(--panel-2);color:var(--kintsugi-soft);padding:.1em .38em;border-radius:5px;border:1px solid var(--line)}
+  strong{color:var(--ink)}
+  em{color:var(--celadon);font-style:normal}
+
+  /* flujo declarado ↔ observado */
+  .flow{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch;margin:22px 0 0}
+  .src{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;position:relative;overflow:hidden}
+  .src:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+  .src.decl:before{background:var(--kintsugi)}
+  .src.obs:before{background:var(--celadon)}
+  .src .lab{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+  .src h3{margin:5px 0 2px;font-size:1.02rem;font-weight:650}
+  .src .from{font-size:.8rem;color:var(--ink-soft);margin:0 0 10px}
+  .src ul{margin:0;padding-left:16px;font-size:.82rem;color:var(--ink-soft)}
+  .src code{font-size:.78em}
+  .vs{display:grid;place-items:center;font-family:var(--serif);font-size:1.1rem;color:var(--kintsugi);font-weight:700}
+  .converge{margin:14px 0 0;text-align:center}
+  .converge .pill{display:inline-flex;align-items:center;gap:10px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:9px 18px;font-family:var(--mono);font-size:.84rem;color:var(--ink)}
+  .converge .pill b{color:var(--kintsugi-soft);font-weight:600}
+  .converge .arrow{color:var(--ink-faint)}
+
+  /* tabla regla de oro */
+  table{width:100%;border-collapse:collapse;margin:18px 0 0;font-size:.88rem}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  td:first-child{color:var(--ink-soft)}
+  .verdict{font-family:var(--mono);font-size:.82rem;font-weight:600}
+  .v-skip{color:var(--ink-faint)}
+  .v-fail{color:var(--shuniku)}
+  .v-ok{color:var(--celadon)}
+
+  /* facetas */
+  .facets{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:20px 0 0}
+  .facet{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px}
+  .facet .n{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--kintsugi)}
+  .facet h4{margin:6px 0 4px;font-size:.98rem;font-weight:650}
+  .facet p{margin:0;font-size:.82rem;color:var(--ink-soft)}
+  .facet .floor-tag{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--celadon);border:1px solid var(--celadon-deep);border-radius:5px;padding:2px 7px;background:rgba(127,174,155,.08)}
+
+  /* niveles */
+  .levels{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0 0}
+  .lvl{border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;background:var(--panel)}
+  .lvl.strict{border-color:var(--sabi)}
+  .lvl .ln{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+  .lvl h4{margin:5px 0 6px;font-size:1.05rem;font-weight:650}
+  .lvl.conf h4{color:var(--celadon)}.lvl.strict h4{color:var(--kintsugi)}
+  .lvl p{margin:0;font-size:.85rem;color:var(--ink-soft)}
+
+  /* bloque de código / sello de ejemplo */
+  .codeblock{background:#100d0b;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin:20px 0 0;font-family:var(--mono);font-size:.8rem;line-height:1.7;color:var(--ink-soft);overflow-x:auto}
+  .codeblock .k{color:var(--info)}
+  .codeblock .s{color:var(--celadon)}
+  .codeblock .f{color:var(--shuniku)}
+  .codeblock .g{color:var(--kintsugi-soft)}
+  .codeblock .c{color:var(--ink-faint)}
+
+  /* nota incremento */
+  .note{display:flex;gap:12px;align-items:flex-start;border:1px dashed var(--kintsugi);border-radius:var(--radius);background:rgba(217,164,65,.05);padding:15px 18px;margin:22px 0 0}
+  .note .ic{font-family:var(--serif);font-size:1.3rem;color:var(--kintsugi);line-height:1;flex:none}
+  .note p{margin:0;font-size:.88rem;color:var(--ink-soft)}
+  .note b{color:var(--kintsugi-soft);font-weight:600}
+
+  footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:.8rem;font-family:var(--mono)}
+  footer .gold{color:var(--kintsugi)}
+
+  @media(max-width:680px){
+    .wrap{padding:38px 16px 70px}h1{font-size:1.9rem}
+    .flow{grid-template-columns:1fr}.vs{padding:6px 0}.levels{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">hanko · 判子 · F3 · cómo funciona</p>
+  <h1>El check de <span class="stamp">contrato</span></h1>
+  <p class="lede">F0–F2 son estáticos: leen el manifest. F3 es la primera capa que mira el <strong>runtime</strong>.
+  Su trabajo es comparar lo que un componente <em>declara</em> con lo que su elemento vivo <em>expone</em>, y
+  estampar la diferencia. Aquí está el mecanismo, pieza a pieza.</p>
+</header>
+
+<hr class="seam">
+
+<!-- 1 -->
+<section class="sec">
+  <span class="tag">01 · la idea</span>
+  <h2>Dos retratos del mismo componente</h2>
+  <p>hanko enfrenta dos descripciones del mismo elemento y busca dónde divergen. Una viene del papel (el
+  manifest); la otra, de la realidad (el DOM). <code>contractCheck()</code> las cruza y emite un veredicto.</p>
+
+  <div class="flow">
+    <div class="src decl">
+      <span class="lab">declarado</span>
+      <h3>ComponentContract</h3>
+      <p class="from">← <code>ingestCem()</code> sobre el CEM</p>
+      <ul>
+        <li>propiedades + tipos</li>
+        <li>atributos + <code>reflects</code></li>
+        <li>métodos · eventos · slots</li>
+      </ul>
+    </div>
+    <div class="vs">⇄</div>
+    <div class="src obs">
+      <span class="lab">observado</span>
+      <h3>ComponentRuntime</h3>
+      <p class="from">← un <strong>harness</strong> monta el elemento</p>
+      <ul>
+        <li><code>registered</code> (¿definido?)</li>
+        <li>props · <code>observedAttributes</code></li>
+        <li>métodos · reflexión real</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="converge">
+    <span class="pill">ComponentContract <span class="arrow">+</span> ComponentRuntime <span class="arrow">→</span> <b>contractCheck()</b> <span class="arrow">→</span> <b>ContractResult</b></span>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="sec">
+  <span class="tag">02 · arquitectura</span>
+  <h2>El motor no toca el DOM</h2>
+  <p>Principio innegociable de hanko: el <strong>core nunca importa</strong> <code>@shibui-ui/ui</code> ni monta
+  navegadores. Por eso F3 parte en dos. <code>ComponentRuntime</code> es el <strong>límite de abstracción</strong>:
+  una instantánea de hechos observados. Quién la rellena —un harness del consumidor o el probe DOM genérico con
+  <code>@vitest/browser</code>— es problema de otra capa.</p>
+  <div class="facets" style="grid-template-columns:1fr 1fr">
+    <div class="facet">
+      <span class="n">cerebro · incremento 1</span>
+      <h4>contractCheck() — puro</h4>
+      <p>Compara declarado ↔ observado. Sin DOM, sin navegador, sin shibui. Se testea en Node con
+      observaciones falsas. <strong>Esto es lo que se entrega hoy.</strong></p>
+    </div>
+    <div class="facet">
+      <span class="n">músculo · incremento 2</span>
+      <h4>harness de runtime</h4>
+      <p>Monta cada elemento, lee su prototipo y prueba la reflexión para construir el
+      <code>ComponentRuntime</code> real. Genérico y parametrizado: no conoce shibui.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="sec">
+  <span class="tag">03 · la regla de oro</span>
+  <h2>Ausencia ≠ incumplimiento — en ambos sentidos</h2>
+  <p>hanko solo valida lo que puede afirmar. Si el manifest no lo declara, o el harness no lo observó, la faceta
+  se <em>omite</em> (y queda registrada en <code>skipped</code>). Solo lo declarado que el runtime <strong>contradice</strong>
+  es violación. El sello declara siempre su cobertura: <code>checked</code> dice qué se comprobó de verdad.</p>
+  <table>
+    <thead><tr><th>Situación</th><th>Veredicto de hanko</th></tr></thead>
+    <tbody>
+      <tr><td>El manifest <strong>no declara</strong> la faceta</td><td class="verdict v-skip">omitir · no es fallo</td></tr>
+      <tr><td>El harness <strong>no observó</strong> la faceta</td><td class="verdict v-skip">omitir · no es fallo</td></tr>
+      <tr><td>Declarado <strong>y</strong> el runtime <strong>coincide</strong></td><td class="verdict v-ok">conforme</td></tr>
+      <tr><td>Declarado <strong>y</strong> el runtime lo <strong>contradice</strong></td><td class="verdict v-fail">violación</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 4 -->
+<section class="sec">
+  <span class="tag">04 · qué comprueba</span>
+  <h2>Las facetas del contrato</h2>
+  <p>Cinco verificaciones en el incremento 1. La registrabilidad es el suelo: sin ella no hay elemento que
+  inspeccionar y el resto se omite.</p>
+  <div class="facets">
+    <div class="facet">
+      <span class="n">facet · registration</span>
+      <h4>¿está registrado?</h4>
+      <p><code>customElements.get(tag)</code> debe estar definido. Si no, nada más se puede mirar.</p>
+      <span class="floor-tag">runtime del Floor (de F2)</span>
+    </div>
+    <div class="facet">
+      <span class="n">facet · property</span>
+      <h4>props declaradas</h4>
+      <p>Cada propiedad del manifest debe existir en la instancia del elemento.</p>
+    </div>
+    <div class="facet">
+      <span class="n">facet · attribute</span>
+      <h4>atributos mapeados</h4>
+      <p>Cada prop con <code>attribute</code> debe figurar en <code>observedAttributes</code>.</p>
+    </div>
+    <div class="facet">
+      <span class="n">facet · reflect</span>
+      <h4>reflexión real</h4>
+      <p>Una prop con <code>reflects:true</code> debe reflejar de verdad — solo si el harness lo probó.</p>
+    </div>
+    <div class="facet">
+      <span class="n">facet · method</span>
+      <h4>métodos declarados</h4>
+      <p>Cada método del manifest debe existir como función en el elemento.</p>
+    </div>
+    <div class="facet" style="border-style:dashed">
+      <span class="n">próximo incremento</span>
+      <h4>eventos · slots</h4>
+      <p>Modelados, pero su verificación necesita ejercitar y renderizar el elemento. Llegan después.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="sec">
+  <span class="tag">05 · exigencia</span>
+  <h2>Dos niveles</h2>
+  <p>El mismo motor, dos varas de medir. La diferencia es qué hace con lo que el manifest <em>no</em> declara.</p>
+  <div class="levels">
+    <div class="lvl conf">
+      <span class="ln">por defecto</span>
+      <h4>conformance</h4>
+      <p>Lo declarado existe y coincide en runtime. Un vanilla parco pasa validando solo lo poco que declara;
+      un Lit rico se gana una validación más estricta por declarar más.</p>
+    </div>
+    <div class="lvl strict">
+      <span class="ln">opt-in</span>
+      <h4>strict</h4>
+      <p>Además, el runtime <strong>no debe exponer API pública no declarada</strong>. Una prop pública sin
+      declarar pasa a ser violación: convierte la ausencia en fallo para quien busca el sello alto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="sec">
+  <span class="tag">06 · el resultado</span>
+  <h2>Un sello de ejemplo</h2>
+  <p>Así se ve un <code>ContractResult</code>: el componente declaró un método que el elemento no tiene
+  (<span class="v-fail" style="font-family:var(--mono)">violación</span>), no se probó la reflexión y no se
+  declararon eventos (ambos <span class="v-skip" style="font-family:var(--mono)">omitidos</span>).</p>
+  <div class="codeblock">
+<span class="k">contractCheck</span>(libCard, runtime) ⟶ {<br>
+&nbsp;&nbsp;tagName: <span class="s">'lib-card'</span>, level: <span class="s">'conformance'</span>, pass: <span class="f">false</span>,<br>
+&nbsp;&nbsp;violations: [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ facet: <span class="f">'method'</span>, member: <span class="s">'expand'</span>, message: <span class="c">'método declarado "expand" ausente en el elemento'</span> }<br>
+&nbsp;&nbsp;],<br>
+&nbsp;&nbsp;checked: { registration: <span class="g">true</span>, properties: <span class="g">3</span>, attributes: <span class="g">2</span>, methods: <span class="g">1</span>, reflect: <span class="g">0</span> },<br>
+&nbsp;&nbsp;skipped: [ <span class="s">'reflect (el harness no probó…)'</span>, <span class="s">'events / slots (no declarados)'</span> ]<br>
+}
+  </div>
+</section>
+
+<div class="note">
+  <span class="ic">判</span>
+  <p><b>Estado:</b> esto es el <b>incremento 1 de F3</b> — el motor de conformidad, puro y testeado en Node.
+  Vive en <code>src/checks/contract.ts</code> + <code>src/core/runtime.ts</code>, en la rama
+  <code>feature/hanko-contract</code>. El <b>incremento 2</b> añade el harness <code>@vitest/browser</code> que
+  observa los elementos vivos de shibui-ui y corre el check sobre los 102 componentes reales.</p>
+</div>
+
+<footer>
+  <p>hanko · referencia · cómo funciona el check de contrato (F3)</p>
+  <p>Relacionado: <span class="gold">docs/specs/checks-contract.md</span> · <span class="gold">docs/decisions/adr-001-baseline-minima-viable.md</span> · <span class="gold">docs/phases/development-phases.html</span></p>
+</footer>
+
+</div>
+</body>
+</html>

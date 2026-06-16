@@ -103,8 +103,9 @@ export interface CssPropContract {
 }
 
 /**
- * Método público (API imperativa). Modelado en el tipo pero NO poblado ni
- * validado hasta F3.
+ * Método público (API imperativa). Poblado por la ingestión y verificado
+ * contra el runtime desde F3. `signature` queda pendiente (el CEM parcial
+ * no modela parámetros/retorno todavía).
  */
 export interface MethodContract {
   name: string;
@@ -134,7 +135,7 @@ export interface ComponentContract {
   slots?: SlotContract[];
   cssParts?: CssPartContract[];
   cssProps?: CssPropContract[];
-  /** Modelados pero no poblados hasta F3. */
+  /** Métodos públicos declarados (poblados por la ingestión desde F3). */
   methods?: MethodContract[];
 }
 

@@ -141,8 +141,10 @@
     <span class="chip">Esfuerzo F0–F6 ≈ <b>12–16 días</b></span>
     <span class="chip">Primera tanda = <b>F0 + F1 + F2</b></span>
     <span class="chip">Construido <b>desde 0</b> (no hereda infra de @shibui-ui/ui)</span>
-    <span class="chip">F0+F1 <b>en main</b> (PR #502/#503/#504) · F2 <b>en curso</b></span>
-    <span class="chip">Actualizado <b>2026-06-14</b></span>
+    <span class="chip">F0·F1·F2 <b>en develop + main</b> (PR #502 → #510)</span>
+    <span class="chip">Sello a escala: <b>102 / 102</b> pasan el Floor</span>
+    <span class="chip">F3 <b>en curso</b> · rama feature/hanko-contract</span>
+    <span class="chip">Actualizado <b>2026-06-16</b></span>
   </div>
 </header>
 
@@ -197,27 +199,29 @@
     </div>
   </div>
 
-  <div class="phase h1 wip">
+  <div class="phase h1 done">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F2</span>
         <h4>Smoke · primer sello</h4>
-        <span class="badge b-wip">en curso</span>
+        <span class="badge b-done">hecho</span>
       </div>
-      <p class="body">Validación mínima end-to-end sobre <strong>10 → 99 componentes</strong> de shibui-ui. Emite el
-      primer sello, aunque sea básico. Responde la pregunta clave: ¿el flujo <em>manifest → verificación → sello</em>
-      funciona a escala real?</p>
-      <span class="thesis-flag">★ valida la tesis del producto</span>
-      <p class="deliv"><b>✓ Hecho ▸</b> <span>Floor + <code>smoke()</code> + cobertura · runner <code>src/smoke/run.ts</code> (script <code>smoke</code>) · job CI <code>hanko-seal</code> en <code>ci-lib</code> (report-only) · spec + tests</span></p>
-      <p class="deliv"><b>▸ Falta ▸</b> <span>regenerar <code>pnpm-lock.yaml</code> (incluir hanko) + validar el job en CI sobre los 99 componentes</span></p>
+      <p class="body">Validación mínima end-to-end sobre los <strong>componentes reales</strong> de shibui-ui. Emite el
+      primer sello (Floor) y responde la pregunta clave —¿el flujo <em>manifest → verificación → sello</em> funciona a
+      escala real?— con un <strong>sí</strong>: el job <code>hanko-seal</code> selló <strong>102 / 102</strong>
+      componentes sobre el CEM real en CI.</p>
+      <span class="thesis-flag">★ tesis del producto validada</span>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span>Floor + <code>smoke()</code> + cobertura · runner <code>src/smoke/run.ts</code> · job CI <code>hanko-seal</code> en <code>ci-lib</code> · <code>pnpm-lock.yaml</code> regenerado · spec + tests</span></p>
+      <p class="deliv"><b>✓ Mergeado ▸</b> <span>en <code>develop</code> (PR #506) y <code>main</code> (PR #510)</span></p>
+      <p class="deliv"><b>▸ Residual ▸</b> <span>el job sigue <code>report-only</code> (<code>continue-on-error</code>); promover a gate duro cuando se quiera</span></p>
     </div>
   </div>
 
   <div class="firstbatch">
-    <span class="tag">Primera tanda acordada</span>
-    <p>F0 + F1 + F2 se abordan juntas. Llegar a un sello real sobre componentes reales es el hito que justifica
-    seguir invirtiendo en las capas profundas del Hito 2.</p>
+    <span class="tag">Primera tanda · completada</span>
+    <p>F0 + F1 + F2 se abordaron juntas. El sello real sobre componentes reales —el hito que justifica seguir
+    invirtiendo en las capas profundas del Hito 2— ya está conseguido. Siguiente: <strong>F3 (contrato)</strong>.</p>
   </div>
 
   <!-- ===== HITO 2 ===== -->
@@ -229,18 +233,19 @@
     </div>
   </div>
 
-  <div class="phase h2 todo">
+  <div class="phase h2 wip">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F3</span>
         <h4>Contrato</h4>
-        <span class="badge b-todo">pendiente</span>
+        <span class="badge b-wip">en curso</span>
       </div>
-      <p class="body">Verifica props / eventos / slots / métodos declarados contra el runtime. Aquí vive la
-      <strong>regla de oro</strong> (<em>ausencia ≠ incumplimiento</em>) y los niveles Floor → Conformance → Strict
-      del ADR-001.</p>
-      <p class="deliv"><b>Entregable ▸</b> <span>checks de contrato + spec <code>checks-contract.md</code></span></p>
+      <p class="body">Primera capa que mira el <strong>runtime</strong>: compara lo declarado contra el elemento vivo.
+      Aquí viven la <strong>regla de oro</strong> (<em>ausencia ≠ incumplimiento</em>, ahora en ambos sentidos) y los
+      niveles Conformance → Strict del ADR-001 —más la registrabilidad que F2 difirió.</p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span>motor puro <code>contractCheck()</code> + límite <code>ComponentRuntime</code> · registrabilidad + props + atributos + reflect + métodos · <code>methods</code> poblados en la ingestión · spec <code>checks-contract.md</code> + tests</span></p>
+      <p class="deliv"><b>▸ Falta ▸</b> <span>incremento 2: harness <code>@vitest/browser</code> que observe elementos vivos y corra el check sobre shibui-ui real · eventos y slots</span></p>
     </div>
   </div>
 
@@ -314,7 +319,7 @@
 <footer>
   <p>hanko · plan de obra F0–F7 · índice en <span class="gold">docs/phases/README.md</span></p>
   <p>Relacionado: <span class="gold">docs/decisions/adr-001-baseline-minima-viable.md</span> · <span class="gold">docs/specs/</span></p>
-  <p>Estado: F0 en curso (esqueleto creado). Sin código de implementación aún.</p>
+  <p>Estado (2026-06-16): Hito 1 cerrado (F0·F1·F2 en <span class="gold">develop + main</span>). Hito 2 arrancado: <span class="gold">F3 en curso</span> — incremento 1 (motor de conformidad) hecho en <span class="gold">feature/hanko-contract</span>; falta el harness browser. F4–F7 sin empezar.</p>
 </footer>
 
 </div>

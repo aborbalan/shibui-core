@@ -10,9 +10,10 @@ define cada fase con detalle suficiente para continuar en frío.
 
 ## ▶ Cómo retomar este proyecto en una sesión nueva
 
-**Estado a 2026-06-14:** Hito 1 avanzado. **F0 y F1 mergeados a `develop` y `main`** (PR #502/#503/#504;
-GitFlow reconciliado). **F2 en curso** en rama `feature/hanko-smoke` (incremento 1: check Floor + motor
-`smoke` con sello y cobertura). Falta el runner sobre el CEM real de shibui-ui para cerrar F2.
+**Estado a 2026-06-16:** Hito 1 **cerrado** — F0·F1·F2 mergeados a `develop` y `main` (PR #502 → #510); el
+job CI `hanko-seal` selló 102/102 componentes (report-only). **Hito 2 arrancado: F3 (contrato) en curso** en
+rama `feature/hanko-contract` (incremento 1: motor `contractCheck` + límite `ComponentRuntime`, node-testable).
+Falta el incremento 2 (harness `@vitest/browser` que observe elementos vivos).
 
 **Orden de lectura recomendado:**
 1. Memoria `project_hanko.md` (se autocarga) — contexto y decisiones vivas.
@@ -37,7 +38,9 @@ GitFlow reconciliado). **F2 en curso** en rama `feature/hanko-smoke` (incremento
   (PR #503) y se sincronizó `develop ↔ main` (PR #504 + back-merge). A partir de aquí, **cada fase = rama
   `feature/hanko-*` desde `develop`** y PR a `develop` (flujo correcto).
 
-**Próximo paso accionable:** cerrar F2 (runner sobre el CEM real de shibui-ui) tras validar `type-check`/`test`.
+**Próximo paso accionable:** F3 incremento 2 — montar el harness `@vitest/browser` que construya el
+`ComponentRuntime` real de cada componente de shibui-ui y corra `contractCheck` sobre ellos (validar antes
+`type-check`/`test` del incremento 1 desde el repo principal).
 
 ---
 
@@ -91,14 +94,18 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 - **Estado:** 🟡 incrementos 1+2 hechos (Floor + smoke + runner `src/smoke/run.ts` + job CI `hanko-seal`
   report-only). **Bloqueante para CI:** regenerar `pnpm-lock.yaml` para incluir hanko (`pnpm install` + commit).
 
-### F3 · Contrato — ⬜ no iniciada
-- **Objetivo:** verificar lo declarado (props/eventos/slots/métodos) contra el **runtime** del elemento vivo.
-  Aquí se introduce el **nivel browser** de test (`@vitest/browser`, ver ADR-002) y se **pueblan los `methods`**
-  (deferidos desde F0).
-- **Entregables (previstos):** checks de contrato con los niveles Floor → Conformance → Strict; spec `checks-contract.md`.
-- **Criterios:** detecta drift declarado↔runtime; respeta *ausencia ≠ incumplimiento*; Strict opt-in exige completitud.
-- **Dependencias:** F2 · entorno de navegador (custom elements + Shadow DOM).
-- **Estado:** ⬜.
+### F3 · Contrato — 🟡 en curso (incremento 1)
+- **Objetivo:** verificar lo declarado (props/atributos/métodos/reflect) contra el **runtime** del elemento vivo.
+  Se **pueblan los `methods`** (deferidos desde F0) y se introduce el **nivel browser** de test
+  (`@vitest/browser`, ver ADR-002) en el incremento 2.
+- **Entregables:** motor `contractCheck` (`src/checks/contract.ts`) + límite `ComponentRuntime`
+  (`src/core/runtime.ts`) · niveles Conformance/Strict + registrabilidad runtime · spec
+  [`checks-contract.md`](../specs/checks-contract.md) · tests. **Incremento 2 (falta):** harness browser que
+  observe elementos vivos y corra el check sobre shibui-ui real; eventos y slots.
+- **Criterios:** detecta drift declarado↔runtime; respeta *ausencia ≠ incumplimiento* en ambos sentidos;
+  Strict opt-in exige completitud; cobertura (`checked`/`skipped`) transparente.
+- **Dependencias:** F2 · (incr. 2) entorno de navegador (custom elements + Shadow DOM).
+- **Estado:** 🟡 incremento 1 hecho (motor puro, node-testable) en `feature/hanko-contract`; falta incr. 2.
 
 ### F4 · Accesibilidad (a11y) — ⬜ no iniciada
 - **Objetivo:** verificación universal de a11y (no depende del contrato declarado): axe + teclado + foco + ARIA.
@@ -139,8 +146,9 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 |---|---|
 | F0 | ✅ mergeado (develop + main) |
 | F1 | ✅ mergeado (develop + main) |
-| F2 | 🟡 en curso — Floor + `smoke` + cobertura; falta runner sobre shibui real |
-| F3–F7 | ⬜ no iniciadas |
+| F2 | ✅ mergeado (develop + main) — Floor + `smoke` + runner + job CI `hanko-seal` (102/102) |
+| F3 | 🟡 en curso — motor `contractCheck` + `ComponentRuntime` (incr. 1); falta harness browser (incr. 2) |
+| F4–F7 | ⬜ no iniciadas |
 
 > Caso especial fuera de este plan (componentes sin manifest / formato custom): ver
 > [`../special-cases/manifest-ausente-o-custom.html`](../special-cases/manifest-ausente-o-custom.html). Decisión **abierta**.
