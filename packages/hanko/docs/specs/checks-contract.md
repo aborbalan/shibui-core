@@ -1,6 +1,8 @@
 # Spec · Check de Contrato (F3)
 
-> **Estado:** v0 (incremento 1) — implementado en `src/checks/contract.ts` + `src/core/runtime.ts`.
+> **Estado:** v0 — incremento 1 (motor puro `src/checks/contract.ts` + `src/core/runtime.ts`) **e
+> incremento 2** (harness `src/harness/probe.ts` con `observeRuntime`, incl. faceta **slot**). Validado en
+> Node; el nivel navegador (`probe.browser.test.ts`) está escrito, pendiente de correr sobre shibui real.
 > **Fase:** F3. Depende de [`data-model.md`](data-model.md) (F0), [`ingest.md`](ingest.md) (F1) y [`smoke.md`](smoke.md) (F2).
 > **Nivel ADR-001:** Conformance (1) + Strict (2). Recoge además la registrabilidad runtime del Floor (0)
 > que F2 difirió. Ver [`../decisions/adr-001-baseline-minima-viable.md`](../decisions/adr-001-baseline-minima-viable.md).
@@ -39,6 +41,7 @@ interface ComponentRuntime {
   observedAttributes?: string[];    // observedAttributes del elemento
   methods?: string[];               // métodos públicos del prototipo
   reflectingProperties?: string[];  // props que reflejan a su atributo (probado)
+  slots?: string[];                 // <slot> del shadow DOM ('' = por defecto)
 }
 ```
 
@@ -52,8 +55,8 @@ contractCheck(component, runtime, options?): ContractResult   // src/checks/cont
 ContractResult {
   tagName; level: 'conformance' | 'strict'; pass; violations[]; checked; skipped[]
 }
-ContractViolation { facet: 'registration'|'property'|'attribute'|'method'|'reflect'; member?; message }
-ContractChecked   { registration; properties; attributes; methods; reflect }   // cuánto se verificó
+ContractViolation { facet: 'registration'|'property'|'attribute'|'method'|'reflect'|'slot'; member?; message }
+ContractChecked   { registration; properties; attributes; methods; reflect; slots }   // cuánto se verificó
 ```
 
 ## Regla de oro, en AMBOS sentidos
@@ -69,7 +72,7 @@ La validación es **condicional a lo presente** — y "presente" aplica a las do
 `checked` cuenta lo verificado de verdad y `skipped` explica lo omitido: el sello declara su **cobertura**,
 nunca finge haber comprobado lo que no pudo.
 
-## Facetas verificadas (incremento 1)
+## Facetas verificadas
 
 1. **Registrabilidad** *(siempre)* — `registered === false` ⇒ violación `registration`. Es la parte runtime
    del Floor que F2 dejó pendiente. Sin registro no hay instancia → el resto se omite.
@@ -78,15 +81,19 @@ nunca finge haber comprobado lo que no pudo.
 4. **Reflect** — cada prop con `reflects: true` debe reflejar de verdad (solo si el harness lo probó vía
    `reflectingProperties`).
 5. **Métodos** — cada método declarado debe existir en `runtime.methods`.
+6. **Slots** *(incremento 2)* — cada slot declarado debe aparecer como `<slot>` en el shadow DOM. El `''`
+   declarado exige un slot por defecto. Solo se verifica si el harness observó slots (montó el elemento).
 
-> **Eventos y slots** se modelan en el contrato pero su verificación runtime (event-spy / render de Shadow DOM)
-> llega en un incremento posterior: requieren montar y ejercitar el elemento, no solo inspeccionarlo.
+> **Eventos:** se modelan en el contrato pero **no** se verifican aún. A diferencia de los slots —enumerables
+> inspeccionando el shadow DOM montado— los eventos no son observables estáticamente: habría que **disparar
+> comportamiento** (event-spy) para saber cuáles emite el componente. Enumerarlos a ciegas sería especular, así
+> que quedan **declarados-only** hasta un incremento de verificación conductual.
 
 ## Niveles (ADR-001)
 
 | Nivel | Qué exige | Cómo |
 |---|---|---|
-| **conformance** *(def.)* | lo declarado existe/coincide en runtime | facetas 1–5 |
+| **conformance** *(def.)* | lo declarado existe/coincide en runtime | facetas 1–6 |
 | **strict** *(opt-in)* | además, el runtime **no expone API pública no declarada** (completitud) | `{ level: 'strict' }` |
 
 En `strict`, una prop pública presente en el elemento pero ausente del manifest es violación: convierte la
@@ -98,7 +105,9 @@ La completitud de **métodos** en strict se difiere (la firma del CEM aún no mo
 F3 **puebla `methods`** (campos `kind:'method'` públicos), que el modelo difería desde F0. La separación
 campos→`properties` / métodos→`methods` ocurre en `ingestCem`. Ver [`ingest.md`](ingest.md).
 
-## Criterios de aceptación (F3 · incremento 1)
+## Criterios de aceptación
+
+**Incremento 1 (motor puro):**
 
 1. `contractCheck` detecta props/atributos/métodos declarados ausentes en runtime.
 2. Verifica reflect solo cuando el harness lo prueba; lo omite (sin fallar) si no.
@@ -107,10 +116,19 @@ campos→`properties` / métodos→`methods` ocurre en `ingestCem`. Ver [`ingest
 5. `strict` marca la API pública no declarada; `conformance` la ignora.
 6. Tests verdes en `src/checks/contract.test.ts`.
 
-## Incremento 2 (siguiente) — harness de runtime + ejecución real
+**Incremento 2 (harness de runtime):**
 
-- **Probe DOM genérico:** dado un módulo que registra los elementos y la lista de `tagName`, montar cada uno
-  con `@vitest/browser` (Playwright) y **construir el `ComponentRuntime`** real (props del prototipo,
-  `observedAttributes`, métodos, prueba de reflect set/get). Genérico y parametrizado: **no** importa shibui.
-- **Integración:** correr `contractCheck` sobre los componentes reales de shibui-ui y agregar al sello (camino
-  hacia el Trust Report de F6). Eventos y slots entran aquí.
+7. `observeRuntime` monta el elemento y construye el `ComponentRuntime` real (props, `observedAttributes`,
+   métodos, prueba de reflect, **slots del shadow DOM**) sin importar shibui.
+8. La faceta **slot** detecta slots declarados ausentes en el shadow DOM y omite (sin fallar) si el manifest
+   no declara slots o el harness no los observó.
+9. Tests de navegador verdes en `src/harness/probe.browser.test.ts` (Playwright vía `@vitest/browser`).
+
+## Incremento 2 — estado y pendientes
+
+- ✅ **Probe DOM genérico (`observeRuntime`):** monta cada elemento con `@vitest/browser` (Playwright) y
+  construye el `ComponentRuntime` real —props del prototipo, `observedAttributes`, métodos, reflect set/get y
+  **slots** del shadow DOM. Genérico y parametrizado: **no** importa shibui. Verificado por `probe.browser.test.ts`
+  (autocontenido); **pendiente de correr sobre el CEM real de shibui** (dogfood — ver [`harness.md`](harness.md)).
+- ⏳ **Eventos:** declarados-only hasta un incremento de verificación conductual (event-spy). Ver nota arriba.
+- ⏳ **Integración:** agregar `contractCheck` sobre los componentes reales al sello (camino al Trust Report de F6).

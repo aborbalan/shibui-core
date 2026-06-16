@@ -53,4 +53,10 @@ export interface ComponentRuntime {
    * → no se verifica.
    */
   reflectingProperties?: string[];
+  /**
+   * Nombres de slots expuestos en el shadow DOM del elemento montado
+   * (`<slot name>` → nombre; `''` = slot por defecto). `undefined` = el harness
+   * no pudo observar slots (el elemento no expone shadow root o no montó).
+   */
+  slots?: string[];
 }

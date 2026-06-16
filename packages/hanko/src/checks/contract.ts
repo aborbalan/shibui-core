@@ -29,7 +29,8 @@ export type ContractFacet =
   | 'property'
   | 'attribute'
   | 'method'
-  | 'reflect';
+  | 'reflect'
+  | 'slot';
 
 export interface ContractViolation {
   facet: ContractFacet;
@@ -45,6 +46,7 @@ export interface ContractChecked {
   attributes: number;
   methods: number;
   reflect: number;
+  slots: number;
 }
 
 export interface ContractResult {
@@ -77,6 +79,7 @@ export function contractCheck(
     attributes: 0,
     methods: 0,
     reflect: 0,
+    slots: 0,
   };
 
   const result = (): ContractResult => ({
@@ -191,7 +194,27 @@ export function contractCheck(
     }
   }
 
-  // 4 · Strict (opt-in) — completitud: el runtime no debe exponer API pública NO declarada.
+  // 4 · Slots declarados ↔ presentes como <slot> en el shadow DOM del elemento.
+  if (component.slots === undefined) {
+    skipped.push('slots (el manifest no declara slots)');
+  } else if (runtime.slots === undefined) {
+    skipped.push('slots (el harness no observó slots — el elemento no expone shadow root)');
+  } else {
+    const present = new Set(runtime.slots);
+    for (const s of component.slots) {
+      checked.slots++;
+      if (!present.has(s.name)) {
+        const label = s.name === '' ? 'el slot por defecto' : `el slot "${s.name}"`;
+        violations.push({
+          facet: 'slot',
+          member: s.name,
+          message: `${label} está declarado pero no aparece en el shadow DOM del elemento`,
+        });
+      }
+    }
+  }
+
+  // 5 · Strict (opt-in) — completitud: el runtime no debe exponer API pública NO declarada.
   if (
     level === 'strict' &&
     component.properties !== undefined &&

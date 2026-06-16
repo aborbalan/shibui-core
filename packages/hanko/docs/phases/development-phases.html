@@ -143,8 +143,9 @@
     <span class="chip">Construido <b>desde 0</b> (no hereda infra de @shibui-ui/ui)</span>
     <span class="chip">F0·F1·F2 <b>en develop + main</b> (PR #502 → #510)</span>
     <span class="chip">Sello a escala: <b>102 / 102</b> pasan el Floor</span>
-    <span class="chip">Hito 2: <b>F3·F4·F5 en curso</b> · motores hechos</span>
-    <span class="chip">Harness (incr. 2) <b>escrito</b> · pend. validar</span>
+    <span class="chip">Hito 2: <b>F3·F4·F5 en curso</b> · 3 motores (incr. 1) hechos</span>
+    <span class="chip">Incr. 2 (harness): <b>falta en #526 / #527</b> · solo en #528, sin validar</span>
+    <span class="chip">Hito 3: <b>F6 incr. 1 hecho</b> · agregador + renderers</span>
     <span class="chip">Actualizado <b>2026-06-16</b></span>
   </div>
 </header>
@@ -234,6 +235,14 @@
     </div>
   </div>
 
+  <div class="firstbatch" style="border-color:var(--shuniku);background:rgba(197,64,47,.06)">
+    <span class="tag" style="color:var(--shuniku)">Acta · incremento 2 pendiente</span>
+    <p>Cada fase = <strong>incr. 1 (motor puro, node)</strong> + <strong>incr. 2 (harness de navegador)</strong>. Los
+    tres motores (incr. 1) están hechos, pero <strong>el incremento 2 falta en los PR de F3 (#526) y F4 (#527)</strong>:
+    el harness se implementó <strong>una sola vez, centralizado en #528 (F5)</strong> — no está en sus ramas. Y
+    <strong>ningún incremento 2 se ha validado en navegador todavía</strong> (worktree sin <code>node_modules</code>).</p>
+  </div>
+
   <div class="phase h2 wip">
     <div class="node"></div>
     <div class="pcard">
@@ -246,7 +255,7 @@
       Aquí viven la <strong>regla de oro</strong> (<em>ausencia ≠ incumplimiento</em>, ahora en ambos sentidos) y los
       niveles Conformance → Strict del ADR-001 —más la registrabilidad que F2 difirió.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor puro <code>contractCheck()</code> + límite <code>ComponentRuntime</code> · registrabilidad + props + atributos + reflect + métodos · <code>methods</code> poblados en la ingestión · spec <code>checks-contract.md</code> + tests</span></p>
-      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span>harness <code>src/harness/</code> <strong>escrito</strong> (observa elementos vivos) — pendiente de validar en navegador y correr sobre shibui real · eventos y slots</span></p>
+      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span><code>observeRuntime</code> ampliado: monta el elemento y <strong>observa los slots del shadow DOM → nueva faceta <code>slot</code></strong> en <code>contractCheck</code> (declarado ↔ shadow DOM), con tests node + navegador. Vive en #528 (no en #526) y <strong>sin validar en navegador</strong>. Eventos: no observables por inspección estática → <em>declarados-only</em>.</span></p>
     </div>
   </div>
 
@@ -261,7 +270,7 @@
       <p class="body">axe + navegación por teclado + foco + nombre accesible. Pruebas <strong>universales</strong>:
       aplican a cualquier componente, declare lo que declare su manifest — F4 no lee el contrato.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor de política puro <code>a11yCheck()</code> + observación <code>A11yObservation</code> · umbral de severidad (<code>failOn</code>) + teclado/foco/nombre exigidos a interactivos · spec <code>checks-a11y.md</code> + tests</span></p>
-      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span>harness <code>src/harness/</code> <strong>escrito</strong> (axe + sondeos inyectados) — pendiente de validar en navegador y correr sobre shibui real</span></p>
+      <p class="deliv"><b>✗ Falta ▸</b> <span><strong>incremento 2 ausente de este PR (#527)</strong>: el harness de a11y (<code>observeA11y</code>, axe + sondeos inyectados) vive centralizado en #528, no en esta rama — y <strong>sin validar en navegador</strong></span></p>
     </div>
   </div>
 
@@ -276,7 +285,7 @@
       <p class="body">Props basura / vacías, SSR, RTL. El componente no debe romperse ante entradas adversas.
       También <strong>universal</strong>, no depende del contrato.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor de política puro <code>resilienceCheck()</code> + observación <code>ResilienceObservation</code> · escenarios obligatorios vs tolerables (<code>optional</code>) · spec <code>checks-resilience.md</code> + tests</span></p>
-      <p class="deliv"><b>▸ Falta ▸</b> <span>incremento 2 (harness compartido): montar cada componente bajo los escenarios adversos en navegador</span></p>
+      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span>el <strong>harness compartido</strong> <code>src/harness/</code> (las tres observaciones: runtime · a11y · resiliencia) <strong>vive en este PR (#528)</strong> — escrito pero <strong>sin validar en navegador</strong> ni correr sobre shibui real</span></p>
     </div>
   </div>
 
@@ -289,17 +298,18 @@
     </div>
   </div>
 
-  <div class="phase h3 todo">
+  <div class="phase h3 wip">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F6</span>
         <h4>Trust Report + gates de CI</h4>
-        <span class="badge b-todo">pendiente</span>
+        <span class="badge b-wip">en curso</span>
       </div>
       <p class="body">Reporte de confianza (<strong>JSON + HTML</strong>) que declara <em>procedencia</em> y
       <em>cobertura</em> del sello. Gates que fallan el build cuando un componente no cumple su nivel exigido.</p>
-      <p class="deliv"><b>Entregable ▸</b> <span>Trust Report + integración CI + spec <code>trust-report.md</code></span></p>
+      <p class="deliv"><b>✓ Incr. 1 ▸</b> <span>agregador puro <code>buildTrustReport()</code> —compone Floor + contrato + a11y + resiliencia por componente, con procedencia y regla de oro (capa no evaluada → <em>skipped</em>, no descalifica)— + renderers <code>renderTrustReport{Json,Html}</code> (HTML con marca washi) · spec <code>trust-report.md</code> + tests node. Rama <code>feature/hanko-trust-report</code>.</span></p>
+      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span>runner real: Floor estático + contrato/a11y/resiliencia vía el harness de navegador sobre shibui-ui → escribir <code>report.json</code>/<code>report.html</code> y <strong>promover <code>hanko-seal</code> a gate duro</strong>. Pendiente (necesita navegador + CEM real).</span></p>
     </div>
   </div>
 
@@ -322,7 +332,7 @@
 <footer>
   <p>hanko · plan de obra F0–F7 · índice en <span class="gold">docs/phases/README.md</span></p>
   <p>Relacionado: <span class="gold">docs/decisions/adr-001-baseline-minima-viable.md</span> · <span class="gold">docs/specs/</span></p>
-  <p>Estado (2026-06-16): Hito 1 cerrado (F0·F1·F2 en <span class="gold">develop + main</span>). Hito 2 a fondo: <span class="gold">F3·F4·F5 en curso</span> — los tres motores puros hechos (contrato, a11y, resiliencia) en ramas apiladas <span class="gold">contract → a11y → resilience</span>. El <span class="gold">harness de runtime (incr. 2)</span> está escrito pero pendiente de validar en navegador. F6–F7 sin empezar.</p>
+  <p>Estado (2026-06-16): Hito 1 cerrado (F0·F1·F2 en <span class="gold">develop + main</span>). Hito 2: los <span class="gold">tres motores puros (incr. 1)</span> de contrato·a11y·resiliencia hechos, en ramas apiladas <span class="gold">contract → a11y → resilience</span>. <strong>El incremento 2 (harness de runtime) FALTA en los PR de F3 (#526) y F4 (#527)</strong> — se centralizó en #528 (F5) y sigue <span class="gold">sin validar en navegador</span>. <span class="gold">F6 incr. 1</span> (agregador <code>buildTrustReport</code> + renderers JSON/HTML) hecho en <span class="gold">feature/hanko-trust-report</span>; falta su incr. 2 (runner + gate de CI) y F7.</p>
 </footer>
 
 </div>

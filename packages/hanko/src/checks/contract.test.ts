@@ -125,6 +125,36 @@ describe('contractCheck · métodos', () => {
   });
 });
 
+describe('contractCheck · slots', () => {
+  const comp = declared({ slots: [{ name: 'icon' }, { name: '' }] });
+
+  it('pasa cuando los slots declarados aparecen en el shadow DOM', () => {
+    const r = contractCheck(comp, observed({ slots: ['icon', ''] }));
+    expect(r.pass).toBe(true);
+    expect(r.checked.slots).toBe(2);
+  });
+
+  it('viola por slot declarado ausente (incl. el slot por defecto)', () => {
+    const r = contractCheck(comp, observed({ slots: ['icon'] }));
+    expect(r.pass).toBe(false);
+    const v = r.violations.find((x) => x.facet === 'slot')!;
+    expect(v.member).toBe('');
+  });
+
+  it('omite (no falla) cuando el harness no observó slots', () => {
+    const r = contractCheck(comp, observed({}));
+    expect(r.pass).toBe(true);
+    expect(r.checked.slots).toBe(0);
+    expect(r.skipped.some((s) => s.startsWith('slots'))).toBe(true);
+  });
+
+  it('omite cuando el manifest no declara slots aunque el runtime los observe', () => {
+    const r = contractCheck(declared(), observed({ slots: ['icon'] }));
+    expect(r.pass).toBe(true);
+    expect(r.skipped.join(' ')).toContain('no declara slots');
+  });
+});
+
 describe('contractCheck · nivel strict (completitud)', () => {
   const comp = declared({
     properties: [{ property: 'variant', reflects: false, type: { raw: 'string', kind: 'string' } }],
