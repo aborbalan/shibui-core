@@ -1,7 +1,8 @@
 # Spec · Trust Report (F6)
 
-> **Estado:** v0 (incremento 1) — implementado en `src/report/trust-report.ts` (agregador) +
-> `src/report/render.ts` (renderers JSON/HTML). Motor puro, validado en Node.
+> **Estado:** incr. 1 (agregador `src/report/trust-report.ts` + renderers `src/report/render.ts`, puro) +
+> incr. 2 **slice Floor** (runner `src/report/run.ts` + deploy a `hanko-report.web.app` en main). Las capas
+> contrato/a11y/resiliencia entran al cablear el harness de navegador en CI.
 > **Fase:** F6. Agrega los veredictos de [`smoke.md`](smoke.md) (Floor, F2),
 > [`checks-contract.md`](checks-contract.md) (F3), [`checks-a11y.md`](checks-a11y.md) (F4) y
 > [`checks-resilience.md`](checks-resilience.md) (F5).
@@ -79,11 +80,16 @@ un CEM nativo vale más que uno inferido del runtime: el reporte lo expone para 
 5. `renderTrustReportJson` reidrata sin pérdida; `renderTrustReportHtml` produce un documento válido con la marca.
 6. Tests verdes en `src/report/trust-report.test.ts`.
 
-## Incremento 2 (siguiente) — runner + gates de CI
+## Incremento 2 — runner, deploy y gate
 
-- **Runner real:** Floor estático sobre el CEM (ya existe en `smoke/run.ts`) + contrato/a11y/resiliencia vía el
-  **harness de navegador** (`src/harness/probe.ts`) sobre los componentes reales de shibui-ui → `ComponentChecks[]`
-  → `buildTrustReport` → escribir `report.json` + `report.html`.
-- **Gate de CI:** fallar el build cuando un componente no alcanza su **nivel exigido** (Floor obligatorio;
-  contrato/a11y/resiliencia configurables). Promueve el `hanko-seal` actual (report-only) a gate duro.
-- **Histórico/badges:** consumir el JSON para *trend* de cobertura y badge de % sellado.
+- ✅ **Runner** (`src/report/run.ts`, script `report`): lee el CEM, ejecuta las capas **disponibles sin
+  navegador** (hoy solo el **Floor** estático) → `buildTrustReport` → escribe `hanko-report/index.html` +
+  `hanko-report/trust-report.json`. Un banner del HTML declara la cobertura parcial.
+- ✅ **Deploy** (`ci-lib.yml` · job `deploy-hanko-report`): en **main**, genera y publica el HTML en
+  **`hanko-report.web.app`** (target Firebase `hanko-report`) — la última versión sellada en main. El JSON
+  queda en `/trust-report.json`.
+- ⏳ **Capas del harness:** contrato · a11y · resiliencia salen `–` (no evaluado) hasta cablear el harness de
+  navegador en CI. Al integrarlo, rellenan sus columnas **sin tocar el runner** (solo se pasan más `*Result`).
+- ⏳ **Gate duro:** fallar el build cuando un componente no alcanza su nivel exigido — promover el `hanko-seal`
+  actual (report-only). Diferido hasta que el sello sea estable.
+- ⏳ **Histórico/badges:** consumir el JSON publicado para *trend* de cobertura y badge de % sellado.

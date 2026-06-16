@@ -65,6 +65,19 @@
           ]
         }
       ]
+    },
+    {
+      "target": "hanko-report",
+      "public": "packages/hanko/hanko-report",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "headers": [
+        {
+          "source": "/trust-report.json",
+          "headers": [
+            { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+          ]
+        }
+      ]
     }
   ]
 }

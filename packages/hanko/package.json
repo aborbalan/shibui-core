@@ -48,6 +48,7 @@
     "test:watch": "vitest",
     "test:browser": "vitest run --config vitest.browser.config.ts",
     "smoke": "tsx src/smoke/run.ts",
+    "report": "tsx src/report/run.ts",
     "prepublishOnly": "pnpm build"
   },
   "devDependencies": {

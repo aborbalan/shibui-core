@@ -77,10 +77,17 @@ function findingsBlock(components: ComponentTrust[]): string {
   return items;
 }
 
-/** Renderiza el Trust Report como documento HTML autónomo con marca de hanko. */
-export function renderTrustReportHtml(report: TrustReport): string {
+/**
+ * Renderiza el Trust Report como documento HTML autónomo con marca de hanko.
+ * `note` (opcional) pinta un banner de cobertura — p.ej. «solo Floor por ahora».
+ */
+export function renderTrustReportHtml(report: TrustReport, note?: string): string {
   const rows = report.components.map(row).join('\n');
   const pct = report.total > 0 ? Math.round((report.trusted / report.total) * 100) : 0;
+  const banner =
+    note !== undefined
+      ? `<p style="margin:0 0 22px;padding:10px 14px;border-radius:8px;border:1px solid #6e5a2e;background:rgba(217,164,65,.08);color:#e8c27a;font-size:.84rem">${esc(note)}</p>`
+      : '';
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -134,7 +141,7 @@ export function renderTrustReportHtml(report: TrustReport): string {
   <p class="kicker">hanko · 判子 · trust report</p>
   <h1>Sello de confianza <span class="stamp">●</span></h1>
   <p class="ts">generado ${esc(report.generatedAt)} · ${report.total} componente(s) · ${pct}% sellados</p>
-
+  ${banner}
   <div class="summary">
     <div class="card tot"><div class="k">Total</div><div class="v">${report.total}</div></div>
     <div class="card ok"><div class="k">Sellados</div><div class="v">${report.trusted}</div></div>
