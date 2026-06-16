@@ -146,6 +146,7 @@
     <span class="chip">Hito 2: <b>F3·F4·F5 en curso</b> · 3 motores (incr. 1) hechos</span>
     <span class="chip">Incr. 2 (harness): <b>falta en #526 / #527</b> · solo en #528, sin validar</span>
     <span class="chip">Hito 3: <b>F6 incr. 1 hecho</b> · agregador + renderers</span>
+    <span class="chip">F7: <b>desacople ejecutable</b> + paquete publicable · publish diferido</span>
     <span class="chip">Actualizado <b>2026-06-16</b></span>
   </div>
 </header>
@@ -313,17 +314,19 @@
     </div>
   </div>
 
-  <div class="phase h3 todo">
+  <div class="phase h3 wip">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F7</span>
         <h4>Desacople + publicación npm</h4>
-        <span class="badge b-todo">pendiente · diferida</span>
+        <span class="badge b-wip">en curso</span>
       </div>
       <p class="body">Garantizar que el <code>core</code> no depende de shibui y publicar
-      <code>@shibui-ui/hanko</code> como paquete independiente. <strong>Diferida</strong> hasta validar el uso local.</p>
-      <p class="deliv"><b>Entregable ▸</b> <span>paquete publicable + verificación de genericidad del core</span></p>
+      <code>@shibui-ui/hanko</code> como paquete independiente.</p>
+      <p class="deliv"><b>✓ Desacople ▸</b> <span>el principio «el core nunca importa shibui» es ahora un <strong>test ejecutable</strong> (<code>src/genericity.test.ts</code>): escanea todos los imports y falla si alguno referencia <code>@shibui-ui/ui</code> o trepa a <code>shibui-ui/</code> (+ se autovalida). La comunicación sigue siendo solo vía el fichero CEM.</span></p>
+      <p class="deliv"><b>✓ Publicable ▸</b> <span>barrel público <code>src/index.ts</code> + <code>tsconfig.build.json</code> (emite <code>dist/</code>) + metadata npm (<code>exports</code>/<code>types</code>/<code>files</code>/<code>publishConfig</code>) · spec <code>packaging.md</code></span></p>
+      <p class="deliv"><b>◐ Diferido ▸</b> <span>el <code>npm publish</code> real (quitar <code>private</code> + versión + credenciales) y elegir bundler para ESM-Node nativo quedan <strong>para cuando el harness esté validado y shibui dogfoodeado</strong>.</span></p>
     </div>
   </div>
 
@@ -332,7 +335,7 @@
 <footer>
   <p>hanko · plan de obra F0–F7 · índice en <span class="gold">docs/phases/README.md</span></p>
   <p>Relacionado: <span class="gold">docs/decisions/adr-001-baseline-minima-viable.md</span> · <span class="gold">docs/specs/</span></p>
-  <p>Estado (2026-06-16): Hito 1 cerrado (F0·F1·F2 en <span class="gold">develop + main</span>). Hito 2: los <span class="gold">tres motores puros (incr. 1)</span> de contrato·a11y·resiliencia hechos, en ramas apiladas <span class="gold">contract → a11y → resilience</span>. <strong>El incremento 2 (harness de runtime) FALTA en los PR de F3 (#526) y F4 (#527)</strong> — se centralizó en #528 (F5) y sigue <span class="gold">sin validar en navegador</span>. <span class="gold">F6 incr. 1</span> (agregador <code>buildTrustReport</code> + renderers JSON/HTML) hecho en <span class="gold">feature/hanko-trust-report</span>; falta su incr. 2 (runner + gate de CI) y F7.</p>
+  <p>Estado (2026-06-16): Hito 1 cerrado (F0·F1·F2 en <span class="gold">develop + main</span>). Hito 2: los <span class="gold">tres motores puros (incr. 1)</span> de contrato·a11y·resiliencia hechos, en ramas apiladas <span class="gold">contract → a11y → resilience</span>. <strong>El incremento 2 (harness de runtime) FALTA en los PR de F3 (#526) y F4 (#527)</strong> — se centralizó en #528 (F5) y sigue <span class="gold">sin validar en navegador</span>. <span class="gold">F6 incr. 1</span> (agregador <code>buildTrustReport</code> + renderers JSON/HTML) hecho en <span class="gold">feature/hanko-trust-report</span>; falta su incr. 2 (runner + gate de CI). <span class="gold">F7</span> desacople (guard de genericidad <strong>ejecutable</strong>) + paquete publicable hechos en <span class="gold">feature/hanko-decouple</span>; el <code>npm publish</code> real queda diferido a tras validar el harness en navegador.</p>
 </footer>
 
 </div>
