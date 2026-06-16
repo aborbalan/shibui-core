@@ -24,11 +24,12 @@ Hogar único de toda la documentación de hanko: specs, decisiones, fases de des
 - 🟡 `specs/checks-resilience.md` — resiliencia universal: props basura/vacías, RTL, SSR (F5, incr. 1).
 - 🟡 `specs/harness.md` — harness de runtime que observa elementos vivos (incr. 2 de F3/F4/F5; escrito, pend. validar).
 - 🟡 `specs/trust-report.md` — Trust Report: agregador del sello (Floor+contrato+a11y+resiliencia) + renderers JSON/HTML (F6, incr. 1).
+- 🟡 `specs/packaging.md` — desacople (guard de genericidad ejecutable) + paquete publicable; npm publish diferido (F7, incr. 1).
 - ✅ `special-cases/manifest-ausente-o-custom.html` — sin manifest / formato custom (decisión **abierta**).
 - ✅ `reference/web-components-vs-lit-y-manifest.html` — fundamentos (WC vs Lit y el manifest).
 - ✅ `reference/runner-y-comunicacion.html` — cómo funciona el runner y cómo se comunican hanko ↔ shibui-ui.
 - ✅ `reference/como-funciona-el-check-de-contrato.html` — el mecanismo del check de contrato de F3.
-- 🟡 `phases/` — índice F0–F7 + tracker visual `development-phases.html` (F6 incr. 1 en curso).
+- 🟡 `phases/` — índice F0–F7 + tracker visual `development-phases.html` (F6 incr. 1 + F7 desacople en curso).
 
 ## Convención
 

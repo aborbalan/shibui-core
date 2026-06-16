@@ -5,12 +5,50 @@
   "type": "module",
   "private": true,
   "license": "MIT",
+  "keywords": [
+    "web-components",
+    "custom-elements",
+    "custom-elements-manifest",
+    "cem",
+    "accessibility",
+    "a11y",
+    "trust",
+    "verification",
+    "design-system"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aborbalan/shibui-core.git",
+    "directory": "packages/hanko"
+  },
+  "bugs": "https://github.com/aborbalan/shibui-core/issues",
+  "homepage": "https://github.com/aborbalan/shibui-core/tree/main/packages/hanko#readme",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:browser": "vitest run --config vitest.browser.config.ts",
-    "smoke": "tsx src/smoke/run.ts"
+    "smoke": "tsx src/smoke/run.ts",
+    "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
