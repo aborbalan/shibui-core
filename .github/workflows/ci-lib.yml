@@ -240,3 +240,46 @@ jobs:
         run: cp .firebaserc .config/.firebaserc
       - name: 🚀 Deploy Storybook
         run: pnpm exec firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Hanko Trust Report — F6 incr. 2 (slice Floor) + deploy.
+  # Genera el Trust Report (JSON + HTML) sobre el CEM de shibui-ui y publica
+  # el HTML en hanko-report.web.app — la última versión sellada en main.
+  #
+  # Cobertura actual: solo el Floor (estático). Contrato/a11y/resiliencia
+  # exigen el harness de navegador (aún sin cablear) → salen como `–` (no
+  # evaluado) por la regla de oro; se rellenan al integrar el harness, sin
+  # tocar este job. Solo main: queremos la foto de lo ejecutado en main.
+  # ─────────────────────────────────────────────────────────────────────────
+  deploy-hanko-report:
+    name: 判 Deploy Hanko Trust Report
+    runs-on: ubuntu-latest
+    needs: build-ui
+    if: |
+      always() &&
+      needs.build-ui.result == 'success' &&
+      inputs.ref == 'refs/heads/main'
+    env:
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 📥 Download UI Library dist (incluye custom-elements.json)
+        uses: actions/download-artifact@v4
+        with:
+          name: ui-dist-${{ github.run_id }}
+          path: packages/shibui-ui/dist/
+      - name: 判 Generar Trust Report (Floor; capas del harness pendientes)
+        run: pnpm --filter @shibui-ui/hanko report
+      - name: 🔧 Copy .firebaserc to config dir
+        run: cp .firebaserc .config/.firebaserc
+      - name: 🚀 Deploy Trust Report → hanko-report.web.app
+        run: pnpm exec firebase deploy --only hosting:hanko-report --non-interactive --project lib-ui-b67c5

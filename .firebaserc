@@ -20,6 +20,9 @@
         ],
         "shibui-api": [
           "shibui-api"
+        ],
+        "hanko-report": [
+          "hanko-report"
         ]
 
       }
