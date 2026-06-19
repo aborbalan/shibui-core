@@ -35,7 +35,7 @@ import { resilienceCheck } from '../checks/resilience';
 import { buildTrustReport, type ComponentChecks } from './trust-report';
 import { renderTrustReportJson, renderTrustReportHtml } from './render';
 import type { CustomElementsManifest } from '../ingest/cem-types';
-import type { ComponentObservation, ObservationsFile } from './observations';
+import type { BrowserDiagnostic, ComponentObservation, ObservationsFile } from './observations';
 
 const cemPath = process.argv[2] ?? '../shibui-ui/dist/custom-elements.json';
 const outDir = process.argv[3] ?? 'hanko-report';
@@ -51,12 +51,21 @@ function loadManifest(p: string): CustomElementsManifest {
   }
 }
 
-/** Observaciones del harness, indexadas por tagName. `undefined` = no hubo sonda. */
-function loadObservations(p: string): Map<string, ComponentObservation> | undefined {
+/** Observaciones del harness ya cargadas: índice por tagName + diagnósticos crudos. */
+interface LoadedObservations {
+  byTag: Map<string, ComponentObservation>;
+  diagnostics: BrowserDiagnostic[];
+}
+
+/** Lee observations.json. `undefined` = no hubo sonda (degradamos a Floor). */
+function loadObservations(p: string): LoadedObservations | undefined {
   if (!existsSync(p)) return undefined;
   try {
     const file = JSON.parse(readFileSync(p, 'utf-8')) as ObservationsFile;
-    return new Map(file.components.map((c): [string, ComponentObservation] => [c.tagName, c]));
+    return {
+      byTag: new Map(file.components.map((c): [string, ComponentObservation] => [c.tagName, c])),
+      diagnostics: file.diagnostics ?? [],
+    };
   } catch (err) {
     // Un observations.json ilegible no debe tumbar el report: degradamos a Floor.
     console.error(`hanko report · observations.json ilegible en "${p}", sigo solo con Floor:`);
@@ -70,7 +79,7 @@ const observations = loadObservations(obsPath);
 
 const components: ComponentChecks[] = [...set.components.values()].map((c) => {
   const checks: ComponentChecks = { tagName: c.tagName, source: c.source, floor: floorCheck(c) };
-  const obs = observations?.get(c.tagName);
+  const obs = observations?.byTag.get(c.tagName);
   if (obs !== undefined) {
     // Checks puros sobre las observaciones del navegador. La regla de oro vive
     // dentro de cada check: faceta no observada → skipped, no fallo.
@@ -90,10 +99,26 @@ const note = fullCoverage
     'sin evaluar (–) hasta cablear el harness de navegador en CI.';
 
 mkdirSync(outDir, { recursive: true });
+// Report LIMPIO (el que se despliega a hanko-report.web.app): solo veredictos.
 writeFileSync(join(outDir, 'index.html'), renderTrustReportHtml(report, note), 'utf-8');
 writeFileSync(join(outDir, 'trust-report.json'), renderTrustReportJson(report), 'utf-8');
+
+// Report-FULL: el mismo report + los errores crudos del navegador capturados por
+// la sonda (depuración/calibración). Solo cuando hubo sonda (hay diagnósticos).
+if (observations !== undefined) {
+  writeFileSync(
+    join(outDir, 'report-full.html'),
+    renderTrustReportHtml(report, note, observations.diagnostics),
+    'utf-8',
+  );
+}
 
 const cobertura = fullCoverage ? '4 capas' : 'Floor';
 console.log(
   `hanko report · ${report.total} componentes · ${report.trusted} sellados (${cobertura}) → ${outDir}/index.html`,
 );
+if (observations !== undefined) {
+  console.log(
+    `hanko report · + ${observations.diagnostics.length} diagnósticos de navegador → ${outDir}/report-full.html`,
+  );
+}

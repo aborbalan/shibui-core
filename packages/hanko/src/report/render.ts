@@ -12,6 +12,7 @@
    ============================================================ */
 import type { ContractSource } from '../core/contract';
 import type { ComponentTrust, LayerStatus, LayerVerdict, TrustLayer, TrustReport } from './trust-report';
+import type { BrowserDiagnostic } from './observations';
 
 /** Serializa el reporte a JSON indentado (formato de cable para CI/badges). */
 export function renderTrustReportJson(report: TrustReport): string {
@@ -77,16 +78,53 @@ function findingsBlock(components: ComponentTrust[]): string {
   return items;
 }
 
+/** Sección con los errores crudos del navegador (depuración/calibración). */
+function diagnosticsBlock(diagnostics: BrowserDiagnostic[]): string {
+  if (diagnostics.length === 0) {
+    return '<p class="empty">Sin errores de navegador capturados durante la sonda. ✓</p>';
+  }
+  const rows = diagnostics
+    .map(
+      (d) => `<tr>
+        <td class="dk">${esc(d.kind)}</td>
+        <td class="dm"><code>${esc(d.message)}</code></td>
+        <td class="dc">×${d.count}</td>
+      </tr>`,
+    )
+    .join('\n');
+  return `<table class="diag">
+      <thead><tr><th>Origen</th><th>Mensaje</th><th>Veces</th></tr></thead>
+      <tbody>
+${rows}
+      </tbody>
+    </table>`;
+}
+
 /**
  * Renderiza el Trust Report como documento HTML autónomo con marca de hanko.
  * `note` (opcional) pinta un banner de cobertura — p.ej. «solo Floor por ahora».
+ * `diagnostics` (opcional) añade abajo una sección con los errores crudos del
+ * navegador capturados por la sonda: la diferencia entre el report limpio que
+ * ya teníamos y el «report-full». Omitirlo → report limpio.
  */
-export function renderTrustReportHtml(report: TrustReport, note?: string): string {
+export function renderTrustReportHtml(
+  report: TrustReport,
+  note?: string,
+  diagnostics?: BrowserDiagnostic[],
+): string {
   const rows = report.components.map(row).join('\n');
   const pct = report.total > 0 ? Math.round((report.trusted / report.total) * 100) : 0;
   const banner =
     note !== undefined
       ? `<p style="margin:0 0 22px;padding:10px 14px;border-radius:8px;border:1px solid #6e5a2e;background:rgba(217,164,65,.08);color:#e8c27a;font-size:.84rem">${esc(note)}</p>`
+      : '';
+  const diagSection =
+    diagnostics !== undefined
+      ? `<h2>Diagnóstico del navegador <span class="muted">(${diagnostics.length})</span></h2>
+  <p class="dhint">Errores crudos capturados al montar los componentes en chromium durante la sonda.
+  <strong>No son veredictos del sello</strong>: por el render async de Lit, el harness todavía no los
+  atribuye a su escenario (regla de oro). Son señal de calibración.</p>
+  ${diagnosticsBlock(diagnostics)}`
       : '';
   return `<!DOCTYPE html>
 <html lang="es">
@@ -133,6 +171,11 @@ export function renderTrustReportHtml(report: TrustReport, note?: string): strin
   details.fnd ul{margin:10px 0 2px;padding-left:18px;color:var(--ink-soft);font-size:.84rem}
   details.fnd li{margin:3px 0;font-family:var(--mono)}
   .empty{color:var(--celadon);font-size:.9rem}
+  .muted{color:var(--ink-faint);font-weight:400;font-size:.92rem}
+  .dhint{color:var(--ink-soft);font-size:.84rem;margin:0 0 14px;max-width:80ch}
+  table.diag td.dk{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);white-space:nowrap;vertical-align:top}
+  table.diag td.dm code{font-family:var(--mono);font-size:.78rem;color:var(--shuniku)}
+  table.diag td.dc{font-family:var(--mono);font-size:.74rem;color:var(--ink-faint);text-align:right;white-space:nowrap;vertical-align:top}
   footer{margin-top:54px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:.78rem;font-family:var(--mono)}
 </style>
 </head>
@@ -163,6 +206,8 @@ ${rows}
 
   <h2>Hallazgos</h2>
   ${findingsBlock(report.components)}
+
+  ${diagSection}
 
   <footer>
     hanko · ✓ pasa · ✗ falla · – no evaluado (regla de oro: ausencia ≠ incumplimiento) ·

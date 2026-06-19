@@ -34,7 +34,11 @@ import { build } from 'esbuild';
 import { chromium } from 'playwright';
 import { ingestCem } from '../src/ingest/cem';
 import type { CustomElementsManifest } from '../src/ingest/cem-types';
-import type { ComponentObservation, ObservationsFile } from '../src/report/observations';
+import type {
+  BrowserDiagnostic,
+  ComponentObservation,
+  ObservationsFile,
+} from '../src/report/observations';
 
 const HERE = dirname(fileURLToPath(import.meta.url)); // packages/hanko/dogfood
 const PKG = resolve(HERE, '..'); //                     packages/hanko
@@ -78,11 +82,24 @@ async function main(): Promise<void> {
   // 3 · Navegador: inyecta el glue y sondea cada tag.
   const browser = await chromium.launch();
   const observations: ComponentObservation[] = [];
+  // Errores crudos del navegador, deduplicados por mensaje (muchos componentes
+  // lanzan el mismo). Se vuelcan a observations.json para el report-full.
+  const diagCounts = new Map<string, BrowserDiagnostic>();
+  const recordDiag = (kind: string, message: string): void => {
+    const key = `${kind}::${message}`;
+    const hit = diagCounts.get(key);
+    if (hit) hit.count++;
+    else diagCounts.set(key, { kind, message, count: 1 });
+  };
   try {
     const page = await browser.newPage();
-    page.on('pageerror', (e) => console.error('  ⚠ page error:', e.message));
+    page.on('pageerror', (e) => {
+      recordDiag('pageerror', e.message);
+      console.error('  ⚠ page error:', e.message);
+    });
     page.on('console', (m) => {
       if (m.type() === 'error' || m.type() === 'warning') {
+        recordDiag(`console.${m.type()}`, m.text());
         console.error(`  ⚠ console.${m.type()}: ${m.text()}`);
       }
     });
@@ -110,20 +127,26 @@ async function main(): Promise<void> {
       )) as ComponentObservation;
       observations.push(obs);
     }
+    // Deja aflorar los errores async de Lit (renderan en microtask) antes de cerrar.
+    await new Promise((r) => setTimeout(r, 200));
   } finally {
     await browser.close();
   }
 
   // 4 · Escribe observations.json junto al resto de artefactos del report.
+  const diagnostics = [...diagCounts.values()].sort((a, b) => b.count - a.count);
   const file: ObservationsFile = {
     generatedAt: new Date().toISOString(),
     via: 'playwright-chromium',
     components: observations,
+    diagnostics,
   };
   mkdirSync(outDir, { recursive: true });
   const outPath = join(outDir, 'observations.json');
   writeFileSync(outPath, JSON.stringify(file, null, 2), 'utf-8');
-  console.log(`hanko observe · ${observations.length} componentes sondeados → ${outPath}`);
+  console.log(
+    `hanko observe · ${observations.length} componentes · ${diagnostics.length} diagnósticos → ${outPath}`,
+  );
 }
 
 main().catch((err) => {
