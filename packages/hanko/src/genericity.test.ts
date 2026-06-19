@@ -12,9 +12,12 @@ import { fileURLToPath } from 'node:url';
    no import de código), así que ningún import debe referenciar la
    librería UI ni trepar a su carpeta.
 
-   Recorre todo src/ y falla listando los infractores. Incluye los
-   tests a propósito: ni siquiera el dogfood importa shibui (lee su
-   CEM como fichero). Ver docs/specs/packaging.md.
+   Recorre todo src/ (incluidos sus tests) y falla listando los
+   infractores. El guard cubre SOLO src/ —el core publicable—, así
+   que el único acople con shibui permitido vive FUERA: la sonda de
+   dogfood `dogfood/probe-shibui.ts` sí carga el dist de shibui para
+   montar los componentes reales, pero no entra en `src/` ni en el
+   paquete. Ver docs/specs/packaging.md · docs/specs/harness.md.
    ============================================================ */
 
 const SRC = dirname(fileURLToPath(import.meta.url));

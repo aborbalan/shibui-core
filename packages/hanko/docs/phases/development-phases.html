@@ -144,10 +144,10 @@
     <span class="chip">F0·F1·F2 <b>en develop + main</b> (PR #502 → #510)</span>
     <span class="chip">Sello a escala: <b>102 / 102</b> pasan el Floor</span>
     <span class="chip">Hito 2: <b>F3·F4·F5 en curso</b> · 3 motores (incr. 1) hechos</span>
-    <span class="chip">Incr. 2 (harness): <b>falta en #526 / #527</b> · solo en #528, sin validar</span>
-    <span class="chip">Hito 3: <b>F6 incr. 1 hecho</b> · agregador + renderers</span>
+    <span class="chip">Incr. 2 (harness): <b>cableado al report (2 etapas)</b> · pendiente validar en navegador</span>
+    <span class="chip">Hito 3: <b>F6 incr. 2 — 4 capas</b> · sonda de navegador → report</span>
     <span class="chip">F7: <b>desacople ejecutable</b> + paquete publicable · publish diferido</span>
-    <span class="chip">Actualizado <b>2026-06-16</b></span>
+    <span class="chip">Actualizado <b>2026-06-19</b></span>
   </div>
 </header>
 
@@ -237,11 +237,13 @@
   </div>
 
   <div class="firstbatch" style="border-color:var(--shuniku);background:rgba(197,64,47,.06)">
-    <span class="tag" style="color:var(--shuniku)">Acta · incremento 2 pendiente</span>
+    <span class="tag" style="color:var(--shuniku)">Acta · incremento 2 — cableado, falta validar</span>
     <p>Cada fase = <strong>incr. 1 (motor puro, node)</strong> + <strong>incr. 2 (harness de navegador)</strong>. Los
-    tres motores (incr. 1) están hechos, pero <strong>el incremento 2 falta en los PR de F3 (#526) y F4 (#527)</strong>:
-    el harness se implementó <strong>una sola vez, centralizado en #528 (F5)</strong> — no está en sus ramas. Y
-    <strong>ningún incremento 2 se ha validado en navegador todavía</strong> (worktree sin <code>node_modules</code>).</p>
+    tres motores (incr. 1) están hechos; el harness se implementó <strong>una sola vez, centralizado en #528 (F5)</strong>.
+    <strong>Ya está cableado al Trust Report</strong> mediante el puente en dos etapas de F6 (sonda <code>dogfood/</code> →
+    <code>observations.json</code> → runner). Lo que <strong>queda pendiente es validarlo en un navegador real</strong>
+    (<code>test:browser</code> + dogfood sobre shibui) y calibrar las heurísticas v0 contra Lit — el worktree no puede
+    (<code>node_modules</code>); lo corre el usuario desde el repo principal.</p>
   </div>
 
   <div class="phase h2 wip">
@@ -310,7 +312,7 @@
       <p class="body">Reporte de confianza (<strong>JSON + HTML</strong>) que declara <em>procedencia</em> y
       <em>cobertura</em> del sello. Gates que fallan el build cuando un componente no cumple su nivel exigido.</p>
       <p class="deliv"><b>✓ Incr. 1 ▸</b> <span>agregador puro <code>buildTrustReport()</code> —compone Floor + contrato + a11y + resiliencia por componente, con procedencia y regla de oro (capa no evaluada → <em>skipped</em>, no descalifica)— + renderers <code>renderTrustReport{Json,Html}</code> (HTML con marca washi) · spec <code>trust-report.md</code> + tests node. Rama <code>feature/hanko-trust-report</code>.</span></p>
-      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span><strong>runner + deploy hechos (slice Floor)</strong>: <code>src/report/run.ts</code> genera el report sobre el CEM y CI lo publica en <strong><code>hanko-report.web.app</code></strong> en cada main. Contrato/a11y/resiliencia salen <code>–</code> (no evaluado) hasta cablear el harness de navegador; el <strong>gate duro</strong> (fallar el build) sigue pendiente.</span></p>
+      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span><strong>puente en dos etapas cableado</strong>: la sonda <code>dogfood/probe-shibui.ts</code> (Etapa 1) corre el harness sobre los componentes vivos de shibui en chromium → <code>observations.json</code>; el runner <code>src/report/run.ts</code> (Etapa 2) lee esas observaciones + Floor estático y corre los checks puros → <strong>las 4 capas</strong>. CI (<code>observe</code> → <code>report</code>) publica en <strong><code>hanko-report.web.app</code></strong> en cada main. La sonda vive <strong>fuera de <code>src/</code></strong> (único punto que carga shibui; el guard de genericidad sigue verde). <strong>Pendiente:</strong> validar el harness en navegador (calibrar Lit) y el <strong>gate duro</strong> (fallar el build).</span></p>
     </div>
   </div>
 
@@ -335,7 +337,7 @@
 <footer>
   <p>hanko · plan de obra F0–F7 · índice en <span class="gold">docs/phases/README.md</span></p>
   <p>Relacionado: <span class="gold">docs/decisions/adr-001-baseline-minima-viable.md</span> · <span class="gold">docs/specs/</span></p>
-  <p>Estado (2026-06-16): Hito 1 cerrado (F0·F1·F2 en <span class="gold">develop + main</span>). Hito 2: los <span class="gold">tres motores puros (incr. 1)</span> de contrato·a11y·resiliencia hechos, en ramas apiladas <span class="gold">contract → a11y → resilience</span>. <strong>El incremento 2 (harness de runtime) FALTA en los PR de F3 (#526) y F4 (#527)</strong> — se centralizó en #528 (F5) y sigue <span class="gold">sin validar en navegador</span>. <span class="gold">F6 incr. 1</span> (agregador <code>buildTrustReport</code> + renderers JSON/HTML) hecho en <span class="gold">feature/hanko-trust-report</span>; su incr. 2 ya tiene <span class="gold">runner + deploy</span> (slice Floor → <span class="gold">hanko-report.web.app</span> en main), falta cablear las capas del harness y el gate duro. <span class="gold">F7</span> desacople (guard de genericidad <strong>ejecutable</strong>) + paquete publicable hechos en <span class="gold">feature/hanko-decouple</span>; el <code>npm publish</code> real queda diferido a tras validar el harness en navegador.</p>
+  <p>Estado (2026-06-19): Hito 1 cerrado (F0·F1·F2 en <span class="gold">develop + main</span>). Hito 2: los <span class="gold">tres motores puros (incr. 1)</span> de contrato·a11y·resiliencia hechos, en ramas apiladas <span class="gold">contract → a11y → resilience</span>. El incremento 2 (harness de runtime) se centralizó en #528 (F5) y <strong>ya está cableado al Trust Report</strong> vía el puente en dos etapas de F6; queda <span class="gold">validarlo en navegador</span> (Paso 0, repo principal) y calibrar las heurísticas contra Lit. <span class="gold">F6 incr. 1</span> (agregador <code>buildTrustReport</code> + renderers) hecho en <span class="gold">feature/hanko-trust-report</span>; <span class="gold">incr. 2</span> ya rellena <strong>las 4 capas</strong>: sonda <code>dogfood/</code> (Etapa 1, chromium) → <code>observations.json</code> → runner (Etapa 2) → deploy a <span class="gold">hanko-report.web.app</span> en main, sobre <span class="gold">feature/hanko-report-deploy</span>. Falta el <span class="gold">gate duro</span> (fallar el build). <span class="gold">F7</span> desacople (guard de genericidad <strong>ejecutable</strong>) + paquete publicable hechos en <span class="gold">feature/hanko-decouple</span>; el <code>npm publish</code> real queda diferido a tras validar el harness en navegador.</p>
 </footer>
 
 </div>
