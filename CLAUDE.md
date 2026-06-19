@@ -5,6 +5,17 @@
 
 ---
 
+## CodeGraph — cargar al arrancar
+
+Las tools `codegraph_*` llegan **deferred** (no cargadas al inicio de sesión).
+Antes de cualquier trabajo **estructural** (buscar símbolos, callers/impact,
+entender un módulo), cargarlas con `ToolSearch` query `"codegraph"` y preferirlas
+a `Grep`/`Read` para preguntas estructurales (qué llama a qué, qué rompe, dónde
+se define, firma). Ver la sección CodeGraph del `CLAUDE.md` global para el detalle
+de cuándo usar cada tool.
+
+---
+
 ## Monorepo
 
 Gestionado con **pnpm workspaces** (pnpm@9.15.0, Node >=20).
