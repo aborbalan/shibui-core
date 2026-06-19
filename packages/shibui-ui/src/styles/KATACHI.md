@@ -270,8 +270,9 @@ Los 6 katachis definitivos (shizen, celadon, sabi, kintsugi, wabi, terminal) y s
 - `lib-header`: eliminadas variantes `kintsugi` y `glitch`
 - `lib-sidebar`: eliminadas variantes `kintsugi` y `glitch`
 
-**Snapshot de legado** (`_katachi-legacy/`): copia de los 7 componentes pre-migración
-como referencia, excluida del build.
+**Snapshot de legado**: existió una copia de los 7 componentes pre-migración en
+`_katachi-legacy/` como fallback ante regresiones visuales. Eliminada (ya consolidada
+la migración); recuperable desde el historial de git si hiciera falta.
 
 **Fixes de herencia Shadow DOM** (PR #423 — en `develop`):
 - Corregido bug de doble opacidad en scanlines terminal

@@ -4,7 +4,7 @@
 
 Shibui (渋い) es una librería de **Web Components agnóstica** construida con Lit y TypeScript estricto, publicada como paquete npm.
 
-Estado actual: **77 componentes** (43 átomos + 18 moléculas + 16 organismos) con **sistema Katachi (形)** completo — 6 contextos estéticos (`wabi`, `kintsugi`, `sabi`, `terminal`, `shizen`, `celadon`) que reescriben tokens semánticos en cascada vía atributo `data-katachi`.
+Estado actual: **99 componentes** (47 átomos + 20 moléculas + 32 organismos) con **sistema Katachi (形)** completo — 6 contextos estéticos (`wabi`, `kintsugi`, `sabi`, `terminal`, `shizen`, `celadon`) que reescriben tokens semánticos en cascada vía atributo `data-katachi`.
 
 El design system se basa en **CSS custom properties (tokens)** organizados en capas: primitivos → compuestos → semánticos → Katachi (overrides contextuales). Incluye efectos visuales opcionales: glassmorphism ("Efecto Agua") y spotlight reactivo al cursor ("Kintsugi Digital").
 
@@ -35,14 +35,20 @@ packages/shibui-ui/
     lighthouserc.cjs
   .storybook/             → Configuración visual de Storybook
   .lighthouseci/          → Configuración de Lighthouse CI
-  models/                 → Única fuente de verdad para tipos compartidos
+  models/                 → Tipos COMPARTIDOS entre componentes (ojo: en raíz del paquete, NO src/models)
     ui/                   → Tokens de interfaz (LibVariant, LibSize...)
     storybook/            → Interfaces auxiliares para stories
+    (se importan con ruta relativa desde src, p.ej. `../../../../models/ui/...`)
+  architecture/           → Modelos base de componentes (lib-list.model.ts)
+  docs/                   → Documentación extendida (componentes, core, tokens, props)
+  scripts/                → Scripts del paquete
+  tests/                  → Suite Playwright (E2E + visual regression)
+  _katachi-legacy/        → ⚠️ Código legacy NO referenciado por src — no usar como ejemplo
   src/
     components/
-      atoms/              → 43 átomos (lib-button, lib-icon, lib-canvas, lib-label, lib-badge, lib-avatar…)
-      molecules/          → 18 moléculas (lib-input, lib-select, lib-tabs, lib-modal, lib-alert…)
-      organisms/          → 16 organismos (lib-accordion, lib-carousel, lib-data-table, lib-sidebar…)
+      atoms/              → 47 átomos (lib-button, lib-icon, lib-canvas, lib-label, lib-badge, lib-avatar…)
+      molecules/          → 20 moléculas (lib-input, lib-select, lib-tabs, lib-modal, lib-alert…)
+      organisms/          → 32 organismos (lib-accordion, lib-carousel, lib-data-table, lib-sidebar…)
     styles/
       shared/
         tokens.css        → Entry point legacy de tokens (--lib-*)
@@ -79,16 +85,21 @@ pnpm lint            # ESLint
 
 ## Estructura de cada componente
 
-Cada componente sigue **obligatoriamente** esta estructura de 5 ficheros:
+Cada componente vive en su carpeta `lib-[nombre]/` (salvo dos legacy, `lib-counter` y
+`lib-alert`, la carpeta usa nombre desnudo: `button/`, `input/`…) con estos ficheros:
 
 ```
-lib-[nombre]/
-  index.ts                   → Re-exportaciones (barrel export)
-  lib-[nombre].component.ts  → LitElement, @customElement, @property, render()
+[nombre]/
+  lib-[nombre].component.ts  → LitElement, @customElement, @property, render()  (SIEMPRE)
   lib-[nombre].html.ts       → Template function separada (TemplateResult)
   lib-[nombre].css           → Estilos scoped con @layer
   lib-[nombre].stories.ts    → Historia de Storybook
+  lib-[nombre].types.ts      → Tipos LOCALES del componente (solo si los tiene; ~60% los tiene)
 ```
+
+> NO hay `index.ts` por componente — el barrel es a nivel de capa
+> (`src/components/{atoms,molecules,organisms}/index.ts`). Los tipos compartidos
+> entre varios componentes van en `models/` (raíz del paquete), no en el `.types.ts` local.
 
 Los tokens compartidos se importan como:
 ```typescript
@@ -105,11 +116,12 @@ static override styles = [
 
 ### Registro del componente (obligatorio)
 
-Al crear un componente nuevo, añadirlo al barrel principal del paquete:
+Al crear un componente nuevo, añadirlo al barrel de su **capa** (no al `src/index.ts`,
+que solo re-exporta las capas enteras):
 
 ```typescript
-// packages/shibui-ui/src/index.ts
-export * from './components/[atoms|molecules|organisms]/lib-[nombre]/index';
+// src/components/[atoms|molecules|organisms]/index.ts
+export * from './[nombre]/lib-[nombre].component';
 ```
 
 ---
@@ -118,7 +130,7 @@ export * from './components/[atoms|molecules|organisms]/lib-[nombre]/index';
 
 **Estructura:**
 - Los templates van en ficheros `.html.ts` separados, nunca inline en el componente
-- Los tipos e interfaces se importan siempre desde `src/models/`, nunca se definen inline
+- Los tipos COMPARTIDOS entre componentes se importan desde `models/` (raíz del paquete, vía ruta relativa `../../../../models/...`). Los tipos LOCALES de un componente van en su `lib-[nombre].types.ts`. Nunca se definen inline en el `.component.ts`
 
 **TypeScript:**
 - Retornos explícitos obligatorios en todos los métodos (`: TemplateResult`, `: void`)
@@ -365,7 +377,7 @@ Usar siempre tokens en lugar de valores px:
 - Asignar el `title` correcto según la plataforma: `Universal/<Cat>/<Nombre>`, `Web/Motion/<Nombre>` o `Desktop/<Cat>/<Nombre>`
 - El katachi `renderContent` debe mostrar el espectro completo del componente (todos los variants + tamaños + estados), no una instancia mínima
 - Los efectos glass y spotlight son opcionales — no añadirlos salvo que se pida explícitamente
-- Los tipos siempre desde `src/models/`, nunca inline
+- Tipos compartidos desde `models/` (raíz del paquete); tipos locales en el `.types.ts` del componente; nunca inline en el `.component.ts`
 - **Katachi-aware**: si un componente nuevo es `semantic`, consumir tokens semánticos (`--bg-elevated`, `--text-primary`…) en vez de la paleta primitiva. Los efectos de katachi se activan automáticamente via `--lib-effect-*` — no hace falta leer `--katachi-id`
 - **Sin variantes palette-named**: los componentes no tienen `variant="kintsugi"`, `variant="glitch"`, `color="celadon"`, `color="kaki"`, etc. Solo roles semánticos (`default`, `inverse`, `accent`, `info`, `neutral`, `filled`, `strong`…). Mapa de equivalencias: `kaki`→`accent`, `celadon`→`info`, `washi`→`neutral`, `ink`→`filled`, `dark`→`strong`. Si te piden añadir una variante con nombre de paleta o katachi, proponer el equivalente semántico. **Excepciones intocables**: CSS custom properties `--color-kaki-*`/`--color-celadon-*`, selectores `[data-katachi="*"]`, variantes art-direction en header/footer (`celadon`/`sabi`/`shizen`), texturas de `lib-background`
 - **Efectos katachi en componentes nuevos**: declarar los pseudo-elementos siempre, controlados por `--lib-effect-*` (ver patrón en `lib-card.css`, `lib-badge.css`, `lib-chip.css`). No activar efectos por ID de katachi. Para SVG internos usar `stroke="currentColor"` — nunca colores hardcodeados. Para gradientes con opacidad, usar `color-mix(in oklch, var(--_prop-interna), transparent N%)` en lugar de oklch con alpha hardcodeado

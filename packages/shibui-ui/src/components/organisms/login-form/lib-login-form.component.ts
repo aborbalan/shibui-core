@@ -6,7 +6,7 @@ import { loginFormTemplate } from './lib-login-form.html';
 import type { LoginSubmitDetail } from './lib-login-form.types';
 import type { LibInputEventDetail } from '../../molecules/input/lib-input.component';
 import '../../molecules/input/lib-input.component';
-import '../../molecules/lib-alert/lib-alert.component';
+import '../../molecules/alert/lib-alert.component';
 import '../../atoms/button/lib-button.component';
 
 /**
