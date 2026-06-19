@@ -48,7 +48,9 @@
     "test:watch": "vitest",
     "test:browser": "vitest run --config vitest.browser.config.ts",
     "smoke": "tsx src/smoke/run.ts",
+    "observe": "tsx dogfood/probe-shibui.ts",
     "report": "tsx src/report/run.ts",
+    "report:full": "pnpm run observe && pnpm run report",
     "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
@@ -56,6 +58,7 @@
     "@vitest/browser": "4.1.6",
     "@vitest/browser-playwright": "4.1.4",
     "axe-core": "^4.10.0",
+    "esbuild": "^0.25.0",
     "playwright": "^1.55.1",
     "tsx": "^4.19.2",
     "typescript": "^5.9.3",

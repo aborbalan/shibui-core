@@ -12,9 +12,12 @@ import { fileURLToPath } from 'node:url';
    no import de código), así que ningún import debe referenciar la
    librería UI ni trepar a su carpeta.
 
-   Recorre todo src/ y falla listando los infractores. Incluye los
-   tests a propósito: ni siquiera el dogfood importa shibui (lee su
-   CEM como fichero). Ver docs/specs/packaging.md.
+   Recorre todo src/ (incluidos sus tests) y falla listando los
+   infractores. El guard cubre SOLO src/ —el core publicable—, así
+   que el único acople con shibui permitido vive FUERA: la sonda de
+   dogfood `dogfood/probe-shibui.ts` sí carga el dist de shibui para
+   montar los componentes reales, pero no entra en `src/` ni en el
+   paquete. Ver docs/specs/packaging.md · docs/specs/harness.md.
    ============================================================ */
 
 const SRC = dirname(fileURLToPath(import.meta.url));
@@ -60,7 +63,12 @@ describe('genericidad del core (F7 · desacople)', () => {
   });
 
   it('el guard detecta un import prohibido (autovalidación del patrón)', () => {
-    const fixture = `import { Button } from '@shibui-ui/ui';\nimport x from './local';`;
-    expect(importsOf(fixture).filter((s) => FORBIDDEN.test(s))).toEqual(['@shibui-ui/ui']);
+    // El especificador prohibido se compone en runtime: así el TEXTO de este
+    // fichero no contiene un `from '@shibui-ui/ui'` literal que el primer test
+    // —que escanea src/ como texto, este incluido— marcaría como falso infractor
+    // de sí mismo. En runtime, `fixture` sí es un import prohibido completo.
+    const forbidden = '@shibui-ui/ui';
+    const fixture = `import { Button } from '${forbidden}';\nimport x from './local';`;
+    expect(importsOf(fixture).filter((s) => FORBIDDEN.test(s))).toEqual([forbidden]);
   });
 });

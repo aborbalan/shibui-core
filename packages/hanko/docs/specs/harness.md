@@ -1,7 +1,8 @@
 # Spec · Harness de runtime (incremento 2 de F3/F4/F5)
 
-> **Estado:** v0 — implementado en `src/harness/probe.ts`. **Escrito, pendiente de validar en navegador**
-> (el worktree no tiene `node_modules`; se valida desde el repo principal).
+> **Estado:** v0 — implementado en `src/harness/probe.ts` y **cableado al Trust Report** vía la sonda
+> `dogfood/probe-shibui.ts` (Etapa 1 del puente de F6). **Pendiente de validar en navegador** (el worktree no
+> tiene `node_modules`; se valida desde el repo principal — Paso 0).
 > **Fase:** incremento 2 común a F3 (contrato), F4 (a11y) y F5 (resiliencia).
 
 ---
@@ -51,31 +52,34 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
 - **interactividad / nombre accesible**: heurísticas (tabindex/role/shadow, aria-label/texto) → calibrar contra
   shibui real.
 - **focusVisible**: requiere foco/render real; v0 lo deja sin observar (el check lo omite, no falla).
+- **render asíncrono de Lit**: los componentes de shibui (LitElement) construyen su shadow DOM en una *microtask*
+  tras montar, no de forma síncrona. `observeRuntime` lee de forma síncrona, así que en v0:
+  - los **slots** de un componente Lit suelen quedar **sin observar** (`shadowRoot` aún null) → el check los
+    **omite** (`skipped`), no genera un falso fallo (regla de oro);
+  - el **reflect** puede quedar corto (Lit refleja en el ciclo de update). Afinarlo = hacer `observeRuntime`
+    consciente de `updateComplete`; es trabajo de calibración del Paso 0, no de esta v0.
 
-## Dogfood sobre shibui-ui (paso de validación)
+## Dogfood sobre shibui-ui — `dogfood/` (Etapa 1 del puente de F6)
 
-No se commitea acoplado (importar el CEM construido rompería `type-check` si no hay build, y acoplaría hanko a
-shibui). Para correrlo en validación, añadir `@shibui-ui/ui` como devDep y un `src/harness/dogfood.browser.test.ts`:
+El dogfood **no vive en `src/`**: el guard `src/genericity.test.ts` prohíbe que el core importe shibui, y para
+montar los componentes reales hay que cargar su código. Por eso el único punto de acople vive **fuera de `src/`**,
+en `dogfood/` — tooling, no publicable (no entra en `files`).
 
-```ts
-import * as axe from 'axe-core';
-import '@shibui-ui/ui';                                   // registra los custom elements
-import cem from '../../../shibui-ui/dist/custom-elements.json';
-import { ingestCem } from '../ingest';
-import { observeRuntime, observeA11y, observeResilience } from './probe';
-import { contractCheck } from '../checks/contract';
-import { a11yCheck } from '../checks/a11y';
-import { resilienceCheck } from '../checks/resilience';
+| Fichero | Rol |
+|---|---|
+| `dogfood/browser-glue.ts` | corre EN el navegador: `import '../../shibui-ui/dist/index.js'` (side-effect: registra los CE) + harness + axe → expone `window.__hankoProbe` |
+| `dogfood/probe-shibui.ts` | orquesta EN node: lee el CEM → tags; **esbuild** bundlea el glue a un IIFE inline; **Playwright/chromium** lo inyecta y sondea cada tag; escribe `hanko-report/observations.json` |
 
-const set = ingestCem(cem as never);
-it.each([...set.components.keys()])('hanko · %s', async (tag) => {
-  const c = set.components.get(tag)!;
-  const contract = contractCheck(c, observeRuntime(tag));
-  const a11y = a11yCheck(await observeA11y(tag, (el) => axe.run(el)));
-  const resilience = resilienceCheck(observeResilience(tag));
-  // report-only hasta calibrar; luego: expect(contract.pass).toBe(true), etc.
-});
+```bash
+pnpm --filter @shibui-ui/hanko exec playwright install chromium   # una vez
+pnpm --filter @shibui-ui/hanko observe                            # Etapa 1 → observations.json
+pnpm --filter @shibui-ui/hanko report                            # Etapa 2 → report con 4 capas
+# o, encadenado:  pnpm --filter @shibui-ui/hanko report:full
 ```
 
-Requiere build previo de shibui (`pnpm build:shibui`). Este es el paso que cierra los incrementos 2 y alimenta
-el **Trust Report** de F6.
+Requiere el build de shibui (`pnpm build:shibui`) para tener su `dist/` + CEM. El runner consume las
+observaciones y corre los checks puros (contrato/a11y/resiliencia) → **Trust Report de 4 capas** (F6). Si la sonda
+falla, el runner degrada a Floor (las otras capas → `–`), sin romper el deploy.
+
+> El bundle inline (esbuild → IIFE) evita resolver módulos/chunks por `file://` (CORS de `about:blank`): todo
+> —shibui, harness, axe— viaja en un solo script que `addScriptTag({ content })` inyecta.

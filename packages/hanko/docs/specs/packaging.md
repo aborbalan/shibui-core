@@ -21,6 +21,12 @@ El principio *"el `core` NUNCA importa de `@shibui-ui/ui`"* deja de ser aspiraci
 (`readFileSync('../shibui-ui/dist/custom-elements.json')`), nunca `import` de código. Por eso el guard
 mira imports, no cadenas: el canal CEM queda permitido, el acoplamiento por código prohibido.
 
+> **Excepción deliberada — el dogfood.** Para correr el harness sobre los componentes **vivos** de shibui hay
+> que cargar su código (el CEM es metadatos, no instancia nada). Ese único acople vive **fuera de `src/`**, en
+> [`dogfood/probe-shibui.ts`](../../dogfood/probe-shibui.ts) (Etapa 1 del Trust Report): el guard cubre solo
+> `src/` —el core publicable—, así que el `core` sigue genérico mientras el *tooling* de dogfood —no incluido en
+> `files`, no publicable— sí importa shibui. Ver [`harness.md`](harness.md).
+
 ## 2 · Paquete publicable
 
 | Pieza | Qué |
