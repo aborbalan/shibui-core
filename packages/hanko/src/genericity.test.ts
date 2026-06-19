@@ -63,7 +63,12 @@ describe('genericidad del core (F7 · desacople)', () => {
   });
 
   it('el guard detecta un import prohibido (autovalidación del patrón)', () => {
-    const fixture = `import { Button } from '@shibui-ui/ui';\nimport x from './local';`;
-    expect(importsOf(fixture).filter((s) => FORBIDDEN.test(s))).toEqual(['@shibui-ui/ui']);
+    // El especificador prohibido se compone en runtime: así el TEXTO de este
+    // fichero no contiene un `from '@shibui-ui/ui'` literal que el primer test
+    // —que escanea src/ como texto, este incluido— marcaría como falso infractor
+    // de sí mismo. En runtime, `fixture` sí es un import prohibido completo.
+    const forbidden = '@shibui-ui/ui';
+    const fixture = `import { Button } from '${forbidden}';\nimport x from './local';`;
+    expect(importsOf(fixture).filter((s) => FORBIDDEN.test(s))).toEqual([forbidden]);
   });
 });
