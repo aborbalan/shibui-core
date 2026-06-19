@@ -57,6 +57,11 @@ async function main(): Promise<void> {
     bundle: true,
     format: 'iife',
     platform: 'browser',
+    // Sin tree-shaking: el import de shibui es side-effect puro (registra los
+    // custom elements vía @customElement). Si se poda, nada queda registrado y
+    // todo el contrato sale "no registrado". El bundle es desechable: no importa
+    // que quede más grande.
+    treeShaking: false,
     write: false,
     logLevel: 'silent',
   });
