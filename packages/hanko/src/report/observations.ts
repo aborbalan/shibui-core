@@ -25,6 +25,20 @@ export interface ComponentObservation {
   resilience: ResilienceObservation;
 }
 
+/**
+ * Error/aviso crudo capturado en el navegador durante la sonda (`pageerror` o
+ * `console.*`). NO es un veredicto del sello: por el render async de Lit, el
+ * harness aún no los atribuye a su escenario (ver harness.md). Se reportan
+ * aparte como señal de calibración.
+ */
+export interface BrowserDiagnostic {
+  /** Origen: `'pageerror'` (excepción no capturada) o `'console.<tipo>'`. */
+  kind: string;
+  message: string;
+  /** Veces que se repitió a lo largo de la sonda (muchos componentes lanzan el mismo). */
+  count: number;
+}
+
 /** Fichero `observations.json` emitido por la sonda de navegador. */
 export interface ObservationsFile {
   /** ISO timestamp de la corrida de la sonda. */
@@ -33,4 +47,6 @@ export interface ObservationsFile {
   via: string;
   /** Una observación por custom element registrado del CEM. */
   components: ComponentObservation[];
+  /** Errores crudos del navegador capturados al montar (depuración/calibración). */
+  diagnostics?: BrowserDiagnostic[];
 }

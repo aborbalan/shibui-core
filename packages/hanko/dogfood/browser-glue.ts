@@ -24,11 +24,16 @@
 
    Spec: docs/specs/harness.md
    ============================================================ */
-import '../../shibui-ui/dist/index.js';
+import * as shibui from '../../shibui-ui/dist/index.js';
 import * as axe from 'axe-core';
 import { observeRuntime, observeA11y, observeResilience } from '../src/harness/probe';
 import type { AxeRunner } from '../src/harness/probe';
 import type { ComponentObservation } from '../src/report/observations';
+
+// Fuerza la evaluación del módulo de shibui (sus @customElement → define()).
+// Asignar a globalThis es un side-effect que NINGÚN bundler poda, a diferencia
+// del `import` a secas que esbuild descartaba (sus chunks no están en sideEffects).
+(globalThis as Record<string, unknown>).__shibui = shibui;
 
 declare global {
   interface Window {
