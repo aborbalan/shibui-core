@@ -62,6 +62,10 @@ async function main(): Promise<void> {
     // todo el contrato sale "no registrado". El bundle es desechable: no importa
     // que quede más grande.
     treeShaking: false,
+    // Ignora `sideEffects` de package.json: sin esto esbuild descarta la
+    // evaluación de los chunks de shibui (que no figuran en su sideEffects) y
+    // los @customElement nunca corren → 0 componentes registrados.
+    ignoreAnnotations: true,
     write: false,
     logLevel: 'silent',
   });
@@ -76,11 +80,28 @@ async function main(): Promise<void> {
   const observations: ComponentObservation[] = [];
   try {
     const page = await browser.newPage();
+    page.on('pageerror', (e) => console.error('  ⚠ page error:', e.message));
+    page.on('console', (m) => {
+      if (m.type() === 'error' || m.type() === 'warning') {
+        console.error(`  ⚠ console.${m.type()}: ${m.text()}`);
+      }
+    });
     await page.setContent('<!doctype html><html><head></head><body></body></html>');
     await page.addScriptTag({ content: glue });
-    await page.waitForFunction(
-      () => Boolean((window as { __hankoProbe?: unknown }).__hankoProbe),
+
+    // Diagnóstico: ¿se montó el puente y cuántos custom elements quedaron
+    // registrados tras cargar shibui? (registered=0 → shibui no corrió sus define()).
+    const ready = await page.evaluate(() =>
+      Boolean((window as { __hankoProbe?: unknown }).__hankoProbe),
     );
+    const registered = await page.evaluate(
+      (ts) => ts.filter((t) => Boolean(customElements.get(t))).length,
+      tags,
+    );
+    console.log(
+      `hanko observe · __hankoProbe=${ready} · ${registered}/${tags.length} tags registrados`,
+    );
+    if (!ready) throw new Error('el glue no expuso window.__hankoProbe');
 
     for (const tag of tags) {
       const obs = (await page.evaluate(
