@@ -242,14 +242,16 @@ jobs:
         run: pnpm exec firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5
 
   # ─────────────────────────────────────────────────────────────────────────
-  # Hanko Trust Report — F6 incr. 2 (slice Floor) + deploy.
+  # Hanko Trust Report — F6 incr. 2 (4 capas) + deploy.
   # Genera el Trust Report (JSON + HTML) sobre el CEM de shibui-ui y publica
   # el HTML en hanko-report.web.app — la última versión sellada en main.
   #
-  # Cobertura actual: solo el Floor (estático). Contrato/a11y/resiliencia
-  # exigen el harness de navegador (aún sin cablear) → salen como `–` (no
-  # evaluado) por la regla de oro; se rellenan al integrar el harness, sin
-  # tocar este job. Solo main: queremos la foto de lo ejecutado en main.
+  # Dos etapas:
+  #   1. `observe` — el harness corre sobre los componentes vivos de shibui en
+  #      chromium → observations.json (contrato/a11y/resiliencia).
+  #   2. `report`  — Floor estático + esas observaciones → buildTrustReport.
+  # Si la sonda fallara, `report` degrada a Floor (otras capas → – por la
+  # regla de oro), sin romper el deploy. Solo main: la foto de lo ejecutado allí.
   # ─────────────────────────────────────────────────────────────────────────
   deploy-hanko-report:
     name: 判 Deploy Hanko Trust Report
@@ -277,7 +279,14 @@ jobs:
         with:
           name: ui-dist-${{ github.run_id }}
           path: packages/shibui-ui/dist/
-      - name: 判 Generar Trust Report (Floor; capas del harness pendientes)
+      - name: 🌐 Install Playwright Chromium
+        run: pnpm --filter @shibui-ui/hanko exec playwright install chromium --with-deps
+      - name: 判 Sondear shibui (Etapa 1) — observations.json sobre el dist real
+        # El harness de hanko corre sobre los componentes vivos de shibui en
+        # chromium y deja observations.json. Si la sonda fallara, el report
+        # siguiente degrada a Floor (las otras capas → –), no rompe el deploy.
+        run: pnpm --filter @shibui-ui/hanko observe
+      - name: 判 Generar Trust Report (Etapa 2) — 4 capas sobre el CEM + observaciones
         run: pnpm --filter @shibui-ui/hanko report
       - name: 🔧 Copy .firebaserc to config dir
         run: cp .firebaserc .config/.firebaserc
