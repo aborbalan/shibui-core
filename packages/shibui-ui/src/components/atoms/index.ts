@@ -23,7 +23,7 @@ export * from './eyebrow/lib-eyebrow.component';
 export * from './icon/lib-icon.component';
 export * from './kbd/lib-kbd.component';
 export * from './label/lib-label.component';
-export * from './lib-counter/lib-counter.component';
+export * from './counter/lib-counter.component';
 export * from './liquid-button/lib-liquid-button.component';
 export * from './magnetic/lib-magnetic.component';
 export * from './progress/lib-progress.component';
