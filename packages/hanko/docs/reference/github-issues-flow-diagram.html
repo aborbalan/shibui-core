@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hanko · Diagrama de flujo — emisor de issues</title>
+<style>
+  :root{
+    --bg:#14110f;
+    --text:#ece4d8;--text-muted:#9a8d78;
+    --surface:#221d19;--surface-2:#2a241f;--border:#3a3128;--accent:#d9a441;
+  }
+  html,body{margin:0;background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(217,164,65,.07), transparent 60%),
+      radial-gradient(900px 500px at -10% 25%, rgba(127,174,155,.06), transparent 55%),
+      var(--bg);
+    color:var(--text);font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 24px 60px}
+  .kick{font-family:ui-monospace,monospace;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  svg{width:100%;height:auto;display:block}
+  .note{color:var(--text-muted);font-size:.84rem;margin:18px 0 0;font-family:ui-monospace,monospace}
+  .note a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kick">hanko · 判子 · F6 · incremento 3 · diagrama de flujo</p>
+
+  <svg viewBox="0 0 780 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl desc" font-family="ui-sans-serif, system-ui, sans-serif">
+    <title id="ttl">Flujo del emisor de issues de hanko</title>
+    <desc id="desc">El trust-report.json pasa por toIssueDrafts y syncGithubIssues hasta GitHub. El disparo es opt-in vía CLI o un flag de CI. La sincronización crea, actualiza o cierra issues de forma idempotente.</desc>
+
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--text-muted, #b8a98f)"/>
+      </marker>
+    </defs>
+
+    <style>
+      .lbl{fill:var(--text, #ece4d8);font-weight:650;font-size:15px}
+      .sub{fill:var(--text-muted, #9a8d78);font-size:11.5px;font-family:ui-monospace,monospace}
+      .kk{fill:var(--text-muted, #9a8d78);font-size:11px;letter-spacing:.14em;font-family:ui-monospace,monospace}
+      .box{fill:var(--surface, #221d19);stroke:var(--border, #3a3128);stroke-width:1.5}
+      .h{font-size:21px;font-weight:700;fill:var(--text, #ece4d8);font-family:Georgia,serif}
+      .stamp{fill:var(--accent, #d9a441)}
+      .flow{stroke:var(--text-muted, #b8a98f);stroke-width:2;fill:none}
+      .vlbl{font-family:ui-monospace,monospace;font-size:12.5px;font-weight:700}
+    </style>
+
+    <text x="40" y="40" class="h">Del sello al trabajo <tspan class="stamp">→ issues de GitHub</tspan></text>
+    <text x="40" y="62" class="kk">HANKO · F6 · INCREMENTO 3 · OPT-IN</text>
+
+    <!-- pipeline row -->
+    <g>
+      <rect x="40" y="92" width="160" height="74" rx="12" class="box"/>
+      <rect x="40" y="92" width="4" height="74" rx="2" fill="#7fae9b"/>
+      <text x="58" y="120" class="lbl">report.json</text>
+      <text x="58" y="140" class="sub">trusted · findings[]</text>
+      <text x="58" y="156" class="sub">ya existía</text>
+
+      <path d="M205 129 H250" class="flow" marker-end="url(#ah)"/>
+
+      <rect x="255" y="92" width="160" height="74" rx="12" class="box"/>
+      <rect x="255" y="92" width="4" height="74" rx="2" fill="var(--accent,#d9a441)"/>
+      <text x="273" y="120" class="lbl">toIssueDrafts</text>
+      <text x="273" y="140" class="sub">solo trusted:false</text>
+      <text x="273" y="156" class="sub">puro · nuevo</text>
+
+      <path d="M420 129 H465" class="flow" marker-end="url(#ah)"/>
+
+      <rect x="470" y="92" width="160" height="74" rx="12" class="box"/>
+      <rect x="470" y="92" width="4" height="74" rx="2" fill="#c5402f"/>
+      <text x="488" y="120" class="lbl">syncGithubIssues</text>
+      <text x="488" y="140" class="sub">diff idempotente</text>
+      <text x="488" y="156" class="sub">nuevo</text>
+
+      <path d="M635 129 H672" class="flow" marker-end="url(#ah)"/>
+
+      <rect x="678" y="92" width="62" height="74" rx="12" class="box"/>
+      <text x="709" y="126" class="lbl" text-anchor="middle">Git</text>
+      <text x="709" y="146" class="lbl" text-anchor="middle">Hub</text>
+    </g>
+
+    <!-- opt-in trigger callout -->
+    <g>
+      <rect x="40" y="205" width="700" height="58" rx="12" class="box" stroke="var(--accent,#d9a441)" fill="var(--surface-2, #2a241f)"/>
+      <text x="58" y="231" class="kk" fill="var(--accent,#d9a441)">⚐ DISPARO OPT-IN — NUNCA POR DEFECTO</text>
+      <text x="58" y="251" class="sub" fill="var(--text,#ece4d8)">CLI:  pnpm --filter @shibui-ui/hanko issues  (--dry-run)        CI:  orchestrator → force_hanko_issues ☑</text>
+    </g>
+    <path d="M120 205 V179" class="flow" stroke="var(--accent,#d9a441)" stroke-dasharray="4 3" marker-end="url(#ah)"/>
+
+    <!-- idempotency outcomes -->
+    <text x="40" y="305" class="kk">SYNC · POR COMPONENTE (CASA POR EL MARCADOR DEL CUERPO)</text>
+
+    <g>
+      <rect x="40" y="320" width="226" height="84" rx="12" class="box"/>
+      <rect x="40" y="320" width="4" height="84" rx="2" fill="#7fae9b"/>
+      <text x="58" y="346" class="vlbl" fill="#7fae9b">createIssue</text>
+      <text x="58" y="368" class="sub" fill="var(--text,#ece4d8)">sin sello +</text>
+      <text x="58" y="385" class="sub" fill="var(--text,#ece4d8)">sin issue abierto</text>
+
+      <rect x="277" y="320" width="226" height="84" rx="12" class="box"/>
+      <rect x="277" y="320" width="4" height="84" rx="2" fill="#d9a441"/>
+      <text x="295" y="346" class="vlbl" fill="#d9a441">updateIssue</text>
+      <text x="295" y="368" class="sub" fill="var(--text,#ece4d8)">sin sello +</text>
+      <text x="295" y="385" class="sub" fill="var(--text,#ece4d8)">issue ya abierto → no duplica</text>
+
+      <rect x="514" y="320" width="226" height="84" rx="12" class="box"/>
+      <rect x="514" y="320" width="4" height="84" rx="2" fill="#6f9fc4"/>
+      <text x="532" y="346" class="vlbl" fill="#6f9fc4">closeIssue</text>
+      <text x="532" y="368" class="sub" fill="var(--text,#ece4d8)">volvió a sellar</text>
+      <text x="532" y="385" class="sub" fill="var(--text,#ece4d8)">cierra con comentario</text>
+    </g>
+
+    <text x="40" y="442" class="sub">1 issue por componente sin sello · solo violations (warnings no) · cero dependencias (fetch global)</text>
+  </svg>
+
+  <p class="note">Reporte completo (texto + secciones): <a href="github-issues-flow.html">github-issues-flow.html</a> · Spec: <code>docs/specs/github-issues.md</code></p>
+</div>
+</body>
+</html>
