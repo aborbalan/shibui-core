@@ -42,6 +42,10 @@ on:
         description: "Forzar pipeline Tauri Rust Core"
         type: boolean
         default: false
+      force_hanko_issues:
+        description: "判 Crear/actualizar issues de GitHub desde el Trust Report de hanko (solo main)"
+        type: boolean
+        default: false
 
 # Un único punto de cancelación para todo el ecosistema
 concurrency:
@@ -116,12 +120,20 @@ jobs:
     name: 📦 UI Library Pipeline
     needs: detect-changes
     if: needs.detect-changes.outputs.ui == 'true'
+    # Techo de permisos para el reusable: un workflow llamado no puede obtener más
+    # que su caller. issues:write habilita el step opt-in de issues de hanko sin
+    # depender del permiso por defecto del repo (que podría ser read-only).
+    permissions:
+      contents: read
+      issues: write
     uses: ./.github/workflows/ci-lib.yml
     with:
-      ui:          ${{ needs.detect-changes.outputs.ui }}
-      ui_behavior: ${{ needs.detect-changes.outputs.ui_behavior }}
-      event:       ${{ github.event_name }}
-      ref:         ${{ github.ref }}
+      ui:            ${{ needs.detect-changes.outputs.ui }}
+      ui_behavior:   ${{ needs.detect-changes.outputs.ui_behavior }}
+      event:         ${{ github.event_name }}
+      ref:           ${{ github.ref }}
+      # Opt-in manual: solo crea issues si se lanza el orchestrator a mano con el flag.
+      github_issues: ${{ inputs.force_hanko_issues == true && 'true' || 'false' }}
     secrets: inherit
 
   run-apps-pipeline:

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hanko · Emisor de issues de GitHub</title>
+<style>
+  :root{
+    --bg:#14110f;--bg-soft:#1c1815;--panel:#221d19;--panel-2:#2a241f;
+    --ink:#ece4d8;--ink-soft:#bcae9c;--ink-faint:#8c8072;--line:#3a3128;
+    --celadon:#7fae9b;--celadon-deep:#4f7d6c;--kintsugi:#d9a441;--kintsugi-soft:#e8c27a;
+    --kaki:#c8623a;--sabi:#9a6f4e;--info:#6f9fc4;--error:#c0573f;--shuniku:#c5402f;
+    --radius:14px;
+    --mono:"SFMono-Regular",ui-monospace,"Cascadia Code","Fira Code",Consolas,monospace;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --serif:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(217,164,65,.07), transparent 60%),
+      radial-gradient(900px 500px at -10% 25%, rgba(127,174,155,.06), transparent 55%),
+      var(--bg);
+    color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto;padding:60px 28px 120px}
+
+  header.hero{margin-bottom:30px}
+  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--kintsugi);margin:0 0 14px}
+  h1{font-family:var(--serif);font-weight:600;font-size:2.4rem;line-height:1.12;margin:0 0 16px;letter-spacing:-.01em}
+  h1 .stamp{color:var(--shuniku)}
+  .lede{font-size:1.06rem;color:var(--ink-soft);max-width:66ch;margin:0}
+
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0}
+  .chip{font-family:var(--mono);font-size:.76rem;background:var(--panel-2);border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;color:var(--ink-soft)}
+  .chip b{color:var(--kintsugi-soft);font-weight:600}
+  .chip.opt{border-color:#6e5a2e;color:var(--kintsugi)}
+
+  .seam{height:2px;border:0;margin:40px 0 30px;
+    background:linear-gradient(90deg,transparent,var(--kintsugi) 22%,var(--kintsugi-soft) 50%,var(--kintsugi) 78%,transparent);opacity:.5}
+
+  h2.sec{font-family:var(--serif);font-size:1.55rem;font-weight:600;margin:0 0 6px;letter-spacing:-.01em}
+  h2.sec .gw{color:var(--kintsugi)}
+  .sub{color:var(--ink-faint);font-size:.9rem;margin:0 0 22px;max-width:70ch}
+
+  /* pipeline */
+  .pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:8px 0 6px;position:relative}
+  .stage{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 16px;position:relative;overflow:hidden}
+  .stage:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+  .stage.s1:before{background:var(--celadon)}.stage.s2:before{background:var(--kintsugi)}
+  .stage.s3:before{background:var(--shuniku)}.stage.s4:before{background:var(--info)}
+  .stage .n{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .stage h3{margin:6px 0 6px;font-size:.98rem;font-weight:650}
+  .stage p{margin:0;font-size:.8rem;color:var(--ink-soft)}
+  .stage code{font-size:.74rem}
+  .arrow{text-align:center;color:var(--kintsugi);font-size:1.1rem;margin:2px 0 0}
+  .pipe-note{font-family:var(--mono);font-size:.74rem;color:var(--ink-faint);margin:14px 0 0;text-align:center}
+  .pipe-note b{color:var(--celadon)}
+
+  /* two latches */
+  .latches{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+  .latch{background:var(--panel);border:1px solid #6e5a2e;border-radius:var(--radius);padding:18px 20px;background:rgba(217,164,65,.05)}
+  .latch .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--kintsugi);display:block;margin-bottom:8px}
+  .latch h4{margin:0 0 6px;font-size:1rem;font-weight:650}
+  .latch p{margin:0;font-size:.85rem;color:var(--ink-soft)}
+
+  /* table */
+  table{width:100%;border-collapse:collapse;margin:8px 0 0;font-size:.86rem}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+  td .verb{font-family:var(--mono);font-weight:700}
+  .v-create{color:var(--celadon)}.v-update{color:var(--kintsugi)}.v-close{color:var(--info)}
+  tr:last-child td{border-bottom:0}
+
+  /* issue anatomy */
+  .issue{background:#0f0d0b;border:1px solid var(--line);border-radius:var(--radius);padding:0;overflow:hidden;margin-top:6px}
+  .issue .bar{background:var(--panel-2);padding:12px 18px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .issue .title{font-weight:650;font-size:.95rem}
+  .lbl{font-family:var(--mono);font-size:.66rem;padding:2px 9px;border-radius:999px;border:1px solid}
+  .lbl.l-hanko{color:var(--kintsugi);border-color:#6e5a2e;background:rgba(217,164,65,.12)}
+  .lbl.l-layer{color:var(--shuniku);border-color:var(--shuniku);background:rgba(197,64,47,.1)}
+  .issue .bodyc{padding:16px 18px;font-size:.84rem;color:var(--ink-soft)}
+  .issue .marker{font-family:var(--mono);font-size:.74rem;color:var(--ink-faint);background:var(--panel);border:1px dashed var(--sabi);border-radius:6px;padding:7px 10px;margin-bottom:12px}
+  .issue ul{margin:8px 0 0;padding-left:20px}
+  .issue li{margin:3px 0}
+  .issue .fnd{color:var(--ink);font-family:var(--mono);font-size:.78rem}
+
+  pre{background:#0f0d0b;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;overflow-x:auto;font-family:var(--mono);font-size:.8rem;color:var(--ink);margin:8px 0 0;line-height:1.7}
+  pre .c{color:var(--ink-faint)}
+  pre .k{color:var(--kintsugi-soft)}
+  code{font-family:var(--mono);font-size:.85em;background:var(--panel-2);color:var(--kintsugi-soft);padding:.1em .38em;border-radius:5px;border:1px solid var(--line)}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+  .warn{border:1px solid var(--error);border-radius:var(--radius);background:rgba(192,87,63,.07);padding:16px 20px;margin-top:8px}
+  .warn .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--error);display:block;margin-bottom:8px}
+  .warn ul{margin:0;padding-left:18px}
+  .warn li{margin:6px 0;font-size:.86rem;color:var(--ink-soft)}
+
+  footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:.82rem;font-family:var(--mono)}
+  footer .gold{color:var(--kintsugi)}
+
+  @media(max-width:740px){
+    .wrap{padding:40px 16px 80px}h1{font-size:1.9rem}
+    .pipe{grid-template-columns:1fr}.latches,.cols{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">hanko · 判子 · F6 · incremento 3</p>
+  <h1>Del sello al trabajo <span class="stamp">→ issues de GitHub</span></h1>
+  <p class="lede">hanko ya dice <em>qué componentes no pasan el sello de confianza</em>. Esta fase cierra el
+  bucle: convierte esos hallazgos en <strong>issues de GitHub accionables</strong> — pero solo cuando se lo
+  pides. Es <strong>opt-in</strong> de extremo a extremo: nada se crea en un push normal.</p>
+  <div class="meta">
+    <span class="chip opt">⚐ <b>opt-in</b> · no default</span>
+    <span class="chip"><b>idempotente</b> · re-correr no duplica</span>
+    <span class="chip"><b>cero deps</b> · fetch global</span>
+    <span class="chip">1 issue / componente sin sello</span>
+    <span class="chip">solo <b>violations</b> · warnings no</span>
+  </div>
+</header>
+
+<hr class="seam">
+
+<!-- ===== PIPELINE ===== -->
+<h2 class="sec">El <span class="gw">flujo</span>, de punta a punta</h2>
+<p class="sub">El Trust Report sigue intacto y puro. El emisor es una capa encima del <code>trust-report.json</code>
+que <code>report</code> ya deja en disco — no recalcula nada, no toca los checks, no importa shibui.</p>
+
+<div class="pipe">
+  <div class="stage s1">
+    <span class="n">ya existía</span>
+    <h3>report</h3>
+    <p>Floor + contrato + a11y + resiliencia → <code>trust-report.json</code> (por componente: <code>trusted</code> + <code>findings[]</code>).</p>
+  </div>
+  <div class="stage s2">
+    <span class="n">nuevo · puro</span>
+    <h3>toIssueDrafts</h3>
+    <p>Filtra los <code>trusted:false</code> con hallazgos → un <b>borrador</b> por componente (título · cuerpo · labels · marcador).</p>
+  </div>
+  <div class="stage s3">
+    <span class="n">nuevo · sync</span>
+    <h3>syncGithubIssues</h3>
+    <p>Diff idempotente contra los issues abiertos: <b>crea</b> / <b>actualiza</b> / <b>cierra</b>.</p>
+  </div>
+  <div class="stage s4">
+    <span class="n">REST · fetch</span>
+    <h3>GitHub</h3>
+    <p>Issues etiquetados <code>hanko</code>, con su marcador de dedupe en el cuerpo.</p>
+  </div>
+</div>
+<p class="arrow">trust-report.json &nbsp;→&nbsp; borradores &nbsp;→&nbsp; diff &nbsp;→&nbsp; api.github.com</p>
+<p class="pipe-note">Disparado por el runner <b>issues-run.ts</b> (CLI) o por un step de CI gateado. <b>Nunca</b> por <code>report</code>/<code>report:full</code>.</p>
+
+<hr class="seam">
+
+<!-- ===== TWO LATCHES ===== -->
+<h2 class="sec">Por qué <span class="gw">nunca se dispara solo</span></h2>
+<p class="sub">Dos pestillos independientes. Hay que abrir el que corresponda a propósito.</p>
+
+<div class="latches">
+  <div class="latch">
+    <span class="tag">Pestillo 1 · pipeline</span>
+    <h4>El script <code>issues</code> está fuera del camino por defecto</h4>
+    <p>Ni <code>report</code> ni <code>report:full</code> lo invocan. Para que pase algo hay que llamar
+    <code>pnpm --filter @shibui-ui/hanko issues</code> explícitamente.</p>
+  </div>
+  <div class="latch">
+    <span class="tag">Pestillo 2 · CI</span>
+    <h4>El step de CI está gateado por un flag manual</h4>
+    <p>El step vive en <code>ci-lib.yml</code> con <code>if: inputs.github_issues == 'true'</code>. Solo se pone a
+    <code>true</code> lanzando el orchestrator a mano con <code>force_hanko_issues</code> (<code>workflow_dispatch</code>).
+    El deploy de cada <code>main</code> <strong>no</strong> crea issues.</p>
+  </div>
+</div>
+
+<hr class="seam">
+
+<!-- ===== IDEMPOTENCY ===== -->
+<h2 class="sec">Idempotencia: el <span class="gw">marcador</span> es la clave</h2>
+<p class="sub">Cada issue lleva un comentario HTML invisible <code>&lt;!-- hanko:component=&lt;tag&gt; --&gt;</code> en el cuerpo.
+La sincronización casa los issues por ese marcador (no por título), así que re-correrla converge en vez de duplicar.</p>
+
+<table>
+  <thead><tr><th>Situación del componente</th><th>Acción</th><th>Efecto</th></tr></thead>
+  <tbody>
+    <tr><td>Sin sello, <b>sin</b> issue abierto</td><td><span class="verb v-create">createIssue</span></td><td>Nace un issue nuevo con label <code>hanko</code> + labels de capa.</td></tr>
+    <tr><td>Sin sello, <b>con</b> issue abierto</td><td><span class="verb v-update">updateIssue</span></td><td>Refresca título/cuerpo/labels con los hallazgos actuales. No duplica.</td></tr>
+    <tr><td>Volvió a <b>sellar</b> (o desapareció del CEM)</td><td><span class="verb v-close">closeIssue</span></td><td>Cierra el issue con un comentario «resuelto».</td></tr>
+    <tr><td>Issue abierto <b>sin</b> marcador de hanko</td><td><span class="verb">— ignora</span></td><td>No se toca: hanko solo gestiona lo que lleva su marca.</td></tr>
+  </tbody>
+</table>
+
+<hr class="seam">
+
+<!-- ===== ISSUE ANATOMY ===== -->
+<h2 class="sec">Anatomía de un <span class="gw">issue</span> generado</h2>
+<p class="sub">Un componente con dos capas en rojo se traduce así:</p>
+
+<div class="issue">
+  <div class="bar">
+    <span class="title">[hanko] lib-stepper — 2 violaciones de confianza</span>
+    <span class="lbl l-hanko">hanko</span>
+    <span class="lbl l-layer">hanko:contract</span>
+    <span class="lbl l-layer">hanko:resilience</span>
+  </div>
+  <div class="bodyc">
+    <div class="marker">&lt;!-- hanko:component=lib-stepper --&gt; &nbsp;←&nbsp; clave de dedupe · no editar</div>
+    <strong>判 lib-stepper no pasa el sello de confianza</strong><br>
+    <b>Capas que fallan:</b> <code>contract</code> · <code>resilience</code>
+    <ul>
+      <li class="fnd">contract/method: método declarado "next" ausente en el elemento</li>
+      <li class="fnd">resilience/empty: el componente se rompió al montar vacío (steps.map is not a function)</li>
+    </ul>
+    <p style="margin-top:12px;color:var(--ink-faint)">Trust Report completo: hanko-report.web.app · Issue generado por hanko, se cierra solo al volver a sellar.</p>
+  </div>
+</div>
+
+<hr class="seam">
+
+<!-- ===== USAGE ===== -->
+<h2 class="sec">Cómo se <span class="gw">usa</span></h2>
+<div class="cols">
+  <div>
+    <h3 style="font-size:1rem;margin:0 0 4px;color:var(--celadon)">Local (CLI)</h3>
+    <pre><span class="c"># 1· genera el report</span>
+pnpm --filter @shibui-ui/hanko report
+
+<span class="c"># 2· ensayo SIN red (imprime el plan)</span>
+pnpm --filter @shibui-ui/hanko issues <span class="k">--dry-run</span>
+
+<span class="c"># 3· crea/actualiza/cierra de verdad</span>
+<span class="k">GITHUB_REPOSITORY</span>=owner/name \
+<span class="k">GITHUB_TOKEN</span>=*** \
+  pnpm --filter @shibui-ui/hanko issues</pre>
+  </div>
+  <div>
+    <h3 style="font-size:1rem;margin:0 0 4px;color:var(--shuniku)">CI (manual)</h3>
+    <pre><span class="c"># GitHub → Actions → Orchestrator</span>
+<span class="c"># → Run workflow</span>
+  branch: <span class="k">main</span>
+  <span class="k">force_hanko_issues</span>: ☑ true
+
+<span class="c"># orchestrator → ci-lib:</span>
+<span class="c">#   github_issues = 'true'</span>
+<span class="c"># job deploy-hanko-report:</span>
+<span class="c">#   permissions: issues: write</span>
+<span class="c">#   step (if github_issues) → issues</span></pre>
+  </div>
+</div>
+
+<hr class="seam">
+
+<!-- ===== LIMITS ===== -->
+<h2 class="sec">Limitaciones <span class="gw">conocidas</span> (v0)</h2>
+<div class="warn">
+  <span class="tag">⚠ decisiones de política, documentadas a propósito</span>
+  <ul>
+    <li><strong>updateIssue reescribe el set de labels.</strong> Una label puesta a mano (p.ej. <code>priority:high</code>)
+    se pierde en la siguiente sync. hanko «posee» estos issues; si hace falta triaje persistente, omitir <code>labels</code> en el update.</li>
+    <li><strong>Solo se listan issues abiertos.</strong> Un issue cerrado a mano (wontfix) de un componente que sigue
+    sin sello se <em>recreará</em>. Para respetar el cierre manual habría que listar también cerrados.</li>
+    <li><strong>El gate duro sigue pendiente.</strong> Esta fase reporta y crea trabajo; aún no <em>falla el build</em>
+    cuando un componente no cumple su nivel exigido (eso es el resto de F6).</li>
+  </ul>
+</div>
+
+<footer>
+  <p>hanko · F6 incremento 3 · emisor de issues opt-in</p>
+  <p>Código: <span class="gold">src/report/github-issues.ts</span> · <span class="gold">src/report/issues-run.ts</span> · spec <span class="gold">docs/specs/github-issues.md</span></p>
+  <p>CI: <span class="gold">.github/workflows/ci-lib.yml</span> (step gateado) · <span class="gold">orchestrator.yml</span> (<code>force_hanko_issues</code>)</p>
+</footer>
+
+</div>
+</body>
+</html>

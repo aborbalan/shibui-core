@@ -10,3 +10,18 @@ export type {
   TrustReportOptions,
 } from './trust-report';
 export { renderTrustReportJson, renderTrustReportHtml } from './render';
+export {
+  toIssueDrafts,
+  syncGithubIssues,
+  parseMarker,
+  RestGithubClient,
+  HANKO_LABEL,
+} from './github-issues';
+export type {
+  IssueDraft,
+  ExistingIssue,
+  GithubClient,
+  SyncSummary,
+  SyncOptions,
+  RestGithubClientOptions,
+} from './github-issues';
