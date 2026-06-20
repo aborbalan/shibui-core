@@ -60,20 +60,27 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   componentes con el mismo falso `contract/reflect`). Validado end-to-end con el dogfood real (98 → 70 «sin sello»;
   los que sellan en contrato pasan limpio, p.ej. `lib-button`).
 
-### ⚠️ Pendiente de calibrar (descubierto al quitar el ruido async)
+- **Miembros privados en el CEM — RESUELTO.** El analizador emite métodos/propiedades `_x` con `privacy: ''`
+  (no los marca `private`), pero `publicApiOf` los excluye por nombre (contrato = API **pública**). La ingestión
+  ahora hace lo mismo (`isPublicMember` descarta los `_`-prefijados) → fuera los falsos `contract/method`.
 
-- **Miembros privados en el CEM**: el analizador emite métodos/propiedades `_x` (privados) en el manifest, pero
-  `publicApiOf` los excluye a propósito (contrato = API **pública**) → cada `_x` declarado sale como
-  `contract/method|property: ausente`. Asimetría interna: decidir si la ingestión los filtra (contrato público)
-  o si declararlos es un *smell* a reportar. Domina los `contract/method` (todos `_`).
+- **Resiliencia ante crashes async — PARCIALMENTE RESUELTO.** `observeResilience` es **async** y espera
+  `updateComplete` en cada escenario, así que el throw async de Lit aflora *dentro* del trial en vez de perderse
+  (antes el `try/catch` síncrono daba un falso «sobrevivió»). Los escenarios son todos adversos *sin datos*
+  (`empty`/`junk-attrs`/`rtl`/`remount`), así que el runner los pasa como `optional` → un crash es **warning**,
+  no descalifica el sello (no se puede distinguir «frágil» de «necesita datos» sin sembrarlos). **Límite:** Lit
+  reporta la mayoría de errores de render a nivel de `window` (`pageerror`), no rechazando `updateComplete`, así
+  que el `await` solo capta unos pocos; el resto sigue viéndose solo en `report-full.html`. Captura completa =
+  escuchar `pageerror`/`window.onerror` durante el trial (diferido). Sembrar datos mínimos por tipo para un
+  escenario duro `valid-min` también queda **diferido** (se probó: los componentes renderizan con datos pero su
+  contrato no mejora → el ruido restante es drift del CEM, no falsos positivos del harness).
+
+### ⚠️ Pendiente de calibrar
+
 - **Miembros fantasma kebab en el CEM**: algunos componentes declaran DOS miembros para una misma prop —el real
   `showLegend` (attribute `show-legend`) y un duplicado `show-legend` (kind field, sin attribute)—. El segundo no
-  existe en runtime → `contract/property: ausente`. Es un *smell* de generación del CEM de shibui.
-- **Crash al montar VACÍO** (componentes data-driven: charts/stepper/tabs…): petan en la primera actualización de
-  Lit (`series.flatMap is not a function`, etc.). El throw async ahora aflora en el `await updateComplete` y
-  `observeRuntime` lo captura (observación parcial → se omite), pero quedan reflect/slots reales sin verificar y
-  los crashes solo se ven en `report-full.html` (vía `page.on('pageerror')`). Calibrar: montar con datos mínimos
-  válidos por tipo, o política explícita "crash en mount vacío = violación de resiliencia".
+  existe en runtime → `contract/property: ausente`. Es un *smell* de generación del CEM de shibui (se arregla en
+  la generación del manifest, no en hanko).
 - **Slot por defecto con etiqueta `—` mal codificada** (`"â€”"`): bug de encoding (UTF-8 leído como latin1) en el
   nombre del slot por defecto del CEM/render → revisar la ingestión/render del nombre de slot.
 - **reflect (sentinel)**: sonda con un sentinel string; para una prop booleana/numérica/enum el converter de Lit

@@ -50,7 +50,7 @@ window.__hankoProbe = {
   async observe(tagName: string): Promise<ComponentObservation> {
     const runtime = await observeRuntime(tagName);
     const a11y = await observeA11y(tagName, runAxe);
-    const resilience = observeResilience(tagName);
+    const resilience = await observeResilience(tagName);
     return { tagName, runtime, a11y, resilience };
   },
 };
