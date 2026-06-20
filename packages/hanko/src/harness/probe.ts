@@ -73,12 +73,33 @@ function readObservedAttributes(ctor: CustomElementConstructor): string[] | unde
   return Array.isArray(oa) ? oa.map(String) : undefined;
 }
 
+/**
+ * Cede al ciclo de actualización del elemento antes de leer estado reflejado.
+ *
+ * Los componentes basados en LitElement reflejan prop→atributo y renderizan su
+ * shadow DOM de forma ASÍNCRONA (microtask siguiente, dentro de `performUpdate`).
+ * Leer en el mismo tick que el set ve siempre el estado PREVIO → falso "no refleja"
+ * y slots vacíos. Lit expone `el.updateComplete` (un `Promise`); lo esperamos.
+ *
+ * El harness es GENÉRICO (no todo custom element es Lit), así que detectamos la
+ * promesa por DUCK-TYPING (`.then`), sin importar Lit — respeta `genericity.test.ts`.
+ * Para un elemento no-Lit cedemos un frame por si refleja en rAF/microtask.
+ */
+async function elUpdateComplete(el: unknown): Promise<void> {
+  const uc = (el as { updateComplete?: unknown }).updateComplete;
+  if (uc && typeof (uc as Promise<unknown>).then === 'function') {
+    await uc;
+  } else {
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+  }
+}
+
 /** Sonda heurística de reflexión prop⇄attribute (string sentinel). v0. */
-function probeReflect(
+async function probeReflect(
   el: HTMLElement,
   properties: string[],
   observed: string[] | undefined,
-): string[] | undefined {
+): Promise<string[] | undefined> {
   if (!observed || observed.length === 0) return undefined;
   const reflecting: string[] = [];
   for (const prop of properties) {
@@ -87,6 +108,8 @@ function probeReflect(
     try {
       const before = el.getAttribute(attr);
       (el as unknown as Record<string, unknown>)[prop] = 'hanko-probe';
+      // Lit refleja en el siguiente ciclo de update, no en este tick.
+      await elUpdateComplete(el);
       const after = el.getAttribute(attr);
       if (after !== null && after !== before) reflecting.push(prop);
     } catch {
@@ -104,7 +127,7 @@ function readSlots(el: HTMLElement): string[] | undefined {
 }
 
 /** Observa el runtime de un custom element registrado. */
-export function observeRuntime(tagName: string): ComponentRuntime {
+export async function observeRuntime(tagName: string): Promise<ComponentRuntime> {
   const ctor = customElements.get(tagName);
   if (!ctor) return { tagName, registered: false };
 
@@ -116,12 +139,18 @@ export function observeRuntime(tagName: string): ComponentRuntime {
   // y deja la instancia en su estado real antes de sondear la reflexión. Se retira
   // siempre. Si el componente no monta limpio, slots/reflect quedan sin observar
   // (se omiten en el check, no son fallo de contrato).
+  //
+  // Lit renderiza el shadow DOM y refleja prop→attr de forma ASÍNCRONA: esperamos
+  // su `updateComplete` tras montar antes de leer slots, y dentro de `probeReflect`
+  // tras cada set. Sin esto, slots/reflect salían sistemáticamente vacíos (falso
+  // positivo en toda la librería). Ver `elUpdateComplete`.
   let slots: string[] | undefined;
   let reflectingProperties: string[] | undefined;
   try {
     document.body.appendChild(el);
+    await elUpdateComplete(el);
     slots = readSlots(el);
-    reflectingProperties = probeReflect(el, properties, observedAttributes);
+    reflectingProperties = await probeReflect(el, properties, observedAttributes);
   } catch {
     /* observación parcial: lo no observado se omite por la regla de oro */
   } finally {
