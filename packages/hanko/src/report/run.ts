@@ -32,6 +32,7 @@ import { floorCheck } from '../checks/floor';
 import { contractCheck } from '../checks/contract';
 import { a11yCheck } from '../checks/a11y';
 import { resilienceCheck } from '../checks/resilience';
+import { ADVERSE_SCENARIOS } from '../harness/probe';
 import { buildTrustReport, type ComponentChecks } from './trust-report';
 import { renderTrustReportJson, renderTrustReportHtml } from './render';
 import type { CustomElementsManifest } from '../ingest/cem-types';
@@ -85,7 +86,9 @@ const components: ComponentChecks[] = [...set.components.values()].map((c) => {
     // dentro de cada check: faceta no observada → skipped, no fallo.
     checks.contract = contractCheck(c, obs.runtime);
     checks.a11y = a11yCheck(obs.a11y);
-    checks.resilience = resilienceCheck(obs.resilience);
+    // Política: petar en un escenario adverso (sin datos) es tolerable (warning);
+    // solo `valid-min` (montado con datos mínimos) descalifica el sello.
+    checks.resilience = resilienceCheck(obs.resilience, { optional: [...ADVERSE_SCENARIOS] });
   }
   return checks;
 });

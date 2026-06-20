@@ -226,19 +226,36 @@ export async function observeA11y(tagName: string, runAxe: AxeRunner): Promise<A
   }
 }
 
-/** Monta el elemento, le aplica un setup y lo retira; relanza si algo explota. */
-function mountThenRemove(tagName: string, setup: (el: HTMLElement) => void): void {
+/**
+ * Monta el elemento, le aplica un setup y lo retira. Espera `updateComplete`
+ * para que los throws ASÍNCRONOS de Lit afloren DENTRO del trial (si no, el
+ * try/catch síncrono los perdía → resiliencia optimista en falso). Relanza.
+ */
+async function mountThenRemove(tagName: string, setup: (el: HTMLElement) => void): Promise<void> {
   const el = document.createElement(tagName);
   setup(el);
   document.body.appendChild(el);
-  el.remove();
+  try {
+    await elUpdateComplete(el);
+  } finally {
+    el.remove();
+  }
 }
 
+/**
+ * Escenarios adversos: todos se montan SIN datos, así que un componente
+ * data-driven puede petar en ellos por falta de datos, no por fragilidad real.
+ * Por eso el runner los pasa como `optional` → su fallo es un warning, no
+ * descalifica el sello. (Distinguir «frágil» de «necesita datos» requeriría
+ * sembrar datos mínimos por tipo; se difiere — ver docs/specs/harness.md.)
+ */
+export const ADVERSE_SCENARIOS: readonly string[] = ['empty', 'junk-attrs', 'rtl', 'remount'];
+
 /** Observa la resiliencia montando el componente bajo escenarios adversos. */
-export function observeResilience(tagName: string): ResilienceObservation {
+export async function observeResilience(tagName: string): Promise<ResilienceObservation> {
   if (!customElements.get(tagName)) return { tagName };
 
-  const scenarios: ReadonlyArray<[string, () => void]> = [
+  const scenarios: ReadonlyArray<[string, () => Promise<void>]> = [
     ['empty', () => mountThenRemove(tagName, () => undefined)],
     [
       'junk-attrs',
@@ -252,24 +269,27 @@ export function observeResilience(tagName: string): ResilienceObservation {
     ['rtl', () => mountThenRemove(tagName, (el) => el.setAttribute('dir', 'rtl'))],
     [
       'remount',
-      () => {
+      async () => {
         const el = document.createElement(tagName);
         document.body.appendChild(el);
+        await elUpdateComplete(el);
         el.remove();
         document.body.appendChild(el);
+        await elUpdateComplete(el);
         el.remove();
       },
     ],
   ];
 
-  const trials: ResilienceTrial[] = scenarios.map(([scenario, run]) => {
+  const trials: ResilienceTrial[] = [];
+  for (const [scenario, run] of scenarios) {
     try {
-      run();
-      return { scenario, survived: true };
+      await run();
+      trials.push({ scenario, survived: true });
     } catch (err) {
-      return { scenario, survived: false, error: String(err) };
+      trials.push({ scenario, survived: false, error: String(err) });
     }
-  });
+  }
 
   return { tagName, trials };
 }
