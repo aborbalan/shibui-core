@@ -224,6 +224,8 @@ export class RestGithubClient implements GithubClient {
       headers: {
         Authorization: `Bearer ${this.token}`,
         Accept: 'application/vnd.github+json',
+        // GitHub RECHAZA (403) cualquier petición sin User-Agent.
+        'User-Agent': 'hanko-trust-engine',
         'X-GitHub-Api-Version': '2022-11-28',
         ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}),
       },
