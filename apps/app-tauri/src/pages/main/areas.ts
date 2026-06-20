@@ -5,7 +5,7 @@
  * (folder, shield, chart-line, desktop, menu…). No usar code/folder-open/
  * gear-six: no existen en el registry y no renderizan.
  */
-export type AreaId = 'dashboard' | 'files' | 'code' | 'security' | 'settings';
+export type AreaId = 'dashboard' | 'files' | 'code' | 'branches' | 'security' | 'settings';
 
 export interface AreaDef {
   id:          AreaId;
@@ -32,6 +32,12 @@ export const AREAS: readonly AreaDef[] = [
     label: 'Code',
     description: 'Editor, terminal y workspace',
     icon: 'menu',
+  },
+  {
+    id: 'branches',
+    label: 'Branches',
+    description: 'Ramas y agentes actuando sobre ellas',
+    icon: 'dots',
   },
   {
     id: 'security',
