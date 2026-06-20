@@ -51,6 +51,7 @@
     "observe": "tsx dogfood/probe-shibui.ts",
     "report": "tsx src/report/run.ts",
     "report:full": "pnpm run observe && pnpm run report",
+    "issues": "tsx src/report/issues-run.ts",
     "prepublishOnly": "pnpm build"
   },
   "devDependencies": {

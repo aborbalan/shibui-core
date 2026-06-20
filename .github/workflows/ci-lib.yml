@@ -22,6 +22,14 @@ on:
       ref:
         type: string
         required: true
+      # github_issues: 'true' → tras generar el Trust Report, crear/actualizar
+      # issues de GitHub (uno por componente sin sello). Opt-in: solo lo pone a
+      # 'true' el orchestrator vía workflow_dispatch (force_hanko_issues). Default
+      # 'false' → el deploy normal en cada main NO crea issues.
+      github_issues:
+        type: string
+        required: false
+        default: 'false'
 
 env:
   NODE_VERSION: "22.14.0"
@@ -261,6 +269,10 @@ jobs:
       always() &&
       needs.build-ui.result == 'success' &&
       inputs.ref == 'refs/heads/main'
+    # issues: write solo se usa si github_issues == 'true' (step opt-in de abajo).
+    permissions:
+      contents: read
+      issues: write
     env:
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
     steps:
@@ -288,6 +300,14 @@ jobs:
         run: pnpm --filter @shibui-ui/hanko observe
       - name: 判 Generar Trust Report (Etapa 2) — 4 capas sobre el CEM + observaciones
         run: pnpm --filter @shibui-ui/hanko report
+      # Opt-in: convierte los componentes sin sello en issues de GitHub (idempotente:
+      # crea/actualiza/cierra). Solo cuando se lanza a mano con force_hanko_issues.
+      - name: 判 Crear/actualizar issues de hanko (opt-in)
+        if: inputs.github_issues == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: pnpm --filter @shibui-ui/hanko issues
       - name: 🔧 Copy .firebaserc to config dir
         run: cp .firebaserc .config/.firebaserc
       - name: 🚀 Deploy Trust Report → hanko-report.web.app
