@@ -15,12 +15,11 @@
    —tooling, no publicable (no entra en `files`)— sí lo carga: es justo lo
    que significa «correr el motor real sobre los componentes reales».
 
-   Nota Lit (calibración, Paso 0): los componentes de shibui son LitElement
-   y renderizan su shadow DOM de forma ASÍNCRONA (microtask tras montar). El
-   harness observa de forma síncrona, así que en esta v0 los slots de un
-   componente Lit quedan SIN observar (→ `skipped` por la regla de oro, no
-   un falso fallo) y el sondeo de reflect puede quedar corto. Afinarlo
-   (esperar `updateComplete`) es trabajo de calibración del harness.
+   Nota Lit (calibración): los componentes de shibui son LitElement y
+   renderizan su shadow DOM / reflejan prop→attr de forma ASÍNCRONA (microtask
+   tras montar). El harness ya espera `el.updateComplete` antes de leer slots y
+   la reflexión (`observeRuntime` es async); por eso `observe` lo `await`-ea.
+   Ver `elUpdateComplete` en `src/harness/probe.ts`.
 
    Spec: docs/specs/harness.md
    ============================================================ */
@@ -49,7 +48,7 @@ const runAxe: AxeRunner = (el) => axe.run(el);
 
 window.__hankoProbe = {
   async observe(tagName: string): Promise<ComponentObservation> {
-    const runtime = observeRuntime(tagName);
+    const runtime = await observeRuntime(tagName);
     const a11y = await observeA11y(tagName, runAxe);
     const resilience = observeResilience(tagName);
     return { tagName, runtime, a11y, resilience };

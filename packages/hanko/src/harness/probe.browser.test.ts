@@ -33,27 +33,65 @@ class HankoProbeButton extends HTMLElement {
   }
 }
 
+/**
+ * Elemento Lit-LIKE: refleja prop→atributo de forma ASÍNCRONA (en el microtask
+ * siguiente, vía un `updateComplete` igual que LitElement). Sirve para verificar
+ * que el harness espera el ciclo de update antes de leer el atributo reflejado.
+ */
+class HankoAsyncReflect extends HTMLElement {
+  static get observedAttributes(): string[] {
+    return ['variant'];
+  }
+  #variant = 'solid';
+  #pending: Promise<boolean> | null = null;
+  get variant(): string {
+    return this.#variant;
+  }
+  set variant(v: string) {
+    this.#variant = v;
+    // Refleja en el siguiente microtask, NO en este tick (como Lit).
+    this.#pending = Promise.resolve().then(() => {
+      this.setAttribute('variant', v);
+      return true;
+    });
+  }
+  /** Promesa que resuelve cuando la reflexión pendiente se ha aplicado. */
+  get updateComplete(): Promise<boolean> {
+    return this.#pending ?? Promise.resolve(true);
+  }
+}
+
 beforeAll(() => {
   if (!customElements.get('hanko-probe-button')) {
     customElements.define('hanko-probe-button', HankoProbeButton);
   }
+  if (!customElements.get('hanko-async-reflect')) {
+    customElements.define('hanko-async-reflect', HankoAsyncReflect);
+  }
 });
 
 describe('harness · observeRuntime', () => {
-  it('refleja la API pública del elemento vivo', () => {
-    const rt = observeRuntime('hanko-probe-button');
+  it('refleja la API pública del elemento vivo', async () => {
+    const rt = await observeRuntime('hanko-probe-button');
     expect(rt.registered).toBe(true);
     expect(rt.properties).toEqual(expect.arrayContaining(['variant', 'disabled']));
     expect(rt.methods).toEqual(expect.arrayContaining(['reset']));
     expect(rt.observedAttributes).toEqual(['variant', 'disabled']);
   });
 
-  it('observa los slots del shadow DOM (named + por defecto)', () => {
-    const rt = observeRuntime('hanko-probe-button');
+  it('observa los slots del shadow DOM (named + por defecto)', async () => {
+    const rt = await observeRuntime('hanko-probe-button');
     expect(rt.slots).toEqual(expect.arrayContaining(['icon', '']));
   });
 
-  it('alimenta contractCheck sin violaciones para un contrato fiel', () => {
+  it('detecta reflexión prop⇄attribute ASÍNCRONA esperando updateComplete', async () => {
+    // El elemento refleja en el microtask siguiente (como Lit): si el harness
+    // leyera el atributo en el mismo tick que el set, lo daría como "no refleja".
+    const rt = await observeRuntime('hanko-async-reflect');
+    expect(rt.reflectingProperties).toContain('variant');
+  });
+
+  it('alimenta contractCheck sin violaciones para un contrato fiel', async () => {
     const declared: ComponentContract = {
       tagName: 'hanko-probe-button',
       modulePath: 'm',
@@ -65,31 +103,45 @@ describe('harness · observeRuntime', () => {
       methods: [{ name: 'reset' }],
       slots: [{ name: 'icon' }, { name: '' }],
     };
-    const r = contractCheck(declared, observeRuntime('hanko-probe-button'));
+    const r = contractCheck(declared, await observeRuntime('hanko-probe-button'));
     expect(r.violations).toHaveLength(0);
     expect(r.checked.slots).toBe(2);
   });
 
-  it('detecta un slot declarado que el elemento no expone', () => {
+  it('no marca falso "no refleja" para una prop reflects:true async', async () => {
+    const declared: ComponentContract = {
+      tagName: 'hanko-async-reflect',
+      modulePath: 'm',
+      source: { kind: 'cem' },
+      properties: [
+        { property: 'variant', attribute: 'variant', reflects: true, type: { raw: 'string', kind: 'string' } },
+      ],
+    };
+    const r = contractCheck(declared, await observeRuntime('hanko-async-reflect'));
+    expect(r.violations.some((v) => v.facet === 'reflect')).toBe(false);
+    expect(r.checked.reflect).toBe(1);
+  });
+
+  it('detecta un slot declarado que el elemento no expone', async () => {
     const declared: ComponentContract = {
       tagName: 'hanko-probe-button',
       modulePath: 'm',
       source: { kind: 'cem' },
       slots: [{ name: 'icon' }, { name: 'footer' }],
     };
-    const r = contractCheck(declared, observeRuntime('hanko-probe-button'));
+    const r = contractCheck(declared, await observeRuntime('hanko-probe-button'));
     expect(r.violations.some((v) => v.facet === 'slot' && v.member === 'footer')).toBe(true);
     expect(r.violations.some((v) => v.facet === 'slot' && v.member === 'icon')).toBe(false);
   });
 
-  it('detecta un método declarado que el elemento no tiene', () => {
+  it('detecta un método declarado que el elemento no tiene', async () => {
     const declared: ComponentContract = {
       tagName: 'hanko-probe-button',
       modulePath: 'm',
       source: { kind: 'cem' },
       methods: [{ name: 'fly' }],
     };
-    const r = contractCheck(declared, observeRuntime('hanko-probe-button'));
+    const r = contractCheck(declared, await observeRuntime('hanko-probe-button'));
     expect(r.violations.some((v) => v.facet === 'method' && v.member === 'fly')).toBe(true);
   });
 });
