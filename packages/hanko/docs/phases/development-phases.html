@@ -140,7 +140,7 @@
   <div class="meta">
     <span class="chip">Esfuerzo F0–F6 ≈ <b>12–16 días</b></span>
     <span class="chip">Primera tanda = <b>F0 + F1 + F2</b></span>
-    <span class="chip">Construido <b>desde 0</b> (no hereda infra de @shibui-ui/ui)</span>
+    <span class="chip">Construido <b>desde 0</b> (infra de test propia)</span>
     <span class="chip">F0·F1·F2 <b>en develop + main</b> (PR #502 → #510)</span>
     <span class="chip">Sello a escala: <b>102 / 102</b> pasan el Floor</span>
     <span class="chip">Hito 2: <b>F3·F4·F5</b> · incr. 1 (motores) + incr. 2 (harness) <b>VALIDADOS en navegador</b> · calibrando</span>
@@ -211,7 +211,7 @@
         <h4>Smoke · primer sello</h4>
         <span class="badge b-done">hecho</span>
       </div>
-      <p class="body">Validación mínima end-to-end sobre los <strong>componentes reales</strong> de shibui-ui. Emite el
+      <p class="body">Validación mínima end-to-end sobre los <strong>componentes reales</strong> de la librería consumidora. Emite el
       primer sello (Floor) y responde la pregunta clave —¿el flujo <em>manifest → verificación → sello</em> funciona a
       escala real?— con un <strong>sí</strong>: el job <code>hanko-seal</code> selló <strong>102 / 102</strong>
       componentes sobre el CEM real en CI.</p>
@@ -238,13 +238,13 @@
   </div>
 
   <div class="firstbatch" style="border-color:var(--shuniku);background:rgba(197,64,47,.06)">
-    <span class="tag" style="color:var(--shuniku)">Acta · incremento 2 — cableado, falta validar</span>
+    <span class="tag" style="color:var(--shuniku)">Acta · incremento 2 — cableado y VALIDADO</span>
     <p>Cada fase = <strong>incr. 1 (motor puro, node)</strong> + <strong>incr. 2 (harness de navegador)</strong>. Los
     tres motores (incr. 1) están hechos; el harness se implementó <strong>una sola vez, centralizado en #528 (F5)</strong>.
-    <strong>Ya está cableado al Trust Report</strong> mediante el puente en dos etapas de F6 (sonda <code>dogfood/</code> →
-    <code>observations.json</code> → runner). Lo que <strong>queda pendiente es validarlo en un navegador real</strong>
-    (<code>test:browser</code> + dogfood sobre shibui) y calibrar las heurísticas v0 contra Lit — el worktree no puede
-    (<code>node_modules</code>); lo corre el usuario desde el repo principal.</p>
+    <strong>Cableado al Trust Report</strong> mediante el puente en dos etapas de F6 (sonda <code>dogfood/</code> →
+    <code>observations.json</code> → runner) y <strong>VALIDADO en navegador real</strong> (<code>test:browser</code> +
+    dogfood) con la calibración async de Lit (esperar <code>updateComplete</code>) resuelta. Queda afinar heurísticas
+    v0 y la estrategia de montaje con datos — ver las tarjetas «◷ Calibración pendiente».</p>
   </div>
 
   <div class="phase h2 wip">
@@ -260,7 +260,7 @@
       niveles Conformance → Strict del ADR-001 —más la registrabilidad que F2 difirió.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor puro <code>contractCheck()</code> + límite <code>ComponentRuntime</code> · registrabilidad + props + atributos + reflect + métodos · <code>methods</code> poblados en la ingestión · spec <code>checks-contract.md</code> + tests</span></p>
       <p class="deliv"><b>✓ Incr. 2 ▸</b> <span><code>observeRuntime</code> ampliado: monta el elemento y <strong>observa los slots del shadow DOM → nueva faceta <code>slot</code></strong> en <code>contractCheck</code> (declarado ↔ shadow DOM), con tests node + navegador. Vive en #528 (no en #526). <strong>VALIDADO en navegador + calibrado async</strong> (espera <code>updateComplete</code> de Lit antes de leer slots/reflect): eliminado el falso <code>contract/reflect</code> que afectaba a ~98 componentes. Además, la ingestión ahora descarta los miembros privados <code>_x</code> del CEM (simetría con <code>publicApiOf</code>) → fuera los falsos <code>contract/method</code>. Eventos: no observables por inspección estática → <em>declarados-only</em>.</span></p>
-      <p class="deliv"><b>◷ Calibración pendiente ▸</b> <span>miembros fantasma kebab del CEM (<code>show-legend</code> duplicando a <code>showLegend</code>) = <em>smell</em> de generación del CEM de shibui; y <code>reflect</code>/<code>slot</code> reales sin verificar en componentes data-driven que petan al montarse VACÍOS. Ver <code>specs/harness.md §Calibración</code>.</span></p>
+      <p class="deliv"><b>◷ Calibración pendiente ▸</b> <span><code>reflect</code>/<code>slot</code> reales sin verificar en componentes data-driven que petan al montarse VACÍOS → el harness debe montarlos con datos mínimos por tipo (o aplicar política «crash en mount vacío»). Ver <code>specs/harness.md §Calibración</code>.</span></p>
     </div>
   </div>
 
@@ -275,8 +275,8 @@
       <p class="body">axe + navegación por teclado + foco + nombre accesible. Pruebas <strong>universales</strong>:
       aplican a cualquier componente, declare lo que declare su manifest — F4 no lee el contrato.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor de política puro <code>a11yCheck()</code> + observación <code>A11yObservation</code> · umbral de severidad (<code>failOn</code>) + teclado/foco/nombre exigidos a interactivos · spec <code>checks-a11y.md</code> + tests</span></p>
-      <p class="deliv"><b>✓ Incr. 2 ▸</b> <span>el harness de a11y (<code>observeA11y</code>, axe inyectado + sondeos de interactividad/teclado/nombre) vive centralizado en #528 y está <strong>VALIDADO en navegador</strong> (Playwright/chromium) y corrido sobre shibui real.</span></p>
-      <p class="deliv"><b>◷ Calibración pendiente ▸</b> <span>29 componentes fallan a11y; en parte señal real, en parte por montarse VACÍOS sin nombre accesible. Heurísticas v0 (interactividad / nombre / <code>focusVisible</code>) a afinar contra shibui real.</span></p>
+      <p class="deliv"><b>✓ Incr. 2 ▸</b> <span>el harness de a11y (<code>observeA11y</code>, axe inyectado + sondeos de interactividad/teclado/nombre) vive centralizado en #528 y está <strong>VALIDADO en navegador</strong> (Playwright/chromium) y corrido sobre componentes reales.</span></p>
+      <p class="deliv"><b>◷ Calibración pendiente ▸</b> <span>29 componentes fallan a11y; en parte señal real, en parte por montarse VACÍOS sin nombre accesible. Heurísticas v0 (interactividad / nombre / <code>focusVisible</code>) a afinar contra componentes reales.</span></p>
     </div>
   </div>
 
@@ -291,7 +291,7 @@
       <p class="body">Props basura / vacías, SSR, RTL. El componente no debe romperse ante entradas adversas.
       También <strong>universal</strong>, no depende del contrato.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor de política puro <code>resilienceCheck()</code> + observación <code>ResilienceObservation</code> · escenarios obligatorios vs tolerables (<code>optional</code>) · spec <code>checks-resilience.md</code> + tests</span></p>
-      <p class="deliv"><b>✓ Incr. 2 ▸</b> <span>el <strong>harness compartido</strong> <code>src/harness/</code> (las tres observaciones: runtime · a11y · resiliencia) <strong>vive en este PR (#528)</strong> — <strong>VALIDADO en navegador y corrido sobre shibui real</strong> (dogfood/Playwright, ~102 componentes).</span></p>
+      <p class="deliv"><b>✓ Incr. 2 ▸</b> <span>el <strong>harness compartido</strong> <code>src/harness/</code> (las tres observaciones: runtime · a11y · resiliencia) <strong>vive en este PR (#528)</strong> — <strong>VALIDADO en navegador y corrido sobre componentes reales</strong> (dogfood/Playwright, ~102 componentes).</span></p>
       <p class="deliv"><b>◷ Calibración pendiente ▸</b> <span>throws async al montar componentes data-driven VACÍOS (el try/catch síncrono de <code>observeResilience</code> no los captura; afloran solo como <code>pageerror</code> en <code>report-full.html</code>). Decidir política: montar con datos mínimos por tipo, o «crash en mount vacío = violación».</span></p>
     </div>
   </div>
@@ -316,7 +316,7 @@
       <p class="body">Reporte de confianza (<strong>JSON + HTML</strong>) que declara <em>procedencia</em> y
       <em>cobertura</em> del sello. Gates que fallan el build cuando un componente no cumple su nivel exigido.</p>
       <p class="deliv"><b>✓ Incr. 1 ▸</b> <span>agregador puro <code>buildTrustReport()</code> —compone Floor + contrato + a11y + resiliencia por componente, con procedencia y regla de oro (capa no evaluada → <em>skipped</em>, no descalifica)— + renderers <code>renderTrustReport{Json,Html}</code> (HTML con marca washi) · spec <code>trust-report.md</code> + tests node. Rama <code>feature/hanko-trust-report</code>.</span></p>
-      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span><strong>puente en dos etapas cableado</strong>: la sonda <code>dogfood/probe-shibui.ts</code> (Etapa 1) corre el harness sobre los componentes vivos de shibui en chromium → <code>observations.json</code>; el runner <code>src/report/run.ts</code> (Etapa 2) lee esas observaciones + Floor estático y corre los checks puros → <strong>las 4 capas</strong>. CI (<code>observe</code> → <code>report</code>) publica en <strong><code>hanko-report.web.app</code></strong> en cada main. La sonda vive <strong>fuera de <code>src/</code></strong> (único punto que carga shibui; el guard de genericidad sigue verde). <strong>Pendiente:</strong> validar el harness en navegador (calibrar Lit) y el <strong>gate duro</strong> (fallar el build).</span></p>
+      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span><strong>puente en dos etapas cableado</strong>: la sonda <code>dogfood/probe-shibui.ts</code> (Etapa 1) corre el harness sobre los componentes vivos de la librería consumidora en chromium → <code>observations.json</code>; el runner <code>src/report/run.ts</code> (Etapa 2) lee esas observaciones + Floor estático y corre los checks puros → <strong>las 4 capas</strong>. CI (<code>observe</code> → <code>report</code>) publica en <strong><code>hanko-report.web.app</code></strong> en cada main. La sonda vive <strong>fuera de <code>src/</code></strong> (único punto que carga la librería consumidora; el guard de genericidad sigue verde). El harness ya está <strong>validado en navegador</strong> (Lit async calibrado). <strong>Pendiente:</strong> el <strong>gate duro</strong> (fallar el build cuando un componente no cumple su nivel).</span></p>
       <p class="deliv"><b>✓ Incr. 3 ▸</b> <span><strong>emisor de issues de GitHub (opt-in)</strong>: <code>src/report/github-issues.ts</code> (<code>toIssueDrafts</code> puro + <code>syncGithubIssues</code> idempotente: crea/actualiza/cierra · cliente REST con <code>fetch</code>, cero deps) + runner <code>issues-run.ts</code> (script <code>issues</code>, lee <code>trust-report.json</code>; <code>--dry-run</code>). Un issue por componente <em>sin sello</em>, marcador estable como clave de dedupe. <strong>No es default</strong>: en CI lo gatea <code>force_hanko_issues</code> (<code>workflow_dispatch</code>) → input <code>github_issues</code> de <code>ci-lib</code>. Spec <code>github-issues.md</code> + tests con fake client.</span></p>
     </div>
   </div>
@@ -329,11 +329,11 @@
         <h4>Desacople + publicación npm</h4>
         <span class="badge b-wip">en curso</span>
       </div>
-      <p class="body">Garantizar que el <code>core</code> no depende de shibui y publicar
+      <p class="body">Garantizar que el <code>core</code> no depende de ninguna librería consumidora y publicar
       <code>@shibui-ui/hanko</code> como paquete independiente.</p>
-      <p class="deliv"><b>✓ Desacople ▸</b> <span>el principio «el core nunca importa shibui» es ahora un <strong>test ejecutable</strong> (<code>src/genericity.test.ts</code>): escanea todos los imports y falla si alguno referencia <code>@shibui-ui/ui</code> o trepa a <code>shibui-ui/</code> (+ se autovalida). La comunicación sigue siendo solo vía el fichero CEM.</span></p>
+      <p class="deliv"><b>✓ Desacople ▸</b> <span>el principio «el core nunca importa la librería consumidora» es ahora un <strong>test ejecutable</strong> (<code>src/genericity.test.ts</code>): escanea todos los imports y falla si alguno referencia el paquete consumidor o trepa a su carpeta (+ se autovalida). La comunicación sigue siendo solo vía el fichero CEM.</span></p>
       <p class="deliv"><b>✓ Publicable ▸</b> <span>barrel público <code>src/index.ts</code> + <code>tsconfig.build.json</code> (emite <code>dist/</code>) + metadata npm (<code>exports</code>/<code>types</code>/<code>files</code>/<code>publishConfig</code>) · spec <code>packaging.md</code></span></p>
-      <p class="deliv"><b>◐ Diferido ▸</b> <span>el <code>npm publish</code> real (quitar <code>private</code> + versión + credenciales) y elegir bundler para ESM-Node nativo quedan <strong>para cuando el harness esté validado y shibui dogfoodeado</strong>.</span></p>
+      <p class="deliv"><b>◐ Diferido ▸</b> <span>el <code>npm publish</code> real (quitar <code>private</code> + versión + credenciales) y elegir bundler para ESM-Node nativo quedan <strong>para cuando el harness esté validado y dogfoodeado</strong>.</span></p>
     </div>
   </div>
 
