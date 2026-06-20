@@ -2,8 +2,9 @@
 
 /* ============================================================
    LIB-SEGMENTED-CONTROL — Shibui UI
-   Variantes: outline · underline · pill · ghost · accent · info
-              dark-outline · dark-pill · dark-accent · dark-underline
+   Display:   outline · underline · pill · ghost
+   Surface:   default · dark
+   Tone:      default · accent · info
    Tamaños:   sm · md (default) · lg
    Extras:    full · icon-only · glitch · badge
    ============================================================ */
@@ -135,30 +136,30 @@
      Borde exterior, thumb negro, texto muted → washi-50 activo
      ================================================================ */
 
-  :host([variant="outline"]) .seg {
+  :host([display="outline"]) .seg {
     border: 1.5px solid var(--border-default);
     background: var(--bg-elevated);
     padding: 3px;
     gap: 0;
   }
 
-  :host([variant="outline"]) .seg-thumb {
+  :host([display="outline"]) .seg-thumb {
     background: var(--color-washi-900);
     top: 3px;
     bottom: 3px;
   }
 
-  :host([variant="outline"]) .seg-option {
+  :host([display="outline"]) .seg-option {
     padding: var(--lib-space-sm) var(--lib-space-md);
     color: var(--text-muted);
     min-width: 80px;
   }
 
-  :host([variant="outline"]) .seg-option:hover {
+  :host([display="outline"]) .seg-option:hover {
     color: var(--text-primary);
   }
 
-  :host([variant="outline"]) .seg-option.is-active {
+  :host([display="outline"]) .seg-option.is-active {
     color: var(--color-washi-50);
   }
 
@@ -167,14 +168,14 @@
      Solo línea inferior, thumb accent 2px
      ================================================================ */
 
-  :host([variant="underline"]) .seg {
+  :host([display="underline"]) .seg {
     background: transparent;
     border-bottom: 1px solid var(--border-subtle);
     gap: 0;
     padding: 0;
   }
 
-  :host([variant="underline"]) .seg-thumb {
+  :host([display="underline"]) .seg-thumb {
     height: 2px;
     top: auto;
     bottom: -1px;
@@ -182,17 +183,17 @@
     transition: transform var(--duration-slow) var(--ease-bounce);
   }
 
-  :host([variant="underline"]) .seg-option {
+  :host([display="underline"]) .seg-option {
     padding: var(--lib-space-sm) calc(var(--lib-space-md) + var(--lib-space-sm));
     color: var(--text-muted);
     border-bottom: 2px solid transparent;
   }
 
-  :host([variant="underline"]) .seg-option:hover {
+  :host([display="underline"]) .seg-option:hover {
     color: var(--text-primary);
   }
 
-  :host([variant="underline"]) .seg-option.is-active {
+  :host([display="underline"]) .seg-option.is-active {
     color: var(--text-primary);
   }
 
@@ -201,7 +202,7 @@
      Track pill, thumb elevado con shadow
      ================================================================ */
 
-  :host([variant="pill"]) .seg {
+  :host([display="pill"]) .seg {
     background: var(--color-washi-100);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-full);
@@ -209,7 +210,7 @@
     gap: 0;
   }
 
-  :host([variant="pill"]) .seg-thumb {
+  :host([display="pill"]) .seg-thumb {
     background: var(--bg-elevated);
     border-radius: var(--radius-full);
     top: 4px;
@@ -217,18 +218,18 @@
     box-shadow: 0 1px 4px var(--color-ink-20);
   }
 
-  :host([variant="pill"]) .seg-option {
+  :host([display="pill"]) .seg-option {
     padding: var(--lib-space-sm) calc(var(--lib-space-md) + var(--lib-space-sm));
     color: var(--text-muted);
     border-radius: var(--radius-full);
     min-width: 80px;
   }
 
-  :host([variant="pill"]) .seg-option:hover {
+  :host([display="pill"]) .seg-option:hover {
     color: var(--text-primary);
   }
 
-  :host([variant="pill"]) .seg-option.is-active {
+  :host([display="pill"]) .seg-option.is-active {
     color: var(--text-primary);
   }
 
@@ -237,34 +238,34 @@
      Sin track, separadores verticales, thumb oculto, active = línea accent
      ================================================================ */
 
-  :host([variant="ghost"]) .seg {
+  :host([display="ghost"]) .seg {
     background: transparent;
     gap: 0;
   }
 
-  :host([variant="ghost"]) .seg-thumb {
+  :host([display="ghost"]) .seg-thumb {
     display: none;
   }
 
-  :host([variant="ghost"]) .seg-option {
+  :host([display="ghost"]) .seg-option {
     padding: var(--lib-space-sm) var(--lib-space-md);
     color: var(--text-muted);
     border-right: 1px solid var(--border-subtle);
   }
 
-  :host([variant="ghost"]) .seg-option:last-child {
+  :host([display="ghost"]) .seg-option:last-child {
     border-right: none;
   }
 
-  :host([variant="ghost"]) .seg-option:hover {
+  :host([display="ghost"]) .seg-option:hover {
     color: var(--text-primary);
   }
 
-  :host([variant="ghost"]) .seg-option.is-active {
+  :host([display="ghost"]) .seg-option.is-active {
     color: var(--text-primary);
   }
 
-  :host([variant="ghost"]) .seg-option.is-active::after {
+  :host([display="ghost"]) .seg-option.is-active::after {
     content: '';
     position: absolute;
     bottom: -1px;
@@ -279,30 +280,30 @@
      Thumb en color acento
      ================================================================ */
 
-  :host([variant="accent"]) .seg {
+  :host([tone="accent"]) .seg {
     border: 1.5px solid var(--border-default);
     background: var(--bg-elevated);
     padding: 3px;
     gap: 0;
   }
 
-  :host([variant="accent"]) .seg-thumb {
+  :host([tone="accent"]) .seg-thumb {
     background: var(--color-kaki-500);
     top: 3px;
     bottom: 3px;
   }
 
-  :host([variant="accent"]) .seg-option {
+  :host([tone="accent"]) .seg-option {
     padding: var(--lib-space-sm) var(--lib-space-md);
     color: var(--text-muted);
     min-width: 80px;
   }
 
-  :host([variant="accent"]) .seg-option:hover {
+  :host([tone="accent"]) .seg-option:hover {
     color: var(--text-primary);
   }
 
-  :host([variant="accent"]) .seg-option.is-active {
+  :host([tone="accent"]) .seg-option.is-active {
     color: var(--color-white);
   }
 
@@ -311,30 +312,30 @@
      Thumb en color celadón
      ================================================================ */
 
-  :host([variant="info"]) .seg {
+  :host([tone="info"]) .seg {
     border: 1.5px solid var(--border-default);
     background: var(--bg-elevated);
     padding: 3px;
     gap: 0;
   }
 
-  :host([variant="info"]) .seg-thumb {
+  :host([tone="info"]) .seg-thumb {
     background: var(--info);
     top: 3px;
     bottom: 3px;
   }
 
-  :host([variant="info"]) .seg-option {
+  :host([tone="info"]) .seg-option {
     padding: var(--lib-space-sm) var(--lib-space-md);
     color: var(--text-muted);
     min-width: 80px;
   }
 
-  :host([variant="info"]) .seg-option:hover {
+  :host([tone="info"]) .seg-option:hover {
     color: var(--text-primary);
   }
 
-  :host([variant="info"]) .seg-option.is-active {
+  :host([tone="info"]) .seg-option.is-active {
     color: var(--color-white);
   }
 
@@ -342,34 +343,34 @@
      DARK VARIANTS
      ================================================================ */
 
-  :host([variant="dark-outline"]) .seg {
+  :host([surface="dark"][display="outline"]) .seg {
     border: 1px solid rgb(255, 255, 255, 0.10);
     background: rgb(255, 255, 255, 0.04);
     padding: 3px;
     gap: 0;
   }
 
-  :host([variant="dark-outline"]) .seg-thumb {
+  :host([surface="dark"][display="outline"]) .seg-thumb {
     background: rgb(250, 247, 244, 0.12);
     top: 3px;
     bottom: 3px;
   }
 
-  :host([variant="dark-outline"]) .seg-option {
+  :host([surface="dark"][display="outline"]) .seg-option {
     padding: var(--lib-space-sm) var(--lib-space-md);
     color: rgb(250, 247, 244, 0.28);
     min-width: 80px;
   }
 
-  :host([variant="dark-outline"]) .seg-option:hover {
+  :host([surface="dark"][display="outline"]) .seg-option:hover {
     color: rgb(250, 247, 244, 0.65);
   }
 
-  :host([variant="dark-outline"]) .seg-option.is-active {
+  :host([surface="dark"][display="outline"]) .seg-option.is-active {
     color: rgb(250, 247, 244, 0.80);
   }
 
-  :host([variant="dark-pill"]) .seg {
+  :host([surface="dark"][display="pill"]) .seg {
     background: rgb(255, 255, 255, 0.06);
     border: 1px solid rgb(255, 255, 255, 0.07);
     border-radius: var(--radius-full);
@@ -377,63 +378,63 @@
     gap: 0;
   }
 
-  :host([variant="dark-pill"]) .seg-thumb {
+  :host([surface="dark"][display="pill"]) .seg-thumb {
     background: rgb(250, 247, 244, 0.12);
     border-radius: var(--radius-full);
     top: 4px;
     bottom: 4px;
   }
 
-  :host([variant="dark-pill"]) .seg-option {
+  :host([surface="dark"][display="pill"]) .seg-option {
     padding: var(--lib-space-sm) calc(var(--lib-space-md) + var(--lib-space-sm));
     color: rgb(250, 247, 244, 0.28);
     border-radius: var(--radius-full);
     min-width: 80px;
   }
 
-  :host([variant="dark-pill"]) .seg-option:hover {
+  :host([surface="dark"][display="pill"]) .seg-option:hover {
     color: rgb(250, 247, 244, 0.65);
   }
 
-  :host([variant="dark-pill"]) .seg-option.is-active {
+  :host([surface="dark"][display="pill"]) .seg-option.is-active {
     color: rgb(250, 247, 244, 0.85);
   }
 
-  :host([variant="dark-accent"]) .seg {
+  :host([surface="dark"][tone="accent"]) .seg {
     border: 1px solid rgb(255, 255, 255, 0.07);
     background: rgb(255, 255, 255, 0.03);
     padding: 3px;
     gap: 0;
   }
 
-  :host([variant="dark-accent"]) .seg-thumb {
+  :host([surface="dark"][tone="accent"]) .seg-thumb {
     background: var(--color-kaki-500);
     top: 3px;
     bottom: 3px;
   }
 
-  :host([variant="dark-accent"]) .seg-option {
+  :host([surface="dark"][tone="accent"]) .seg-option {
     padding: var(--lib-space-sm) var(--lib-space-md);
     color: rgb(250, 247, 244, 0.30);
     min-width: 80px;
   }
 
-  :host([variant="dark-accent"]) .seg-option:hover {
+  :host([surface="dark"][tone="accent"]) .seg-option:hover {
     color: rgb(250, 247, 244, 0.65);
   }
 
-  :host([variant="dark-accent"]) .seg-option.is-active {
+  :host([surface="dark"][tone="accent"]) .seg-option.is-active {
     color: var(--color-white);
   }
 
-  :host([variant="dark-underline"]) .seg {
+  :host([surface="dark"][display="underline"]) .seg {
     background: transparent;
     border-bottom: 1px solid rgb(255, 255, 255, 0.07);
     gap: 0;
     padding: 0;
   }
 
-  :host([variant="dark-underline"]) .seg-thumb {
+  :host([surface="dark"][display="underline"]) .seg-thumb {
     height: 2px;
     top: auto;
     bottom: -1px;
@@ -441,16 +442,16 @@
     transition: transform var(--duration-slow) var(--ease-bounce);
   }
 
-  :host([variant="dark-underline"]) .seg-option {
+  :host([surface="dark"][display="underline"]) .seg-option {
     padding: var(--lib-space-sm) calc(var(--lib-space-md) + var(--lib-space-sm));
     color: rgb(250, 247, 244, 0.28);
   }
 
-  :host([variant="dark-underline"]) .seg-option:hover {
+  :host([surface="dark"][display="underline"]) .seg-option:hover {
     color: rgb(250, 247, 244, 0.65);
   }
 
-  :host([variant="dark-underline"]) .seg-option.is-active {
+  :host([surface="dark"][display="underline"]) .seg-option.is-active {
     color: rgb(250, 247, 244, 0.80);
   }
 
@@ -465,40 +466,40 @@
     min-width: 60px;
   }
 
-  :host([size="sm"][variant="pill"]) .seg {
+  :host([size="sm"][display="pill"]) .seg {
     padding: 3px;
     border-radius: var(--radius-full);
   }
 
-  :host([size="sm"][variant="pill"]) .seg-thumb {
+  :host([size="sm"][display="pill"]) .seg-thumb {
     top: 3px;
     bottom: 3px;
   }
 
-  :host([size="sm"][variant="dark-pill"]) .seg {
+  :host([size="sm"][surface="dark"][display="pill"]) .seg {
     padding: 3px;
     border-radius: var(--radius-full);
   }
 
-  :host([size="sm"][variant="dark-pill"]) .seg-thumb {
+  :host([size="sm"][surface="dark"][display="pill"]) .seg-thumb {
     top: 3px;
     bottom: 3px;
   }
 
-  :host([size="sm"][variant="outline"]) .seg {
+  :host([size="sm"][display="outline"]) .seg {
     padding: 2px;
   }
 
-  :host([size="sm"][variant="outline"]) .seg-thumb {
+  :host([size="sm"][display="outline"]) .seg-thumb {
     top: 2px;
     bottom: 2px;
   }
 
-  :host([size="sm"][variant="accent"]) .seg {
+  :host([size="sm"][tone="accent"]) .seg {
     padding: 2px;
   }
 
-  :host([size="sm"][variant="accent"]) .seg-thumb {
+  :host([size="sm"][tone="accent"]) .seg-thumb {
     top: 2px;
     bottom: 2px;
   }
@@ -510,20 +511,20 @@
     min-width: 100px;
   }
 
-  :host([size="lg"][variant="pill"]) .seg {
+  :host([size="lg"][display="pill"]) .seg {
     padding: 5px;
   }
 
-  :host([size="lg"][variant="pill"]) .seg-thumb {
+  :host([size="lg"][display="pill"]) .seg-thumb {
     top: 5px;
     bottom: 5px;
   }
 
-  :host([size="lg"][variant="dark-pill"]) .seg {
+  :host([size="lg"][surface="dark"][display="pill"]) .seg {
     padding: 5px;
   }
 
-  :host([size="lg"][variant="dark-pill"]) .seg-thumb {
+  :host([size="lg"][surface="dark"][display="pill"]) .seg-thumb {
     top: 5px;
     bottom: 5px;
   }
@@ -641,11 +642,11 @@
     box-shadow: var(--lib-effect-ring, none);
   }
 
-  :host([variant="outline"]) .seg-thumb {
+  :host([display="outline"]:not([surface="dark"])) .seg-thumb {
     background: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
-  :host([variant="outline"]) .seg-option.is-active {
+  :host([display="outline"]:not([surface="dark"])) .seg-option.is-active {
     color: var(--lib-comp-fg-inverse, var(--text-inverse));
   }
 

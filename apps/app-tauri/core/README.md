@@ -39,7 +39,7 @@ core/
 | Módulo | Funciones principales | Para qué |
 |--------|----------------------|----------|
 | `system.rs` | `get_system_info`, `get_cpu_detail`, `get_memory_detail`, `get_disk_detail`, `get_network_detail` | Leer el estado del hardware. Lo consumen los gadgets de monitorización. |
-| `fs.rs` | `list_dir`, `home_dir` | Navegar el sistema de ficheros. Lo consume el explorador de archivos. |
+| `fs.rs` | `list_dir`, `home_dir`, `read_file`, `write_file` | Navegar el FS y leer/escribir ficheros de texto. Lo consumen el explorador y el editor (área Code). |
 | `git.rs` | `get_git_log` | Leer el historial de un repositorio git. Lo consume el visualizador de git. |
 | `project.rs` | `get_project_info` | Detectar metadata de un proyecto (tipo por marcadores + rama git). Lo consume el servicio de proyecto del frontend. |
 

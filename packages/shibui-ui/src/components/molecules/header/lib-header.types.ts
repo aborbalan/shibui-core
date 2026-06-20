@@ -4,7 +4,7 @@
  * Los efectos de katachi (seam dorado, scanlines) se activan
  * automáticamente vía --lib-effect-* tokens del contexto data-katachi.
  */
-export type HeaderVariant =
+export type HeaderTheme =
   | 'classic'      // 01 — light, dropdown
   | 'dark'         // 02 — washi-950, blur
   | 'centered'     // 03 — logo central, nav dividida

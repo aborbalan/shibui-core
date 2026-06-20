@@ -5,7 +5,12 @@ import kbdCss from './lib-kbd.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
 export type LibKbdSize    = 'xs' | 'sm' | 'md' | 'lg';
-export type LibKbdVariant = 'default' | 'inverse' | 'ghost' | 'accent' | 'subtle';
+/** Tratamiento visual de la tecla (subconjunto canónico de `LibVariant`). */
+export type LibKbdVariant = 'solid' | 'ghost';
+/** Superficie de la tecla (subconjunto canónico de `LibSurface`). */
+export type LibKbdSurface = 'default' | 'inverse';
+/** Tinte semántico de la tecla (subconjunto canónico de `LibTone`). */
+export type LibKbdTone    = 'default' | 'accent' | 'info';
 
 /**
  * @element lib-kbd
@@ -38,9 +43,17 @@ export class LibKbd extends LitElement {
   @property({ type: String, reflect: true })
   size: LibKbdSize = 'md';
 
-  /** Variante visual de color. */
+  /** Tratamiento visual (solid · ghost). */
   @property({ type: String, reflect: true })
-  variant: LibKbdVariant = 'default';
+  variant: LibKbdVariant = 'solid';
+
+  /** Superficie (default · inverse). */
+  @property({ type: String, reflect: true })
+  surface: LibKbdSurface = 'default';
+
+  /** Tinte semántico (default · accent · info). */
+  @property({ type: String, reflect: true })
+  tone: LibKbdTone = 'default';
 
   /**
    * Estado pressed programático.
@@ -58,6 +71,8 @@ export class LibKbd extends LitElement {
     return kbdTemplate({
       size:    this.size,
       variant: this.variant,
+      surface: this.surface,
+      tone:    this.tone,
       pressed: this.pressed || this._pointerPressed,
       onDown:  this._onPointerDown.bind(this),
       onUp:    this._onPointerUp.bind(this),

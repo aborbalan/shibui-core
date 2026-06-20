@@ -15,8 +15,14 @@
         "svelte": [
           "shibui-showcase-svelte"
         ],
+        "cv": [
+          "shibui-cv"
+        ],
         "shibui-api": [
           "shibui-api"
+        ],
+        "hanko-report": [
+          "hanko-report"
         ]
 
       }

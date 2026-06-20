@@ -121,7 +121,7 @@ export function LoginPage() {
             )}
           </div>
 
-          <LibButton variant="primary" onUiLibClick={handleSubmit}>
+          <LibButton variant="solid" onUiLibClick={handleSubmit}>
             Entrar
           </LibButton>
         </div>

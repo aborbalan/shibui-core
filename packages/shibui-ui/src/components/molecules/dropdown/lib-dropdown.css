@@ -117,34 +117,34 @@
   }
 
   /* Filled */
-  :host([variant="filled"]) .dd-trigger {
+  :host([variant="solid"]) .dd-trigger {
     background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
     color: var(--lib-comp-fg-inverse, var(--text-inverse));
   }
 
-  :host([variant="filled"]) .dd-trigger:hover {
+  :host([variant="solid"]) .dd-trigger:hover {
     background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     border-color: var(--lib-comp-bg-inverse, var(--bg-inverse));
   }
 
-  :host([variant="filled"]) .dd-chevron {
+  :host([variant="solid"]) .dd-chevron {
     color: var(--lib-comp-fg-muted, var(--text-muted));
   }
 
   /* Kaki */
-  :host([variant="accent"]) .dd-trigger {
+  :host([tone="accent"]) .dd-trigger {
     background: var(--color-kaki-500);
     border-color: var(--color-kaki-500);
     color: #fff;
   }
 
-  :host([variant="accent"]) .dd-trigger:hover {
+  :host([tone="accent"]) .dd-trigger:hover {
     background: var(--color-kaki-600);
     border-color: var(--color-kaki-600);
   }
 
-  :host([variant="accent"]) .dd-chevron {
+  :host([tone="accent"]) .dd-chevron {
     color: rgb(255, 255, 255, .6);
   }
 

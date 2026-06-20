@@ -57,7 +57,7 @@ export function LoginPage() {
                                 fontFamily: 'var(--lib-font-display)',
                                 fontSize: 'var(--text-3xl)',
                                 fontWeight: 'var(--weight-light)' as React.CSSProperties['fontWeight'],
-                                color: 'color-mix(in oklch, var(--color-kaki-500), transparent 40%)',
+                                color: 'color-mix(in oklch, var(--text-accent), transparent 40%)',
                                 lineHeight: 1,
                             }}>
                                 渋
@@ -87,7 +87,7 @@ export function LoginPage() {
                             }}
                         />
 
-                        <LibButton variant="primary" onUiLibClick={handleSubmit}>
+                        <LibButton variant="solid" onUiLibClick={handleSubmit}>
                             Entrar
                         </LibButton>
                     </form>

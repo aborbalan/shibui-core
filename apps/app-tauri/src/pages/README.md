@@ -15,8 +15,9 @@ Cada subcarpeta es una **pantalla** (una ruta) de la app. Las rutas se conectan 
 | `workspace/` | `/workspace` | Ventana del macro entorno: barra de tabs (Files / Git). Es la pantalla que abre la **2ª ventana**. |
 | `dashboard/` | — (área) | Grid de **gadgets** arrastrables (CPU, RAM, notas…). Ya no es ruta: se abre como pestaña desde el Hub. Ver [`../gadgets/README.md`](../gadgets/README.md). |
 | `files/` | — (área) | Explorador de ficheros a pantalla completa. Área, no ruta. |
+| `code/` | — (área) | **Editor estilo VS Code**: árbol de ficheros (`lib-tree-select`) + editor multi-fichero (`lib-text-editor`). Layout fijo. Opera sobre el proyecto abierto (`useProject`). |
 | `branches/` | — (área) | **Vista de mando**: grid de gadgets (grafo de ramas + tarjetas de agente). Sobre el proyecto abierto. Agentes con datos mock (`agents.mock.ts`). |
-| `section-placeholder/` | — (área) | Stub reutilizable para áreas aún sin construir (Code, Security, Settings). |
+| `section-placeholder/` | — (área) | Stub reutilizable para áreas aún sin construir (Security, Settings). |
 
 > **Ya no hay sidebar.** `DashboardLayout` y la antigua `hub/` se eliminaron. Las
 > secciones dejaron de ser rutas (`/files`, `/code`…) y ahora se abren como

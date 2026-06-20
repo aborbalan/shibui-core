@@ -49,7 +49,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                         }}
                     >
                         Base{' '}
-                        <em style={{ fontStyle: 'italic', color: 'var(--color-kaki-400, #D97234)' }}>
+                        <em style={{ fontStyle: 'italic', color: 'var(--text-accent)' }}>
                             académica
                         </em>
                     </h2>
@@ -65,7 +65,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                                 flexDirection: 'column',
                                 gap: '0.35rem',
                                 paddingLeft: '1rem',
-                                borderLeft: '1px solid rgba(184,90,30,0.25)',
+                                borderLeft: '1px solid color-mix(in oklch, var(--text-accent), transparent 75%)',
                             }}
                         >
                             <p
@@ -74,7 +74,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                                     fontSize: '0.6rem',
                                     letterSpacing: '0.18em',
                                     textTransform: 'uppercase',
-                                    color: 'rgba(184,90,30,0.5)',
+                                    color: 'color-mix(in oklch, var(--text-accent), transparent 50%)',
                                     margin: 0,
                                 }}
                             >
@@ -137,7 +137,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                         }}
                     >
                         Comunicación{' '}
-                        <em style={{ fontStyle: 'italic', color: 'var(--color-kaki-400, #D97234)' }}>
+                        <em style={{ fontStyle: 'italic', color: 'var(--text-accent)' }}>
                             global
                         </em>
                     </h2>
@@ -170,7 +170,7 @@ export const EducationSection: React.FC<EducationSectionProps> = ({ education, l
                                 >
                                     {lang.name}
                                 </span>
-                                <LibBadge variant={badgeVariant}>
+                                <LibBadge tone={badgeVariant}>
                                     {lang.level}
                                 </LibBadge>
                             </div>

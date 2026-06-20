@@ -80,7 +80,7 @@
     <div class="content-col">
       <div class="eyebrow-row">
         <lib-eyebrow tone="accent" size="sm">Perfil · About Me</lib-eyebrow>
-        <lib-badge variant="success" dot>Open to Work</lib-badge>
+        <lib-badge tone="success" dot>Open to Work</lib-badge>
       </div>
 
       <lib-display-heading tag="h1" size="md" surface="dark" line1={PROFILE.name} accent={PROFILE.title}></lib-display-heading>
@@ -126,7 +126,7 @@
             {#if item.tags.length > 0}
               <div class="tags">
                 {#each item.tags as tag}
-                  <lib-badge variant="strong">{tag}</lib-badge>
+                  <lib-badge tone="strong">{tag}</lib-badge>
                 {/each}
               </div>
             {/if}
@@ -156,7 +156,7 @@
           </div>
           <div class="skill-badges">
             {#each [...group.skills].sort((a,b) => a.order - b.order) as skill}
-              <lib-badge variant={variant}>{skill.name}</lib-badge>
+              <lib-badge tone={variant}>{skill.name}</lib-badge>
             {/each}
           </div>
         </div>
@@ -190,7 +190,7 @@
         {@const v = LEVEL_VARIANT[lang.level] ?? 'strong'}
         <div class="lang-item">
           <span class="lang-name">{lang.name}</span>
-          <lib-badge variant={v}>{lang.level}</lib-badge>
+          <lib-badge tone={v}>{lang.level}</lib-badge>
         </div>
       {/each}
     </div>

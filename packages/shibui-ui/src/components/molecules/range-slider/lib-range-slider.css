@@ -203,26 +203,26 @@
   :host([tone="accent"])  .rs { --rs-fill-color: var(--color-kaki-500); }
   :host([tone="info"])    .rs { --rs-fill-color: var(--info); }
   :host([tone="error"])   .rs { --rs-fill-color: var(--color-error); }
-  :host([tone="neutral"]) .rs { --rs-fill-color: var(--color-washi-700); }
+  :host([tone="muted"]) .rs { --rs-fill-color: var(--color-washi-700); }
 
   /* ── Inverse tone ───────────────────────────────────────── */
-  :host([tone="inverse"]) .rs {
+  :host([surface="inverse"]) .rs {
     --rs-track-bg:   oklch(20% 0.02 45deg);
     --rs-fill-color: oklch(65% 0.02 55deg);
   }
-  :host([tone="inverse"]) .rs-label { color: oklch(42% 0.02 50deg); }
-  :host([tone="inverse"]) .rs-value { color: oklch(65% 0.02 55deg); }
-  :host([tone="dark"]) .rs-limit { color: oklch(28% 0.02 50deg); }
-  :host([tone="dark"]) .rs-mark  { background: oklch(22% 0.02 45deg); }
-  :host([tone="dark"]) .rs-mark.is-filled { background: oklch(65% 0.02 55deg); }
-  :host([tone="dark"]) .rs-mark-label { color: oklch(28% 0.02 50deg); }
+  :host([surface="inverse"]) .rs-label { color: oklch(42% 0.02 50deg); }
+  :host([surface="inverse"]) .rs-value { color: oklch(65% 0.02 55deg); }
+  :host([surface="dark"]) .rs-limit { color: oklch(28% 0.02 50deg); }
+  :host([surface="dark"]) .rs-mark  { background: oklch(22% 0.02 45deg); }
+  :host([surface="dark"]) .rs-mark.is-filled { background: oklch(65% 0.02 55deg); }
+  :host([surface="dark"]) .rs-mark-label { color: oklch(28% 0.02 50deg); }
 
-  :host([tone="dark"]) .rs input[type="range"]::-webkit-slider-thumb {
+  :host([surface="dark"]) .rs input[type="range"]::-webkit-slider-thumb {
     background:    oklch(13% 0.015 45deg);
     border-color:  oklch(60% 0.02 55deg);
   }
 
-  :host([tone="dark"]) .rs input[type="range"]::-moz-range-thumb {
+  :host([surface="dark"]) .rs input[type="range"]::-moz-range-thumb {
     background:   oklch(13% 0.015 45deg);
     border-color: oklch(60% 0.02 55deg);
   }

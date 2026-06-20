@@ -2,7 +2,7 @@ import { html, nothing, svg, TemplateResult } from 'lit';
 import type { LibStepStatus, LibStepOrientation } from './lib-step.types';
 
 export type { LibStepStatus, LibStepOrientation } from './lib-step.types';
-export type { LibStepVariant, LibStepSize } from './lib-step.types';
+export type { LibStepTheme, LibStepSize } from './lib-step.types';
 
 export interface StepTemplateProps {
   index:       number;

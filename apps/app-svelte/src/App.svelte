@@ -7,6 +7,7 @@
   import About from './routes/About.svelte';
   import Philosophy from './routes/Philosophy.svelte';
   import Componentes from './routes/Componentes.svelte';
+  import ComponenteDetail from './routes/ComponenteDetail.svelte';
   import Tokens from './routes/Tokens.svelte';
   import Login from './routes/Login.svelte';
   import Kitchen from './routes/Kitchen.svelte';
@@ -32,8 +33,15 @@
     if (path === '/admin') navigate('/admin/kitchen-sink');
   });
 
-  let isPublic = $derived(PUBLIC_ROUTES.includes(path) || path === '/');
+  let isPublic = $derived(
+    PUBLIC_ROUTES.includes(path) || path === '/' || path.startsWith('/componentes/')
+  );
   let isAdmin = $derived(path.startsWith('/admin'));
+
+  // Detalle de componente: /componentes/<slug>
+  let componentSlug = $derived(
+    path.startsWith('/componentes/') ? path.slice('/componentes/'.length) : null
+  );
 </script>
 
 <svelte:window onkeydown={onKeydown} />
@@ -46,11 +54,13 @@
   {/if}
 {:else}
   <Header />
-  <lib-background variant="washi" style="min-height:100vh;">
+  <lib-background theme="washi" style="min-height:100vh;">
     {#if path === '/about'}
       <About />
     {:else if path === '/philosophy'}
       <Philosophy />
+    {:else if componentSlug}
+      <ComponenteDetail slug={componentSlug} />
     {:else if path === '/componentes'}
       <Componentes />
     {:else if path === '/tokens'}

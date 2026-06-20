@@ -5,7 +5,7 @@ import { html, nothing, TemplateResult } from 'lit';
  * Roles semánticos — independientes de la paleta del katachi activo.
  * TODO: mover a src/models/ui/ cuando se integre en el monorepo.
  */
-export type LibBadgeVariant =
+export type LibBadgeTone =
   | 'default'   // neutro adaptativo — hereda del contexto katachi
   | 'accent'    // énfasis cálido (kaki/persimón)
   | 'info'      // informativo (jade/celadon) — era 'celadon'
@@ -17,7 +17,7 @@ export type LibBadgeVariant =
 export type LibBadgeSize = 'sm' | 'md';
 
 export interface BadgeTemplateProps {
-  variant: LibBadgeVariant;
+  tone: LibBadgeTone;
   size: LibBadgeSize;
   dot: boolean;
   pill: boolean;

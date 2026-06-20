@@ -20,6 +20,15 @@ const frameworkLabel: Record<ExampleFramework, string> = {
   vue:     "Vue",
 };
 
+// `lib-code-block` solo admite un set acotado y decorativo de lenguajes
+// (bash|ts|js|html|css|json|text). No hay token jsx/tsx → React usa `ts`.
+const frameworkLanguage: Record<ExampleFramework, "html" | "ts"> = {
+  vanilla: "html",
+  react:   "ts",
+  angular: "html",
+  vue:     "html",
+};
+
 export const ComponentDetailExamples: React.FC<ComponentDetailExamplesProps> = ({ examples }) => {
   const grouped = FRAMEWORK_ORDER.reduce<Record<ExampleFramework, ExampleDto[]>>(
     (acc, fw) => {
@@ -57,7 +66,7 @@ export const ComponentDetailExamples: React.FC<ComponentDetailExamplesProps> = (
       {availableFrameworks.length > 1 && (
         <div style={{ marginBottom: "1.25rem" }}>
           <LibSegmentedControl
-            variant="outline"
+            display="outline"
             size="sm"
             options={options}
             value={activeFramework ?? availableFrameworks[0]}
@@ -74,7 +83,7 @@ export const ComponentDetailExamples: React.FC<ComponentDetailExamplesProps> = (
             <p style={{
               fontFamily: "var(--lib-font-mono)",
               fontSize: "0.72rem",
-              color: "var(--color-kaki-400)",
+              color: "var(--text-accent)",
               marginBottom: "0.5rem",
             }}>
               {example.title}
@@ -85,7 +94,7 @@ export const ComponentDetailExamples: React.FC<ComponentDetailExamplesProps> = (
               {example.description}
             </p>
           )}
-          <LibCodeBlock code={example.code} language="html" />
+          <LibCodeBlock code={example.code} language={frameworkLanguage[example.framework]} />
         </div>
       ))}
     </div>

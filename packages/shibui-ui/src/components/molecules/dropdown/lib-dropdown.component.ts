@@ -3,13 +3,14 @@ import { customElement, property } from 'lit/decorators.js';
 import { dropdownTemplate } from './lib-dropdown.html';
 import dropdownCss from './lib-dropdown.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
-import type { DropdownTriggerVariant, DropdownAlign } from './lib-dropdown.types';
+import type { DropdownTriggerVariant, DropdownTone, DropdownAlign } from './lib-dropdown.types';
 
 /**
  * lib-dropdown — Menú contextual flotante Shibui (SG-25)
  *
  * @prop label          — Texto del trigger (si no hay slot "trigger")
- * @prop variant        — 'default' | 'ghost' | 'filled' | 'accent'
+ * @prop variant        — 'solid' | 'outlined' (default) | 'ghost'
+ * @prop tone           — 'default' | 'accent'
  * @prop align          — 'left' (default) | 'right'
  * @prop open           — Estado abierto (refleja en atributo)
  * @prop dark           — Menú con tema oscuro
@@ -51,7 +52,10 @@ export class LibDropdown extends LitElement {
   label = 'Opciones';
 
   @property({ type: String, reflect: true })
-  variant: DropdownTriggerVariant = 'default';
+  variant: DropdownTriggerVariant = 'outlined';
+
+  @property({ type: String, reflect: true })
+  tone: DropdownTone = 'default';
 
   @property({ type: String, reflect: true })
   align: DropdownAlign = 'left';

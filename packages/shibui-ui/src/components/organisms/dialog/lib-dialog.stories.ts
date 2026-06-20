@@ -12,7 +12,7 @@ const open = (id: string): void => {
 
 type DialogStoryArgs = Pick<
   LibDialog,
-  'eyebrow' | 'dlgTitle' | 'variant' | 'size' | 'layout' | 'footerMeta'
+  'eyebrow' | 'dlgTitle' | 'tone' | 'surface' | 'size' | 'layout' | 'footerMeta'
 >;
 
 const meta: Meta<DialogStoryArgs> = {
@@ -20,9 +20,13 @@ const meta: Meta<DialogStoryArgs> = {
   tags:['autodocs'],
   component: 'lib-dialog',
   argTypes: {
-    variant: {
+    tone: {
       control: 'select',
-      options: ['default', 'danger', 'warning', 'dark'],
+      options: ['default', 'error', 'warning'],
+    },
+    surface: {
+      control: 'select',
+      options: ['default', 'dark'],
     },
     size: {
       control: 'select',
@@ -43,7 +47,8 @@ export const Playground: Story = {
   args: {
     eyebrow:    'Confirmación',
     dlgTitle:   'Guardar cambios',
-    variant:    'default',
+    tone:       'default',
+    surface:    'default',
     size:       'md',
     layout:     'dialog',
     footerMeta: 'v0.1.0',
@@ -55,7 +60,8 @@ export const Playground: Story = {
       id="dlg-playground"
       eyebrow="${args.eyebrow}"
       dlg-title="${args.dlgTitle}"
-      variant="${args.variant}"
+      tone="${args.tone}"
+      surface="${args.surface}"
       size="${args.size}"
       layout="${args.layout}"
       footer-meta="${args.footerMeta}"
@@ -69,7 +75,7 @@ export const Playground: Story = {
             const d = document.getElementById('dlg-playground') as LibDialog;
             d?.close();
           }}">Cancelar</lib-button>
-        <lib-button variant="primary"
+        <lib-button variant="solid"
           @click="${(): void => {
             const d = document.getElementById('dlg-playground') as LibDialog;
             d?.close();
@@ -100,7 +106,7 @@ export const Default: Story = {
           @click="${(): void => { (document.getElementById('dlg-confirm') as LibDialog)?.close(); }}">
           Cancelar
         </lib-button>
-        <lib-button variant="primary"
+        <lib-button variant="solid"
           @click="${(): void => { (document.getElementById('dlg-confirm') as LibDialog)?.close(); }}">
           Guardar
         </lib-button>
@@ -132,7 +138,7 @@ export const FormDialog: Story = {
           @click="${(): void => { (document.getElementById('dlg-form') as LibDialog)?.close(); }}">
           Cancelar
         </lib-button>
-        <lib-button variant="accent"
+        <lib-button tone="accent"
           @click="${(): void => { (document.getElementById('dlg-form') as LibDialog)?.close(); }}">
           Crear
         </lib-button>
@@ -144,13 +150,13 @@ export const FormDialog: Story = {
 /* ── Danger ── */
 export const Danger: Story = {
   render: (): TemplateResult => html`
-    <lib-button variant="danger" @click="${(): void => open('dlg-danger')}">Eliminar componente</lib-button>
+    <lib-button tone="error" @click="${(): void => open('dlg-danger')}">Eliminar componente</lib-button>
 
     <lib-dialog
       id="dlg-danger"
       eyebrow="Acción irreversible"
       dlg-title="Eliminar componente"
-      variant="danger"
+      tone="error"
       size="sm"
       layout="alert"
     >
@@ -161,7 +167,7 @@ export const Danger: Story = {
           @click="${(): void => { (document.getElementById('dlg-danger') as LibDialog)?.close(); }}">
           Cancelar
         </lib-button>
-        <lib-button variant="danger"
+        <lib-button tone="error"
           @click="${(): void => { (document.getElementById('dlg-danger') as LibDialog)?.close(); }}">
           Eliminar
         </lib-button>
@@ -173,13 +179,13 @@ export const Danger: Story = {
 /* ── Warning ── */
 export const Warning: Story = {
   render: (): TemplateResult => html`
-    <lib-button variant="secondary" @click="${(): void => open('dlg-warning')}">Cambios sin guardar</lib-button>
+    <lib-button variant="outlined" @click="${(): void => open('dlg-warning')}">Cambios sin guardar</lib-button>
 
     <lib-dialog
       id="dlg-warning"
       eyebrow="Aviso"
       dlg-title="Cambios sin guardar"
-      variant="warning"
+      tone="warning"
       size="sm"
       layout="alert"
     >
@@ -190,7 +196,7 @@ export const Warning: Story = {
           @click="${(): void => { (document.getElementById('dlg-warning') as LibDialog)?.close(); }}">
           Descartar
         </lib-button>
-        <lib-button variant="primary"
+        <lib-button variant="solid"
           @click="${(): void => { (document.getElementById('dlg-warning') as LibDialog)?.close(); }}">
           Guardar y salir
         </lib-button>
@@ -204,7 +210,7 @@ export const Dark: Story = {
   name: 'Dark — Kintsugi',
   parameters: { backgrounds: { default: 'dark' } },
   render: (): TemplateResult => html`
-    <lib-button ?glass="${true}" variant="primary" @click="${(): void => open('dlg-dark')}">
+    <lib-button ?glass="${true}" variant="solid" @click="${(): void => open('dlg-dark')}">
       Kintsugi dialog
     </lib-button>
 
@@ -212,9 +218,9 @@ export const Dark: Story = {
       id="dlg-dark"
       eyebrow="Design System · Shibui"
       dlg-title="Kintsugi 暗い"
-      variant="dark"
+      surface="dark"
       size="md"
-      footer-meta="暗い · dark variant"
+      footer-meta="暗い · dark surface"
     >
       <p>El modo kintsugi aplica la paleta oscura del sistema. Los tokens semánticos se invierten — washi-950 como superficie, kaki-400 como acento.</p>
       <hr style="border:none;border-top:1px solid oklch(16% 0.02 45);margin:var(--lib-space-lg) 0;">
@@ -225,7 +231,7 @@ export const Dark: Story = {
           @click="${(): void => { (document.getElementById('dlg-dark') as LibDialog)?.close(); }}">
           Cerrar
         </lib-button>
-        <lib-button variant="accent"
+        <lib-button tone="accent"
           @click="${(): void => { (document.getElementById('dlg-dark') as LibDialog)?.close(); }}">
           Aplicar
         </lib-button>
@@ -238,7 +244,7 @@ export const Dark: Story = {
 export const DrawerRight: Story = {
   name: 'Drawer — Right',
   render: (): TemplateResult => html`
-    <lib-button variant="secondary" @click="${(): void => open('dlg-drawer')}">Panel lateral</lib-button>
+    <lib-button variant="outlined" @click="${(): void => open('dlg-drawer')}">Panel lateral</lib-button>
 
     <lib-dialog
       id="dlg-drawer"
@@ -263,7 +269,7 @@ export const DrawerRight: Story = {
           @click="${(): void => { (document.getElementById('dlg-drawer') as LibDialog)?.close(); }}">
           Cancelar
         </lib-button>
-        <lib-button variant="primary"
+        <lib-button variant="solid"
           @click="${(): void => { (document.getElementById('dlg-drawer') as LibDialog)?.close(); }}">
           Aplicar
         </lib-button>
@@ -276,7 +282,7 @@ export const DrawerRight: Story = {
 export const DrawerBottom: Story = {
   name: 'Drawer — Bottom',
   render: (): TemplateResult => html`
-    <lib-button variant="secondary" @click="${(): void => open('dlg-bottom')}">Sheet inferior</lib-button>
+    <lib-button variant="outlined" @click="${(): void => open('dlg-bottom')}">Sheet inferior</lib-button>
 
     <lib-dialog
       id="dlg-bottom"
@@ -294,7 +300,7 @@ export const DrawerBottom: Story = {
           @click="${(): void => { (document.getElementById('dlg-bottom') as LibDialog)?.close(); }}">
           Cancelar
         </lib-button>
-        <lib-button variant="primary"
+        <lib-button variant="solid"
           @click="${(): void => { (document.getElementById('dlg-bottom') as LibDialog)?.close(); }}">
           Confirmar
         </lib-button>
@@ -308,7 +314,7 @@ export const Sizes: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex;flex-wrap:wrap;gap:var(--lib-space-md);">
       ${(['sm', 'md', 'lg', 'xl'] as const).map(s => html`
-        <lib-button variant="secondary" @click="${(): void => open(`dlg-size-${s}`)}">
+        <lib-button variant="outlined" @click="${(): void => open(`dlg-size-${s}`)}">
           ${s.toUpperCase()}
         </lib-button>
 
@@ -330,7 +336,7 @@ export const Sizes: Story = {
               @click="${(): void => { (document.getElementById(`dlg-size-${s}`) as LibDialog)?.close(); }}">
               Cerrar
             </lib-button>
-            <lib-button variant="primary"
+            <lib-button variant="solid"
               @click="${(): void => { (document.getElementById(`dlg-size-${s}`) as LibDialog)?.close(); }}">
               Confirmar
             </lib-button>
@@ -352,7 +358,7 @@ const _katachi = createKatachiStories<object>(() => html`
 
     <!-- Variant badges showing the available variants -->
     <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;">
-      ${(['default', 'danger', 'warning', 'dark'] as const).map(v => html`
+      ${(['default', 'error', 'warning', 'dark'] as const).map(v => html`
         <div style="
           padding:var(--lib-space-xs) var(--lib-space-sm);
           border:1px solid var(--border-default);

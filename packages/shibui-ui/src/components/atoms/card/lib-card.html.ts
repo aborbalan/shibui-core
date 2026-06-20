@@ -1,5 +1,5 @@
 import { html, nothing, TemplateResult } from "lit";
-import type { LibCardVariant } from "./lib-card.component";
+import type { LibCardVariant, LibCardTone } from "./lib-card.component";
 import {
   celadonDecorationLayers,
   parseDecorations,
@@ -7,6 +7,7 @@ import {
 
 export interface CardTemplateProps {
   variant: LibCardVariant;
+  tone: LibCardTone;
   accentColor: string | undefined;
   kanji: string;
   clickable: boolean;
@@ -28,7 +29,7 @@ export function cardTemplate(props: CardTemplateProps): TemplateResult {
       role="${props.clickable ? "button" : nothing}"
       tabindex="${props.clickable ? "0" : nothing}"
       @click="${props.clickable ? props.onClick : nothing}"
-      style="${props.variant === "accent" && props.accentColor
+      style="${props.tone === "accent" && props.accentColor
         ? `--card-accent-color: ${props.accentColor}`
         : nothing}"
     >

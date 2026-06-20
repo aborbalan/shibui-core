@@ -130,7 +130,7 @@
   }
 
   /* Dark rail: logo mark */
-  :host([variant="dark"]) .sb-logo-mark,
+  :host([theme="dark"]) .sb-logo-mark,
   .sb-logo-mark {
     background: var(--color-kaki-500);
     color: #fff;
@@ -465,7 +465,7 @@
   }
 
   /* Dark user avatar */
-  :host([variant="dark"]) .sb-user-avatar,
+  :host([theme="dark"]) .sb-user-avatar,
   .sb-user-avatar {
     background: var(--color-kaki-500);
     color: #fff;
@@ -576,7 +576,7 @@
   /* ══════════════════════════════════════
      LIGHT
      ══════════════════════════════════════ */
-  :host([variant="light"]) {
+  :host([theme="light"]) {
     & .sidebar {
       background: var(--bg-elevated);
       border-right: 1px solid var(--border-subtle);
@@ -635,7 +635,7 @@
   }
 
   /* Three-level compound — must stay flat */
-  :host([variant="light"]) .sidebar.is-collapsed .sb-link.is-active {
+  :host([theme="light"]) .sidebar.is-collapsed .sb-link.is-active {
     background: var(--color-kaki-50);
   }
 

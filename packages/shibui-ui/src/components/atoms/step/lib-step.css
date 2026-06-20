@@ -160,7 +160,7 @@
      VARIANT — MINIMAL (acento kaki, nodo cuadrado)
      ============================================================ */
 
-  :host([variant="minimal"]) .step-node {
+  :host([theme="minimal"]) .step-node {
     width: 24px;
     height: 24px;
     border-radius: var(--radius-none);
@@ -168,19 +168,19 @@
     font-size: 9px;
   }
 
-  :host([variant="minimal"]) .step-connector { top: 11px;
+  :host([theme="minimal"]) .step-connector { top: 11px;
      left: calc(50% + 12px);
       width: calc(100% - 24px); }
 
-  :host([variant="minimal"][status="active"]) .step-node {
+  :host([theme="minimal"][status="active"]) .step-node {
     background: var(--color-kaki-500);
     border-color: var(--color-kaki-500);
     color: var(--color-white);
     box-shadow: none;
   }
-  :host([variant="minimal"][status="active"]) .step-label { color: var(--color-kaki-500); }
+  :host([theme="minimal"][status="active"]) .step-label { color: var(--color-kaki-500); }
 
-  :host([variant="minimal"][status="completed"]) .step-node {
+  :host([theme="minimal"][status="completed"]) .step-node {
     background: transparent;
     border-color: var(--color-washi-700);
     color: var(--color-washi-700);
@@ -190,13 +190,13 @@
      VARIANT — KINTSUGI (venas doradas, superficie oscura)
      ============================================================ */
 
-  :host([variant="inverse"][status="completed"]) .step-node {
+  :host([theme="inverse"][status="completed"]) .step-node {
     background: var(--lib-comp-bg, var(--color-washi-900));
     border: none;
     color: var(--lib-comp-fg-sec, var(--text-secondary));
   }
 
-  :host([variant="inverse"][status="completed"]) .step-node::after {
+  :host([theme="inverse"][status="completed"]) .step-node::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -210,14 +210,14 @@
     pointer-events: none;
   }
 
-  :host([variant="inverse"][status="active"]) .step-node {
+  :host([theme="inverse"][status="active"]) .step-node {
     background: var(--lib-comp-bg, var(--color-washi-950));
     border: none;
     color: var(--lib-comp-fg-sec, var(--text-secondary));
     box-shadow: 0 0 0 4px oklch(45% 0.05 45deg / 0.1); /* glow kintsugi, sin token equivalente */
   }
 
-  :host([variant="inverse"][status="active"]) .step-node::after {
+  :host([theme="inverse"][status="active"]) .step-node::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -237,20 +237,20 @@
     50%       { opacity: 1; }
   }
 
-  :host([variant="inverse"][status="completed"]) .step-connector {
+  :host([theme="inverse"][status="completed"]) .step-connector {
     background: linear-gradient(90deg, oklch(45% 0.04 60deg / 0.5), oklch(55% 0.05 65deg / 0.3));
   }
 
-  :host([variant="inverse"]) .step-label { color: var(--lib-comp-fg-muted, var(--text-muted)); }
-  :host([variant="inverse"][status="active"]) .step-label    { color: var(--lib-comp-fg, var(--text-primary)); }
-  :host([variant="inverse"][status="completed"]) .step-label { color: var(--lib-comp-fg-sec, var(--text-secondary)); }
+  :host([theme="inverse"]) .step-label { color: var(--lib-comp-fg-muted, var(--text-muted)); }
+  :host([theme="inverse"][status="active"]) .step-label    { color: var(--lib-comp-fg, var(--text-primary)); }
+  :host([theme="inverse"][status="completed"]) .step-label { color: var(--lib-comp-fg-sec, var(--text-secondary)); }
 
-  :host([variant="inverse"]) .step-node {
+  :host([theme="inverse"]) .step-node {
     background: var(--lib-comp-bg, var(--color-washi-950));
     border-color: var(--lib-comp-border, var(--border-default));
     color: var(--lib-comp-fg-muted, var(--text-muted));
   }
-  :host([variant="inverse"]) .step-connector { background: var(--lib-comp-border, var(--border-default)); }
+  :host([theme="inverse"]) .step-connector { background: var(--lib-comp-border, var(--border-default)); }
 
   /* ============================================================
      ORIENTATION — VERTICAL
@@ -321,7 +321,7 @@
      VARIANT — BRUTAL (nodo cuadrado, sombra sólida ink)
      ============================================================ */
 
-  :host([variant="brutal"]) .step-node {
+  :host([theme="brutal"]) .step-node {
     border-radius: 0;
     background: var(--color-washi-50);
     border: 2px solid var(--color-ink-100);
@@ -329,51 +329,51 @@
     box-shadow: var(--lib-shadow-brutal);
   }
 
-  :host([variant="brutal"][status="active"]) .step-node {
+  :host([theme="brutal"][status="active"]) .step-node {
     background: var(--color-ink-100);
     border-color: var(--color-ink-100);
     color: var(--color-washi-50);
     box-shadow: var(--lib-shadow-brutal);
   }
 
-  :host([variant="brutal"][status="completed"]) .step-node {
+  :host([theme="brutal"][status="completed"]) .step-node {
     background: var(--color-ink-100);
     border-color: var(--color-ink-100);
     color: var(--color-washi-50);
     box-shadow: 2px 2px 0 0 var(--lib-shibui-ink);
   }
 
-  :host([variant="brutal"][status="error"]) .step-node {
+  :host([theme="brutal"][status="error"]) .step-node {
     background: var(--color-washi-50);
     border-color: var(--color-error);
     color: var(--color-error);
     box-shadow: 4px 4px 0 0 var(--color-error);
   }
 
-  :host([variant="brutal"]) .step-connector {
+  :host([theme="brutal"]) .step-connector {
     background: var(--color-ink-100);
     height: 2px;
   }
 
-  :host([variant="brutal"][status="completed"]) .step-connector {
+  :host([theme="brutal"][status="completed"]) .step-connector {
     background: var(--color-ink-100);
   }
 
-  :host([variant="brutal"]) .step-label {
+  :host([theme="brutal"]) .step-label {
     color: var(--color-ink-100);
     letter-spacing: var(--tracking-widest);
   }
 
-  :host([variant="brutal"][status="active"]) .step-label {
+  :host([theme="brutal"][status="active"]) .step-label {
     color: var(--color-ink-100);
     font-weight: var(--weight-semibold);
   }
 
-  :host([variant="brutal"][status="completed"]) .step-label {
+  :host([theme="brutal"][status="completed"]) .step-label {
     color: var(--text-secondary);
   }
 
-  :host([variant="brutal"][status="error"]) .step-label {
+  :host([theme="brutal"][status="error"]) .step-label {
     color: var(--color-error);
   }
 
@@ -383,7 +383,7 @@
     .step-connector,
     .step-label { transition: none; }
 
-    :host([variant="inverse"][status="active"]) .step-node::after {
+    :host([theme="inverse"][status="active"]) .step-node::after {
       animation: none; }
   }
 

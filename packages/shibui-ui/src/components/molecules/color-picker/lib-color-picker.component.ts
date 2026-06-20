@@ -5,7 +5,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
 import { colorPickerTemplate, swatchGridTemplate } from './lib-color-picker.html';
 import { SHIBUI_SWATCHES } from './lib-color-picker.types';
 import type {
-  ColorPickerVariant,
+  ColorPickerDisplay,
   ColorInputMode,
   SwatchRow,
   SwatchColor,
@@ -70,7 +70,7 @@ function isValidHex(v: string): boolean {
  * slider de opacidad, inputs HEX/RGB/HSL intercambiables y colores guardados.
  *
  * @prop {string}             value     — Color inicial en HEX (#RRGGBB)
- * @prop {ColorPickerVariant} variant   — inline · trigger (default: inline)
+ * @prop {ColorPickerDisplay} display   — inline · trigger (default: inline)
  * @prop {boolean}            show-alpha— Mostrar slider y campo de opacidad
  * @prop {boolean}            dark      — Modo oscuro
  * @prop {boolean}            disabled  — Desactivado
@@ -97,7 +97,7 @@ export class LibColorPicker extends LitElement {
   value = '#B85A1E';
 
   @property({ type: String, reflect: true })
-  variant: ColorPickerVariant = 'inline';
+  display: ColorPickerDisplay = 'inline';
 
   @property({ type: Boolean, reflect: true, attribute: 'show-alpha' })
   showAlpha = false;
@@ -172,7 +172,7 @@ export class LibColorPicker extends LitElement {
     const res = this._buildColorResult();
 
     return colorPickerTemplate({
-      variant:   this.variant,
+      display:   this.display,
       label:     this.label || res.hex,
       panelOpen: this._open,
       hex: res.hex, r: res.r, g: res.g, b: res.b,
@@ -329,7 +329,7 @@ export class LibColorPicker extends LitElement {
   /* ── Close on outside click / Escape ── */
 
   private _onDocClick = (e: MouseEvent): void => {
-    if (this.variant !== 'trigger' || !this._open) return;
+    if (this.display !== 'trigger' || !this._open) return;
     if (!this.contains(e.target as Node) && !(this.shadowRoot?.contains(e.target as Node) ?? false)) {
       this._cancel();
     }

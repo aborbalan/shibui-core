@@ -82,10 +82,10 @@ test.describe('Angular 21 × @shibui-ui/ui — consumer contract', () => {
 
   // ── 2b. Properties — string enum ──────────────────────────────────────────
 
-  test('prop string: variant="danger" se refleja como atributo en el host', async ({ page }) => {
-    const btn = page.locator('[data-testid="btn-danger"]');
-    const attr = await btn.getAttribute('variant');
-    expect(attr).toBe('danger');
+  test('prop string: tone="error" se refleja como atributo en el host', async ({ page }) => {
+    const btn = page.locator('[data-testid="btn-error"]');
+    const attr = await btn.getAttribute('tone');
+    expect(attr).toBe('error');
   });
 
   // ── 3. Eventos ─────────────────────────────────────────────────────────────

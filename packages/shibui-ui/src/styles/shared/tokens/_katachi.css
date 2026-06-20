@@ -238,6 +238,9 @@
   --lib-effect-brutal-shadow:  4px 4px 0px 0px var(--color-washi-900);
   /* Ring pill/indicator — brutal shadow reducido a escala pequeña */
   --lib-effect-ring:           2px 2px 0px 0px var(--color-washi-900);
+  /* Variante SVG (comps circulares) — offset brutal vía drop-shadow,
+     antialiaseado siguiendo la silueta del path en vez del box-shadow del div */
+  --lib-effect-ring-glow:      drop-shadow(2px 2px 0 var(--color-washi-900));
   --lib-effect-glass-blur:     0px;
   --lib-effect-topbar-opacity: 0;
   --lib-effect-after-bg:       transparent;
@@ -329,6 +332,12 @@
   --lib-effect-ring:
     0 0 0 1px oklch(61.85% 0.149 48.72deg / 0.45),
     0 0 8px oklch(61.85% 0.149 48.72deg / 0.15);
+  /* Variante SVG (comps circulares) — anillo dorado nítido como stroke
+     (antialiasing nativo) + halo difuso vía drop-shadow */
+  --lib-effect-ring-stroke:
+    oklch(61.85% 0.149 48.72deg / 0.55);
+  --lib-effect-ring-glow:
+    drop-shadow(0 0 6px oklch(61.85% 0.149 48.72deg / 0.30));
   --lib-effect-glass-blur:     0px;
   /* Top bar: seam gradient (default en card CSS) — sólo abrirlo */
   --lib-effect-topbar-opacity: 1;

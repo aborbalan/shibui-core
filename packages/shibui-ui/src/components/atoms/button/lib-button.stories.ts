@@ -16,8 +16,13 @@ const meta: Meta<LibButtonStoryArgs> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'ghost', 'accent', 'danger'],
-      description: 'Rol semántico del botón (prominencia y comportamiento). La estética viene del contexto katachi del ancestor.',
+      options: ['solid', 'outlined', 'ghost'],
+      description: 'Tratamiento visual del botón (prominencia). La estética viene del contexto katachi del ancestor.',
+    },
+    tone: {
+      control: 'select',
+      options: ['default', 'accent', 'error'],
+      description: 'Tinte semántico del botón.',
     },
     size: {
       control: 'select',
@@ -40,6 +45,7 @@ const meta: Meta<LibButtonStoryArgs> = {
   render: (args): TemplateResult => html`
     <lib-button
       variant=${args.variant}
+      tone=${args.tone ?? 'default'}
       size=${args.size}
       ?disabled=${args.disabled}
       ?glass=${args.glass}
@@ -55,7 +61,8 @@ type Story = StoryObj<LibButtonStoryArgs>;
 
 export const Playground: Story = {
   args: {
-    variant: 'primary',
+    variant: 'solid',
+    tone: 'default',
     size: 'md',
     disabled: false,
     glass: false,
@@ -69,11 +76,11 @@ export const AllVariants: Story = {
   name: 'Roles — sin contexto',
   render: (): TemplateResult => html`
     <div style="display: flex; flex-wrap: wrap; gap: var(--lib-space-md); align-items: center; padding: var(--lib-space-lg);">
-      <lib-button variant="primary">Primary</lib-button>
-      <lib-button variant="secondary">Secondary</lib-button>
+      <lib-button variant="solid">Primary</lib-button>
+      <lib-button variant="outlined">Secondary</lib-button>
       <lib-button variant="ghost">Ghost</lib-button>
-      <lib-button variant="accent">Accent</lib-button>
-      <lib-button variant="danger">Danger</lib-button>
+      <lib-button tone="accent">Accent</lib-button>
+      <lib-button tone="error">Danger</lib-button>
     </div>
   `,
 };
@@ -82,9 +89,9 @@ export const AllVariants: Story = {
 export const Sizes: Story = {
   render: (): TemplateResult => html`
     <div style="display: flex; flex-wrap: wrap; gap: var(--lib-space-md); align-items: center; padding: var(--lib-space-lg);">
-      <lib-button variant="primary" size="sm">Small</lib-button>
-      <lib-button variant="primary" size="md">Medium</lib-button>
-      <lib-button variant="primary" size="lg">Large</lib-button>
+      <lib-button variant="solid" size="sm">Small</lib-button>
+      <lib-button variant="solid" size="md">Medium</lib-button>
+      <lib-button variant="solid" size="lg">Large</lib-button>
     </div>
   `,
 };
@@ -93,11 +100,11 @@ export const Sizes: Story = {
 export const Disabled: Story = {
   render: (): TemplateResult => html`
     <div style="display: flex; flex-wrap: wrap; gap: var(--lib-space-md); align-items: center; padding: var(--lib-space-lg);">
-      <lib-button variant="primary"   ?disabled=${true}>Primary</lib-button>
-      <lib-button variant="secondary" ?disabled=${true}>Secondary</lib-button>
+      <lib-button variant="solid"   ?disabled=${true}>Primary</lib-button>
+      <lib-button variant="outlined" ?disabled=${true}>Secondary</lib-button>
       <lib-button variant="ghost"     ?disabled=${true}>Ghost</lib-button>
-      <lib-button variant="accent"    ?disabled=${true}>Accent</lib-button>
-      <lib-button variant="danger"    ?disabled=${true}>Danger</lib-button>
+      <lib-button tone="accent"    ?disabled=${true}>Accent</lib-button>
+      <lib-button tone="error"    ?disabled=${true}>Danger</lib-button>
     </div>
   `,
 };
@@ -114,8 +121,8 @@ export const GlassEffect: Story = {
       align-items: center; justify-content: center;
     ">
       <lib-button ?glass=${true}>Paper Glass</lib-button>
-      <lib-button ?glass=${true} variant="primary">Water Glass</lib-button>
-      <lib-button ?glass=${true} variant="accent">Kaki Glass</lib-button>
+      <lib-button ?glass=${true} variant="solid">Water Glass</lib-button>
+      <lib-button ?glass=${true} tone="accent">Kaki Glass</lib-button>
     </div>
   `,
 };
@@ -131,9 +138,9 @@ export const SpotlightEffect: Story = {
       padding: var(--lib-space-xl);
       background: var(--color-washi-950, #120E0A);
     ">
-      <lib-button variant="primary"   ?spotlight=${true}>Primary</lib-button>
-      <lib-button variant="secondary" ?spotlight=${true}>Secondary</lib-button>
-      <lib-button variant="accent"    ?spotlight=${true}>Accent</lib-button>
+      <lib-button variant="solid"   ?spotlight=${true}>Primary</lib-button>
+      <lib-button variant="outlined" ?spotlight=${true}>Secondary</lib-button>
+      <lib-button tone="accent"    ?spotlight=${true}>Accent</lib-button>
     </div>
   `,
 };
@@ -143,15 +150,15 @@ export const WithIcons: Story = {
   name: 'With Icon Slots',
   render: (): TemplateResult => html`
     <div style="display: flex; flex-wrap: wrap; gap: var(--lib-space-md); align-items: center; padding: var(--lib-space-lg);">
-      <lib-button variant="primary">
+      <lib-button variant="solid">
         <span slot="prefix">→</span>
         Siguiente
       </lib-button>
-      <lib-button variant="secondary">
+      <lib-button variant="outlined">
         Exportar
         <span slot="suffix">↗</span>
       </lib-button>
-      <lib-button variant="danger">
+      <lib-button tone="error">
         <span slot="prefix">✕</span>
         Eliminar
       </lib-button>
@@ -166,11 +173,11 @@ export const WithIcons: Story = {
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<LibButtonStoryArgs>(() => html`
-  <lib-button variant="primary">Primary</lib-button>
-  <lib-button variant="secondary">Secondary</lib-button>
+  <lib-button variant="solid">Primary</lib-button>
+  <lib-button variant="outlined">Secondary</lib-button>
   <lib-button variant="ghost">Ghost</lib-button>
-  <lib-button variant="accent">Accent</lib-button>
-  <lib-button variant="danger">Danger</lib-button>
+  <lib-button tone="accent">Accent</lib-button>
+  <lib-button tone="error">Danger</lib-button>
 `);
 
 export const KatachiShizen   = _katachi.KatachiShizen;
@@ -187,7 +194,7 @@ export const KatachiTerminal = _katachi.KatachiTerminal;
 export const TestClickEvent: Story = {
   name: 'Test · ui-lib-click se dispara con detail',
   tags: ['test'],
-  args: { variant: 'primary', size: 'md', disabled: false },
+  args: { variant: 'solid', size: 'md', disabled: false },
   play: async ({ canvasElement }): Promise<void> => {
     const btn = canvasElement.querySelector('lib-button') as HTMLElement;
     const shadowBtn = btn.shadowRoot!.querySelector('.btn') as HTMLElement;
@@ -207,7 +214,7 @@ export const TestClickEvent: Story = {
 export const TestDisabledBlocksEvent: Story = {
   name: 'Test · disabled bloquea el evento',
   tags: ['test'],
-  args: { variant: 'primary', size: 'md', disabled: true },
+  args: { variant: 'solid', size: 'md', disabled: true },
   play: async ({ canvasElement }): Promise<void> => {
     const btn = canvasElement.querySelector('lib-button') as HTMLElement;
     const shadowBtn = btn.shadowRoot!.querySelector('.btn') as HTMLElement;

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Components vs Lit — y su relación con el Manifest</title>
+<style>
+  :root{
+    --bg:#14110f;
+    --bg-soft:#1c1815;
+    --panel:#221d19;
+    --panel-2:#2a241f;
+    --ink:#ece4d8;
+    --ink-soft:#bcae9c;
+    --ink-faint:#8c8072;
+    --line:#3a3128;
+    --celadon:#7fae9b;
+    --celadon-deep:#4f7d6c;
+    --kintsugi:#d9a441;
+    --kintsugi-soft:#e8c27a;
+    --kaki:#c8623a;
+    --sabi:#9a6f4e;
+    --info:#6f9fc4;
+    --error:#c0573f;
+    --radius:14px;
+    --mono:"SFMono-Regular",ui-monospace,"Cascadia Code","Fira Code",Consolas,monospace;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --serif:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(217,164,65,.08), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(127,174,155,.07), transparent 55%),
+      var(--bg);
+    color:var(--ink);font-family:var(--sans);line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:64px 28px 120px}
+  header.hero{margin-bottom:56px}
+  .kicker{
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--kintsugi);margin:0 0 14px
+  }
+  h1{
+    font-family:var(--serif);font-weight:600;font-size:2.65rem;line-height:1.12;margin:0 0 18px;
+    letter-spacing:-.01em
+  }
+  h1 .accent{color:var(--celadon)}
+  .lede{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:0}
+  .seam{height:2px;border:0;margin:42px 0;
+    background:linear-gradient(90deg,transparent,var(--kintsugi) 22%,var(--kintsugi-soft) 50%,var(--kintsugi) 78%,transparent);
+    opacity:.55}
+  h2{font-family:var(--serif);font-size:1.7rem;font-weight:600;margin:54px 0 8px;letter-spacing:-.01em}
+  h2 .num{font-family:var(--mono);font-size:.95rem;color:var(--kintsugi);margin-right:.6em;vertical-align:middle}
+  h3{font-size:1.12rem;font-weight:650;margin:30px 0 6px;color:var(--ink)}
+  p{margin:12px 0;color:var(--ink-soft)}
+  strong{color:var(--ink);font-weight:650}
+  em{color:var(--kintsugi-soft);font-style:normal}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel-2);color:var(--kintsugi-soft);
+    padding:.12em .4em;border-radius:6px;border:1px solid var(--line)}
+  a{color:var(--celadon)}
+
+  .toc{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 0}
+  .toc a{font-family:var(--mono);font-size:.78rem;text-decoration:none;color:var(--ink-soft);
+    border:1px solid var(--line);background:var(--panel);padding:8px 14px;border-radius:999px;transition:.2s}
+  .toc a:hover{border-color:var(--celadon);color:var(--celadon);transform:translateY(-1px)}
+
+  pre{background:#100d0b;border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;overflow:auto;margin:18px 0;font-size:.84rem;line-height:1.55}
+  pre code{background:none;border:0;padding:0;color:#d7cdbd}
+  .tok-key{color:#c98ac0}
+  .tok-fn{color:var(--celadon)}
+  .tok-str{color:var(--kintsugi-soft)}
+  .tok-com{color:var(--ink-faint);font-style:italic}
+  .tok-tag{color:var(--info)}
+  .tok-dec{color:var(--kaki)}
+
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px;margin:20px 0}
+
+  table{width:100%;border-collapse:collapse;margin:22px 0;font-size:.92rem}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-faint);border-bottom:1px solid var(--line)}
+  thead th:first-child{width:30%}
+  td:first-child{color:var(--ink);font-weight:600}
+  tbody tr:hover{background:rgba(127,174,155,.04)}
+  .vanilla{color:var(--sabi)}
+  .lit{color:var(--celadon)}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px}
+  .card h4{margin:0 0 10px;font-size:1.02rem;display:flex;align-items:center;gap:8px}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .card ul{margin:8px 0 0;padding-left:18px}
+  .card li{margin:6px 0;color:var(--ink-soft);font-size:.9rem}
+  .card.v{border-top:3px solid var(--sabi)}
+  .card.l{border-top:3px solid var(--celadon)}
+
+  .callout{border-left:3px solid var(--kintsugi);background:rgba(217,164,65,.06);
+    border-radius:0 10px 10px 0;padding:16px 20px;margin:22px 0}
+  .callout.celadon{border-left-color:var(--celadon);background:rgba(127,174,155,.06)}
+  .callout .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--kintsugi);display:block;margin-bottom:6px}
+  .callout.celadon .tag{color:var(--celadon)}
+
+  /* Diagrama de flujo del manifest */
+  .flow{margin:26px 0}
+  .flow svg{width:100%;height:auto;display:block}
+
+  /* lifecycle list */
+  .life{counter-reset:step;list-style:none;padding:0;margin:18px 0}
+  .life li{position:relative;padding:12px 0 12px 50px;border-bottom:1px solid var(--line)}
+  .life li:before{counter-increment:step;content:counter(step);position:absolute;left:0;top:10px;
+    width:32px;height:32px;border-radius:50%;background:var(--panel-2);border:1px solid var(--line);
+    color:var(--kintsugi);font-family:var(--mono);font-size:.85rem;display:grid;place-items:center}
+  .life code{font-size:.82em}
+
+  footer{margin-top:70px;padding-top:24px;border-top:1px solid var(--line);
+    color:var(--ink-faint);font-size:.82rem;font-family:var(--mono)}
+  footer .gold{color:var(--kintsugi)}
+
+  @media(max-width:680px){
+    .wrap{padding:40px 18px 80px}
+    h1{font-size:2rem}
+    .cards{grid-template-columns:1fr}
+    thead th:first-child{width:auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">Informe técnico · shibui-ecosystem</p>
+  <h1>Web Components <span class="accent">vs</span> Lit<br>y su relación con el <span class="accent">Manifest</span></h1>
+  <p class="lede">Cómo funciona la plataforma nativa de componentes, qué añade Lit por encima, y por qué un
+  <em>manifest</em> es el puente entre ese código y todo lo que lo consume (APIs, wrappers, tipos, tests).</p>
+  <nav class="toc">
+    <a href="#nativos">1 · Web Components nativos</a>
+    <a href="#lit">2 · Lit</a>
+    <a href="#tabla">3 · Comparativa</a>
+    <a href="#manifest">4 · El Manifest</a>
+    <a href="#shibui">5 · Caso shibui</a>
+    <a href="#cuando">6 · Cuándo usar qué</a>
+  </nav>
+</header>
+
+<hr class="seam">
+
+<!-- ============ 1 ============ -->
+<section id="nativos">
+  <h2><span class="num">01</span>Web Components nativos: la plataforma cruda</h2>
+  <p>“Web Components” no es una librería, es un conjunto de <strong>APIs estándar del navegador</strong>.
+  No hay nada que instalar. Se apoyan en tres piezas que encajan entre sí:</p>
+
+  <div class="panel">
+    <p><strong class="lit">① Custom Elements</strong> — registrar una etiqueta HTML propia (<code>&lt;lib-button&gt;</code>)
+    asociada a una clase que extiende <code>HTMLElement</code>.</p>
+    <p><strong class="lit">② Shadow DOM</strong> — un árbol DOM encapsulado y aislado, con sus estilos
+    <em>scopeados</em> que no se filtran ni reciben fugas del exterior.</p>
+    <p><strong class="lit">③ Templates &amp; Slots</strong> — <code>&lt;template&gt;</code> para markup inerte reutilizable
+    y <code>&lt;slot&gt;</code> para proyectar contenido del usuario dentro del shadow tree.</p>
+  </div>
+
+  <p>Un componente nativo mínimo se ve así — y aquí está el punto: <strong>tú gestionas todo a mano</strong>.</p>
+
+  <pre><code><span class="tok-key">class</span> <span class="tok-fn">LibButton</span> <span class="tok-key">extends</span> <span class="tok-fn">HTMLElement</span> {
+  <span class="tok-com">// 1. Declaras qué atributos observar</span>
+  <span class="tok-key">static</span> <span class="tok-key">get</span> <span class="tok-fn">observedAttributes</span>() { <span class="tok-key">return</span> [<span class="tok-str">'variant'</span>, <span class="tok-str">'disabled'</span>]; }
+
+  <span class="tok-fn">constructor</span>() {
+    <span class="tok-key">super</span>();
+    <span class="tok-key">this</span>.attachShadow({ mode: <span class="tok-str">'open'</span> }); <span class="tok-com">// crea el shadow root</span>
+  }
+
+  <span class="tok-com">// 2. Lifecycle: se llama al insertarse en el DOM</span>
+  <span class="tok-fn">connectedCallback</span>() { <span class="tok-key">this</span>.render(); }
+
+  <span class="tok-com">// 3. Reaccionas a CADA cambio de atributo, manualmente</span>
+  <span class="tok-fn">attributeChangedCallback</span>(name, oldVal, newVal) { <span class="tok-key">this</span>.render(); }
+
+  <span class="tok-com">// 4. Re-pintas el HTML completo a string — sin diffing</span>
+  <span class="tok-fn">render</span>() {
+    <span class="tok-key">const</span> variant = <span class="tok-key">this</span>.getAttribute(<span class="tok-str">'variant'</span>) ?? <span class="tok-str">'solid'</span>;
+    <span class="tok-key">this</span>.shadowRoot.innerHTML = <span class="tok-str">`
+      &lt;style&gt;button { /* ... */ }&lt;/style&gt;
+      &lt;button class="${variant}"&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/button&gt;
+    `</span>;
+  }
+}
+customElements.<span class="tok-fn">define</span>(<span class="tok-str">'lib-button'</span>, LibButton);</code></pre>
+
+  <h3>El ciclo de vida que te da el navegador</h3>
+  <ol class="life">
+    <li><code>constructor()</code> — se crea la instancia. Aquí montas el shadow root.</li>
+    <li><code>connectedCallback()</code> — el elemento entra en el DOM. Primer render.</li>
+    <li><code>attributeChangedCallback()</code> — cambia un atributo observado. <strong>Tú</strong> decides qué re-renderizar.</li>
+    <li><code>disconnectedCallback()</code> — sale del DOM. Limpieza manual de listeners.</li>
+  </ol>
+
+  <div class="callout">
+    <span class="tag">El dolor real</span>
+    <p style="margin:0">Nativo funciona, pero te deja resolviendo a mano lo tedioso: <strong>reactividad</strong>
+    (re-pintar string completo en cada cambio, sin diff eficiente), el desfase <strong>atributo ⇄ propiedad</strong>
+    (un <code>disabled</code> string vs un boolean JS), y plantillas como <em>template strings</em> sin tipado ni escapado.
+    A escala, eso es mucho <em>boilerplate</em> repetido y propenso a errores.</p>
+  </div>
+</section>
+
+<hr class="seam">
+
+<!-- ============ 2 ============ -->
+<section id="lit">
+  <h2><span class="num">02</span>Lit: una capa fina sobre el estándar</h2>
+  <p>Lit <strong>no reemplaza</strong> los Web Components — los <em>potencia</em>. Sigues produciendo un Custom Element
+  estándar con Shadow DOM; Lit (~5&nbsp;KB) solo elimina el boilerplate y añade reactividad eficiente.
+  Su clase base <code>LitElement</code> <strong>extiende <code>HTMLElement</code></strong>.</p>
+
+  <p>El mismo botón, en Lit — y exactamente así es como está escrito <code>lib-button</code> en shibui-ui:</p>
+
+  <pre><code><span class="tok-key">import</span> { LitElement, html, css } <span class="tok-key">from</span> <span class="tok-str">'lit'</span>;
+<span class="tok-key">import</span> { customElement, property } <span class="tok-key">from</span> <span class="tok-str">'lit/decorators.js'</span>;
+
+<span class="tok-dec">@customElement</span>(<span class="tok-str">'lib-button'</span>)              <span class="tok-com">// registra la etiqueta por ti</span>
+<span class="tok-key">export class</span> <span class="tok-fn">LibButton</span> <span class="tok-key">extends</span> <span class="tok-fn">LitElement</span> {
+
+  <span class="tok-dec">@property</span>({ type: String, reflect: <span class="tok-key">true</span> })   <span class="tok-com">// propiedad reactiva + refleja a atributo</span>
+  variant = <span class="tok-str">'solid'</span>;
+
+  <span class="tok-dec">@property</span>({ type: Boolean, reflect: <span class="tok-key">true</span> })
+  disabled = <span class="tok-key">false</span>;
+
+  <span class="tok-key">static</span> styles = css<span class="tok-str">`button { /* scopeado al shadow */ }`</span>;
+
+  <span class="tok-com">// render() declarativo. Lit hace el diff: solo toca lo que cambió.</span>
+  <span class="tok-fn">render</span>() {
+    <span class="tok-key">return</span> html<span class="tok-str">`&lt;button class=${<span class="tok-key">this</span>.variant} ?disabled=${<span class="tok-key">this</span>.disabled}&gt;
+              &lt;slot&gt;&lt;/slot&gt;
+            &lt;/button&gt;`</span>;
+  }
+}</code></pre>
+
+  <h3>Qué te regala Lit respecto al nativo</h3>
+  <div class="cards">
+    <div class="card l">
+      <h4><span class="dot" style="background:var(--celadon)"></span>Reactividad automática</h4>
+      <ul>
+        <li>Cambias <code>this.variant</code> y el re-render se programa solo.</li>
+        <li><code>lit-html</code> hace <strong>diffing</strong>: actualiza solo los nodos afectados, no todo el innerHTML.</li>
+        <li>Batch asíncrono: varios cambios → un único render.</li>
+      </ul>
+    </div>
+    <div class="card l">
+      <h4><span class="dot" style="background:var(--celadon)"></span>Plantillas declarativas</h4>
+      <ul>
+        <li><code>html`…`</code> con interpolación segura (auto-escapado).</li>
+        <li>Bindings expresivos: <code>?attr</code> (booleano), <code>.prop</code>, <code>@event</code>.</li>
+        <li>Sin <code>innerHTML</code> manual ni concatenar strings.</li>
+      </ul>
+    </div>
+    <div class="card l">
+      <h4><span class="dot" style="background:var(--celadon)"></span>Atributo ⇄ propiedad resuelto</h4>
+      <ul>
+        <li><code>reflect: true</code> sincroniza la propiedad JS con el atributo HTML.</li>
+        <li>Conversión de tipos (Boolean, Number…) gestionada.</li>
+        <li>Es justo lo que shibui usa para que <code>variant</code> sea estilizable por CSS.</li>
+      </ul>
+    </div>
+    <div class="card l">
+      <h4><span class="dot" style="background:var(--celadon)"></span>Ergonomía + metadatos</h4>
+      <ul>
+        <li>Decoradores (<code>@customElement</code>, <code>@property</code>) = menos ruido.</li>
+        <li>Esos decoradores son <strong>código declarativo legible por herramientas</strong> → clave para el manifest.</li>
+        <li>Estilos co-localizados con <code>css`…`</code>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout celadon">
+    <span class="tag">Idea central</span>
+    <p style="margin:0">La salida de un componente Lit <strong>es</strong> un Web Component estándar.
+    Cualquiera puede usar <code>&lt;lib-button&gt;</code> en React, Angular, Svelte o HTML plano sin saber que dentro hay Lit.
+    Lit es <em>build-time / authoring-time</em>; el runtime es la plataforma.</p>
+  </div>
+</section>
+
+<hr class="seam">
+
+<!-- ============ 3 ============ -->
+<section id="tabla">
+  <h2><span class="num">03</span>Comparativa frente a frente</h2>
+  <table>
+    <thead>
+      <tr><th>Dimensión</th><th class="vanilla">Web Components nativos</th><th class="lit">Lit</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Qué es</td><td>Estándar del navegador (sin deps)</td><td>Librería ~5 KB sobre el estándar</td></tr>
+      <tr><td>Clase base</td><td><code>HTMLElement</code></td><td><code>LitElement</code> (extiende HTMLElement)</td></tr>
+      <tr><td>Reactividad</td><td>Manual: tú llamas a render()</td><td>Automática + diffing eficiente</td></tr>
+      <tr><td>Plantillas</td><td><code>innerHTML</code> = strings</td><td><code>html`…`</code> tipado y seguro</td></tr>
+      <tr><td>Attr ⇄ prop</td><td>A mano (getAttribute / set)</td><td><code>reflect</code> + conversión de tipos</td></tr>
+      <tr><td>Boilerplate</td><td>Alto</td><td>Bajo (decoradores)</td></tr>
+      <tr><td>Bundle</td><td>0 KB</td><td>~5 KB (amortizado entre N componentes)</td></tr>
+      <tr><td>Interop frameworks</td><td>Total (es un elemento DOM)</td><td>Total (la salida es estándar)</td></tr>
+      <tr><td>Legibilidad para tooling</td><td>Baja (lógica imperativa)</td><td>Alta (decoradores declarativos)</td></tr>
+    </tbody>
+  </table>
+  <p>La última fila es la bisagra hacia la siguiente sección: porque Lit declara las props con
+  <code>@property</code> y los eventos/slots con JSDoc, una herramienta <strong>puede leer ese código y extraer un mapa
+  completo del componente</strong>. Eso es el manifest.</p>
+</section>
+
+<hr class="seam">
+
+<!-- ============ 4 ============ -->
+<section id="manifest">
+  <h2><span class="num">04</span>El Manifest: el contrato legible por máquinas</h2>
+  <p>Un componente sabe describirse a sí mismo en el código (su tag, sus props, sus tipos, sus eventos, sus slots),
+  pero ese conocimiento está <em>atrapado</em> dentro de la clase. El <strong>Custom Elements Manifest (CEM)</strong>
+  lo extrae a un fichero <code>custom-elements.json</code> — un <strong>JSON estándar</strong> que describe cada
+  componente de la librería de forma neutral.</p>
+
+  <div class="panel">
+    <p style="margin:0 0 6px"><strong>Lo genera <code>cem analyze</code></strong>, que parsea el código fuente —los decoradores
+    <code>@property</code>, los tipos TypeScript, los comentarios <code>@fires</code> / <code>@csspart</code>— y emite algo así:</p>
+  </div>
+
+  <pre><code>{
+  <span class="tok-str">"schemaVersion"</span>: <span class="tok-str">"1.0.0"</span>,
+  <span class="tok-str">"modules"</span>: [{
+    <span class="tok-str">"path"</span>: <span class="tok-str">"src/components/atoms/button/lib-button.component.ts"</span>,
+    <span class="tok-str">"declarations"</span>: [{
+      <span class="tok-str">"kind"</span>: <span class="tok-str">"class"</span>,
+      <span class="tok-str">"customElement"</span>: <span class="tok-key">true</span>,
+      <span class="tok-str">"tagName"</span>: <span class="tok-str">"lib-button"</span>,
+      <span class="tok-str">"members"</span>: [
+        { <span class="tok-str">"name"</span>: <span class="tok-str">"variant"</span>, <span class="tok-str">"attribute"</span>: <span class="tok-str">"variant"</span>,
+          <span class="tok-str">"type"</span>: { <span class="tok-str">"text"</span>: <span class="tok-str">"'solid' | 'outlined' | 'ghost'"</span> }, <span class="tok-str">"default"</span>: <span class="tok-str">"'solid'"</span> },
+        { <span class="tok-str">"name"</span>: <span class="tok-str">"disabled"</span>, <span class="tok-str">"type"</span>: { <span class="tok-str">"text"</span>: <span class="tok-str">"boolean"</span> }, <span class="tok-str">"default"</span>: <span class="tok-str">"false"</span> }
+      ],
+      <span class="tok-str">"events"</span>: [{ <span class="tok-str">"name"</span>: <span class="tok-str">"ui-lib-click"</span> }],
+      <span class="tok-str">"slots"</span>:  [{ <span class="tok-str">"name"</span>: <span class="tok-str">""</span>, <span class="tok-str">"description"</span>: <span class="tok-str">"Contenido del botón"</span> }]
+    }]
+  }]
+}</code></pre>
+
+  <h3>La relación, en una frase</h3>
+  <div class="callout">
+    <span class="tag">Manifest ⇄ Web Components</span>
+    <p style="margin:0">El <strong>código del componente</strong> es la <em>fuente de verdad</em>; el <strong>manifest</strong>
+    es su <em>reflejo serializado y neutral</em>. Lit hace que ese reflejo sea fácil de generar (props declarativas),
+    y el manifest hace que todo lo que rodea al componente —docs, IDE, wrappers, tests— se derive de un único origen
+    en vez de duplicarse a mano.</p>
+  </div>
+
+  <h3>Por qué importa: una fuente, muchos consumidores</h3>
+  <div class="flow">
+    <svg viewBox="0 0 860 360" xmlns="http://www.w3.org/2000/svg" font-family="var(--mono),monospace">
+      <defs>
+        <marker id="arw" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#9a6f4e"/>
+        </marker>
+        <marker id="arwg" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#d9a441"/>
+        </marker>
+      </defs>
+
+      <!-- source -->
+      <rect x="20" y="135" width="180" height="90" rx="12" fill="#221d19" stroke="#7fae9b" stroke-width="1.5"/>
+      <text x="110" y="168" text-anchor="middle" fill="#ece4d8" font-size="14" font-weight="700">Componente Lit</text>
+      <text x="110" y="188" text-anchor="middle" fill="#bcae9c" font-size="11">lib-button.ts</text>
+      <text x="110" y="206" text-anchor="middle" fill="#8c8072" font-size="10">@property · @fires</text>
+      <text x="110" y="118" text-anchor="middle" fill="#7fae9b" font-size="10">FUENTE DE VERDAD</text>
+
+      <!-- arrow to manifest -->
+      <line x1="200" y1="180" x2="330" y2="180" stroke="#d9a441" stroke-width="2" marker-end="url(#arwg)"/>
+      <text x="265" y="170" text-anchor="middle" fill="#d9a441" font-size="10">cem analyze</text>
+
+      <!-- manifest -->
+      <rect x="335" y="140" width="170" height="80" rx="12" fill="#2a241f" stroke="#d9a441" stroke-width="2"/>
+      <text x="420" y="172" text-anchor="middle" fill="#e8c27a" font-size="14" font-weight="700">Manifest</text>
+      <text x="420" y="192" text-anchor="middle" fill="#bcae9c" font-size="11">custom-elements.json</text>
+      <text x="420" y="118" text-anchor="middle" fill="#d9a441" font-size="10">CONTRATO NEUTRAL</text>
+
+      <!-- consumers -->
+      <g>
+        <line x1="505" y1="160" x2="650" y2="60"  stroke="#9a6f4e" stroke-width="1.5" marker-end="url(#arw)"/>
+        <line x1="505" y1="172" x2="650" y2="130" stroke="#9a6f4e" stroke-width="1.5" marker-end="url(#arw)"/>
+        <line x1="505" y1="188" x2="650" y2="200" stroke="#9a6f4e" stroke-width="1.5" marker-end="url(#arw)"/>
+        <line x1="505" y1="200" x2="650" y2="270" stroke="#9a6f4e" stroke-width="1.5" marker-end="url(#arw)"/>
+        <line x1="505" y1="210" x2="650" y2="335" stroke="#9a6f4e" stroke-width="1.5" marker-end="url(#arw)"/>
+      </g>
+
+      <g font-size="11.5">
+        <rect x="655" y="40"  width="185" height="40" rx="9" fill="#221d19" stroke="#3a3128"/>
+        <text x="668" y="65" fill="#ece4d8">Datos de la API REST</text>
+        <rect x="655" y="110" width="185" height="40" rx="9" fill="#221d19" stroke="#3a3128"/>
+        <text x="668" y="135" fill="#ece4d8">Wrappers React / Ng / Svelte</text>
+        <rect x="655" y="180" width="185" height="40" rx="9" fill="#221d19" stroke="#3a3128"/>
+        <text x="668" y="205" fill="#ece4d8">Tipos &amp; types generados</text>
+        <rect x="655" y="250" width="185" height="40" rx="9" fill="#221d19" stroke="#3a3128"/>
+        <text x="668" y="275" fill="#ece4d8">Tests de conformidad</text>
+        <rect x="655" y="315" width="185" height="40" rx="9" fill="#221d19" stroke="#3a3128"/>
+        <text x="668" y="340" fill="#ece4d8">Docs · autocompletado IDE</text>
+      </g>
+    </svg>
+  </div>
+  <p>Sin manifest, cada uno de esos consumidores tendría que <strong>volver a describir el componente a mano</strong>
+  y mantenerlo sincronizado. Con manifest, se <em>generan</em> y el <strong>drift</strong> (desincronización) se detecta en CI.</p>
+</section>
+
+<hr class="seam">
+
+<!-- ============ 5 ============ -->
+<section id="shibui">
+  <h2><span class="num">05</span>Cómo lo usa shibui-ecosystem (tu caso real)</h2>
+  <p>Esto no es teoría aquí: es exactamente la arquitectura de <code>@shibui/ui</code>. El manifest CEM es el eje del
+  tooling, y <code>generate-components-api.ts</code> lo dice literalmente en su cabecera:
+  <em>“fuente de verdad = el código”</em>.</p>
+
+  <div class="cards">
+    <div class="card">
+      <h4><span class="dot" style="background:var(--kintsugi)"></span>API de componentes</h4>
+      <ul>
+        <li><code>generate-components-api.ts</code> lee <code>dist/custom-elements.json</code>.</li>
+        <li>Emite <code>components.generated.ts</code> para <code>shibui-api</code> (NestJS).</li>
+        <li>Fusiona un overlay editorial (status, version, tags).</li>
+        <li>Salida determinista → <code>git diff --exit-code</code> como drift-guard.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4><span class="dot" style="background:var(--kintsugi)"></span>Wrappers &amp; tipos</h4>
+      <ul>
+        <li><code>generate-wrappers.ts</code> y los <code>mappers/</code> derivan React/Angular/Svelte.</li>
+        <li>Cada framework consume el mismo manifest, sin reescribir props.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4><span class="dot" style="background:var(--celadon)"></span>Conformidad de props</h4>
+      <ul>
+        <li><code>props-conformance.test.ts</code> y <code>manifest-cohesion.test.ts</code> validan
+        que código, CSS y manifest <strong>no divergen</strong>.</li>
+        <li>Es tu <em>Cohesión de props</em> Nivel 2 (orphan-check / reflect) en ci-lib.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4><span class="dot" style="background:var(--celadon)"></span>hanko (a futuro)</h4>
+      <ul>
+        <li>Tu motor de confianza es <strong>manifest-driven</strong> por diseño.</li>
+        <li>Verifica Web Components contra su manifest declarado → el manifest pasa de
+        documentación a <strong>contrato verificable</strong>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout celadon">
+    <span class="tag">El círculo se cierra</span>
+    <p style="margin:0">Lit hace que tus componentes sean <strong>fáciles de describir</strong> →
+    el CEM los <strong>describe en JSON neutral</strong> → tu tooling y hanko los <strong>consumen y verifican</strong>.
+    El manifest es lo que convierte una colección de Web Components en un <em>sistema gobernado por un único contrato</em>.</p>
+  </div>
+</section>
+
+<hr class="seam">
+
+<!-- ============ 6 ============ -->
+<section id="cuando">
+  <h2><span class="num">06</span>Cuándo usar qué</h2>
+  <table>
+    <thead><tr><th>Situación</th><th>Recomendación</th></tr></thead>
+    <tbody>
+      <tr><td>1–2 elementos muy simples, sin estado</td><td class="vanilla">Web Components nativos — evitas la dependencia</td></tr>
+      <tr><td>Librería de diseño con N componentes reactivos</td><td class="lit">Lit — la reactividad y el boilerplate ahorrado lo amortizan de sobra</td></tr>
+      <tr><td>Necesitas interop con React/Angular/Svelte</td><td>Cualquiera de los dos (la salida es estándar); Lit facilita generar los wrappers</td></tr>
+      <tr><td>Quieres docs, tipos y tests autogenerados</td><td class="lit">Lit + <strong>CEM manifest</strong> — props declarativas = manifest rico</td></tr>
+      <tr><td>Gobernanza / verificación de confianza</td><td>Manifest como contrato (el modelo de hanko)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="panel">
+    <p style="margin:0"><strong>Resumen en tres líneas:</strong></p>
+    <p style="margin:8px 0 0">› <strong class="vanilla">Web Components</strong> son el estándar del navegador: potentes pero crudos.</p>
+    <p style="margin:4px 0 0">› <strong class="lit">Lit</strong> es una capa fina que les añade reactividad y ergonomía sin dejar de producir el estándar.</p>
+    <p style="margin:4px 0 0">› El <strong style="color:var(--kintsugi)">Manifest</strong> serializa esos componentes a un contrato neutral del que se deriva —y contra el que se verifica— todo lo demás.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Informe generado para <span class="gold">shibui-ecosystem</span> · @shibui/ui usa Lit + Custom Elements Manifest (cem analyze).</p>
+  <p>Referencias en repo: <span class="gold">scripts/generate-components-api.ts</span> · <span class="gold">tests/conformance/props-conformance.test.ts</span> · <span class="gold">scripts/__tests__/manifest-cohesion.test.ts</span></p>
+</footer>
+
+</div>
+</body>
+</html>

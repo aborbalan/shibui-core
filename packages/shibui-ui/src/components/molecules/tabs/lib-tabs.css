@@ -4,8 +4,8 @@
    LIB-TABS — Shibui UI · SG-60
    ============================================================
    Variantes de lista : underline · pill · card · outline · vertical
-   Colores            : (default accent) · info
-   Modificadores      : dark · gold · glitch · scroll · full
+   Tone               : default · accent · info
+   Modificadores      : dark · gold · glitch · scrollable · full
    Tamaños            : sm · (base) · lg
    ============================================================ */
 
@@ -190,16 +190,16 @@
   /* ════════════════════════════════
      1. UNDERLINE (default)
      ════════════════════════════════ */
-  :host([variant="underline"]) .tb-list {
+  :host([display="underline"]) .tb-list {
     border-bottom: 1px solid var(--color-washi-200);
     gap: var(--lib-space-xs);
   }
 
-  :host([variant="underline"]) .tb-panels {
+  :host([display="underline"]) .tb-panels {
     padding-top: var(--lib-space-2xl);
   }
 
-  :host([variant="underline"]) .tb-tab.is-active {
+  :host([display="underline"]) .tb-tab.is-active {
     color: var(--color-kaki-600);
   }
 
@@ -217,15 +217,15 @@
   }
 
   /* Celadon underline */
-  :host([variant="underline"][color="info"]) .tb-tab.is-active {
+  :host([display="underline"][tone="info"]) .tb-tab.is-active {
     color: var(--info);
   }
 
-  :host([variant="underline"][color="info"]) .tb-ink {
+  :host([display="underline"][tone="info"]) .tb-ink {
     background: var(--info);
   }
 
-  :host([variant="underline"][color="info"]) .tb-tab.is-active .tb-badge {
+  :host([display="underline"][tone="info"]) .tb-tab.is-active .tb-badge {
     background: var(--info);
   }
 
@@ -233,7 +233,7 @@
   /* ════════════════════════════════
      2. PILL
      ════════════════════════════════ */
-  :host([variant="pill"]) .tb-list {
+  :host([display="pill"]) .tb-list {
     gap: var(--lib-space-xs);
     padding: var(--lib-space-xs);
     background: var(--color-washi-100);
@@ -241,49 +241,49 @@
     display: inline-flex;
   }
 
-  :host([variant="pill"]) .tb-tab {
+  :host([display="pill"]) .tb-tab {
     border-radius: 2px;
     height: 36px;
     padding: var(--lib-space-xs) var(--lib-space-lg);
   }
 
-  :host([variant="pill"]) .tb-tab.is-active {
+  :host([display="pill"]) .tb-tab.is-active {
     background: #fff;
     color: var(--color-washi-900);
     box-shadow: 0 1px 4px rgb(26, 20, 14, .1);
   }
 
-  :host([variant="pill"]) .tb-panels {
+  :host([display="pill"]) .tb-panels {
     padding-top: var(--lib-space-2xl);
   }
 
-  :host([variant="pill"]) .tb-ink {
+  :host([display="pill"]) .tb-ink {
     display: none;
   }
 
   /* Pill accent */
-  :host([variant="pill"][color="accent"]) .tb-tab.is-active {
+  :host([display="pill"][tone="accent"]) .tb-tab.is-active {
     background: var(--color-kaki-500);
     color: #fff;
   }
 
-  :host([variant="pill"][color="accent"]) .tb-tab.is-active .tb-badge {
+  :host([display="pill"][tone="accent"]) .tb-tab.is-active .tb-badge {
     background: rgb(255, 255, 255, .3);
     color: #fff;
   }
 
   /* Pill info */
-  :host([variant="pill"][color="info"]) .tb-tab.is-active {
+  :host([display="pill"][tone="info"]) .tb-tab.is-active {
     background: var(--info);
     color: #fff;
   }
 
   /* Pill round */
-  :host([variant="pill"][round]) .tb-list {
+  :host([display="pill"][round]) .tb-list {
     border-radius: 999px;
   }
 
-  :host([variant="pill"][round]) .tb-tab {
+  :host([display="pill"][round]) .tb-tab {
     border-radius: 999px;
   }
 
@@ -291,12 +291,12 @@
   /* ════════════════════════════════
      3. CARD
      ════════════════════════════════ */
-  :host([variant="card"]) .tb-list {
+  :host([display="card"]) .tb-list {
     gap: 2px;
     align-items: flex-end;
   }
 
-  :host([variant="card"]) .tb-tab {
+  :host([display="card"]) .tb-tab {
     border: 1px solid transparent;
     border-bottom: none;
     background: var(--color-washi-100);
@@ -307,12 +307,12 @@
     border-radius: 2px 2px 0 0;
   }
 
-  :host([variant="card"]) .tb-tab:hover {
+  :host([display="card"]) .tb-tab:hover {
     background: var(--color-washi-50);
     color: var(--color-washi-700);
   }
 
-  :host([variant="card"]) .tb-tab.is-active {
+  :host([display="card"]) .tb-tab.is-active {
     background: #fff;
     color: var(--color-washi-900);
     border-color: var(--color-washi-200);
@@ -321,13 +321,13 @@
     height: 44px;
   }
 
-  :host([variant="card"]) .tb-panels {
+  :host([display="card"]) .tb-panels {
     border: 1px solid var(--color-washi-200);
     background: #fff;
     padding: var(--lib-space-2xl);
   }
 
-  :host([variant="card"]) .tb-ink {
+  :host([display="card"]) .tb-ink {
     display: none;
   }
 
@@ -335,29 +335,29 @@
   /* ════════════════════════════════
      4. OUTLINE
      ════════════════════════════════ */
-  :host([variant="outline"]) .tb-list {
+  :host([display="outline"]) .tb-list {
     border-bottom: 1px solid var(--color-washi-200);
     gap: var(--lib-space-xs);
   }
 
-  :host([variant="outline"]) .tb-tab {
+  :host([display="outline"]) .tb-tab {
     border: 1px solid transparent;
     border-bottom: none;
     margin-bottom: -1px;
   }
 
-  :host([variant="outline"]) .tb-tab.is-active {
+  :host([display="outline"]) .tb-tab.is-active {
     border-color: var(--color-washi-200);
     border-bottom-color: var(--color-washi-50);
     background: var(--color-washi-50);
     color: var(--color-washi-900);
   }
 
-  :host([variant="outline"]) .tb-panels {
+  :host([display="outline"]) .tb-panels {
     padding-top: var(--lib-space-2xl);
   }
 
-  :host([variant="outline"]) .tb-ink {
+  :host([display="outline"]) .tb-ink {
     display: none;
   }
 
@@ -365,14 +365,14 @@
   /* ════════════════════════════════
      5. VERTICAL
      ════════════════════════════════ */
-  :host([variant="vertical"]) .tb {
+  :host([display="vertical"]) .tb {
     display: grid;
     grid-template-columns: 180px 1fr;
     gap: 0;
     align-items: start;
   }
 
-  :host([variant="vertical"]) .tb-list {
+  :host([display="vertical"]) .tb-list {
     flex-direction: column;
     align-items: stretch;
     border-right: 1px solid var(--color-washi-200);
@@ -384,17 +384,17 @@
     grid-row: 1;
   }
 
-  :host([variant="vertical"]) .tb-ink {
+  :host([display="vertical"]) .tb-ink {
     display: none;
   }
 
-  :host([variant="vertical"]) .tb-panels {
+  :host([display="vertical"]) .tb-panels {
     padding: var(--lib-space-xs) 0 var(--lib-space-xs) var(--lib-space-2xl);
     grid-column: 2;
     grid-row: 1;
   }
 
-  :host([variant="vertical"]) .tb-tab {
+  :host([display="vertical"]) .tb-tab {
     height: auto;
     padding: var(--lib-space-md) var(--lib-space-xl);
     text-align: left;
@@ -403,17 +403,17 @@
     justify-content: flex-start;
   }
 
-  :host([variant="vertical"]) .tb-tab:hover {
+  :host([display="vertical"]) .tb-tab:hover {
     border-left-color: var(--color-washi-300);
   }
 
-  :host([variant="vertical"]) .tb-tab.is-active {
+  :host([display="vertical"]) .tb-tab.is-active {
     border-left-color: var(--color-kaki-500);
     color: var(--color-kaki-600);
     background: var(--color-kaki-50);
   }
 
-  :host([variant="vertical"]) .tb-panel.is-active {
+  :host([display="vertical"]) .tb-panel.is-active {
     animation: tb-in-h var(--duration-slow) var(--ease-out) both;
   }
 
@@ -429,7 +429,7 @@
     }
   }
 
-  :host([variant="vertical"]) .tb-label {
+  :host([display="vertical"]) .tb-label {
     padding: 0 var(--lib-space-xl) var(--lib-space-md);
   }
 
@@ -472,59 +472,59 @@
   }
 
   /* dark underline */
-  :host([dark][variant="underline"]) .tb-list {
+  :host([dark][display="underline"]) .tb-list {
     border-bottom-color: rgb(255, 255, 255, .08);
   }
 
-  :host([dark][variant="underline"]) .tb-tab.is-active {
+  :host([dark][display="underline"]) .tb-tab.is-active {
     color: var(--color-kaki-400);
   }
 
-  :host([dark][variant="underline"]) .tb-ink {
+  :host([dark][display="underline"]) .tb-ink {
     background: var(--color-kaki-400);
   }
 
   /* dark pill */
-  :host([dark][variant="pill"]) .tb-list {
+  :host([dark][display="pill"]) .tb-list {
     background: rgb(255, 255, 255, .04);
     border-color: rgb(255, 255, 255, .07);
   }
 
-  :host([dark][variant="pill"]) .tb-tab.is-active {
+  :host([dark][display="pill"]) .tb-tab.is-active {
     background: rgb(255, 255, 255, .09);
     color: rgb(250, 247, 244, .8);
     box-shadow: 0 1px 4px rgb(0, 0, 0, .3);
   }
 
-  :host([dark][variant="pill"][color="accent"]) .tb-tab.is-active {
+  :host([dark][display="pill"][tone="accent"]) .tb-tab.is-active {
     background: var(--color-kaki-500);
     color: #fff;
   }
 
   /* dark card */
-  :host([dark][variant="card"]) .tb-tab {
+  :host([dark][display="card"]) .tb-tab {
     background: rgb(255, 255, 255, .03);
     border-color: transparent;
   }
 
-  :host([dark][variant="card"]) .tb-tab.is-active {
+  :host([dark][display="card"]) .tb-tab.is-active {
     background: rgb(255, 255, 255, .07);
     border-color: rgb(255, 255, 255, .08);
     border-bottom-color: var(--color-washi-950);
     color: rgb(250, 247, 244, .75);
   }
 
-  :host([dark][variant="card"]) .tb-panels {
+  :host([dark][display="card"]) .tb-panels {
     background: rgb(255, 255, 255, .04);
     border-color: rgb(255, 255, 255, .08);
   }
 
   /* dark vertical */
-  :host([dark][variant="vertical"]) .tb-list {
+  :host([dark][display="vertical"]) .tb-list {
     border-right-color: rgb(255, 255, 255, .08);
   }
 
-  :host([dark][variant="vertical"]) .tb-tab.is-active {
+  :host([dark][display="vertical"]) .tb-tab.is-active {
     border-left-color: var(--color-kaki-500);
     color: var(--color-kaki-400);
     background: rgb(184, 90, 30, .1);
@@ -544,7 +544,7 @@
     }
   }
 
-  :host([gold][variant="underline"]) .tb-ink {
+  :host([gold][display="underline"]) .tb-ink {
     background: linear-gradient(90deg,
         var(--color-kaki-600) 0%,
         var(--color-kaki-400) 25%,
@@ -565,7 +565,7 @@
   }
 
   /* Kintsugi pill */
-  :host([gold][variant="pill"]) .tb-tab.is-active {
+  :host([gold][display="pill"]) .tb-tab.is-active {
     background: linear-gradient(90deg,
         var(--color-kaki-600), var(--color-kaki-400), #F5D08A,
         var(--color-kaki-400), var(--color-kaki-600));
@@ -575,7 +575,7 @@
   }
 
   /* Kintsugi dark */
-  :host([gold][dark][variant="underline"]) .tb-ink {
+  :host([gold][dark][display="underline"]) .tb-ink {
     background: linear-gradient(90deg,
         rgb(184, 90, 30, .4) 0%,
         rgb(217, 114, 52, .7) 25%,
@@ -721,7 +721,7 @@
   }
 
   /* Glitch ink flickers */
-  :host([glitch][variant="underline"]) .tb-ink {
+  :host([glitch][display="underline"]) .tb-ink {
     background: var(--lib-comp-bg-inverse, var(--bg-inverse));
     animation: tb-glitch-flicker 6s steps(1) infinite !important;
   }
@@ -735,7 +735,7 @@
     color: rgb(78, 148, 130, .7);
   }
 
-  :host([glitch][dark][variant="underline"]) .tb-ink {
+  :host([glitch][dark][display="underline"]) .tb-ink {
     background: rgb(250, 247, 244, .6);
   }
 
@@ -953,7 +953,7 @@
 
     /* Underline border-bottom: washi-200 hardcoded → --border-subtle
        (en kintsugi = oklch(kaki-400 / 0.20), dorado sutil) */
-    :host([variant="underline"]):host-context([data-katachi="kintsugi"]) .tb-list {
+    :host([display="underline"]):host-context([data-katachi="kintsugi"]) .tb-list {
       border-bottom-color: var(--border-subtle);
     }
 
@@ -969,24 +969,24 @@
       box-shadow: 0 0 8px oklch(58.33% 0.068 171.21deg / 0.45);
     }
 
-    :host([variant="underline"]):host-context([data-katachi="celadon"]) .tb-list {
+    :host([display="underline"]):host-context([data-katachi="celadon"]) .tb-list {
       border-bottom-color: var(--border-subtle);
     }
 
     /* Tab activo: el acento (texto/badge/pill/vertical) sigue al katachi
        (jade frío) — consume --text-accent / --border-focus en vez del
        kaki cálido hardcodeado de cada variante. */
-    :host([variant="underline"]):host-context([data-katachi="celadon"]) .tb-tab.is-active,
-    :host([variant="vertical"]):host-context([data-katachi="celadon"]) .tb-tab.is-active {
+    :host([display="underline"]):host-context([data-katachi="celadon"]) .tb-tab.is-active,
+    :host([display="vertical"]):host-context([data-katachi="celadon"]) .tb-tab.is-active {
       color: var(--text-accent);
     }
 
-    :host([variant="vertical"]):host-context([data-katachi="celadon"]) .tb-tab.is-active {
+    :host([display="vertical"]):host-context([data-katachi="celadon"]) .tb-tab.is-active {
       border-left-color: var(--border-focus);
       background: color-mix(in oklch, var(--text-accent), transparent 90%);
     }
 
-    :host([variant="pill"]):host-context([data-katachi="celadon"]) .tb-tab.is-active {
+    :host([display="pill"]):host-context([data-katachi="celadon"]) .tb-tab.is-active {
       background: var(--text-accent);
     }
 

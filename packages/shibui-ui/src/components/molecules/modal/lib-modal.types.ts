@@ -3,12 +3,17 @@
 export type ModalSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
 
 /**
- * Variante visual del panel.
- * - `default`    — header con borde y fondo neutro.
+ * Tratamiento visual del panel (LibVariant + extensión documentada `editorial`).
+ * - `solid`      — header con borde y fondo neutro (era 'default').
  * - `editorial`  — sin separador de header, título expandido.
- * - `danger`     — header tintado en rojo para acciones destructivas.
  */
-export type ModalVariant = 'default' | 'editorial' | 'danger';
+export type ModalVariant = 'solid' | 'editorial';
+
+/**
+ * Tinte semántico del panel (subconjunto canónico de `LibTone`).
+ * - `error` — header tintado en rojo para acciones destructivas.
+ */
+export type ModalTone = 'default' | 'error';
 
 /**
  * Animación de entrada del panel.

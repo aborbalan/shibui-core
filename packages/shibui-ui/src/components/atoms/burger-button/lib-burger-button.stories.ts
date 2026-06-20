@@ -8,7 +8,7 @@ const meta: Meta = {
   tags:['autodocs'],
   component: 'lib-burger',
   argTypes: {
-    variant:   { control: 'select', options: ['filled', 'kanji', 'neutral', 'framed', 'inverse', 'glitch'] },
+    theme:     { control: 'select', options: ['filled', 'kanji', 'neutral', 'framed', 'inverse', 'glitch'] },
     size:      { control: 'select', options: ['sm', 'md', 'lg'] },
     open:      { control: 'boolean' },
     label:     { control: 'text' },
@@ -26,7 +26,7 @@ const lbl = (t: string): TemplateResult => html`
 /* ── Playground ── */
 export const Playground: Story = {
   args: {
-    variant:   'filled',
+    theme:     'filled',
     size:      'md',
     open:      false,
     label:     '',
@@ -35,7 +35,7 @@ export const Playground: Story = {
   render: (args): TemplateResult => html`
     <div style="padding:3rem;">
       <lib-burger
-        variant="${args.variant}"
+        theme="${args.theme}"
         size="${args.size}"
         ?open="${args.open}"
         label="${args.label}"
@@ -53,22 +53,22 @@ export const Variants: Story = {
     <div style="padding:3rem;display:flex;align-items:center;gap:3rem;flex-wrap:wrap;">
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="filled"></lib-burger>
+        <lib-burger theme="filled"></lib-burger>
         ${lbl('ink stroke')}
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="kanji"></lib-burger>
+        <lib-burger theme="kanji"></lib-burger>
         ${lbl('kanji 三')}
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="neutral"></lib-burger>
+        <lib-burger theme="neutral"></lib-burger>
         ${lbl('neutral fold')}
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="framed"></lib-burger>
+        <lib-burger theme="framed"></lib-burger>
         ${lbl('hanko frame')}
       </div>
 
@@ -85,13 +85,13 @@ export const Kintsugi: Story = {
       display:flex;align-items:center;gap:3rem;flex-wrap:wrap;">
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="inverse"></lib-burger>
+        <lib-burger theme="inverse"></lib-burger>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;
           text-transform:uppercase;color:var(--color-washi-700);">inverse</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="inverse" label="menú" label-open="cerrar"></lib-burger>
+        <lib-burger theme="inverse" label="menú" label-open="cerrar"></lib-burger>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;
           text-transform:uppercase;color:var(--color-washi-700);">con label</span>
       </div>
@@ -107,13 +107,13 @@ export const Glitch: Story = {
     <div style="padding:3rem;display:flex;align-items:center;gap:3rem;flex-wrap:wrap;">
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="glitch"></lib-burger>
+        <lib-burger theme="glitch"></lib-burger>
         ${lbl('glitch · light')}
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;
         background:var(--color-washi-950);padding:1.5rem;">
-        <lib-burger variant="glitch"
+        <lib-burger theme="glitch"
           style="color:rgba(250,247,244,0.45);">
         </lib-burger>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;
@@ -131,17 +131,17 @@ export const Sizes: Story = {
     <div style="padding:3rem;display:flex;align-items:center;gap:3rem;">
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="filled" size="sm"></lib-burger>
+        <lib-burger theme="filled" size="sm"></lib-burger>
         ${lbl('sm')}
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="filled" size="md"></lib-burger>
+        <lib-burger theme="filled" size="md"></lib-burger>
         ${lbl('md')}
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="filled" size="lg"></lib-burger>
+        <lib-burger theme="filled" size="lg"></lib-burger>
         ${lbl('lg')}
       </div>
 
@@ -156,17 +156,17 @@ export const WithLabel: Story = {
     <div style="padding:3rem;display:flex;align-items:center;gap:3rem;flex-wrap:wrap;">
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="filled" label="menú" label-open="cerrar"></lib-burger>
+        <lib-burger theme="filled" label="menú" label-open="cerrar"></lib-burger>
         ${lbl('ink + label')}
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="neutral" label="menú" label-open="cerrar"></lib-burger>
+        <lib-burger theme="neutral" label="menú" label-open="cerrar"></lib-burger>
         ${lbl('neutral + label')}
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="kanji" label="menú" label-open="cerrar"></lib-burger>
+        <lib-burger theme="kanji" label="menú" label-open="cerrar"></lib-burger>
         ${lbl('kanji + label')}
       </div>
 
@@ -181,34 +181,34 @@ export const OpenState: Story = {
     <div style="padding:3rem;display:flex;align-items:center;gap:3rem;flex-wrap:wrap;">
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="filled" open></lib-burger>
+        <lib-burger theme="filled" open></lib-burger>
         ${lbl('ink open')}
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="kanji" open></lib-burger>
+        <lib-burger theme="kanji" open></lib-burger>
         ${lbl('kanji open')}
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="neutral" open></lib-burger>
+        <lib-burger theme="neutral" open></lib-burger>
         ${lbl('neutral open')}
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="framed" open></lib-burger>
+        <lib-burger theme="framed" open></lib-burger>
         ${lbl('framed open')}
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;
         background:var(--color-washi-950);padding:1rem;">
-        <lib-burger variant="inverse" open></lib-burger>
+        <lib-burger theme="inverse" open></lib-burger>
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;
           text-transform:uppercase;color:var(--color-washi-700);">inverse open</span>
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <lib-burger variant="glitch" open></lib-burger>
+        <lib-burger theme="glitch" open></lib-burger>
         ${lbl('glitch open')}
       </div>
 
@@ -239,7 +239,7 @@ export const InContext: Story = {
             </span>
           </span>
           <lib-burger
-            variant="filled"
+            theme="filled"
             label="menú"
             label-open="cerrar"
             @ui-lib-burger-change="${(e: CustomEvent): void => {
@@ -275,23 +275,23 @@ export const InContext: Story = {
 const _katachi = createKatachiStories<object>(() => html`
   <div style="display:flex;flex-direction:column;gap:var(--lib-space-md);">
     <div style="display:flex;align-items:center;gap:var(--lib-space-lg);flex-wrap:wrap;">
-      <lib-burger variant="filled"     size="md"></lib-burger>
-      <lib-burger variant="kanji"   size="md"></lib-burger>
-      <lib-burger variant="neutral"   size="md"></lib-burger>
-      <lib-burger variant="framed"  size="md"></lib-burger>
-      <lib-burger variant="glitch"  size="md"></lib-burger>
+      <lib-burger theme="filled"     size="md"></lib-burger>
+      <lib-burger theme="kanji"   size="md"></lib-burger>
+      <lib-burger theme="neutral"   size="md"></lib-burger>
+      <lib-burger theme="framed"  size="md"></lib-burger>
+      <lib-burger theme="glitch"  size="md"></lib-burger>
     </div>
     <div style="display:flex;align-items:center;gap:var(--lib-space-lg);flex-wrap:wrap;">
-      <lib-burger variant="filled"     size="md" open></lib-burger>
-      <lib-burger variant="kanji"   size="md" open></lib-burger>
-      <lib-burger variant="neutral"   size="md" open></lib-burger>
-      <lib-burger variant="framed"  size="md" open></lib-burger>
-      <lib-burger variant="glitch"  size="md" open></lib-burger>
+      <lib-burger theme="filled"     size="md" open></lib-burger>
+      <lib-burger theme="kanji"   size="md" open></lib-burger>
+      <lib-burger theme="neutral"   size="md" open></lib-burger>
+      <lib-burger theme="framed"  size="md" open></lib-burger>
+      <lib-burger theme="glitch"  size="md" open></lib-burger>
     </div>
     <div style="display:flex;align-items:center;gap:var(--lib-space-lg);">
-      <lib-burger variant="filled" size="sm"></lib-burger>
-      <lib-burger variant="filled" size="md"></lib-burger>
-      <lib-burger variant="filled" size="lg"></lib-burger>
+      <lib-burger theme="filled" size="sm"></lib-burger>
+      <lib-burger theme="filled" size="md"></lib-burger>
+      <lib-burger theme="filled" size="lg"></lib-burger>
     </div>
   </div>
 `);

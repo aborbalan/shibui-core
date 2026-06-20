@@ -22,8 +22,8 @@ const base: React.CSSProperties = {
 export const DataStatus: React.FC<DataStatusProps> = ({ label, isPending, isError, error, count }) => {
   if (isPending) {
     return (
-      <span style={{ ...base, background: 'color-mix(in oklch, var(--color-kaki-600) 15%, transparent)', color: 'var(--color-kaki-300)' }}>
-        <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--color-kaki-400)', animation: 'pulse 1.2s ease-in-out infinite' }} />
+      <span style={{ ...base, background: 'color-mix(in oklch, var(--text-accent) 15%, transparent)', color: 'var(--text-accent)' }}>
+        <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--text-accent)', animation: 'pulse 1.2s ease-in-out infinite' }} />
         {label} — cargando…
       </span>
     );
@@ -38,7 +38,7 @@ export const DataStatus: React.FC<DataStatusProps> = ({ label, isPending, isErro
   }
 
   return (
-    <span style={{ ...base, background: 'color-mix(in oklch, var(--color-kaki-500) 12%, transparent)', color: 'var(--color-kaki-400)' }}>
+    <span style={{ ...base, background: 'color-mix(in oklch, var(--text-accent) 12%, transparent)', color: 'var(--text-accent)' }}>
       ✓ {label} — {count} tokens
     </span>
   );

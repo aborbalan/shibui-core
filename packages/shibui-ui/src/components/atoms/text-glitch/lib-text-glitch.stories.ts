@@ -1,20 +1,21 @@
 ﻿import { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, TemplateResult } from 'lit';
+import { expect } from 'storybook/test';
 import './lib-text-glitch.component';
 import type { LibTextGlitch } from './lib-text-glitch.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
-type LibTextGlitchArgs = Pick<LibTextGlitch, 'text' | 'variant' | 'trigger' | 'active'>;
+type LibTextGlitchArgs = Pick<LibTextGlitch, 'text' | 'theme' | 'trigger' | 'active'>;
 
 const meta: Meta<LibTextGlitchArgs> = {
   title: 'Universal/Content/Text Glitch',
   tags:['autodocs'],
   component: 'lib-text-glitch',
   argTypes: {
-    variant: {
+    theme: {
       control: 'select',
       options: ['slice', 'scan', 'shift', 'decode', 'redact', 'noise'],
-      description: 'Variante de efecto visual',
+      description: 'Variante estética de efecto visual',
     },
     trigger: {
       control: 'select',
@@ -35,7 +36,7 @@ const meta: Meta<LibTextGlitchArgs> = {
       <span style="font-family:var(--lib-font-display);font-size:3.5rem;font-weight:300;letter-spacing:-0.02em;line-height:1.1;">
         <lib-text-glitch
           text=${args.text}
-          variant=${args.variant}
+          theme=${args.theme}
           trigger=${args.trigger}
           ?active=${args.active}
         ></lib-text-glitch>
@@ -54,7 +55,7 @@ type Story = StoryObj<LibTextGlitchArgs>;
 export const Playground: Story = {
   args: {
     text:    'shibui',
-    variant: 'slice',
+    theme:   'slice',
     trigger: 'hover',
     active:  false,
   },
@@ -80,7 +81,7 @@ export const AllVariants: Story = {
               ${v}
             </span>
             <span style="font-family:var(--lib-font-display);font-size:2.75rem;font-weight:300;letter-spacing:-0.02em;line-height:1.1;">
-              <lib-text-glitch text="shibui 渋い" variant="${v}"></lib-text-glitch>
+              <lib-text-glitch text="shibui 渋い" theme="${v}"></lib-text-glitch>
             </span>
           </div>
         `)}
@@ -92,7 +93,7 @@ export const AllVariants: Story = {
           noise
         </span>
         <span style="font-family:var(--lib-font-display);font-size:2.75rem;font-weight:300;letter-spacing:-0.02em;color:oklch(82% 0.015 55);line-height:1.1;">
-          <lib-text-glitch text="shibui 渋い" variant="noise"></lib-text-glitch>
+          <lib-text-glitch text="shibui 渋い" theme="noise"></lib-text-glitch>
         </span>
       </div>
 
@@ -112,7 +113,7 @@ export const Slice: Story = {
       <div style="display:flex;flex-direction:column;gap:0.5rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Display · 5xl</span>
         <span style="font-family:var(--lib-font-display);font-size:5rem;font-weight:300;letter-spacing:-0.02em;line-height:1;">
-          <lib-text-glitch text="kintsugi" variant="slice"></lib-text-glitch>
+          <lib-text-glitch text="kintsugi" theme="slice"></lib-text-glitch>
         </span>
       </div>
 
@@ -120,19 +121,19 @@ export const Slice: Story = {
         <div style="display:flex;flex-direction:column;gap:0.5rem;">
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Italic accent</span>
           <span style="font-family:var(--lib-font-display);font-size:2.75rem;font-style:italic;color:var(--color-kaki-500);letter-spacing:-0.02em;">
-            <lib-text-glitch text="渋い" variant="slice"></lib-text-glitch>
+            <lib-text-glitch text="渋い" theme="slice"></lib-text-glitch>
           </span>
         </div>
         <div style="display:flex;flex-direction:column;gap:0.5rem;">
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Mono · nav link</span>
           <span style="font-family:var(--lib-font-mono);font-size:var(--text-xs);letter-spacing:0.25em;text-transform:uppercase;color:var(--text-muted);">
-            <lib-text-glitch text="ANATOMY" variant="slice"></lib-text-glitch>
+            <lib-text-glitch text="ANATOMY" theme="slice"></lib-text-glitch>
           </span>
         </div>
         <div style="display:flex;flex-direction:column;gap:0.5rem;">
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Mono · kaki</span>
           <span style="font-family:var(--lib-font-mono);font-size:var(--text-xs);letter-spacing:0.25em;text-transform:uppercase;color:var(--color-kaki-500);">
-            <lib-text-glitch text="← 42 PROGRESS" variant="slice"></lib-text-glitch>
+            <lib-text-glitch text="← 42 PROGRESS" theme="slice"></lib-text-glitch>
           </span>
         </div>
       </div>
@@ -153,21 +154,21 @@ export const Scan: Story = {
       <div style="display:flex;flex-direction:column;gap:0.5rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Display · plays once per hover</span>
         <span style="font-family:var(--lib-font-display);font-size:3.5rem;font-weight:300;letter-spacing:-0.02em;">
-          <lib-text-glitch text="diseño sutil" variant="scan"></lib-text-glitch>
+          <lib-text-glitch text="diseño sutil" theme="scan"></lib-text-glitch>
         </span>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:0.5rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Mono · versión · ideal para CTAs</span>
         <span style="font-family:var(--lib-font-mono);font-size:var(--text-sm);letter-spacing:0.08em;color:var(--text-secondary);">
-          <lib-text-glitch text="v0.1.0 · 43 components" variant="scan"></lib-text-glitch>
+          <lib-text-glitch text="v0.1.0 · 43 components" theme="scan"></lib-text-glitch>
         </span>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:0.5rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">trigger="always" — scan en bucle</span>
         <span style="font-family:var(--lib-font-display);font-size:2rem;font-weight:300;letter-spacing:-0.02em;">
-          <lib-text-glitch text="cargando sistema" variant="scan" trigger="always"></lib-text-glitch>
+          <lib-text-glitch text="cargando sistema" theme="scan" trigger="always"></lib-text-glitch>
         </span>
       </div>
 
@@ -187,14 +188,14 @@ export const Shift: Story = {
       <div style="display:flex;flex-direction:column;gap:0.5rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Display · 4xl — intensidad baja</span>
         <span style="font-family:var(--lib-font-display);font-size:4rem;font-weight:300;letter-spacing:-0.02em;line-height:1.1;">
-          <lib-text-glitch text="wabi-sabi" variant="shift"></lib-text-glitch>
+          <lib-text-glitch text="wabi-sabi" theme="shift"></lib-text-glitch>
         </span>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:0.5rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Body text</span>
         <span style="font-family:var(--lib-font-body);font-size:var(--text-base);color:var(--text-secondary);line-height:1.6;">
-          <lib-text-glitch text="La belleza de lo incompleto" variant="shift"></lib-text-glitch>
+          <lib-text-glitch text="La belleza de lo incompleto" theme="shift"></lib-text-glitch>
         </span>
       </div>
 
@@ -214,7 +215,7 @@ export const Decode: Story = {
       <div style="display:flex;flex-direction:column;gap:0.5rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Display · pasa el cursor</span>
         <span style="font-family:var(--lib-font-display);font-size:3.5rem;font-weight:300;letter-spacing:-0.02em;">
-          <lib-text-glitch text="shibui" variant="decode"></lib-text-glitch>
+          <lib-text-glitch text="shibui" theme="decode"></lib-text-glitch>
         </span>
       </div>
 
@@ -222,19 +223,19 @@ export const Decode: Story = {
         <div style="display:flex;flex-direction:column;gap:0.5rem;">
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Italic accent</span>
           <span style="font-family:var(--lib-font-display);font-size:2.2rem;font-style:italic;color:var(--text-accent);">
-            <lib-text-glitch text="wabi-sabi" variant="decode"></lib-text-glitch>
+            <lib-text-glitch text="wabi-sabi" theme="decode"></lib-text-glitch>
           </span>
         </div>
         <div style="display:flex;flex-direction:column;gap:0.5rem;">
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Mono uppercase</span>
           <span style="font-family:var(--lib-font-mono);font-size:var(--text-sm);letter-spacing:0.15em;color:var(--text-secondary);">
-            <lib-text-glitch text="DESIGN SYSTEM" variant="decode"></lib-text-glitch>
+            <lib-text-glitch text="DESIGN SYSTEM" theme="decode"></lib-text-glitch>
           </span>
         </div>
         <div style="display:flex;flex-direction:column;gap:0.5rem;">
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Kanji</span>
           <span style="font-family:var(--lib-font-display);font-size:2.5rem;color:var(--color-washi-300);">
-            <lib-text-glitch text="渋い美学" variant="decode"></lib-text-glitch>
+            <lib-text-glitch text="渋い美学" theme="decode"></lib-text-glitch>
           </span>
         </div>
       </div>
@@ -242,7 +243,7 @@ export const Decode: Story = {
       <div style="display:flex;flex-direction:column;gap:0.5rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">trigger="always" — decodifica en bucle</span>
         <span style="font-family:var(--lib-font-display);font-size:3rem;font-weight:300;letter-spacing:-0.02em;">
-          <lib-text-glitch text="kintsugi digital" variant="decode" trigger="always"></lib-text-glitch>
+          <lib-text-glitch text="kintsugi digital" theme="decode" trigger="always"></lib-text-glitch>
         </span>
       </div>
 
@@ -264,20 +265,20 @@ export const Redact: Story = {
         <div style="display:flex;flex-direction:column;gap:0.5rem;">
           <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Display · plays once per hover</span>
           <span style="font-family:var(--lib-font-display);font-size:3rem;font-weight:300;letter-spacing:-0.02em;">
-            <lib-text-glitch text="kintsugi digital" variant="redact"></lib-text-glitch>
+            <lib-text-glitch text="kintsugi digital" theme="redact"></lib-text-glitch>
           </span>
         </div>
         <div style="display:flex;gap:2.5rem;flex-wrap:wrap;align-items:center;">
           <div style="display:flex;flex-direction:column;gap:0.5rem;">
             <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Mono</span>
             <span style="font-family:var(--lib-font-mono);font-size:var(--text-sm);letter-spacing:0.15em;text-transform:uppercase;">
-              <lib-text-glitch text="CLASIFICADO" variant="redact"></lib-text-glitch>
+              <lib-text-glitch text="CLASIFICADO" theme="redact"></lib-text-glitch>
             </span>
           </div>
           <div style="display:flex;flex-direction:column;gap:0.5rem;">
             <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--text-muted);text-transform:uppercase;">Body</span>
             <span style="font-family:var(--lib-font-body);font-size:var(--text-base);color:var(--text-secondary);">
-              <lib-text-glitch text="La belleza de lo incompleto" variant="redact"></lib-text-glitch>
+              <lib-text-glitch text="La belleza de lo incompleto" theme="redact"></lib-text-glitch>
             </span>
           </div>
         </div>
@@ -287,10 +288,10 @@ export const Redact: Story = {
       <div style="padding:3rem;background:var(--color-washi-950);display:flex;flex-direction:column;gap:2rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--color-washi-600);text-transform:uppercase;">Dark stage</span>
         <span style="font-family:var(--lib-font-display);font-size:2.8rem;font-weight:300;letter-spacing:-0.02em;color:rgba(250,247,244,0.75);">
-          <lib-text-glitch text="sistema shibui" variant="redact"></lib-text-glitch>
+          <lib-text-glitch text="sistema shibui" theme="redact"></lib-text-glitch>
         </span>
         <span style="font-family:var(--lib-font-mono);font-size:var(--text-xs);letter-spacing:0.25em;text-transform:uppercase;color:oklch(30% 0.02 50);">
-          <lib-text-glitch text="渋い · design system · v0.1.0" variant="redact"></lib-text-glitch>
+          <lib-text-glitch text="渋い · design system · v0.1.0" theme="redact"></lib-text-glitch>
         </span>
       </div>
 
@@ -311,21 +312,21 @@ export const Noise: Story = {
       <div style="display:flex;flex-direction:column;gap:0.5rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--color-washi-700);text-transform:uppercase;">Display · dark</span>
         <span style="font-family:var(--lib-font-display);font-size:3.5rem;font-weight:300;letter-spacing:-0.02em;color:rgba(250,247,244,0.75);line-height:1;">
-          <lib-text-glitch text="shibui" variant="noise"></lib-text-glitch>
+          <lib-text-glitch text="shibui" theme="noise"></lib-text-glitch>
         </span>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:0.5rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--color-washi-700);text-transform:uppercase;">Kanji · italic</span>
         <span style="font-family:var(--lib-font-display);font-size:5rem;font-style:italic;letter-spacing:-0.02em;color:rgba(250,247,244,0.3);line-height:1;">
-          <lib-text-glitch text="渋い" variant="noise"></lib-text-glitch>
+          <lib-text-glitch text="渋い" theme="noise"></lib-text-glitch>
         </span>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:0.5rem;">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:0.25em;color:var(--color-washi-700);text-transform:uppercase;">trigger="always"</span>
         <span style="font-family:var(--lib-font-display);font-size:2.5rem;font-weight:300;letter-spacing:-0.02em;color:rgba(250,247,244,0.6);line-height:1;">
-          <lib-text-glitch text="乱れ" variant="noise" trigger="always"></lib-text-glitch>
+          <lib-text-glitch text="乱れ" theme="noise" trigger="always"></lib-text-glitch>
         </span>
       </div>
 
@@ -336,9 +337,10 @@ export const Noise: Story = {
 
 /* ═══════════════════════════════════════════════════════════════
    KATACHI · 形 · Las 6 historias estándar
-   lib-text-glitch usa palette tokens deliberados (kaki, celadon)
-   para sus efectos — la superficie contenedora (bg-base,
-   text-primary) adapta al katachi activo.
+   Los fantasmas RGB siguen el acento del katachi activo vía
+   --tg-ghost-warm (--text-accent) y --tg-ghost-cool (--text-link):
+   terminal→fósforo, celadón→jade, kintsugi→oro, wabi→neutro…
+   La superficie contenedora (bg-base, text-primary) también adapta.
    ═══════════════════════════════════════════════════════════════ */
 
 const _katachi = createKatachiStories<object>(() => html`
@@ -347,7 +349,7 @@ const _katachi = createKatachiStories<object>(() => html`
       <div style="display:flex;align-items:baseline;gap:var(--lib-space-md);">
         <span style="font-family:var(--lib-font-mono);font-size:10px;letter-spacing:.15em;color:var(--text-muted);text-transform:uppercase;width:48px;flex-shrink:0;">${v}</span>
         <span style="font-family:var(--lib-font-display);font-size:2rem;font-weight:300;letter-spacing:-0.02em;color:var(--text-primary);line-height:1.1;">
-          <lib-text-glitch text="shibui 渋い" variant="${v}"></lib-text-glitch>
+          <lib-text-glitch text="shibui 渋い" theme="${v}"></lib-text-glitch>
         </span>
       </div>
     `)}
@@ -387,21 +389,21 @@ export const ContextNav: Story = {
         <!-- Links con distintas variantes -->
         <div style="display:flex;gap:1.5rem;">
           <a style="font-family:var(--lib-font-mono);font-size:var(--text-xs);letter-spacing:0.08em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;" href="#">
-            <lib-text-glitch text="Slice" variant="slice"></lib-text-glitch>
+            <lib-text-glitch text="Slice" theme="slice"></lib-text-glitch>
           </a>
           <a style="font-family:var(--lib-font-mono);font-size:var(--text-xs);letter-spacing:0.08em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;" href="#">
-            <lib-text-glitch text="Scan" variant="scan"></lib-text-glitch>
+            <lib-text-glitch text="Scan" theme="scan"></lib-text-glitch>
           </a>
           <a style="font-family:var(--lib-font-mono);font-size:var(--text-xs);letter-spacing:0.08em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;" href="#">
-            <lib-text-glitch text="Decode" variant="decode"></lib-text-glitch>
+            <lib-text-glitch text="Decode" theme="decode"></lib-text-glitch>
           </a>
           <a style="font-family:var(--lib-font-mono);font-size:var(--text-xs);letter-spacing:0.08em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;" href="#">
-            <lib-text-glitch text="Redact" variant="redact"></lib-text-glitch>
+            <lib-text-glitch text="Redact" theme="redact"></lib-text-glitch>
           </a>
         </div>
 
         <a style="font-family:var(--lib-font-mono);font-size:var(--text-xs);letter-spacing:0.08em;color:var(--color-kaki-500);text-decoration:none;text-transform:uppercase;opacity:0.6;" href="#">
-          <lib-text-glitch text="← 42 Progress" variant="scan"></lib-text-glitch>
+          <lib-text-glitch text="← 42 Progress" theme="scan"></lib-text-glitch>
         </a>
       </div>
 
@@ -436,4 +438,65 @@ export const ContextNav: Story = {
 
     </div>
   `,
+};
+
+
+/* ═══════════════════════════════════════════════════════════════
+   TESTS · katachi-awareness de los fantasmas
+   ═══════════════════════════════════════════════════════════════ */
+
+export const TestGhostsFollowKatachi: Story = {
+  name: 'Test · los fantasmas siguen el acento del katachi',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <div style="display:flex;gap:var(--lib-space-lg);padding:var(--lib-space-lg);background:var(--bg-base);">
+      ${(['terminal', 'celadon'] as const).map(k => html`
+        <div data-katachi="${k}" data-ctx="${k}" style="padding:var(--lib-space-md);">
+          <span style="font-family:var(--lib-font-display);font-size:2rem;">
+            <lib-text-glitch text="渋い" theme="slice"></lib-text-glitch>
+          </span>
+        </div>
+      `)}
+      <div data-ctx="base" style="padding:var(--lib-space-md);">
+        <span style="font-family:var(--lib-font-display);font-size:2rem;">
+          <lib-text-glitch text="渋い" theme="slice"></lib-text-glitch>
+        </span>
+      </div>
+    </div>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    await customElements.whenDefined('lib-text-glitch');
+    const glitches = [...canvasElement.querySelectorAll<LibTextGlitch>('lib-text-glitch')];
+    await Promise.all(glitches.map(g => g.updateComplete));
+
+    const ctx = (name: string): { warm: string; cool: string; accent: string; link: string } => {
+      const wrap = canvasElement.querySelector(`[data-ctx="${name}"]`) as HTMLElement;
+      const glitch = wrap.querySelector('lib-text-glitch') as HTMLElement;
+      const host = getComputedStyle(glitch);
+      const surface = getComputedStyle(wrap);
+      return {
+        warm:   host.getPropertyValue('--tg-ghost-warm').trim(),
+        cool:   host.getPropertyValue('--tg-ghost-cool').trim(),
+        accent: surface.getPropertyValue('--text-accent').trim(),
+        link:   surface.getPropertyValue('--text-link').trim(),
+      };
+    };
+
+    const terminal = ctx('terminal');
+    const celadon  = ctx('celadon');
+    const base     = ctx('base');
+
+    /* 1 · cada fantasma resuelve al acento/enlace de SU katachi */
+    expect(terminal.warm).toBe(terminal.accent);
+    expect(terminal.cool).toBe(terminal.link);
+    expect(celadon.warm).toBe(celadon.accent);
+
+    /* 2 · el cálido cambia con el katachi — ya no está clavado en kaki */
+    expect(terminal.warm).not.toBe(base.warm);
+    expect(celadon.warm).not.toBe(base.warm);
+    expect(terminal.warm).not.toBe(celadon.warm);
+
+    /* 3 · sin katachi cae al acento por defecto (kaki) */
+    expect(base.warm).toBe(base.accent);
+  },
 };

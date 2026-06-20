@@ -46,7 +46,7 @@ export function loginFormTemplate(props: LoginFormTemplateProps): TemplateResult
 
       <div class="login-form-actions">
         <lib-button
-          variant="primary"
+          variant="solid"
           ?disabled="${props.loading}"
           @ui-lib-click="${(): void => props.onSubmit()}"
         >

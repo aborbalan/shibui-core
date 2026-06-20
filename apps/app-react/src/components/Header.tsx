@@ -19,10 +19,10 @@ export interface DropdownItem {
 export interface HeaderAction {
   label: string;
   href?: string;
-  variant?: 'accent' | 'secondary' | 'ghost';
+  variant?: 'accent' | 'secondary' | 'ghost' | 'celadon';
 }
 
-export type HeaderVariant =
+export type HeaderTheme =
   | 'classic'
   | 'dark'
   | 'centered'
@@ -36,8 +36,8 @@ export type HeaderVariant =
   | 'shizen';
 
 export interface ShibuiHeaderProps {
-  /** Variante visual del header. Default: 'celadon' */
-  variant?: HeaderVariant;
+  /** Tema visual del header. Default: 'celadon' */
+  theme?: HeaderTheme;
   /** Carácter del logo mark. Default: '渋' */
   logoMark?: string;
   /** Nombre de marca. Default: 'shibui' */
@@ -79,16 +79,16 @@ const DEFAULT_LINKS: NavLink[] = [
 ];
 
 const DEFAULT_ACTIONS: HeaderAction[] = [
-  { label: 'Empezar →', href: '#', variant: 'accent' },
+  { label: 'Empezar →', href: '#', variant: 'celadon' },
 ];
 
 // ─── Componente ───────────────────────────────────────────────────────────────
 export const ShibuiHeader: React.FC<ShibuiHeaderProps> = ({
-  variant = 'celadon',
+  theme = 'celadon',
   logoMark = '渋',
   brandName = 'shibui',
   brandTagline,
-  logoHref = '#',
+  logoHref = '/',
   version,
   links = DEFAULT_LINKS,
   actions = DEFAULT_ACTIONS,
@@ -103,7 +103,7 @@ export const ShibuiHeader: React.FC<ShibuiHeaderProps> = ({
 }) => {
   return (
     <LibHeader
-      variant={variant}
+      theme={theme}
       logo-mark={logoMark}
       brand-name={brandName}
       brand-tagline={brandTagline ?? ''}

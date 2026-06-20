@@ -23,7 +23,7 @@ export const TokenRow: React.FC<TokenRowProps> = ({ token, preview }) => (
       style={{
         fontFamily: 'var(--lib-font-mono)',
         fontSize: '0.68rem',
-        color: 'var(--color-kaki-300)',
+        color: 'var(--text-accent)',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
@@ -64,7 +64,7 @@ interface SubHeaderProps {
 
 export const SubHeader: React.FC<SubHeaderProps> = ({ label, first }) => (
   <LibDivider
-    color="kaki"
+    tone="accent"
     label-style="mono"
     align="left"
     style={{ marginBottom: '0.75rem', marginTop: first ? '0' : '2rem' }}

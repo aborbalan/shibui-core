@@ -14,7 +14,7 @@ const meta: Meta<EmptyStateArgs> = {
   tags:['autodocs'],
   component: 'lib-empty-state',
   argTypes: {
-    tone:    { control: 'select', options: ['neutral', 'accent', 'info', 'error'] },
+    tone:    { control: 'select', options: ['default', 'accent', 'info', 'error'] },
     layout:  { control: 'select', options: ['default', 'inline'] },
     size:    { control: 'select', options: ['md', 'sm'] },
     bordered: { control: 'boolean' },
@@ -36,7 +36,7 @@ const meta: Meta<EmptyStateArgs> = {
         ?ghost=${args.ghost}
       >
         <ph-folder-open slot="illustration" weight="regular"></ph-folder-open>
-        <lib-button slot="actions" variant="primary">Subir archivo</lib-button>
+        <lib-button slot="actions" variant="solid">Subir archivo</lib-button>
         <lib-button slot="actions" variant="ghost">Ver tutorial</lib-button>
       </lib-empty-state>
     </div>
@@ -51,7 +51,7 @@ export const Playground: Story = {
   args: {
     heading: 'Esta carpeta está vacía',
     description: 'Todavía no hay ningún archivo aquí. Sube tu primer documento para empezar.',
-    kanji: '', tone: 'neutral', layout: 'default', size: 'md',
+    kanji: '', tone: 'default', layout: 'default', size: 'md',
     bordered: false, ghost: false,
   },
 };
@@ -66,7 +66,7 @@ export const DefaultWithIcon: Story = {
         description="Todavía no hay ningún archivo aquí. Sube tu primer documento para empezar."
       >
         <ph-folder-open slot="illustration" weight="regular"></ph-folder-open>
-        <lib-button slot="actions" variant="primary">
+        <lib-button slot="actions" variant="solid">
           <ph-upload-simple slot="prefix" weight="regular"></ph-upload-simple>
           Subir archivo
         </lib-button>
@@ -113,7 +113,7 @@ export const Bordered: Story = {
         description="O haz click para seleccionarlos. Formatos admitidos: PDF, PNG, JPG."
       >
         <ph-plus slot="illustration" weight="regular"></ph-plus>
-        <lib-button slot="actions" variant="primary">Seleccionar archivos</lib-button>
+        <lib-button slot="actions" variant="solid">Seleccionar archivos</lib-button>
       </lib-empty-state>
     </div>
   `,
@@ -177,7 +177,7 @@ export const Tones: Story = {
       <div style="flex:1; min-width:180px; max-width:220px;">
         <lib-empty-state size="sm" tone="accent" heading="Empieza aquí" description="Crea tu primer proyecto.">
           <ph-sparkle slot="illustration" weight="regular"></ph-sparkle>
-          <lib-button slot="actions" variant="accent">Crear proyecto</lib-button>
+          <lib-button slot="actions" tone="accent">Crear proyecto</lib-button>
         </lib-empty-state>
       </div>
 
@@ -190,7 +190,7 @@ export const Tones: Story = {
       <div style="flex:1; min-width:180px; max-width:220px;">
         <lib-empty-state size="sm" tone="error" heading="Acceso restringido" description="No tienes permisos para ver este contenido.">
           <ph-lock-simple slot="illustration" weight="regular"></ph-lock-simple>
-          <lib-button slot="actions" variant="danger">Solicitar acceso</lib-button>
+          <lib-button slot="actions" tone="error">Solicitar acceso</lib-button>
         </lib-empty-state>
       </div>
 
@@ -229,7 +229,7 @@ export const InlineTableRow: Story = {
         </div>
         <lib-empty-state layout="inline" size="sm" heading="No hay registros" description="Cuando se añadan datos aparecerán aquí.">
           <ph-rows slot="illustration" weight="regular"></ph-rows>
-          <lib-button slot="actions" variant="primary" size="sm">
+          <lib-button slot="actions" variant="solid" size="sm">
             <ph-plus slot="prefix" weight="regular"></ph-plus>
             Añadir registro
           </lib-button>

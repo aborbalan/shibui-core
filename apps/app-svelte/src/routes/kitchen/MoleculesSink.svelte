@@ -38,15 +38,15 @@
 
     <KitchenItem name="lib-button-group">
       <lib-button-group>
-        <lib-button variant="default">Left</lib-button>
-        <lib-button variant="default">Mid</lib-button>
-        <lib-button variant="default">Right</lib-button>
+        <lib-button>Left</lib-button>
+        <lib-button>Mid</lib-button>
+        <lib-button>Right</lib-button>
       </lib-button-group>
     </KitchenItem>
 
     <KitchenItem name="lib-chip">
       <lib-chip>default</lib-chip>
-      <lib-chip variant="accent">accent</lib-chip>
+      <lib-chip tone="accent">accent</lib-chip>
       <lib-chip dismissible>dismissible</lib-chip>
     </KitchenItem>
 
@@ -84,10 +84,10 @@
     </KitchenItem>
 
     <KitchenItem name="lib-alert">
-      <lib-alert variant="info" style="min-width: 280px">Info alert</lib-alert>
-      <lib-alert variant="success" style="min-width: 280px">Success</lib-alert>
-      <lib-alert variant="warning" style="min-width: 280px">Warning</lib-alert>
-      <lib-alert variant="error" style="min-width: 280px">Error</lib-alert>
+      <lib-alert type="info" style="min-width: 280px">Info alert</lib-alert>
+      <lib-alert type="success" style="min-width: 280px">Success</lib-alert>
+      <lib-alert type="warning" style="min-width: 280px">Warning</lib-alert>
+      <lib-alert type="error" style="min-width: 280px">Error</lib-alert>
     </KitchenItem>
 
     <KitchenItem name="lib-empty-state">

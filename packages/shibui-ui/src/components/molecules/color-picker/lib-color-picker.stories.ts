@@ -9,7 +9,7 @@ const meta: Meta = {
   tags:['autodocs'],
   component: 'lib-color-picker',
   argTypes: {
-    variant:   { control: 'select', options: ['inline', 'trigger'] },
+    display:   { control: 'select', options: ['inline', 'trigger'] },
     value:     { control: 'text' },
     showAlpha: { control: 'boolean' },
     dark:      { control: 'boolean' },
@@ -23,7 +23,7 @@ type Story = StoryObj;
 export const Playground: Story = {
   args: {
     value:     '#B85A1E',
-    variant:   'inline',
+    display:   'inline',
     showAlpha: false,
     dark:      false,
     disabled:  false,
@@ -32,7 +32,7 @@ export const Playground: Story = {
     <div style="padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
       <lib-color-picker
         value="${args.value}"
-        variant="${args.variant}"
+        display="${args.display}"
         ?show-alpha="${args.showAlpha}"
         ?dark="${args.dark}"
         ?disabled="${args.disabled}"
@@ -54,7 +54,7 @@ export const Inline: Story = {
         </span>
         <lib-color-picker
           value="#B85A1E"
-          variant="inline"
+          display="inline"
           @ui-lib-change="${(e: CustomEvent): void => console.log(e.detail)}"
         ></lib-color-picker>
       </div>
@@ -65,7 +65,7 @@ export const Inline: Story = {
         </span>
         <lib-color-picker
           value="#357164"
-          variant="inline"
+          display="inline"
           show-alpha
           @ui-lib-change="${(e: CustomEvent): void => console.log(e.detail)}"
         ></lib-color-picker>
@@ -87,7 +87,7 @@ export const Trigger: Story = {
         </span>
         <lib-color-picker
           value="#B85A1E"
-          variant="trigger"
+          display="trigger"
           show-alpha
           @ui-lib-apply="${(e: CustomEvent): void => console.log('apply', e.detail)}"
         ></lib-color-picker>
@@ -100,7 +100,7 @@ export const Trigger: Story = {
         </span>
         <lib-color-picker
           value="#357164"
-          variant="trigger"
+          display="trigger"
           @ui-lib-apply="${(e: CustomEvent): void => console.log('apply', e.detail)}"
         ></lib-color-picker>
       </div>
@@ -112,7 +112,7 @@ export const Trigger: Story = {
         </span>
         <lib-color-picker
           value="#221C16"
-          variant="trigger"
+          display="trigger"
           @ui-lib-apply="${(e: CustomEvent): void => console.log('apply', e.detail)}"
         ></lib-color-picker>
       </div>
@@ -136,7 +136,7 @@ export const Dark: Story = {
         </span>
         <lib-color-picker
           value="#B85A1E"
-          variant="inline"
+          display="inline"
           show-alpha
           dark
         ></lib-color-picker>
@@ -148,7 +148,7 @@ export const Dark: Story = {
         </span>
         <lib-color-picker
           value="#357164"
-          variant="trigger"
+          display="trigger"
           dark
         ></lib-color-picker>
       </div>
@@ -197,7 +197,7 @@ export const WithSavedColors: Story = {
     <div style="padding: 2rem;">
       <lib-color-picker
         value="#B85A1E"
-        variant="inline"
+        display="inline"
         saved='["#221C16","#B85A1E","#357164","#D97234","#245249"]'
         @ui-lib-change="${(e: CustomEvent): void => {
           const el = document.getElementById('saved-preview');
@@ -235,7 +235,7 @@ export const InContext: Story = {
 
         <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 0.75rem;">
           <span style="font-family: var(--lib-font-mono); font-size: 10px; color: var(--text-secondary); flex: 1;">Color de texto</span>
-          <lib-color-picker value="#221C16" variant="trigger"
+          <lib-color-picker value="#221C16" display="trigger"
             @ui-lib-apply="${(e: CustomEvent): void => {
               const p = document.getElementById('ctx-text');
               if (p) p.style.color = (e.detail as {hex: string}).hex;
@@ -244,7 +244,7 @@ export const InContext: Story = {
 
         <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 0.75rem;">
           <span style="font-family: var(--lib-font-mono); font-size: 10px; color: var(--text-secondary); flex: 1;">Fondo</span>
-          <lib-color-picker value="#FAF7F4" variant="trigger"
+          <lib-color-picker value="#FAF7F4" display="trigger"
             @ui-lib-apply="${(e: CustomEvent): void => {
               const p = document.getElementById('ctx-preview');
               if (p) p.style.background = (e.detail as {hex: string}).hex;
@@ -253,7 +253,7 @@ export const InContext: Story = {
 
         <div style="padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.75rem;">
           <span style="font-family: var(--lib-font-mono); font-size: 10px; color: var(--text-secondary); flex: 1;">Acento</span>
-          <lib-color-picker value="#B85A1E" variant="trigger"
+          <lib-color-picker value="#B85A1E" display="trigger"
             @ui-lib-apply="${(e: CustomEvent): void => {
               const p = document.getElementById('ctx-accent');
               if (p) p.style.color = (e.detail as {hex: string}).hex;
@@ -282,11 +282,11 @@ export const InContext: Story = {
 
 const _katachi = createKatachiStories<object>(() => html`
   <div style="padding:var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:var(--lib-space-lg);">
-    <lib-color-picker variant="inline" value="#4E9482"></lib-color-picker>
+    <lib-color-picker display="inline" value="#4E9482"></lib-color-picker>
     <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
-      <lib-color-picker variant="trigger" value="#B85A1E"></lib-color-picker>
-      <lib-color-picker variant="trigger" value="#4E9482"></lib-color-picker>
-      <lib-color-picker variant="trigger" value="#221C16" show-alpha></lib-color-picker>
+      <lib-color-picker display="trigger" value="#B85A1E"></lib-color-picker>
+      <lib-color-picker display="trigger" value="#4E9482"></lib-color-picker>
+      <lib-color-picker display="trigger" value="#221C16" show-alpha></lib-color-picker>
     </div>
   </div>
 `);
@@ -307,7 +307,7 @@ export const TestColorChange: Story = {
   tags: ['test'],
   render: (): TemplateResult => html`
     <div style="padding: 2rem;">
-      <lib-color-picker value="#B85A1E" variant="inline"></lib-color-picker>
+      <lib-color-picker value="#B85A1E" display="inline"></lib-color-picker>
     </div>
   `,
   play: async ({ canvasElement }): Promise<void> => {

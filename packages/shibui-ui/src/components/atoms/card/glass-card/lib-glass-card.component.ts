@@ -1,6 +1,6 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { LibGlassVariant, LibGlassIntensity } from './lib-glass-card.types';
+import type { LibGlassTint, LibGlassIntensity } from './lib-glass-card.types';
 import { glassCardTemplate } from './lib-glass-card.html';
 import glassCss from './lib-glass-card.css?inline';
 import sharedTokens from '../../../../styles/shared/tokens.css?inline';
@@ -21,10 +21,10 @@ import sharedTokens from '../../../../styles/shared/tokens.css?inline';
  * </lib-glass-card>
  *
  * @example — tinte frío con intensidad alta
- * <lib-glass-card variant="cool" intensity="high">...</lib-glass-card>
+ * <lib-glass-card tint="cool" intensity="high">...</lib-glass-card>
  *
  * @example — tinte cálido
- * <lib-glass-card variant="warm">...</lib-glass-card>
+ * <lib-glass-card tint="warm">...</lib-glass-card>
  *
  * @example — dentro de un contexto katachi (el tinte lo decide el katachi)
  * <div data-katachi="wabi">
@@ -46,7 +46,7 @@ export class LibGlassCard extends LitElement {
    * Dentro de un katachi el tinte es sobreescrito por el contexto.
    */
   @property({ type: String, reflect: true })
-  variant: LibGlassVariant = 'neutral';
+  tint: LibGlassTint = 'neutral';
 
   /**
    * Intensidad del efecto (blur + opacidad).
@@ -59,7 +59,7 @@ export class LibGlassCard extends LitElement {
 
   override render(): TemplateResult {
     return glassCardTemplate({
-      variant:   this.variant,
+      tint:      this.tint,
       intensity: this.intensity,
     });
   }

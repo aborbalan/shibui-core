@@ -77,7 +77,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                                             fontSize: 'var(--text-xs)',
                                             letterSpacing: 'var(--lib-tracking-elegant)',
                                             textTransform: 'uppercase',
-                                            color: 'color-mix(in oklch, var(--color-kaki-500), transparent 45%)',
+                                            color: 'color-mix(in oklch, var(--text-accent), transparent 45%)',
                                             margin: '0 0 0.2rem 0',
                                         }}
                                     >
@@ -155,7 +155,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                             {item.tags.length > 0 && (
                                 <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                                     {item.tags.map((tag) => (
-                                        <LibBadge key={tag} variant="strong">
+                                        <LibBadge key={tag} tone="strong">
                                             {tag}
                                         </LibBadge>
                                     ))}

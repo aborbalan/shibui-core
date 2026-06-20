@@ -4,7 +4,7 @@ import '../../atoms/close-button/lib-close-button.component';
 import { chipTemplate } from './lib-chip.html';
 import chipCss from './lib-chip.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
-import type { ChipKind, ChipSize, ChipColor } from './lib-chip.types';
+import type { ChipKind, ChipSize, ChipTone } from './lib-chip.types';
 
 /**
  * lib-chip — Chip Shibui (SG-26)
@@ -16,7 +16,7 @@ import type { ChipKind, ChipSize, ChipColor } from './lib-chip.types';
  *
  * @prop kind       — 'static' | 'toggle' | 'input'
  * @prop size       — 'xs' | 'sm' | 'md' | 'lg'
- * @prop color      — 'default' | 'accent' | 'info' | 'error' | 'strong'
+ * @prop tone       — 'default' | 'accent' | 'info' | 'error' | 'strong'
  * @prop selected   — Estado seleccionado (solo kind=toggle)
  * @prop dot        — Dot de color antes del texto
  * @prop aria-label — Texto accesible del chip
@@ -42,7 +42,7 @@ export class LibChip extends LitElement {
   size: ChipSize = 'md';
 
   @property({ type: String, reflect: true })
-  color: ChipColor = 'default';
+  tone: ChipTone = 'default';
 
   @property({ type: Boolean, reflect: true })
   selected = false;

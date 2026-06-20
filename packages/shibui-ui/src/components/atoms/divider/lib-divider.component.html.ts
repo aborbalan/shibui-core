@@ -1,7 +1,7 @@
 import { html, nothing, TemplateResult } from 'lit';
 
 export type LibDividerStyle     = 'hairline' | 'default' | 'strong' | 'heavy' | 'dashed' | 'dotted' | 'gradient';
-export type LibDividerColor     = 'default' | 'accent' | 'info';
+export type LibDividerTone      = 'default' | 'accent' | 'info';
 export type LibDividerAlign     = 'left' | 'center' | 'right';
 export type LibDividerOrnament  = 'none' | 'dot' | 'diamond';
 export type LibDividerLabelStyle = 'mono' | 'display' | 'kanji';
@@ -10,7 +10,7 @@ export type LibDividerOrientation = 'horizontal' | 'vertical';
 export interface DividerTemplateProps {
   orientation: LibDividerOrientation;
   style: LibDividerStyle;
-  color: LibDividerColor;
+  tone: LibDividerTone;
   align: LibDividerAlign;
   ornament: LibDividerOrnament;
   labelStyle: LibDividerLabelStyle;
@@ -46,8 +46,12 @@ function dividerCenter(props: DividerTemplateProps): TemplateResult | typeof not
 }
 
 export function dividerTemplate(props: DividerTemplateProps): TemplateResult {
+  // Sin label ni ornamento las dos líneas deben unirse en una sola
+  // continua: colapsamos el gap central que de otro modo parte la
+  // línea en dos segmentos visibles.
+  const isBare = props.ornament === 'none' && !props.hasSlotContent;
   return html`
-    <div class="dv">
+    <div class="dv ${isBare ? 'dv--bare' : ''}">
       <span class="dv__line"></span>
       ${dividerCenter(props)}
       <span class="dv__line"></span>

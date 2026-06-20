@@ -19,7 +19,7 @@ export const DownloadCVModal: React.FC<DownloadCVModalProps> = ({ isOpen, onClos
             heading="Elige idioma"
             open
             _animate="scale"
-            variant="default"
+            variant="solid"
             onUiLibModalClose={onClose}
         >
             <div className="cv-options">
@@ -53,7 +53,7 @@ export const DownloadCVModal: React.FC<DownloadCVModalProps> = ({ isOpen, onClos
                 </LibButton>
 
                 <LibButton
-                    variant="primary"
+                    variant="solid"
                     disabled={!selectedLangs.es && !selectedLangs.en}
                     onUiLibClick={() => {
                         console.log("Acción: Confirmar descarga de CV");

@@ -52,7 +52,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
                     gap: '1px',
-                    background: 'var(--border-subtle)',
+                    background: 'transparent',
                 }}
             >
                 {skillGroups.map((group) => {
@@ -77,7 +77,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
                                         fontFamily: 'var(--lib-font-display)',
                                         fontSize: 'var(--text-2xl)',
                                         fontWeight: 'var(--weight-light)' as React.CSSProperties['fontWeight'],
-                                        color: 'color-mix(in oklch, var(--color-kaki-500), transparent 75%)',
+                                        color: 'color-mix(in oklch, var(--text-accent), transparent 75%)',
                                         lineHeight: 1,
                                         flexShrink: 0,
                                     }}
@@ -90,7 +90,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
                                         fontSize: 'var(--text-xs)',
                                         letterSpacing: 'var(--lib-tracking-elegant)',
                                         textTransform: 'uppercase',
-                                        color: 'color-mix(in oklch, var(--color-kaki-500), transparent 50%)',
+                                        color: 'color-mix(in oklch, var(--text-accent), transparent 50%)',
                                     }}
                                 >
                                     {group.label}
@@ -102,7 +102,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
                                 {[...group.skills]
                                     .sort((a, b) => a.order - b.order)
                                     .map((skill) => (
-                                        <LibBadge key={skill.id} variant={variant}>
+                                        <LibBadge key={skill.id} tone={variant}>
                                             {skill.name}
                                         </LibBadge>
                                     ))}

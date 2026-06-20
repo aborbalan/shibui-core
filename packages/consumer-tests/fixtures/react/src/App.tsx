@@ -63,10 +63,10 @@ export default function App() {
       </section>
 
       {/* ── 2b. Property — string enum ──────────────────────────────────── */}
-      {/* variant="danger" debe llegar como atributo reflejado (reflect:true
+      {/* tone="error" debe llegar como atributo reflejado (reflect:true
           en el LitElement) para que los tests de atributo funcionen. */}
       <section data-scenario="string-prop">
-        <lib-button variant="danger" data-testid="btn-danger">Danger</lib-button>
+        <lib-button tone="error" data-testid="btn-error">Error</lib-button>
       </section>
 
       {/* ── 3. Eventos ──────────────────────────────────────────────────── */}

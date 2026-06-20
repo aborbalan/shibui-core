@@ -1,6 +1,6 @@
 import { LitElement, TemplateResult, css, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import  { FooterColumn, FooterLink, FooterVariant } from './lib-footer.types';
+import  { FooterColumn, FooterLink, FooterTheme } from './lib-footer.types';
 import { renderFooter } from './lib-footer.html';
 import componentCss from './lib-footer.css?inline';
 import celadonDecorations from '../../../styles/shared/celadon-decorations.css?inline';
@@ -11,7 +11,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  *
  * @tag lib-footer
  *
- * @attr {string}  variant      - Estilo del footer: 'social' | 'accordion' | 'inverse' | 'glitch' | 'celadon' | 'sabi' | 'shizen'
+ * @attr {string}  theme        - Estilo del footer: 'social' | 'accordion' | 'inverse' | 'glitch' | 'celadon' | 'sabi' | 'shizen'
  * @attr {string}  brand-name   - Nombre de marca (ej: "shibui")
  * @attr {string}  brand-kanji  - Caracter kanji decorativo (ej: "渋")
  * @attr {string}  brand-sub    - Subtítulo bajo el logo (ej: "Design System · Zaragoza")
@@ -42,8 +42,8 @@ export class LibFooter extends LitElement {
 
   /* ── Props principales ── */
 
-  @property({ type: String })
-  variant: FooterVariant = 'social';
+  @property({ type: String, reflect: true })
+  theme: FooterTheme = 'social';
 
   /**
    * Decoraciones celadon opt-in (Bar), separadas por espacio

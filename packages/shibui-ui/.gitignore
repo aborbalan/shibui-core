@@ -1,0 +1,20 @@
+# Build output
+/dist/
+/storybook-static/
+*.tsbuildinfo
+
+# Declaration maps emitidos por tsc (van a /dist; nunca junto a fuentes)
+*.d.ts.map
+
+# npm pack
+*.tgz
+
+# Temporales de Vite
+vite.config.ts.timestamp-*.mjs
+
+# Playwright / Lighthouse
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/.lighthouseci/

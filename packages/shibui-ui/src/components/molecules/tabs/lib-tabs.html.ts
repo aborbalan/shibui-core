@@ -2,7 +2,7 @@ import { html, TemplateResult, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import '../../atoms/icon/lib-icon.component';
 import type { LibTabs } from './lib-tabs.component';
-import type { TabItem, TabsVariant } from './lib-tabs.types';
+import type { TabItem, TabsDisplay } from './lib-tabs.types';
 
 /* ── Badge ── */
 function renderBadge(item: TabItem): TemplateResult | typeof nothing {
@@ -111,7 +111,7 @@ export function tabsTemplate(context: LibTabs): TemplateResult {
   const tabs = (context.items ?? []) as TabItem[];
 
   /* La ink bar solo aplica en underline (y sus modificadores gold/glitch) */
-  const showInk = !(['pill', 'card', 'outline', 'vertical'] as TabsVariant[]).includes(context.variant);
+  const showInk = !(['pill', 'card', 'outline', 'vertical'] as TabsDisplay[]).includes(context.display);
 
   return html`
     <div class="tb" part="root">

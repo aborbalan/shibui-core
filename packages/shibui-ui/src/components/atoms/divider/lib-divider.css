@@ -43,6 +43,12 @@
     gap: var(--lib-space-sm);
   }
 
+  /* Divider vacío (sin label ni ornamento): las dos líneas se unen
+     en una sola continua — sin hueco central que la parta en dos. */
+  .dv--bare {
+    gap: 0;
+  }
+
   /* ── Línea base ────────────────────────────────────────────── */
   .dv__line {
     flex: 1;
@@ -131,12 +137,12 @@
   /* ============================================================
      COLORES — accent · info
      ============================================================ */
-  :host([color="accent"]) .dv__line {
+  :host([tone="accent"]) .dv__line {
     background: var(--color-kaki-500);
     height: 2px;
   }
 
-  :host([color="info"]) .dv__line {
+  :host([tone="info"]) .dv__line {
     background: var(--info);
     height: 2px;
   }
@@ -170,8 +176,8 @@
   }
 
   /* Ornamentos heredan color del modificador */
-  :host([color="accent"])    .dv__ornament { background: var(--color-kaki-500); }
-  :host([color="info"]) .dv__ornament { background: var(--info); }
+  :host([tone="accent"])    .dv__ornament { background: var(--color-kaki-500); }
+  :host([tone="info"]) .dv__ornament { background: var(--info); }
 
   /* ============================================================
      LABELS
@@ -212,7 +218,7 @@
   }
 
   /* Label hereda acento kaki cuando color="accent" */
-  :host([color="accent"]) .dv__label--mono {
+  :host([tone="accent"]) .dv__label--mono {
     color: var(--color-kaki-500);
   }
 

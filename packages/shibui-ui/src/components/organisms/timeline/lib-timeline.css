@@ -62,6 +62,16 @@
     transition: transform var(--duration-base), box-shadow var(--duration-base);
   }
 
+  /* Node con tooltip — el nodo es trigger de lib-tooltip */
+  .tl-node-tip {
+    position: relative;
+    z-index: 2; /* sobre la línea y por encima de ítems vecinos al abrir */
+  }
+
+  .tl-node.has-tip {
+    cursor: help;
+  }
+
   /* Dot */
   .tl-node-dot {
     background: var(--bg-elevated);
@@ -360,6 +370,53 @@
     border: 1px solid var(--border-subtle);
     padding: var(--lib-space-md) var(--lib-space-md);
     margin-top: var(--lib-space-xs);
+  }
+
+  /* ── CLICKABLE / NAVEGACIÓN ──
+     La superficie interactiva (card o contenido) usa role+tabindex en JS;
+     aquí solo el feedback visual. Tokens semánticos → katachi-aware. */
+  .tl-clickable {
+    cursor: pointer;
+    outline: none;
+    transition:
+      transform var(--duration-base) var(--ease-out),
+      box-shadow var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out),
+      background var(--duration-base) var(--ease-out);
+
+    &:focus-visible {
+      outline: 2px solid var(--color-kaki-500);
+      outline-offset: 2px;
+    }
+  }
+
+  /* Card clickable — elevación + borde accent */
+  .tl-card.tl-clickable {
+    &:hover {
+      border-color: var(--color-kaki-200);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+
+  /* Contenido (sin card) clickable — superficie sutil al hover */
+  .tl-content-clickable {
+    margin: calc(var(--lib-space-xs) * -1) calc(var(--lib-space-sm) * -1);
+    padding: var(--lib-space-xs) var(--lib-space-sm);
+    border-radius: var(--radius-sm);
+
+    &:hover { background: var(--bg-surface); }
+    &:active { background: var(--border-subtle); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tl-card.tl-clickable:hover,
+    .tl-card.tl-clickable:active { transform: none; }
   }
 
   /* Media block */

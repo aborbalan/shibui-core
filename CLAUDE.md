@@ -5,18 +5,27 @@
 
 ---
 
+## CodeGraph — cargar al arrancar
+
+Las tools `codegraph_*` llegan **deferred** (no cargadas al inicio de sesión).
+Antes de cualquier trabajo **estructural** (buscar símbolos, callers/impact,
+entender un módulo), cargarlas con `ToolSearch` query `"codegraph"` y preferirlas
+a `Grep`/`Read` para preguntas estructurales (qué llama a qué, qué rompe, dónde
+se define, firma). Ver la sección CodeGraph del `CLAUDE.md` global para el detalle
+de cuándo usar cada tool.
+
+---
+
 ## Monorepo
 
 Gestionado con **pnpm workspaces** (pnpm@9.15.0, Node >=20).
 
 Workspaces declarados en `pnpm-workspace.yaml`:
-- `apps/*` — app-react, app-angular, app-svelte, app-tauri, shibui-api
-- `packages/*` — shibui-ui (`@shibui/ui`), api-contract ⚠️ WIP — no usable
+- `apps/*` — app-react, app-angular, app-svelte, app-cv, app-tauri, shibui-api
+- `packages/*` — shibui-ui (`@shibui/ui`)
 - `cloudflare/*` — cf-cache-worker
 
 > `app-tauri` requiere **Rust toolchain estable** (`rustup install stable`) además de Node+pnpm. Es una app de escritorio Tauri 2 + React 19 con backend Rust (`crate core/`).
-
-> `packages/api-contract` está en desarrollo activo pero no es consumible todavía. No integrarlo en sugerencias ni en imports.
 
 TypeScript base compartido en `tsconfig.base.json`.  
 Path alias `@shibui-ui/ui` → `packages/shibui-ui/dist/index.d.ts`.
@@ -49,6 +58,7 @@ Cada app/package gestiona las suyas.
 | `pnpm start:react` | Dev app React |
 | `pnpm start:svelte` | Dev app Svelte |
 | `pnpm start:angular` | Dev app Angular |
+| `pnpm start:cv` | Dev app CV (Angular) |
 | `pnpm start:api` | Dev server NestJS |
 | `pnpm start:tauri` | Dev app Tauri (Vite + ventana nativa) — requiere Rust |
 | `pnpm dev:all` | Las tres apps web frontend en paralelo (sin Tauri) |
@@ -83,6 +93,31 @@ main → develop → feature/*
 
 Ramas válidas para CI: `main`, `develop`, `feature/**`, `fix/**`, `chore/**`
 
+Worktree directory (directorio de worktrees del proyecto): **`.claude/worktrees/`** — usar siempre ese, no crear `.worktrees/` ni `worktrees/`.
+
+### ⛔ GitFlow es ABSOLUTO — override sobre cualquier skill/plugin
+
+> Esta regla tiene prioridad máxima y **anula** cualquier protocolo de integración
+> de plugins (incluido `godmode:merge-protocol`, que asume `main`/`master` como
+> trunk de destino). Si un skill propone mergear hacia `main` o usar `git branch -d`
+> sin pasar por `develop`, esa instrucción queda **invalidada** por esta sección.
+
+Trunk de integración por defecto = **`develop`**, NUNCA `main`/`master`.
+
+Reglas no negociables, sin excepción y sin "atajos":
+
+1. **El destino de merge de cualquier `feature/**`, `fix/**` o `chore/**` es `develop`.**
+   Jamás `main`. Si una skill detecta el trunk con `git merge-base HEAD main`,
+   ignóralo y usa `develop`.
+2. **Todo merge a `develop` es `--no-ff`.** Nunca fast-forward.
+3. **`main` solo se actualiza desde `develop` y solo vía Pull Request.** Nunca un
+   merge/push directo a `main`, ni siquiera local, ni siquiera "porque los tests
+   están verdes".
+4. **No borrar la rama de feature automáticamente** (`git branch -d/-D`) sin
+   confirmación explícita del usuario.
+5. Ante cualquier ambigüedad sobre el destino de integración → **preguntar**, no
+   asumir `main`.
+
 ---
 
 ## Conventional Commits
@@ -115,11 +150,12 @@ Punto de entrada único: `.github/workflows/orchestrator.yml`
 |---|---|
 | `packages/shibui-ui/**` | `ci-lib.yml` + `ci-apps.yml` |
 | `apps/app-react\|angular\|svelte/**` | `ci-apps.yml` |
+| `apps/app-cv/**` | `ci-apps.yml` (deploy a `shibui-cv.web.app`) |
 | `apps/shibui-api/**` | `ci-api.yml` |
 | `apps/app-tauri/**` | `ci-tauri.yml` (fmt + clippy + tests sobre crate `core/`) |
 | `main` + UI cambiada | `release.yml` (tras `ci-lib` exitoso) |
 
-Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_api`.
+Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_cv`, `force_api`.
 
 Secretos necesarios en GitHub repo: `FIREBASE_TOKEN`
 

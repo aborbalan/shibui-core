@@ -33,7 +33,7 @@ const ZIndexSection: React.FC = () => {
               borderBottom: '1px solid color-mix(in oklch, var(--color-washi-700) 25%, transparent)',
             }}
           >
-            <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--color-kaki-300)' }}>
+            <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--text-accent)' }}>
               {t.cssVar}
             </code>
             <code style={{ fontFamily: 'var(--lib-font-mono)', fontSize: '0.68rem', color: 'var(--text-secondary)', opacity: 0.7 }}>
@@ -51,7 +51,7 @@ const ZIndexSection: React.FC = () => {
                 style={{
                   height: '100%',
                   width: `${Math.max(barPct, 1)}%`,
-                  background: `color-mix(in oklch, var(--color-kaki-500) ${30 + barPct * 0.7}%, var(--color-kaki-300))`,
+                  background: `color-mix(in oklch, var(--color-celadon-600) ${30 + barPct * 0.7}%, var(--color-celadon-300))`,
                   borderRadius: '2px',
                 }}
               />

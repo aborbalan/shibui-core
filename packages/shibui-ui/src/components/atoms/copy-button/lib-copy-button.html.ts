@@ -1,6 +1,7 @@
 import { html, nothing, TemplateResult } from 'lit';
 
-export type LibCopyVariant  = 'ghost' | 'outlined' | 'filled' | 'subtle' | 'on-dark';
+export type LibCopyVariant  = 'ghost' | 'outlined' | 'solid' | 'subtle';
+export type LibCopySurface  = 'default' | 'dark';
 export type LibCopySize     = 'sm' | 'md' | 'lg';
 
 export interface CopyButtonTemplateProps {

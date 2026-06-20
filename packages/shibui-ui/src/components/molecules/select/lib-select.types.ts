@@ -3,7 +3,7 @@
    ============================================================ */
 
    export type SelectSize    = 'sm' | 'md' | 'lg';
-   export type SelectVariant = 'default' | 'filled' | 'ghost';
+   export type SelectVariant = 'solid' | 'outlined' | 'ghost';
    
    export interface SelectChangeDetail {
      value:  string;

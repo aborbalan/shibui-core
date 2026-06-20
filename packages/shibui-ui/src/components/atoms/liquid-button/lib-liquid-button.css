@@ -122,7 +122,7 @@
      ══════════════════════════════════════ */
 
   /* filled — fondo sólido, tinta inversa */
-  :host([variant="filled"]) .btn {
+  :host([variant="solid"]) .btn {
     background: var(--color-washi-900);
     color: var(--color-washi-100);
   }
@@ -135,13 +135,13 @@
   }
 
   /* accent — acento kaki terracota */
-  :host([variant="accent"]) .btn {
+  :host([tone="accent"]) .btn {
     background: var(--color-kaki-400);
     color: #fff;
   }
 
   /* info — acento celadón jade */
-  :host([variant="info"]) .btn {
+  :host([tone="info"]) .btn {
     background: var(--info);
     color: #fff;
   }
@@ -153,8 +153,8 @@
     border: none;
   }
 
-  /* danger — outline rojo */
-  :host([variant="danger"]) .btn {
+  /* error — outline rojo */
+  :host([tone="error"]) .btn {
     background: transparent;
     color: var(--color-error);
     border: 1px solid var(--color-error);
@@ -183,7 +183,7 @@
      .btn ya tiene box-shadow en transition — el ring anima suavemente.
      ─────────────────────────────────────────────────────────── */
 
-  :host([variant="filled"]) .btn {
+  :host([variant="solid"]) .btn {
     background: var(--bg-inverse);
     color: var(--text-inverse);
   }

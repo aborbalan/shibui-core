@@ -84,7 +84,8 @@ Unifica los patrones \`.sg-section-label\`, \`.hero-eyebrow\` y \`.section-label
 
 | Atributo | Tipo | Default | Descripción |
 |---|---|---|---|
-| \`tone\` | \`'accent'\\|'neutral'\\|'inverse'\\|'muted'\` | \`'accent'\` | Rol semántico del color |
+| \`tone\` | \`'default'\\|'accent'\\|'muted'\` | \`'accent'\` | Rol semántico del color |
+| \`surface\` | \`'default'\\|'inverse'\\|'on-dark'\` | \`'default'\` | Contexto de superficie (fondos oscuros) |
 | \`line\` | \`'left'\\|'right'\\|'both'\\|'none'\` | \`'left'\` | Posición de la línea decorativa |
 | \`size\` | \`'sm'\\|'md'\\|'lg'\` | \`'md'\` | Tamaño tipográfico |
 | \`dot\` | \`boolean\` | \`false\` | Sustituye la línea por un punto |
@@ -103,7 +104,7 @@ Unifica los patrones \`.sg-section-label\`, \`.hero-eyebrow\` y \`.section-label
   argTypes: {
     tone: {
       control: "select",
-      options: ["accent", "neutral", "inverse", "muted"],
+      options: ["default", "accent", "muted"],
       description: "Rol semántico del color — el katachi activo determina el acento exacto",
     },
     line: { control: "select", options: ["left", "right", "both", "none"] },
@@ -233,13 +234,13 @@ export const Tones: Story = {
         "Arquitectura",
       )}
       ${block(
-        html`<lib-eyebrow tone="neutral" style="margin-bottom:.75rem"
+        html`<lib-eyebrow tone="default" style="margin-bottom:.75rem"
           >Neutral · cálido-washi</lib-eyebrow
         >`,
         "Componentes",
       )}
       ${block(
-        html`<lib-eyebrow tone="inverse" style="margin-bottom:.75rem"
+        html`<lib-eyebrow surface="inverse" style="margin-bottom:.75rem"
           >Inverse · para superficies oscuras</lib-eyebrow
         >`,
         "Contraste",
@@ -268,7 +269,7 @@ export const TonesDark: Story = {
         "Componentes activos",
       )}
       ${blockDark(
-        html`<lib-eyebrow tone="inverse" style="margin-bottom:.75rem"
+        html`<lib-eyebrow surface="inverse" style="margin-bottom:.75rem"
           >Inverse · contraste claro</lib-eyebrow
         >`,
         "Runtime activo",
@@ -280,7 +281,7 @@ export const TonesDark: Story = {
         "Metadatos secundarios",
       )}
       ${blockDark(
-        html`<lib-eyebrow tone="neutral" style="margin-bottom:.75rem"
+        html`<lib-eyebrow tone="default" style="margin-bottom:.75rem"
           >Neutral · washi cálido</lib-eyebrow
         >`,
         "Sistema operativo",
@@ -344,7 +345,7 @@ export const Dot: Story = {
           "Rendimiento",
         )}
         ${block(
-          html`<lib-eyebrow dot tone="neutral" style="margin-bottom:.5rem"
+          html`<lib-eyebrow dot tone="default" style="margin-bottom:.5rem"
             >Neutral dot</lib-eyebrow
           >`,
           "Metadatos",
@@ -361,7 +362,7 @@ export const Dot: Story = {
           "Monitor activo",
         )}
         ${blockDark(
-          html`<lib-eyebrow dot tone="inverse" style="margin-bottom:.5rem"
+          html`<lib-eyebrow dot surface="inverse" style="margin-bottom:.5rem"
             >Módulo cargado</lib-eyebrow
           >`,
           "Runtime",

@@ -15,6 +15,9 @@ on:
       svelte:
         type: string
         required: true
+      cv:
+        type: string
+        required: true
       ref:
         type: string
         required: true
@@ -104,16 +107,43 @@ jobs:
           path: apps/app-svelte/dist/
           retention-days: 1
 
+  build-cv:
+    name: 📦 Build CV App
+    runs-on: ubuntu-latest
+    if: inputs.cv == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 🏗️ Build UI lib (peer dependency)
+        run: pnpm --filter @shibui-ui/ui build
+      - name: 📦 Build CV App
+        run: pnpm --filter app-cv build
+      - name: 📤 Upload CV dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-dist-${{ github.run_id }}
+          path: apps/app-cv/dist/
+          retention-days: 1
+
   deploy-apps:
     name: 🚀 Deploy Apps to Firebase
     runs-on: ubuntu-latest
-    needs: [build-react, build-angular, build-svelte]
+    needs: [build-react, build-angular, build-svelte, build-cv]
     if: |
       always() &&
       (inputs.ref == 'refs/heads/main' || inputs.ref == 'refs/heads/develop') &&
       needs.build-react.result != 'failure' &&
       needs.build-angular.result != 'failure' &&
-      needs.build-svelte.result != 'failure'
+      needs.build-svelte.result != 'failure' &&
+      needs.build-cv.result != 'failure'
     env:
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
     steps:
@@ -156,3 +186,12 @@ jobs:
       - name: 🚀 Deploy Svelte App
         if: needs.build-svelte.result == 'success'
         run: pnpm exec firebase deploy --only hosting:svelte --non-interactive --project lib-ui-b67c5
+      - name: 📥 Download CV dist artifact
+        if: needs.build-cv.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: cv-dist-${{ github.run_id }}
+          path: apps/app-cv/dist/
+      - name: 🚀 Deploy CV App
+        if: needs.build-cv.result == 'success'
+        run: pnpm exec firebase deploy --only hosting:cv --non-interactive --project lib-ui-b67c5

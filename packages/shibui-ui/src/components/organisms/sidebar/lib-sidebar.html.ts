@@ -18,7 +18,7 @@ export interface SidebarTemplateProps {
   userInitials:string;
   showUserAction: boolean;
   /* State */
-  variant:    string;
+  theme:      string;
   collapsed:  boolean;
   mobileOpen: boolean;
   /* Handlers */
@@ -124,7 +124,7 @@ function renderNav(p: SidebarTemplateProps): TemplateResult {
 
 /* ── User footer ── */
 function renderUser(p: SidebarTemplateProps): TemplateResult {
-  const isDark = p.variant === 'dark' || !p.variant;
+  const isDark = p.theme === 'dark' || !p.theme;
 
   return html`
     <div class="sb-user" part="user">

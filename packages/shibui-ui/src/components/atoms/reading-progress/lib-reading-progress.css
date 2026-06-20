@@ -14,7 +14,8 @@
               Display inline-flex — coloca junto al brand.
    vertical → barra fija en el margen izquierdo de la ventana.
 
-   Tonos : accent (default) · info · filled · gold
+   Tonos : default (ink) · accent (default value) · info
+   Theme : default · kintsugi (era tone='gold')
    ============================================================ */
 
 @layer reset {
@@ -27,7 +28,7 @@
   /* ════════════════════════════════════
      BAR — borde inferior de nav
      ════════════════════════════════════ */
-  :host([variant="bar"]),
+  :host([display="bar"]),
   :host(:not([variant])) {
     display: block;
     position: absolute;
@@ -57,7 +58,7 @@
     }
   }
 
-  :host([variant="bar"][active])::after,
+  :host([display="bar"][active])::after,
   :host(:not([variant])[active])::after {
     opacity: 1;
   }
@@ -65,7 +66,7 @@
   /* ════════════════════════════════════
      LINE — borde inferior modulado, 1px
      ════════════════════════════════════ */
-  :host([variant="line"]) {
+  :host([display="line"]) {
     display: block;
     position: absolute;
     bottom: 0;
@@ -82,7 +83,7 @@
   /* ════════════════════════════════════
      DOTS — fila de puntos de capítulo
      ════════════════════════════════════ */
-  :host([variant="dots"]) {
+  :host([display="dots"]) {
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -114,7 +115,7 @@
   /* ════════════════════════════════════
      RING — anillo SVG
      ════════════════════════════════════ */
-  :host([variant="ring"]) {
+  :host([display="ring"]) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -144,7 +145,7 @@
   /* ════════════════════════════════════
      VERTICAL — margen izquierdo fijo
      ════════════════════════════════════ */
-  :host([variant="vertical"]) {
+  :host([display="vertical"]) {
     display: block;
     position: fixed;
     left: 0;
@@ -189,8 +190,8 @@
     --rp-glow:        rgb(53, 113, 100, 0.25);
   }
 
-  /* Ink */
-  :host([tone="filled"]) {
+  /* Ink (tono default) */
+  :host([tone="default"]) {
     --rp-color:       var(--color-washi-800);
     --rp-color-light: var(--color-washi-700);
     --rp-glow:        rgb(61, 51, 42, 0.2);
@@ -208,15 +209,15 @@
      Shimmer: un reflejo de luz (::before) recorre la barra
      en bucle lento — luz resbalando sobre la vena de oro.
      ════════════════════════════════════════════════════════ */
-  :host([tone="gold"]) {
+  :host([theme="kintsugi"]) {
     --rp-color:       var(--color-kaki-500);
     --rp-color-light: var(--color-kaki-300);
     --rp-glow:        oklch(65% 0.1 50deg / 0.55);
   }
 
   /* ── Gradiente kintsugi en bar ────────────────────────── */
-  :host([tone="gold"][variant="bar"]),
-  :host([tone="gold"]:not([variant])) {
+  :host([theme="kintsugi"][display="bar"]),
+  :host([theme="kintsugi"]:not([variant])) {
     background: linear-gradient(
       90deg,
       var(--color-kaki-600)  0%,
@@ -245,8 +246,8 @@
   }
 
   /* Glow tip más cálido y pronunciado */
-  :host([tone="gold"][variant="bar"][active])::after,
-  :host([tone="gold"]:not([variant])[active])::after {
+  :host([theme="kintsugi"][display="bar"][active])::after,
+  :host([theme="kintsugi"]:not([variant])[active])::after {
     width: 24px;
     height: 8px;
     background: oklch(65% 0.1 50deg / 0.65);
@@ -254,7 +255,7 @@
   }
 
   /* ── Gradiente kintsugi en line ───────────────────────── */
-  :host([tone="gold"][variant="line"]) {
+  :host([theme="kintsugi"][display="line"]) {
     background: linear-gradient(
       90deg,
       var(--color-kaki-600) 0%,
@@ -266,7 +267,7 @@
   }
 
   /* ── Gradiente kintsugi en vertical ──────────────────── */
-  :host([tone="gold"][variant="vertical"]) {
+  :host([theme="kintsugi"][display="vertical"]) {
     background: linear-gradient(
       to bottom,
       var(--color-kaki-600) 0%,
@@ -303,10 +304,10 @@
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
-     lib-reading-progress tiene 4 tones explícitos
-     (accent · info · filled · gold) — paletas deliberadas
-     que definen la identidad de la barra. El tone gold
-     incluso lleva su propio shimmer animado.
+     lib-reading-progress tiene 3 tones explícitos
+     (default/ink · accent · info) + theme kintsugi — paletas
+     deliberadas que definen la identidad de la barra. El theme
+     kintsugi incluso lleva su propio shimmer dorado animado.
 
      No se aplica semantic override: estos tonos son la API
      pública del componente. Para variar por katachi, usar

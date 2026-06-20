@@ -48,7 +48,7 @@ Acepta un \`<lib-eyebrow>\` por slot.
 | \`line2-prefix\` | \`string\` | \`''\` | Texto antes del acento |
 | \`accent\` | \`string\` | \`''\` | Texto en itálica kaki |
 | \`description\` | \`string\` | \`''\` | Párrafo de descripción |
-| \`surface\` | \`'light'\\|'dark'\\|'neutral'\` | \`'light'\` | Superficie de fondo |
+| \`surface\` | \`'default'\\|'light'\\|'dark'\` | \`'light'\` | Superficie de fondo |
 | \`size\` | \`'sm'\\|'md'\\|'lg'\` | \`'md'\` | Tamaño fluido |
 | \`tag\` | \`'h1'\\|'h2'\\|'h3'\\|'h4'\` | \`'h2'\` | Tag semántico |
 | \`centered\` | \`boolean\` | \`false\` | Centra el bloque |
@@ -62,7 +62,7 @@ Acepta un \`<lib-eyebrow>\` por slot.
     },
   },
   argTypes: {
-    surface:  { control: 'select', options: ['light', 'dark', 'neutral'] },
+    surface:  { control: 'select', options: ['default', 'light', 'dark'] },
     size:     { control: 'select', options: ['sm', 'md', 'lg'] },
     tag:      { control: 'select', options: ['h1', 'h2', 'h3', 'h4'] },
     centered: { control: 'boolean' },
@@ -90,7 +90,7 @@ export const Playground: Story = {
     _animate:  false,
   },
   render: (args) => html`
-    <div style="padding:3rem 2.5rem;background:${args.surface === 'dark' ? 'var(--color-washi-950,#120E0A)' : args.surface === 'neutral' ? 'var(--color-washi-100,#F2EDE6)' : '#fff'}">
+    <div style="padding:3rem 2.5rem;background:${args.surface === 'dark' ? 'var(--color-washi-950,#120E0A)' : args.surface === 'default' ? 'var(--color-washi-100,#F2EDE6)' : '#fff'}">
       <lib-display-heading
         line1=${args.line1}
         line2-prefix=${args.line2Prefix}
@@ -168,9 +168,9 @@ export const Surfaces: Story = {
           line1="Belleza en"
           accent="la austeridad"
           description="El sistema abraza las restricciones como características, no como limitaciones."
-          surface="neutral"
+          surface="default"
         >
-          <lib-eyebrow slot="eyebrow" tone="neutral" size="sm" style="margin-bottom:1rem">Neutral surface</lib-eyebrow>
+          <lib-eyebrow slot="eyebrow" tone="muted" size="sm" style="margin-bottom:1rem">Default surface</lib-eyebrow>
         </lib-display-heading>
       `)}
 

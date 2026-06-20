@@ -4,7 +4,7 @@ import './lib-glass-card.component';
 import type { LibGlassCard } from './lib-glass-card.component';
 import { createKatachiStories } from '../../../../stories/katachi-stories.helper';
 
-type LibGlassCardStoryArgs = Pick<LibGlassCard, 'variant' | 'intensity'>;
+type LibGlassCardStoryArgs = Pick<LibGlassCard, 'tint' | 'intensity'>;
 
 /* Stage oscuro con orbes de fondo — imprescindible para que blur sea visible */
 const stage = (content: TemplateResult): TemplateResult => html`
@@ -49,7 +49,7 @@ const meta: Meta<LibGlassCardStoryArgs> = {
   },
 
   argTypes: {
-    variant: {
+    tint: {
       control: 'select',
       options: ['neutral', 'cool', 'warm'],
       description: 'Tinte estructural del cristal (neutral=default, cool=blue, warm=organic)',
@@ -62,8 +62,8 @@ const meta: Meta<LibGlassCardStoryArgs> = {
   },
 
   render: (args): TemplateResult => stage(html`
-    <lib-glass-card variant=${args.variant} intensity=${args.intensity} style="grid-column:1/-1; max-width:360px;">
-      ${cardContent('--lib-glass-bg', `${args.variant} · ${args.intensity}`, 'Glassmorphism shibui construido sobre tokens primitivos.', `opacity · ${args.intensity}`)}
+    <lib-glass-card tint=${args.tint} intensity=${args.intensity} style="grid-column:1/-1; max-width:360px;">
+      ${cardContent('--lib-glass-bg', `${args.tint} · ${args.intensity}`, 'Glassmorphism shibui construido sobre tokens primitivos.', `opacity · ${args.intensity}`)}
     </lib-glass-card>
   `),
 };
@@ -74,7 +74,7 @@ type Story = StoryObj<LibGlassCardStoryArgs>;
 /* ── Playground ── */
 export const Playground: Story = {
   args: {
-    variant: 'neutral',
+    tint: 'neutral',
     intensity: 'md',
   },
 };
@@ -83,15 +83,15 @@ export const Playground: Story = {
 export const Variants: Story = {
   name: 'Color Variants',
   render: (): TemplateResult => stage(html`
-    <lib-glass-card variant="neutral">
+    <lib-glass-card tint="neutral">
       ${cardContent('--lib-glass-bg', 'Neutral Glass', 'Variante neutra. Surface paper al 15% sobre cualquier fondo oscuro.', 'opacity · 0.15')}
     </lib-glass-card>
 
-    <lib-glass-card variant="cool">
+    <lib-glass-card tint="cool">
       ${cardContent('--lib-glass-bg-water', 'Cool Glass', 'Tinte azul sereno. Para componentes primary o acciones de confirmación.', 'oklch 55% 0.06 210')}
     </lib-glass-card>
 
-    <lib-glass-card variant="warm">
+    <lib-glass-card tint="warm">
       ${cardContent('--lib-glass-bg-kaki', 'Warm Glass', 'Tinte orgánico cálido. Para acciones de acento o estados destacados.', 'oklch 45% 0.05 45')}
     </lib-glass-card>
   `),
@@ -119,7 +119,7 @@ export const Matrix: Story = {
   render: (): TemplateResult => stage(html`
     ${(['neutral', 'cool', 'warm'] as const).flatMap(v =>
       (['low', 'md', 'high'] as const).map(i => html`
-        <lib-glass-card variant=${v} intensity=${i}>
+        <lib-glass-card tint=${v} intensity=${i}>
           <div style="padding:16px;">
             <p style="font-family:monospace; font-size:9px; color:oklch(90% 0 0 / 0.4); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.25em;">${v} · ${i}</p>
             <p style="font-size:11px; color:oklch(90% 0 0 / 0.55); line-height:1.6;">Glass card combinando tinte y blur.</p>
@@ -147,7 +147,7 @@ export const ContextModal: Story = {
     ">
       <div style="position:absolute; width:400px; height:400px; border-radius:50%; background:oklch(55% 0.06 210 / 0.2); top:-100px; right:-100px; filter:blur(80px);"></div>
 
-      <lib-glass-card variant="water" intensity="high" style="max-width:400px; width:100%;">
+      <lib-glass-card tint="cool" intensity="high" style="max-width:400px; width:100%;">
         <div style="padding:32px;">
           <p style="font-family:monospace; font-size:10px; color:oklch(90% 0 0 / 0.4); text-transform:uppercase; letter-spacing:0.25em; margin-bottom:16px;">Confirmar acción</p>
           <h3 style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:oklch(98% 0.01 60); text-shadow:0 1px 3px oklch(0% 0 0 / 0.3); margin-bottom:12px;">¿Estás seguro?</h3>
@@ -178,21 +178,21 @@ export const ContextDashboard: Story = {
     ">
       <div style="position:absolute; width:350px; height:350px; border-radius:50%; background:oklch(55% 0.06 210 / 0.15); top:-80px; left:20%; filter:blur(70px);"></div>
 
-      <lib-glass-card variant="paper" intensity="low">
+      <lib-glass-card tint="neutral" intensity="low">
         <div style="padding:20px;">
           <p style="font-family:monospace; font-size:9px; color:oklch(70% 0 0 / 0.5); text-transform:uppercase; letter-spacing:0.25em; margin-bottom:8px;">Componentes</p>
           <p style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300; color:oklch(95% 0.01 60); line-height:1;">16</p>
         </div>
       </lib-glass-card>
 
-      <lib-glass-card variant="water" intensity="md">
+      <lib-glass-card tint="cool" intensity="md">
         <div style="padding:20px;">
           <p style="font-family:monospace; font-size:9px; color:oklch(70% 0 0 / 0.5); text-transform:uppercase; letter-spacing:0.25em; margin-bottom:8px;">Completados</p>
           <p style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300; color:oklch(95% 0.01 60); line-height:1;">12</p>
         </div>
       </lib-glass-card>
 
-      <lib-glass-card variant="warm" intensity="md">
+      <lib-glass-card tint="warm" intensity="md">
         <div style="padding:20px;">
           <p style="font-family:monospace; font-size:9px; color:oklch(70% 0 0 / 0.5); text-transform:uppercase; letter-spacing:0.25em; margin-bottom:8px;">En progreso</p>
           <p style="font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300; color:oklch(95% 0.01 60); line-height:1;">4</p>
@@ -211,19 +211,19 @@ export const ContextDashboard: Story = {
 
 const _katachi = createKatachiStories<object>(() => html`
   <div style="background:var(--bg-base);padding:var(--lib-space-lg);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--lib-space-sm);">
-    <lib-glass-card variant="neutral" intensity="low">
+    <lib-glass-card tint="neutral" intensity="low">
       <div style="padding:var(--lib-space-md);">
         <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">neutral · low</p>
         <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Tinte neutro.</p>
       </div>
     </lib-glass-card>
-    <lib-glass-card variant="cool" intensity="md">
+    <lib-glass-card tint="cool" intensity="md">
       <div style="padding:var(--lib-space-md);">
         <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">cool · md</p>
         <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Tinte azul sereno.</p>
       </div>
     </lib-glass-card>
-    <lib-glass-card variant="warm" intensity="high">
+    <lib-glass-card tint="warm" intensity="high">
       <div style="padding:var(--lib-space-md);">
         <p style="font-family:var(--lib-font-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--lib-space-xs);">warm · high</p>
         <p style="font-family:var(--lib-font-body);font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;">Tinte cálido orgánico.</p>

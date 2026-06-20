@@ -5,7 +5,7 @@ import { codeBlockTemplate } from './lib-code-block.html';
 import codeBlockCss from './lib-code-block.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
 
-export type LibCodeBlockVariant = 'default' | 'ghost';
+export type LibCodeBlockVariant = 'solid' | 'ghost';
 
 /**
  * @element lib-code-block
@@ -49,9 +49,9 @@ export class LibCodeBlock extends LitElement {
   @property({ type: Boolean, reflect: true })
   copyable = true;
 
-  /** Variante visual: default (oscuro) | ghost (claro) */
+  /** Tratamiento visual: solid (oscuro, default) | ghost (claro) */
   @property({ type: String, reflect: true })
-  variant: LibCodeBlockVariant = 'default';
+  variant: LibCodeBlockVariant = 'solid';
 
   /** Estado interno: feedback tras copiar */
   @state()

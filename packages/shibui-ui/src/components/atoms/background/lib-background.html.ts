@@ -12,8 +12,8 @@ import type { BackgroundTemplateProps } from './lib-background.types';
  *  .bg-content → contenido sloteado — z-index 2
  */
 export function backgroundTemplate(props: BackgroundTemplateProps): TemplateResult {
-  const { variant, isCanvas } = props;
-  const isAuroraDrift = variant === 'aurora-drift';
+  const { theme, isCanvas } = props;
+  const isAuroraDrift = theme === 'aurora-drift';
 
   return html`
     ${isCanvas

@@ -6,7 +6,7 @@ import type { LibCloseButton } from './lib-close-button.component';
 
 type LibCloseButtonStoryArgs = Pick<
   LibCloseButton,
-  'variant' | 'size' | 'icon' | 'disabled'
+  'variant' | 'tone' | 'surface' | 'size' | 'icon' | 'disabled'
 >;
 
 const meta: Meta<LibCloseButtonStoryArgs> = {
@@ -17,8 +17,10 @@ const meta: Meta<LibCloseButtonStoryArgs> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['ghost', 'subtle', 'outlined', 'filled', 'filled-round', 'danger', 'on-dark'],
+      options: ['ghost', 'subtle', 'outlined', 'solid', 'filled-round'],
     },
+    tone:    { control: 'select', options: ['default', 'error'] },
+    surface: { control: 'select', options: ['default', 'dark'] },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg', 'xl'],
@@ -35,6 +37,8 @@ const meta: Meta<LibCloseButtonStoryArgs> = {
     <div style="padding:24px; background:#FFFFFF; border:1px solid #E5DDD3; display:inline-flex;">
       <lib-close-button
         variant=${args.variant}
+        tone=${args.tone ?? 'default'}
+        surface=${args.surface ?? 'default'}
         size=${args.size}
         icon=${args.icon}
         ?disabled=${args.disabled}
@@ -77,7 +81,7 @@ export const AllVariants: Story = {
       </div>
 
       <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
-        <lib-close-button variant="filled" size="md"></lib-close-button>
+        <lib-close-button variant="solid" size="md"></lib-close-button>
         <span style="font-family:monospace; font-size:10px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em;">Filled</span>
       </div>
 
@@ -87,12 +91,12 @@ export const AllVariants: Story = {
       </div>
 
       <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
-        <lib-close-button variant="danger" size="md"></lib-close-button>
+        <lib-close-button tone="error" size="md"></lib-close-button>
         <span style="font-family:monospace; font-size:10px; color:#9A8878; text-transform:uppercase; letter-spacing:0.15em;">Danger</span>
       </div>
 
       <div style="display:flex; flex-direction:column; align-items:center; gap:8px; background:#221C16; padding:12px;">
-        <lib-close-button variant="on-dark" size="md"></lib-close-button>
+        <lib-close-button surface="dark" size="md"></lib-close-button>
         <span style="font-family:monospace; font-size:10px; color:#5C4E42; text-transform:uppercase; letter-spacing:0.15em;">On-dark</span>
       </div>
 
@@ -204,19 +208,19 @@ export const ContextOnDark: Story = {
   render: (): TemplateResult => html`
     <div style="display:flex; align-items:center; gap:32px; padding:32px; background:#221C16;">
       <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
-        <lib-close-button variant="on-dark" size="sm"></lib-close-button>
+        <lib-close-button surface="dark" size="sm"></lib-close-button>
         <span style="font-family:monospace; font-size:10px; color:#5C4E42; text-transform:uppercase; letter-spacing:0.15em;">SM</span>
       </div>
       <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
-        <lib-close-button variant="on-dark" size="md"></lib-close-button>
+        <lib-close-button surface="dark" size="md"></lib-close-button>
         <span style="font-family:monospace; font-size:10px; color:#5C4E42; text-transform:uppercase; letter-spacing:0.15em;">MD</span>
       </div>
       <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
-        <lib-close-button variant="on-dark" size="lg"></lib-close-button>
+        <lib-close-button surface="dark" size="lg"></lib-close-button>
         <span style="font-family:monospace; font-size:10px; color:#5C4E42; text-transform:uppercase; letter-spacing:0.15em;">LG</span>
       </div>
       <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
-        <lib-close-button variant="on-dark" size="xl"></lib-close-button>
+        <lib-close-button surface="dark" size="xl"></lib-close-button>
         <span style="font-family:monospace; font-size:10px; color:#5C4E42; text-transform:uppercase; letter-spacing:0.15em;">XL</span>
       </div>
     </div>
@@ -235,9 +239,9 @@ const _katachi = createKatachiStories<object>(() => html`
       <lib-close-button variant="ghost"        size="md"></lib-close-button>
       <lib-close-button variant="subtle"       size="md"></lib-close-button>
       <lib-close-button variant="outlined"     size="md"></lib-close-button>
-      <lib-close-button variant="filled"       size="md"></lib-close-button>
+      <lib-close-button variant="solid"       size="md"></lib-close-button>
       <lib-close-button variant="filled-round" size="md"></lib-close-button>
-      <lib-close-button variant="danger"       size="md"></lib-close-button>
+      <lib-close-button tone="error"       size="md"></lib-close-button>
     </div>
     <div style="display:flex;gap:var(--lib-space-md);align-items:center;">
       <lib-close-button variant="ghost" size="sm"></lib-close-button>
@@ -249,7 +253,7 @@ const _katachi = createKatachiStories<object>(() => html`
       <lib-close-button variant="ghost"   size="lg" icon="x"></lib-close-button>
       <lib-close-button variant="ghost"   size="lg" icon="x-circle"></lib-close-button>
       <lib-close-button variant="ghost"   size="lg" icon="x-square"></lib-close-button>
-      <lib-close-button variant="filled"  size="md" ?disabled=${true}></lib-close-button>
+      <lib-close-button variant="solid"  size="md" ?disabled=${true}></lib-close-button>
     </div>
   </div>
 `);

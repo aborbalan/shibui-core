@@ -46,6 +46,15 @@ jobs:
         run: pnpm --filter @shibui-ui/ui type-check
       - name: 🧹 Lint
         run: pnpm --filter @shibui-ui/ui lint
+      - name: 🎯 Cohesión de props (contrato del DS)
+        # Valida que el manifest cumple docs/props-contract.md (C1–C12: size/tone/
+        # tint/surface/variant canónicos, danger prohibido, estéticas solo en theme,
+        # sin '' ni unknown, defaults válidos). KNOWN_PENDING vacío = DS 100% cohesivo.
+        run: pnpm --filter @shibui-ui/ui test:cohesion
+      - name: 🧪 Unit tests (extractor wrappers · icon-registry · utils)
+        # Suite unitaria completa (vitest). Antes solo corría test:stories, lo que
+        # ocultaba drift en el generador de wrappers y en el registro de iconos.
+        run: pnpm --filter @shibui-ui/ui test:unit
 
   build-ui:
     name: 🏗️ Build UI Library
@@ -64,6 +73,12 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: 🏗️ Build Library
         run: pnpm --filter @shibui-ui/ui build
+      - name: 🔁 Drift guard — datos de componentes en sync con el manifiesto
+        # El build ya corre `analyze` + `generate:components-api`. Si el fichero
+        # generado difiere del commiteado, alguien tocó un componente sin regenerar.
+        run: |
+          git diff --exit-code -- apps/shibui-api/src/domain/components/data/components.generated.ts \
+            || { echo "::error::components.generated.ts desactualizado. Corre 'pnpm --filter @shibui-ui/ui generate:components-api' y commitea el resultado."; exit 1; }
       - name: 📤 Upload UI Library dist artifact
         uses: actions/upload-artifact@v4
         with:
@@ -78,6 +93,40 @@ jobs:
           name: storybook-static-${{ github.run_id }}
           path: packages/shibui-ui/storybook-static/
           retention-days: 1
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Hanko Trust Seal (judaico 判) — F2: smoke / sello Floor sobre el manifest.
+  # hanko lee el `custom-elements.json` que produce el build de shibui-ui
+  # (artefacto ui-dist) y aplica el Floor del ADR-001. NO importa shibui:
+  # se comunica solo por el manifest. Ver packages/hanko/docs/.
+  #
+  # ⚠️ Report-only de momento (continue-on-error). Para convertirlo en gate
+  # duro del DS, quitar `continue-on-error` cuando el sello sea estable.
+  # Requiere que el lockfile incluya @shibui-ui/hanko (pnpm install + commit).
+  # ─────────────────────────────────────────────────────────────────────────
+  hanko-seal:
+    name: 判 Hanko Trust Seal (smoke · Floor)
+    runs-on: ubuntu-latest
+    needs: build-ui
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 📥 Download UI Library dist (incluye custom-elements.json)
+        uses: actions/download-artifact@v4
+        with:
+          name: ui-dist-${{ github.run_id }}
+          path: packages/shibui-ui/dist/
+      - name: 判 Hanko smoke — sello Floor sobre el CEM de shibui-ui
+        run: pnpm --filter @shibui-ui/hanko smoke
 
   test-stories:
     name: 🧪 Story Tests
@@ -98,6 +147,12 @@ jobs:
         run: pnpm --filter @shibui-ui/ui exec playwright install chromium --with-deps
       - name: 🧪 Run Story Tests
         run: pnpm --filter @shibui-ui/ui test:stories
+      - name: 🔬 Props Conformance (Nivel 2 — reflect + delta visual)
+        # Instancia cada componente en Chromium y verifica que los 7 ejes de
+        # cohesión (size/tone/surface/theme/variant/display/tint) reflejan su
+        # atributo y que cada opción cambia el render. Caza selectores
+        # :host([attr=…]) huérfanos tras los renames que el Nivel 1 no ve.
+        run: pnpm --filter @shibui-ui/ui test:conformance
 
   # ─────────────────────────────────────────────────────────────────────────
   # Consumer Contract Tests
@@ -185,3 +240,55 @@ jobs:
         run: cp .firebaserc .config/.firebaserc
       - name: 🚀 Deploy Storybook
         run: pnpm exec firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Hanko Trust Report — F6 incr. 2 (4 capas) + deploy.
+  # Genera el Trust Report (JSON + HTML) sobre el CEM de shibui-ui y publica
+  # el HTML en hanko-report.web.app — la última versión sellada en main.
+  #
+  # Dos etapas:
+  #   1. `observe` — el harness corre sobre los componentes vivos de shibui en
+  #      chromium → observations.json (contrato/a11y/resiliencia).
+  #   2. `report`  — Floor estático + esas observaciones → buildTrustReport.
+  # Si la sonda fallara, `report` degrada a Floor (otras capas → – por la
+  # regla de oro), sin romper el deploy. Solo main: la foto de lo ejecutado allí.
+  # ─────────────────────────────────────────────────────────────────────────
+  deploy-hanko-report:
+    name: 判 Deploy Hanko Trust Report
+    runs-on: ubuntu-latest
+    needs: build-ui
+    if: |
+      always() &&
+      needs.build-ui.result == 'success' &&
+      inputs.ref == 'refs/heads/main'
+    env:
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 📥 Download UI Library dist (incluye custom-elements.json)
+        uses: actions/download-artifact@v4
+        with:
+          name: ui-dist-${{ github.run_id }}
+          path: packages/shibui-ui/dist/
+      - name: 🌐 Install Playwright Chromium
+        run: pnpm --filter @shibui-ui/hanko exec playwright install chromium --with-deps
+      - name: 判 Sondear shibui (Etapa 1) — observations.json sobre el dist real
+        # El harness de hanko corre sobre los componentes vivos de shibui en
+        # chromium y deja observations.json. Si la sonda fallara, el report
+        # siguiente degrada a Floor (las otras capas → –), no rompe el deploy.
+        run: pnpm --filter @shibui-ui/hanko observe
+      - name: 判 Generar Trust Report (Etapa 2) — 4 capas sobre el CEM + observaciones
+        run: pnpm --filter @shibui-ui/hanko report
+      - name: 🔧 Copy .firebaserc to config dir
+        run: cp .firebaserc .config/.firebaserc
+      - name: 🚀 Deploy Trust Report → hanko-report.web.app
+        run: pnpm exec firebase deploy --only hosting:hanko-report --non-interactive --project lib-ui-b67c5

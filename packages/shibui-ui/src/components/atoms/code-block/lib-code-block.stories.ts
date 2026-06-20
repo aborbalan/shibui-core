@@ -34,8 +34,8 @@ const meta: Meta<LibCodeBlockStoryArgs> = {
     },
     variant: {
       control: 'select',
-      options: ['default', 'ghost'],
-      description: 'Variante visual: default (oscuro) | ghost (claro)',
+      options: ['solid', 'ghost'],
+      description: 'Tratamiento: solid (oscuro, default) | ghost (claro)',
     },
   },
 
@@ -61,7 +61,7 @@ export const Playground: Story = {
     language: 'bash',
     filename: '',
     copyable: true,
-    variant: 'default',
+    variant: 'solid',
   },
 };
 
@@ -113,8 +113,8 @@ export const MultiLanguage: Story = {
       <lib-code-block
         language="html"
         filename="index.html"
-        code='<lib-button variant="primary">Click me</lib-button>
-<lib-badge variant="info" dot>Activo</lib-badge>'
+        code='<lib-button variant="solid">Click me</lib-button>
+<lib-badge tone="info" dot>Activo</lib-badge>'
       ></lib-code-block>
 
       <lib-code-block
@@ -182,7 +182,7 @@ export const NoCopy: Story = {
 const _katachi = createKatachiStories<object>(() => html`
   <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);max-width:480px;">
     <lib-code-block
-      variant="default"
+      variant="solid"
       language="bash"
       code="npm install @shibui-ui/ui lit"
       copyable
@@ -195,7 +195,7 @@ const _katachi = createKatachiStories<object>(() => html`
       copyable
     ></lib-code-block>
     <lib-code-block
-      variant="default"
+      variant="solid"
       language="json"
       filename="package.json"
       code='{ "version": "1.0.0" }'

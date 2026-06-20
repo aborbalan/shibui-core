@@ -1,13 +1,16 @@
 import { html, TemplateResult } from 'lit';
 
+/** Tratamiento visual (LibVariant + extensión documentada `filled-round`). */
 export type LibCloseVariant =
   | 'ghost'
   | 'subtle'
   | 'outlined'
-  | 'filled'
-  | 'filled-round'
-  | 'danger'
-  | 'on-dark';
+  | 'solid'        // era 'filled'
+  | 'filled-round';
+/** Tinte semántico (subconjunto canónico de `LibTone`). */
+export type LibCloseTone    = 'default' | 'error';
+/** Superficie (subconjunto canónico de `LibSurface`). */
+export type LibCloseSurface = 'default' | 'dark';
 
 export type LibCloseSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type LibCloseIcon = 'x' | 'x-circle' | 'x-square';

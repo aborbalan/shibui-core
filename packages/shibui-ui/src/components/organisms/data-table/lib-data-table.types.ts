@@ -2,7 +2,7 @@
    LIB-DATA-TABLE — Tipos e interfaces
    ============================================================ */
 
-   export type TableVariant  = 'lines' | 'grid' | 'striped' | 'borderless';
+   export type TableDisplay  = 'lines' | 'grid' | 'striped' | 'borderless';
    export type TableSize     = 'sm' | 'md' | 'lg';
    export type TableColType  = 'text' | 'mono' | 'num' | 'badge' | 'progress' | 'avatar' | 'actions';
    export type TableBadgeTone = 'estable' | 'beta' | 'error' | 'warning' | 'inactive' | 'info';

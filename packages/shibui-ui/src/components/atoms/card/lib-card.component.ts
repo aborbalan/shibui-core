@@ -4,9 +4,9 @@ import sharedTokens from "../../../styles/shared/tokens.css?inline";
 import celadonDecorations from "../../../styles/shared/celadon-decorations.css?inline";
 import cardStyles from "./lib-card.css?inline";
 import { cardTemplate } from "./lib-card.html";
-import type { LibCardVariant } from "./lib-card.types";
+import type { LibCardVariant, LibCardSurface, LibCardTone } from "./lib-card.types";
 
-export type { LibCardVariant } from "./lib-card.types";
+export type { LibCardVariant, LibCardSurface, LibCardTone } from "./lib-card.types";
 export type { CeladonDecoration } from "../../../styles/shared/celadon-decorations";
 
 /**
@@ -18,11 +18,11 @@ export type { CeladonDecoration } from "../../../styles/shared/celadon-decoratio
  * automáticamente cuando la card está dentro de un ancestro con
  * `data-katachi="kintsugi|terminal|sabi"` — sin ningún prop adicional.
  *
- * @attr {'default'|'inverse'|'accent'|'featured'} variant
- *   - default  → superficie elevada neutra; adapta completamente al katachi activo
- *   - inverse  → fondo invertido respecto al base de página (--bg-inverse)
- *   - accent   → borde izquierdo de énfasis; color vía `accent-color`
+ * @attr {'solid'|'featured'} variant
+ *   - solid    → superficie elevada neutra (era 'default'); adapta al katachi activo
  *   - featured → fondo con gradiente cálido sutil, título grande; para 2 cols en grid
+ * @attr {'default'|'inverse'} surface - inverse → fondo invertido (--bg-inverse)
+ * @attr {'default'|'accent'}  tone    - accent → borde izquierdo de énfasis (color vía `accent-color`)
  *
  * @attr {string}  accent-color - Color del borde izquierdo (solo variante `accent`).
  * @attr {string}  kanji        - Kanji decorativo de fondo (ej: "渋", "金", "間").
@@ -61,7 +61,13 @@ export class LibCard extends LitElement {
   ];
 
   @property({ type: String, reflect: true })
-  variant: LibCardVariant = "default";
+  variant: LibCardVariant = "solid";
+
+  @property({ type: String, reflect: true })
+  surface: LibCardSurface = "default";
+
+  @property({ type: String, reflect: true })
+  tone: LibCardTone = "default";
 
   @property({ type: String, attribute: "accent-color" })
   accentColor: string | undefined = undefined;
@@ -80,6 +86,7 @@ export class LibCard extends LitElement {
   override render(): TemplateResult {
     return cardTemplate({
       variant: this.variant,
+      tone: this.tone,
       accentColor: this.accentColor,
       kanji: this.kanji,
       clickable: this.clickable,

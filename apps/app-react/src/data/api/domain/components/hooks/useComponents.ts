@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { componentsApi, examplesApi } from "../api/components.api";
+import type { CategoryWithComponentsDto } from "../api/components.api";
 import { queryKeys } from "../../../query-keys";
 
 /** Todas las categorías con sus componentes embebidos. */
@@ -11,17 +12,26 @@ export function useCategoriesWithComponents() {
 }
 
 /**
- * Componente individual por slug, derivado del caché de categorías.
- * Reutiliza la misma query key que useCategoriesWithComponents para no
- * hacer una petición extra, y aplica select() para extraer el componente.
+ * Componente individual por slug.
+ *
+ * Llama al endpoint `slug`, que es la única vía que incluye el bloque `api`
+ * (props/slots/events); el listado `with-components` lo omite por peso.
+ * Usa `initialData` derivada del caché de categorías para pintar al instante
+ * los campos base y luego hidratar `api` cuando resuelve la petición.
  */
 export function useComponentBySlug(slug: string) {
+  const qc = useQueryClient();
   return useQuery({
-    queryKey: queryKeys.components.withCategories,
-    queryFn: componentsApi.getCategoriesWithComponents,
-    select: (categories) =>
-      categories.flatMap((cat) => cat.components).find((c) => c.slug === slug),
+    queryKey: queryKeys.components.bySlug(slug),
+    queryFn: () => componentsApi.getBySlug(slug),
     enabled: !!slug,
+    initialData: () =>
+      qc
+        .getQueryData<CategoryWithComponentsDto[]>(
+          queryKeys.components.withCategories
+        )
+        ?.flatMap((cat) => cat.components)
+        .find((c) => c.slug === slug),
   });
 }
 

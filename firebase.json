@@ -32,6 +32,17 @@
       ]
     },
     {
+      "target": "cv",
+      "public": "apps/app-cv/dist/app-cv/browser",
+      "ignore": ["**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
       "target": "svelte",
       "public": "apps/app-svelte/dist",
       "ignore": ["**/node_modules/**"],
@@ -49,6 +60,19 @@
       "headers": [
         {
           "source": "/openapi.json",
+          "headers": [
+            { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+          ]
+        }
+      ]
+    },
+    {
+      "target": "hanko-report",
+      "public": "packages/hanko/hanko-report",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "headers": [
+        {
+          "source": "/trust-report.json",
           "headers": [
             { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
           ]

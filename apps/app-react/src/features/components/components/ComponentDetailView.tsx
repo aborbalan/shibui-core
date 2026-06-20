@@ -2,6 +2,7 @@ import React from "react";
 import { LibButton, LibBadge, LibChip, LibDivider, LibSpinner } from "@shibui-ui/ui/react";
 import type { ComponentDto, ExampleDto } from "../../../data/api/domain/components/api/components.api";
 import { ComponentDetailExamples } from "./ComponentDetailExamples";
+import { ComponentDetailApi } from "./ComponentDetailApi";
 
 interface ComponentDetailViewProps {
   component: ComponentDto;
@@ -19,7 +20,7 @@ const statusVariant: Record<string, string> = {
 const metaStyle: React.CSSProperties = {
   fontFamily: "var(--lib-font-mono)",
   fontSize: "0.65rem",
-  color: "var(--color-kaki-700)",
+  color: "var(--text-accent)",
 };
 
 export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
@@ -41,7 +42,7 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
       <header style={{ marginBottom: "2.5rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
           <LibBadge
-            variant={statusVariant[component.status] ?? "default"}
+            tone={statusVariant[component.status] ?? "default"}
             size="sm"
             pill
           >
@@ -51,13 +52,23 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
           {component.packageName && (
             <span style={metaStyle}>{component.packageName}</span>
           )}
+          {component.docsUrl && (
+            <a
+              href={component.docsUrl}
+              target="_blank"
+              rel="noreferrer"
+              style={{ ...metaStyle, textDecoration: "none", borderBottom: "1px solid currentColor", paddingBottom: "1px" }}
+            >
+              Documentación ↗
+            </a>
+          )}
         </div>
 
         <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 600, marginBottom: "0.5rem" }}>
           {component.name}
         </h1>
 
-        <p style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.85rem", color: "var(--color-kaki-600)", marginBottom: "1rem" }}>
+        <p style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.85rem", color: "var(--text-accent)", marginBottom: "1rem" }}>
           {"<"}{component.tagName}{">"}
         </p>
 
@@ -77,9 +88,12 @@ export const ComponentDetailView: React.FC<ComponentDetailViewProps> = ({
         </div>
       )}
 
+      {/* API reference (props / slots / events) */}
+      <ComponentDetailApi api={component.api} />
+
       {/* Examples */}
       <section>
-        <h2 style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--color-kaki-700)", marginBottom: "0.75rem" }}>
+        <h2 style={{ fontFamily: "var(--lib-font-mono)", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-accent)", marginBottom: "0.75rem" }}>
           Ejemplos
         </h2>
         <LibDivider style={{ marginBottom: "1.25rem" }} />

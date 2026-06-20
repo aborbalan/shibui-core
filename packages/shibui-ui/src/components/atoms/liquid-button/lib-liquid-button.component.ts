@@ -3,8 +3,8 @@ import { customElement, property, query } from 'lit/decorators.js';
 import { buttonLiquidTemplate } from './lib-liquid-button.html';
 import liquidCss from './lib-liquid-button.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
-import { LIQUID_PALETTES } from './lib-liquid-button.types';
-import type { LiquidVariant, LiquidSize } from './lib-liquid-button.types';
+import { resolveLiquidPalette } from './lib-liquid-button.types';
+import type { LiquidVariant, LiquidTone, LiquidSize } from './lib-liquid-button.types';
 
 /* ============================================================
    WaterPhysics — clase interna de física de canvas
@@ -231,7 +231,8 @@ class WaterPhysics {
 /**
  * Botón con física de agua en canvas.
  *
- * @prop variant  — 'filled' | 'outlined' | 'accent' | 'info' | 'ghost' | 'danger'
+ * @prop variant  — 'solid' | 'outlined' | 'ghost'
+ * @prop tone     — 'default' | 'accent' | 'info' | 'error'
  * @prop size     — 'sm' | 'md' | 'lg'
  * @prop disabled — bloquea interacción y detiene el canvas
  * @prop loading  — muestra spinner, bloquea interacción
@@ -249,7 +250,10 @@ export class LibButtonLiquid extends LitElement {
   ];
 
   @property({ type: String, reflect: true })
-  variant: LiquidVariant = 'filled';
+  variant: LiquidVariant = 'solid';
+
+  @property({ type: String, reflect: true })
+  tone: LiquidTone = 'default';
 
   @property({ type: String, reflect: true })
   size: LiquidSize = 'md';
@@ -281,7 +285,7 @@ export class LibButtonLiquid extends LitElement {
 
   override updated(changed: Map<string, unknown>): void {
     /* Si cambia la variante, reconstruir physics con nueva paleta */
-    if (changed.has('variant')) {
+    if (changed.has('variant') || changed.has('tone')) {
       this._destroyCanvas();
       this._initCanvas();
     }
@@ -303,7 +307,7 @@ export class LibButtonLiquid extends LitElement {
     this._canvas   = canvas;
     this._btn.insertBefore(canvas, this._btn.firstChild);
 
-    const palette  = LIQUID_PALETTES[this.variant];
+    const palette  = resolveLiquidPalette(this.variant, this.tone);
     this._physics  = new WaterPhysics(this._btn, canvas, palette.water, palette.ripple);
 
     /* ResizeObserver para adaptar canvas al tamaño real del botón */

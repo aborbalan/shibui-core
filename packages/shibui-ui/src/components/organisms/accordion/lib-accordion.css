@@ -2,9 +2,9 @@
 
 /* ============================================================
    LIB-ACCORDION — Shibui UI
-   Variantes: default · flush · separated · accent
+   Display: default · flush · separated   ·   Tone: default · accent
 
-   Las variantes actuan sobre lib-accordion-item via su API
+   Los modos actuan sobre lib-accordion-item via su API
    de CSS custom properties usando ::slotted().
    ============================================================ */
 
@@ -37,7 +37,7 @@
 
   /* ── Flush ───────────────────────────────────────────────── */
   /* Sin borde exterior ni padding lateral */
-  :host([variant="flush"]) {
+  :host([display="flush"]) {
     border: none;
     background: transparent;
     box-shadow: none;
@@ -53,7 +53,7 @@
 
   /* ── Separated ───────────────────────────────────────────── */
   /* Cada item es una tarjeta independiente con gap entre ellas */
-  :host([variant="separated"]) {
+  :host([display="separated"]) {
     border: none;
     background: transparent;
     box-shadow: none;
@@ -77,7 +77,7 @@
 
   /* ── Accent ──────────────────────────────────────────────── */
   /* Borde izquierdo kaki + fondo kaki-50 al abrirse */
-  :host([variant="accent"]) {
+  :host([tone="accent"]) {
     border: 1px solid var(--border-subtle);
     background: var(--bg-elevated);
 
@@ -103,9 +103,9 @@
 
   /* ─── KATACHI · ambient context ──────────────────────────────
      lib-accordion default ya consume tokens semánticos
-     (--bg-elevated, --border-subtle). Las variants flush/separated
-     pasan a transparent (heredan del contexto del ancestro). La
-     variant accent es una paleta kaki deliberada.
+     (--bg-elevated, --border-subtle). Los display flush/separated
+     pasan a transparent (heredan del contexto del ancestro). El
+     tone accent es una paleta kaki deliberada.
 
      Los hijos lib-accordion-item heredan el katachi via su API
      de CSS custom properties.

@@ -202,8 +202,8 @@
      VARIANTES DE COLOR
      ============================================================ */
 
-  /* danger */
-  :host([variant="danger"]) {
+  /* error */
+  :host([tone="error"]) {
     & .dlg-header {
       border-bottom-color: var(--color-error-border, #E8B4AE);
       background: var(--color-error-bg, #FDF0EE);
@@ -220,7 +220,7 @@
   }
 
   /* warning */
-  :host([variant="warning"]) {
+  :host([tone="warning"]) {
     & .dlg-header {
       border-bottom-color: var(--color-warning-border, #E8D0AE);
       background: var(--color-warning-bg, #FDF5EC);
@@ -237,7 +237,7 @@
   }
 
   /* dark / kintsugi */
-  :host([variant="dark"]) {
+  :host([surface="dark"]) {
     & dialog.dlg {
       background: var(--color-washi-950);
       border-color: oklch(18% 0.02 45deg);

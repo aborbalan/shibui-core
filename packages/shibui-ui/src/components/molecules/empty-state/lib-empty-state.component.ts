@@ -19,7 +19,7 @@ export type { LibEmptyStateTone, LibEmptyStateLayout, LibEmptyStateSize };
  * @example — default con icono
  * <lib-empty-state heading="Carpeta vacía" description="Sube tu primer archivo.">
  *   <ph-folder-open slot="illustration" weight="regular"></ph-folder-open>
- *   <lib-button slot="actions" variant="primary">Subir</lib-button>
+ *   <lib-button slot="actions" variant="solid">Subir</lib-button>
  * </lib-empty-state>
  *
  * @example — kanji como ilustración
@@ -30,7 +30,7 @@ export type { LibEmptyStateTone, LibEmptyStateLayout, LibEmptyStateSize };
  * @example — inline con tone
  * <lib-empty-state layout="inline" tone="accent" heading="Empieza aquí" size="sm">
  *   <ph-sparkle slot="illustration" weight="regular"></ph-sparkle>
- *   <lib-button slot="actions" variant="accent">Crear</lib-button>
+ *   <lib-button slot="actions" tone="accent">Crear</lib-button>
  * </lib-empty-state>
  *
  * @example — bordered (dropzone)
@@ -71,7 +71,7 @@ export class LibEmptyState extends LitElement {
    * - error: fallo, acceso denegado
    */
   @property({ type: String, reflect: true })
-  tone: LibEmptyStateTone = 'neutral';
+  tone: LibEmptyStateTone = 'default';
 
   /**
    * Disposición del componente.

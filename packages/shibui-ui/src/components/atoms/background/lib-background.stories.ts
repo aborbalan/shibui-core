@@ -1,7 +1,7 @@
 import { html, TemplateResult } from "lit";
 import type { Meta, StoryObj } from "@storybook/web-components-vite";
 import "./lib-background.component";
-import type { LibBackgroundVariant } from "./lib-background.types";
+import type { LibBackgroundTheme } from "./lib-background.types";
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
 /* ── Helpers de presentación ── */
@@ -37,7 +37,7 @@ const DEMO_DARK = html`
 
 function bgGrid(
   items: Array<{
-    variant: LibBackgroundVariant;
+    variant: LibBackgroundTheme;
     label: string;
     dark?: boolean;
   }>,
@@ -51,7 +51,7 @@ function bgGrid(
         ({ variant, label, dark }) => html`
           <div style="display:flex;flex-direction:column;gap:4px;">
             <lib-background
-              variant="${variant}"
+              theme="${variant}"
               style="height:180px;border-radius:2px;display:block;"
             >
               ${dark ? DEMO_DARK : DEMO_LIGHT}
@@ -89,7 +89,7 @@ const meta: Meta = {
 - **Celadon (4)** — familia jade completa: celadon-wash, celadon-mist, celadon, jade-deep…
 
 \`\`\`html
-<lib-background variant="fireflies" style="height: 400px;">
+<lib-background theme="fireflies" style="height: 400px;">
   <h1>Tu contenido aquí</h1>
 </lib-background>
 \`\`\`
@@ -99,7 +99,7 @@ const meta: Meta = {
     backgrounds: { default: "surface" },
   },
   argTypes: {
-    variant: {
+    theme: {
       control: "select",
       options: [
         /* Light */
@@ -162,7 +162,7 @@ const meta: Meta = {
         "constellation",
         "fireflies",
         "ink-wash",
-      ] satisfies LibBackgroundVariant[],
+      ] satisfies LibBackgroundTheme[],
     },
     paused: { control: "boolean" },
   },
@@ -173,10 +173,10 @@ type Story = StoryObj;
 
 /* ── Playground ── */
 export const Playground: Story = {
-  args: { variant: "ink-wash", paused: false },
+  args: { theme: "ink-wash", paused: false },
   render: (args): TemplateResult => html`
     <lib-background
-      variant="${args.variant as LibBackgroundVariant}"
+      theme="${args.theme as LibBackgroundTheme}"
       ?paused="${args.paused}"
       style="height:420px;display:block;"
     >
@@ -189,7 +189,7 @@ export const Playground: Story = {
         >
         <span
           style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.4;"
-          >lib-background · ${args.variant}</span
+          >lib-background · ${args.theme}</span
         >
       </div>
     </lib-background>
@@ -262,7 +262,7 @@ export const Gradients: Story = {
           { variant: "twilight", label: "37 · 黄昏 twilight", dark: true },
           { variant: "jade-deep", label: "38 · 翡翠 jade deep", dark: true },
         ] as Array<{
-          variant: LibBackgroundVariant;
+          variant: LibBackgroundTheme;
           label: string;
           dark: boolean;
         }>
@@ -270,7 +270,7 @@ export const Gradients: Story = {
         ({ variant, label, dark }) => html`
           <div style="display:flex;flex-direction:column;gap:4px;">
             <lib-background
-              variant="${variant}"
+              theme="${variant}"
               style="height:220px;border-radius:2px;display:block;"
             >
               ${dark ? DEMO_DARK : DEMO_LIGHT}
@@ -299,12 +299,12 @@ export const Celadon: Story = {
           { variant: "celadon-mist", label: "celadon-mist · gradient · niebla jade", dark: false },
           { variant: "celadon",      label: "celadon · dark · superficie jade", dark: true },
           { variant: "jade-deep",   label: "jade-deep · gradient · profundidad jade", dark: true },
-        ] as Array<{ variant: LibBackgroundVariant; label: string; dark: boolean }>
+        ] as Array<{ variant: LibBackgroundTheme; label: string; dark: boolean }>
       ).map(
         ({ variant, label, dark }) => html`
           <div style="display:flex;flex-direction:column;gap:4px;">
             <lib-background
-              variant="${variant}"
+              theme="${variant}"
               style="height:240px;border-radius:2px;display:block;"
             >
               ${dark ? DEMO_DARK : DEMO_LIGHT}
@@ -343,7 +343,7 @@ export const Animated: Story = {
           { variant: "static", label: "49 · static · CRT", dark: true },
           { variant: "glitch", label: "50 · glitch · CRT 6s", dark: true },
         ] as Array<{
-          variant: LibBackgroundVariant;
+          variant: LibBackgroundTheme;
           label: string;
           dark: boolean;
         }>
@@ -351,7 +351,7 @@ export const Animated: Story = {
         ({ variant, label, dark }) => html`
           <div style="display:flex;flex-direction:column;gap:4px;">
             <lib-background
-              variant="${variant}"
+              theme="${variant}"
               style="height:220px;border-radius:2px;display:block;"
             >
               ${dark ? DEMO_DARK : DEMO_LIGHT}
@@ -383,7 +383,7 @@ export const Canvas: Story = {
           { variant: "fireflies", label: "51 · fireflies", dark: true },
           { variant: "ink-wash", label: "52 · ink wash", dark: false },
         ] as Array<{
-          variant: LibBackgroundVariant;
+          variant: LibBackgroundTheme;
           label: string;
           dark: boolean;
         }>
@@ -391,7 +391,7 @@ export const Canvas: Story = {
         ({ variant, label, dark }) => html`
           <div style="display:flex;flex-direction:column;gap:4px;">
             <lib-background
-              variant="${variant}"
+              theme="${variant}"
               style="height:260px;border-radius:2px;display:block;"
             >
               ${dark ? DEMO_DARK : DEMO_LIGHT}
@@ -423,7 +423,7 @@ export const KatachiCoverage: Story = {
           { katachi: "terminal",        variants: ["glitch", "scan", "static"],                                dark: true  },
           { katachi: "shizen · 自然",   variants: ["particles", "rain", "constellation", "fireflies"],         dark: true  },
           { katachi: "celadon · 青磁",  variants: ["celadon-wash", "celadon-mist", "celadon", "jade-deep"],   dark: false },
-        ] as Array<{ katachi: string; variants: LibBackgroundVariant[]; dark: boolean }>
+        ] as Array<{ katachi: string; variants: LibBackgroundTheme[]; dark: boolean }>
       ).map(
         ({ katachi, variants, dark }) => html`
           <div style="margin-bottom:20px;">
@@ -435,7 +435,7 @@ export const KatachiCoverage: Story = {
                 (variant) => html`
                   <div style="display:flex;flex-direction:column;gap:4px;">
                     <lib-background
-                      variant="${variant}"
+                      theme="${variant}"
                       style="height:120px;border-radius:2px;display:block;"
                     >
                       ${dark ? DEMO_DARK : DEMO_LIGHT}
@@ -459,7 +459,7 @@ export const HeroExample: Story = {
   name: "Uso real — Hero",
   render: (): TemplateResult => html`
     <div style="display:flex;flex-direction:column;gap:2px;">
-      <lib-background variant="ink-wash" style="height:360px;display:block;">
+      <lib-background theme="ink-wash" style="height:360px;display:block;">
         <div
           style="display:flex;flex-direction:column;justify-content:center;height:100%;padding:64px;"
         >
@@ -483,7 +483,7 @@ export const HeroExample: Story = {
         </div>
       </lib-background>
 
-      <lib-background variant="fireflies" style="height:360px;display:block;">
+      <lib-background theme="fireflies" style="height:360px;display:block;">
         <div
           style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%;text-align:center;gap:16px;"
         >
@@ -499,7 +499,7 @@ export const HeroExample: Story = {
         </div>
       </lib-background>
 
-      <lib-background variant="forge" style="height:280px;display:block;">
+      <lib-background theme="forge" style="height:280px;display:block;">
         <div
           style="display:flex;flex-direction:column;justify-content:flex-end;height:100%;padding:40px 64px;"
         >
@@ -527,7 +527,7 @@ export const Paused: Story = {
       style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:24px;background:#F2EDE6;"
     >
       <div style="display:flex;flex-direction:column;gap:4px;">
-        <lib-background variant="pulse" style="height:200px;display:block;"
+        <lib-background theme="pulse" style="height:200px;display:block;"
           >${DEMO_DARK}</lib-background
         >
         <span
@@ -537,7 +537,7 @@ export const Paused: Story = {
       </div>
       <div style="display:flex;flex-direction:column;gap:4px;">
         <lib-background
-          variant="pulse"
+          theme="pulse"
           paused
           style="height:200px;display:block;"
           >${DEMO_DARK}</lib-background
@@ -561,22 +561,22 @@ export const Paused: Story = {
 
 const _katachi = createKatachiStories<object>(() => html`
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--lib-space-sm);width:100%;max-width:480px;">
-    <lib-background variant="washi" style="height:100px;display:block;border-radius:2px;overflow:hidden;">
+    <lib-background theme="washi" style="height:100px;display:block;border-radius:2px;overflow:hidden;">
       <div style="display:flex;align-items:center;justify-content:center;height:100%;"><span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--color-washi-600,#7A6A5C);letter-spacing:.1em;">washi</span></div>
     </lib-background>
-    <lib-background variant="ink-wash" style="height:100px;display:block;border-radius:2px;overflow:hidden;">
+    <lib-background theme="ink-wash" style="height:100px;display:block;border-radius:2px;overflow:hidden;">
       <div style="display:flex;align-items:center;justify-content:center;height:100%;"><span style="font-family:var(--lib-font-mono);font-size:9px;color:rgba(250,247,244,.4);letter-spacing:.1em;">ink-wash</span></div>
     </lib-background>
-    <lib-background variant="fireflies" style="height:100px;display:block;border-radius:2px;overflow:hidden;">
+    <lib-background theme="fireflies" style="height:100px;display:block;border-radius:2px;overflow:hidden;">
       <div style="display:flex;align-items:center;justify-content:center;height:100%;"><span style="font-family:var(--lib-font-mono);font-size:9px;color:rgba(250,247,244,.4);letter-spacing:.1em;">fireflies</span></div>
     </lib-background>
-    <lib-background variant="kintsugi" style="height:100px;display:block;border-radius:2px;overflow:hidden;">
+    <lib-background theme="kintsugi" style="height:100px;display:block;border-radius:2px;overflow:hidden;">
       <div style="display:flex;align-items:center;justify-content:center;height:100%;"><span style="font-family:var(--lib-font-mono);font-size:9px;color:rgba(250,247,244,.4);letter-spacing:.1em;">kintsugi</span></div>
     </lib-background>
-    <lib-background variant="celadon-wash" style="height:100px;display:block;border-radius:2px;overflow:hidden;">
+    <lib-background theme="celadon-wash" style="height:100px;display:block;border-radius:2px;overflow:hidden;">
       <div style="display:flex;align-items:center;justify-content:center;height:100%;"><span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--color-washi-600,#7A6A5C);letter-spacing:.1em;">celadon-wash</span></div>
     </lib-background>
-    <lib-background variant="aurora-light" style="height:100px;display:block;border-radius:2px;overflow:hidden;">
+    <lib-background theme="aurora-light" style="height:100px;display:block;border-radius:2px;overflow:hidden;">
       <div style="display:flex;align-items:center;justify-content:center;height:100%;"><span style="font-family:var(--lib-font-mono);font-size:9px;color:var(--color-washi-600,#7A6A5C);letter-spacing:.1em;">aurora-light</span></div>
     </lib-background>
   </div>

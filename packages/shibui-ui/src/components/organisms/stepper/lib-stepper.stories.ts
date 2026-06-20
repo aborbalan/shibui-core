@@ -5,7 +5,7 @@ import '../../atoms/step/lib-step.component';
 import type { LibStepper } from './lib-stepper.component';
 import { createKatachiStories } from '../../../stories/katachi-stories.helper';
 
-type StepperArgs = Pick<LibStepper, 'current' | 'orientation' | 'variant' | 'size'>;
+type StepperArgs = Pick<LibStepper, 'current' | 'orientation' | 'theme' | 'size'>;
 
 /* ── Helpers ── */
 const wrap = (bg: string, content: TemplateResult, pad = '40px'): TemplateResult => html`
@@ -21,14 +21,14 @@ const meta: Meta<StepperArgs> = {
   argTypes: {
     current:     { control: { type: 'number', min: 1, max: 4 } },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
-    variant:     { control: 'select', options: ['default', 'minimal', 'inverse'] },
+    theme:       { control: 'select', options: ['default', 'minimal', 'inverse'] },
     size:        { control: 'select', options: ['sm', 'md', 'lg'] },
   },
   render: (args): TemplateResult => wrap('var(--bg-surface)', html`
     <lib-stepper
       current=${args.current}
       orientation=${args.orientation}
-      variant=${args.variant}
+      theme=${args.theme}
       size=${args.size}
     >
       <lib-step label="Información" sub="Datos personales"></lib-step>
@@ -44,7 +44,7 @@ type Story = StoryObj<StepperArgs>;
 
 /* ── Playground ── */
 export const Playground: Story = {
-  args: { current: 3, orientation: 'horizontal', variant: 'default', size: 'md' },
+  args: { current: 3, orientation: 'horizontal', theme: 'default', size: 'md' },
 };
 
 /* ── Horizontal — tamaños ── */
@@ -111,7 +111,7 @@ export const Vertical: Story = {
 export const Minimal: Story = {
   name: 'Variant — Minimal (acento kaki)',
   render: (): TemplateResult => wrap('var(--bg-surface)', html`
-    <lib-stepper variant="minimal" current="3">
+    <lib-stepper theme="minimal" current="3">
       <lib-step label="Catálogo"></lib-step>
       <lib-step label="Selección"></lib-step>
       <lib-step label="Detalles"></lib-step>
@@ -127,7 +127,7 @@ export const Kintsugi: Story = {
   parameters: { backgrounds: { default: 'dark' } },
   render: (): TemplateResult => html`
     <div style="padding:48px 40px; background:var(--color-washi-950); border:none;">
-      <lib-stepper variant="inverse" current="3">
+      <lib-stepper theme="inverse" current="3">
         <lib-step label="Origen"></lib-step>
         <lib-step label="Proceso"></lib-step>
         <lib-step label="Refinado" sub="En curso"></lib-step>
@@ -210,7 +210,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <!-- default variant · horizontal · sizes sm/md/lg -->
     <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-md);">default · sm</p>
-      <lib-stepper current="2" variant="default" size="sm">
+      <lib-stepper current="2" theme="default" size="sm">
         <lib-step label="Diseño"  sub="Tokens"></lib-step>
         <lib-step label="Build"   sub="Componentes"></lib-step>
         <lib-step label="Test"    sub="Playwright"></lib-step>
@@ -220,7 +220,7 @@ const _katachi = createKatachiStories<object>(() => html`
 
     <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-md);">default · md · con error en paso 2</p>
-      <lib-stepper current="2" variant="default" size="md">
+      <lib-stepper current="2" theme="default" size="md">
         <lib-step label="Cuenta"  sub="Email"></lib-step>
         <lib-step label="Verificación" sub="Código" status="error"></lib-step>
         <lib-step label="Pago"    sub="Método"></lib-step>
@@ -230,7 +230,7 @@ const _katachi = createKatachiStories<object>(() => html`
 
     <div style="padding:var(--lib-space-lg);background:var(--bg-base);border:1px solid var(--border-subtle);">
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-md);">minimal · md · acento kaki</p>
-      <lib-stepper current="3" variant="minimal" size="md">
+      <lib-stepper current="3" theme="minimal" size="md">
         <lib-step label="Catálogo"></lib-step>
         <lib-step label="Selección"></lib-step>
         <lib-step label="Detalles"></lib-step>

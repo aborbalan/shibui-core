@@ -79,7 +79,7 @@
      ============================================================ */
 
   /* ── Default ── */
-  :host([variant="default"]) .badge,
+  :host([tone="default"]) .badge,
   .badge {
     background: var(--lib-comp-bg-subtle, var(--bg-surface));
     color: var(--text-secondary);
@@ -87,42 +87,42 @@
   }
 
   /* ── Accent (kaki / persimón) ── */
-  :host([variant="accent"]) .badge {
+  :host([tone="accent"]) .badge {
     background: var(--color-kaki-50);
     color: var(--color-kaki-600);
     border-color: var(--color-kaki-200);
   }
 
   /* ── Info (jade / informativo) ── */
-  :host([variant="info"]) .badge {
+  :host([tone="info"]) .badge {
     background: var(--info-bg);
     color: var(--info-text);
     border-color: var(--info-border);
   }
 
   /* ── Strong (contraste máximo / inverso) ── */
-  :host([variant="strong"]) .badge {
+  :host([tone="strong"]) .badge {
     background: var(--lib-comp-bg-inverse, var(--color-washi-900));
     color: var(--lib-comp-fg-sec, var(--color-washi-300));
     border-color: var(--lib-comp-border, var(--color-washi-700));
   }
 
   /* ── Error ── */
-  :host([variant="error"]) .badge {
+  :host([tone="error"]) .badge {
     background: oklch(97% 0.01 15deg);
     color: var(--color-error);
     border-color: oklch(85% 0.04 15deg);
   }
 
   /* ── Success ── */
-  :host([variant="success"]) .badge {
+  :host([tone="success"]) .badge {
     background: oklch(97% 0.01 150deg);
     color: var(--color-success);
     border-color: oklch(85% 0.04 150deg);
   }
 
   /* ── Warning ── */
-  :host([variant="warning"]) .badge {
+  :host([tone="warning"]) .badge {
     background: oklch(97% 0.02 80deg);
     color: var(--color-warning);
     border-color: oklch(87% 0.05 80deg);

@@ -11,7 +11,7 @@ const meta: Meta = {
   tags:['autodocs'],
   component: 'lib-checkbox-card',
   argTypes: {
-    color:       { control: 'select', options: ['accent', 'info'] },
+    tone:        { control: 'select', options: ['accent', 'info'] },
     layout:      { control: 'select', options: ['vertical', 'horizontal', 'compact'] },
     'input-type':{ control: 'select', options: ['checkbox', 'radio'] },
     checked:     { control: 'boolean' },
@@ -55,14 +55,14 @@ const featureList = (items: string[]): TemplateResult => html`
 /* ── Playground ── */
 export const Playground: Story = {
   args: {
-    color: 'accent', layout: 'vertical',
+    tone: 'accent', layout: 'vertical',
     'input-type': 'checkbox', checked: false,
     dark: false, disabled: false, error: false,
   },
   render: (args): TemplateResult => html`
     <div style="width:280px;padding:2rem;">
       <lib-checkbox-card
-        color="${args.color}"
+        tone="${args.tone}"
         layout="${args.layout}"
         input-type="${args['input-type']}"
         ?checked="${args.checked}"
@@ -138,7 +138,7 @@ export const Info: Story = {
   render: (): TemplateResult => html`
     <div style="display:grid;grid-template-columns:repeat(3,240px);gap:1rem;padding:2rem;">
 
-      <lib-checkbox-card color="info" check-shape="pill"
+      <lib-checkbox-card tone="info" check-shape="pill"
         card-title="Seguridad" checked
         desc="Autenticación de dos factores y auditoría de accesos.">
         <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -148,7 +148,7 @@ export const Info: Story = {
         </svg>
       </lib-checkbox-card>
 
-      <lib-checkbox-card color="info" check-shape="pill"
+      <lib-checkbox-card tone="info" check-shape="pill"
         card-title="Monitorización"
         desc="Alertas en tiempo real y dashboards de salud.">
         <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -158,7 +158,7 @@ export const Info: Story = {
         </svg>
       </lib-checkbox-card>
 
-      <lib-checkbox-card color="info" check-shape="pill"
+      <lib-checkbox-card tone="info" check-shape="pill"
         card-title="API Access"
         desc="Claves, webhooks y rate limiting configurables.">
         <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -329,7 +329,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <div style="display:flex;gap:var(--lib-space-sm);">
       <lib-checkbox-card value="wabi" card-title="Wabi" desc="Austeridad serena"></lib-checkbox-card>
       <lib-checkbox-card value="sabi" card-title="Sabi" desc="Patina del tiempo" checked></lib-checkbox-card>
-      <lib-checkbox-card value="shizen" color="info" card-title="Shizen" desc="Naturaleza"></lib-checkbox-card>
+      <lib-checkbox-card value="shizen" tone="info" card-title="Shizen" desc="Naturaleza"></lib-checkbox-card>
     </div>
     <lib-checkbox-card layout="horizontal" value="kintsugi" card-title="Kintsugi" desc="La belleza de las grietas reparadas con oro."></lib-checkbox-card>
     <div style="display:flex;gap:var(--lib-space-sm);">

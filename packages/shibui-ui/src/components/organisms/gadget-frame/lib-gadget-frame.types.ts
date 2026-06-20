@@ -1,4 +1,5 @@
-export type GadgetFrameVariant = 'glass' | 'card';
+/** Estética/skin del marco (eje `theme`). `default` = superficie card. */
+export type GadgetFrameTheme = 'default' | 'glass';
 
 export interface GadgetFrameTemplateProps {
   gadgetTitle: string;
@@ -6,7 +7,7 @@ export interface GadgetFrameTemplateProps {
   minimizable: boolean;
   closable:    boolean;
   minimized:   boolean;
-  variant:     GadgetFrameVariant;
+  theme:       GadgetFrameTheme;
   onMinimize:  () => void;
   onClose:     () => void;
 }

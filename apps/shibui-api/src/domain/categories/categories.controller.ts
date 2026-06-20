@@ -45,7 +45,13 @@ export class CategoriesController {
     const categories = this.categoriesService.findAll();
     return categories.map((cat) => ({
       ...cat,
-      components: this.componentsService.findByCategory(cat.id),
+      // El bloque `api` (props/slots/events) se omite en el listado por peso;
+      // se sirve solo en el detalle (GET /components/slug/:slug).
+      components: this.componentsService.findByCategory(cat.id).map((c) => {
+        const light = { ...c };
+        delete light.api;
+        return light;
+      }),
     }));
   }
 

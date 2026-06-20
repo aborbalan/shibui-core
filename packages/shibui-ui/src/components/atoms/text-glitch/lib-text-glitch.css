@@ -6,7 +6,7 @@
    Variantes
    ─────────
    slice  → RGB split, 2 fantasmas clip-path steps(1), ∞ hover
-   scan   → barrido L→R, 1 fantasma kaki, una vez por hover
+   scan   → barrido L→R, 1 fantasma (acento katachi), una vez por hover
    shift  → imprenta desregistrada, 2 capas sutiles, ∞ hover
    decode → katakana scramble JS-driven, una vez por hover
    redact → barra tinta cubre y revela, una vez por hover
@@ -25,6 +25,16 @@
   :host {
     display: inline-block;
     cursor: default;
+
+    /* ── Fantasmas RGB · katachi-aware ──────────────────────────
+       Antes fijos en kaki/celadón. Ahora el fantasma cálido sigue el
+       acento del katachi (--text-accent) y el frío su color de enlace
+       (--text-link, el segundo acento). Sin katachi caen a la pareja
+       histórica kaki-500 / celadón-500. Así el glitch cambia de color
+       al cambiar el katachi (terminal→fósforo, celadón→jade, kintsugi→oro…)
+       en vez de quedarse siempre kaki. Sobreescribibles por instancia. */
+    --tg-ghost-warm: var(--text-accent, var(--color-kaki-500));
+    --tg-ghost-cool: var(--text-link, var(--color-celadon-400));
   }
 
   /* ── Inner wrapper ────────────────────────────────────────── */
@@ -37,12 +47,13 @@
 
   /* ════════════════════════════════════════════════════════════
      SLICE — desregistro RGB en imprenta analógica
-     Dos fantasmas: kaki (×multiply) y celadón (×multiply).
+     Dos fantasmas (cálido + frío, ×multiply) que siguen el acento
+     del katachi vía --tg-ghost-warm / --tg-ghost-cool.
      El mix-blend-mode funciona correctamente sobre fondos washi.
      ════════════════════════════════════════════════════════════ */
 
-  :host([variant="slice"]) .tg-inner::before,
-  :host([variant="slice"]) .tg-inner::after {
+  :host([theme="slice"]) .tg-inner::before,
+  :host([theme="slice"]) .tg-inner::after {
     content: attr(data-text);
     position: absolute;
     inset: 0;
@@ -50,26 +61,26 @@
     opacity: 0;
   }
 
-  :host([variant="slice"]) .tg-inner::before {
-    color: var(--color-kaki-500);
+  :host([theme="slice"]) .tg-inner::before {
+    color: var(--tg-ghost-warm);
     mix-blend-mode: multiply;
   }
 
-  :host([variant="slice"]) .tg-inner::after {
-    color: var(--color-celadon-400);
+  :host([theme="slice"]) .tg-inner::after {
+    color: var(--tg-ghost-cool);
     mix-blend-mode: multiply;
   }
 
-  :host([variant="slice"]:hover) .tg-inner::before,
-  :host([variant="slice"][active]) .tg-inner::before,
-  :host([variant="slice"][trigger="always"]) .tg-inner::before {
+  :host([theme="slice"]:hover) .tg-inner::before,
+  :host([theme="slice"][active]) .tg-inner::before,
+  :host([theme="slice"][trigger="always"]) .tg-inner::before {
     opacity: 1;
     animation: tg-slice-before 420ms steps(1) infinite;
   }
 
-  :host([variant="slice"]:hover) .tg-inner::after,
-  :host([variant="slice"][active]) .tg-inner::after,
-  :host([variant="slice"][trigger="always"]) .tg-inner::after {
+  :host([theme="slice"]:hover) .tg-inner::after,
+  :host([theme="slice"][active]) .tg-inner::after,
+  :host([theme="slice"][trigger="always"]) .tg-inner::after {
     opacity: 1;
     animation: tg-slice-after 420ms steps(1) infinite;
     animation-delay: 60ms;
@@ -152,24 +163,24 @@
      trigger="always" → infinite para efecto continuo.
      ════════════════════════════════════════════════════════════ */
 
-  :host([variant="scan"]) .tg-inner::before {
+  :host([theme="scan"]) .tg-inner::before {
     content: attr(data-text);
     position: absolute;
     inset: 0;
     pointer-events: none;
-    color: var(--color-kaki-500);
+    color: var(--tg-ghost-warm);
     opacity: 0;
     clip-path: inset(0 100% 0 0);
   }
 
   /* Hover / active → plays once (forwards) */
-  :host([variant="scan"]:hover) .tg-inner::before,
-  :host([variant="scan"][active]) .tg-inner::before {
+  :host([theme="scan"]:hover) .tg-inner::before,
+  :host([theme="scan"][active]) .tg-inner::before {
     opacity: 1;
     animation: tg-scan-sweep 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
   /* always → loops */
-  :host([variant="scan"][trigger="always"]) .tg-inner::before {
+  :host([theme="scan"][trigger="always"]) .tg-inner::before {
     opacity: 1;
     animation: tg-scan-sweep 600ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
@@ -202,8 +213,8 @@
      Más sutil que slice — no usa multiply, solo opacity baja.
      ════════════════════════════════════════════════════════════ */
 
-  :host([variant="shift"]) .tg-inner::before,
-  :host([variant="shift"]) .tg-inner::after {
+  :host([theme="shift"]) .tg-inner::before,
+  :host([theme="shift"]) .tg-inner::after {
     content: attr(data-text);
     position: absolute;
     inset: 0;
@@ -212,19 +223,19 @@
     color: inherit;
   }
 
-  :host([variant="shift"]:hover) .tg-inner::before,
-  :host([variant="shift"][active]) .tg-inner::before,
-  :host([variant="shift"][trigger="always"]) .tg-inner::before {
+  :host([theme="shift"]:hover) .tg-inner::before,
+  :host([theme="shift"][active]) .tg-inner::before,
+  :host([theme="shift"][trigger="always"]) .tg-inner::before {
     opacity: 0.55;
-    color: var(--color-kaki-400);
+    color: var(--tg-ghost-warm);
     animation: tg-shift-a 380ms steps(1) infinite;
   }
 
-  :host([variant="shift"]:hover) .tg-inner::after,
-  :host([variant="shift"][active]) .tg-inner::after,
-  :host([variant="shift"][trigger="always"]) .tg-inner::after {
+  :host([theme="shift"]:hover) .tg-inner::after,
+  :host([theme="shift"][active]) .tg-inner::after,
+  :host([theme="shift"][trigger="always"]) .tg-inner::after {
     opacity: 0.35;
-    color: var(--color-celadon-500);
+    color: var(--tg-ghost-cool);
     animation: tg-shift-b 380ms steps(1) infinite;
     animation-delay: 100ms;
   }
@@ -276,13 +287,13 @@
      Los .char son <span> individuales renderizados por Lit.
      ════════════════════════════════════════════════════════════ */
 
-  :host([variant="decode"]) .char {
+  :host([theme="decode"]) .char {
     display: inline-block;
     will-change: transform;
   }
 
-  :host([variant="decode"]) .char.is-scrambling {
-    color: var(--color-kaki-500);
+  :host([theme="decode"]) .char.is-scrambling {
+    color: var(--tg-ghost-warm);
     animation: tg-char-jitter 60ms steps(1) infinite;
   }
 
@@ -299,7 +310,7 @@
      Plays once per hover. trigger="always" → loops.
      ════════════════════════════════════════════════════════════ */
 
-  :host([variant="redact"]) .tg-inner::before {
+  :host([theme="redact"]) .tg-inner::before {
     content: '';
     position: absolute;
     inset: 0 -3px;
@@ -310,12 +321,12 @@
   }
 
   /* Hover / active → plays once */
-  :host([variant="redact"]:hover) .tg-inner::before,
-  :host([variant="redact"][active]) .tg-inner::before {
+  :host([theme="redact"]:hover) .tg-inner::before,
+  :host([theme="redact"][active]) .tg-inner::before {
     animation: tg-redact 700ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
   /* always → loops */
-  :host([variant="redact"][trigger="always"]) .tg-inner::before {
+  :host([theme="redact"][trigger="always"]) .tg-inner::before {
     animation: tg-redact 700ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 
@@ -343,8 +354,8 @@
      Dos fantasmas con skewX + translate en steps(1), ∞ hover.
      ════════════════════════════════════════════════════════════ */
 
-  :host([variant="noise"]) .tg-inner::before,
-  :host([variant="noise"]) .tg-inner::after {
+  :host([theme="noise"]) .tg-inner::before,
+  :host([theme="noise"]) .tg-inner::after {
     content: attr(data-text);
     position: absolute;
     inset: 0;
@@ -352,24 +363,24 @@
     opacity: 0;
   }
 
-  :host([variant="noise"]) .tg-inner::before {
-    color: oklch(55% 0.08 40deg / 0.8);   /* kaki cálido */
+  :host([theme="noise"]) .tg-inner::before {
+    color: color-mix(in oklch, var(--tg-ghost-warm), transparent 20%);   /* cálido — acento del katachi */
   }
 
-  :host([variant="noise"]) .tg-inner::after {
-    color: oklch(55% 0.06 180deg / 0.7);  /* celadón frío */
+  :host([theme="noise"]) .tg-inner::after {
+    color: color-mix(in oklch, var(--tg-ghost-cool), transparent 30%);  /* frío — enlace del katachi */
   }
 
-  :host([variant="noise"]:hover) .tg-inner::before,
-  :host([variant="noise"][active]) .tg-inner::before,
-  :host([variant="noise"][trigger="always"]) .tg-inner::before {
+  :host([theme="noise"]:hover) .tg-inner::before,
+  :host([theme="noise"][active]) .tg-inner::before,
+  :host([theme="noise"][trigger="always"]) .tg-inner::before {
     opacity: 1;
     animation: tg-noise-a 280ms steps(1) infinite;
   }
 
-  :host([variant="noise"]:hover) .tg-inner::after,
-  :host([variant="noise"][active]) .tg-inner::after,
-  :host([variant="noise"][trigger="always"]) .tg-inner::after {
+  :host([theme="noise"]:hover) .tg-inner::after,
+  :host([theme="noise"][active]) .tg-inner::after,
+  :host([theme="noise"][trigger="always"]) .tg-inner::after {
     opacity: 1;
     animation: tg-noise-b 280ms steps(1) infinite;
     animation-delay: 40ms;
@@ -442,16 +453,19 @@
 
   /* ─── KATACHI · ambient context ──────────────────────────────
      lib-text-glitch es un efecto visual con 6 variants
-     (slice · scan · shift · decode · redact · noise). Las
-     paletas kaki/celadon que pintan los fantasmas RGB y la
-     barra redact (washi-900) son deliberadas — definen la
-     estética glitch como tal, independientemente del katachi
-     del ancestro.
+     (slice · scan · shift · decode · redact · noise). Los
+     fantasmas RGB consumen --tg-ghost-warm / --tg-ghost-cool,
+     que por defecto siguen --text-accent / --text-link del
+     katachi activo (fallback kaki-500 / celadón-500). Así el
+     glitch cambia de paleta con el katachi: terminal→fósforo,
+     celadón→jade, kintsugi→oro, wabi→neutro… en vez de quedarse
+     siempre kaki. Sobreescribibles por instancia vía esos tokens.
+
+     La barra de redact sigue usando washi-900 (tinta) — no es un
+     fantasma cromático; pendiente de hacerla katachi-aware aparte.
 
      El katachi terminal está diseñado para potenciar este
-     componente: combina bien con cualquier variant. Bajo
-     wabi/kintsugi/celadon también funciona, manteniendo su
-     identidad visual.
+     componente: combina bien con cualquier variant.
 
      Bloque marcador para discoverability.
      ─────────────────────────────────────────────────────────── */

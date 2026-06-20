@@ -1,5 +1,6 @@
 import { html, svg, TemplateResult } from 'lit';
-import type { LibVariant, LibSize } from '../../../types';
+import type { LibSize } from '../../../types';
+import type { LibButtonVariant, LibButtonTone } from '../../atoms/button/lib-button.types';
 import type { SplitMenuItem } from './lib-button-group.types';
 
 /* ── Caret SVG (va dentro del slot del lib-button flecha) ── */
@@ -25,7 +26,8 @@ export function buttonGroupTemplate(): TemplateResult {
    ──────────────────────────────────────────── */
 export interface SplitTemplateProps {
   label:       string;
-  variant:     LibVariant;
+  variant:     LibButtonVariant;
+  tone:        LibButtonTone;
   size:        LibSize;
   dark:        boolean;
   disabled:    boolean;
@@ -36,10 +38,10 @@ export interface SplitTemplateProps {
 }
 
 export function buttonSplitTemplate(p: SplitTemplateProps): TemplateResult {
-  const { label, variant, size, dark, disabled, menuOpen, items } = p;
+  const { label, variant, tone, size, dark, disabled, menuOpen, items } = p;
 
-  /* Gold en el arrow solo para variantes sólidas (accent/primary) */
-  const arrowGold = variant === 'accent' || variant === 'primary';
+  /* Gold en el arrow solo para tratamientos sólidos (solid / tone accent) */
+  const arrowGold = tone === 'accent' || variant === 'solid';
 
   const menuItems: TemplateResult = items.length > 0
     ? html`${items.map(item => html`
@@ -58,6 +60,7 @@ export function buttonSplitTemplate(p: SplitTemplateProps): TemplateResult {
       <lib-button
         part="main"
         variant="${variant}"
+        tone="${tone}"
         size="${size}"
         ?dark="${dark}"
         ?disabled="${disabled}"
@@ -74,6 +77,7 @@ export function buttonSplitTemplate(p: SplitTemplateProps): TemplateResult {
       <lib-button
         part="arrow"
         variant="${variant}"
+        tone="${tone}"
         size="${size}"
         ?dark="${dark}"
         ?disabled="${disabled}"
