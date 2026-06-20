@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import * as axe from 'axe-core';
-import { observeRuntime, observeA11y, observeResilience } from './probe';
+import { observeRuntime, observeA11y, observeResilience, ADVERSE_SCENARIOS } from './probe';
 import { contractCheck } from '../checks/contract';
 import { a11yCheck } from '../checks/a11y';
 import { resilienceCheck } from '../checks/resilience';
@@ -61,12 +61,37 @@ class HankoAsyncReflect extends HTMLElement {
   }
 }
 
+/**
+ * Componente DATA-DRIVEN que PETA al montarse vacío: su render hace `items.map(...)`
+ * de forma ASÍNCRONA (como Lit). Sin datos → `undefined.map` lanza en la microtask.
+ * Sirve para probar (a) que el harness captura el throw async y (b) que sembrar
+ * `items: []` lo deja renderizar.
+ */
+class HankoNeedsData extends HTMLElement {
+  items: unknown;
+  #pending: Promise<void> | null = null;
+  connectedCallback(): void {
+    this.#pending = Promise.resolve().then(() => {
+      (this.items as unknown[]).map((x) => x); // lanza si items no es array
+      if (!this.shadowRoot) {
+        this.attachShadow({ mode: 'open' }).appendChild(document.createElement('slot'));
+      }
+    });
+  }
+  get updateComplete(): Promise<void> {
+    return this.#pending ?? Promise.resolve();
+  }
+}
+
 beforeAll(() => {
   if (!customElements.get('hanko-probe-button')) {
     customElements.define('hanko-probe-button', HankoProbeButton);
   }
   if (!customElements.get('hanko-async-reflect')) {
     customElements.define('hanko-async-reflect', HankoAsyncReflect);
+  }
+  if (!customElements.get('hanko-needs-data')) {
+    customElements.define('hanko-needs-data', HankoNeedsData);
   }
 });
 
@@ -156,9 +181,24 @@ describe('harness · observeA11y', () => {
 });
 
 describe('harness · observeResilience', () => {
-  it('sobrevive a los escenarios adversos', () => {
-    const r = resilienceCheck(observeResilience('hanko-probe-button'));
+  it('sobrevive a los escenarios adversos', async () => {
+    const r = resilienceCheck(await observeResilience('hanko-probe-button'));
     expect(r.pass).toBe(true);
     expect(r.checked.length).toBeGreaterThan(0);
+  });
+
+  it('CAPTURA el throw ASÍNCRONO al montar un componente data-driven vacío', async () => {
+    // items=undefined → el render async (como Lit) lanza en la microtask siguiente.
+    // El harness espera `updateComplete`, así que el throw aflora DENTRO del trial
+    // (un try/catch síncrono lo habría perdido → falso «sobrevivió»).
+    const obs = await observeResilience('hanko-needs-data');
+    const empty = obs.trials?.find((t) => t.scenario === 'empty');
+    expect(empty?.survived).toBe(false);
+
+    // Política del runner: los escenarios adversos (sin datos) son tolerables →
+    // el crash es un WARNING, no descalifica el sello.
+    const r = resilienceCheck(obs, { optional: [...ADVERSE_SCENARIOS] });
+    expect(r.pass).toBe(true);
+    expect(r.warnings.some((w) => w.scenario === 'empty')).toBe(true);
   });
 });
