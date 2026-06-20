@@ -89,8 +89,20 @@ pnpm --filter @shibui-ui/hanko issues [report.json] [--repo owner/name]
 ## Cliente REST
 
 `RestGithubClient` usa `fetch` global (Node 22) contra `https://api.github.com`, headers
-`Authorization: Bearer`, `Accept: application/vnd.github+json`, `X-GitHub-Api-Version`. Lista
-con paginación y descarta PRs (el endpoint de issues los incluye). **Cero dependencias nuevas.**
+`Authorization: Bearer`, `Accept: application/vnd.github+json`, **`User-Agent`** (GitHub
+**rechaza con 403** toda petición sin él) y `X-GitHub-Api-Version`. Lista con paginación y
+descarta PRs (el endpoint de issues los incluye). **Cero dependencias nuevas.**
+
+> **Entorno local con TLS interceptado** (antivirus/proxy corporativo): el `fetch` de Node usa
+> su propio almacén de CAs y puede fallar con `UNABLE_TO_VERIFY_LEAF_SIGNATURE` aunque `gh`
+> funcione (este usa el almacén del SO). Solución: `NODE_EXTRA_CA_CERTS=<raíz-corp.pem>` (o, en
+> un test puntual, `NODE_TLS_REJECT_UNAUTHORIZED=0`). **CI (runners Ubuntu) no se ve afectado.**
+
+### Smoke test (validado contra GitHub real)
+
+Plumbing verificado con un report mínimo de un componente de prueba (`issues <report.json>`):
+**create** → **update** (re-corrida, no duplica) → **close** (componente de nuevo `trusted`),
+labels auto-creadas y dedup por marcador. Sin tocar componentes reales.
 
 ## Criterios de aceptación
 
