@@ -81,24 +81,33 @@ function toComponent(
   return component;
 }
 
-/** Campos públicos de instancia (excluye métodos, privados/protegidos y estáticos). */
-function isPublicField(m: CemMember): boolean {
+/**
+ * ¿Es un miembro de instancia PÚBLICO? Excluye estáticos, `privacy`
+ * private/protected y —por CONVENCIÓN de nombre— los `_`-prefijados.
+ *
+ * El analizador de CEM (custom-elements-manifest) NO marca como `private` los
+ * miembros `_x`: les deja `privacy: ''`. Pero el contrato de hanko es la API
+ * PÚBLICA, y el harness (`publicApiOf`) ya descarta los `_` por nombre. Sin esta
+ * simetría, cada método/campo privado declarado en el CEM (p.ej. `_handleClick`)
+ * salía como falso `contract/method|property: ausente` (el runtime no lo expone).
+ */
+function isPublicMember(m: CemMember): boolean {
   return (
-    m.kind === 'field' &&
     m.privacy !== 'private' &&
     m.privacy !== 'protected' &&
-    m.static !== true
+    m.static !== true &&
+    !m.name.startsWith('_')
   );
 }
 
-/** Métodos públicos de instancia (excluye campos, privados/protegidos y estáticos). */
+/** Campos públicos de instancia (excluye métodos). */
+function isPublicField(m: CemMember): boolean {
+  return m.kind === 'field' && isPublicMember(m);
+}
+
+/** Métodos públicos de instancia (excluye campos). */
 function isPublicMethod(m: CemMember): boolean {
-  return (
-    m.kind === 'method' &&
-    m.privacy !== 'private' &&
-    m.privacy !== 'protected' &&
-    m.static !== true
-  );
+  return m.kind === 'method' && isPublicMember(m);
 }
 
 function toProperty(m: CemMember): PropertyContract {

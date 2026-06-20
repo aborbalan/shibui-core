@@ -1,8 +1,9 @@
 # Spec · Harness de runtime (incremento 2 de F3/F4/F5)
 
-> **Estado:** v0 — implementado en `src/harness/probe.ts` y **cableado al Trust Report** vía la sonda
-> `dogfood/probe-shibui.ts` (Etapa 1 del puente de F6). **Pendiente de validar en navegador** (el worktree no
-> tiene `node_modules`; se valida desde el repo principal — Paso 0).
+> **Estado:** implementado en `src/harness/probe.ts` y **cableado al Trust Report** vía la sonda
+> `dogfood/probe-shibui.ts` (Etapa 1 del puente de F6). **Validado en navegador** (Playwright/chromium): tests
+> `*.browser.test.ts` verdes + dogfood real sobre los ~102 componentes de shibui. Calibración async (Lit
+> `updateComplete`) **resuelta** — ver §Calibración.
 > **Fase:** incremento 2 común a F3 (contrato), F4 (a11y) y F5 (resiliencia).
 
 ---
@@ -31,10 +32,14 @@ custom element registrado ──► observe*() ──► Observación ──► 
 
 ```ts
 publicApiOf(instance, stopProto?): { properties; methods }     // puro
-observeRuntime(tagName): ComponentRuntime                       // browser
+observeRuntime(tagName): Promise<ComponentRuntime>             // browser, async (espera updateComplete)
 observeA11y(tagName, runAxe): Promise<A11yObservation>          // browser, axe inyectado
 observeResilience(tagName): ResilienceObservation               // browser
 ```
+
+> `observeRuntime` es **async**: tras montar el elemento espera su `updateComplete` (duck-typing por `.then`,
+> sin importar Lit) antes de leer slots/reflect, porque LitElement renderiza el shadow DOM y refleja
+> prop→attr en la *microtask* siguiente, no de forma síncrona. Ver `elUpdateComplete` en `probe.ts`.
 
 ## Niveles de test (ADR-002)
 
@@ -46,18 +51,36 @@ observeResilience(tagName): ResilienceObservation               // browser
 Scripts: `pnpm --filter @shibui-ui/hanko test` (node) · `… test:browser` (navegador).
 Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwright install chromium`.
 
-## ⚠️ v0 — heurísticas a calibrar
+## Calibración
 
-- **reflect**: sonda con un sentinel string; no detecta reflexión de booleanos → a refinar.
+- **render asíncrono de Lit — RESUELTO.** Los componentes de shibui (LitElement) construyen su shadow DOM y
+  reflejan prop→attr en la *microtask* siguiente al montaje, no de forma síncrona. `observeRuntime` ahora es
+  **async** y espera `updateComplete` tras montar (y `probeReflect` tras cada set) → slots y reflect se observan
+  de verdad. Antes, leer en el mismo tick daba `shadowRoot` vacío y "no refleja" en TODA la librería (~98
+  componentes con el mismo falso `contract/reflect`). Validado end-to-end con el dogfood real (98 → 70 «sin sello»;
+  los que sellan en contrato pasan limpio, p.ej. `lib-button`).
+
+### ⚠️ Pendiente de calibrar (descubierto al quitar el ruido async)
+
+- **Miembros privados en el CEM**: el analizador emite métodos/propiedades `_x` (privados) en el manifest, pero
+  `publicApiOf` los excluye a propósito (contrato = API **pública**) → cada `_x` declarado sale como
+  `contract/method|property: ausente`. Asimetría interna: decidir si la ingestión los filtra (contrato público)
+  o si declararlos es un *smell* a reportar. Domina los `contract/method` (todos `_`).
+- **Miembros fantasma kebab en el CEM**: algunos componentes declaran DOS miembros para una misma prop —el real
+  `showLegend` (attribute `show-legend`) y un duplicado `show-legend` (kind field, sin attribute)—. El segundo no
+  existe en runtime → `contract/property: ausente`. Es un *smell* de generación del CEM de shibui.
+- **Crash al montar VACÍO** (componentes data-driven: charts/stepper/tabs…): petan en la primera actualización de
+  Lit (`series.flatMap is not a function`, etc.). El throw async ahora aflora en el `await updateComplete` y
+  `observeRuntime` lo captura (observación parcial → se omite), pero quedan reflect/slots reales sin verificar y
+  los crashes solo se ven en `report-full.html` (vía `page.on('pageerror')`). Calibrar: montar con datos mínimos
+  válidos por tipo, o política explícita "crash en mount vacío = violación de resiliencia".
+- **Slot por defecto con etiqueta `—` mal codificada** (`"â€”"`): bug de encoding (UTF-8 leído como latin1) en el
+  nombre del slot por defecto del CEM/render → revisar la ingestión/render del nombre de slot.
+- **reflect (sentinel)**: sonda con un sentinel string; para una prop booleana/numérica/enum el converter de Lit
+  puede no producir un atributo "cambiado" aunque refleje → considerar sentinel tipado por el CEM.
 - **interactividad / nombre accesible**: heurísticas (tabindex/role/shadow, aria-label/texto) → calibrar contra
-  shibui real.
+  shibui real (29 componentes fallan a11y, en parte por montarse vacíos sin nombre accesible).
 - **focusVisible**: requiere foco/render real; v0 lo deja sin observar (el check lo omite, no falla).
-- **render asíncrono de Lit**: los componentes de shibui (LitElement) construyen su shadow DOM en una *microtask*
-  tras montar, no de forma síncrona. `observeRuntime` lee de forma síncrona, así que en v0:
-  - los **slots** de un componente Lit suelen quedar **sin observar** (`shadowRoot` aún null) → el check los
-    **omite** (`skipped`), no genera un falso fallo (regla de oro);
-  - el **reflect** puede quedar corto (Lit refleja en el ciclo de update). Afinarlo = hacer `observeRuntime`
-    consciente de `updateComplete`; es trabajo de calibración del Paso 0, no de esta v0.
 
 ## Dogfood sobre shibui-ui — `dogfood/` (Etapa 1 del puente de F6)
 

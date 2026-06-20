@@ -143,11 +143,12 @@
     <span class="chip">Construido <b>desde 0</b> (no hereda infra de @shibui-ui/ui)</span>
     <span class="chip">F0·F1·F2 <b>en develop + main</b> (PR #502 → #510)</span>
     <span class="chip">Sello a escala: <b>102 / 102</b> pasan el Floor</span>
-    <span class="chip">Hito 2: <b>F3·F4·F5 en curso</b> · 3 motores (incr. 1) hechos</span>
-    <span class="chip">Incr. 2 (harness): <b>cableado al report (2 etapas)</b> · pendiente validar en navegador</span>
+    <span class="chip">Hito 2: <b>F3·F4·F5</b> · incr. 1 (motores) + incr. 2 (harness) <b>VALIDADOS en navegador</b> · calibrando</span>
+    <span class="chip">Incr. 2 (harness): <b>validado en navegador</b> · async Lit (<code>updateComplete</code>) calibrado</span>
     <span class="chip">Hito 3: <b>F6 incr. 2 — 4 capas</b> · sonda de navegador → report</span>
     <span class="chip">F7: <b>desacople ejecutable</b> + paquete publicable · publish diferido</span>
-    <span class="chip">Actualizado <b>2026-06-19</b></span>
+    <span class="chip">Calibración: <b>«sin sello» 98 → 66</b> (falso <code>reflect</code> async + privados `_` del CEM)</span>
+    <span class="chip">Actualizado <b>2026-06-20</b></span>
   </div>
 </header>
 
@@ -258,7 +259,8 @@
       Aquí viven la <strong>regla de oro</strong> (<em>ausencia ≠ incumplimiento</em>, ahora en ambos sentidos) y los
       niveles Conformance → Strict del ADR-001 —más la registrabilidad que F2 difirió.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor puro <code>contractCheck()</code> + límite <code>ComponentRuntime</code> · registrabilidad + props + atributos + reflect + métodos · <code>methods</code> poblados en la ingestión · spec <code>checks-contract.md</code> + tests</span></p>
-      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span><code>observeRuntime</code> ampliado: monta el elemento y <strong>observa los slots del shadow DOM → nueva faceta <code>slot</code></strong> en <code>contractCheck</code> (declarado ↔ shadow DOM), con tests node + navegador. Vive en #528 (no en #526) y <strong>sin validar en navegador</strong>. Eventos: no observables por inspección estática → <em>declarados-only</em>.</span></p>
+      <p class="deliv"><b>✓ Incr. 2 ▸</b> <span><code>observeRuntime</code> ampliado: monta el elemento y <strong>observa los slots del shadow DOM → nueva faceta <code>slot</code></strong> en <code>contractCheck</code> (declarado ↔ shadow DOM), con tests node + navegador. Vive en #528 (no en #526). <strong>VALIDADO en navegador + calibrado async</strong> (espera <code>updateComplete</code> de Lit antes de leer slots/reflect): eliminado el falso <code>contract/reflect</code> que afectaba a ~98 componentes. Además, la ingestión ahora descarta los miembros privados <code>_x</code> del CEM (simetría con <code>publicApiOf</code>) → fuera los falsos <code>contract/method</code>. Eventos: no observables por inspección estática → <em>declarados-only</em>.</span></p>
+      <p class="deliv"><b>◷ Calibración pendiente ▸</b> <span>miembros fantasma kebab del CEM (<code>show-legend</code> duplicando a <code>showLegend</code>) = <em>smell</em> de generación del CEM de shibui; y <code>reflect</code>/<code>slot</code> reales sin verificar en componentes data-driven que petan al montarse VACÍOS. Ver <code>specs/harness.md §Calibración</code>.</span></p>
     </div>
   </div>
 
@@ -273,7 +275,8 @@
       <p class="body">axe + navegación por teclado + foco + nombre accesible. Pruebas <strong>universales</strong>:
       aplican a cualquier componente, declare lo que declare su manifest — F4 no lee el contrato.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor de política puro <code>a11yCheck()</code> + observación <code>A11yObservation</code> · umbral de severidad (<code>failOn</code>) + teclado/foco/nombre exigidos a interactivos · spec <code>checks-a11y.md</code> + tests</span></p>
-      <p class="deliv"><b>✗ Falta ▸</b> <span><strong>incremento 2 ausente de este PR (#527)</strong>: el harness de a11y (<code>observeA11y</code>, axe + sondeos inyectados) vive centralizado en #528, no en esta rama — y <strong>sin validar en navegador</strong></span></p>
+      <p class="deliv"><b>✓ Incr. 2 ▸</b> <span>el harness de a11y (<code>observeA11y</code>, axe inyectado + sondeos de interactividad/teclado/nombre) vive centralizado en #528 y está <strong>VALIDADO en navegador</strong> (Playwright/chromium) y corrido sobre shibui real.</span></p>
+      <p class="deliv"><b>◷ Calibración pendiente ▸</b> <span>29 componentes fallan a11y; en parte señal real, en parte por montarse VACÍOS sin nombre accesible. Heurísticas v0 (interactividad / nombre / <code>focusVisible</code>) a afinar contra shibui real.</span></p>
     </div>
   </div>
 
@@ -288,7 +291,8 @@
       <p class="body">Props basura / vacías, SSR, RTL. El componente no debe romperse ante entradas adversas.
       También <strong>universal</strong>, no depende del contrato.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor de política puro <code>resilienceCheck()</code> + observación <code>ResilienceObservation</code> · escenarios obligatorios vs tolerables (<code>optional</code>) · spec <code>checks-resilience.md</code> + tests</span></p>
-      <p class="deliv"><b>◐ Incr. 2 ▸</b> <span>el <strong>harness compartido</strong> <code>src/harness/</code> (las tres observaciones: runtime · a11y · resiliencia) <strong>vive en este PR (#528)</strong> — escrito pero <strong>sin validar en navegador</strong> ni correr sobre shibui real</span></p>
+      <p class="deliv"><b>✓ Incr. 2 ▸</b> <span>el <strong>harness compartido</strong> <code>src/harness/</code> (las tres observaciones: runtime · a11y · resiliencia) <strong>vive en este PR (#528)</strong> — <strong>VALIDADO en navegador y corrido sobre shibui real</strong> (dogfood/Playwright, ~102 componentes).</span></p>
+      <p class="deliv"><b>◷ Calibración pendiente ▸</b> <span>throws async al montar componentes data-driven VACÍOS (el try/catch síncrono de <code>observeResilience</code> no los captura; afloran solo como <code>pageerror</code> en <code>report-full.html</code>). Decidir política: montar con datos mínimos por tipo, o «crash en mount vacío = violación».</span></p>
     </div>
   </div>
 

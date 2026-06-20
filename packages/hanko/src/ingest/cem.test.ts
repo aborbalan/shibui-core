@@ -24,6 +24,10 @@ const manifest: CustomElementsManifest = {
             },
             { kind: 'field', name: 'disabled', type: { text: 'boolean' }, default: 'false' },
             { kind: 'field', name: '_internal', privacy: 'private', type: { text: 'string' } },
+            // `_`-prefijados que el analizador deja con privacy '' (caso real shibui):
+            // se excluyen por CONVENCIÓN de nombre, igual que en publicApiOf.
+            { kind: 'field', name: '_uid', type: { text: 'number' } },
+            { kind: 'method', name: '_handleClick' },
             { kind: 'method', name: 'focus' },
           ],
           events: [{ name: 'ui-lib-click' }],
@@ -46,6 +50,12 @@ describe('ingestCem', () => {
     const c = ingestCem(manifest).components.get('lib-button')!;
     expect(c.properties?.map((p) => p.property)).toEqual(['variant', 'disabled']); // sin _internal ni focus
     expect(c.methods?.map((m) => m.name)).toEqual(['focus']); // poblados desde F3
+  });
+
+  it('excluye miembros `_`-prefijados aunque privacy sea \'\' (simetría con publicApiOf)', () => {
+    const c = ingestCem(manifest).components.get('lib-button')!;
+    expect(c.properties?.map((p) => p.property)).not.toContain('_uid');
+    expect(c.methods?.map((m) => m.name)).not.toContain('_handleClick');
   });
 
   it('respeta reflect, attribute, default raw y tipo parseado', () => {
