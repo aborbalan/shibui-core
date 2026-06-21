@@ -103,9 +103,113 @@ class HankoWindowThrower extends HTMLElement {
   }
 }
 
+/**
+ * Componente DATA-DRIVEN con una prop array REFLEJABLE (`rows` en
+ * `observedAttributes`, inicializada a `[]`) cuyo render hace `rows.map(...)` de
+ * forma ASÍNCRONA (como Lit). Si la sonda de reflexión le asignara el viejo
+ * sentinel STRING, `'hanko-probe'.map` petaría a nivel `window` (el patrón de los
+ * ~24 `pageerror`). Con el sentinel TIPADO recibe `[]` y renderiza limpio.
+ */
+class HankoReflectArray extends HTMLElement {
+  static get observedAttributes(): string[] {
+    return ['rows'];
+  }
+  rows: unknown = [];
+  #pending: Promise<void> | null = null;
+  connectedCallback(): void {
+    this.scheduleRender();
+  }
+  attributeChangedCallback(): void {
+    this.scheduleRender();
+  }
+  scheduleRender(): void {
+    this.#pending = Promise.resolve().then(() => {
+      (this.rows as unknown[]).map((x) => x); // peta si rows no es array
+      if (!this.shadowRoot) {
+        this.attachShadow({ mode: 'open' }).appendChild(document.createElement('slot'));
+      }
+    });
+  }
+  get updateComplete(): Promise<void> {
+    return this.#pending ?? Promise.resolve();
+  }
+}
+
+/**
+ * Booleano de reflexión ESTRICTA: refleja `active`⇄atributo SOLO si el valor es un
+ * boolean real (converter estricto, como el de Lit). Con el viejo sentinel STRING
+ * (`'hanko-probe'`) el setter ignora el cambio → la sonda daba FALSO «no refleja».
+ * Con el sentinel TIPADO recibe el booleano invertido → refleja → se detecta.
+ */
+class HankoStrictBool extends HTMLElement {
+  static get observedAttributes(): string[] {
+    return ['active'];
+  }
+  #active = false;
+  #pending: Promise<void> | null = null;
+  get active(): boolean {
+    return this.#active;
+  }
+  set active(v: unknown) {
+    this.#active = Boolean(v);
+    this.#pending = Promise.resolve().then(() => {
+      if (typeof v !== 'boolean') return; // converter estricto: un string no refleja
+      if (v) this.setAttribute('active', '');
+      else this.removeAttribute('active');
+    });
+  }
+  get updateComplete(): Promise<boolean | void> {
+    return this.#pending ?? Promise.resolve();
+  }
+}
+
+/**
+ * Componente con una prop ENUM que indexa un mapa y DESTRUCTURA el resultado en
+ * el render async (`const { px } = MAP[mode]`), como `lib-progress-circle` con
+ * `SIZE_MAP[size]`. Un valor fuera del enum → `MAP[v]` es `undefined` → la
+ * destructuración PETA. Refleja `mode`⇄atributo sincrónicamente.
+ *
+ * Sirve para dos caminos: (a) con literales del CEM la sonda elige un enum VÁLIDO
+ * → no peta y detecta reflexión; (b) sin literales cae al string → peta, pero el
+ * error (artefacto del sondeo) lo absorbe `probeReflect` → `observeRuntime`
+ * resuelve limpio.
+ */
+const ENUM_MAP: Record<string, { px: number }> = { alpha: { px: 10 }, beta: { px: 20 } };
+class HankoEnumMap extends HTMLElement {
+  static get observedAttributes(): string[] {
+    return ['mode'];
+  }
+  #mode = 'alpha';
+  #pending: Promise<void> | null = null;
+  get mode(): string {
+    return this.#mode;
+  }
+  set mode(v: unknown) {
+    this.#mode = String(v);
+    this.setAttribute('mode', this.#mode); // refleja prop→attr
+    // Render que resuelve `updateComplete` LIMPIO; el fallo aflora a `window` (vía
+    // setTimeout), como un crash de render de Lit que no rechaza la promesa.
+    this.#pending = Promise.resolve().then(() => {
+      if (!this.shadowRoot) {
+        this.attachShadow({ mode: 'open' }).appendChild(document.createElement('slot'));
+      }
+    });
+    setTimeout(() => {
+      const { px } = ENUM_MAP[this.#mode]!; // peta a window si `mode` no es clave válida
+      void px;
+    }, 0);
+  }
+  get updateComplete(): Promise<void> {
+    return this.#pending ?? Promise.resolve();
+  }
+}
+
 beforeAll(() => {
   if (!customElements.get('hanko-probe-button')) {
     customElements.define('hanko-probe-button', HankoProbeButton);
+  }
+  if (!customElements.get('hanko-enum-map')) {
+    customElements.define('hanko-enum-map', HankoEnumMap);
   }
   if (!customElements.get('hanko-async-reflect')) {
     customElements.define('hanko-async-reflect', HankoAsyncReflect);
@@ -115,6 +219,12 @@ beforeAll(() => {
   }
   if (!customElements.get('hanko-window-thrower')) {
     customElements.define('hanko-window-thrower', HankoWindowThrower);
+  }
+  if (!customElements.get('hanko-reflect-array')) {
+    customElements.define('hanko-reflect-array', HankoReflectArray);
+  }
+  if (!customElements.get('hanko-strict-bool')) {
+    customElements.define('hanko-strict-bool', HankoStrictBool);
   }
 });
 
@@ -137,6 +247,54 @@ describe('harness · observeRuntime', () => {
     // leyera el atributo en el mismo tick que el set, lo daría como "no refleja".
     const rt = await observeRuntime('hanko-async-reflect');
     expect(rt.reflectingProperties).toContain('variant');
+  });
+
+  it('sondea una prop array reflejable SIN romper el render (sentinel tipado)', async () => {
+    // Con el viejo sentinel string, `'hanko-probe'.map` petaba a nivel window (los
+    // ~24 `pageerror`). El sentinel tipado asigna `[]` → el render data-driven vive.
+    const crashes: string[] = [];
+    const onError = (e: ErrorEvent): void => {
+      e.preventDefault();
+      crashes.push(e.message || String(e.error));
+    };
+    window.addEventListener('error', onError);
+    try {
+      await observeRuntime('hanko-reflect-array');
+      // Cede un macrotask por si un throw async aflorara a window.
+      await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    } finally {
+      window.removeEventListener('error', onError);
+    }
+    expect(crashes.filter((m) => /is not a function/.test(m))).toHaveLength(0);
+  });
+
+  it('detecta reflexión de un booleano estricto invirtiendo el valor (no falso negativo)', async () => {
+    // Converter estricto: solo refleja un boolean real. El viejo sentinel string lo
+    // daba como «no refleja»; el sentinel tipado invierte el booleano → SÍ refleja.
+    const rt = await observeRuntime('hanko-strict-bool');
+    expect(rt.reflectingProperties).toContain('active');
+  });
+
+  it('usa los literales del CEM para elegir un enum VÁLIDO (no rompe el mapa interno)', async () => {
+    // Con el tipo declarado (`string-union` + literales), la sonda asigna un enum
+    // válido distinto del actual ('beta' ≠ 'alpha') → `ENUM_MAP['beta']` existe, no
+    // peta, y detecta la reflexión. Sin esto, el string sentinel petaría el render.
+    const rt = await observeRuntime('hanko-enum-map', {
+      mode: { kind: 'string-union' as const, literals: ['alpha', 'beta'] },
+    });
+    expect(rt.registered).toBe(true);
+    expect(rt.reflectingProperties).toContain('mode');
+  });
+
+  it('ABSORBE el crash que el propio sondeo provoca en un enum sin literales', async () => {
+    // Sin tipo declarado (enum-alias del CEM, p.ej. `LibSize`), la sonda cae al
+    // string → `ENUM_MAP['hanko-probe']` es undefined → la destructuración PETA de
+    // forma async. Ese error es ARTEFACTO DEL SONDEO: `probeReflect` lo absorbe a
+    // nivel window. Si NO lo hiciera, el throw async tumbaría este test.
+    const rt = await observeRuntime('hanko-enum-map');
+    expect(rt.registered).toBe(true);
+    // La reflexión se detecta igual (el set sí escribió el atributo antes de petar).
+    expect(rt.reflectingProperties).toContain('mode');
   });
 
   it('alimenta contractCheck sin violaciones para un contrato fiel', async () => {

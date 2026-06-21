@@ -75,9 +75,33 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   `updateComplete`). Los ~24 `pageerror` de `report-full.html` **NO son fallos de resiliencia**: corriendo el
   probe con **solo** `observeResilience` montando salen **0** diagnósticos; los 24 vienen de
   `observeRuntime`/`observeA11y`. El patrón (`X.flatMap`/`map`/`find` *is not a function*) delata el **sentinel
-  string de `probeReflect`** asignado a props data-driven → es trabajo de **calibración D** (sentinel tipado, ver
-  abajo), no de resiliencia. Sembrar datos mínimos por tipo (`valid-min`) sigue **diferido** (se probó: los
+  string de `probeReflect`** asignado a props data-driven → era trabajo de **calibración D** (sentinel tipado,
+  **RESUELTA** — ver abajo), no de resiliencia. Sembrar datos mínimos por tipo (`valid-min`) sigue **diferido** (se probó: los
   componentes renderizan con datos pero su contrato no mejora → el ruido restante es drift del CEM).
+
+- **Sentinel de reflexión tipado (calibración D) — RESUELTO.** `probeReflect` asignaba el string `'hanko-probe'`
+  a CUALQUIER prop reflejable. Para una prop **data-driven** array (`series`/`links`/`files`, inicializadas a `[]`)
+  eso la dejaba en string → el render hacía `series.flatMap(...)` y petaba ASÍNCRono (los ~24 `pageerror`). Ahora
+  el sentinel es **coherente con el tipo** (`chooseSentinel`/`typedSentinel` en `probe.ts`):
+  1. **Inferencia por runtime** (`typeof`/`Array.isArray` del valor inicial — genérica, sin acoplar al CEM):
+     bool→invertido, number→distinto, array→`[]`, object→`{}`, string→`'hanko-probe'`.
+  2. **Tipo declarado del CEM** (`PropTypeHint` = `{kind, literals}` que el runner inyecta por tag): lidera donde
+     el runtime no acierta — un **enum** (`string-union`) → primer literal VÁLIDO ≠ actual (un string arbitrario
+     indexaría mal un mapa interno: `SIZE_MAP[size].px`). Pasa como dato plano, no el `ComponentContract` → el
+     harness sigue sin conocer lo declarado.
+  3. **Red de captura**: la mayoría de enums de shibui son **alias con nombre** (`LibProgressCircleSize`) → el CEM
+     los deja `kind:'unknown'` SIN literales, así que caen al string y aún pueden petar. Ese crash es **artefacto
+     del sondeo** (de la fragilidad ante basura ya se ocupa la resiliencia con `junk-attrs`), y Lit lo emite
+     DIFERIDO a `window` (re-render en cascada, no rechazo de `updateComplete`). `observeRuntime` envuelve TODA su
+     fase montada (montaje, sondeo, settle de 2 macrotasks, desmontaje) escuchando `window` con `preventDefault`
+     → no rebota como `pageerror`. Genérico (`window`/`setTimeout`), respeta `genericity.test.ts`.
+
+  **Efecto medido (dogfood real):** diagnósticos de navegador **24 → 1** (el único restante es genuino: un
+  `console.warning` de `lib-progress` por JSON inválido — comportamiento defensivo correcto); `contract/reflect`
+  **71 → 31** (el sentinel tipado detecta reflexión en booleanos/enums que el string daba como falso negativo);
+  **sellados 36 → 38**. Resto de facetas sin regresión (slot 29, property 108, attribute 7, a11y 29).
+  **Trade-off asumido:** la red de captura también absorbe un crash genuino de montaje por defecto en
+  `observeRuntime` (lo capta igualmente la capa de resiliencia, escenario `empty`).
 
 ### ⚠️ Pendiente de calibrar
 
@@ -87,13 +111,6 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   la generación del manifest, no en hanko).
 - **Slot por defecto con etiqueta `—` mal codificada** (`"â€”"`): bug de encoding (UTF-8 leído como latin1) en el
   nombre del slot por defecto del CEM/render → revisar la ingestión/render del nombre de slot.
-- **reflect (sentinel) — calibración D, el lever de los ~24 `pageerror`**: `probeReflect` asigna el string
-  `'hanko-probe'` a cualquier prop con atributo observado. Para una prop **data-driven** (un chart que espera
-  `series`/`links`/`items` array) eso la deja en un string → el render hace `'hanko-probe'.flatMap(...)` y
-  **peta** (de ahí los `X.flatMap/map/find is not a function` de `report-full.html`). Y para una prop
-  booleana/numérica/enum el converter de Lit puede no producir un atributo "cambiado" aunque refleje → falso
-  negativo de reflexión. **Plan:** leer el tipo del CEM y usar un sentinel coherente (bool→`true`, number→`1`,
-  enum→primer literal válido, array/object→un valor mínimo del tipo) en vez de un string para todo.
 - **interactividad / nombre accesible**: heurísticas (tabindex/role/shadow, aria-label/texto) → calibrar contra
   shibui real (29 componentes fallan a11y, en parte por montarse vacíos sin nombre accesible).
 - **focusVisible**: requiere foco/render real; v0 lo deja sin observar (el check lo omite, no falla).

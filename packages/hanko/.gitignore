@@ -1,0 +1,3 @@
+# Artefactos de vitest browser (Playwright): screenshots de fallo y adjuntos.
+.vitest-attachments/
+**/__screenshots__/
