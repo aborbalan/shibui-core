@@ -220,6 +220,61 @@ class HankoNamelessControl extends HTMLElement {
   }
 }
 
+/**
+ * Control que DECLARA un rol interactivo (`role=button`) pero NO es alcanzable por
+ * teclado: el host no es tabbable y su shadow no tiene ningún tabbable genuino (solo
+ * un `<span tabindex="-1">`, foco programático). SEÑAL REAL de la calibración F4-cierre
+ * (1.1): `keyboardReachable` debe salir `false` → la regla `keyboard` viola. Antes, el
+ * proxy `shadowRoot !== null` lo daba por verde (laxitud que fingía cobertura). Lleva
+ * `aria-label` para AISLAR la señal de teclado de la de nombre.
+ */
+class HankoUnreachableRole extends HTMLElement {
+  connectedCallback(): void {
+    this.setAttribute('role', 'button'); // rol interactivo en el host
+    this.setAttribute('aria-label', 'unreachable'); // nombre OK: aísla la señal de teclado
+    if (!this.shadowRoot) {
+      const sr = this.attachShadow({ mode: 'open' });
+      const span = document.createElement('span');
+      span.tabIndex = -1; // foco programático, NO tab-stop
+      sr.appendChild(span);
+    }
+  }
+}
+
+/**
+ * REGIÓN (landmark): su shadow envuelve el contenido en un `<footer>` (landmark
+ * `contentinfo` implícito) que CONTIENE un control. La calibración F4-cierre (1.2) la
+ * trata como región, no como control → `interactive` sale `false` y teclado/foco/nombre
+ * se OMITEN (un landmark no necesita nombre de control aunque contenga controles).
+ */
+class HankoLandmarkRegion extends HTMLElement {
+  connectedCallback(): void {
+    if (!this.shadowRoot) {
+      const sr = this.attachShadow({ mode: 'open' });
+      const footer = document.createElement('footer');
+      footer.appendChild(document.createElement('button')); // control DENTRO de la región
+      sr.appendChild(footer);
+    }
+  }
+}
+
+/**
+ * Elemento PRESENTACIONAL: el único contenido de su shadow es un `<span tabindex="-1">`
+ * (foco programático, no un control). No debe contar como interactivo (F4-cierre 1.1/1.2):
+ * un `-1` no fabrica interactividad. `interactive` → `false`, sin fallo de teclado. Es el
+ * patrón de `lib-chip`/`lib-drawer` por defecto, que fabricaban un falso `keyboard`.
+ */
+class HankoPresentational extends HTMLElement {
+  connectedCallback(): void {
+    if (!this.shadowRoot) {
+      const sr = this.attachShadow({ mode: 'open' });
+      const span = document.createElement('span');
+      span.tabIndex = -1;
+      sr.appendChild(span);
+    }
+  }
+}
+
 beforeAll(() => {
   if (!customElements.get('hanko-probe-button')) {
     customElements.define('hanko-probe-button', HankoProbeButton);
@@ -244,6 +299,15 @@ beforeAll(() => {
   }
   if (!customElements.get('hanko-strict-bool')) {
     customElements.define('hanko-strict-bool', HankoStrictBool);
+  }
+  if (!customElements.get('hanko-unreachable-role')) {
+    customElements.define('hanko-unreachable-role', HankoUnreachableRole);
+  }
+  if (!customElements.get('hanko-landmark-region')) {
+    customElements.define('hanko-landmark-region', HankoLandmarkRegion);
+  }
+  if (!customElements.get('hanko-presentational')) {
+    customElements.define('hanko-presentational', HankoPresentational);
   }
 });
 
@@ -409,6 +473,43 @@ describe('harness · observeA11y', () => {
     const obs = await observeA11y('hanko-nameless-control', (el) => axe.run(el), ['ariaLabel'], []);
     expect(obs.nameSupplyable).toBe(true);
     expect(a11yCheck(obs).violations.some((v) => v.rule === 'name')).toBe(false);
+  });
+
+  it('1.1 · un control con tabbable GENUINO en el shadow → keyboardReachable=true (no falso fallo)', async () => {
+    const obs = await observeA11y('hanko-probe-button', (el) => axe.run(el));
+    expect(obs.interactive).toBe(true);
+    expect(obs.keyboardReachable).toBe(true);
+    expect(a11yCheck(obs).violations.some((v) => v.rule === 'keyboard')).toBe(false);
+  });
+
+  it('1.1 · un interactivo por ROL pero inalcanzable por teclado → keyboard viola (señal real)', async () => {
+    // role=button (interactivo) pero el host no es tabbable y el shadow solo tiene un
+    // `[tabindex="-1"]`: no hay tab-stop. El proxy viejo (`shadowRoot !== null`) lo daba
+    // por verde; ahora `keyboardReachable=false` → la regla `keyboard` muerde de verdad.
+    const obs = await observeA11y('hanko-unreachable-role', (el) => axe.run(el));
+    expect(obs.interactive).toBe(true);
+    expect(obs.keyboardReachable).toBe(false);
+    expect(a11yCheck(obs).violations.some((v) => v.rule === 'keyboard')).toBe(true);
+  });
+
+  it('1.1/1.2 · un `tabindex="-1"` presentacional NO fabrica interactividad', async () => {
+    // El selector laxo viejo (`[tabindex]`) marcaba interactivo a un `-1` presentacional
+    // → como nunca es tab-reachable, fabricaba un falso `keyboard`. Alineado con el
+    // tabbable genuino, deja de contar: no interactivo, sin checks de control.
+    const obs = await observeA11y('hanko-presentational', (el) => axe.run(el));
+    expect(obs.interactive).toBe(false);
+    expect(obs.keyboardReachable).toBeUndefined();
+    expect(a11yCheck(obs).violations.some((v) => v.rule === 'keyboard')).toBe(false);
+  });
+
+  it('1.2 · una REGIÓN landmark (shadow con <footer>) no se marca control → teclado/nombre se omiten', async () => {
+    // Contiene un <button>, pero es una región (contentinfo), no un control: no se le
+    // exige nombre ni teclado. Antes caía como interactivo por «contiene un control».
+    const obs = await observeA11y('hanko-landmark-region', (el) => axe.run(el));
+    expect(obs.interactive).toBe(false);
+    const r = a11yCheck(obs);
+    expect(r.violations.some((v) => v.rule === 'name' || v.rule === 'keyboard')).toBe(false);
+    expect(r.skipped.join(' ')).toContain('no interactivo');
   });
 });
 

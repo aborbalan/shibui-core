@@ -294,13 +294,66 @@ function normalizeImpact(impact: string | null | undefined): AxeImpact {
 const INTERACTIVE_ROLES: ReadonlySet<string> = new Set([
   'button', 'link', 'checkbox', 'radio', 'switch', 'tab', 'menuitem', 'textbox', 'slider', 'option',
 ]);
-/** Heurística de interactividad. v0: tabindex, role o tabbable nativo en shadow. */
+
+/** Roles ARIA de región (landmarks): demarcan zonas, NO son controles. */
+const LANDMARK_ROLES: ReadonlySet<string> = new Set([
+  'banner', 'contentinfo', 'navigation', 'main', 'complementary', 'region', 'search', 'form',
+]);
+/** Elementos HTML cuyo rol de landmark es implícito (no necesitan `role`). */
+const LANDMARK_ELEMENTS: ReadonlySet<string> = new Set([
+  'header', 'footer', 'nav', 'main', 'aside',
+]);
+
+/**
+ * ¿El componente es una REGIÓN (landmark), no un control? (calibración F4-cierre).
+ *
+ * Una región contiene controles pero no es ella misma operable, así que NO se le
+ * exige teclado/foco/nombre como a un control. Señal genérica de región: el host
+ * expone un rol de landmark, o el elemento más externo del shadow es un landmark
+ * nativo (`<header>`/`<footer>`/`<nav>`/`<main>`/`<aside>`) — shibui usa elementos
+ * nativos en vez de `role`, de ahí la segunda vía. Es deliberadamente estrecha (el
+ * landmark ha de ser el WRAPPER, no estar anidado) para no perder controles que
+ * delegan en un hijo del shadow.
+ */
+function isLandmarkRegion(el: HTMLElement): boolean {
+  const role = el.getAttribute('role');
+  if (role !== null && LANDMARK_ROLES.has(role)) return true;
+  const root = el.shadowRoot?.firstElementChild;
+  return root != null && LANDMARK_ELEMENTS.has(root.localName);
+}
+
+/**
+ * Selector de elementos GENUINAMENTE alcanzables por tab: excluye `[tabindex="-1"]`
+ * (enfocable por script pero NO por tab), los nativos deshabilitados y los
+ * `input[type="hidden"]` (presentes pero no enfocables).
+ */
+const TABBABLE_SELECTOR =
+  'button:not([disabled]),a[href],input:not([disabled]):not([type="hidden"]),' +
+  'select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+/** ¿Hay un tabbable real dentro del shadow? (no basta con que exista el shadow). */
+function hasTabbableInShadow(el: HTMLElement): boolean {
+  return el.shadowRoot?.querySelector(TABBABLE_SELECTOR) != null;
+}
+
+/**
+ * Heurística de interactividad. v0: tabindex propio, rol interactivo, o un tabbable
+ * GENUINO en el shadow.
+ *
+ * El barrido del shadow usa `hasTabbableInShadow` (el mismo selector que la señal de
+ * teclado), que EXCLUYE `[tabindex="-1"]`: un `-1` es foco programático, no un control
+ * (un `<span role="note" tabindex="-1">` presentacional o un `[role=dialog tabindex=-1]`
+ * contenedor no son operables). Antes el selector laxo los marcaba interactivos → como
+ * nunca son tab-reachable, fabricaban un falso fallo de `keyboard`. Alineados, la regla
+ * `keyboard` solo falla en su caso real: declara rol interactivo pero es inalcanzable.
+ */
 function isInteractive(el: HTMLElement): boolean {
   if (el.tabIndex >= 0) return true;
+  // Una región (landmark) contiene controles pero no es un control: se descarta
+  // ANTES del barrido del shadow para no marcarla interactiva por su contenido.
+  if (isLandmarkRegion(el)) return false;
   const role = el.getAttribute('role');
   if (role !== null && INTERACTIVE_ROLES.has(role)) return true;
-  const sr = el.shadowRoot;
-  return sr !== null && sr.querySelector('button,a[href],input,select,textarea,[tabindex]') !== null;
+  return hasTabbableInShadow(el);
 }
 
 /** ¿Tiene nombre accesible? Heurística v0 (aria-label/labelledby/texto). */
@@ -372,10 +425,18 @@ export async function observeA11y(
     const interactive = isInteractive(el);
     const obs: A11yObservation = { tagName, axeViolations, interactive };
     if (interactive) {
-      obs.keyboardReachable = el.tabIndex >= 0 || el.shadowRoot !== null;
+      // Señal real de teclado (calibración F4-cierre): el host es tabbable, o el
+      // shadow contiene un tabbable GENUINO. Antes era `tabIndex>=0 || shadowRoot
+      // !== null` → verde para TODO LitElement (shadow siempre existe): laxitud que
+      // fingía cobertura. Ahora la regla `keyboard` puede fallar de verdad cuando un
+      // componente se declara interactivo (rol/contenido) pero nada es alcanzable.
+      obs.keyboardReachable = el.tabIndex >= 0 || hasTabbableInShadow(el);
       obs.hasAccessibleName = hasAccessibleName(el);
       obs.nameSupplyable = isNameSupplyable(el, declaredProps, declaredSlots);
-      // focusVisible exige render/foco real: se deja sin observar (no se omite el resto).
+      // focusVisible: DIFERIDO formalmente (F4-cierre, decisión 1.3). Verificar el
+      // anillo de foco exige foco real + leer `:focus-visible`/outline: caro y frágil
+      // en headless, con la peor relación señal/coste de la capa. Se deja sin observar
+      // → la regla `focus` se OMITE (regla de oro), no se finge. Ver docs/specs/checks-a11y.md.
     }
     return obs;
   } finally {

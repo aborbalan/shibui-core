@@ -125,6 +125,31 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   omitiéndose): la opción de *sembrar* el nombre y comprobar que aflora (opción «a») se **difirió** (rozaba «sembrar
   datos» y arriesgaba falsos negativos por enmascarado).
 
+- **Teclado real · landmarks · foco diferido (calibración F4-cierre) — RESUELTO.** Cerró las tres heurísticas v0
+  de a11y que quedaban en el mecanismo. La política (`a11yCheck`) **no** cambió; cambió la calidad de la señal:
+  1. **`keyboardReachable` — señal real, no proxy.** Era `tabIndex>=0 || shadowRoot!==null`: como **todo**
+     LitElement tiene shadow, la regla `keyboard` **nunca** fallaba — laxitud que fingía cobertura (el reverso del
+     falso `reflect` de D). Ahora `host tabbable **o** un tabbable GENUINO en el shadow` (`TABBABLE_SELECTOR`,
+     que excluye `[tabindex="-1"]` y deshabilitados).
+  2. **`isInteractive` — un `tabindex="-1"` no es un control.** El barrido del shadow usaba un selector laxo
+     (`[tabindex]`) que capturaba el `-1` (foco programático): marcaba interactivos a presentacionales/contenedores
+     (`<span role=note tabindex=-1>` de `lib-chip`, `[role=dialog tabindex=-1]` de `lib-drawer`) que, al no ser
+     nunca alcanzables, **fabricaban un falso `keyboard`**. Ahora `isInteractive` reusa `hasTabbableInShadow` (el
+     mismo tabbable genuino) → la señal de teclado deja de auto-contradecirse.
+  3. **landmarks no son controles.** `isInteractive` descarta una **región** (host con rol de landmark, o
+     elemento más externo del shadow = landmark nativo `<header>/<footer>/<nav>/<main>/<aside>`): contiene
+     controles pero no es operable. Estrecho a propósito (el landmark ha de ser el *wrapper*) para no perder los
+     `*-button`-like que delegan en un hijo.
+  4. **`focusVisible` — diferido formalmente.** Sigue sin observarse → la regla `focus` se **omite** (regla de
+     oro). Verificar el anillo exige foco real + `:focus-visible`/outline: caro y frágil en headless. Decisión
+     explícita (vNext), no olvido.
+
+  **Efecto medido (dogfood real):** `a11y/name` **6 → 4** (`lib-footer` sale = landmark; `lib-file-browser`/`-chip`/
+  `-drawer` salen = presentacional/contenedor/data-driven vacío); `a11y/keyboard` **0 falso-verde → 0 honesto**
+  (los 3 falsos que aparecieron al quitar el proxy se eliminaron al alinear los selectores; shibui SÍ pasa la regla
+  real); **sellados 47 → 47** (estable). Las **4** `a11y/name` restantes —`lib-rating`, `lib-editor-toolbar`,
+  `lib-header`, `lib-tree-select`— son controles genuinos sin nombre aportable = **deuda de shibui**.
+
 ### ⚠️ Pendiente de calibrar
 
 - **Miembros fantasma kebab en el CEM**: algunos componentes declaran DOS miembros para una misma prop —el real
@@ -134,13 +159,11 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
 - **Slot por defecto con etiqueta `—` mal codificada** (`"â€”"`): bug de encoding (UTF-8 leído como latin1) en el
   nombre del slot por defecto del CEM/render → revisar la ingestión/render del nombre de slot.
 - **nombre accesible**: **calibrado (C, RESUELTO)** — `nameSupplyable` bajó `a11y/name` de 29 a 6 señales reales.
-- **interactividad (`isInteractive`) — sobre-detección v0 pendiente**: el branch que mira el shadow
-  (`button,a[href],input,…`) marca interactivo a cualquier componente que *contenga* un control, no solo a los que
-  *son* un control. Por eso `lib-header`/`lib-footer` (landmarks que contienen enlaces/botones) quedan entre los 6
-  `a11y/name`: no son controles que necesiten nombre, son regiones. Estrechar la heurística es delicado (muchos
-  web components delegan la interactividad a un hijo del shadow y SÍ deben contar) → calibración separada, no se
-  tocó en C para no arriesgar falsos negativos de interactividad.
-- **focusVisible**: requiere foco/render real; v0 lo deja sin observar (el check lo omite, no falla).
+- **interactividad (`isInteractive`)**: **calibrado (F4-cierre, RESUELTO)** — landmarks descartados + `tabindex="-1"`
+  presentacional ya no fabrica interactividad (ver arriba).
+- **`keyboardReachable`**: **calibrado (F4-cierre, RESUELTO)** — señal real (tabbable genuino), ya no es un proxy.
+- **focusVisible**: **diferido formalmente (F4-cierre)** — sin observar → la regla `focus` se omite (regla de oro);
+  decisión explícita a vNext, no olvido.
 
 ## Dogfood sobre shibui-ui — `dogfood/` (Etapa 1 del puente de F6)
 
