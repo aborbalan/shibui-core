@@ -61,6 +61,9 @@ async function main(): Promise<void> {
   // el harness (enums válidos, booleanos). Es un dato plano que se inyecta en el
   // navegador; el harness no conoce el `ComponentContract`, solo recibe pistas.
   const propTypesByTag: Record<string, Record<string, PropTypeHint>> = {};
+  // Slots declarados por tag (`''` = slot por defecto) → señal `nameSupplyable` de
+  // la a11y: un slot por defecto es un mecanismo de nombre aportable por el consumidor.
+  const slotsByTag: Record<string, string[]> = {};
   for (const [tag, contract] of ingested.components) {
     const hints: Record<string, PropTypeHint> = {};
     for (const p of contract.properties ?? []) {
@@ -69,6 +72,7 @@ async function main(): Promise<void> {
         : { kind: p.type.kind };
     }
     propTypesByTag[tag] = hints;
+    slotsByTag[tag] = (contract.slots ?? []).map((s) => s.name);
   }
 
   // 2 · Bundle del glue (shibui + harness + axe) → IIFE inline.
@@ -138,8 +142,8 @@ async function main(): Promise<void> {
 
     for (const tag of tags) {
       const obs = (await page.evaluate(
-        ({ t, types }) => window.__hankoProbe.observe(t, types),
-        { t: tag, types: propTypesByTag[tag] ?? {} },
+        ({ t, types, slots }) => window.__hankoProbe.observe(t, types, slots),
+        { t: tag, types: propTypesByTag[tag] ?? {}, slots: slotsByTag[tag] ?? [] },
       )) as ComponentObservation;
       observations.push(obs);
     }

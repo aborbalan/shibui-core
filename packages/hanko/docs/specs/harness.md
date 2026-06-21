@@ -33,7 +33,7 @@ custom element registrado ──► observe*() ──► Observación ──► 
 ```ts
 publicApiOf(instance, stopProto?): { properties; methods }     // puro
 observeRuntime(tagName): Promise<ComponentRuntime>             // browser, async (espera updateComplete)
-observeA11y(tagName, runAxe): Promise<A11yObservation>          // browser, axe inyectado
+observeA11y(tagName, runAxe, declaredProps?, declaredSlots?): Promise<A11yObservation>  // browser, axe inyectado
 observeResilience(tagName): ResilienceObservation               // browser
 ```
 
@@ -103,6 +103,28 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   **Trade-off asumido:** la red de captura también absorbe un crash genuino de montaje por defecto en
   `observeRuntime` (lo capta igualmente la capa de resiliencia, escenario `empty`).
 
+- **Nombre accesible aportable por el consumidor (calibración C) — RESUELTO.** El harness monta cada componente
+  **vacío**: un componente cuyo nombre sale de su slot por defecto o de una prop de etiqueta aparece sin nombre
+  *sin tener defecto* (lo aporta el consumidor). `observeA11y` ahora produce la señal **`nameSupplyable`** —¿hay un
+  mecanismo de nombre?— y la política a11y omite la regla `name` cuando es aportable (ver
+  [`checks-a11y.md`](checks-a11y.md)). El mecanismo (`isNameSupplyable` en `probe.ts`) la calcula por **capacidad**,
+  no por el render vacío, en tres vías genéricas:
+  1. **slot por defecto DECLARADO** en el CEM (`''`) → el runner pasa los nombres de slot por tag (lista plana,
+     como `propTypes`); cubre el slot condicional al contenido que el montaje vacío no renderiza (p.ej.
+     `lib-code-block`);
+  2. **slot por defecto en el shadow vivo** (`readSlots`) → cubre CEM incompletos;
+  3. **prop de etiqueta declarada** — regex `NAMEISH_PROP` (`label`/`ariaLabel`/`text`/`heading`/`caption`/`title`/
+     `alt`), de **alta precisión** a propósito: incluir una prop que NO nombra sería un falso negativo. Excluye
+     `name` (atributo de formulario) y `placeholder` (no es nombre accesible fiable).
+
+  **Efecto medido (dogfood real):** `a11y/name` **29 → 6**; **sellados 38 → 47**. Cambio **monotónico** (solo relaja
+  `name`, nunca añade violación → sin regresión posible). Los **6** restantes son **señal real** —interactivos que
+  no declaran ni slot por defecto ni prop de etiqueta: `lib-rating`, `lib-editor-toolbar`, `lib-tree-select`,
+  `lib-file-browser`, `lib-header`, `lib-footer`— = deuda a11y de **shibui** (añadirles `aria-label`/`label` o un
+  slot por defecto), no de hanko. **Verifica capacidad, no cableado** (una `label` prop ignorada seguiría
+  omitiéndose): la opción de *sembrar* el nombre y comprobar que aflora (opción «a») se **difirió** (rozaba «sembrar
+  datos» y arriesgaba falsos negativos por enmascarado).
+
 ### ⚠️ Pendiente de calibrar
 
 - **Miembros fantasma kebab en el CEM**: algunos componentes declaran DOS miembros para una misma prop —el real
@@ -111,8 +133,13 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   la generación del manifest, no en hanko).
 - **Slot por defecto con etiqueta `—` mal codificada** (`"â€”"`): bug de encoding (UTF-8 leído como latin1) en el
   nombre del slot por defecto del CEM/render → revisar la ingestión/render del nombre de slot.
-- **interactividad / nombre accesible**: heurísticas (tabindex/role/shadow, aria-label/texto) → calibrar contra
-  shibui real (29 componentes fallan a11y, en parte por montarse vacíos sin nombre accesible).
+- **nombre accesible**: **calibrado (C, RESUELTO)** — `nameSupplyable` bajó `a11y/name` de 29 a 6 señales reales.
+- **interactividad (`isInteractive`) — sobre-detección v0 pendiente**: el branch que mira el shadow
+  (`button,a[href],input,…`) marca interactivo a cualquier componente que *contenga* un control, no solo a los que
+  *son* un control. Por eso `lib-header`/`lib-footer` (landmarks que contienen enlaces/botones) quedan entre los 6
+  `a11y/name`: no son controles que necesiten nombre, son regiones. Estrechar la heurística es delicado (muchos
+  web components delegan la interactividad a un hijo del shadow y SÍ deben contar) → calibración separada, no se
+  tocó en C para no arriesgar falsos negativos de interactividad.
 - **focusVisible**: requiere foco/render real; v0 lo deja sin observar (el check lo omite, no falla).
 
 ## Dogfood sobre shibui-ui — `dogfood/` (Etapa 1 del puente de F6)

@@ -41,6 +41,7 @@ declare global {
       observe(
         tagName: string,
         propTypes?: Record<string, PropTypeHint>,
+        slotNames?: string[],
       ): Promise<ComponentObservation>;
     };
   }
@@ -56,9 +57,13 @@ window.__hankoProbe = {
   async observe(
     tagName: string,
     propTypes?: Record<string, PropTypeHint>,
+    slotNames?: string[],
   ): Promise<ComponentObservation> {
     const runtime = await observeRuntime(tagName, propTypes);
-    const a11y = await observeA11y(tagName, runAxe);
+    // Las claves de `propTypes` (props declaradas) y `slotNames` (slots declarados)
+    // del CEM alimentan la señal `nameSupplyable` de la a11y: ¿hay prop de etiqueta
+    // o slot por defecto donde el consumidor aporte el nombre?
+    const a11y = await observeA11y(tagName, runAxe, Object.keys(propTypes ?? {}), slotNames ?? []);
     const resilience = await observeResilience(tagName);
     return { tagName, runtime, a11y, resilience };
   },

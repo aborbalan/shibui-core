@@ -50,6 +50,18 @@ export interface A11yObservation {
   focusVisible?: boolean;
   /** ¿Tiene nombre accesible (aria-label/labelledby/texto)? `undefined` = no observado. */
   hasAccessibleName?: boolean;
+  /**
+   * ¿Puede el CONSUMIDOR aportar el nombre accesible (slot por defecto o prop de
+   * etiqueta como `label`/`ariaLabel`)? El harness monta el elemento VACÍO, así que
+   * un componente bien diseñado (un botón cuyo nombre sale de su slot) aparece sin
+   * nombre sin tener defecto alguno. Esta señal distingue ese ruido de la señal real:
+   *   · `true`  → el nombre es aportable → ausencia con montaje vacío NO es violación
+   *               (regla de oro: no verificable sin contenido → se omite).
+   *   · `false` → no hay mecanismo para nombrarlo → la ausencia ES violación real.
+   *   · `undefined` → no observado → se conserva la política estricta previa (violación).
+   * Calibración C. Spec: docs/specs/checks-a11y.md.
+   */
+  nameSupplyable?: boolean;
 }
 
 export interface A11yFinding {
@@ -109,20 +121,39 @@ export function a11yCheck(obs: A11yObservation, options: A11yOptions = {}): A11y
     }
   }
 
-  // 2 · teclado / foco / nombre — exigibles SOLO a elementos interactivos.
+  // 2 · teclado / foco — exigibles SOLO a elementos interactivos.
   if (obs.interactive === true) {
-    const interactiveChecks: ReadonlyArray<[string, boolean | undefined, string]> = [
+    const reachabilityChecks: ReadonlyArray<[string, boolean | undefined, string]> = [
       ['keyboard', obs.keyboardReachable, 'el elemento interactivo no es alcanzable por teclado'],
       ['focus', obs.focusVisible, 'el foco no es visible al navegar por teclado'],
-      ['name', obs.hasAccessibleName, 'el elemento interactivo carece de nombre accesible'],
     ];
-    for (const [rule, observed, failMessage] of interactiveChecks) {
+    for (const [rule, observed, failMessage] of reachabilityChecks) {
       if (observed === undefined) {
         skipped.push(`${rule} (no probado)`);
         continue;
       }
       checked.push(rule);
       if (!observed) violations.push({ rule, impact: 'serious', message: failMessage });
+    }
+
+    // 3 · nombre accesible — regla de oro aplicada al montaje vacío (calibración C).
+    // Un nombre ausente solo es violación si el componente no tiene forma de recibirlo.
+    // Si es APORTABLE por el consumidor (slot por defecto / prop de etiqueta), montarlo
+    // vacío no lo prueba → se OMITE, no se viola. Sin esa señal (`undefined`) se mantiene
+    // la política estricta previa: ausencia = violación.
+    if (obs.hasAccessibleName === undefined) {
+      skipped.push('name (no probado)');
+    } else if (obs.hasAccessibleName) {
+      checked.push('name');
+    } else if (obs.nameSupplyable === true) {
+      skipped.push('name (nombre aportable por el consumidor — no verificable con montaje vacío)');
+    } else {
+      checked.push('name');
+      violations.push({
+        rule: 'name',
+        impact: 'serious',
+        message: 'el elemento interactivo carece de nombre accesible',
+      });
     }
   } else if (obs.interactive === false) {
     skipped.push('keyboard · focus · name (elemento no interactivo)');

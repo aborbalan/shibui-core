@@ -60,11 +60,42 @@ describe('a11yCheck · teclado / foco / nombre (solo interactivos)', () => {
     expect(r.violations.some((v) => v.rule === 'keyboard')).toBe(true);
   });
 
-  it('viola si un interactivo carece de nombre accesible', () => {
+  it('viola si un interactivo carece de nombre accesible (sin señal de aportabilidad)', () => {
     const r = a11yCheck(
       obs({ interactive: true, keyboardReachable: true, focusVisible: true, hasAccessibleName: false }),
     );
     expect(r.violations.some((v) => v.rule === 'name')).toBe(true);
+  });
+
+  it('omite name (no viola) si el nombre es aportable por el consumidor', () => {
+    // calibración C: montado vacío no tiene nombre, pero el consumidor puede
+    // aportarlo (slot por defecto / prop de etiqueta) → no es defecto, se omite.
+    const r = a11yCheck(
+      obs({
+        interactive: true,
+        keyboardReachable: true,
+        hasAccessibleName: false,
+        nameSupplyable: true,
+      }),
+    );
+    expect(r.pass).toBe(true);
+    expect(r.violations.some((v) => v.rule === 'name')).toBe(false);
+    expect(r.checked).not.toContain('name');
+    expect(r.skipped.some((s) => s.startsWith('name') && s.includes('aportable'))).toBe(true);
+  });
+
+  it('SÍ viola si no hay nombre y NO es aportable (señal real)', () => {
+    const r = a11yCheck(
+      obs({
+        interactive: true,
+        keyboardReachable: true,
+        hasAccessibleName: false,
+        nameSupplyable: false,
+      }),
+    );
+    expect(r.pass).toBe(false);
+    expect(r.violations.some((v) => v.rule === 'name')).toBe(true);
+    expect(r.checked).toContain('name');
   });
 
   it('omite teclado/foco/nombre en elementos no interactivos', () => {
