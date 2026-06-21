@@ -311,8 +311,50 @@ function hasAccessibleName(el: HTMLElement): boolean {
   return (el.textContent ?? '').trim() !== '';
 }
 
-/** Observa la accesibilidad de un custom element renderizado. axe inyectado. */
-export async function observeA11y(tagName: string, runAxe: AxeRunner): Promise<A11yObservation> {
+/**
+ * Props cuyo nombre indica que aportan el nombre accesible del componente. v0.
+ * Alta precisión a propósito (calibración C): incluir aquí una prop que NO nombra
+ * = falso negativo (omite una violación real). Por eso se excluyen `name` (atributo
+ * de formulario, no nombre a11y) y `placeholder` (no es nombre accesible fiable).
+ */
+const NAMEISH_PROP = /^(?:aria-?label|label|text|heading|caption|title|alt)$/i;
+
+/**
+ * ¿Puede el consumidor aportar el nombre accesible? (calibración C). Tres vías:
+ *   1. el contrato DECLARA un slot por defecto (`''`) → capacidad de nombre aunque
+ *      el montaje vacío no lo renderice (un slot condicional al contenido);
+ *   2. el shadow vivo expone un slot por defecto (cubre CEM incompletos);
+ *   3. el componente declara una prop de etiqueta (`label`/`ariaLabel`/…).
+ * `declaredProps`/`declaredSlots` son nombres del CEM (el harness no ve el
+ * `ComponentContract`: recibe listas planas, igual que `propTypes`). Genérico.
+ * Es una pregunta de CAPACIDAD: la responde el contrato, no el render vacío.
+ */
+function isNameSupplyable(
+  el: HTMLElement,
+  declaredProps: readonly string[],
+  declaredSlots: readonly string[],
+): boolean {
+  if (declaredSlots.includes('')) return true;
+  const runtimeSlots = readSlots(el);
+  if (runtimeSlots && runtimeSlots.includes('')) return true;
+  return declaredProps.some((p) => NAMEISH_PROP.test(p));
+}
+
+/**
+ * Observa la accesibilidad de un custom element renderizado. axe inyectado.
+ *
+ * `declaredProps`/`declaredSlots` (opcionales, nombres del CEM vía el runner)
+ * alimentan la señal `nameSupplyable`: con el montaje VACÍO un componente bien
+ * diseñado aparece sin nombre; saber si el nombre es aportable (slot por defecto /
+ * prop de etiqueta) deja que la política omita ese ruido sin perder la señal real.
+ * Ausentes → solo cuenta el slot por defecto del shadow vivo; sigue siendo genérico.
+ */
+export async function observeA11y(
+  tagName: string,
+  runAxe: AxeRunner,
+  declaredProps: readonly string[] = [],
+  declaredSlots: readonly string[] = [],
+): Promise<A11yObservation> {
   const ctor = customElements.get(tagName);
   if (!ctor) return { tagName };
 
@@ -332,6 +374,7 @@ export async function observeA11y(tagName: string, runAxe: AxeRunner): Promise<A
     if (interactive) {
       obs.keyboardReachable = el.tabIndex >= 0 || el.shadowRoot !== null;
       obs.hasAccessibleName = hasAccessibleName(el);
+      obs.nameSupplyable = isNameSupplyable(el, declaredProps, declaredSlots);
       // focusVisible exige render/foco real: se deja sin observar (no se omite el resto).
     }
     return obs;

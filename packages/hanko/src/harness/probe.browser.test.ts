@@ -204,9 +204,28 @@ class HankoEnumMap extends HTMLElement {
   }
 }
 
+/**
+ * Control interactivo (un `<button>` en el shadow → tabbable) montado VACÍO y SIN
+ * ningún mecanismo de nombre: ni slot por defecto, ni aria-label, ni prop de
+ * etiqueta. Es la SEÑAL REAL de la calibración C — un interactivo que el consumidor
+ * no puede nombrar. `nameSupplyable` debe salir `false` salvo que el runner aporte
+ * un slot/prop declarado.
+ */
+class HankoNamelessControl extends HTMLElement {
+  connectedCallback(): void {
+    if (!this.shadowRoot) {
+      const sr = this.attachShadow({ mode: 'open' });
+      sr.appendChild(document.createElement('button')); // tabbable, sin slot ni nombre
+    }
+  }
+}
+
 beforeAll(() => {
   if (!customElements.get('hanko-probe-button')) {
     customElements.define('hanko-probe-button', HankoProbeButton);
+  }
+  if (!customElements.get('hanko-nameless-control')) {
+    customElements.define('hanko-nameless-control', HankoNamelessControl);
   }
   if (!customElements.get('hanko-enum-map')) {
     customElements.define('hanko-enum-map', HankoEnumMap);
@@ -358,6 +377,38 @@ describe('harness · observeA11y', () => {
     const r = a11yCheck(obs);
     expect(r.tagName).toBe('hanko-probe-button');
     expect(r.checked).toContain('axe');
+  });
+
+  it('nameSupplyable=true por el slot por defecto del shadow vivo → name se omite', async () => {
+    // hanko-probe-button monta un slot por defecto: montado vacío no tiene nombre,
+    // pero el consumidor puede aportarlo → la regla `name` se omite, no viola.
+    const obs = await observeA11y('hanko-probe-button', (el) => axe.run(el));
+    expect(obs.interactive).toBe(true);
+    expect(obs.hasAccessibleName).toBe(false);
+    expect(obs.nameSupplyable).toBe(true);
+    const r = a11yCheck(obs);
+    expect(r.violations.some((v) => v.rule === 'name')).toBe(false);
+  });
+
+  it('un interactivo SIN mecanismo de nombre → nameSupplyable=false → name viola (señal real)', async () => {
+    const obs = await observeA11y('hanko-nameless-control', (el) => axe.run(el));
+    expect(obs.interactive).toBe(true);
+    expect(obs.hasAccessibleName).toBe(false);
+    expect(obs.nameSupplyable).toBe(false);
+    const r = a11yCheck(obs);
+    expect(r.violations.some((v) => v.rule === 'name')).toBe(true);
+  });
+
+  it('un slot por defecto DECLARADO en el CEM basta para aportar el nombre (aunque el render vacío no lo muestre)', async () => {
+    const obs = await observeA11y('hanko-nameless-control', (el) => axe.run(el), [], ['']);
+    expect(obs.nameSupplyable).toBe(true);
+    expect(a11yCheck(obs).violations.some((v) => v.rule === 'name')).toBe(false);
+  });
+
+  it('una prop de etiqueta DECLARADA (ariaLabel) basta para aportar el nombre', async () => {
+    const obs = await observeA11y('hanko-nameless-control', (el) => axe.run(el), ['ariaLabel'], []);
+    expect(obs.nameSupplyable).toBe(true);
+    expect(a11yCheck(obs).violations.some((v) => v.rule === 'name')).toBe(false);
   });
 });
 
