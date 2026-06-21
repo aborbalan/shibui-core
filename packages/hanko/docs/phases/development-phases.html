@@ -151,6 +151,7 @@
     <span class="chip">Resiliencia: <b>captura de crashes completa</b> (ventana + <code>updateComplete</code>) · 0 violaciones duras</span>
     <span class="chip">Calibración <b>D ✓</b>: sentinel tipado + red de captura → <b>pageerror 24 → 1</b> · <b>sellados 36 → 38</b></span>
     <span class="chip">Calibración <b>C ✓</b>: <code>nameSupplyable</code> (nombre aportable) → <b>a11y/name 29 → 6</b> · <b>sellados 38 → 47</b></span>
+    <span class="chip"><b>F4 ✓ terminada</b> · calibración F4-cierre (teclado real · landmarks · foco diferido) → <b>a11y/name 6 → 4</b> · <b>sellados 47 → 47</b></span>
     <span class="chip">Actualizado <b>2026-06-21</b></span>
   </div>
 </header>
@@ -273,14 +274,14 @@
       <div class="head">
         <span class="fno">F4</span>
         <h4>Accesibilidad (a11y)</h4>
-        <span class="badge b-wip">en curso</span>
+        <span class="badge b-done">hecho</span>
       </div>
       <p class="body">axe + navegación por teclado + foco + nombre accesible. Pruebas <strong>universales</strong>:
       aplican a cualquier componente, declare lo que declare su manifest — F4 no lee el contrato.</p>
       <p class="deliv"><b>✓ Hecho ▸</b> <span>motor de política puro <code>a11yCheck()</code> + observación <code>A11yObservation</code> · umbral de severidad (<code>failOn</code>) + teclado/foco/nombre exigidos a interactivos · spec <code>checks-a11y.md</code> + tests</span></p>
       <p class="deliv"><b>✓ Incr. 2 ▸</b> <span>el harness de a11y (<code>observeA11y</code>, axe inyectado + sondeos de interactividad/teclado/nombre) vive centralizado en #528 y está <strong>VALIDADO en navegador</strong> (Playwright/chromium) y corrido sobre componentes reales.</span></p>
       <p class="deliv"><b>✓ Calibración C (nombre aportable) ▸</b> <span>el harness monta los componentes <strong>VACÍOS</strong>: un componente cuyo nombre sale de su slot por defecto o de una prop de etiqueta aparecía sin nombre <em>sin tener defecto</em> (lo aporta el consumidor) → 29 falsos <code>a11y/name</code>. <strong>Resuelto</strong> con la señal <code>nameSupplyable</code> (capacidad, no render vacío): slot por defecto <strong>declarado</strong> en el CEM (vía nombres de slot inyectados por tag) · slot por defecto en el shadow vivo · prop de etiqueta declarada (regex <code>NAMEISH_PROP</code> de alta precisión). La política a11y <strong>omite</strong> <code>name</code> cuando es aportable (regla de oro), lo deja como violación cuando no hay mecanismo. <strong>Efecto (dogfood):</strong> <code>a11y/name</code> <strong>29 → 6</strong>, <strong>sellados 38 → 47</strong> (cambio monotónico, sin regresión). Los 6 restantes = señal real (deuda a11y de shibui). Ver <code>specs/checks-a11y.md</code> + <code>harness.md §Calibración</code>.</span></p>
-      <p class="deliv"><b>◷ Pendiente (menor) ▸</b> <span>sobre-detección de <code>isInteractive</code> (landmarks <code>lib-header</code>/<code>lib-footer</code> que <em>contienen</em> controles cuentan como interactivos) y <code>focusVisible</code> (sin observar en v0) → calibración separada.</span></p>
+      <p class="deliv"><b>✓ Calibración F4-cierre (teclado real · landmarks · foco diferido) ▸</b> <span>cerró las tres heurísticas v0 que quedaban. <strong>(1) <code>keyboardReachable</code></strong> era <code>tabIndex&gt;=0 || shadowRoot!==null</code> → como <em>todo</em> LitElement tiene shadow, la regla <code>keyboard</code> nunca fallaba (laxitud que fingía cobertura, el reverso del falso <code>reflect</code> de D); ahora exige un <strong>tabbable genuino</strong> (excluye <code>[tabindex="-1"]</code>/deshabilitados). <strong>(2) <code>isInteractive</code></strong> ya no cuenta un <code>tabindex="-1"</code> presentacional como control (eliminó los falsos <code>keyboard</code> de <code>lib-chip</code>/<code>lib-drawer</code>) y <strong>descarta landmarks</strong> (host con rol de región o shadow con elemento landmark nativo: <code>lib-footer</code> sale). <strong>(3) <code>focusVisible</code></strong> diferido formalmente (sin observar → la regla <code>focus</code> se omite; decisión, no olvido). <strong>Efecto (dogfood):</strong> <code>a11y/name</code> <strong>6 → 4</strong>, <code>a11y/keyboard</code> <strong>falso-verde → honesto (0)</strong>, <strong>sellados 47 → 47</strong> (estable). Las 4 restantes (<code>lib-rating</code>·<code>lib-editor-toolbar</code>·<code>lib-header</code>·<code>lib-tree-select</code>) = controles genuinos sin nombre aportable = <strong>deuda de shibui</strong>. Tests: node 80 · browser 23 (+4). Ver <code>specs/checks-a11y.md</code> + <code>harness.md §Calibración</code>.</span></p>
     </div>
   </div>
 
