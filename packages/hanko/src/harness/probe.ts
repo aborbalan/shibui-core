@@ -20,8 +20,21 @@
    shibui-ui real (generalizar desde el uso). Ver docs/specs/harness.md.
    ============================================================ */
 import type { ComponentRuntime } from '../core/runtime';
+import type { TypeKind } from '../core/contract';
 import type { A11yObservation, AxeImpact, AxeViolation } from '../checks/a11y';
 import type { ResilienceObservation, ResilienceTrial } from '../checks/resilience';
+
+/**
+ * Pista de tipo DECLARADO que el runner puede pasar por prop para tipar el
+ * sentinel de reflexión. Es un dato plano (no el `ComponentContract`): el harness
+ * sigue sin conocer el modelo declarado, solo recibe candidatos. `undefined` →
+ * inferencia por runtime (`typeof`/`Array.isArray`).
+ */
+export interface PropTypeHint {
+  kind: TypeKind;
+  /** Literales válidos si `kind === 'string-union'`. Permite elegir un enum válido. */
+  literals?: string[];
+}
 
 /* ───────────────────────── puro (node-testable) ───────────────────────── */
 
@@ -94,11 +107,85 @@ async function elUpdateComplete(el: unknown): Promise<void> {
   }
 }
 
-/** Sonda heurística de reflexión prop⇄attribute (string sentinel). v0. */
+const STRING_SENTINEL = 'hanko-probe';
+
+/**
+ * Elige un sentinel del MISMO tipo que el valor actual de la prop.
+ *
+ * Antes se asignaba el string `'hanko-probe'` a CUALQUIER prop reflejable. Para
+ * una prop data-driven que el componente espera como array (`series`, `links`,
+ * `files`… inicializadas a `[]`), eso la dejaba como string → el render hacía
+ * `series.flatMap(...)` y PETABA de forma ASÍNCRONA (en `updateComplete`), fuera
+ * del alcance del try/catch síncrono → el error afloraba a `window` como ruido
+ * (los ~24 `pageerror` del Trust Report que NO eran señal de contrato).
+ *
+ * Sentinel por tipo: array→`[]` y objeto→`{}` NO rompen el render; booleano→
+ * invertido y número→distinto fuerzan un cambio OBSERVABLE (un string podía no
+ * producir un atributo «cambiado» → falso «no refleja»). El tipo se infiere por
+ * RUNTIME (`typeof`/`Array.isArray` del valor inicial): genérico, sin acoplar el
+ * harness al contrato declarado (respeta `genericity.test.ts`). Una prop sin
+ * valor inicial (`undefined`) cae al string, como antes.
+ */
+function typedSentinel(current: unknown): unknown {
+  switch (typeof current) {
+    case 'boolean':
+      return !current;
+    case 'number':
+      return Number.isFinite(current) ? current + 1 : 1;
+    case 'string':
+      return current === STRING_SENTINEL ? `${STRING_SENTINEL}-2` : STRING_SENTINEL;
+    case 'object':
+      if (current === null) return STRING_SENTINEL;
+      return Array.isArray(current) ? [] : {};
+    default:
+      // undefined · bigint · function · symbol → no inferible: string como antes.
+      return STRING_SENTINEL;
+  }
+}
+
+/**
+ * Sentinel preferentemente DECLARADO, con runtime como red de seguridad.
+ *
+ * El tipo declarado lidera en las categorías que infiere con precisión y que el
+ * runtime no puede acertar: un **enum** (`string-union`) → el primer literal
+ * VÁLIDO distinto del actual (un string arbitrario indexaría mal un mapa interno
+ * y rompería el render); booleano/número sin valor inicial (que runtime vería
+ * `undefined`). Para `string`/`object`/`unknown` cede al runtime, que distingue
+ * array de objeto (`Array.isArray`) mejor que el `kind` del CEM.
+ */
+function chooseSentinel(current: unknown, hint: PropTypeHint | undefined): unknown {
+  switch (hint?.kind) {
+    case 'string-union': {
+      const pick = hint.literals?.find((l) => l !== current);
+      if (pick !== undefined) return pick;
+      break; // alias sin literales (p.ej. `LibSize`) → runtime/string fallback
+    }
+    case 'boolean':
+      return typeof current === 'boolean' ? !current : true;
+    case 'number':
+      return typeof current === 'number' && Number.isFinite(current) ? current + 1 : 1;
+    // 'string' | 'object' | 'unknown' | undefined → el runtime infiere mejor.
+  }
+  return typedSentinel(current);
+}
+
+/**
+ * Sonda heurística de reflexión prop⇄attribute (sentinel tipado). v0.
+ *
+ * El sondeo asigna valores SENTINEL deliberadamente adversos. Si uno rompe el
+ * render (un enum-alias sin literales conocidos cae al string `'hanko-probe'`,
+ * que un mapa interno indexa a `undefined` → `SIZE_MAP[size].px` peta), ese error
+ * es ARTEFACTO DEL SONDEO, no un fallo de contrato del componente —de su
+ * fragilidad ante basura ya se ocupa la capa de resiliencia (`junk-attrs`). El
+ * crash de Lit aflora DIFERIDO a `window` (re-render en cascada, no rechazo de
+ * `updateComplete`), así que su absorción la hace el llamador (`observeRuntime`)
+ * envolviendo TODA la fase montada, no este bucle.
+ */
 async function probeReflect(
   el: HTMLElement,
   properties: string[],
   observed: string[] | undefined,
+  types?: Record<string, PropTypeHint>,
 ): Promise<string[] | undefined> {
   if (!observed || observed.length === 0) return undefined;
   const reflecting: string[] = [];
@@ -107,13 +194,14 @@ async function probeReflect(
     if (!observed.includes(attr)) continue;
     try {
       const before = el.getAttribute(attr);
-      (el as unknown as Record<string, unknown>)[prop] = 'hanko-probe';
+      const record = el as unknown as Record<string, unknown>;
+      record[prop] = chooseSentinel(record[prop], types?.[prop]);
       // Lit refleja en el siguiente ciclo de update, no en este tick.
       await elUpdateComplete(el);
       const after = el.getAttribute(attr);
       if (after !== null && after !== before) reflecting.push(prop);
     } catch {
-      // props que no aceptan el sentinel string → no concluyente, se ignora
+      // props que no aceptan el sentinel → no concluyente, se ignora
     }
   }
   return reflecting;
@@ -126,8 +214,17 @@ function readSlots(el: HTMLElement): string[] | undefined {
   return [...sr.querySelectorAll('slot')].map((s) => s.name);
 }
 
-/** Observa el runtime de un custom element registrado. */
-export async function observeRuntime(tagName: string): Promise<ComponentRuntime> {
+/**
+ * Observa el runtime de un custom element registrado.
+ *
+ * `propTypes` (opcional) es el tipo DECLARADO por prop (del CEM, vía el runner):
+ * tipa el sentinel de la sonda de reflexión para enums/booleanos. Ausente → el
+ * harness infiere el tipo por runtime (sigue siendo genérico).
+ */
+export async function observeRuntime(
+  tagName: string,
+  propTypes?: Record<string, PropTypeHint>,
+): Promise<ComponentRuntime> {
   const ctor = customElements.get(tagName);
   if (!ctor) return { tagName, registered: false };
 
@@ -144,17 +241,34 @@ export async function observeRuntime(tagName: string): Promise<ComponentRuntime>
   // su `updateComplete` tras montar antes de leer slots, y dentro de `probeReflect`
   // tras cada set. Sin esto, slots/reflect salían sistemáticamente vacíos (falso
   // positivo en toda la librería). Ver `elUpdateComplete`.
+  // El sondeo de reflexión asigna sentinels adversos que pueden romper el render
+  // de un componente data-driven o enum (artefacto del sondeo, no fallo de
+  // contrato — de eso se ocupa la resiliencia). Lit emite esos crashes DIFERIDOS a
+  // `window` (re-render en cascada / update pendiente al desmontar), no rechazando
+  // `updateComplete`. Absorbemos esos errores a nivel `window` (`preventDefault`)
+  // durante toda la fase montada —montaje, sondeo, settle y desmontaje— para que
+  // no rebote como `pageerror` ni descalifique nada. Genérico: `window`/`setTimeout`
+  // son globals del DOM, no acoplan a Lit/shibui (respeta `genericity.test.ts`).
   let slots: string[] | undefined;
   let reflectingProperties: string[] | undefined;
+  const swallow = (e: Event): void => e.preventDefault();
+  window.addEventListener('error', swallow);
+  window.addEventListener('unhandledrejection', swallow);
   try {
     document.body.appendChild(el);
     await elUpdateComplete(el);
     slots = readSlots(el);
-    reflectingProperties = await probeReflect(el, properties, observedAttributes);
+    reflectingProperties = await probeReflect(el, properties, observedAttributes, propTypes);
   } catch {
     /* observación parcial: lo no observado se omite por la regla de oro */
   } finally {
     el.remove();
+    // Cede dos macrotasks para que los crashes async que provocó el sondeo (y los
+    // que dispare el desmontaje) afloren y se absorban antes de retirar los listeners.
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    window.removeEventListener('error', swallow);
+    window.removeEventListener('unhandledrejection', swallow);
   }
 
   const runtime: ComponentRuntime = { tagName, registered: true, properties, methods };
