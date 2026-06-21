@@ -64,16 +64,20 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   (no los marca `private`), pero `publicApiOf` los excluye por nombre (contrato = API **pública**). La ingestión
   ahora hace lo mismo (`isPublicMember` descarta los `_`-prefijados) → fuera los falsos `contract/method`.
 
-- **Resiliencia ante crashes async — PARCIALMENTE RESUELTO.** `observeResilience` es **async** y espera
-  `updateComplete` en cada escenario, así que el throw async de Lit aflora *dentro* del trial en vez de perderse
-  (antes el `try/catch` síncrono daba un falso «sobrevivió»). Los escenarios son todos adversos *sin datos*
-  (`empty`/`junk-attrs`/`rtl`/`remount`), así que el runner los pasa como `optional` → un crash es **warning**,
-  no descalifica el sello (no se puede distinguir «frágil» de «necesita datos» sin sembrarlos). **Límite:** Lit
-  reporta la mayoría de errores de render a nivel de `window` (`pageerror`), no rechazando `updateComplete`, así
-  que el `await` solo capta unos pocos; el resto sigue viéndose solo en `report-full.html`. Captura completa =
-  escuchar `pageerror`/`window.onerror` durante el trial (diferido). Sembrar datos mínimos por tipo para un
-  escenario duro `valid-min` también queda **diferido** (se probó: los componentes renderizan con datos pero su
-  contrato no mejora → el ruido restante es drift del CEM, no falsos positivos del harness).
+- **Resiliencia ante crashes async — RESUELTO.** `observeResilience` corre cada trial dentro de una ventana que
+  escucha `window` (`error` + `unhandledrejection`, con `preventDefault` para adueñarse del error y no rebotarlo
+  como uncaught) **además** del throw síncrono / rechazo de `updateComplete`, y cede un macrotask antes de
+  cerrarla → capta tanto los rechazos de `updateComplete` como los throws que Lit emite a nivel de **ventana**
+  (`runCapturingWindowErrors` en `probe.ts`). Los escenarios son adversos *sin datos*
+  (`empty`/`junk-attrs`/`rtl`/`remount`), `optional` → un crash es **warning**, no descalifica el sello.
+  **Hallazgo (dogfood, validado aislando el probe):** sobre shibui un montaje adverso-vacío **sobrevive limpio**
+  salvo **2** componentes que petan en `junk-attrs` (`lib-button-liquid`, `lib-progress-circle`, ambos rechazan
+  `updateComplete`). Los ~24 `pageerror` de `report-full.html` **NO son fallos de resiliencia**: corriendo el
+  probe con **solo** `observeResilience` montando salen **0** diagnósticos; los 24 vienen de
+  `observeRuntime`/`observeA11y`. El patrón (`X.flatMap`/`map`/`find` *is not a function*) delata el **sentinel
+  string de `probeReflect`** asignado a props data-driven → es trabajo de **calibración D** (sentinel tipado, ver
+  abajo), no de resiliencia. Sembrar datos mínimos por tipo (`valid-min`) sigue **diferido** (se probó: los
+  componentes renderizan con datos pero su contrato no mejora → el ruido restante es drift del CEM).
 
 ### ⚠️ Pendiente de calibrar
 
@@ -83,8 +87,13 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   la generación del manifest, no en hanko).
 - **Slot por defecto con etiqueta `—` mal codificada** (`"â€”"`): bug de encoding (UTF-8 leído como latin1) en el
   nombre del slot por defecto del CEM/render → revisar la ingestión/render del nombre de slot.
-- **reflect (sentinel)**: sonda con un sentinel string; para una prop booleana/numérica/enum el converter de Lit
-  puede no producir un atributo "cambiado" aunque refleje → considerar sentinel tipado por el CEM.
+- **reflect (sentinel) — calibración D, el lever de los ~24 `pageerror`**: `probeReflect` asigna el string
+  `'hanko-probe'` a cualquier prop con atributo observado. Para una prop **data-driven** (un chart que espera
+  `series`/`links`/`items` array) eso la deja en un string → el render hace `'hanko-probe'.flatMap(...)` y
+  **peta** (de ahí los `X.flatMap/map/find is not a function` de `report-full.html`). Y para una prop
+  booleana/numérica/enum el converter de Lit puede no producir un atributo "cambiado" aunque refleje → falso
+  negativo de reflexión. **Plan:** leer el tipo del CEM y usar un sentinel coherente (bool→`true`, number→`1`,
+  enum→primer literal válido, array/object→un valor mínimo del tipo) en vez de un string para todo.
 - **interactividad / nombre accesible**: heurísticas (tabindex/role/shadow, aria-label/texto) → calibrar contra
   shibui real (29 componentes fallan a11y, en parte por montarse vacíos sin nombre accesible).
 - **focusVisible**: requiere foco/render real; v0 lo deja sin observar (el check lo omite, no falla).

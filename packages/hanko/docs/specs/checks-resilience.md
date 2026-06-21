@@ -57,9 +57,14 @@ Escenarios previstos para el harness (no impuestos por el motor): `empty` (sin p
 4. El mensaje cae al `error` capturado, o a uno por defecto si no lo hay.
 5. Tests verdes en `src/checks/resilience.test.ts`.
 
-## Incremento 2 (siguiente) — harness de resiliencia
+## Incremento 2 — harness de resiliencia (hecho)
 
-- Montar cada componente bajo los escenarios con `@vitest/browser`, capturando excepciones de
-  `connectedCallback`/render → construir la `ResilienceObservation`. Compartido con el harness de F3/F4
-  (ver [`harness.md`](harness.md)).
-- Calibrar el catálogo de escenarios y la lista `optional` contra shibui-ui real.
+- Monta cada componente bajo los escenarios con `@vitest/browser` y construye la `ResilienceObservation`.
+  Compartido con el harness de F3/F4 (ver [`harness.md`](harness.md)).
+- **Captura completa de crashes (calibración):** cada trial corre en una ventana que escucha `window`
+  (`error` + `unhandledrejection`) además del rechazo de `updateComplete`, así que capta también los throws
+  que Lit emite a nivel de ventana (no solo los que rechazan la promesa). Ver `runCapturingWindowErrors` y
+  la §Calibración de `harness.md`.
+- **Hallazgo:** sobre shibui un montaje adverso-vacío sobrevive limpio salvo 2 crashers en `junk-attrs`; los
+  `pageerror` restantes del Trust Report son artefactos del sentinel de `probeReflect` (contrato), no de
+  resiliencia.

@@ -83,6 +83,26 @@ class HankoNeedsData extends HTMLElement {
   }
 }
 
+/**
+ * Componente que PETA SOLO a nivel `window`: lanza desde un `setTimeout` en
+ * `connectedCallback`, sin rechazar `updateComplete` (que resuelve limpio). El `await`
+ * del harness no lo vería — como los crashes de render de Lit que afloran como `pageerror`,
+ * no como rechazo de la promesa. Cubre el camino de captura por listener de ventana.
+ */
+class HankoWindowThrower extends HTMLElement {
+  connectedCallback(): void {
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: 'open' }).appendChild(document.createElement('slot'));
+    }
+    setTimeout(() => {
+      throw new Error('hanko-window-boom');
+    }, 0);
+  }
+  get updateComplete(): Promise<void> {
+    return Promise.resolve();
+  }
+}
+
 beforeAll(() => {
   if (!customElements.get('hanko-probe-button')) {
     customElements.define('hanko-probe-button', HankoProbeButton);
@@ -92,6 +112,9 @@ beforeAll(() => {
   }
   if (!customElements.get('hanko-needs-data')) {
     customElements.define('hanko-needs-data', HankoNeedsData);
+  }
+  if (!customElements.get('hanko-window-thrower')) {
+    customElements.define('hanko-window-thrower', HankoWindowThrower);
   }
 });
 
@@ -197,6 +220,20 @@ describe('harness · observeResilience', () => {
 
     // Política del runner: los escenarios adversos (sin datos) son tolerables →
     // el crash es un WARNING, no descalifica el sello.
+    const r = resilienceCheck(obs, { optional: [...ADVERSE_SCENARIOS] });
+    expect(r.pass).toBe(true);
+    expect(r.warnings.some((w) => w.scenario === 'empty')).toBe(true);
+  });
+
+  it('CAPTURA un crash que SOLO aflora a nivel window (no rechaza updateComplete)', async () => {
+    // El throw va en un setTimeout y updateComplete resuelve limpio: el `await` del
+    // harness no lo ve. Solo el listener de `window.error` por trial lo capta.
+    const obs = await observeResilience('hanko-window-thrower');
+    const empty = obs.trials?.find((t) => t.scenario === 'empty');
+    expect(empty?.survived).toBe(false);
+    expect(empty?.error).toContain('hanko-window-boom');
+
+    // Escenario adverso (sin datos) → tolerable: warning, no descalifica el sello.
     const r = resilienceCheck(obs, { optional: [...ADVERSE_SCENARIOS] });
     expect(r.pass).toBe(true);
     expect(r.warnings.some((w) => w.scenario === 'empty')).toBe(true);

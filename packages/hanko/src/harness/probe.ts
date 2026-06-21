@@ -251,6 +251,49 @@ async function mountThenRemove(tagName: string, setup: (el: HTMLElement) => void
  */
 export const ADVERSE_SCENARIOS: readonly string[] = ['empty', 'junk-attrs', 'rtl', 'remount'];
 
+/**
+ * Corre un trial capturando TODO lo que pueda romperlo: el throw síncrono/rechazo de
+ * `run()` Y los errores que el componente emite a nivel `window` (`error` /
+ * `unhandledrejection`). Lit reporta la mayoría de fallos de render a la ventana, no
+ * rechazando `updateComplete`, así que sin esto el `await` los perdía → falso «sobrevivió».
+ *
+ * Los listeners llaman `preventDefault()` para adueñarse del error: lo marca «manejado»
+ * (no rebota como uncaught en el runner de tests) y evita el `pageerror` redundante, ahora
+ * que vive estructurado en el trial. Cede un macrotask para que los throws diferidos
+ * (`setTimeout`) afloren antes de quitar los listeners. Devuelve los mensajes deduplicados.
+ *
+ * Genérico: `window`/`ErrorEvent`/`PromiseRejectionEvent`/`setTimeout` son globals del DOM,
+ * no acoplan a Lit/shibui (respeta `genericity.test.ts`).
+ */
+async function runCapturingWindowErrors(run: () => Promise<void>): Promise<string[]> {
+  const captured: string[] = [];
+  const onError = (e: ErrorEvent): void => {
+    e.preventDefault();
+    captured.push(e.message || String(e.error));
+  };
+  const onRejection = (e: PromiseRejectionEvent): void => {
+    e.preventDefault();
+    captured.push(String(e.reason));
+  };
+  window.addEventListener('error', onError);
+  window.addEventListener('unhandledrejection', onRejection);
+
+  let thrown: string | undefined;
+  try {
+    await run();
+  } catch (err) {
+    thrown = String(err);
+  }
+  // Cede un macrotask: los throws async a nivel window (p.ej. setTimeout en render) afloran aquí.
+  await new Promise<void>((resolve) => setTimeout(resolve, 0));
+
+  window.removeEventListener('error', onError);
+  window.removeEventListener('unhandledrejection', onRejection);
+
+  const all = thrown !== undefined ? [thrown, ...captured] : captured;
+  return [...new Set(all)];
+}
+
 /** Observa la resiliencia montando el componente bajo escenarios adversos. */
 export async function observeResilience(tagName: string): Promise<ResilienceObservation> {
   if (!customElements.get(tagName)) return { tagName };
@@ -283,11 +326,11 @@ export async function observeResilience(tagName: string): Promise<ResilienceObse
 
   const trials: ResilienceTrial[] = [];
   for (const [scenario, run] of scenarios) {
-    try {
-      await run();
+    const errors = await runCapturingWindowErrors(run);
+    if (errors.length === 0) {
       trials.push({ scenario, survived: true });
-    } catch (err) {
-      trials.push({ scenario, survived: false, error: String(err) });
+    } else {
+      trials.push({ scenario, survived: false, error: errors.join(' | ') });
     }
   }
 
