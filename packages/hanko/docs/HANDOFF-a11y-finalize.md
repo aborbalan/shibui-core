@@ -26,6 +26,25 @@ Lo que falta para considerar F4 **terminada** son los **pendientes menores** que
 
 ---
 
+## 0.1 Principio de entrega — **cada fase es un entregable**
+
+> **Regla del proyecto (decisión del 2026-06-21):** cada fase (F0…F7) se trata como un **entregable cerrado**.
+> **No se pasa a la fase siguiente hasta que la actual está terminada por completo** — todos sus criterios de
+> aceptación cumplidos, validados y documentados (specs + tracker). Nada de «dejar flecos para luego» y arrancar
+> la siguiente: los flecos son parte de la entrega, no deuda diferible.
+
+Implicaciones para esta sesión y las próximas:
+- **F4 no se da por cerrada** hasta cumplir TODO el «Criterio de F4 terminada» (§1). Los pendientes menores de C
+  (keyboard/isInteractive/focus) **son parte de la entrega de F4**, no un «extra opcional».
+- **No empieces F5/F6/F7-restante** mientras F4 siga abierta. (Nota: algunas fases ya tienen incrementos hechos en
+  ramas previas; eso no contradice la regla — la regla es de **cierre/aceptación**, no de exploración.)
+- **Distingue lo que ES de la fase de lo que NO**: meter el gate duro (F6) en F4 «porque ya que estamos» viola la
+  regla en sentido inverso — infla el alcance de F4 con trabajo de otra fase. Cada entregable, su alcance exacto.
+- El **tracker** (`development-phases.html`) refleja el estado real de cada fase; una fase solo pasa a `hecho`
+  cuando su entrega está aceptada de verdad (no «en curso con flecos»).
+
+---
+
 ## 1. Qué falta para «terminada» — checklist + DECISIONES tuyas primero
 
 F4 = capa a11y: **axe + teclado + foco + nombre**. Incr. 1 (política pura `a11yCheck`) y incr. 2 (harness
@@ -98,11 +117,17 @@ calibrar esto: la capa a11y ya hace lo correcto al señalarlos.
 3. `focusVisible` con una decisión **explícita** (implementado o diferido con rationale en el spec).
 4. Los `a11y/name` restantes = solo controles genuinos, documentados como deuda de shibui.
 5. **Sin reintroducir estricteza que no compra señal NI laxitud que finge cobertura** (lección de #549, ambas caras).
-6. sellados estable o al alza; specs (`checks-a11y.md` + `harness.md §Calibración`) + tracker
+6. **Capacidad de enforce presente y apagada**: `a11yCheck` ya acepta `failOn` (umbral de severidad) → la capa
+   a11y *podría* gatear. Se entrega esa capacidad **explícitamente en report-only** (documentar que el enforce
+   existe y está apagado por decisión de rollout), para que nadie diga «el check no enforce»: enforce existe,
+   está deliberadamente off.
+7. sellados estable o al alza; specs (`checks-a11y.md` + `harness.md §Calibración`) + tracker
    (`development-phases.html`, marcar F4 `hecho`) actualizados.
 
-> Lo que F4-terminada **NO** incluye: el **gate duro** (fallar el build con el sello a11y) es un item global
-> aparte (vale para las 4 capas), no de F4. No lo metas aquí salvo que lo pidas explícitamente.
+> **El gate duro NO es de F4.** Quitar `continue-on-error` del job `hanko-seal` (fallar el build con el sello) es
+> un **hito global de F6**: gatea el Trust Report de las **4 capas**, no la a11y sola, y es **un único flip**
+> posterior, bloqueado por el drift del CEM de shibui (`property`/`reflect`/`slot`) + el cierre de las otras capas.
+> No lo metas en esta entrega. F4 entrega la *capacidad* de enforce (punto 6), no el *encendido* del gate.
 
 ---
 
