@@ -24,6 +24,14 @@ Las **tres capas de verificación están funcionalmente calibradas** y emiten se
 Tally de hallazgos: `contract/property 108 · contract/reflect 31 · contract/slot 29 · contract/attribute 7 ·
 a11y/name 4`. **Resiliencia = 0 fallos duros** (todos los escenarios son `optional` → warnings; ver decisión 5.1).
 
+> **⚠️ El baseline puede haber cambiado — re-mídelo fresco al empezar (dogfood desde el worktree).** Los **4
+> `a11y/name`** (`lib-rating`, `lib-editor-toolbar`, `lib-tree-select`, `lib-header`) son **deuda de shibui (F4),
+> NO de F3/F5**, y están **siendo arreglados en una tarea SEPARADA de shibui-ui** (chip `task_fed46dd2`, fuera de
+> hanko). Si esa tarea se mergea antes que esta sesión, verás `a11y/name 0` y `sellados` por encima de 47 — es lo
+> esperado, no una regresión. **Fuera de alcance de F3/F5:** no investigues, calibres ni documentes la deuda a11y
+> aquí — ya tiene su carril. El suelo de `sellados` para esta sesión es **«lo que mida el dogfood al arrancar»**,
+> no el 47 literal.
+
 F4 cerró su capa. **Esta sesión cierra F3 y F5 con el mismo rasero**: confirmar que NO queda *laxitud que finge
 cobertura* NI *estricteza que no compra señal* (lección #549, las dos caras), tomar las decisiones de política
 🟠 abajo, marcarlas «terminadas» en specs + tracker, y dejar el sin-sello restante clasificado (hanko vs deuda
@@ -106,7 +114,8 @@ se difiere como deuda del CEM de shibui. Bajo riesgo; probablemente un fix de bo
 2. **F3:** cobertura cruzada F3↔F5 confirmada (3.1); el sin-sello de contrato clasificado y documentado como
    drift del CEM de shibui (3.2); `B` cerrado o diferido con rationale (3.3).
 3. Sin reintroducir estricteza que no compra señal NI laxitud que finge cobertura (#549, ambas caras).
-4. **sellados estable o al alza** (47 es el suelo); specs (`checks-contract.md` · `checks-resilience.md` ·
+4. **sellados estable o al alza** (el suelo = lo que mida el dogfood AL ARRANCAR, no el 47 literal — la deuda
+   a11y de shibui puede haberlo movido; ver nota de la §0); specs (`checks-contract.md` · `checks-resilience.md` ·
    `harness.md §Calibración`) actualizadas de «v0/pendiente» a «terminada»; tracker (`development-phases.html` +
    `phases/README.md`) con **F3 y F5 = hecho**.
 
