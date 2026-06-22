@@ -2,8 +2,9 @@
 
 > **Estado:** implementado en `src/harness/probe.ts` y **cableado al Trust Report** vía la sonda
 > `dogfood/probe-shibui.ts` (Etapa 1 del puente de F6). **Validado en navegador** (Playwright/chromium): tests
-> `*.browser.test.ts` verdes + dogfood real sobre los ~102 componentes de shibui. Calibración async (Lit
-> `updateComplete`) **resuelta** — ver §Calibración.
+> `*.browser.test.ts` verdes + dogfood real sobre los ~102 componentes de shibui. Calibraciones async, D, C,
+> F4-cierre, **F3-cierre (reflexión)** y **F5-cierre (resiliencia)** **resueltas** — ver §Calibración. Con F3, F4
+> y F5 cerradas, las tres capas emiten señal honesta (Trust Report: 102 · **49 sellados**).
 > **Fase:** incremento 2 común a F3 (contrato), F4 (a11y) y F5 (resiliencia).
 
 ---
@@ -68,8 +69,13 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   escucha `window` (`error` + `unhandledrejection`, con `preventDefault` para adueñarse del error y no rebotarlo
   como uncaught) **además** del throw síncrono / rechazo de `updateComplete`, y cede un macrotask antes de
   cerrarla → capta tanto los rechazos de `updateComplete` como los throws que Lit emite a nivel de **ventana**
-  (`runCapturingWindowErrors` en `probe.ts`). Los escenarios son adversos *sin datos*
-  (`empty`/`junk-attrs`/`rtl`/`remount`), `optional` → un crash es **warning**, no descalifica el sello.
+  (`runCapturingWindowErrors` en `probe.ts`). **Política de escenarios (calibración F5-cierre, decisión 5.1):**
+  `empty`/`junk-attrs`/`rtl` se montan *sin datos* (`DATA_DEPENDENT_SCENARIOS`) → `optional` → un crash es
+  **warning**; **`remount` es OBLIGATORIO** —re-montarse vacío no depende de datos, un crash ahí es fragilidad
+  de ciclo de vida real → descalifica el sello. `observeRemount` solo cuenta el fallo del **2º** montaje (si el
+  1º vacío ya peta, eso es asunto de `empty`) para no doble-contar ni reintroducir el falso positivo data-driven
+  (#549). La capa deja de ser **verde por construcción**; sobre shibui ningún componente trip­ea `remount`
+  (sellados estable) pero el gate muerde de verdad (fixture `hanko-remount-crasher`). Ver `checks-resilience.md`.
   **Hallazgo (dogfood, validado aislando el probe):** sobre shibui un montaje adverso-vacío **sobrevive limpio**
   salvo **2** componentes que petan en `junk-attrs` (`lib-button-liquid`, `lib-progress-circle`, ambos rechazan
   `updateComplete`). Los ~24 `pageerror` de `report-full.html` **NO son fallos de resiliencia**: corriendo el
@@ -100,8 +106,32 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   `console.warning` de `lib-progress` por JSON inválido — comportamiento defensivo correcto); `contract/reflect`
   **71 → 31** (el sentinel tipado detecta reflexión en booleanos/enums que el string daba como falso negativo);
   **sellados 36 → 38**. Resto de facetas sin regresión (slot 29, property 108, attribute 7, a11y 29).
-  **Trade-off asumido:** la red de captura también absorbe un crash genuino de montaje por defecto en
-  `observeRuntime` (lo capta igualmente la capa de resiliencia, escenario `empty`).
+  **Trade-off asumido (cobertura cruzada F3↔F5, decisión 3.1 — verificada):** la red de captura también absorbe
+  un crash genuino de montaje por defecto en `observeRuntime`; lo capta igualmente la capa de resiliencia
+  (escenario `empty`, hoy `optional` → aflora como **warning** + diagnóstico, no se pierde entre capas). Tras la
+  calibración F5-cierre la cobertura sigue intacta (sobre shibui `empty` no peta en ningún componente; el
+  mecanismo lo prueban las fixtures `hanko-needs-data`/`hanko-window-thrower`).
+
+- **Reflexión sin falsos negativos (calibración F3-cierre) — RESUELTO.** Tras D quedaban **31** `contract/reflect`,
+  y la mayoría eran **falsos negativos de la sonda**, no drift de shibui. Dos mecanismos + un tercer estado,
+  calibrados en `probeReflect` (`probe.ts`):
+  1. **Booleano que refleja QUITANDO el atributo** (presente `''` → ausente `null`): el viejo guard
+     `after !== null` lo descartaba. Un default `true`→`false` (charts: `showGrid`/`showLegend`) reflejaba de
+     verdad. → detectado por `after !== before`.
+  2. **Refleja-luego-peta**: Lit refleja prop→attr DENTRO de `update()`; un hook posterior (`updated()`, p.ej.
+     reconstruir un canvas — `lib-button-liquid` con `variant`/`tone`) peta y rechaza `updateComplete`, pero la
+     reflexión YA ocurrió. El viejo `continue` ante el rechazo la perdía. → se lee el atributo aunque rechace.
+  3. **Reflexión INCONCLUSA** (`reflectInconclusiveProperties`): si el sentinel adverso rompe el render ANTES de
+     reflejar (enum-alias sin literales en el CEM → string → `SIZE_MAP[size]` peta, `lib-progress-circle`), no se
+     puede verificar → la prop se marca inconclusa y `contractCheck` la **OMITE**, no la viola (regla de oro).
+     Cada prop se sondea **aislada** (restaura su valor previo) para que un crasher no marque inconclusas en
+     cascada a las siguientes (lo que enmascararía un «no refleja» genuino).
+
+  **Efecto medido (dogfood real):** `contract/reflect` **31 → 1** (el residual = `lib-timeline-item` `nKind`,
+  drift de nombre del CEM); **sellados 47 → 49** (`lib-button-liquid` y `lib-progress-circle` sellan). Cambio
+  esencialmente monotónico: solo deja de **violar en falso** reflexiones reales o no verificables. El resto del
+  sin-sello de contrato (property kebab-fantasma 105, slot `—` 20, attribute camelCase 7) es **drift del CEM de
+  shibui** confirmado (verificado contra el CEM), no falsos positivos de hanko — ver `checks-contract.md`.
 
 - **Nombre accesible aportable por el consumidor (calibración C) — RESUELTO.** El harness monta cada componente
   **vacío**: un componente cuyo nombre sale de su slot por defecto o de una prop de etiqueta aparece sin nombre
@@ -150,14 +180,20 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   real); **sellados 47 → 47** (estable). Las **4** `a11y/name` restantes —`lib-rating`, `lib-editor-toolbar`,
   `lib-header`, `lib-tree-select`— son controles genuinos sin nombre aportable = **deuda de shibui**.
 
-### ⚠️ Pendiente de calibrar
+### Triado — drift del CEM de shibui (NO trabajo de hanko)
 
-- **Miembros fantasma kebab en el CEM**: algunos componentes declaran DOS miembros para una misma prop —el real
-  `showLegend` (attribute `show-legend`) y un duplicado `show-legend` (kind field, sin attribute)—. El segundo no
-  existe en runtime → `contract/property: ausente`. Es un *smell* de generación del CEM de shibui (se arregla en
-  la generación del manifest, no en hanko).
-- **Slot por defecto con etiqueta `—` mal codificada** (`"â€”"`): bug de encoding (UTF-8 leído como latin1) en el
-  nombre del slot por defecto del CEM/render → revisar la ingestión/render del nombre de slot.
+- **Miembros fantasma kebab en el CEM (≈105) — TRIADO como deuda de shibui.** Algunos componentes declaran un
+  *field* con el nombre KEBAB del atributo (`show-labels`) además del field JS real (`showLabels`): el primero
+  no existe en runtime → `contract/property: ausente`. Confirmado contra el CEM (el `attributes[].fieldName`
+  apunta al `showLabels` real). Es un *smell* de generación del CEM de shibui — se arregla en la generación del
+  manifest, no en hanko. hanko lo reporta correctamente.
+- **Slot `"—"` (≈20) — TRIADO como deuda de shibui (decisión 3.3).** El analizador de shibui cuela el em-dash de
+  una descripción JSDoc (`@slot — …`) como **nombre** del slot; ese slot no existe en el shadow DOM. **El `â€”`
+  que reportaban sesiones previas era artefacto de codificación del TERMINAL, NO un bug de hanko:** hanko lee el
+  CEM (`readFileSync` utf-8) y escribe el report en UTF-8 correctos (0 bytes mojibake en `trust-report.json` /
+  `index.html`; el em-dash `—` figura bien). No hay fix de ingestión que hacer en hanko.
+- **reflexión (calibración D + F3-cierre)**: **RESUELTA** — `contract/reflect` 71 → 31 → **1** (residual = drift
+  del CEM). Ver §Calibración.
 - **nombre accesible**: **calibrado (C, RESUELTO)** — `nameSupplyable` bajó `a11y/name` de 29 a 6 señales reales.
 - **interactividad (`isInteractive`)**: **calibrado (F4-cierre, RESUELTO)** — landmarks descartados + `tabindex="-1"`
   presentacional ya no fabrica interactividad (ver arriba).

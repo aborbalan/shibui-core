@@ -120,5 +120,5 @@ labels auto-creadas y dedup por marcador. Sin tocar componentes reales.
 - `orchestrator.yml`: input `workflow_dispatch` `force_hanko_issues` (default `false`), pasado a
   `ci-lib` como `github_issues`. `secrets: inherit` ya provee `GITHUB_TOKEN`.
 
-> ⚠️ **Lockfile:** si el `pnpm-lock.yaml` aún no incluye `@shibui-ui/hanko` con todas sus deps,
-> regenerar y commitear antes de que CI (con `--frozen-lockfile`) corra el step.
+> **Lockfile:** el `pnpm-lock.yaml` **ya incluye `@shibui-ui/hanko`** con sus deps (importer por ruta;
+> `--frozen-lockfile` pasa), así que CI corre el step sin pasos extra.
