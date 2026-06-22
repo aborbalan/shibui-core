@@ -103,20 +103,48 @@ jobs:
           retention-days: 1
 
   # ─────────────────────────────────────────────────────────────────────────
-  # Hanko Trust Seal (judaico 判) — F2: smoke / sello Floor sobre el manifest.
-  # hanko lee el `custom-elements.json` que produce el build de shibui-ui
-  # (artefacto ui-dist) y aplica el Floor del ADR-001. NO importa shibui:
-  # se comunica solo por el manifest. Ver packages/hanko/docs/.
-  #
-  # ⚠️ Report-only de momento (continue-on-error). Para convertirlo en gate
-  # duro del DS, quitar `continue-on-error` cuando el sello sea estable.
-  # Requiere que el lockfile incluya @shibui-ui/hanko (pnpm install + commit).
+  # Hanko · Carril 1 — Correctitud de hanko (gate DURO, independiente de shibui).
+  # hanko se valida A SÍ MISMO con fixtures sintéticos: type-check + vitest
+  # (node + navegador). NO depende del sellado de ningún consumer (ADR-003):
+  # el desarrollo de hanko no puede bloquearse por el drift del CEM de shibui.
+  # Requiere @shibui-ui/hanko en el lockfile (pnpm install + commit).
+  # ─────────────────────────────────────────────────────────────────────────
+  hanko-test:
+    name: 判 Hanko — tests propios (type-check · vitest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 🔎 Type Check
+        run: pnpm --filter @shibui-ui/hanko type-check
+      - name: 🧪 Unit tests (node)
+        run: pnpm --filter @shibui-ui/hanko test
+      - name: 🌐 Install Playwright Chromium
+        run: pnpm --filter @shibui-ui/hanko exec playwright install chromium --with-deps
+      - name: 🧪 Browser tests (harness sobre elementos sintéticos)
+        run: pnpm --filter @shibui-ui/hanko test:browser
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Hanko · Carril 2 (PR) — Gate de REGRESIÓN Floor sobre el CEM de shibui-ui.
+  # hanko lee el `custom-elements.json` (artefacto ui-dist) y aplica el Floor
+  # del ADR-001 (registrabilidad, node, sin navegador). Gate de regresión: falla
+  # solo si un componente que sellaba el Floor en el baseline deja de hacerlo —
+  # NO exige conformance plena, así que NO castiga el drift del CEM de shibui
+  # (ADR-003). NO importa shibui: se comunica solo por el manifest.
+  # Requiere @shibui-ui/hanko en el lockfile (pnpm install + commit).
   # ─────────────────────────────────────────────────────────────────────────
   hanko-seal:
-    name: 判 Hanko Trust Seal (smoke · Floor)
+    name: 判 Hanko Trust Seal (Floor · regresión)
     runs-on: ubuntu-latest
     needs: build-ui
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -133,8 +161,10 @@ jobs:
         with:
           name: ui-dist-${{ github.run_id }}
           path: packages/shibui-ui/dist/
-      - name: 判 Hanko smoke — sello Floor sobre el CEM de shibui-ui
-        run: pnpm --filter @shibui-ui/hanko smoke
+      - name: 判 Trust Report (Floor · node, sin observaciones de navegador)
+        run: pnpm --filter @shibui-ui/hanko report
+      - name: 判 Gate de regresión Floor (vs dogfood/baseline.floor.json)
+        run: pnpm --filter @shibui-ui/hanko gate:floor
 
   test-stories:
     name: 🧪 Story Tests
@@ -300,6 +330,14 @@ jobs:
         run: pnpm --filter @shibui-ui/hanko observe
       - name: 判 Generar Trust Report (Etapa 2) — 4 capas sobre el CEM + observaciones
         run: pnpm --filter @shibui-ui/hanko report
+      - name: 📤 Subir trust-report.json (refresco de baseline ante delta de plataforma)
+        # Si el gate de 4 capas marcara una regresión espuria por delta Linux↔local,
+        # se refresca dogfood/baseline.json desde este artefacto (ver dogfood/BASELINE.md).
+        uses: actions/upload-artifact@v4
+        with:
+          name: hanko-trust-report-${{ github.run_id }}
+          path: packages/hanko/hanko-report/trust-report.json
+          retention-days: 7
       # Opt-in: convierte los componentes sin sello en issues de GitHub (idempotente:
       # crea/actualiza/cierra). Solo cuando se lanza a mano con force_hanko_issues.
       - name: 判 Crear/actualizar issues de hanko (opt-in)
@@ -312,3 +350,9 @@ jobs:
         run: cp .firebaserc .config/.firebaserc
       - name: 🚀 Deploy Trust Report → hanko-report.web.app
         run: pnpm exec firebase deploy --only hosting:hanko-report --non-interactive --project lib-ui-b67c5
+      - name: 判 Gate de regresión (4 capas) — falla si un sello del baseline se cae
+        # Último paso: el report ya se publicó y el artefacto ya subió, así que una
+        # regresión deja rastro inspeccionable aunque el job acabe en rojo. Gate de
+        # regresión per-tag vs dogfood/baseline.json (ADR-003): el drift preexistente
+        # del CEM de shibui está congelado en el baseline → no rompe el build.
+        run: pnpm --filter @shibui-ui/hanko gate

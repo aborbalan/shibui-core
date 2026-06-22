@@ -1,9 +1,10 @@
 # Spec · Trust Report (F6)
 
-> **Estado:** incr. 1 (agregador `src/report/trust-report.ts` + renderers `src/report/render.ts`, puro) +
-> incr. 2 **completo (4 capas)** vía el puente en dos etapas: sonda `dogfood/probe-shibui.ts` → `observations.json`
-> → runner `src/report/run.ts` → deploy a `hanko-report.web.app` en main. **Pendiente:** validar el harness en
-> navegador (Paso 0) y el gate duro.
+> **Estado:** F6 **terminada.** incr. 1 (agregador `src/report/trust-report.ts` + renderers `src/report/render.ts`,
+> puro) · incr. 2 (puente en dos etapas: sonda `dogfood/probe-shibui.ts` → `observations.json` → runner
+> `src/report/run.ts` → deploy a `hanko-report.web.app` en main) · incr. 3 (emisor de issues opt-in) · **gate duro**
+> (`src/report/gate.ts` + `gate-run.ts`, [ADR-003](../decisions/adr-003-gate-regresion.md)). El harness en navegador
+> quedó **validado** con los cierres de F3/F4/F5 (#554/#555/#558).
 > **Fase:** F6. Agrega los veredictos de [`smoke.md`](smoke.md) (Floor, F2),
 > [`checks-contract.md`](checks-contract.md) (F3), [`checks-a11y.md`](checks-a11y.md) (F4) y
 > [`checks-resilience.md`](checks-resilience.md) (F5).
@@ -104,8 +105,19 @@ dogfood/probe-shibui.ts                      src/report/run.ts
   `skipped`): robusto en una corrida solo-node. El banner de cobertura del HTML es **dinámico**.
 - ✅ **Deploy** (`ci-lib.yml` · job `deploy-hanko-report`): en **main**, `observe` → `report` → publica el HTML
   en **`hanko-report.web.app`** (target Firebase `hanko-report`). El JSON queda en `/trust-report.json`.
-- ⏳ **Validar el harness en navegador (Paso 0):** `test:browser` + el dogfood sobre shibui real, calibrando las
-  heurísticas v0 contra Lit (ver `harness.md`). Es la puerta que hace fiables las 3 capas del harness.
-- ⏳ **Gate duro:** fallar el build cuando un componente no alcanza su nivel exigido — promover el `hanko-seal`
-  actual (report-only). Diferido hasta que el sello sea estable.
-- ⏳ **Histórico/badges:** consumir el JSON publicado para *trend* de cobertura y badge de % sellado.
+- ✅ **Harness en navegador (Paso 0):** validado con los cierres de F3/F4/F5 (#554/#555/#558) — `test:browser` +
+  el dogfood sobre shibui real, con las heurísticas v0 calibradas contra Lit (ver `harness.md`).
+- ✅ **Gate duro** ([ADR-003](../decisions/adr-003-gate-regresion.md)): **dos carriles desacoplados**, genéricos.
+  - **Carril 1 — correctitud de hanko:** `type-check` + `vitest` (node + navegador) sobre fixtures sintéticos
+    (job CI `hanko-test`). No depende del sellado de ningún consumer.
+  - **Carril 2 — regresión sobre baseline:** el gate **no exige que todos sellen** (eso castigaría el drift del
+    CEM de shibui); compara el report contra un **baseline commiteado** (`dogfood/baseline*.json`) y falla solo si
+    un componente sellado, todavía presente, **pierde el sello** (estricto per-tag). **PR:** Floor-regresión
+    (`gate:floor`, node). **main:** 4-capas-regresión (`gate`, navegador). Motor puro `src/report/gate.ts`
+    (`gateAgainstBaseline` · `reportCoverage` · `baselineFromReport`) + runner `gate-run.ts` (exit `0`/`1`/`2`).
+  - **Suelo medido (2026-06-22):** Floor 102/102 · 4 capas 48/102 (los 54 sin sello = drift del CEM de shibui,
+    congelado en el baseline; ver [`../../dogfood/BASELINE.md`](../../dogfood/BASELINE.md)).
+  - **Prerrequisito:** `@shibui-ui/hanko` en `pnpm-lock.yaml` (regenerar + commitear) antes de que el gate sea
+    efectivo en CI.
+- ⏳ **Histórico/badges (diferido a vNext):** consumir el JSON publicado para *trend* de cobertura y badge de %
+  sellado. Decisión explícita: es valor añadido, **no** parte del gate (ADR-003).
