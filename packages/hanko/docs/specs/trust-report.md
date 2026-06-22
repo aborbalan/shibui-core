@@ -117,7 +117,7 @@ dogfood/probe-shibui.ts                      src/report/run.ts
     (`gateAgainstBaseline` · `reportCoverage` · `baselineFromReport`) + runner `gate-run.ts` (exit `0`/`1`/`2`).
   - **Suelo medido (2026-06-22):** Floor 102/102 · 4 capas 48/102 (los 54 sin sello = drift del CEM de shibui,
     congelado en el baseline; ver [`../../dogfood/BASELINE.md`](../../dogfood/BASELINE.md)).
-  - **Prerrequisito:** `@shibui-ui/hanko` en `pnpm-lock.yaml` (regenerar + commitear) antes de que el gate sea
-    efectivo en CI.
+  - **Lockfile:** `@shibui-ui/hanko` **ya está** en `pnpm-lock.yaml` (importer por ruta + devDeps;
+    `--frozen-lockfile` pasa) → el gate es efectivo en CI sin pasos extra.
 - ⏳ **Histórico/badges (diferido a vNext):** consumir el JSON publicado para *trend* de cobertura y badge de %
   sellado. Decisión explícita: es valor añadido, **no** parte del gate (ADR-003).

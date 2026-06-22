@@ -17,8 +17,8 @@ calibraciones, **validados ejecutando el dogfood** sobre los ~102 componentes de
 señal honesta (Trust Report: 102 · **48 sellados** medidos fresco el 2026-06-22); el sin-sello restante es
 **drift del CEM de shibui**, no falsos positivos de hanko. **Hito 3: F6 (Trust Report + gate) TERMINADA** — gate
 duro de CI en dos carriles desacoplados (correctitud de hanko + regresión sobre baseline,
-[ADR-003](../decisions/adr-003-gate-regresion.md)). **F7 (publicación npm) diferida.** Prerrequisito vivo del
-gate: incluir `@shibui-ui/hanko` en `pnpm-lock.yaml` (regenerar en el principal + commitear).
+[ADR-003](../decisions/adr-003-gate-regresion.md)). **F7 (publicación npm) diferida.** El lockfile ya incluye
+`@shibui-ui/hanko` (`--frozen-lockfile` pasa) → el gate es efectivo en CI sin pasos extra.
 
 **Orden de lectura recomendado:**
 1. Memoria `project_hanko.md` (se autocarga) — contexto y decisiones vivas.
@@ -39,10 +39,8 @@ gate: incluir `@shibui-ui/hanko` en `pnpm-lock.yaml` (regenerar en el principal 
   (PR #503) y se sincronizó `develop ↔ main` (PR #504 + back-merge). A partir de aquí, **cada fase = rama
   `feature/hanko-*` desde `develop`** y PR a `develop` (flujo correcto).
 
-**Próximo paso accionable:** **regenerar `pnpm-lock.yaml`** incluyendo `@shibui-ui/hanko` (en el repo principal:
-`pnpm install` + commit) para que los jobs de hanko resuelvan `pnpm install --frozen-lockfile` en CI — es el
-prerrequisito para que el gate de F6 sea efectivo. Después, **F7 (publicación npm)**: desacople final + build
-publicable + release (diferida a propósito; quitar `private: true`).
+**Próximo paso accionable:** **F7 (publicación npm)** — desacople final + build publicable + release (diferida a
+propósito; quitar `private: true`). El gate de F6 ya es efectivo (el lockfile incluye `@shibui-ui/hanko`).
 
 ---
 
@@ -94,8 +92,8 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
   demostrado que el flujo escala de 10 a 99.
 - **Dependencias:** F1 · acceso al CEM real de shibui-ui (`packages/shibui-ui/dist/custom-elements.json`).
 - **Estado:** ✅ **TERMINADA**. Floor + smoke + runner `src/smoke/run.ts`; el job CI `hanko-seal` evolucionó en
-  F6 de report-only a **gate de regresión Floor** (ver F6). **Prerrequisito CI vivo:** `@shibui-ui/hanko` en
-  `pnpm-lock.yaml` (`pnpm install` + commit en el principal).
+  F6 de report-only a **gate de regresión Floor** (ver F6). El lockfile ya incluye `@shibui-ui/hanko`
+  (`--frozen-lockfile` pasa).
 
 ### F3 · Contrato — ✅ hecho
 - **Objetivo:** verificar lo declarado (props/atributos/métodos/reflect) contra el **runtime** del elemento vivo.
@@ -150,8 +148,8 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 - **Dependencias:** F3–F5.
 - **Estado:** ✅ **TERMINADA**. incr. 1 (agregador puro) + incr. 2 (puente 4 capas + deploy) + incr. 3 (issues
   opt-in) + **gate duro en dos carriles** (correctitud de hanko `hanko-test`; regresión sobre baseline:
-  Floor en PR / 4 capas en main). Suelo medido 2026-06-22: Floor 102/102 · 4 capas 48/102. **Prerrequisito vivo:**
-  `@shibui-ui/hanko` en `pnpm-lock.yaml` antes de que el gate sea efectivo.
+  Floor en PR / 4 capas en main). Suelo medido 2026-06-22: Floor 102/102 · 4 capas 48/102. El lockfile ya incluye
+  `@shibui-ui/hanko` → el gate es efectivo en CI.
 
 ### F7 · Desacople + publicación npm — ⬜ diferida
 - **Objetivo:** garantizar que el `core` no depende de shibui y publicar `@shibui-ui/hanko` como paquete independiente.
@@ -172,7 +170,7 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 | F3 | ✅ **hecho** — motor + harness + calibraciones D/F3-cierre; validada en dogfood (`reflect` 31→1) |
 | F4 | ✅ **hecho** — motor + harness + calibraciones C/F4-cierre; validada en dogfood (#554/#555) |
 | F5 | ✅ **hecho** — motor + harness + calibración F5-cierre (`remount` obligatorio honesto); validada en dogfood |
-| F6 | ✅ **hecho** — Trust Report (puro + puente 4 capas + deploy + issues) + **gate duro** (`hanko-test` + regresión Floor/4-capas, ADR-003); suelo 102 Floor · 48 sellados. Prerrequisito: lockfile con hanko |
+| F6 | ✅ **hecho** — Trust Report (puro + puente 4 capas + deploy + issues) + **gate duro** (`hanko-test` + regresión Floor/4-capas, ADR-003); suelo 102 Floor · 48 sellados. Lockfile ya incluye hanko (gate efectivo) |
 | F7 | ⬜ diferida — desacople final + publicación npm |
 
 > Caso especial fuera de este plan (componentes sin manifest / formato custom): ver

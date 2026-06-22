@@ -53,9 +53,9 @@ El gate **nunca exige que todos sellen**. Compara el Trust Report actual contra 
 - **Delta de plataforma:** el baseline de 4 capas se siembra en local; axe/Playwright pueden diferir en el ubuntu
   de CI. Mitigación: el gate de 4 capas corre **solo en main**, **tras** publicar el report y subir
   `trust-report.json` como artefacto → refresco trivial si hay una regresión espuria de borde.
-- **Prerrequisito (nudo del lockfile):** `pnpm-lock.yaml` debe incluir `@shibui-ui/hanko` para que cualquier job
-  de hanko resuelva `pnpm install --frozen-lockfile`. Se regenera en el repo principal y se commitea **antes** de
-  que el gate sea efectivo.
+- **Lockfile (ya satisfecho):** `pnpm-lock.yaml` debe incluir `@shibui-ui/hanko` para que cualquier job de hanko
+  resuelva `pnpm install --frozen-lockfile`. **Ya lo incluye** (importer `packages/hanko:` + sus devDeps;
+  `--frozen-lockfile` → exit 0). Nota: los importers del lockfile se indexan por **ruta**, no por nombre.
 
 ## Alternativas descartadas
 

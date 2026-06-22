@@ -65,7 +65,7 @@ de tener verificación profunda (F3+).
 Solo vía el **artefacto** `custom-elements.json` (que produce el build de shibui-ui). hanko **no importa** shibui
 ni depende de él en npm. Detalle visual en [`../reference/runner-y-comunicacion.html`](../reference/runner-y-comunicacion.html).
 
-### ⚠️ Prerrequisito para CI
-El `pnpm-lock.yaml` committeado **no incluye `@shibui-ui/hanko`**. CI usa `--frozen-lockfile`, así que hay que
-**regenerar y commitear el lockfile** (`pnpm install` desde el repo principal) antes de que el job —o cualquier
-run de ci-lib— pase el paso de instalación.
+### Lockfile (ya OK)
+El `pnpm-lock.yaml` committeado **ya incluye `@shibui-ui/hanko`** (importer `packages/hanko:` + sus devDeps), así
+que CI con `--frozen-lockfile` instala sin pasos extra (verificado: exit 0). Nota: los importers del lockfile se
+indexan por **ruta**, no por nombre — buscar `packages/hanko:`, no el nombre del paquete.
