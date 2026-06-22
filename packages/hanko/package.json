@@ -51,6 +51,10 @@
     "observe": "tsx dogfood/probe-shibui.ts",
     "report": "tsx src/report/run.ts",
     "report:full": "pnpm run observe && pnpm run report",
+    "gate": "tsx src/report/gate-run.ts dogfood/baseline.json",
+    "gate:floor": "tsx src/report/gate-run.ts dogfood/baseline.floor.json",
+    "baseline:write": "tsx src/report/gate-run.ts dogfood/baseline.json hanko-report/trust-report.json --write",
+    "baseline:write:floor": "tsx src/report/gate-run.ts dogfood/baseline.floor.json hanko-report/trust-report.json --write",
     "issues": "tsx src/report/issues-run.ts",
     "prepublishOnly": "pnpm build"
   },
