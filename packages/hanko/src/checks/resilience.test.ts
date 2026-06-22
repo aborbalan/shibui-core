@@ -65,4 +65,21 @@ describe('resilienceCheck', () => {
     const v = r.violations.find((x) => x.scenario === 'remount')!;
     expect(v.message).toContain('remount');
   });
+
+  it('política del runner (5.1): `remount` viola aunque empty/junk/rtl sean tolerables', () => {
+    // Espejo del cableado de run.ts: optional = data-dependent; `remount` queda fuera
+    // → su fallo descalifica el sello mientras el crash de `empty` solo avisa.
+    const r = resilienceCheck(
+      obs({
+        trials: [
+          { scenario: 'empty', survived: false, error: 'sin datos' },
+          { scenario: 'remount', survived: false, error: 'estado no reinicializado' },
+        ],
+      }),
+      { optional: ['empty', 'junk-attrs', 'rtl'] },
+    );
+    expect(r.pass).toBe(false);
+    expect(r.violations.some((v) => v.scenario === 'remount')).toBe(true);
+    expect(r.warnings.some((w) => w.scenario === 'empty')).toBe(true);
+  });
 });

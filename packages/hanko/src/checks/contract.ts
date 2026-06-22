@@ -161,15 +161,24 @@ export function contractCheck(
         skipped.push('reflect (el harness no probó la reflexión prop⇄attribute)');
       } else {
         const reflecting = new Set(runtime.reflectingProperties);
+        const inconclusive = new Set(runtime.reflectInconclusiveProperties ?? []);
         for (const p of declaredReflect) {
-          checked.reflect++;
-          if (!reflecting.has(p.property)) {
-            violations.push({
-              facet: 'reflect',
-              member: p.property,
-              message: `la prop "${p.property}" declara reflects:true pero no se refleja a su atributo en runtime`,
-            });
+          if (reflecting.has(p.property)) {
+            checked.reflect++;
+            continue;
           }
+          // Inconcluso: el sentinel del propio sondeo petó el render antes de reflejar.
+          // No se puede verificar → se OMITE (regla de oro), no se cuenta ni se viola.
+          if (inconclusive.has(p.property)) {
+            skipped.push(`reflect de "${p.property}" (el sondeo no concluyó: su sentinel rompió el render)`);
+            continue;
+          }
+          checked.reflect++;
+          violations.push({
+            facet: 'reflect',
+            member: p.property,
+            message: `la prop "${p.property}" declara reflects:true pero no se refleja a su atributo en runtime`,
+          });
         }
       }
     }

@@ -10,11 +10,12 @@ define cada fase con detalle suficiente para continuar en frío.
 
 ## ▶ Cómo retomar este proyecto en una sesión nueva
 
-**Estado a 2026-06-16:** Hito 1 **cerrado** — F0·F1·F2 en `develop` y `main` (PR #502 → #510); `hanko-seal`
-selló 102/102 (report-only). **Hito 2 a fondo: F3·F4·F5 en curso** — los tres motores puros (incr. 1) hechos en
-ramas apiladas `feature/hanko-contract` → `feature/hanko-a11y` → `feature/hanko-resilience`. El **harness de
-runtime (incr. 2, `src/harness/`)** que cierra los tres está **escrito pero pendiente de validar en navegador**
-(deps `@vitest/browser`/`axe-core`/Playwright + build de shibui). Ninguna rama mergeada aún.
+**Estado a 2026-06-22:** Hito 1 **cerrado** — F0·F1·F2 en `develop` y `main` (PR #502 → #510); `hanko-seal`
+selló 102/102 (report-only). **Hito 2 (capas de verificación) CERRADO: F3·F4·F5 ✅ TERMINADAS** — los tres
+motores puros (incr. 1) + el harness de runtime (incr. 2, `src/harness/probe.ts`, Playwright/axe) + sus
+calibraciones, **validados ejecutando el dogfood** sobre los ~102 componentes de shibui. Las tres capas emiten
+señal honesta (Trust Report: 102 · **49 sellados**); el sin-sello restante es **drift del CEM de shibui**, no
+falsos positivos de hanko. Siguiente: Hito 3 (gate duro / enforcer de CI).
 
 **Orden de lectura recomendado:**
 1. Memoria `project_hanko.md` (se autocarga) — contexto y decisiones vivas.
@@ -97,7 +98,7 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 - **Estado:** 🟡 incrementos 1+2 hechos (Floor + smoke + runner `src/smoke/run.ts` + job CI `hanko-seal`
   report-only). **Bloqueante para CI:** regenerar `pnpm-lock.yaml` para incluir hanko (`pnpm install` + commit).
 
-### F3 · Contrato — 🟡 en curso (incremento 1)
+### F3 · Contrato — ✅ hecho
 - **Objetivo:** verificar lo declarado (props/atributos/métodos/reflect) contra el **runtime** del elemento vivo.
   Se **pueblan los `methods`** (deferidos desde F0) y se introduce el **nivel browser** de test
   (`@vitest/browser`, ver ADR-002) en el incremento 2.
@@ -108,9 +109,11 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 - **Criterios:** detecta drift declarado↔runtime; respeta *ausencia ≠ incumplimiento* en ambos sentidos;
   Strict opt-in exige completitud; cobertura (`checked`/`skipped`) transparente.
 - **Dependencias:** F2 · (incr. 2) entorno de navegador (custom elements + Shadow DOM).
-- **Estado:** 🟡 incremento 1 hecho (motor puro, node-testable) en `feature/hanko-contract`; harness incr. 2 escrito.
+- **Estado:** ✅ **TERMINADA**. Motor (incr. 1) + harness `observeRuntime` (incr. 2) + calibraciones D y
+  **F3-cierre** (reflexión sin falsos negativos + reflexión inconclusa), **validada ejecutando el dogfood** sobre
+  los ~102 componentes de shibui (`contract/reflect` 31 → 1; el sin-sello restante es drift del CEM de shibui).
 
-### F4 · Accesibilidad (a11y) — 🟡 en curso (incremento 1)
+### F4 · Accesibilidad (a11y) — ✅ hecho
 - **Objetivo:** verificación **universal** de a11y (no lee el contrato): axe + teclado + foco + nombre accesible.
 - **Entregables:** motor de política `a11yCheck` (`src/checks/a11y.ts`) + observación `A11yObservation` ·
   umbral de severidad (`failOn`) + checks de teclado/foco/nombre exigidos a interactivos · spec
@@ -119,9 +122,10 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 - **Criterios:** violaciones axe `>= failOn` fallan; interactivos exigen teclado/foco/nombre; lo no observado se
   omite (cobertura transparente vía `checked`/`skipped`).
 - **Dependencias:** F3 (entorno browser; el incr. 1 de F4 es independiente en código).
-- **Estado:** 🟡 incremento 1 hecho (motor puro, node-testable) en `feature/hanko-a11y`; falta incr. 2.
+- **Estado:** ✅ **TERMINADA**. Motor (incr. 1) + harness `observeA11y` (incr. 2) + calibraciones C y F4-cierre
+  (nombre aportable, teclado real, landmarks, foco diferido), validada sobre shibui (PR #554/#555).
 
-### F5 · Resiliencia — 🟡 en curso (incremento 1)
+### F5 · Resiliencia — ✅ hecho
 - **Objetivo:** el componente no se rompe ante entradas adversas: props basura/vacías, SSR, RTL. **Universal**
   (no lee el contrato, como a11y).
 - **Entregables:** motor de política `resilienceCheck` (`src/checks/resilience.ts`) + observación
@@ -130,7 +134,9 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
   compartido — montar bajo escenarios adversos.
 - **Criterios:** un escenario obligatorio roto → violación; tolerable roto → warning; lo no probado se omite.
 - **Dependencias:** F3 (entorno browser; el incr. 1 es independiente en código).
-- **Estado:** 🟡 incremento 1 hecho (motor puro) en `feature/hanko-resilience`; falta validar el harness.
+- **Estado:** ✅ **TERMINADA**. Motor (incr. 1) + harness `observeResilience` (incr. 2) + calibración **F5-cierre**
+  (`remount` obligatorio y honesto — solo el 2º montaje; `empty`/`junk-attrs`/`rtl` tolerables; `valid-min`
+  diferido a vNext), validada sobre shibui. La capa deja de ser verde-por-construcción (gate real, 0 fallos reales).
 
 ### F6 · Trust Report + gates de CI — ⬜ no iniciada
 - **Objetivo:** consolidar resultados en un **Trust Report** (JSON + HTML) que declara **procedencia** y
@@ -158,9 +164,9 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 | F0 | ✅ mergeado (develop + main) |
 | F1 | ✅ mergeado (develop + main) |
 | F2 | ✅ mergeado (develop + main) — Floor + `smoke` + runner + job CI `hanko-seal` (102/102) |
-| F3 | 🟡 en curso — `contractCheck` + `ComponentRuntime` (incr. 1); harness escrito, pend. validar (incr. 2) |
-| F4 | 🟡 en curso — `a11yCheck` + `A11yObservation` (incr. 1); harness escrito, pend. validar (incr. 2) |
-| F5 | 🟡 en curso — `resilienceCheck` + `ResilienceObservation` (incr. 1); harness escrito (incr. 2) |
+| F3 | ✅ **hecho** — motor + harness + calibraciones D/F3-cierre; validada en dogfood (`reflect` 31→1) |
+| F4 | ✅ **hecho** — motor + harness + calibraciones C/F4-cierre; validada en dogfood (#554/#555) |
+| F5 | ✅ **hecho** — motor + harness + calibración F5-cierre (`remount` obligatorio honesto); validada en dogfood |
 | F6–F7 | ⬜ no iniciadas |
 
 > Caso especial fuera de este plan (componentes sin manifest / formato custom): ver

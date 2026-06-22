@@ -54,6 +54,15 @@ export interface ComponentRuntime {
    */
   reflectingProperties?: string[];
   /**
+   * Propiedades cuya reflexión NO se pudo verificar porque el sentinel adverso del
+   * propio sondeo rompió el render del componente ANTES de que reflejara (p.ej. un
+   * enum-alias sin literales en el CEM cuyo valor cae al string y peta un mapa
+   * interno). Inconcluso ≠ «no refleja»: la regla de oro manda OMITIR, no violar.
+   * `undefined` = el harness no distingue inconclusos (todo lo no reflejado se trata
+   * como no-refleja).
+   */
+  reflectInconclusiveProperties?: string[];
+  /**
    * Nombres de slots expuestos en el shadow DOM del elemento montado
    * (`<slot name>` → nombre; `''` = slot por defecto). `undefined` = el harness
    * no pudo observar slots (el elemento no expone shadow root o no montó).

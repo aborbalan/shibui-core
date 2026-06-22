@@ -1,8 +1,8 @@
 # Spec · Check de Contrato (F3)
 
-> **Estado:** v0 — incremento 1 (motor puro `src/checks/contract.ts` + `src/core/runtime.ts`) **e
-> incremento 2** (harness `src/harness/probe.ts` con `observeRuntime`, incl. faceta **slot**). Validado en
-> Node; el nivel navegador (`probe.browser.test.ts`) está escrito, pendiente de correr sobre shibui real.
+> **Estado:** **TERMINADA** — incr. 1 (motor puro `src/checks/contract.ts` + `src/core/runtime.ts`), incr. 2
+> (harness `src/harness/probe.ts` con `observeRuntime`, incl. faceta **slot**) y calibraciones D + «F3-cierre».
+> Validada sobre shibui (~102 componentes) **ejecutando el dogfood**, no solo en Node.
 > **Fase:** F3. Depende de [`data-model.md`](data-model.md) (F0), [`ingest.md`](ingest.md) (F1) y [`smoke.md`](smoke.md) (F2).
 > **Nivel ADR-001:** Conformance (1) + Strict (2). Recoge además la registrabilidad runtime del Floor (0)
 > que F2 difirió. Ver [`../decisions/adr-001-baseline-minima-viable.md`](../decisions/adr-001-baseline-minima-viable.md).
@@ -41,6 +41,7 @@ interface ComponentRuntime {
   observedAttributes?: string[];    // observedAttributes del elemento
   methods?: string[];               // métodos públicos del prototipo
   reflectingProperties?: string[];  // props que reflejan a su atributo (probado)
+  reflectInconclusiveProperties?: string[]; // reflexión no verificable (el sondeo petó) → se omite
   slots?: string[];                 // <slot> del shadow DOM ('' = por defecto)
 }
 ```
@@ -79,7 +80,8 @@ nunca finge haber comprobado lo que no pudo.
 2. **Propiedades** — cada prop declarada debe existir en `runtime.properties`.
 3. **Atributos** — cada prop con `attribute` debe figurar en `observedAttributes`.
 4. **Reflect** — cada prop con `reflects: true` debe reflejar de verdad (solo si el harness lo probó vía
-   `reflectingProperties`).
+   `reflectingProperties`). Una prop **inconclusa** (`reflectInconclusiveProperties`: el sentinel del propio
+   sondeo rompió el render antes de reflejar) se **OMITE**, no se viola (ver «Calibración F3-cierre»).
 5. **Métodos** — cada método declarado debe existir en `runtime.methods`.
 6. **Slots** *(incremento 2)* — cada slot declarado debe aparecer como `<slot>` en el shadow DOM. El `''`
    declarado exige un slot por defecto. Solo se verifica si el harness observó slots (montó el elemento).
@@ -124,11 +126,46 @@ campos→`properties` / métodos→`methods` ocurre en `ingestCem`. Ver [`ingest
    no declara slots o el harness no los observó.
 9. Tests de navegador verdes en `src/harness/probe.browser.test.ts` (Playwright vía `@vitest/browser`).
 
-## Incremento 2 — estado y pendientes
+## Incremento 2 — estado
 
 - ✅ **Probe DOM genérico (`observeRuntime`):** monta cada elemento con `@vitest/browser` (Playwright) y
   construye el `ComponentRuntime` real —props del prototipo, `observedAttributes`, métodos, reflect set/get y
   **slots** del shadow DOM. Genérico y parametrizado: **no** importa shibui. Verificado por `probe.browser.test.ts`
-  (autocontenido); **pendiente de correr sobre el CEM real de shibui** (dogfood — ver [`harness.md`](harness.md)).
+  (autocontenido) **y ejecutado sobre el CEM real de shibui** (dogfood — ver [`harness.md`](harness.md)).
 - ⏳ **Eventos:** declarados-only hasta un incremento de verificación conductual (event-spy). Ver nota arriba.
-- ⏳ **Integración:** agregar `contractCheck` sobre los componentes reales al sello (camino al Trust Report de F6).
+- ✅ **Integración:** `contractCheck` corre sobre los ~102 componentes reales y alimenta el Trust Report (F6).
+
+## Calibración «F3-cierre» — sonda de reflexión sin falsos negativos
+
+La sonda `probeReflect` (`probe.ts`) tenía **dos falsos negativos** que inflaban `contract/reflect` (31 sobre
+shibui), ambos calibrados — sobre el dogfood, **31 → 1** (el residual es drift del CEM, abajo):
+
+1. **Booleano que refleja QUITANDO el atributo** (presente→ausente, `''`→`null`): el viejo guard
+   `after !== null` lo descartaba. Un default `true` que pasa a `false` (charts: `showGrid`/`showLegend`)
+   reflejaba de verdad. → se detecta por `after !== before`.
+2. **Refleja-luego-peta**: Lit refleja prop→attr DENTRO de `update()`; un hook posterior (`updated()`, p.ej.
+   reconstruir un canvas — `lib-button-liquid` con `variant`) puede petar y rechazar `updateComplete`, pero la
+   reflexión YA ocurrió. El viejo `continue` ante el rechazo la perdía. → se lee el atributo aunque rechace.
+
+**Reflexión INCONCLUSA** (`reflectInconclusiveProperties`): si el sentinel adverso del propio sondeo rompe el
+render ANTES de reflejar (un enum-alias sin literales en el CEM cuyo string indexa mal un mapa interno —
+`lib-progress-circle` con `SIZE_MAP[size]`), no se puede verificar la reflexión → la prop se marca inconclusa y
+`contractCheck` la **OMITE** (regla de oro: lo que no se puede probar se omite, no se viola). Cada prop se sondea
+**aislada** (se restaura su valor previo) para que un crasher no marque inconclusas en cascada a las siguientes.
+
+## Triaje del sin-sello de contrato — drift del CEM de shibui (no de hanko)
+
+Tras la calibración, el grueso del sin-sello de contrato es **drift del CEM generado por shibui**, no falsos
+positivos de hanko (hanko lo reporta correctamente). Se arregla en la generación del manifest de shibui, no aquí:
+
+- **`property` (≈105) «fantasma kebab»** — el CEM declara un *field* con el nombre KEBAB del atributo
+  (`show-labels`) además del field JS real (`showLabels`): hanko ve `show-labels` ausente en el elemento.
+- **`slot "—"` (≈20)** — el analizador de shibui cuela el em-dash de una descripción JSDoc (`@slot — …`) como
+  **nombre** del slot; ese slot no existe en el shadow DOM. (El `â€”` que reportaban sesiones previas era
+  artefacto de codificación del TERMINAL: hanko lee y escribe el CEM en UTF-8 correcto — decisión 3.3.)
+- **`attribute` (7)** — el CEM declara un `attribute` en camelCase (`htmlFor`) imposible como atributo HTML real
+  (los atributos van en minúsculas) → no figura en `observedAttributes`.
+- **`reflect` residual (1)** — `lib-timeline-item` `nKind`: mismatch de nombre (el atributo real difiere de
+  `dasherize('nKind')`); además el componente arrastra otros findings de property/slot → drift de shibui.
+
+> Estos no son trabajo de hanko: son deuda de la generación del CEM de shibui (otra tarea, otro carril).

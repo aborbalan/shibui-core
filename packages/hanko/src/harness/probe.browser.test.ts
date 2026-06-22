@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import * as axe from 'axe-core';
-import { observeRuntime, observeA11y, observeResilience, ADVERSE_SCENARIOS } from './probe';
+import { observeRuntime, observeA11y, observeResilience, DATA_DEPENDENT_SCENARIOS } from './probe';
 import { contractCheck } from '../checks/contract';
 import { a11yCheck } from '../checks/a11y';
 import { resilienceCheck } from '../checks/resilience';
@@ -164,6 +164,94 @@ class HankoStrictBool extends HTMLElement {
 }
 
 /**
+ * Booleano de reflexión que DEFAULT a `true` y refleja QUITANDO el atributo cuando
+ * pasa a `false` (presente `''` → ausente `null`), como un chart con `showGrid`/
+ * `showLegend`. El viejo guard `after !== null` descartaba esta transición → falso
+ * «no refleja». La calibración F3-cierre detecta reflexión por `after !== before`.
+ */
+class HankoBoolReflectRemove extends HTMLElement {
+  static get observedAttributes(): string[] {
+    return ['visible'];
+  }
+  #visible = true;
+  #pending: Promise<void> | null = null;
+  connectedCallback(): void {
+    this.setAttribute('visible', ''); // refleja el default `true` al montar
+  }
+  get visible(): boolean {
+    return this.#visible;
+  }
+  set visible(v: unknown) {
+    this.#visible = Boolean(v);
+    this.#pending = Promise.resolve().then(() => {
+      if (this.#visible) this.setAttribute('visible', '');
+      else this.removeAttribute('visible'); // false → QUITA el atributo (reflexión real)
+    });
+  }
+  get updateComplete(): Promise<void> {
+    return this.#pending ?? Promise.resolve();
+  }
+}
+
+/**
+ * Componente que REFLEJA prop→attr durante el ciclo de update pero cuyo
+ * `updateComplete` RECHAZA después (un hook `updated()` que peta — el patrón de
+ * `lib-button-liquid`, que reconstruye su canvas al cambiar `variant`). El viejo
+ * `await` perdía la reflexión al hacer `continue` ante el rechazo; la calibración
+ * F3-cierre lee el atributo igualmente (la reflexión ya ocurrió antes del rechazo).
+ */
+class HankoReflectThenCrash extends HTMLElement {
+  static get observedAttributes(): string[] {
+    return ['variant'];
+  }
+  #variant = 'solid';
+  #dirty = false;
+  get variant(): string {
+    return this.#variant;
+  }
+  set variant(v: unknown) {
+    this.#variant = String(v);
+    this.setAttribute('variant', this.#variant); // refleja YA (como Lit en update())
+    this.#dirty = true;
+  }
+  get updateComplete(): Promise<void> {
+    // El montaje resuelve limpio; tras CAMBIAR variant, el hook posterior peta DESPUÉS
+    // de que la reflexión ya quedó en el atributo → updateComplete rechaza.
+    return this.#dirty ? Promise.reject(new Error('hanko-updated-boom')) : Promise.resolve();
+  }
+}
+
+/**
+ * Componente cuyo RENDER destructura un mapa indexado por `size` (`SIZE_MAP[size].px`,
+ * como lib-progress-circle). Con un valor fuera del enum el render peta ANTES de
+ * reflejar y SIN tocar el atributo. El sondeo no puede concluir si refleja → la prop
+ * debe quedar INCONCLUSA (se omite), no contarse como «no refleja» (falso positivo).
+ */
+const SIZE_MAP: Record<string, { px: number }> = { sm: { px: 8 }, md: { px: 16 } };
+class HankoCrashBeforeReflect extends HTMLElement {
+  static get observedAttributes(): string[] {
+    return ['size'];
+  }
+  #size = 'md';
+  #pending: Promise<void> | null = null;
+  get size(): string {
+    return this.#size;
+  }
+  set size(v: unknown) {
+    this.#size = String(v);
+    // NO refleja en el setter; el "render" async destructura el mapa y peta con un
+    // valor inválido, sin haber tocado el atributo.
+    this.#pending = Promise.resolve().then(() => {
+      const { px } = SIZE_MAP[this.#size]!; // peta si size no es clave válida
+      void px;
+    });
+  }
+  get updateComplete(): Promise<void> {
+    return this.#pending ?? Promise.resolve();
+  }
+}
+
+/**
  * Componente con una prop ENUM que indexa un mapa y DESTRUCTURA el resultado en
  * el render async (`const { px } = MAP[mode]`), como `lib-progress-circle` con
  * `SIZE_MAP[size]`. Un valor fuera del enum → `MAP[v]` es `undefined` → la
@@ -275,6 +363,23 @@ class HankoPresentational extends HTMLElement {
   }
 }
 
+/**
+ * Componente que SOBREVIVE el primer montaje vacío pero PETA al re-montarse: su
+ * `connectedCallback` no reinicializa estado, así que la SEGUNDA conexión revienta
+ * (doble init). SEÑAL REAL de la calibración 5.1: `remount` es obligatorio y debe
+ * morder aquí, mientras empty/junk/rtl (data-dependent) siguen tolerables. Como el
+ * primer montaje vivió, el fallo se atribuye a `remount`, no a `empty`.
+ */
+class HankoRemountCrasher extends HTMLElement {
+  #mounts = 0;
+  connectedCallback(): void {
+    this.#mounts += 1;
+    if (this.#mounts > 1) {
+      throw new Error('hanko-remount-boom: estado no reinicializado al re-montar');
+    }
+  }
+}
+
 beforeAll(() => {
   if (!customElements.get('hanko-probe-button')) {
     customElements.define('hanko-probe-button', HankoProbeButton);
@@ -300,6 +405,15 @@ beforeAll(() => {
   if (!customElements.get('hanko-strict-bool')) {
     customElements.define('hanko-strict-bool', HankoStrictBool);
   }
+  if (!customElements.get('hanko-bool-reflect-remove')) {
+    customElements.define('hanko-bool-reflect-remove', HankoBoolReflectRemove);
+  }
+  if (!customElements.get('hanko-reflect-then-crash')) {
+    customElements.define('hanko-reflect-then-crash', HankoReflectThenCrash);
+  }
+  if (!customElements.get('hanko-crash-before-reflect')) {
+    customElements.define('hanko-crash-before-reflect', HankoCrashBeforeReflect);
+  }
   if (!customElements.get('hanko-unreachable-role')) {
     customElements.define('hanko-unreachable-role', HankoUnreachableRole);
   }
@@ -308,6 +422,9 @@ beforeAll(() => {
   }
   if (!customElements.get('hanko-presentational')) {
     customElements.define('hanko-presentational', HankoPresentational);
+  }
+  if (!customElements.get('hanko-remount-crasher')) {
+    customElements.define('hanko-remount-crasher', HankoRemountCrasher);
   }
 });
 
@@ -356,6 +473,42 @@ describe('harness · observeRuntime', () => {
     // daba como «no refleja»; el sentinel tipado invierte el booleano → SÍ refleja.
     const rt = await observeRuntime('hanko-strict-bool');
     expect(rt.reflectingProperties).toContain('active');
+  });
+
+  it('F3-cierre · detecta el booleano default-true que refleja QUITANDO el atributo (presente→ausente)', async () => {
+    // showGrid/showLegend de los charts: default `true`, reflejan removiendo el atributo
+    // en `false`. El viejo guard `after !== null` los daba por «no refleja» (falso negativo).
+    const rt = await observeRuntime('hanko-bool-reflect-remove');
+    expect(rt.reflectingProperties).toContain('visible');
+  });
+
+  it('F3-cierre · detecta reflexión aunque updateComplete RECHACE tras reflejar (hook updated() que peta)', async () => {
+    // lib-button-liquid: refleja variant durante update(), luego updated() reconstruye el
+    // canvas y peta al montar vacío. El viejo `continue` ante el rechazo perdía la reflexión.
+    const rt = await observeRuntime('hanko-reflect-then-crash');
+    expect(rt.reflectingProperties).toContain('variant');
+  });
+
+  it('F3-cierre · marca INCONCLUSO (no «no refleja») cuando el sentinel rompe el render antes de reflejar', async () => {
+    // lib-progress-circle: `size` es un enum-alias sin literales en el CEM → el sentinel
+    // cae al string → SIZE_MAP['hanko-probe'] peta en el render ANTES de reflejar. No se
+    // puede concluir si refleja → inconcluso, NO «no refleja».
+    const rt = await observeRuntime('hanko-crash-before-reflect');
+    expect(rt.reflectingProperties).not.toContain('size');
+    expect(rt.reflectInconclusiveProperties).toContain('size');
+
+    // contractCheck OMITE (no viola) una reflexión inconclusa.
+    const declared: ComponentContract = {
+      tagName: 'hanko-crash-before-reflect',
+      modulePath: 'm',
+      source: { kind: 'cem' },
+      properties: [
+        { property: 'size', attribute: 'size', reflects: true, type: { raw: 'string', kind: 'string' } },
+      ],
+    };
+    const r = contractCheck(declared, rt);
+    expect(r.violations.some((v) => v.facet === 'reflect')).toBe(false);
+    expect(r.skipped.join(' ')).toContain('size');
   });
 
   it('usa los literales del CEM para elegir un enum VÁLIDO (no rompe el mapa interno)', async () => {
@@ -528,9 +681,9 @@ describe('harness · observeResilience', () => {
     const empty = obs.trials?.find((t) => t.scenario === 'empty');
     expect(empty?.survived).toBe(false);
 
-    // Política del runner: los escenarios adversos (sin datos) son tolerables →
-    // el crash es un WARNING, no descalifica el sello.
-    const r = resilienceCheck(obs, { optional: [...ADVERSE_SCENARIOS] });
+    // Política del runner (5.1): los escenarios data-dependent (sin datos) son
+    // tolerables → el crash es un WARNING, no descalifica el sello.
+    const r = resilienceCheck(obs, { optional: [...DATA_DEPENDENT_SCENARIOS] });
     expect(r.pass).toBe(true);
     expect(r.warnings.some((w) => w.scenario === 'empty')).toBe(true);
   });
@@ -543,9 +696,36 @@ describe('harness · observeResilience', () => {
     expect(empty?.survived).toBe(false);
     expect(empty?.error).toContain('hanko-window-boom');
 
-    // Escenario adverso (sin datos) → tolerable: warning, no descalifica el sello.
-    const r = resilienceCheck(obs, { optional: [...ADVERSE_SCENARIOS] });
+    // Escenario data-dependent (sin datos) → tolerable: warning, no descalifica el sello.
+    const r = resilienceCheck(obs, { optional: [...DATA_DEPENDENT_SCENARIOS] });
     expect(r.pass).toBe(true);
+    expect(r.warnings.some((w) => w.scenario === 'empty')).toBe(true);
+  });
+
+  it('5.1 · `remount` es OBLIGATORIO: un crash al re-montar descalifica el sello (señal real)', async () => {
+    // Un componente que sobrevive el PRIMER montaje vacío pero peta al re-montarse
+    // (estado no reinicializado / doble inicialización). `remount` no está entre los
+    // tolerables del runner → su fallo es una VIOLACIÓN, no un warning.
+    const obs = await observeResilience('hanko-remount-crasher');
+    const remount = obs.trials?.find((t) => t.scenario === 'remount');
+    expect(remount?.survived).toBe(false);
+
+    const r = resilienceCheck(obs, { optional: [...DATA_DEPENDENT_SCENARIOS] });
+    expect(r.pass).toBe(false);
+    expect(r.violations.some((v) => v.scenario === 'remount')).toBe(true);
+  });
+
+  it('5.1 · un crash de PRIMER montaje (sin datos) NO se atribuye a `remount` (no falso positivo #549)', async () => {
+    // hanko-needs-data peta al montarse vacío. Ese crash es del escenario `empty`
+    // (data-dependent, tolerable), NO fragilidad de re-montaje: `remount` debe SOBREVIVIR
+    // (delega en `empty`) para no doble-contar el mismo fallo como violación obligatoria.
+    const obs = await observeResilience('hanko-needs-data');
+    expect(obs.trials?.find((t) => t.scenario === 'empty')?.survived).toBe(false);
+    expect(obs.trials?.find((t) => t.scenario === 'remount')?.survived).toBe(true);
+
+    const r = resilienceCheck(obs, { optional: [...DATA_DEPENDENT_SCENARIOS] });
+    expect(r.pass).toBe(true);
+    expect(r.violations.some((v) => v.scenario === 'remount')).toBe(false);
     expect(r.warnings.some((w) => w.scenario === 'empty')).toBe(true);
   });
 });

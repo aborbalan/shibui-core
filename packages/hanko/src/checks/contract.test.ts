@@ -107,6 +107,24 @@ describe('contractCheck · atributos y reflect', () => {
     expect(r.violations.some((v) => v.facet === 'reflect')).toBe(false);
     expect(r.skipped.some((s) => s.startsWith('reflect'))).toBe(true);
   });
+
+  it('OMITE (no viola) una reflexión INCONCLUSA: el sondeo no concluyó por su propio crash', () => {
+    // F3-cierre: `variant` declara reflects:true, no figura en reflectingProperties PERO
+    // sí en reflectInconclusiveProperties → el sentinel rompió el render antes de reflejar.
+    // No se puede verificar → se omite, no se viola (regla de oro).
+    const r = contractCheck(
+      comp,
+      observed({
+        properties: ['variant'],
+        observedAttributes: ['variant'],
+        reflectingProperties: [],
+        reflectInconclusiveProperties: ['variant'],
+      }),
+    );
+    expect(r.violations.some((v) => v.facet === 'reflect')).toBe(false);
+    expect(r.checked.reflect).toBe(0);
+    expect(r.skipped.some((s) => s.includes('variant'))).toBe(true);
+  });
 });
 
 describe('contractCheck · métodos', () => {

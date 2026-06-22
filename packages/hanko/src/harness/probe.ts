@@ -181,30 +181,80 @@ function chooseSentinel(current: unknown, hint: PropTypeHint | undefined): unkno
  * `updateComplete`), así que su absorción la hace el llamador (`observeRuntime`)
  * envolviendo TODA la fase montada, no este bucle.
  */
+/** Resultado del sondeo de reflexión: lo que refleja y lo que no se pudo concluir. */
+interface ReflectProbe {
+  /** Props que reflejan prop→attr (cambio observable del atributo). */
+  reflecting: string[];
+  /** Props cuyo sondeo NO concluyó porque su propio sentinel rompió el render. */
+  inconclusive: string[];
+}
+
 async function probeReflect(
   el: HTMLElement,
   properties: string[],
   observed: string[] | undefined,
   types?: Record<string, PropTypeHint>,
-): Promise<string[] | undefined> {
+): Promise<ReflectProbe | undefined> {
   if (!observed || observed.length === 0) return undefined;
   const reflecting: string[] = [];
+  const inconclusive: string[] = [];
   for (const prop of properties) {
     const attr = dasherize(prop);
     if (!observed.includes(attr)) continue;
+    const before = el.getAttribute(attr);
+    const record = el as unknown as Record<string, unknown>;
+    const prev = record[prop];
+
+    // ¿El sondeo de ESTA prop rompió el render ANTES de poder reflejar? La señal es
+    // ACOTADA A LA PROP: un throw del setter, o un rechazo de `updateComplete` (el ciclo
+    // de update —render incl.— petó al recibir el sentinel). NO escuchamos `window`: un
+    // crash que aflora a la ventana DESPUÉS de un `updateComplete` limpio significa que
+    // el ciclo de reflexión ya tuvo su oportunidad (si no reflejó, es «no refleja»
+    // genuino), y atribuir errores de ventana por timing contaminaría props vecinas.
+    // Los crashes a `window` ya los absorbe el `swallow` de `observeRuntime`.
+    let crashed = false;
     try {
-      const before = el.getAttribute(attr);
-      const record = el as unknown as Record<string, unknown>;
       record[prop] = chooseSentinel(record[prop], types?.[prop]);
-      // Lit refleja en el siguiente ciclo de update, no en este tick.
-      await elUpdateComplete(el);
-      const after = el.getAttribute(attr);
-      if (after !== null && after !== before) reflecting.push(prop);
     } catch {
-      // props que no aceptan el sentinel → no concluyente, se ignora
+      crashed = true; // el setter rechaza el sentinel → no se pudo sondear
+    }
+    if (!crashed) {
+      // Lit refleja prop→attr DENTRO de `update()`; un hook POSTERIOR (`updated()`,
+      // p.ej. una reconstrucción de canvas) puede petar y rechazar `updateComplete`,
+      // pero la reflexión YA ocurrió → leemos el atributo igualmente.
+      try {
+        await elUpdateComplete(el);
+      } catch {
+        crashed = true; // el render/`updated()` petó al recibir el sentinel
+      }
+    }
+
+    const after = el.getAttribute(attr);
+    if (after !== before) {
+      // La reflexión ocurrió (aunque un hook posterior petara). `after !== before`
+      // capta también el booleano que refleja QUITANDO el atributo (presente→ausente,
+      // `''`→`null`): un default `true` que pasa a `false` reflejaba de verdad y el
+      // viejo guard `after !== null` lo descartaba (falso «no refleja»).
+      reflecting.push(prop);
+    } else if (crashed) {
+      // El sentinel adverso rompió el render ANTES de reflejar (p.ej. un enum-alias
+      // sin literales en el CEM cuyo string indexa mal un mapa). No se puede verificar
+      // → INCONCLUSO: la regla de oro manda OMITIR, no contarlo como «no refleja».
+      inconclusive.push(prop);
+    }
+    // else: settle limpio y atributo sin cambiar → genuinamente no refleja.
+
+    // Restaura el valor previo para sondear cada prop AISLADA: si no, dejar la prop en
+    // un sentinel inválido rompería el render de las props siguientes y las marcaría
+    // inconclusas en cascada (enmascarando un «no refleja» genuino). Mejor esfuerzo.
+    try {
+      record[prop] = prev;
+      await elUpdateComplete(el);
+    } catch {
+      /* el componente ya quedó roto por el sentinel; restaurar no siempre lo recupera */
     }
   }
-  return reflecting;
+  return { reflecting, inconclusive };
 }
 
 /** Nombres de slot del shadow DOM (`''` = slot por defecto). `undefined` sin shadow root. */
@@ -250,7 +300,7 @@ export async function observeRuntime(
   // no rebote como `pageerror` ni descalifique nada. Genérico: `window`/`setTimeout`
   // son globals del DOM, no acoplan a Lit/shibui (respeta `genericity.test.ts`).
   let slots: string[] | undefined;
-  let reflectingProperties: string[] | undefined;
+  let reflect: ReflectProbe | undefined;
   const swallow = (e: Event): void => e.preventDefault();
   window.addEventListener('error', swallow);
   window.addEventListener('unhandledrejection', swallow);
@@ -258,7 +308,7 @@ export async function observeRuntime(
     document.body.appendChild(el);
     await elUpdateComplete(el);
     slots = readSlots(el);
-    reflectingProperties = await probeReflect(el, properties, observedAttributes, propTypes);
+    reflect = await probeReflect(el, properties, observedAttributes, propTypes);
   } catch {
     /* observación parcial: lo no observado se omite por la regla de oro */
   } finally {
@@ -273,7 +323,10 @@ export async function observeRuntime(
 
   const runtime: ComponentRuntime = { tagName, registered: true, properties, methods };
   if (observedAttributes !== undefined) runtime.observedAttributes = observedAttributes;
-  if (reflectingProperties !== undefined) runtime.reflectingProperties = reflectingProperties;
+  if (reflect !== undefined) {
+    runtime.reflectingProperties = reflect.reflecting;
+    if (reflect.inconclusive.length > 0) runtime.reflectInconclusiveProperties = reflect.inconclusive;
+  }
   if (slots !== undefined) runtime.slots = slots;
   return runtime;
 }
@@ -461,13 +514,20 @@ async function mountThenRemove(tagName: string, setup: (el: HTMLElement) => void
 }
 
 /**
- * Escenarios adversos: todos se montan SIN datos, así que un componente
- * data-driven puede petar en ellos por falta de datos, no por fragilidad real.
- * Por eso el runner los pasa como `optional` → su fallo es un warning, no
- * descalifica el sello. (Distinguir «frágil» de «necesita datos» requeriría
- * sembrar datos mínimos por tipo; se difiere — ver docs/specs/harness.md.)
+ * Escenarios adversos que se montan SIN datos (`empty`/`junk-attrs`/`rtl`): un
+ * componente data-driven puede petar en ellos por falta de datos, no por fragilidad
+ * real. Por eso el runner los pasa como `optional` → su fallo es un WARNING, no
+ * descalifica el sello (`src/report/run.ts`). (Distinguir «frágil» de «necesita datos»
+ * exigiría sembrar datos mínimos por tipo — `valid-min`, diferido a vNext; ver
+ * docs/specs/checks-resilience.md.)
+ *
+ * El otro escenario que ejecuta `observeResilience`, `remount`, NO está aquí: NO es
+ * data-dependent (re-montar la MISMA instancia vacía no depende de datos), así que un
+ * crash ahí es fragilidad de ciclo de vida GENUINA → es OBLIGATORIO (descalifica el
+ * sello). Ver `observeRemount`, que lo aísla del montaje vacío para no doble-contar
+ * el escenario `empty` (evita el falso positivo #549).
  */
-export const ADVERSE_SCENARIOS: readonly string[] = ['empty', 'junk-attrs', 'rtl', 'remount'];
+export const DATA_DEPENDENT_SCENARIOS: readonly string[] = ['empty', 'junk-attrs', 'rtl'];
 
 /**
  * Corre un trial capturando TODO lo que pueda romperlo: el throw síncrono/rechazo de
@@ -512,44 +572,71 @@ async function runCapturingWindowErrors(run: () => Promise<void>): Promise<strin
   return [...new Set(all)];
 }
 
+/**
+ * Monta una instancia YA creada, espera su `updateComplete` y la retira, capturando
+ * lo que la rompa (throw del trial + errores a `window`). Reutilizable para el ciclo
+ * de re-montaje, que necesita conservar la MISMA instancia entre montajes.
+ */
+function mountInstanceCapturing(el: HTMLElement): Promise<string[]> {
+  return runCapturingWindowErrors(async () => {
+    document.body.appendChild(el);
+    try {
+      await elUpdateComplete(el);
+    } finally {
+      el.remove();
+    }
+  });
+}
+
+/**
+ * Escenario `remount` (OBLIGATORIO): un componente sano sobrevive a montarse,
+ * desmontarse y volver a montarse vacío. Mide fragilidad de ciclo de vida, no de datos.
+ *
+ * Para NO reintroducir el falso positivo data-driven (#549), solo cuenta el fallo del
+ * SEGUNDO montaje: si el PRIMER montaje vacío ya peta, eso es asunto del escenario
+ * `empty` (data-dependent, tolerable) — `remount` lo omite (devuelve sin errores) en
+ * vez de doble-contar el mismo crash. Conserva la MISMA instancia entre montajes para
+ * exponer el estado no reinicializado / los listeners filtrados al re-conectar.
+ */
+async function observeRemount(tagName: string): Promise<string[]> {
+  const el = document.createElement(tagName);
+  const first = await mountInstanceCapturing(el);
+  if (first.length > 0) return []; // primer montaje falló → lo capta `empty`, no es fragilidad de remount
+  return mountInstanceCapturing(el); // re-monta la MISMA instancia: aquí sí mide la fragilidad de remount
+}
+
 /** Observa la resiliencia montando el componente bajo escenarios adversos. */
 export async function observeResilience(tagName: string): Promise<ResilienceObservation> {
   if (!customElements.get(tagName)) return { tagName };
 
-  const scenarios: ReadonlyArray<[string, () => Promise<void>]> = [
-    ['empty', () => mountThenRemove(tagName, () => undefined)],
+  const scenarios: ReadonlyArray<[string, () => Promise<string[]>]> = [
+    ['empty', () => runCapturingWindowErrors(() => mountThenRemove(tagName, () => undefined))],
     [
       'junk-attrs',
       () =>
-        mountThenRemove(tagName, (el) => {
-          el.setAttribute('variant', 'zzz-invalid');
-          el.setAttribute('size', '-999');
-          el.setAttribute('disabled', 'not-a-bool');
-        }),
+        runCapturingWindowErrors(() =>
+          mountThenRemove(tagName, (el) => {
+            el.setAttribute('variant', 'zzz-invalid');
+            el.setAttribute('size', '-999');
+            el.setAttribute('disabled', 'not-a-bool');
+          }),
+        ),
     ],
-    ['rtl', () => mountThenRemove(tagName, (el) => el.setAttribute('dir', 'rtl'))],
     [
-      'remount',
-      async () => {
-        const el = document.createElement(tagName);
-        document.body.appendChild(el);
-        await elUpdateComplete(el);
-        el.remove();
-        document.body.appendChild(el);
-        await elUpdateComplete(el);
-        el.remove();
-      },
+      'rtl',
+      () => runCapturingWindowErrors(() => mountThenRemove(tagName, (el) => el.setAttribute('dir', 'rtl'))),
     ],
+    ['remount', () => observeRemount(tagName)],
   ];
 
   const trials: ResilienceTrial[] = [];
-  for (const [scenario, run] of scenarios) {
-    const errors = await runCapturingWindowErrors(run);
-    if (errors.length === 0) {
-      trials.push({ scenario, survived: true });
-    } else {
-      trials.push({ scenario, survived: false, error: errors.join(' | ') });
-    }
+  for (const [scenario, evaluate] of scenarios) {
+    const errors = await evaluate();
+    trials.push(
+      errors.length === 0
+        ? { scenario, survived: true }
+        : { scenario, survived: false, error: errors.join(' | ') },
+    );
   }
 
   return { tagName, trials };
