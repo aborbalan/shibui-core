@@ -10,7 +10,7 @@ import { renderHamburger, renderMobileDrawer }                from './header-mob
  */
 export function renderMega(ctx: LibHeader): TemplateResult {
   return html`
-    <div class="hdr">
+    <header class="hdr">
       ${renderLogo(ctx)}
       <nav class="hdr-nav">
         ${ctx.links.map(link =>
@@ -30,7 +30,7 @@ export function renderMega(ctx: LibHeader): TemplateResult {
       </nav>
       ${renderActions(ctx)}
       ${renderHamburger(ctx)}
-    </div>
+    </header>
 
     <!-- Overlay detrás del panel -->
     <div

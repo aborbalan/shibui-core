@@ -26,7 +26,7 @@
 import * as shibui from '../../shibui-ui/dist/index.js';
 import * as axe from 'axe-core';
 import { observeRuntime, observeA11y, observeResilience } from '../src/harness/probe';
-import type { AxeRunner } from '../src/harness/probe';
+import type { AxeRunner, PropTypeHint } from '../src/harness/probe';
 import type { ComponentObservation } from '../src/report/observations';
 
 // Fuerza la evaluación del módulo de shibui (sus @customElement → define()).
@@ -38,7 +38,11 @@ declare global {
   interface Window {
     /** Puente que `probe-shibui.ts` invoca por cada tag vía `page.evaluate`. */
     __hankoProbe: {
-      observe(tagName: string): Promise<ComponentObservation>;
+      observe(
+        tagName: string,
+        propTypes?: Record<string, PropTypeHint>,
+        slotNames?: string[],
+      ): Promise<ComponentObservation>;
     };
   }
 }
@@ -47,9 +51,19 @@ declare global {
 const runAxe: AxeRunner = (el) => axe.run(el);
 
 window.__hankoProbe = {
-  async observe(tagName: string): Promise<ComponentObservation> {
-    const runtime = await observeRuntime(tagName);
-    const a11y = await observeA11y(tagName, runAxe);
+  // `propTypes` (tipo declarado por prop, del CEM) lo arma `probe-shibui.ts` en
+  // Node y lo inyecta por tag: tipa el sentinel de reflexión sin que el harness
+  // conozca el contrato.
+  async observe(
+    tagName: string,
+    propTypes?: Record<string, PropTypeHint>,
+    slotNames?: string[],
+  ): Promise<ComponentObservation> {
+    const runtime = await observeRuntime(tagName, propTypes);
+    // Las claves de `propTypes` (props declaradas) y `slotNames` (slots declarados)
+    // del CEM alimentan la señal `nameSupplyable` de la a11y: ¿hay prop de etiqueta
+    // o slot por defecto donde el consumidor aporte el nombre?
+    const a11y = await observeA11y(tagName, runAxe, Object.keys(propTypes ?? {}), slotNames ?? []);
     const resilience = await observeResilience(tagName);
     return { tagName, runtime, a11y, resilience };
   },

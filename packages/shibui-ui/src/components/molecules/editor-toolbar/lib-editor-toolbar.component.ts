@@ -15,10 +15,11 @@ import type { EditorToolbarTemplateProps }    from './lib-editor-toolbar.types';
  *
  * Categoría: Molecule · `app/editor`.
  *
- * @prop {string}        filename  — Nombre del fichero activo. Vacío → "Sin título".
- * @prop {boolean}       dirty     — Indica cambios sin guardar (muestra `·` en el nombre).
- * @prop {boolean}       saving    — Estado de guardado en curso (deshabilita el botón Save).
- * @prop {boolean}       show-open — Muestra el botón "Abrir fichero".
+ * @prop {string}        filename   — Nombre del fichero activo. Vacío → "Sin título".
+ * @prop {boolean}       dirty      — Indica cambios sin guardar (muestra `·` en el nombre).
+ * @prop {boolean}       saving     — Estado de guardado en curso (deshabilita el botón Save).
+ * @prop {boolean}       show-open  — Muestra el botón "Abrir fichero".
+ * @prop {string}        aria-label — Nombre accesible del `role="toolbar"` (default: "Acciones del editor").
  *
  * @fires ui-lib-editor-toolbar-new  — El usuario pide crear un fichero nuevo.
  * @fires ui-lib-editor-toolbar-open — El usuario pide abrir un fichero.
@@ -53,16 +54,25 @@ export class LibEditorToolbar extends LitElement {
   @property({ type: Boolean, attribute: 'show-open' })
   showOpen = false;
 
+  /**
+   * Nombre accesible de la barra (`role="toolbar"`). Se refleja al host para que
+   * el control quede nombrado incluso sin contenido visible. Aportable por el
+   * consumidor; default razonable.
+   */
+  @property({ type: String, attribute: 'aria-label', reflect: true })
+  override ariaLabel = 'Acciones del editor';
+
   override render(): TemplateResult {
     return editorToolbarTemplate(this._buildProps());
   }
 
   private _buildProps(): EditorToolbarTemplateProps {
     return {
-      filename: this.filename,
-      dirty:    this.dirty,
-      saving:   this.saving,
-      showOpen: this.showOpen,
+      filename:  this.filename,
+      dirty:     this.dirty,
+      saving:    this.saving,
+      showOpen:  this.showOpen,
+      ariaLabel: this.ariaLabel || 'Acciones del editor',
       onNew:    this._handleNew.bind(this),
       onOpen:   this._handleOpen.bind(this),
       onSave:   this._handleSave.bind(this),

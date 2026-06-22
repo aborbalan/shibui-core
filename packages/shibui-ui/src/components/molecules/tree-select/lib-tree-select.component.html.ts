@@ -216,7 +216,7 @@ export function treeSelectTemplate(props: TreeSelectTemplateProps): TemplateResu
   /* ── Modo INLINE ── */
   if (props.inline) {
     return html`
-      <div class="ts-inline">
+      <div class="ts-inline" role="group" aria-label="${props.ariaLabel}">
         ${renderSearch(props)}
         <div class="ts-tree">${renderTree(props)}</div>
         ${renderFooter(props)}
@@ -247,7 +247,7 @@ export function treeSelectTemplate(props: TreeSelectTemplateProps): TemplateResu
         </svg>
       </div>
 
-      <div class="ts-dropdown" role="listbox">
+      <div class="ts-dropdown" role="listbox" aria-label="${props.ariaLabel}">
         ${renderSearch(props)}
         <div class="ts-tree">${renderTree(props)}</div>
         ${renderFooter(props)}

@@ -36,6 +36,7 @@ export interface TreeNode {
     disabled:       boolean;
     placeholder:    string;
     emptyText:      string;
+    ariaLabel:      string;
     searchValue:    string;
     triggerLabel:   string;
     isPlaceholder:  boolean;

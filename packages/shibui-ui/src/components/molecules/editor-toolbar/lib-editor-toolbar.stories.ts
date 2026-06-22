@@ -9,6 +9,7 @@ interface EditorToolbarArgs {
   dirty:     boolean;
   saving:    boolean;
   showOpen:  boolean;
+  ariaLabel: string;
 }
 
 /* ── Meta ── */
@@ -49,6 +50,7 @@ integración con el sistema de ficheros (nativa vía Tauri, Web File API, etc.).
     dirty:     { control: 'boolean', description: 'Cambios sin guardar' },
     saving:    { control: 'boolean', description: 'Guardado en curso' },
     showOpen:  { control: 'boolean', name: 'show-open', description: 'Muestra botón Abrir' },
+    ariaLabel: { control: 'text', name: 'aria-label', description: 'Nombre accesible del role="toolbar" (default: "Acciones del editor")' },
   },
 
   args: {
@@ -56,6 +58,7 @@ integración con el sistema de ficheros (nativa vía Tauri, Web File API, etc.).
     dirty:     false,
     saving:    false,
     showOpen:  false,
+    ariaLabel: 'Acciones del editor',
   },
 
   render: (args) => html`
@@ -65,6 +68,7 @@ integración con el sistema de ficheros (nativa vía Tauri, Web File API, etc.).
         ?dirty=${args.dirty}
         ?saving=${args.saving}
         ?show-open=${args.showOpen}
+        aria-label=${args.ariaLabel}
       ></lib-editor-toolbar>
       <div style="
         padding: var(--lib-space-lg);

@@ -33,7 +33,7 @@ custom element registrado ──► observe*() ──► Observación ──► 
 ```ts
 publicApiOf(instance, stopProto?): { properties; methods }     // puro
 observeRuntime(tagName): Promise<ComponentRuntime>             // browser, async (espera updateComplete)
-observeA11y(tagName, runAxe): Promise<A11yObservation>          // browser, axe inyectado
+observeA11y(tagName, runAxe, declaredProps?, declaredSlots?): Promise<A11yObservation>  // browser, axe inyectado
 observeResilience(tagName): ResilienceObservation               // browser
 ```
 
@@ -64,16 +64,91 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   (no los marca `private`), pero `publicApiOf` los excluye por nombre (contrato = API **pública**). La ingestión
   ahora hace lo mismo (`isPublicMember` descarta los `_`-prefijados) → fuera los falsos `contract/method`.
 
-- **Resiliencia ante crashes async — PARCIALMENTE RESUELTO.** `observeResilience` es **async** y espera
-  `updateComplete` en cada escenario, así que el throw async de Lit aflora *dentro* del trial en vez de perderse
-  (antes el `try/catch` síncrono daba un falso «sobrevivió»). Los escenarios son todos adversos *sin datos*
-  (`empty`/`junk-attrs`/`rtl`/`remount`), así que el runner los pasa como `optional` → un crash es **warning**,
-  no descalifica el sello (no se puede distinguir «frágil» de «necesita datos» sin sembrarlos). **Límite:** Lit
-  reporta la mayoría de errores de render a nivel de `window` (`pageerror`), no rechazando `updateComplete`, así
-  que el `await` solo capta unos pocos; el resto sigue viéndose solo en `report-full.html`. Captura completa =
-  escuchar `pageerror`/`window.onerror` durante el trial (diferido). Sembrar datos mínimos por tipo para un
-  escenario duro `valid-min` también queda **diferido** (se probó: los componentes renderizan con datos pero su
-  contrato no mejora → el ruido restante es drift del CEM, no falsos positivos del harness).
+- **Resiliencia ante crashes async — RESUELTO.** `observeResilience` corre cada trial dentro de una ventana que
+  escucha `window` (`error` + `unhandledrejection`, con `preventDefault` para adueñarse del error y no rebotarlo
+  como uncaught) **además** del throw síncrono / rechazo de `updateComplete`, y cede un macrotask antes de
+  cerrarla → capta tanto los rechazos de `updateComplete` como los throws que Lit emite a nivel de **ventana**
+  (`runCapturingWindowErrors` en `probe.ts`). Los escenarios son adversos *sin datos*
+  (`empty`/`junk-attrs`/`rtl`/`remount`), `optional` → un crash es **warning**, no descalifica el sello.
+  **Hallazgo (dogfood, validado aislando el probe):** sobre shibui un montaje adverso-vacío **sobrevive limpio**
+  salvo **2** componentes que petan en `junk-attrs` (`lib-button-liquid`, `lib-progress-circle`, ambos rechazan
+  `updateComplete`). Los ~24 `pageerror` de `report-full.html` **NO son fallos de resiliencia**: corriendo el
+  probe con **solo** `observeResilience` montando salen **0** diagnósticos; los 24 vienen de
+  `observeRuntime`/`observeA11y`. El patrón (`X.flatMap`/`map`/`find` *is not a function*) delata el **sentinel
+  string de `probeReflect`** asignado a props data-driven → era trabajo de **calibración D** (sentinel tipado,
+  **RESUELTA** — ver abajo), no de resiliencia. Sembrar datos mínimos por tipo (`valid-min`) sigue **diferido** (se probó: los
+  componentes renderizan con datos pero su contrato no mejora → el ruido restante es drift del CEM).
+
+- **Sentinel de reflexión tipado (calibración D) — RESUELTO.** `probeReflect` asignaba el string `'hanko-probe'`
+  a CUALQUIER prop reflejable. Para una prop **data-driven** array (`series`/`links`/`files`, inicializadas a `[]`)
+  eso la dejaba en string → el render hacía `series.flatMap(...)` y petaba ASÍNCRono (los ~24 `pageerror`). Ahora
+  el sentinel es **coherente con el tipo** (`chooseSentinel`/`typedSentinel` en `probe.ts`):
+  1. **Inferencia por runtime** (`typeof`/`Array.isArray` del valor inicial — genérica, sin acoplar al CEM):
+     bool→invertido, number→distinto, array→`[]`, object→`{}`, string→`'hanko-probe'`.
+  2. **Tipo declarado del CEM** (`PropTypeHint` = `{kind, literals}` que el runner inyecta por tag): lidera donde
+     el runtime no acierta — un **enum** (`string-union`) → primer literal VÁLIDO ≠ actual (un string arbitrario
+     indexaría mal un mapa interno: `SIZE_MAP[size].px`). Pasa como dato plano, no el `ComponentContract` → el
+     harness sigue sin conocer lo declarado.
+  3. **Red de captura**: la mayoría de enums de shibui son **alias con nombre** (`LibProgressCircleSize`) → el CEM
+     los deja `kind:'unknown'` SIN literales, así que caen al string y aún pueden petar. Ese crash es **artefacto
+     del sondeo** (de la fragilidad ante basura ya se ocupa la resiliencia con `junk-attrs`), y Lit lo emite
+     DIFERIDO a `window` (re-render en cascada, no rechazo de `updateComplete`). `observeRuntime` envuelve TODA su
+     fase montada (montaje, sondeo, settle de 2 macrotasks, desmontaje) escuchando `window` con `preventDefault`
+     → no rebota como `pageerror`. Genérico (`window`/`setTimeout`), respeta `genericity.test.ts`.
+
+  **Efecto medido (dogfood real):** diagnósticos de navegador **24 → 1** (el único restante es genuino: un
+  `console.warning` de `lib-progress` por JSON inválido — comportamiento defensivo correcto); `contract/reflect`
+  **71 → 31** (el sentinel tipado detecta reflexión en booleanos/enums que el string daba como falso negativo);
+  **sellados 36 → 38**. Resto de facetas sin regresión (slot 29, property 108, attribute 7, a11y 29).
+  **Trade-off asumido:** la red de captura también absorbe un crash genuino de montaje por defecto en
+  `observeRuntime` (lo capta igualmente la capa de resiliencia, escenario `empty`).
+
+- **Nombre accesible aportable por el consumidor (calibración C) — RESUELTO.** El harness monta cada componente
+  **vacío**: un componente cuyo nombre sale de su slot por defecto o de una prop de etiqueta aparece sin nombre
+  *sin tener defecto* (lo aporta el consumidor). `observeA11y` ahora produce la señal **`nameSupplyable`** —¿hay un
+  mecanismo de nombre?— y la política a11y omite la regla `name` cuando es aportable (ver
+  [`checks-a11y.md`](checks-a11y.md)). El mecanismo (`isNameSupplyable` en `probe.ts`) la calcula por **capacidad**,
+  no por el render vacío, en tres vías genéricas:
+  1. **slot por defecto DECLARADO** en el CEM (`''`) → el runner pasa los nombres de slot por tag (lista plana,
+     como `propTypes`); cubre el slot condicional al contenido que el montaje vacío no renderiza (p.ej.
+     `lib-code-block`);
+  2. **slot por defecto en el shadow vivo** (`readSlots`) → cubre CEM incompletos;
+  3. **prop de etiqueta declarada** — regex `NAMEISH_PROP` (`label`/`ariaLabel`/`text`/`heading`/`caption`/`title`/
+     `alt`), de **alta precisión** a propósito: incluir una prop que NO nombra sería un falso negativo. Excluye
+     `name` (atributo de formulario) y `placeholder` (no es nombre accesible fiable).
+
+  **Efecto medido (dogfood real):** `a11y/name` **29 → 6**; **sellados 38 → 47**. Cambio **monotónico** (solo relaja
+  `name`, nunca añade violación → sin regresión posible). Los **6** restantes son **señal real** —interactivos que
+  no declaran ni slot por defecto ni prop de etiqueta: `lib-rating`, `lib-editor-toolbar`, `lib-tree-select`,
+  `lib-file-browser`, `lib-header`, `lib-footer`— = deuda a11y de **shibui** (añadirles `aria-label`/`label` o un
+  slot por defecto), no de hanko. **Verifica capacidad, no cableado** (una `label` prop ignorada seguiría
+  omitiéndose): la opción de *sembrar* el nombre y comprobar que aflora (opción «a») se **difirió** (rozaba «sembrar
+  datos» y arriesgaba falsos negativos por enmascarado).
+
+- **Teclado real · landmarks · foco diferido (calibración F4-cierre) — RESUELTO.** Cerró las tres heurísticas v0
+  de a11y que quedaban en el mecanismo. La política (`a11yCheck`) **no** cambió; cambió la calidad de la señal:
+  1. **`keyboardReachable` — señal real, no proxy.** Era `tabIndex>=0 || shadowRoot!==null`: como **todo**
+     LitElement tiene shadow, la regla `keyboard` **nunca** fallaba — laxitud que fingía cobertura (el reverso del
+     falso `reflect` de D). Ahora `host tabbable **o** un tabbable GENUINO en el shadow` (`TABBABLE_SELECTOR`,
+     que excluye `[tabindex="-1"]` y deshabilitados).
+  2. **`isInteractive` — un `tabindex="-1"` no es un control.** El barrido del shadow usaba un selector laxo
+     (`[tabindex]`) que capturaba el `-1` (foco programático): marcaba interactivos a presentacionales/contenedores
+     (`<span role=note tabindex=-1>` de `lib-chip`, `[role=dialog tabindex=-1]` de `lib-drawer`) que, al no ser
+     nunca alcanzables, **fabricaban un falso `keyboard`**. Ahora `isInteractive` reusa `hasTabbableInShadow` (el
+     mismo tabbable genuino) → la señal de teclado deja de auto-contradecirse.
+  3. **landmarks no son controles.** `isInteractive` descarta una **región** (host con rol de landmark, o
+     elemento más externo del shadow = landmark nativo `<header>/<footer>/<nav>/<main>/<aside>`): contiene
+     controles pero no es operable. Estrecho a propósito (el landmark ha de ser el *wrapper*) para no perder los
+     `*-button`-like que delegan en un hijo.
+  4. **`focusVisible` — diferido formalmente.** Sigue sin observarse → la regla `focus` se **omite** (regla de
+     oro). Verificar el anillo exige foco real + `:focus-visible`/outline: caro y frágil en headless. Decisión
+     explícita (vNext), no olvido.
+
+  **Efecto medido (dogfood real):** `a11y/name` **6 → 4** (`lib-footer` sale = landmark; `lib-file-browser`/`-chip`/
+  `-drawer` salen = presentacional/contenedor/data-driven vacío); `a11y/keyboard` **0 falso-verde → 0 honesto**
+  (los 3 falsos que aparecieron al quitar el proxy se eliminaron al alinear los selectores; shibui SÍ pasa la regla
+  real); **sellados 47 → 47** (estable). Las **4** `a11y/name` restantes —`lib-rating`, `lib-editor-toolbar`,
+  `lib-header`, `lib-tree-select`— son controles genuinos sin nombre aportable = **deuda de shibui**.
 
 ### ⚠️ Pendiente de calibrar
 
@@ -83,11 +158,12 @@ Antes del browser: `pnpm install` + `pnpm --filter @shibui-ui/hanko exec playwri
   la generación del manifest, no en hanko).
 - **Slot por defecto con etiqueta `—` mal codificada** (`"â€”"`): bug de encoding (UTF-8 leído como latin1) en el
   nombre del slot por defecto del CEM/render → revisar la ingestión/render del nombre de slot.
-- **reflect (sentinel)**: sonda con un sentinel string; para una prop booleana/numérica/enum el converter de Lit
-  puede no producir un atributo "cambiado" aunque refleje → considerar sentinel tipado por el CEM.
-- **interactividad / nombre accesible**: heurísticas (tabindex/role/shadow, aria-label/texto) → calibrar contra
-  shibui real (29 componentes fallan a11y, en parte por montarse vacíos sin nombre accesible).
-- **focusVisible**: requiere foco/render real; v0 lo deja sin observar (el check lo omite, no falla).
+- **nombre accesible**: **calibrado (C, RESUELTO)** — `nameSupplyable` bajó `a11y/name` de 29 a 6 señales reales.
+- **interactividad (`isInteractive`)**: **calibrado (F4-cierre, RESUELTO)** — landmarks descartados + `tabindex="-1"`
+  presentacional ya no fabrica interactividad (ver arriba).
+- **`keyboardReachable`**: **calibrado (F4-cierre, RESUELTO)** — señal real (tabbable genuino), ya no es un proxy.
+- **focusVisible**: **diferido formalmente (F4-cierre)** — sin observar → la regla `focus` se omite (regla de oro);
+  decisión explícita a vNext, no olvido.
 
 ## Dogfood sobre shibui-ui — `dogfood/` (Etapa 1 del puente de F6)
 

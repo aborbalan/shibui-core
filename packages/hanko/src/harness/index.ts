@@ -6,4 +6,4 @@ export {
   observeA11y,
   observeResilience,
 } from './probe';
-export type { AxeRunner, AxeResultLike } from './probe';
+export type { AxeRunner, AxeResultLike, PropTypeHint } from './probe';

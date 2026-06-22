@@ -20,8 +20,21 @@
    shibui-ui real (generalizar desde el uso). Ver docs/specs/harness.md.
    ============================================================ */
 import type { ComponentRuntime } from '../core/runtime';
+import type { TypeKind } from '../core/contract';
 import type { A11yObservation, AxeImpact, AxeViolation } from '../checks/a11y';
 import type { ResilienceObservation, ResilienceTrial } from '../checks/resilience';
+
+/**
+ * Pista de tipo DECLARADO que el runner puede pasar por prop para tipar el
+ * sentinel de reflexión. Es un dato plano (no el `ComponentContract`): el harness
+ * sigue sin conocer el modelo declarado, solo recibe candidatos. `undefined` →
+ * inferencia por runtime (`typeof`/`Array.isArray`).
+ */
+export interface PropTypeHint {
+  kind: TypeKind;
+  /** Literales válidos si `kind === 'string-union'`. Permite elegir un enum válido. */
+  literals?: string[];
+}
 
 /* ───────────────────────── puro (node-testable) ───────────────────────── */
 
@@ -94,11 +107,85 @@ async function elUpdateComplete(el: unknown): Promise<void> {
   }
 }
 
-/** Sonda heurística de reflexión prop⇄attribute (string sentinel). v0. */
+const STRING_SENTINEL = 'hanko-probe';
+
+/**
+ * Elige un sentinel del MISMO tipo que el valor actual de la prop.
+ *
+ * Antes se asignaba el string `'hanko-probe'` a CUALQUIER prop reflejable. Para
+ * una prop data-driven que el componente espera como array (`series`, `links`,
+ * `files`… inicializadas a `[]`), eso la dejaba como string → el render hacía
+ * `series.flatMap(...)` y PETABA de forma ASÍNCRONA (en `updateComplete`), fuera
+ * del alcance del try/catch síncrono → el error afloraba a `window` como ruido
+ * (los ~24 `pageerror` del Trust Report que NO eran señal de contrato).
+ *
+ * Sentinel por tipo: array→`[]` y objeto→`{}` NO rompen el render; booleano→
+ * invertido y número→distinto fuerzan un cambio OBSERVABLE (un string podía no
+ * producir un atributo «cambiado» → falso «no refleja»). El tipo se infiere por
+ * RUNTIME (`typeof`/`Array.isArray` del valor inicial): genérico, sin acoplar el
+ * harness al contrato declarado (respeta `genericity.test.ts`). Una prop sin
+ * valor inicial (`undefined`) cae al string, como antes.
+ */
+function typedSentinel(current: unknown): unknown {
+  switch (typeof current) {
+    case 'boolean':
+      return !current;
+    case 'number':
+      return Number.isFinite(current) ? current + 1 : 1;
+    case 'string':
+      return current === STRING_SENTINEL ? `${STRING_SENTINEL}-2` : STRING_SENTINEL;
+    case 'object':
+      if (current === null) return STRING_SENTINEL;
+      return Array.isArray(current) ? [] : {};
+    default:
+      // undefined · bigint · function · symbol → no inferible: string como antes.
+      return STRING_SENTINEL;
+  }
+}
+
+/**
+ * Sentinel preferentemente DECLARADO, con runtime como red de seguridad.
+ *
+ * El tipo declarado lidera en las categorías que infiere con precisión y que el
+ * runtime no puede acertar: un **enum** (`string-union`) → el primer literal
+ * VÁLIDO distinto del actual (un string arbitrario indexaría mal un mapa interno
+ * y rompería el render); booleano/número sin valor inicial (que runtime vería
+ * `undefined`). Para `string`/`object`/`unknown` cede al runtime, que distingue
+ * array de objeto (`Array.isArray`) mejor que el `kind` del CEM.
+ */
+function chooseSentinel(current: unknown, hint: PropTypeHint | undefined): unknown {
+  switch (hint?.kind) {
+    case 'string-union': {
+      const pick = hint.literals?.find((l) => l !== current);
+      if (pick !== undefined) return pick;
+      break; // alias sin literales (p.ej. `LibSize`) → runtime/string fallback
+    }
+    case 'boolean':
+      return typeof current === 'boolean' ? !current : true;
+    case 'number':
+      return typeof current === 'number' && Number.isFinite(current) ? current + 1 : 1;
+    // 'string' | 'object' | 'unknown' | undefined → el runtime infiere mejor.
+  }
+  return typedSentinel(current);
+}
+
+/**
+ * Sonda heurística de reflexión prop⇄attribute (sentinel tipado). v0.
+ *
+ * El sondeo asigna valores SENTINEL deliberadamente adversos. Si uno rompe el
+ * render (un enum-alias sin literales conocidos cae al string `'hanko-probe'`,
+ * que un mapa interno indexa a `undefined` → `SIZE_MAP[size].px` peta), ese error
+ * es ARTEFACTO DEL SONDEO, no un fallo de contrato del componente —de su
+ * fragilidad ante basura ya se ocupa la capa de resiliencia (`junk-attrs`). El
+ * crash de Lit aflora DIFERIDO a `window` (re-render en cascada, no rechazo de
+ * `updateComplete`), así que su absorción la hace el llamador (`observeRuntime`)
+ * envolviendo TODA la fase montada, no este bucle.
+ */
 async function probeReflect(
   el: HTMLElement,
   properties: string[],
   observed: string[] | undefined,
+  types?: Record<string, PropTypeHint>,
 ): Promise<string[] | undefined> {
   if (!observed || observed.length === 0) return undefined;
   const reflecting: string[] = [];
@@ -107,13 +194,14 @@ async function probeReflect(
     if (!observed.includes(attr)) continue;
     try {
       const before = el.getAttribute(attr);
-      (el as unknown as Record<string, unknown>)[prop] = 'hanko-probe';
+      const record = el as unknown as Record<string, unknown>;
+      record[prop] = chooseSentinel(record[prop], types?.[prop]);
       // Lit refleja en el siguiente ciclo de update, no en este tick.
       await elUpdateComplete(el);
       const after = el.getAttribute(attr);
       if (after !== null && after !== before) reflecting.push(prop);
     } catch {
-      // props que no aceptan el sentinel string → no concluyente, se ignora
+      // props que no aceptan el sentinel → no concluyente, se ignora
     }
   }
   return reflecting;
@@ -126,8 +214,17 @@ function readSlots(el: HTMLElement): string[] | undefined {
   return [...sr.querySelectorAll('slot')].map((s) => s.name);
 }
 
-/** Observa el runtime de un custom element registrado. */
-export async function observeRuntime(tagName: string): Promise<ComponentRuntime> {
+/**
+ * Observa el runtime de un custom element registrado.
+ *
+ * `propTypes` (opcional) es el tipo DECLARADO por prop (del CEM, vía el runner):
+ * tipa el sentinel de la sonda de reflexión para enums/booleanos. Ausente → el
+ * harness infiere el tipo por runtime (sigue siendo genérico).
+ */
+export async function observeRuntime(
+  tagName: string,
+  propTypes?: Record<string, PropTypeHint>,
+): Promise<ComponentRuntime> {
   const ctor = customElements.get(tagName);
   if (!ctor) return { tagName, registered: false };
 
@@ -144,17 +241,34 @@ export async function observeRuntime(tagName: string): Promise<ComponentRuntime>
   // su `updateComplete` tras montar antes de leer slots, y dentro de `probeReflect`
   // tras cada set. Sin esto, slots/reflect salían sistemáticamente vacíos (falso
   // positivo en toda la librería). Ver `elUpdateComplete`.
+  // El sondeo de reflexión asigna sentinels adversos que pueden romper el render
+  // de un componente data-driven o enum (artefacto del sondeo, no fallo de
+  // contrato — de eso se ocupa la resiliencia). Lit emite esos crashes DIFERIDOS a
+  // `window` (re-render en cascada / update pendiente al desmontar), no rechazando
+  // `updateComplete`. Absorbemos esos errores a nivel `window` (`preventDefault`)
+  // durante toda la fase montada —montaje, sondeo, settle y desmontaje— para que
+  // no rebote como `pageerror` ni descalifique nada. Genérico: `window`/`setTimeout`
+  // son globals del DOM, no acoplan a Lit/shibui (respeta `genericity.test.ts`).
   let slots: string[] | undefined;
   let reflectingProperties: string[] | undefined;
+  const swallow = (e: Event): void => e.preventDefault();
+  window.addEventListener('error', swallow);
+  window.addEventListener('unhandledrejection', swallow);
   try {
     document.body.appendChild(el);
     await elUpdateComplete(el);
     slots = readSlots(el);
-    reflectingProperties = await probeReflect(el, properties, observedAttributes);
+    reflectingProperties = await probeReflect(el, properties, observedAttributes, propTypes);
   } catch {
     /* observación parcial: lo no observado se omite por la regla de oro */
   } finally {
     el.remove();
+    // Cede dos macrotasks para que los crashes async que provocó el sondeo (y los
+    // que dispare el desmontaje) afloren y se absorban antes de retirar los listeners.
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    window.removeEventListener('error', swallow);
+    window.removeEventListener('unhandledrejection', swallow);
   }
 
   const runtime: ComponentRuntime = { tagName, registered: true, properties, methods };
@@ -180,13 +294,66 @@ function normalizeImpact(impact: string | null | undefined): AxeImpact {
 const INTERACTIVE_ROLES: ReadonlySet<string> = new Set([
   'button', 'link', 'checkbox', 'radio', 'switch', 'tab', 'menuitem', 'textbox', 'slider', 'option',
 ]);
-/** Heurística de interactividad. v0: tabindex, role o tabbable nativo en shadow. */
+
+/** Roles ARIA de región (landmarks): demarcan zonas, NO son controles. */
+const LANDMARK_ROLES: ReadonlySet<string> = new Set([
+  'banner', 'contentinfo', 'navigation', 'main', 'complementary', 'region', 'search', 'form',
+]);
+/** Elementos HTML cuyo rol de landmark es implícito (no necesitan `role`). */
+const LANDMARK_ELEMENTS: ReadonlySet<string> = new Set([
+  'header', 'footer', 'nav', 'main', 'aside',
+]);
+
+/**
+ * ¿El componente es una REGIÓN (landmark), no un control? (calibración F4-cierre).
+ *
+ * Una región contiene controles pero no es ella misma operable, así que NO se le
+ * exige teclado/foco/nombre como a un control. Señal genérica de región: el host
+ * expone un rol de landmark, o el elemento más externo del shadow es un landmark
+ * nativo (`<header>`/`<footer>`/`<nav>`/`<main>`/`<aside>`) — shibui usa elementos
+ * nativos en vez de `role`, de ahí la segunda vía. Es deliberadamente estrecha (el
+ * landmark ha de ser el WRAPPER, no estar anidado) para no perder controles que
+ * delegan en un hijo del shadow.
+ */
+function isLandmarkRegion(el: HTMLElement): boolean {
+  const role = el.getAttribute('role');
+  if (role !== null && LANDMARK_ROLES.has(role)) return true;
+  const root = el.shadowRoot?.firstElementChild;
+  return root != null && LANDMARK_ELEMENTS.has(root.localName);
+}
+
+/**
+ * Selector de elementos GENUINAMENTE alcanzables por tab: excluye `[tabindex="-1"]`
+ * (enfocable por script pero NO por tab), los nativos deshabilitados y los
+ * `input[type="hidden"]` (presentes pero no enfocables).
+ */
+const TABBABLE_SELECTOR =
+  'button:not([disabled]),a[href],input:not([disabled]):not([type="hidden"]),' +
+  'select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+/** ¿Hay un tabbable real dentro del shadow? (no basta con que exista el shadow). */
+function hasTabbableInShadow(el: HTMLElement): boolean {
+  return el.shadowRoot?.querySelector(TABBABLE_SELECTOR) != null;
+}
+
+/**
+ * Heurística de interactividad. v0: tabindex propio, rol interactivo, o un tabbable
+ * GENUINO en el shadow.
+ *
+ * El barrido del shadow usa `hasTabbableInShadow` (el mismo selector que la señal de
+ * teclado), que EXCLUYE `[tabindex="-1"]`: un `-1` es foco programático, no un control
+ * (un `<span role="note" tabindex="-1">` presentacional o un `[role=dialog tabindex=-1]`
+ * contenedor no son operables). Antes el selector laxo los marcaba interactivos → como
+ * nunca son tab-reachable, fabricaban un falso fallo de `keyboard`. Alineados, la regla
+ * `keyboard` solo falla en su caso real: declara rol interactivo pero es inalcanzable.
+ */
 function isInteractive(el: HTMLElement): boolean {
   if (el.tabIndex >= 0) return true;
+  // Una región (landmark) contiene controles pero no es un control: se descarta
+  // ANTES del barrido del shadow para no marcarla interactiva por su contenido.
+  if (isLandmarkRegion(el)) return false;
   const role = el.getAttribute('role');
   if (role !== null && INTERACTIVE_ROLES.has(role)) return true;
-  const sr = el.shadowRoot;
-  return sr !== null && sr.querySelector('button,a[href],input,select,textarea,[tabindex]') !== null;
+  return hasTabbableInShadow(el);
 }
 
 /** ¿Tiene nombre accesible? Heurística v0 (aria-label/labelledby/texto). */
@@ -197,8 +364,50 @@ function hasAccessibleName(el: HTMLElement): boolean {
   return (el.textContent ?? '').trim() !== '';
 }
 
-/** Observa la accesibilidad de un custom element renderizado. axe inyectado. */
-export async function observeA11y(tagName: string, runAxe: AxeRunner): Promise<A11yObservation> {
+/**
+ * Props cuyo nombre indica que aportan el nombre accesible del componente. v0.
+ * Alta precisión a propósito (calibración C): incluir aquí una prop que NO nombra
+ * = falso negativo (omite una violación real). Por eso se excluyen `name` (atributo
+ * de formulario, no nombre a11y) y `placeholder` (no es nombre accesible fiable).
+ */
+const NAMEISH_PROP = /^(?:aria-?label|label|text|heading|caption|title|alt)$/i;
+
+/**
+ * ¿Puede el consumidor aportar el nombre accesible? (calibración C). Tres vías:
+ *   1. el contrato DECLARA un slot por defecto (`''`) → capacidad de nombre aunque
+ *      el montaje vacío no lo renderice (un slot condicional al contenido);
+ *   2. el shadow vivo expone un slot por defecto (cubre CEM incompletos);
+ *   3. el componente declara una prop de etiqueta (`label`/`ariaLabel`/…).
+ * `declaredProps`/`declaredSlots` son nombres del CEM (el harness no ve el
+ * `ComponentContract`: recibe listas planas, igual que `propTypes`). Genérico.
+ * Es una pregunta de CAPACIDAD: la responde el contrato, no el render vacío.
+ */
+function isNameSupplyable(
+  el: HTMLElement,
+  declaredProps: readonly string[],
+  declaredSlots: readonly string[],
+): boolean {
+  if (declaredSlots.includes('')) return true;
+  const runtimeSlots = readSlots(el);
+  if (runtimeSlots && runtimeSlots.includes('')) return true;
+  return declaredProps.some((p) => NAMEISH_PROP.test(p));
+}
+
+/**
+ * Observa la accesibilidad de un custom element renderizado. axe inyectado.
+ *
+ * `declaredProps`/`declaredSlots` (opcionales, nombres del CEM vía el runner)
+ * alimentan la señal `nameSupplyable`: con el montaje VACÍO un componente bien
+ * diseñado aparece sin nombre; saber si el nombre es aportable (slot por defecto /
+ * prop de etiqueta) deja que la política omita ese ruido sin perder la señal real.
+ * Ausentes → solo cuenta el slot por defecto del shadow vivo; sigue siendo genérico.
+ */
+export async function observeA11y(
+  tagName: string,
+  runAxe: AxeRunner,
+  declaredProps: readonly string[] = [],
+  declaredSlots: readonly string[] = [],
+): Promise<A11yObservation> {
   const ctor = customElements.get(tagName);
   if (!ctor) return { tagName };
 
@@ -216,9 +425,18 @@ export async function observeA11y(tagName: string, runAxe: AxeRunner): Promise<A
     const interactive = isInteractive(el);
     const obs: A11yObservation = { tagName, axeViolations, interactive };
     if (interactive) {
-      obs.keyboardReachable = el.tabIndex >= 0 || el.shadowRoot !== null;
+      // Señal real de teclado (calibración F4-cierre): el host es tabbable, o el
+      // shadow contiene un tabbable GENUINO. Antes era `tabIndex>=0 || shadowRoot
+      // !== null` → verde para TODO LitElement (shadow siempre existe): laxitud que
+      // fingía cobertura. Ahora la regla `keyboard` puede fallar de verdad cuando un
+      // componente se declara interactivo (rol/contenido) pero nada es alcanzable.
+      obs.keyboardReachable = el.tabIndex >= 0 || hasTabbableInShadow(el);
       obs.hasAccessibleName = hasAccessibleName(el);
-      // focusVisible exige render/foco real: se deja sin observar (no se omite el resto).
+      obs.nameSupplyable = isNameSupplyable(el, declaredProps, declaredSlots);
+      // focusVisible: DIFERIDO formalmente (F4-cierre, decisión 1.3). Verificar el
+      // anillo de foco exige foco real + leer `:focus-visible`/outline: caro y frágil
+      // en headless, con la peor relación señal/coste de la capa. Se deja sin observar
+      // → la regla `focus` se OMITE (regla de oro), no se finge. Ver docs/specs/checks-a11y.md.
     }
     return obs;
   } finally {
@@ -250,6 +468,49 @@ async function mountThenRemove(tagName: string, setup: (el: HTMLElement) => void
  * sembrar datos mínimos por tipo; se difiere — ver docs/specs/harness.md.)
  */
 export const ADVERSE_SCENARIOS: readonly string[] = ['empty', 'junk-attrs', 'rtl', 'remount'];
+
+/**
+ * Corre un trial capturando TODO lo que pueda romperlo: el throw síncrono/rechazo de
+ * `run()` Y los errores que el componente emite a nivel `window` (`error` /
+ * `unhandledrejection`). Lit reporta la mayoría de fallos de render a la ventana, no
+ * rechazando `updateComplete`, así que sin esto el `await` los perdía → falso «sobrevivió».
+ *
+ * Los listeners llaman `preventDefault()` para adueñarse del error: lo marca «manejado»
+ * (no rebota como uncaught en el runner de tests) y evita el `pageerror` redundante, ahora
+ * que vive estructurado en el trial. Cede un macrotask para que los throws diferidos
+ * (`setTimeout`) afloren antes de quitar los listeners. Devuelve los mensajes deduplicados.
+ *
+ * Genérico: `window`/`ErrorEvent`/`PromiseRejectionEvent`/`setTimeout` son globals del DOM,
+ * no acoplan a Lit/shibui (respeta `genericity.test.ts`).
+ */
+async function runCapturingWindowErrors(run: () => Promise<void>): Promise<string[]> {
+  const captured: string[] = [];
+  const onError = (e: ErrorEvent): void => {
+    e.preventDefault();
+    captured.push(e.message || String(e.error));
+  };
+  const onRejection = (e: PromiseRejectionEvent): void => {
+    e.preventDefault();
+    captured.push(String(e.reason));
+  };
+  window.addEventListener('error', onError);
+  window.addEventListener('unhandledrejection', onRejection);
+
+  let thrown: string | undefined;
+  try {
+    await run();
+  } catch (err) {
+    thrown = String(err);
+  }
+  // Cede un macrotask: los throws async a nivel window (p.ej. setTimeout en render) afloran aquí.
+  await new Promise<void>((resolve) => setTimeout(resolve, 0));
+
+  window.removeEventListener('error', onError);
+  window.removeEventListener('unhandledrejection', onRejection);
+
+  const all = thrown !== undefined ? [thrown, ...captured] : captured;
+  return [...new Set(all)];
+}
 
 /** Observa la resiliencia montando el componente bajo escenarios adversos. */
 export async function observeResilience(tagName: string): Promise<ResilienceObservation> {
@@ -283,11 +544,11 @@ export async function observeResilience(tagName: string): Promise<ResilienceObse
 
   const trials: ResilienceTrial[] = [];
   for (const [scenario, run] of scenarios) {
-    try {
-      await run();
+    const errors = await runCapturingWindowErrors(run);
+    if (errors.length === 0) {
       trials.push({ scenario, survived: true });
-    } catch (err) {
-      trials.push({ scenario, survived: false, error: String(err) });
+    } else {
+      trials.push({ scenario, survived: false, error: errors.join(' | ') });
     }
   }
 

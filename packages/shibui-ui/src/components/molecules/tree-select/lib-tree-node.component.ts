@@ -24,6 +24,7 @@ import { treeSelectTemplate } from './lib-tree-select.component.html';
  * @prop {boolean}   disabled       — Deshabilitado (reflected)
  * @prop {string}    placeholder    — Texto cuando no hay selección
  * @prop {string}    empty-text     — Texto sin resultados de búsqueda
+ * @prop {string}    aria-label     — Nombre accesible del control (default: "Selección en árbol")
  *
  * @fires ui-lib-tree-change   — Cada vez que cambia la selección
  *                               Detail: { selected: TreeNode[], ids: string[] }
@@ -46,6 +47,14 @@ export class LibTreeSelect extends LitElement {
   @property({ type: Boolean, reflect: true }) disabled   = false;
   @property({ type: String }) placeholder = 'Seleccionar…';
   @property({ type: String, attribute: 'empty-text' }) emptyText = 'Sin resultados';
+
+  /**
+   * Nombre accesible del control. Se refleja al host para que el selector quede
+   * nombrado incluso montado sin nodos. También etiqueta el `combobox`/trigger
+   * y el árbol inline. Aportable por el consumidor; default razonable.
+   */
+  @property({ type: String, attribute: 'aria-label', reflect: true })
+  override ariaLabel = 'Selección en árbol';
 
   /* ── Estado interno ── */
   @state() private _nodeStates: Map<string, TreeNodeState> = new Map();
@@ -276,6 +285,7 @@ export class LibTreeSelect extends LitElement {
       disabled:       this.disabled,
       placeholder:    this.placeholder,
       emptyText:      this.emptyText,
+      ariaLabel:      this.ariaLabel || 'Selección en árbol',
       searchValue:    this._search,
       triggerLabel,
       isPlaceholder:  triggerLabel === '',

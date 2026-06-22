@@ -34,6 +34,7 @@ import { build } from 'esbuild';
 import { chromium } from 'playwright';
 import { ingestCem } from '../src/ingest/cem';
 import type { CustomElementsManifest } from '../src/ingest/cem-types';
+import type { PropTypeHint } from '../src/harness/probe';
 import type {
   BrowserDiagnostic,
   ComponentObservation,
@@ -49,10 +50,29 @@ const outDir = process.argv[3] ?? resolve(PKG, 'hanko-report');
 async function main(): Promise<void> {
   // 1 · Tags a sondear: los custom elements del CEM (misma ingestión que el motor).
   const manifest = JSON.parse(readFileSync(cemPath, 'utf-8')) as CustomElementsManifest;
-  const tags = [...ingestCem(manifest).components.keys()];
+  const ingested = ingestCem(manifest);
+  const tags = [...ingested.components.keys()];
   if (tags.length === 0) {
     console.error(`hanko observe · el CEM en "${cemPath}" no declara custom elements.`);
     process.exit(2);
+  }
+
+  // Tipo DECLARADO por prop (del CEM) por tag → tipa el sentinel de reflexión en
+  // el harness (enums válidos, booleanos). Es un dato plano que se inyecta en el
+  // navegador; el harness no conoce el `ComponentContract`, solo recibe pistas.
+  const propTypesByTag: Record<string, Record<string, PropTypeHint>> = {};
+  // Slots declarados por tag (`''` = slot por defecto) → señal `nameSupplyable` de
+  // la a11y: un slot por defecto es un mecanismo de nombre aportable por el consumidor.
+  const slotsByTag: Record<string, string[]> = {};
+  for (const [tag, contract] of ingested.components) {
+    const hints: Record<string, PropTypeHint> = {};
+    for (const p of contract.properties ?? []) {
+      hints[p.property] = p.type.literals
+        ? { kind: p.type.kind, literals: p.type.literals }
+        : { kind: p.type.kind };
+    }
+    propTypesByTag[tag] = hints;
+    slotsByTag[tag] = (contract.slots ?? []).map((s) => s.name);
   }
 
   // 2 · Bundle del glue (shibui + harness + axe) → IIFE inline.
@@ -122,8 +142,8 @@ async function main(): Promise<void> {
 
     for (const tag of tags) {
       const obs = (await page.evaluate(
-        (t) => window.__hankoProbe.observe(t),
-        tag,
+        ({ t, types, slots }) => window.__hankoProbe.observe(t, types, slots),
+        { t: tag, types: propTypesByTag[tag] ?? {}, slots: slotsByTag[tag] ?? [] },
       )) as ComponentObservation;
       observations.push(obs);
     }
