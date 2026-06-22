@@ -48,13 +48,13 @@ const savingSpinnerSvg = html`
  *   └── .toolbar__file-info    ← nombre del fichero + dirty indicator
  */
 export function editorToolbarTemplate(props: EditorToolbarTemplateProps): TemplateResult {
-  const { filename, dirty, saving, showOpen, onNew, onOpen, onSave } = props;
+  const { filename, dirty, saving, showOpen, ariaLabel, onNew, onOpen, onSave } = props;
 
   const displayName = filename || 'Sin título';
   const canSave     = !saving;
 
   return html`
-    <div class="toolbar" role="toolbar" aria-label="Acciones del editor">
+    <div class="toolbar" role="toolbar" aria-label="${ariaLabel}">
 
       <!-- ACCIONES -->
       <div class="toolbar__actions">

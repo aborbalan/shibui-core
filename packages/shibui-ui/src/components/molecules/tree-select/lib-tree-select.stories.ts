@@ -133,6 +133,7 @@ Selector jerárquico con propagación bidireccional de selección.
     searchable:  { control: 'boolean', description: 'Mostrar barra de búsqueda' },
     disabled:    { control: 'boolean', description: 'Estado deshabilitado' },
     placeholder: { control: 'text',    description: 'Texto cuando no hay selección' },
+    ariaLabel:   { control: 'text', name: 'aria-label', description: 'Nombre accesible del control (default: "Selección en árbol")' },
   },
 };
 
@@ -149,6 +150,7 @@ export const Playground: Story = {
     searchable:  true,
     disabled:    false,
     placeholder: 'Seleccionar categorías…',
+    ariaLabel:   'Selección en árbol',
   },
   render: (args): TemplateResult => html`
     <div style="padding: 40px; background: var(--bg-surface); min-height: 420px;">
@@ -159,6 +161,7 @@ export const Playground: Story = {
         ?searchable="${args.searchable}"
         ?disabled="${args.disabled}"
         placeholder="${args.placeholder}"
+        aria-label="${args.ariaLabel}"
         style="width: 300px;"
         @ui-lib-tree-change="${(e: CustomEvent): void => console.log('[tree-change]', e.detail)}"
         @ui-lib-tree-confirm="${(e: CustomEvent): void => console.log('[tree-confirm]', e.detail)}"

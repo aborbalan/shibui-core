@@ -16,7 +16,7 @@ import {
 export function renderClassic(ctx: LibHeader): TemplateResult {
   const hasDecoration = parseDecorations(ctx.decoration).length > 0;
   return html`
-    <div class="hdr">
+    <header class="hdr">
       ${hasDecoration
         ? html`<div class="hdr-fx" aria-hidden="true">
             ${celadonDecorationLayers(ctx.decoration)}
@@ -26,6 +26,6 @@ export function renderClassic(ctx: LibHeader): TemplateResult {
       <nav class="hdr-nav">${renderLinks(ctx, ctx.links)}</nav>
       ${renderActions(ctx)}
       ${renderHamburger(ctx)}
-    </div>
+    </header>
     ${renderMobileDrawer(ctx)}`;
 }

@@ -11,7 +11,7 @@ import { renderBreadcrumbs, svgSearch, svgBell } from './header-shared.html';
  */
 export function renderAppBar(ctx: LibHeader): TemplateResult {
   return html`
-    <div class="hdr">
+    <header class="hdr">
 
       <!-- Logo mark (sin texto) -->
       <div class="hdr-logo-mark" style="flex-shrink:0;"></div>
@@ -70,5 +70,5 @@ export function renderAppBar(ctx: LibHeader): TemplateResult {
       <!-- Avatar -->
       <div class="hdr-avatar">${ctx.userInitials || ctx.userName.slice(0, 1)}</div>
 
-    </div>`;
+    </header>`;
 }

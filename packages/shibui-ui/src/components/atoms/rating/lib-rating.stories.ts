@@ -17,6 +17,7 @@ const meta: Meta = {
     readonly:  { control: 'boolean' },
     disabled:  { control: 'boolean' },
     showCount: { control: 'boolean' },
+    ariaLabel: { control: 'text', name: 'aria-label', description: 'Nombre accesible del control (default: "Valoración")' },
   },
 };
 export default meta;
@@ -40,7 +41,7 @@ const row = (label: string, content: TemplateResult): TemplateResult => html`
    Playground
    ────────────────────────────────────────────── */
 export const Playground: Story = {
-  args: { value: 3, max: 5, size: 'md', tone: 'default', icon: 'star', readonly: false, disabled: false, showCount: false },
+  args: { value: 3, max: 5, size: 'md', tone: 'default', icon: 'star', readonly: false, disabled: false, showCount: false, ariaLabel: 'Valoración' },
   render: (args): TemplateResult => html`
     <div style="padding:2rem;">
       <lib-rating
@@ -49,6 +50,7 @@ export const Playground: Story = {
         size="${args.size}"
         tone="${args.tone}"
         icon="${args.icon}"
+        aria-label="${args.ariaLabel}"
         ?readonly="${args.readonly}"
         ?disabled="${args.disabled}"
         ?show-count="${args.showCount}"
@@ -346,6 +348,27 @@ export const TestReadonlyBlocksEvent: Story = {
     if (items[4]) fireEvent.click(items[4] as HTMLElement);
 
     expect(fired).toBe(false);
+  },
+};
+
+export const TestAccessibleName: Story = {
+  name: 'Test · expone nombre accesible (aria-label)',
+  tags: ['test'],
+  render: (): TemplateResult => html`
+    <div style="padding:2rem;">
+      <lib-rating value="0" max="5"></lib-rating>
+      <lib-rating value="0" max="5" aria-label="Califica el producto"></lib-rating>
+    </div>
+  `,
+  play: async ({ canvasElement }): Promise<void> => {
+    const ratings = canvasElement.querySelectorAll('lib-rating');
+    const byDefault = ratings[0] as HTMLElement;
+    const custom    = ratings[1] as HTMLElement;
+
+    // Default razonable reflejado al host aunque se monte sin valor.
+    expect(byDefault.getAttribute('aria-label')).toBe('Valoración');
+    // El consumidor puede aportar el nombre.
+    expect(custom.getAttribute('aria-label')).toBe('Califica el producto');
   },
 };
 
