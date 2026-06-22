@@ -3,8 +3,11 @@
   "compilerOptions": {
     "noEmit": false,
     "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+    // Sin declaration-maps ni source-maps de tsc: el tarball no incluye src/
+    // (files:[dist,README]) → apuntarían a fuentes ausentes. El .js.map lo
+    // emite esbuild autocontenido (sourcesContent). Ver scripts/build.mjs · ADR-004.
+    "declarationMap": false,
+    "sourceMap": false,
     "outDir": "dist",
     "rootDir": "src"
   },

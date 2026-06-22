@@ -1,3 +1,6 @@
 # Artefactos de vitest browser (Playwright): screenshots de fallo y adjuntos.
 .vitest-attachments/
 **/__screenshots__/
+
+# Tarballs de `npm pack` (validación de empaquetado F7); el publish los genera al vuelo.
+*.tgz
