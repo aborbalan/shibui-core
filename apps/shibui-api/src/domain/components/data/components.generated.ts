@@ -3571,6 +3571,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "false",
           "description": "Muestra el botón \"Abrir fichero\".",
           "attribute": "show-open"
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string",
+          "default": "'Acciones del editor'",
+          "description": "Nombre accesible de la barra (`role=\"toolbar\"`). Se refleja al host para que\nel control quede nombrado incluso sin contenido visible. Aportable por el\nconsumidor; default razonable.",
+          "attribute": "aria-label"
         }
       ],
       "slots": [],
@@ -6379,6 +6386,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "null",
           "description": "— Número de reseñas a mostrar junto al valor numérico",
           "attribute": "count"
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string",
+          "default": "'Valoración'",
+          "description": "Nombre accesible del control. Se refleja al host para que la valoración\nquede nombrada incluso montada sin contenido. El `role` interno (group /\nimg) conserva además su etiqueta contextual (\"Valorar de 1 a N\",\n\"Valoración: X de N\"). Aportable por el consumidor; default razonable.",
+          "attribute": "aria-label"
         }
       ],
       "slots": [],
@@ -8803,6 +8817,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "'Sin resultados'",
           "description": "— Texto sin resultados de búsqueda",
           "attribute": "empty-text"
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string",
+          "default": "'Selección en árbol'",
+          "description": "Nombre accesible del control. Se refleja al host para que el selector quede\nnombrado incluso montado sin nodos. También etiqueta el `combobox`/trigger\ny el árbol inline. Aportable por el consumidor; default razonable.",
+          "attribute": "aria-label"
         }
       ],
       "slots": [],

@@ -17,6 +17,7 @@ import type { RatingSize, RatingTone, RatingIcon } from './lib-rating.types';
  * @prop disabled    — Opacity 0.4, sin interacción
  * @prop show-count  — Muestra el valor numérico junto a las estrellas
  * @prop count       — Número de reseñas a mostrar junto al valor numérico
+ * @prop aria-label  — Nombre accesible del control (default: "Valoración")
  *
  * @fires ui-lib-rating-change — { detail: { value: number, prev: number } }
  */
@@ -53,6 +54,15 @@ export class LibRating extends LitElement {
 
   @property({ type: Number })
   count: number | null = null;
+
+  /**
+   * Nombre accesible del control. Se refleja al host para que la valoración
+   * quede nombrada incluso montada sin contenido. El `role` interno (group /
+   * img) conserva además su etiqueta contextual ("Valorar de 1 a N",
+   * "Valoración: X de N"). Aportable por el consumidor; default razonable.
+   */
+  @property({ type: String, attribute: 'aria-label', reflect: true })
+  override ariaLabel = 'Valoración';
 
   /* ── Estado interno de hover ── */
   @state() _hoverValue = 0;
