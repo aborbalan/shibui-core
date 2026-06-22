@@ -22,7 +22,7 @@ export function renderCentered(ctx: LibHeader): TemplateResult {
           : nothing}
       </div>` : nothing}
 
-    <div class="hdr">
+    <header class="hdr">
       <nav class="hdr-nav hdr-nav--centered-left">
         ${renderLinks(ctx, leftLinks)}
       </nav>
@@ -32,6 +32,6 @@ export function renderCentered(ctx: LibHeader): TemplateResult {
         ${renderActions(ctx)}
       </nav>
       ${renderHamburger(ctx)}
-    </div>
+    </header>
     ${renderMobileDrawer(ctx)}`;
 }
