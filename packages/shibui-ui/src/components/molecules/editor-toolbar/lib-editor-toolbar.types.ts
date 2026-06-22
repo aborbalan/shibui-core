@@ -7,6 +7,7 @@ export interface EditorToolbarTemplateProps {
   dirty:     boolean;
   saving:    boolean;
   showOpen:  boolean;
+  ariaLabel: string;
   onNew:     () => void;
   onOpen:    () => void;
   onSave:    () => void;
