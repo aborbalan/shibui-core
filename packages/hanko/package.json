@@ -1,9 +1,8 @@
 {
   "name": "@shibui-ui/hanko",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "判子 — motor de verificación de confianza (trust) manifest-driven para Web Components.",
   "type": "module",
-  "private": true,
   "license": "MIT",
   "keywords": [
     "web-components",
@@ -42,7 +41,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "node scripts/build.mjs",
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",

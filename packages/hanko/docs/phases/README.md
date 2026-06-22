@@ -17,8 +17,12 @@ calibraciones, **validados ejecutando el dogfood** sobre los ~102 componentes de
 señal honesta (Trust Report: 102 · **48 sellados** medidos fresco el 2026-06-22); el sin-sello restante es
 **drift del CEM de shibui**, no falsos positivos de hanko. **Hito 3: F6 (Trust Report + gate) TERMINADA** — gate
 duro de CI en dos carriles desacoplados (correctitud de hanko + regresión sobre baseline,
-[ADR-003](../decisions/adr-003-gate-regresion.md)). **F7 (publicación npm) diferida.** El lockfile ya incluye
-`@shibui-ui/hanko` (`--frozen-lockfile` pasa) → el gate es efectivo en CI sin pasos extra.
+[ADR-003](../decisions/adr-003-gate-regresion.md)). **F7 (desacople + publicación npm) ✅ TERMINADA** — emisión
+ESM con esbuild (bundle de fichero único + `.d.ts` con extensiones), `gate` expuesto en la superficie pública,
+`private` retirado y `version 0.1.0`; **validado instalando el tarball en un proyecto externo** (Node-ESM puro +
+tipos `nodenext`). El primer `npm publish` es manual (lo ejecuta un humano/CI con red/auth; ADR-004). El lockfile
+ya incluye `@shibui-ui/hanko` (`--frozen-lockfile` pasa) → el gate es efectivo en CI sin pasos extra.
+**Las 8 fases del plan están cerradas.**
 
 **Orden de lectura recomendado:**
 1. Memoria `project_hanko.md` (se autocarga) — contexto y decisiones vivas.
@@ -39,8 +43,9 @@ duro de CI en dos carriles desacoplados (correctitud de hanko + regresión sobre
   (PR #503) y se sincronizó `develop ↔ main` (PR #504 + back-merge). A partir de aquí, **cada fase = rama
   `feature/hanko-*` desde `develop`** y PR a `develop` (flujo correcto).
 
-**Próximo paso accionable:** **F7 (publicación npm)** — desacople final + build publicable + release (diferida a
-propósito; quitar `private: true`). El gate de F6 ya es efectivo (el lockfile incluye `@shibui-ui/hanko`).
+**Próximo paso accionable:** **plan completo (F0–F7) cerrado.** Lo único pendiente es la *ejecución* del primer
+`npm publish` (manual, con red/auth; comando en [`../specs/packaging.md`](../specs/packaging.md)) y, a vNext,
+automatizar el release con provenance + el histórico/badges del Trust Report.
 
 ---
 
@@ -50,7 +55,7 @@ propósito; quitar `private: true`). El gate de F6 ya es efectivo (el lockfile i
 |---|---|---|
 | **1 · Cimientos e ingestión** | F0 · F1 · F2 | Esqueleto, modelo, lectura de manifest, primer sello a escala real |
 | **2 · Capas de verificación** | F3 · F4 · F5 | Contrato, accesibilidad y resiliencia |
-| **3 · Reporte y desacople** | F6 · F7 | Trust Report + gates CI, publicación npm (diferida) |
+| **3 · Reporte y desacople** | F6 · F7 | Trust Report + gates CI, desacople verificable + publicación npm |
 
 Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2** (el primer sello valida la tesis).
 
@@ -151,12 +156,17 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
   Floor en PR / 4 capas en main). Suelo medido 2026-06-22: Floor 102/102 · 4 capas 48/102. El lockfile ya incluye
   `@shibui-ui/hanko` → el gate es efectivo en CI.
 
-### F7 · Desacople + publicación npm — ⬜ diferida
+### F7 · Desacople + publicación npm — ✅ hecho
 - **Objetivo:** garantizar que el `core` no depende de shibui y publicar `@shibui-ui/hanko` como paquete independiente.
-- **Entregables (previstos):** verificación de genericidad del core; build publicable; release npm.
-- **Criterios:** el core no importa nada de shibui; el paquete se instala y usa en un proyecto externo.
-- **Dependencias:** F6 · validación del uso local. **Diferida** a propósito.
-- **Estado:** ⬜.
+- **Entregables:** guard de genericidad ejecutable (`src/genericity.test.ts`) + barrel público `src/index.ts`
+  (incr. 1, PR #530); **emisión Node-ESM** (`scripts/build.mjs`: bundle esbuild de fichero único + `.d.ts` con
+  extensiones); `gate` (F6) expuesto en la superficie pública (`Coverage`→`BaselineCoverage`); `private` retirado
+  + `version 0.1.0`; spec [`packaging.md`](../specs/packaging.md) + [ADR-004](../decisions/adr-004-emision-y-publicacion.md).
+- **Criterios:** el core no importa nada de shibui (test verde); el paquete **se instala y usa en un proyecto
+  externo** (validado: runtime Node-ESM + tipos `nodenext` con `npm pack` + instalación fuera del monorepo).
+- **Dependencias:** F6 · validación del uso local (cubierta por el dogfood de F3–F6).
+- **Estado:** ✅ **TERMINADA**. Pendiente solo la *ejecución* del primer `npm publish` (manual, con red/auth) y, a
+  vNext, automatizar el release con provenance.
 
 ---
 
@@ -171,7 +181,7 @@ Esfuerzo F0–F6 ≈ **12–16 días**. Primera tanda acordada = **F0 + F1 + F2*
 | F4 | ✅ **hecho** — motor + harness + calibraciones C/F4-cierre; validada en dogfood (#554/#555) |
 | F5 | ✅ **hecho** — motor + harness + calibración F5-cierre (`remount` obligatorio honesto); validada en dogfood |
 | F6 | ✅ **hecho** — Trust Report (puro + puente 4 capas + deploy + issues) + **gate duro** (`hanko-test` + regresión Floor/4-capas, ADR-003); suelo 102 Floor · 48 sellados. Lockfile ya incluye hanko (gate efectivo) |
-| F7 | ⬜ diferida — desacople final + publicación npm |
+| F7 | ✅ **hecho** — desacople verificable + emisión Node-ESM (esbuild) + `gate` público + `private` retirado/`0.1.0`; validado en proyecto externo (ADR-004). Publish manual pendiente de ejecutar |
 
 > Caso especial fuera de este plan (componentes sin manifest / formato custom): ver
 > [`../special-cases/manifest-ausente-o-custom.html`](../special-cases/manifest-ausente-o-custom.html). Decisión **abierta**.

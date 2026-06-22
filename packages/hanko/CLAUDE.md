@@ -19,8 +19,9 @@ emite un **Trust Report** (JSON + HTML).
    normaliza en el borde de ingestión (`src/ingest/`).
 3. **Generalizar desde el uso, no especular.** No se añade una opción al core hasta que un
    consumer real la necesita.
-4. **`shibui-ui` = consumer #1** (~99 componentes). Uso local primero; publicar a npm diferido
-   (de ahí `private: true` aún, pese a tener ya metadata npm y barrel público).
+4. **`shibui-ui` = consumer #1** (~99 componentes). Uso local primero, validado por el dogfood (F3–F6). F7
+   cerró el desacople y el empaquetado: paquete publicable (`private` retirado, `version 0.1.0`), emisión
+   Node-ESM validada en un proyecto externo. El primer `npm publish` es manual (ver `docs/specs/packaging.md`).
 
 **Regla de oro — *ausencia ≠ incumplimiento*:** hanko valida **solo lo que el manifest
 declara**. Lo no declarado no se verifica (no es fallo); lo declarado que el runtime
@@ -55,10 +56,12 @@ pnpm --filter @shibui-ui/hanko test           # vitest run (node)
 pnpm --filter @shibui-ui/hanko test:browser   # vitest --config vitest.browser.config.ts
 pnpm --filter @shibui-ui/hanko smoke          # tsx src/smoke/run.ts
 pnpm --filter @shibui-ui/hanko report         # tsx src/report/run.ts → genera el Trust Report
-pnpm --filter @shibui-ui/hanko build          # tsc -p tsconfig.build.json → emite dist/
+pnpm --filter @shibui-ui/hanko build          # scripts/build.mjs → emite dist/ (bundle ESM + d.ts)
 ```
 
-- `tsconfig.json` = type-check (no emite). `tsconfig.build.json` = emite `dist/` para publicación.
+- `tsconfig.json` = type-check (no emite). El build de publicación es `scripts/build.mjs`: esbuild empaqueta
+  `src/index.ts` en un `dist/index.js` ESM autocontenido + `tsc --emitDeclarationOnly` (config en
+  `tsconfig.build.json`) con fixup de extensiones en los `.d.ts`. Ver [ADR-004](docs/decisions/adr-004-emision-y-publicacion.md).
 
 ---
 
