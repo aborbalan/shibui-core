@@ -1,7 +1,9 @@
 # Spec · Empaquetado y desacople (F7)
 
-> **Estado:** v0 (incremento 1) — desacople verificable + paquete publicable. El `npm publish` real queda
-> **diferido** (decisión del plan: hasta validar el uso local / dogfood).
+> **Estado:** ✅ **TERMINADA** — desacople verificable + paquete publicable + emisión Node-ESM validada en un
+> proyecto externo. `private` retirado y versión `0.1.0` fijada. El `npm publish` real lo ejecuta un humano/CI
+> (este entorno no tiene red/auth); la **automatización del release** y la **provenance** quedan diferidas (ver
+> §3 y [ADR-004](../decisions/adr-004-emision-y-publicacion.md)).
 > **Fase:** F7. Cierra el principio de arquitectura nº1 (el core no depende de shibui) con un test ejecutable.
 
 ---
@@ -31,26 +33,46 @@ mira imports, no cadenas: el canal CEM queda permitido, el acoplamiento por cód
 
 | Pieza | Qué |
 |---|---|
-| [`src/index.ts`](../../src/index.ts) | **barrel público**: reexporta core · ingest · checks · report · harness · smoke |
-| [`tsconfig.build.json`](../../tsconfig.build.json) | build de emisión → `dist/` (`.js` + `.d.ts` + maps), excluye tests |
-| `package.json` | `exports`/`main`/`module`/`types` → `dist/`, `files`, `sideEffects:false`, `publishConfig.access:public`, `build`/`prepublishOnly`, keywords/repository |
+| [`src/index.ts`](../../src/index.ts) | **barrel público** (único entry `.`): reexporta core · ingest · checks · report · harness · smoke. El `gate` (F6) se expone aquí; su `Coverage` se reexporta con alias **`BaselineCoverage`** (colisiona con el `Coverage` de `smoke`). |
+| [`scripts/build.mjs`](../../scripts/build.mjs) | **build de emisión** (`pnpm build`). **JS:** esbuild empaqueta `src/index.ts` en un único `dist/index.js` ESM autocontenido (sin imports relativos → sin problema de extensiones). **DTS:** `tsc --emitDeclarationOnly` + *fixup* que añade `.js`/`/index.js` a los especificadores (resuelve bajo `nodenext`). `.js.map` autocontenido; sin maps de tsc. |
+| [`tsconfig.build.json`](../../tsconfig.build.json) | config del paso DTS (declaraciones, sin maps; excluye tests). |
+| `package.json` | `exports`/`main`/`module`/`types` → `dist/`, `files:[dist,README.md]`, `sideEffects:false`, `publishConfig.access:public`, `build`/`prepublishOnly`, keywords/repository. **`private` retirado**, `version: 0.1.0`. |
 
 ```bash
-pnpm --filter @shibui-ui/hanko build      # emite dist/
+pnpm --filter @shibui-ui/hanko build      # emite dist/ (bundle ESM + d.ts con extensiones)
 ```
 
-## 3 · Qué queda DIFERIDO (no se hace aún)
+**Validado (criterio 7.5):** `npm pack` + instalación del tarball en un proyecto externo (fuera del monorepo)
+→ `import` del barrel y ejecución de un check sobre un CEM de muestra en **Node-ESM puro**, más resolución de
+tipos bajo `moduleResolution: nodenext`. El emisor `tsc`/bundler anterior (imports sin extensión) fallaba aquí
+con `ERR_MODULE_NOT_FOUND`; el bundle de esbuild lo resuelve. Decisión completa en
+[ADR-004](../decisions/adr-004-emision-y-publicacion.md).
 
-- **`npm publish` real**: el paquete sigue `private: true` (pestillo de seguridad). Publicar exige quitarlo,
-  versionar (≥ `0.1.0`/`1.0.0`) y credenciales — **tras** validar el harness en navegador y dogfoodear shibui.
-- **Bundler para ESM-Node nativo**: el build con `tsc` (moduleResolution `bundler`) emite imports
-  **sin extensión** → sirve a consumidores con bundler (Vite, el propio shibui), pero un Node ESM puro
-  necesitaría `.js` explícitas. Evaluar `tsup` al publicar. No se especula ahora.
+## 3 · Publicación y qué queda diferido
 
-## Criterios de aceptación (F7 · incremento 1)
+**El paquete es publicable.** `private` retirado, `version: 0.1.0`, scope `@shibui-ui` (reutiliza el token
+`NPM_SECRET` de shibui). Primer publish **manual** (decisión 7.3, ADR-004), sin tocar el semantic-release de
+shibui:
 
-1. `genericity.test.ts` pasa sobre el código actual y su autovalidación detecta un import prohibido.
-2. `src/index.ts` reexporta la superficie pública sin colisiones de nombres.
-3. `tsconfig.build.json` emite `dist/` con tipos, excluyendo tests.
-4. `package.json` describe los entry points (`exports`/`types`/`files`) y mantiene `private: true`.
-5. El `npm publish` real y la elección de bundler quedan documentados como diferidos.
+```bash
+pnpm --filter @shibui-ui/hanko build        # prepublishOnly también lo corre
+cd packages/hanko && npm publish --access public
+```
+
+Lo ejecuta un humano/CI con red y auth (el entorno de desarrollo aquí tiene interceptación TLS y no está
+autenticado). Diferido a vNext:
+
+- **Provenance** (`--provenance`): requiere CI con OIDC; un publish local manual no la genera. Llega al
+  automatizar el release.
+- **Automatización del release** (semantic-release multi-paquete o workflow propio): se prefirió el publish
+  manual como primer paso para no arriesgar el release estable de `@shibui-ui/ui`.
+- **Histórico/badges del Trust Report:** diferido a vNext por ADR-003 (ajeno a F7).
+
+## Criterios de aceptación (F7) — ✅
+
+1. `genericity.test.ts` pasa sobre el código actual y su autovalidación detecta un import prohibido (intacto).
+2. `src/index.ts` reexporta la superficie pública sin colisiones (gate expuesto; `Coverage`→`BaselineCoverage`).
+3. El build emite `dist/` instalable-y-ejecutable en **Node-ESM puro** (bundle ESM + `.d.ts` con extensiones).
+4. `npm pack` + instalación en un **proyecto externo** importa y corre el paquete (runtime + tipos `nodenext`).
+5. `private` retirado y `version` fijada (`0.1.0`) **tras** la validación externa; ningún workflow auto-publica.
+6. Formato de emisión y pipeline de release documentados en [ADR-004](../decisions/adr-004-emision-y-publicacion.md).
