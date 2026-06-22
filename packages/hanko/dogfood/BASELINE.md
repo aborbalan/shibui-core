@@ -27,3 +27,15 @@ diferir levemente en el ubuntu de CI. Si la primera corrida real del gate de 4 c
 regresión espuria, refresca el baseline desde el artefacto `hanko-trust-report` que sube el job
 `deploy-hanko-report` (descárgalo, copia su `trust-report.json` y corre `baseline:write`). El gate per-tag solo
 falla si un tag **sellado** se cae, así que el riesgo está acotado a sellos en el borde.
+
+## Cobertura y exit codes (no confundir con regresión)
+
+El gate compara **misma cobertura con misma cobertura**: `gate.ts` deriva la cobertura del propio report y, si no
+casa con la del baseline, sale con **exit 2** (error de config), no exit 1 (regresión). Dos consecuencias:
+
+- **Sonda inestable en `main`:** si `observe` (chromium) falla, `report` degrada a Floor → el report queda con
+  cobertura `floor` y `gate` (baseline de 4 capas) sale **exit 2**. Es honesto (sin sonda no se pueden verificar
+  las 4 capas), no una regresión. El report Floor ya se publicó y el artefacto subió; re-lanza el job.
+- **`baseline:write` toma la cobertura del report presente:** corre `report` con las observaciones (4 capas)
+  **antes** de `baseline:write`, o el baseline saldrá etiquetado `floor`. El guard de cobertura lo atrapa después
+  (exit 2, nunca un falso verde), pero tendrías que regenerarlo bien.
