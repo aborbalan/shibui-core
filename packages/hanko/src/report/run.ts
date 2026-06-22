@@ -32,7 +32,7 @@ import { floorCheck } from '../checks/floor';
 import { contractCheck } from '../checks/contract';
 import { a11yCheck } from '../checks/a11y';
 import { resilienceCheck } from '../checks/resilience';
-import { ADVERSE_SCENARIOS } from '../harness/probe';
+import { DATA_DEPENDENT_SCENARIOS } from '../harness/probe';
 import { buildTrustReport, type ComponentChecks } from './trust-report';
 import { renderTrustReportJson, renderTrustReportHtml } from './render';
 import type { CustomElementsManifest } from '../ingest/cem-types';
@@ -86,9 +86,10 @@ const components: ComponentChecks[] = [...set.components.values()].map((c) => {
     // dentro de cada check: faceta no observada → skipped, no fallo.
     checks.contract = contractCheck(c, obs.runtime);
     checks.a11y = a11yCheck(obs.a11y);
-    // Política: petar en un escenario adverso (sin datos) es tolerable (warning);
-    // solo `valid-min` (montado con datos mínimos) descalifica el sello.
-    checks.resilience = resilienceCheck(obs.resilience, { optional: [...ADVERSE_SCENARIOS] });
+    // Política (5.1): petar en un escenario data-dependent (sin datos) es tolerable
+    // (warning); `remount` NO es tolerable — un componente sano sobrevive a re-montarse
+    // vacío, así que su crash descalifica el sello (escenario obligatorio honesto).
+    checks.resilience = resilienceCheck(obs.resilience, { optional: [...DATA_DEPENDENT_SCENARIOS] });
   }
   return checks;
 });
