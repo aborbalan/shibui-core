@@ -76,7 +76,7 @@ import { Profile } from '@data/cv';
         font-size: clamp(18rem, 48vw, 38rem);
         line-height: 1;
         color: var(--text-accent, currentColor);
-        opacity: 0.05;
+        opacity: 0.06;
         pointer-events: none;
         user-select: none;
       }
@@ -168,17 +168,24 @@ import { Profile } from '@data/cv';
       }
 
       /* Parallax: --p (0→1) lo escribe el componente al hacer scroll.
-         Capas a distinta velocidad = profundidad. Solo si el usuario no
+         Las capas DIVERGEN — el contenido baja, el sello sube + deriva y
+         escala — para que la separación se note. Solo si el usuario no
          pidió reducir movimiento. */
       @media (prefers-reduced-motion: no-preference) {
         .hero__inner {
-          transform: translateY(calc(var(--p, 0) * 70px));
-          opacity: calc(1 - var(--p, 0) * 0.6);
+          transform: translateY(calc(var(--p, 0) * 64px));
+          opacity: calc(1 - var(--p, 0) * 0.65);
           will-change: transform, opacity;
         }
         .hero__mark {
-          transform: translateY(calc(var(--p, 0) * 26px));
-          will-change: transform;
+          transform: translate3d(
+              calc(var(--p, 0) * 40px),
+              calc(var(--p, 0) * -72px),
+              0
+            )
+            scale(calc(1 + var(--p, 0) * 0.12));
+          opacity: calc(0.06 + var(--p, 0) * 0.04);
+          will-change: transform, opacity;
         }
       }
 
