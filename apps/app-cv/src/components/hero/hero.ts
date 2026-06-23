@@ -22,11 +22,17 @@ import { Profile } from '@data/cv';
 
       <p class="hero__tagline">{{ profile().tagline }}</p>
 
-      <nav class="hero__links" aria-label="Contacto">
-        <a [href]="profile().github" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a [href]="profile().linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a [href]="'mailto:' + profile().email">Email</a>
-      </nav>
+      <div class="hero__actions">
+        <nav class="hero__links" aria-label="Contacto">
+          <a [href]="profile().github" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a [href]="profile().linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a [href]="'mailto:' + profile().email">Email</a>
+        </nav>
+
+        <button type="button" class="hero__print no-print" (click)="onPrint()">
+          Descargar PDF
+        </button>
+      </div>
     </section>
   `,
   styles: [
@@ -52,11 +58,41 @@ import { Profile } from '@data/cv';
         color: var(--text-secondary);
         overflow-wrap: anywhere;
       }
+      .hero__actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--lib-space-md, 16px) var(--lib-space-xl, 32px);
+        margin-top: var(--lib-space-sm, 8px);
+      }
       .hero__links {
         display: flex;
         flex-wrap: wrap;
         gap: var(--lib-space-md, 16px) var(--lib-space-lg, 24px);
-        margin-top: var(--lib-space-sm, 8px);
+      }
+      .hero__print {
+        font-family: var(--lib-font-mono, monospace);
+        font-size: var(--text-sm, 0.8125rem);
+        letter-spacing: var(--tracking-wide, 0.08em);
+        text-transform: uppercase;
+        color: var(--text-primary);
+        background: transparent;
+        border: 1px solid var(--border-default, currentColor);
+        border-radius: var(--lib-radius-sm, 4px);
+        padding: 8px 16px;
+        cursor: pointer;
+        transition:
+          color 0.2s ease,
+          border-color 0.2s ease,
+          background 0.2s ease;
+      }
+      .hero__print:hover {
+        color: var(--text-accent);
+        border-color: var(--text-accent);
+      }
+      .hero__print:focus-visible {
+        outline: 2px solid var(--border-focus, currentColor);
+        outline-offset: 2px;
       }
       .hero__links a {
         position: relative;
@@ -93,4 +129,9 @@ import { Profile } from '@data/cv';
 })
 export class Hero {
   readonly profile = input.required<Profile>();
+
+  /** Abre el diálogo de impresión del navegador (→ «Guardar como PDF»). */
+  protected onPrint(): void {
+    window.print();
+  }
 }
