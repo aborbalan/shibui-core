@@ -57,6 +57,23 @@ export interface LanguageItem {
   level: string;
 }
 
+export interface ProjectItem {
+  name: string;
+  /** Kicker mono en el header de la card (rol del proyecto) */
+  tag: string;
+  /** Una línea: qué es y por qué importa */
+  description: string;
+  stack: string[];
+  /** Demo en vivo (opcional) */
+  demo?: string;
+  /** Código — deep-link a la subcarpeta del monorepo (opcional) */
+  code?: string;
+  /** Kanji watermark de la card (guiño del design system) */
+  kanji?: string;
+  /** Proyecto destacado → variante featured de la card */
+  highlight?: boolean;
+}
+
 // ─────────────────────────────────────────────────────────────
 // PERFIL
 // ─────────────────────────────────────────────────────────────
@@ -172,6 +189,57 @@ export const education: EducationItem[] = [
     title: 'Bachillerato — Ciencias físicas',
     place: 'IES Torre de los Espejos',
     period: '2014 – 2016',
+  },
+];
+
+// ─────────────────────────────────────────────────────────────
+// PROYECTOS — trabajo propio. El ecosistema Shibui es un monorepo:
+// un solo repo cohesionado, no repos dispersos → cada card enlaza a
+// su demo en vivo y/o a su subcarpeta dentro del monorepo público.
+// ─────────────────────────────────────────────────────────────
+const REPO = 'https://github.com/aborbalan/shibui-core/tree/main';
+
+export const projects: ProjectItem[] = [
+  {
+    name: '@shibui/ui',
+    tag: 'Sistema de diseño',
+    description:
+      'Librería de Web Components (Lit) agnóstica de framework con el sistema de diseño Katachi: el mismo componente, idéntico, consumido desde React, Angular y Svelte.',
+    stack: ['Lit', 'Web Components', 'TypeScript', 'Storybook', 'CSS Tokens'],
+    demo: 'https://shibui-showcase-storybook.web.app',
+    code: `${REPO}/packages/shibui-ui`,
+    kanji: '渋',
+    highlight: true,
+  },
+  {
+    name: 'hanko',
+    tag: 'Trust engine',
+    description:
+      'Motor de verificación manifest-driven para Web Components: audita contrato, accesibilidad y resiliencia, y emite un Trust Report con sello por componente.',
+    stack: ['TypeScript', 'Vitest', 'Playwright', 'axe-core', 'Node ESM'],
+    demo: 'https://hanko-report.web.app',
+    code: `${REPO}/packages/hanko`,
+    kanji: '印',
+    highlight: true,
+  },
+  {
+    name: 'Showcase multi-framework',
+    tag: 'Agnosticismo real',
+    description:
+      'La misma librería consumida en tres apps —React, Angular y Svelte— como prueba de que el diseño y el comportamiento son verdaderamente agnósticos del framework.',
+    stack: ['React', 'Angular', 'Svelte', 'pnpm workspaces'],
+    demo: 'https://shibui-showcase-react.web.app',
+    code: `${REPO}/apps`,
+    kanji: '三',
+  },
+  {
+    name: 'Entorno de escritorio Tauri',
+    tag: 'Desktop · Rust',
+    description:
+      'App de escritorio multi-ventana (Tauri 2 + React 19 + backend Rust) con un visualizador interactivo de git-graph, sobre el mismo ecosistema de componentes.',
+    stack: ['Tauri 2', 'React 19', 'Rust', 'Vite'],
+    code: `${REPO}/apps/app-tauri`,
+    kanji: '卓',
   },
 ];
 

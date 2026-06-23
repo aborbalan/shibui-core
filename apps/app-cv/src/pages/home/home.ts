@@ -1,10 +1,11 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Hero } from '@components/hero/hero';
 import { Experience } from '@components/experience/experience';
+import { Projects } from '@components/projects/projects';
 import { Skills } from '@components/skills/skills';
 import { Education } from '@components/education/education';
 import { Languages } from '@components/languages/languages';
-import { profile, experience, skills, education, languages } from '@data/cv';
+import { profile, experience, projects, skills, education, languages } from '@data/cv';
 
 /**
  * Página única del CV. Smart component: inyecta los datos estáticos
@@ -13,7 +14,7 @@ import { profile, experience, skills, education, languages } from '@data/cv';
 @Component({
   selector: 'cv-home',
   standalone: true,
-  imports: [Hero, Experience, Skills, Education, Languages],
+  imports: [Hero, Experience, Projects, Skills, Education, Languages],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <lib-background variant="kaki-glow" class="bg">
@@ -22,6 +23,9 @@ import { profile, experience, skills, education, languages } from '@data/cv';
 
         <lib-divider></lib-divider>
         <cv-experience [items]="experience" />
+
+        <lib-divider></lib-divider>
+        <cv-projects [items]="projects" />
 
         <lib-divider></lib-divider>
         <cv-skills [groups]="skills" />
@@ -59,6 +63,7 @@ import { profile, experience, skills, education, languages } from '@data/cv';
         margin-block: var(--lib-space-xl, 32px);
       }
       .page > cv-experience,
+      .page > cv-projects,
       .page > cv-skills,
       .page > cv-education,
       .page > cv-languages {
@@ -83,6 +88,7 @@ import { profile, experience, skills, education, languages } from '@data/cv';
 export class HomePage {
   protected readonly profile = profile;
   protected readonly experience = experience;
+  protected readonly projects = projects;
   protected readonly skills = skills;
   protected readonly education = education;
   protected readonly languages = languages;
