@@ -5,7 +5,7 @@ import { Projects } from '@components/projects/projects';
 import { Skills } from '@components/skills/skills';
 import { Education } from '@components/education/education';
 import { Languages } from '@components/languages/languages';
-import { profile, experience, projects, skills, education, languages } from '@data/cv';
+import { profile, experience, projects, skills, fullStack, education, languages } from '@data/cv';
 
 /**
  * Página única del CV. Smart component: inyecta los datos estáticos
@@ -28,7 +28,7 @@ import { profile, experience, projects, skills, education, languages } from '@da
         <cv-projects [items]="projects" />
 
         <lib-divider></lib-divider>
-        <cv-skills [groups]="skills" />
+        <cv-skills [groups]="skills" [fullStack]="fullStack" />
 
         <lib-divider></lib-divider>
         <cv-education [items]="education" />
@@ -90,6 +90,7 @@ export class HomePage {
   protected readonly experience = experience;
   protected readonly projects = projects;
   protected readonly skills = skills;
+  protected readonly fullStack = fullStack;
   protected readonly education = education;
   protected readonly languages = languages;
   protected readonly year = new Date().getFullYear();

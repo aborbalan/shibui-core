@@ -160,15 +160,38 @@ export const experience: ExperienceItem[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────
-// SKILLS — agrupación ligera del brief (Core / Tooling / Familiar).
-// El CV completo incluye más (Tauri, Lit, NgRx, Astro, Node, Java,
-// Python, Jest, Playwright, arquitectura…) — ampliar si se desea.
+// SKILLS — agrupación ligera y curada para la columna principal.
+// El stack exhaustivo vive en `fullStack` (drawer «Ver stack completo»).
 // ─────────────────────────────────────────────────────────────
 export const skills: SkillGroup[] = [
   { label: 'Core', items: ['Angular', 'TypeScript', 'RxJS', 'SCSS', 'Lit Elements'], primary: true },
   { label: 'Styling', items: ['CSS', 'SCSS', 'Sass', 'Ant Design', 'Material'] },
   { label: 'Tooling', items: ['Nx', 'Storybook'] },
   { label: 'Familiar', items: ['React', 'Svelte', 'NestJS'] },
+];
+
+// Stack completo — se muestra bajo demanda en un drawer para no recargar
+// la sección Skills. Agrupado por dominio; fundamentado en la experiencia
+// y los proyectos reales del CV.
+export const fullStack: SkillGroup[] = [
+  { label: 'Lenguajes', items: ['TypeScript', 'JavaScript', 'Java', 'Python', 'Rust', 'PL/1'] },
+  {
+    label: 'Frameworks & UI',
+    items: ['Angular', 'AngularJS', 'React', 'Svelte', 'Lit', 'Web Components'],
+  },
+  {
+    label: 'Estado & estilado',
+    items: ['RxJS', 'NgRx', 'Angular Signals', 'SCSS', 'Sass', 'Ant Design', 'Material'],
+  },
+  { label: 'Backend & runtime', items: ['Node.js', 'NestJS', 'Express.js'] },
+  {
+    label: 'Testing',
+    items: ['Vitest', 'Jest', 'Playwright', 'Cucumber', 'Selenium', 'axe-core'],
+  },
+  {
+    label: 'Tooling & arquitectura',
+    items: ['Nx', 'pnpm workspaces', 'Monorepo', 'Storybook', 'Vite', 'Tauri', 'Arq. hexagonal'],
+  },
 ];
 
 // ─────────────────────────────────────────────────────────────
