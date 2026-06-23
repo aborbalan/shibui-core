@@ -222,25 +222,6 @@ export const projects: ProjectItem[] = [
     kanji: '印',
     highlight: true,
   },
-  {
-    name: 'Showcase multi-framework',
-    tag: 'Agnosticismo real',
-    description:
-      'La misma librería consumida en tres apps —React, Angular y Svelte— como prueba de que el diseño y el comportamiento son verdaderamente agnósticos del framework.',
-    stack: ['React', 'Angular', 'Svelte', 'pnpm workspaces'],
-    demo: 'https://shibui-showcase-react.web.app',
-    code: `${REPO}/apps`,
-    kanji: '三',
-  },
-  {
-    name: 'Entorno de escritorio Tauri',
-    tag: 'Desktop · Rust',
-    description:
-      'App de escritorio multi-ventana (Tauri 2 + React 19 + backend Rust) con un visualizador interactivo de git-graph, sobre el mismo ecosistema de componentes.',
-    stack: ['Tauri 2', 'React 19', 'Rust', 'Vite'],
-    code: `${REPO}/apps/app-tauri`,
-    kanji: '卓',
-  },
 ];
 
 // ─────────────────────────────────────────────────────────────
