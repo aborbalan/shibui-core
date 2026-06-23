@@ -30,3 +30,54 @@ body {
 a {
   color: var(--text-link, inherit);
 }
+
+/* ─────────────────────────────────────────────────────────────
+ * Versión imprimible / PDF
+ * El katachi base (shizen) ya es papel claro con tinta oscura, así
+ * que el print es sobre todo estructural: altura natural del hero,
+ * ocultar controles, márgenes de página y evitar cortes feos.
+ * ───────────────────────────────────────────────────────────── */
+@media print {
+  @page {
+    margin: 1.4cm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    /* en pantalla bloqueamos el scroll horizontal; en papel sobra */
+    overflow: visible !important;
+  }
+
+  /* Papel blanco puro bajo los componentes (el token cruza el Shadow DOM). */
+  :root {
+    --bg-base: #fff;
+  }
+
+  /* El hero ocupa el viewport completo en web; en papel, altura natural. */
+  .hero {
+    min-height: auto !important;
+    padding-block: 0 !important;
+  }
+  .bg {
+    min-height: auto !important;
+  }
+
+  /* Controles de pantalla que no deben aparecer en el PDF. */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Mantener juntas las secciones cortas dentro de una página. */
+  cv-skills,
+  cv-education,
+  cv-languages {
+    break-inside: avoid;
+  }
+
+  /* Enlaces en tinta negra, sin adornos, para legibilidad impresa. */
+  a {
+    color: #000 !important;
+    text-decoration: none;
+  }
+}
