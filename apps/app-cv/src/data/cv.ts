@@ -51,6 +51,12 @@ export interface EducationItem {
   period: string;
 }
 
+export interface LanguageItem {
+  name: string;
+  /** Nivel descriptivo: Nativo, Profesional, etc. */
+  level: string;
+}
+
 // ─────────────────────────────────────────────────────────────
 // PERFIL
 // ─────────────────────────────────────────────────────────────
@@ -162,4 +168,17 @@ export const education: EducationItem[] = [
     place: 'IES Santiago Hernández',
     period: '2016 – 2018',
   },
+  {
+    title: 'Bachillerato — Ciencias físicas',
+    place: 'IES Torre de los Espejos',
+    period: '2014 – 2016',
+  },
+];
+
+// ─────────────────────────────────────────────────────────────
+// IDIOMAS
+// ─────────────────────────────────────────────────────────────
+export const languages: LanguageItem[] = [
+  { name: 'Español', level: 'Nativo' },
+  { name: 'Inglés', level: 'Profesional' },
 ];

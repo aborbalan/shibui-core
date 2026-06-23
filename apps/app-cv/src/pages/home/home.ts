@@ -3,7 +3,8 @@ import { Hero } from '@components/hero/hero';
 import { Experience } from '@components/experience/experience';
 import { Skills } from '@components/skills/skills';
 import { Education } from '@components/education/education';
-import { profile, experience, skills, education } from '@data/cv';
+import { Languages } from '@components/languages/languages';
+import { profile, experience, skills, education, languages } from '@data/cv';
 
 /**
  * Página única del CV. Smart component: inyecta los datos estáticos
@@ -12,7 +13,7 @@ import { profile, experience, skills, education } from '@data/cv';
 @Component({
   selector: 'cv-home',
   standalone: true,
-  imports: [Hero, Experience, Skills, Education],
+  imports: [Hero, Experience, Skills, Education, Languages],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <lib-background variant="kaki-glow" class="bg">
@@ -27,6 +28,9 @@ import { profile, experience, skills, education } from '@data/cv';
 
         <lib-divider></lib-divider>
         <cv-education [items]="education" />
+
+        <lib-divider></lib-divider>
+        <cv-languages [items]="languages" />
 
         <footer class="page__foot">
           <span>© {{ year }} {{ profile.firstName }} {{ profile.lastName }}</span>
@@ -56,7 +60,8 @@ import { profile, experience, skills, education } from '@data/cv';
       }
       .page > cv-experience,
       .page > cv-skills,
-      .page > cv-education {
+      .page > cv-education,
+      .page > cv-languages {
         display: block;
         scroll-margin-top: var(--lib-space-xl, 32px);
       }
@@ -80,5 +85,6 @@ export class HomePage {
   protected readonly experience = experience;
   protected readonly skills = skills;
   protected readonly education = education;
+  protected readonly languages = languages;
   protected readonly year = new Date().getFullYear();
 }
