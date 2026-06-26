@@ -1,0 +1,43 @@
+:root {
+  --bg: #11151a;
+  --panel: #1a212b;
+  --ink: #e7edf3;
+  --soft: #9fb0c0;
+  --faint: #6f8093;
+  --line: #2a3441;
+  --accent: #5b8fb9;
+  --ok: #7fae9b;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: radial-gradient(1100px 560px at 80% -10%, rgba(91, 143, 185, 0.1), transparent 60%), var(--bg);
+  color: var(--ink);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 860px; margin: 0 auto; padding: 56px 24px 100px; }
+.kicker { font-size: 0.74rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+h1 { font-size: 2rem; font-weight: 600; margin: 0 0 12px; letter-spacing: -0.01em; }
+.lede { color: var(--soft); max-width: 60ch; margin: 0 0 8px; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 22px; margin: 32px 0 24px; }
+.group { display: flex; flex-direction: column; gap: 8px; }
+.lbl { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; }
+button {
+  font: inherit; font-size: 0.86rem; color: var(--ink);
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  padding: 7px 14px; cursor: pointer; transition: border-color 0.15s, background 0.15s;
+}
+button:hover { border-color: var(--accent); }
+button.on { border-color: var(--accent); background: rgba(91, 143, 185, 0.16); color: #cfe2f2; }
+
+.stagewrap { margin-top: 12px; }
+.status { font-size: 0.86rem; color: var(--faint); margin: 14px 0 0; min-height: 20px; }
+.status.aligned { color: var(--ok); }
+.split { display: flex; gap: 20px; flex-wrap: wrap; }
+figure { margin: 0; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+figcaption { font-size: 0.8rem; color: var(--soft); }

@@ -8,10 +8,15 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "dev": "vite demo",
+    "build:demo": "vite build demo",
+    "preview": "vite preview demo",
+    "deploy": "firebase deploy --only hosting:sukashi --project lib-ui-b67c5"
   },
   "devDependencies": {
     "typescript": "^5.9.3",
+    "vite": "^6.4.2",
     "vitest": "^4.0.18"
   }
 }
