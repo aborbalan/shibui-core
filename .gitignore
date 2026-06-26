@@ -19,3 +19,8 @@ packages/hanko/hanko-report/
 .nx/cache
 .nx/workspace-data.claude/
 .claude/
+
+# tooling local
+.codegraph/
+.codegraph.backup-*/
+AGENTS.md
