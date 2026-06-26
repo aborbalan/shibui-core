@@ -3,7 +3,7 @@
 > Plan de obra de `@shibui-ui/sukashi`. Cada fase es un incremento verificable.
 > Trunk de integración: **`develop`** (merges `--no-ff`). Tests/builds desde el repo principal.
 
-**Estado actual:** F0 ✅ hecha · siguiente: F1 (ver [`STATUS.md`](../STATUS.md)).
+**Estado actual:** F0 · F1 ✅ hechas · siguiente: F2 (y F4 en paralelo) — ver [`STATUS.md`](../STATUS.md).
 **Visual del roadmap:** [`roadmap.html`](roadmap.html) — línea de tiempo F0→F7 (camino crítico + opcionales).
 
 ---
@@ -13,7 +13,7 @@
 | Fase | Nombre | Entregable | Estado |
 |---|---|---|---|
 | **F0** | Andamiaje | `package.json`, `tsconfig`, `vitest`, README; estructura `src/` | ✅ hecha |
-| **F1** | Núcleo de composición | `Bitmap`, tabla de patrones, *weave* de 2 capas, `compose`, render SVG/PNG | — |
+| **F1** | Núcleo de composición | `Bitmap`, tabla de patrones, *weave* de 2 capas, `compose`, render SVG/PNG | ✅ hecha |
 | **F2** | Ingestión de motivo | rasterizar fuente (glifo/SVG/PNG) → bitmap; alineación de pares | — |
 | **F3** | Web component | `<shibui-sukashi>` + Storybook; superposición en vivo (`mix-blend-mode`) | — |
 | **F4** | Patrones decorativos | covers generativos (seigaiha, asanoha, sashiko, mon, moiré); capas con cover | — |

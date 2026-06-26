@@ -1,7 +1,8 @@
 # Fase actual
 
 **F0 — Andamiaje** ✅
+**F1 — Núcleo de composición de capas** ✅ <sub>(18 tests + type-check en verde)</sub>
 
-Siguiente: **F1 — Núcleo de composición de capas**
+Siguiente: **F2 — Ingestión de motivo** (y **F4 — Patrones decorativos** en paralelo)
 
 > Plan de obra completo (F0→F7) en [`phases/README.md`](phases/README.md) · visual en [`phases/roadmap.html`](phases/roadmap.html).

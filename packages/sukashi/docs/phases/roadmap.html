@@ -148,7 +148,7 @@
   </div>
 
   <div class="meta">
-    <span class="chip">Estado: <b>F0 hecha</b> · siguiente <b>F1</b></span>
+    <span class="chip">Estado: <b>F0 · F1 hechas</b> · siguiente <b>F2</b></span>
     <span class="chip">Camino crítico = <b>F0 → F6</b></span>
     <span class="chip">Opcionales enchufables = <b>F4½ · F7</b></span>
     <span class="chip">Trunk de integración <b>develop</b> (merges --no-ff)</span>
@@ -192,21 +192,21 @@
     </div>
   </div>
 
-  <div class="phase h1">
+  <div class="phase h1 done">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F1</span>
         <h4>Núcleo de composición de capas</h4>
-        <span class="badge b-todo">pendiente</span>
+        <span class="badge b-done">hecho</span>
       </div>
       <p class="body"><code>Bitmap</code> binario, tabla de patrones base 2×2, <em>weave</em> de 2 capas y
       <code>compose</code> (superposición = OR por bloque), y <code>render</code> a SVG y Canvas/PNG con fondo
       transparente y marcas de registro. Incluye el <em>seam</em> <code>SeedSource</code> (semilla; default =
       <code>systemSeed</code>) y un punto de enganche para transformar capas — <strong>preparan los adaptadores
       opcionales</strong> (uzumaki, kumo) sin acoplarlos al núcleo.</p>
-      <p class="deliv"><b>Entregable ▸</b> <span><code>core/{bitmap,patterns,weave,compose,rng,seed}</code> · <code>render/{svg,canvas}</code> · tests</span></p>
-      <p class="deliv"><b>Cierre ▸</b> <span><code>compose(weave(motivo))</code> reproduce el motivo dentro de tolerancia; test de independencia (una capa aislada no correlaciona con el motivo) en verde</span></p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>core/{bitmap,patterns,weave,compose,rng,seed,reconstruct}</code> · <code>render/{svg,canvas}</code> · 18 tests + <code>type-check</code> en verde</span></p>
+      <p class="deliv"><b>✓ Cierre ▸</b> <span><code>compose(weave(motivo))</code> reproduce el motivo (error 0); independencia de capa aislada validada (χ²)</span></p>
       <p class="deliv"><b>Depende de ▸</b> <span>F0</span></p>
     </div>
   </div>
@@ -350,7 +350,7 @@
 <footer>
   <p>sukashi · plan de obra F0–F7 · índice y tabla canónica en <span class="accent">docs/phases/README.md</span></p>
   <p>Estado vigente en <span class="accent">docs/STATUS.md</span> · diseño en <span class="accent">docs/plans/2026-06-15-sukashi-design.md</span></p>
-  <p>Estado: <strong>F0 (andamiaje) hecha</strong>. Camino crítico F0 → F6; F4½ y F7 son adaptadores opcionales enchufables al núcleo. Trunk de integración: <span class="accent">develop</span> (merges --no-ff).</p>
+  <p>Estado: <strong>F0 (andamiaje) y F1 (núcleo de composición) hechas</strong> · siguiente F2 (motif) con F4 (pattern) en paralelo. Camino crítico F0 → F6; F4½ y F7 son adaptadores opcionales enchufables al núcleo. Trunk de integración: <span class="accent">develop</span> (merges --no-ff).</p>
 </footer>
 
 </div>
