@@ -1,0 +1,61 @@
+name: CI — Sukashi
+
+# Reusable: lo invoca el orchestrator cuando cambia packages/sukashi/**.
+# quality (type-check + tests node) en cada cambio; deploy de la web de demo
+# (sukashi.web.app) SOLO en main.
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: true
+
+env:
+  NODE_VERSION: "22.14.0"
+  PNPM_VERSION: "9.15.0"
+
+jobs:
+  quality:
+    name: ✅ Sukashi — type-check + tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 🔎 Type Check
+        run: pnpm --filter @shibui-ui/sukashi type-check
+      - name: 🧪 Unit tests (node)
+        run: pnpm --filter @shibui-ui/sukashi test
+
+  deploy-demo:
+    name: 🚀 Deploy Demo → sukashi.web.app
+    runs-on: ubuntu-latest
+    needs: quality
+    if: inputs.ref == 'refs/heads/main'
+    env:
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 🏗️ Build demo
+        run: pnpm --filter @shibui-ui/sukashi build:demo
+      - name: 🔧 Copy .firebaserc to config dir
+        run: cp .firebaserc .config/.firebaserc
+      - name: 🚀 Deploy → sukashi.web.app
+        run: pnpm exec firebase deploy --only hosting:sukashi --non-interactive --project lib-ui-b67c5

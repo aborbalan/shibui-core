@@ -42,6 +42,10 @@ on:
         description: "Forzar pipeline Tauri Rust Core"
         type: boolean
         default: false
+      force_sukashi:
+        description: "Forzar pipeline Sukashi"
+        type: boolean
+        default: false
       force_hanko_issues:
         description: "判 Crear/actualizar issues de GitHub desde el Trust Report de hanko (solo main)"
         type: boolean
@@ -70,6 +74,7 @@ jobs:
       cv:          ${{ steps.resolve.outputs.cv }}
       api:         ${{ steps.resolve.outputs.api }}
       tauri:       ${{ steps.resolve.outputs.tauri }}
+      sukashi:     ${{ steps.resolve.outputs.sukashi }}
     steps:
       - uses: actions/checkout@v4
 
@@ -98,6 +103,7 @@ jobs:
             cv:      'apps/app-cv/**'
             api:     'apps/shibui-api/**'
             tauri:   'apps/app-tauri/**'
+            sukashi: 'packages/sukashi/**'
 
       # OR lógico: cambio detectado ó forzado manualmente
       - name: 🎛️ Resolve outputs (auto + manual override)
@@ -111,6 +117,7 @@ jobs:
           echo "cv=$([[ '${{ steps.filter.outputs.cv }}' == 'true' || '${{ inputs.force_cv }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "api=$([[ '${{ steps.filter.outputs.api }}' == 'true' || '${{ inputs.force_api }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "tauri=$([[ '${{ steps.filter.outputs.tauri }}' == 'true' || '${{ inputs.force_tauri }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "sukashi=$([[ '${{ steps.filter.outputs.sukashi }}' == 'true' || '${{ inputs.force_sukashi }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
 
   # ─────────────────────────────────────────
   # JOB 2 — Pipeline UI & Apps
@@ -192,6 +199,20 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.tauri == 'true'
     uses: ./.github/workflows/ci-tauri.yml
+    with:
+      ref: ${{ github.ref }}
+    secrets: inherit
+
+  # ─────────────────────────────────────────
+  # JOB 5 — Pipeline Sukashi
+  # type-check + tests en cada cambio de packages/sukashi/**.
+  # Deploy de la web de demo (sukashi.web.app) solo en main.
+  # ─────────────────────────────────────────
+  run-sukashi-pipeline:
+    name: 透 Sukashi Pipeline
+    needs: detect-changes
+    if: needs.detect-changes.outputs.sukashi == 'true'
+    uses: ./.github/workflows/ci-sukashi.yml
     with:
       ref: ${{ github.ref }}
     secrets: inherit
