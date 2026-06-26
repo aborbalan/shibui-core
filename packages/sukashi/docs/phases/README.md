@@ -3,7 +3,7 @@
 > Plan de obra de `@shibui-ui/sukashi`. Cada fase es un incremento verificable.
 > Trunk de integración: **`develop`** (merges `--no-ff`). Tests/builds desde el repo principal.
 
-**Estado actual:** F0 ✅ hecha · siguiente: F1 (ver [`STATUS.md`](../STATUS.md)).
+**Estado actual:** F0 · F1 · F2 ✅ hechas · en curso: F3 (ver [`STATUS.md`](../STATUS.md)).
 **Visual del roadmap:** [`roadmap.html`](roadmap.html) — línea de tiempo F0→F7 (camino crítico + opcionales).
 
 ---
@@ -13,9 +13,9 @@
 | Fase | Nombre | Entregable | Estado |
 |---|---|---|---|
 | **F0** | Andamiaje | `package.json`, `tsconfig`, `vitest`, README; estructura `src/` | ✅ hecha |
-| **F1** | Núcleo de composición | `Bitmap`, tabla de patrones, *weave* de 2 capas, `compose`, render SVG/PNG | — |
-| **F2** | Ingestión de motivo | rasterizar fuente (glifo/SVG/PNG) → bitmap; alineación de pares | — |
-| **F3** | Web component | `<shibui-sukashi>` + Storybook; superposición en vivo (`mix-blend-mode`) | — |
+| **F1** | Núcleo de composición | `Bitmap`, tabla de patrones, *weave* de 2 capas, `compose`, render SVG/PNG | ✅ hecha |
+| **F2** | Ingestión de motivo | rasterizar fuente (glifo/SVG/PNG) → bitmap; alineación de pares | ✅ hecha |
+| **F3** | Web component + demo | `<shibui-sukashi>` + web de demo propia (sukashi.web.app); superposición en vivo (`mix-blend-mode`) | 🔄 en curso |
 | **F4** | Patrones decorativos | covers generativos (seigaiha, asanoha, sashiko, mon, moiré); capas con cover | — |
 | **F5** | Weaves multi-motivo | distintos emparejamientos de capas revelan distintos motivos | — |
 | **F6** | (stretch) Refinado | capas con cover + métrica de contraste y *fallback* | — |
@@ -41,8 +41,9 @@ Incluye el *seam* `SeedSource` (semilla; default = `systemSeed`) que alimenta el
 `motif/rasterize`: fuente (glifo/kanji, SVG, PNG) → bitmap b/n (threshold/dither). `alignPair` rechaza dimensiones no alineadas (el núcleo solo recibe pares alineados).
 **Hecho cuando:** un kanji de ejemplo se rasteriza y compone correctamente.
 
-### F3 — Web component
-`<shibui-sukashi>` (Shadow DOM): apila capas con `mix-blend-mode: multiply`; capa superior arrastrable con *snap* a marcas de registro. Story en Storybook.
+### F3 — Web component + web de demo
+`<shibui-sukashi>` (Shadow DOM): apila capas con `mix-blend-mode: multiply`; capa superior arrastrable con *snap* a marcas de registro.
+En vez de Storybook, **web de demo propia** en `demo/` (Vite + TS, sin dependencia de `@shibui-ui/ui`) desplegada en **sukashi.web.app** (target Firebase `sukashi`): showcase con selector de motivo, reveal arrastrable y vista de capas por separado.
 **Hecho cuando:** arrastrar una capa sobre otra revela el motivo en vivo.
 
 ### F4 — Patrones decorativos (covers generativos)
