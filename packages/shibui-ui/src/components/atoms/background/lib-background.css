@@ -66,23 +66,23 @@
      ================================================================ */
 
     /* 01 · washi — base del sistema */
-    :host([variant="washi"]) .bg-base {
+    :host([theme="washi"]) .bg-base {
         background: var(--color-washi-50);
     }
 
     /* 02 · washi-grain — noise texture */
-    :host([variant="washi-grain"]) .bg-base {
+    :host([theme="washi-grain"]) .bg-base {
         background: var(--color-washi-50);
     }
 
-    :host([variant="washi-grain"]) .bg-overlay {
+    :host([theme="washi-grain"]) .bg-overlay {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.045'/%3E%3C/svg%3E");
         background-repeat: repeat;
         mix-blend-mode: multiply;
     }
 
     /* 03 · washi-weave — trama de papel */
-    :host([variant="washi-weave"]) .bg-base {
+    :host([theme="washi-weave"]) .bg-base {
         background-color: var(--color-washi-100);
         background-image:
             repeating-linear-gradient(0deg,
@@ -98,7 +98,7 @@
     }
 
     /* 04 · seigaiha — escamas de ola */
-    :host([variant="seigaiha"]) .bg-base {
+    :host([theme="seigaiha"]) .bg-base {
         background-color: var(--color-washi-50);
         background-image: radial-gradient(ellipse 100% 90% at 50% 0%,
                 transparent 60%,
@@ -110,7 +110,7 @@
     }
 
     /* 05 · tatami — cuadrícula estructural */
-    :host([variant="tatami"]) .bg-base {
+    :host([theme="tatami"]) .bg-base {
         background-color: var(--color-washi-100);
         background-image:
             linear-gradient(rgb(160, 140, 118, 0.12) 1px, transparent 1px),
@@ -121,7 +121,7 @@
     }
 
     /* 06 · asanoha — estrella de cáñamo */
-    :host([variant="asanoha"]) .bg-base {
+    :host([theme="asanoha"]) .bg-base {
         background-color: var(--color-washi-50);
         background-image:
             repeating-linear-gradient(60deg, rgb(160, 140, 118, 0.10) 0, rgb(160, 140, 118, 0.10) 1px, transparent 1px, transparent 18px),
@@ -130,14 +130,14 @@
     }
 
     /* 07 · sashiko — puntos de bordado */
-    :host([variant="sashiko"]) .bg-base {
+    :host([theme="sashiko"]) .bg-base {
         background-color: #F0EAE0;
         background-image: radial-gradient(circle, rgb(130, 100, 70, 0.18) 1.5px, transparent 1.5px);
         background-size: 16px 16px;
     }
 
     /* 08 · komon — micro patrón */
-    :host([variant="komon"]) .bg-base {
+    :host([theme="komon"]) .bg-base {
         background-color: var(--color-washi-50);
         background-image:
             radial-gradient(circle at 2px 2px, rgb(160, 130, 100, 0.15) 1px, transparent 0),
@@ -146,7 +146,7 @@
     }
 
     /* 09 · kasuri — trama irregular */
-    :host([variant="kasuri"]) .bg-base {
+    :host([theme="kasuri"]) .bg-base {
         background-color: #F5EFE6;
         background-image:
             repeating-linear-gradient(-45deg,
@@ -162,7 +162,7 @@
     }
 
     /* 10 · nishiki — degradado diagonal */
-    :host([variant="nishiki"]) .bg-base {
+    :host([theme="nishiki"]) .bg-base {
         background: linear-gradient(135deg,
                 var(--color-washi-50) 0%,
                 #F5EEE4 35%,
@@ -175,23 +175,23 @@
      ================================================================ */
 
     /* 11 · sumi — negro de tinta */
-    :host([variant="sumi"]) .bg-base {
+    :host([theme="sumi"]) .bg-base {
         background: var(--color-washi-950);
     }
 
     /* 12 · sumi-grain */
-    :host([variant="sumi-grain"]) .bg-base {
+    :host([theme="sumi-grain"]) .bg-base {
         background: var(--color-washi-950);
     }
 
-    :host([variant="sumi-grain"]) .bg-overlay {
+    :host([theme="sumi-grain"]) .bg-overlay {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.055'/%3E%3C/svg%3E");
         background-repeat: repeat;
         mix-blend-mode: screen;
     }
 
     /* 13 · kintsugi — filamentos dorados */
-    :host([variant="kintsugi"]) .bg-base {
+    :host([theme="kintsugi"]) .bg-base {
         background: var(--color-washi-950);
         background-image:
             linear-gradient(125deg, transparent 30%, rgb(184, 90, 30, 0.07) 50%, transparent 70%),
@@ -199,7 +199,7 @@
     }
 
     /* 14 · ash-grid — cuadrícula ceniza */
-    :host([variant="ash-grid"]) .bg-base {
+    :host([theme="ash-grid"]) .bg-base {
         background-color: var(--color-washi-950);
         background-image:
             linear-gradient(rgb(250, 247, 244, 0.04) 1px, transparent 1px),
@@ -208,14 +208,14 @@
     }
 
     /* 15 · ink-dot */
-    :host([variant="ink-dot"]) .bg-base {
+    :host([theme="ink-dot"]) .bg-base {
         background-color: var(--color-washi-950);
         background-image: radial-gradient(circle, rgb(250, 247, 244, 0.07) 1px, transparent 1px);
         background-size: 20px 20px;
     }
 
     /* 16 · mokume — veteado de madera */
-    :host([variant="mokume"]) .bg-base {
+    :host([theme="mokume"]) .bg-base {
         background: #1A120A;
         background-image:
             repeating-linear-gradient(2deg,
@@ -231,7 +231,7 @@
     }
 
     /* 17 · kumo — nubes radiales */
-    :host([variant="kumo"]) .bg-base {
+    :host([theme="kumo"]) .bg-base {
         background: #0E0A07;
         background-image:
             radial-gradient(ellipse 60% 40% at 20% 30%, rgb(184, 90, 30, 0.08) 0%, transparent 70%),
@@ -240,7 +240,7 @@
     }
 
     /* 18 · temari — anillos concéntricos */
-    :host([variant="temari"]) .bg-base {
+    :host([theme="temari"]) .bg-base {
         background: #110D09;
         background-image:
             radial-gradient(circle at 50% 50%, transparent 38px, rgb(250, 247, 244, 0.04) 39px, transparent 40px),
@@ -251,7 +251,7 @@
     }
 
     /* 19 · dusk — degradado oscuro */
-    :host([variant="dusk"]) .bg-base {
+    :host([theme="dusk"]) .bg-base {
         background: linear-gradient(160deg,
                 #1A1008 0%,
                 #2A1A0E 30%,
@@ -260,7 +260,7 @@
     }
 
     /* 20 · embers — brasas */
-    :host([variant="embers"]) .bg-base {
+    :host([theme="embers"]) .bg-base {
         background: #0C0804;
         background-image:
             radial-gradient(ellipse 50% 40% at 50% 100%, rgb(184, 90, 30, 0.22) 0%, transparent 65%),
@@ -273,7 +273,7 @@
      ================================================================ */
 
     /* 21 · aurora-light */
-    :host([variant="aurora-light"]) .bg-base {
+    :host([theme="aurora-light"]) .bg-base {
         background:
             radial-gradient(ellipse 80% 60% at 10% 20%, rgb(217, 114, 52, 0.12) 0%, transparent 60%),
             radial-gradient(ellipse 60% 50% at 90% 80%, rgb(78, 148, 130, 0.10) 0%, transparent 60%),
@@ -282,7 +282,7 @@
     }
 
     /* 22 · kaki-glow */
-    :host([variant="kaki-glow"]) .bg-base {
+    :host([theme="kaki-glow"]) .bg-base {
         background:
             radial-gradient(ellipse 70% 60% at 30% 40%, rgb(217, 114, 52, 0.18) 0%, transparent 65%),
             radial-gradient(ellipse 50% 40% at 80% 20%, rgb(184, 90, 30, 0.10) 0%, transparent 60%),
@@ -290,7 +290,7 @@
     }
 
     /* 23 · celadon-mist */
-    :host([variant="celadon-mist"]) .bg-base {
+    :host([theme="celadon-mist"]) .bg-base {
         background:
             radial-gradient(ellipse 80% 60% at 70% 30%, rgb(78, 148, 130, 0.14) 0%, transparent 65%),
             radial-gradient(ellipse 60% 50% at 20% 80%, rgb(78, 148, 130, 0.08) 0%, transparent 60%),
@@ -298,7 +298,7 @@
     }
 
     /* 24 · noctiluca — mesh oscuro */
-    :host([variant="noctiluca"]) .bg-base {
+    :host([theme="noctiluca"]) .bg-base {
         background: #0A0806;
         background-image:
             radial-gradient(ellipse 60% 50% at 20% 30%, rgb(217, 114, 52, 0.12) 0%, transparent 60%),
@@ -307,7 +307,7 @@
     }
 
     /* 25 · horizon — lineal */
-    :host([variant="horizon"]) .bg-base {
+    :host([theme="horizon"]) .bg-base {
         background: linear-gradient(180deg,
                 var(--color-washi-50) 0%,
                 #EDE3D5 40%,
@@ -320,11 +320,11 @@
      ================================================================ */
 
     /* 26 · breathing */
-    :host([variant="breathing"]) .bg-base {
+    :host([theme="breathing"]) .bg-base {
         background: var(--color-washi-50);
     }
 
-    :host([variant="breathing"]) .bg-overlay {
+    :host([theme="breathing"]) .bg-overlay {
         inset: -20%;
         background: radial-gradient(ellipse 60% 50% at 50% 50%,
                 rgb(217, 114, 52, 0.10) 0%,
@@ -333,17 +333,17 @@
     }
 
     /* 27 · aurora-drift */
-    :host([variant="aurora-drift"]) .bg-base {
+    :host([theme="aurora-drift"]) .bg-base {
         background: #0C0906;
     }
 
-    :host([variant="aurora-drift"]) .bg-overlay {
+    :host([theme="aurora-drift"]) .bg-overlay {
         background: transparent;
         animation: none;
     }
 
-    :host([variant="aurora-drift"]) .bg-orb-a,
-    :host([variant="aurora-drift"]) .bg-orb-b {
+    :host([theme="aurora-drift"]) .bg-orb-a,
+    :host([theme="aurora-drift"]) .bg-orb-b {
         position: absolute;
         border-radius: 50%;
         filter: blur(60px);
@@ -351,7 +351,7 @@
         z-index: 1;
     }
 
-    :host([variant="aurora-drift"]) .bg-orb-a {
+    :host([theme="aurora-drift"]) .bg-orb-a {
         width: 200px;
         height: 160px;
         background: rgb(184, 90, 30, 0.18);
@@ -360,7 +360,7 @@
         animation: bg-aurora-float 12s ease-in-out infinite;
     }
 
-    :host([variant="aurora-drift"]) .bg-orb-b {
+    :host([theme="aurora-drift"]) .bg-orb-b {
         width: 180px;
         height: 140px;
         background: rgb(78, 148, 130, 0.14);
@@ -372,7 +372,7 @@
     }
 
     /* 28 · scan */
-    :host([variant="scan"]) .bg-base {
+    :host([theme="scan"]) .bg-base {
         background: #0E0A07;
         background-image: repeating-linear-gradient(0deg,
                 transparent 0,
@@ -381,7 +381,7 @@
                 rgb(255, 255, 255, 0.018) 4px);
     }
 
-    :host([variant="scan"]) .bg-overlay {
+    :host([theme="scan"]) .bg-overlay {
         height: 2px;
         inset: 0 0 auto;
         top: 0;
@@ -392,11 +392,11 @@
     }
 
     /* 29 · ink-drop */
-    :host([variant="ink-drop"]) .bg-base {
+    :host([theme="ink-drop"]) .bg-base {
         background: var(--color-washi-50);
     }
 
-    :host([variant="ink-drop"]) .bg-overlay {
+    :host([theme="ink-drop"]) .bg-overlay {
         width: 80px;
         height: 80px;
         inset: unset;
@@ -412,11 +412,11 @@
     }
 
     /* 30 · shimmer */
-    :host([variant="shimmer"]) .bg-base {
+    :host([theme="shimmer"]) .bg-base {
         background: var(--color-washi-100);
     }
 
-    :host([variant="shimmer"]) .bg-overlay {
+    :host([theme="shimmer"]) .bg-overlay {
         background: linear-gradient(105deg,
                 transparent 30%,
                 rgb(250, 247, 244, 0.50) 50%,
@@ -430,19 +430,19 @@
      CANVAS BACKGROUNDS — base color (canvas JS maneja el resto)
      ================================================================ */
 
-    :host([variant="particles"]) {
+    :host([theme="particles"]) {
         background: var(--color-washi-950);
     }
 
-    :host([variant="rain"]) {
+    :host([theme="rain"]) {
         background: #0E0A07;
     }
 
-    :host([variant="wave-mesh"]) {
+    :host([theme="wave-mesh"]) {
         background: var(--color-washi-50);
     }
 
-    :host([variant="constellation"]) {
+    :host([theme="constellation"]) {
         background: #0A0806;
     }
 
@@ -456,7 +456,7 @@
     ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
 
     /* 35 · kagome — 籠目 hexagonal basket weave */
-    :host([variant="kagome"]) .bg-base {
+    :host([theme="kagome"]) .bg-base {
         background-color: var(--color-washi-50);
         background-image:
             linear-gradient(60deg, rgb(160, 140, 118, 0.11) 1px, transparent 1px),
@@ -466,7 +466,7 @@
     }
 
     /* 36 · shoji — 障子 paper screen */
-    :host([variant="shoji"]) .bg-base {
+    :host([theme="shoji"]) .bg-base {
         background-color: var(--color-washi-50);
         background-image:
             linear-gradient(rgb(160, 140, 118, 0.07) 1px, transparent 1px),
@@ -477,7 +477,7 @@
     }
 
     /* 37 · shibori — 絞り tie-dye concentric circles */
-    :host([variant="shibori"]) .bg-base {
+    :host([theme="shibori"]) .bg-base {
         background-color: var(--color-washi-50);
         background-image:
             radial-gradient(circle at 0% 0%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
@@ -493,7 +493,7 @@
     }
 
     /* 38 · ori — 織 diagonal woven textile */
-    :host([variant="ori"]) .bg-base {
+    :host([theme="ori"]) .bg-base {
         background-color: var(--color-washi-100);
         background-image:
             repeating-linear-gradient(45deg,
@@ -509,7 +509,7 @@
     }
 
     /* 39 · chirimen — 縮緬 crepe silk fine crinkle */
-    :host([variant="chirimen"]) .bg-base {
+    :host([theme="chirimen"]) .bg-base {
         background-color: var(--color-washi-50);
         background-image:
             url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9 0.3' numOctaves='3' seed='5' stitchTiles='stitch'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='2' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23c)' fill='rgb(160,140,118)' opacity='0.04'/%3E%3C/svg%3E");
@@ -517,7 +517,7 @@
     }
 
     /* 40 · celadon-wash — 青磁洗い light celadon-tinted paper */
-    :host([variant="celadon-wash"]) .bg-base {
+    :host([theme="celadon-wash"]) .bg-base {
         background-color: var(--color-celadon-50);
         background-image:
             radial-gradient(ellipse 70% 60% at 70% 30%,
@@ -543,7 +543,7 @@
     ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
 
     /* 40 · obsidian — 黒曜石 mineral shimmer */
-    :host([variant="obsidian"]) .bg-base {
+    :host([theme="obsidian"]) .bg-base {
         background: #0A0808;
         background-image:
             linear-gradient(135deg,
@@ -556,7 +556,7 @@
     }
 
     /* 41 · forge — 鍛冶 hot metal glow from below */
-    :host([variant="forge"]) .bg-base {
+    :host([theme="forge"]) .bg-base {
         background: #080604;
         background-image:
             radial-gradient(ellipse 90% 40% at 50% 110%, rgb(217, 114, 52, 0.35) 0%, rgb(140, 65, 21, 0.20) 35%, transparent 65%),
@@ -564,7 +564,7 @@
     }
 
     /* 42 · void — 虚空 radial vignette */
-    :host([variant="void"]) .bg-base {
+    :host([theme="void"]) .bg-base {
         background: #06040302;
         background-image:
             radial-gradient(ellipse 70% 60% at 50% 50%,
@@ -576,7 +576,7 @@
     }
 
     /* 43 · yami — 闇 pure depth gradient */
-    :host([variant="yami"]) .bg-base {
+    :host([theme="yami"]) .bg-base {
         background: linear-gradient(160deg,
                 #1A1208 0%,
                 #0E0B07 30%,
@@ -586,21 +586,21 @@
     }
 
     /* 44 · midnight — 深夜 fine dot matrix */
-    :host([variant="midnight"]) .bg-base {
+    :host([theme="midnight"]) .bg-base {
         background-color: #090806;
         background-image: radial-gradient(circle, rgb(250, 247, 244, 0.04) 1px, transparent 1px);
         background-size: 12px 12px;
         background-position: 0 0, 6px 6px;
     }
 
-    :host([variant="midnight"]) .bg-overlay {
+    :host([theme="midnight"]) .bg-overlay {
         background: linear-gradient(180deg,
                 transparent 60%,
                 rgb(184, 90, 30, 0.04) 100%);
     }
 
     /* 46 · celadon — 青磁 deep jade surface */
-    :host([variant="celadon"]) .bg-base {
+    :host([theme="celadon"]) .bg-base {
         background-color: #050B09;
         background-image:
             linear-gradient(rgb(78, 148, 130, 0.055) 1px, transparent 1px),
@@ -616,7 +616,7 @@
     ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
 
     /* 45 · sakura — 桜 rosa-washi suave */
-    :host([variant="sakura"]) .bg-base {
+    :host([theme="sakura"]) .bg-base {
         background:
             radial-gradient(ellipse 70% 60% at 30% 30%, rgb(230, 190, 180, 0.22) 0%, transparent 60%),
             radial-gradient(ellipse 60% 50% at 80% 70%, rgb(217, 114, 52, 0.08) 0%, transparent 60%),
@@ -625,7 +625,7 @@
     }
 
     /* 46 · twilight — 黄昏 kaki cálido a oscuro */
-    :host([variant="twilight"]) .bg-base {
+    :host([theme="twilight"]) .bg-base {
         background: linear-gradient(160deg,
                 #2A1A0E 0%,
                 #1E1208 35%,
@@ -637,7 +637,7 @@
     }
 
     /* 47 · jade-deep — 翡翠 celadón profundo con humo */
-    :host([variant="jade-deep"]) .bg-base {
+    :host([theme="jade-deep"]) .bg-base {
         background: #080E0C;
         background-image:
             radial-gradient(ellipse 70% 60% at 20% 40%, rgb(78, 148, 130, 0.16) 0%, transparent 65%),
@@ -650,16 +650,16 @@
     ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
 
     /* 48 · pulse — anillos kintsugi expandiéndose */
-    :host([variant="pulse"]) .bg-base {
+    :host([theme="pulse"]) .bg-base {
         background: var(--color-washi-950);
     }
 
-    :host([variant="pulse"]) .bg-overlay {
+    :host([theme="pulse"]) .bg-overlay {
         background: transparent;
     }
 
-    :host([variant="pulse"]) .bg-overlay::before,
-    :host([variant="pulse"]) .bg-overlay::after {
+    :host([theme="pulse"]) .bg-overlay::before,
+    :host([theme="pulse"]) .bg-overlay::after {
         content: '';
         position: absolute;
         top: 50%;
@@ -672,7 +672,7 @@
         animation: bg-pulse-ring 4s ease-out infinite;
     }
 
-    :host([variant="pulse"]) .bg-overlay::after {
+    :host([theme="pulse"]) .bg-overlay::after {
         border-color: rgb(245, 208, 138, 0.2);
         animation-delay: 2s;
     }
@@ -690,11 +690,11 @@
     }
 
     /* 49 · fog — niebla lenta */
-    :host([variant="fog"]) .bg-base {
+    :host([theme="fog"]) .bg-base {
         background: var(--color-washi-950);
     }
 
-    :host([variant="fog"]) .bg-overlay {
+    :host([theme="fog"]) .bg-overlay {
         background:
             radial-gradient(ellipse 500px 220px at 0% 50%,
                 rgb(250, 247, 244, 0.045),
@@ -705,7 +705,7 @@
         animation: bg-fog-drift 10s linear infinite;
     }
 
-    :host([variant="fog"]) .bg-overlay::before {
+    :host([theme="fog"]) .bg-overlay::before {
         content: '';
         position: absolute;
         inset: 0;
@@ -728,14 +728,14 @@
     }
 
     /* 50 · static — ruido CRT */
-    :host([variant="static"]) .bg-base {
+    :host([theme="static"]) .bg-base {
         background: #0A0806;
         background-image:
             url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");
         background-repeat: repeat;
     }
 
-    :host([variant="static"]) .bg-overlay {
+    :host([theme="static"]) .bg-overlay {
         background-image:
             url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E"),
             repeating-linear-gradient(0deg,
@@ -774,7 +774,7 @@
     }
 
     /* 54 · glitch — CRT terminal jitter */
-    :host([variant="glitch"]) .bg-base {
+    :host([theme="glitch"]) .bg-base {
         background: #050A08;
         background-image: repeating-linear-gradient(0deg,
                 transparent 0,
@@ -783,12 +783,12 @@
                 rgb(250, 247, 244, 0.012) 4px);
     }
 
-    :host([variant="glitch"]) .bg-overlay {
+    :host([theme="glitch"]) .bg-overlay {
         background: transparent;
         animation: bg-glitch-jitter 6s steps(1) infinite;
     }
 
-    :host([variant="glitch"]) .bg-overlay::before {
+    :host([theme="glitch"]) .bg-overlay::before {
         content: '';
         position: absolute;
         top: 0;
@@ -799,7 +799,7 @@
         pointer-events: none;
     }
 
-    :host([variant="glitch"]) .bg-overlay::after {
+    :host([theme="glitch"]) .bg-overlay::after {
         content: '';
         position: absolute;
         inset: 0;
@@ -849,11 +849,11 @@
        CANVAS BASE COLORS — Nuevas (55–56)
     ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
 
-    :host([variant="fireflies"]) {
+    :host([theme="fireflies"]) {
         background: #080604;
     }
 
-    :host([variant="ink-wash"]) {
+    :host([theme="ink-wash"]) {
         background: var(--color-washi-50);
     }
 
