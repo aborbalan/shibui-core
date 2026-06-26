@@ -3,7 +3,7 @@
 > Plan de obra de `@shibui-ui/sukashi`. Cada fase es un incremento verificable.
 > Trunk de integración: **`develop`** (merges `--no-ff`). Tests/builds desde el repo principal.
 
-**Estado actual:** F0 · F1 · F2 ✅ hechas · en curso: F3 (ver [`STATUS.md`](../STATUS.md)).
+**Estado actual:** F0 → F3 ✅ hechas (demo en vivo en sukashi.web.app) · siguiente: F4 (ver [`STATUS.md`](../STATUS.md)).
 **Visual del roadmap:** [`roadmap.html`](roadmap.html) — línea de tiempo F0→F7 (camino crítico + opcionales).
 
 ---
@@ -15,7 +15,7 @@
 | **F0** | Andamiaje | `package.json`, `tsconfig`, `vitest`, README; estructura `src/` | ✅ hecha |
 | **F1** | Núcleo de composición | `Bitmap`, tabla de patrones, *weave* de 2 capas, `compose`, render SVG/PNG | ✅ hecha |
 | **F2** | Ingestión de motivo | rasterizar fuente (glifo/SVG/PNG) → bitmap; alineación de pares | ✅ hecha |
-| **F3** | Web component + demo | `<shibui-sukashi>` + web de demo propia (sukashi.web.app); superposición en vivo (`mix-blend-mode`) | 🔄 en curso |
+| **F3** | Web component + demo | `<shibui-sukashi>` + web de demo propia (sukashi.web.app); superposición en vivo (`mix-blend-mode`) | ✅ hecha |
 | **F4** | Patrones decorativos | covers generativos (seigaiha, asanoha, sashiko, mon, moiré); capas con cover | — |
 | **F5** | Weaves multi-motivo | distintos emparejamientos de capas revelan distintos motivos | — |
 | **F6** | (stretch) Refinado | capas con cover + métrica de contraste y *fallback* | — |
