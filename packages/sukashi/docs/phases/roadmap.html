@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sukashi · Plan de obra por capas</title>
+<style>
+  :root{
+    --bg:#0f1318;--bg-soft:#161b22;--panel:#1a2029;--panel-2:#222a35;
+    --ink:#e6ecf2;--ink-soft:#a9b6c4;--ink-faint:#7c8a99;--line:#2c3640;
+    --ai:#5b8fb9;--ai-deep:#3c6589;--celadon:#7fae9b;--celadon-deep:#4f7d6c;
+    --moire:#a98cc4;--moire-deep:#7a5fa0;--beni:#c8623a;--gold:#d9a441;--gold-soft:#e8c27a;
+    --radius:14px;
+    --mono:"SFMono-Regular",ui-monospace,"Cascadia Code","Fira Code",Consolas,monospace;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --serif:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:
+      radial-gradient(1200px 600px at 82% -10%, rgba(91,143,185,.08), transparent 60%),
+      radial-gradient(900px 500px at -8% 22%, rgba(169,140,196,.06), transparent 55%),
+      var(--bg);
+    color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:60px 28px 120px}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+  /* hero */
+  header.hero{margin-bottom:40px}
+  .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ai);margin:0 0 14px}
+  h1{font-family:var(--serif);font-weight:600;font-size:2.5rem;line-height:1.12;margin:0 0 16px;letter-spacing:-.01em}
+  h1 .arc{color:var(--moire)}
+  .lede{font-size:1.08rem;color:var(--ink-soft);max-width:64ch;margin:0}
+
+  /* overview strip */
+  .overview{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:34px 0 10px}
+  .ov{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden}
+  .ov:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+  .ov.h1:before{background:var(--ai)}.ov.h2:before{background:var(--celadon)}.ov.h3:before{background:var(--moire)}
+  .ov .hl{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .ov h3{margin:6px 0 4px;font-size:1.05rem;font-weight:650}
+  .ov p{margin:0;font-size:.84rem;color:var(--ink-soft)}
+  .ov .ph{font-family:var(--mono);font-size:.72rem;color:var(--ai);margin-top:8px;display:block}
+
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 0}
+  .chip{font-family:var(--mono);font-size:.76rem;background:var(--panel-2);border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;color:var(--ink-soft)}
+  .chip b{color:var(--gold-soft);font-weight:600}
+
+  .seam{height:2px;border:0;margin:38px 0 30px;
+    background:linear-gradient(90deg,transparent,var(--ai) 22%,var(--celadon) 50%,var(--moire) 78%,transparent);opacity:.5}
+
+  /* legend */
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin:0 0 30px;font-size:.8rem;color:var(--ink-soft)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .badge{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:6px;border:1px solid}
+  .b-done{color:var(--celadon);border-color:var(--celadon-deep);background:rgba(127,174,155,.1)}
+  .b-todo{color:var(--ink-faint);border-color:var(--line);background:transparent}
+  .b-opt{color:var(--moire);border-color:var(--moire-deep);background:rgba(169,140,196,.1)}
+
+  /* timeline */
+  .timeline{position:relative;margin-left:8px}
+  .spine{position:absolute;left:23px;top:8px;bottom:8px;width:2px;
+    background:linear-gradient(180deg,var(--ai),var(--celadon) 55%,var(--moire))}
+
+  .milestone{margin:34px 0 14px;display:flex;align-items:center;gap:14px;position:relative;z-index:2}
+  .milestone .ring{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
+    font-family:var(--serif);font-size:1.2rem;font-weight:700;background:var(--bg);flex:none}
+  .milestone.h1 .ring{border:2px solid var(--ai);color:var(--ai)}
+  .milestone.h2 .ring{border:2px solid var(--celadon);color:var(--celadon)}
+  .milestone.h3 .ring{border:2px solid var(--moire);color:var(--moire)}
+  .milestone .mt{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .milestone h2{font-family:var(--serif);font-size:1.4rem;font-weight:600;margin:2px 0 0;letter-spacing:-.01em}
+
+  .phase{position:relative;margin:0 0 14px 0;padding-left:64px}
+  .phase .node{position:absolute;left:15px;top:20px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:3px solid var(--ink-faint);z-index:2}
+  .phase.h1 .node{border-color:var(--ai)}.phase.h2 .node{border-color:var(--celadon)}.phase.h3 .node{border-color:var(--moire)}
+  .phase.done .node{background:var(--celadon);border-color:var(--celadon)}
+
+  .pcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;transition:.2s}
+  .pcard:hover{border-color:var(--ai-deep);transform:translateX(2px)}
+  .pcard .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .pcard .fno{font-family:var(--mono);font-weight:700;font-size:1.05rem}
+  .phase.h1 .fno{color:var(--ai)}.phase.h2 .fno{color:var(--celadon)}.phase.h3 .fno{color:var(--moire)}
+  .pcard h4{margin:0;font-size:1.12rem;font-weight:650;color:var(--ink)}
+  .pcard .body{margin:8px 0 0;color:var(--ink-soft);font-size:.92rem}
+  .pcard .deliv{margin:12px 0 0;font-size:.82rem;color:var(--ink-faint);font-family:var(--mono);display:flex;gap:8px;align-items:flex-start}
+  .pcard .deliv b{color:var(--gold-soft);font-weight:600;flex:none}
+  .pcard .badge{margin-left:auto}
+  code{font-family:var(--mono);font-size:.85em;background:var(--panel-2);color:var(--gold-soft);padding:.1em .38em;border-radius:5px;border:1px solid var(--line)}
+
+  .stretch-flag{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--gold);border:1px solid #6e5a2e;border-radius:6px;padding:3px 9px;margin-top:10px;background:rgba(217,164,65,.08)}
+
+  /* optional plug-in panel */
+  .optgroup{margin:30px 0 0 64px;border:1px dashed var(--moire-deep);border-radius:var(--radius);background:rgba(169,140,196,.05);padding:18px 22px}
+  .optgroup .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--moire);display:block;margin-bottom:12px}
+  .optgroup .ocard{padding:12px 0;border-top:1px solid var(--line)}
+  .optgroup .ocard:first-of-type{border-top:0;padding-top:0}
+  .optgroup .head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .optgroup .fno{font-family:var(--mono);font-weight:700;font-size:1rem;color:var(--moire)}
+  .optgroup h4{margin:0;font-size:1.05rem;font-weight:650}
+  .optgroup .body{margin:8px 0 0;color:var(--ink-soft);font-size:.9rem}
+  .optgroup .deliv{margin:10px 0 0;font-size:.8rem;color:var(--ink-faint);font-family:var(--mono);display:flex;gap:8px;align-items:flex-start}
+  .optgroup .deliv b{color:var(--moire);font-weight:600;flex:none}
+
+  footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:.82rem;font-family:var(--mono)}
+  footer .accent{color:var(--ai)}
+
+  @media(max-width:680px){
+    .wrap{padding:40px 16px 80px}h1{font-size:1.95rem}
+    .overview{grid-template-columns:1fr}
+    .phase{padding-left:54px}.optgroup{margin-left:54px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con dos adaptadores opcionales enchufables (F4½ y F7). F0 está hecha; el resto pendiente.</p>
+
+<header class="hero">
+  <p class="kicker">sukashi · 透かし · plan de obra</p>
+  <h1>Fases de desarrollo <span class="arc">F0 → F7</span></h1>
+  <p class="lede">Librería de <strong>patrones decorativos por capas</strong> (<em>sukashi-e</em> / moiré). Capas con
+  texturas tradicionales que, al superponerse, revelan un motivo emergente. Cada fase es un incremento
+  verificable y solo arranca cuando la anterior está estable. Los adaptadores opcionales son enchufables al
+  núcleo y nunca están en el camino crítico.</p>
+
+  <div class="overview">
+    <div class="ov h1">
+      <span class="hl">Hito 1</span>
+      <h3>Núcleo y materiales</h3>
+      <p>Andamiaje, motor de composición de capas e ingestión del motivo de entrada.</p>
+      <span class="ph">F0 · F1 · F2</span>
+    </div>
+    <div class="ov h2">
+      <span class="hl">Hito 2</span>
+      <h3>Capas vivas y decoración</h3>
+      <p>Elemento consumible en vivo, covers generativos y composiciones multi-motivo.</p>
+      <span class="ph">F3 · F4 · F5</span>
+    </div>
+    <div class="ov h3">
+      <span class="hl">Hito 3</span>
+      <h3>Refinado y extras</h3>
+      <p>Capas con cover + métrica de contraste; adaptadores opcionales (warp, semilla del cielo).</p>
+      <span class="ph">F6 · F4½ · F7</span>
+    </div>
+  </div>
+
+  <div class="meta">
+    <span class="chip">Estado: <b>F0 hecha</b> · siguiente <b>F1</b></span>
+    <span class="chip">Camino crítico = <b>F0 → F6</b></span>
+    <span class="chip">Opcionales enchufables = <b>F4½ · F7</b></span>
+    <span class="chip">Trunk de integración <b>develop</b> (merges --no-ff)</span>
+    <span class="chip">Tests/builds desde el <b>repo principal</b></span>
+  </div>
+</header>
+
+<hr class="seam">
+
+<div class="legend">
+  <span><i class="badge b-done">hecho</i> completado</span>
+  <span><i class="badge b-todo">pendiente</i> no iniciada</span>
+  <span><i class="badge b-opt">opcional</i> enchufable, fuera del camino crítico</span>
+</div>
+
+<div class="timeline">
+  <div class="spine"></div>
+
+  <!-- ===== HITO 1 ===== -->
+  <div class="milestone h1">
+    <div class="ring">壱</div>
+    <div>
+      <div class="mt">Hito 1</div>
+      <h2>Núcleo y materiales</h2>
+    </div>
+  </div>
+
+  <div class="phase h1 done">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F0</span>
+        <h4>Andamiaje</h4>
+        <span class="badge b-done">hecho</span>
+      </div>
+      <p class="body">Crear el paquete (espejo del estilo de <code>packages/hanko</code>): <code>package.json</code>,
+      <code>tsconfig</code> extendiendo <code>tsconfig.base.json</code>, <code>vitest.config</code>, README decorativo y
+      el esqueleto <code>src/{core,motif,pattern,render,web}</code> + <code>index.ts</code>.</p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span>paquete <code>@shibui-ui/sukashi</code> + esqueleto <code>src/</code> · <code>type-check</code> limpio</span></p>
+      <p class="deliv"><b>Cierre ▸</b> <span><code>type-check</code> pasa sin errores</span></p>
+    </div>
+  </div>
+
+  <div class="phase h1">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F1</span>
+        <h4>Núcleo de composición de capas</h4>
+        <span class="badge b-todo">pendiente</span>
+      </div>
+      <p class="body"><code>Bitmap</code> binario, tabla de patrones base 2×2, <em>weave</em> de 2 capas y
+      <code>compose</code> (superposición = OR por bloque), y <code>render</code> a SVG y Canvas/PNG con fondo
+      transparente y marcas de registro. Incluye el <em>seam</em> <code>SeedSource</code> (semilla; default =
+      <code>systemSeed</code>) y un punto de enganche para transformar capas — <strong>preparan los adaptadores
+      opcionales</strong> (uzumaki, kumo) sin acoplarlos al núcleo.</p>
+      <p class="deliv"><b>Entregable ▸</b> <span><code>core/{bitmap,patterns,weave,compose,rng,seed}</code> · <code>render/{svg,canvas}</code> · tests</span></p>
+      <p class="deliv"><b>Cierre ▸</b> <span><code>compose(weave(motivo))</code> reproduce el motivo dentro de tolerancia; test de independencia (una capa aislada no correlaciona con el motivo) en verde</span></p>
+      <p class="deliv"><b>Depende de ▸</b> <span>F0</span></p>
+    </div>
+  </div>
+
+  <div class="phase h1">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F2</span>
+        <h4>Ingestión de motivo</h4>
+        <span class="badge b-todo">pendiente</span>
+      </div>
+      <p class="body"><code>motif/rasterize</code>: fuente (glifo/kanji, SVG, PNG) → bitmap b/n por
+      threshold/dither. <code>alignPair</code> rechaza dimensiones no alineadas (el núcleo solo recibe pares
+      alineados). Único borde de normalización de la entrada.</p>
+      <p class="deliv"><b>Entregable ▸</b> <span><code>motif/{rasterize,alignPair}</code> + tests</span></p>
+      <p class="deliv"><b>Cierre ▸</b> <span>un kanji de ejemplo se rasteriza y compone correctamente</span></p>
+      <p class="deliv"><b>Depende de ▸</b> <span>F1</span></p>
+    </div>
+  </div>
+
+  <!-- ===== HITO 2 ===== -->
+  <div class="milestone h2">
+    <div class="ring">弐</div>
+    <div>
+      <div class="mt">Hito 2</div>
+      <h2>Capas vivas y decoración</h2>
+    </div>
+  </div>
+
+  <div class="phase h2">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F3</span>
+        <h4>Web component</h4>
+        <span class="badge b-todo">pendiente</span>
+      </div>
+      <p class="body"><code>&lt;shibui-sukashi&gt;</code> (Shadow DOM): apila capas con
+      <code>mix-blend-mode: multiply</code>; capa superior arrastrable con <em>snap</em> a marcas de registro.
+      Story en Storybook. Único punto que toca el DOM.</p>
+      <p class="deliv"><b>Entregable ▸</b> <span><code>web/shibui-sukashi.ts</code> + <code>stories/sukashi.stories.ts</code></span></p>
+      <p class="deliv"><b>Cierre ▸</b> <span>arrastrar una capa sobre otra revela el motivo en vivo</span></p>
+      <p class="deliv"><b>Depende de ▸</b> <span>F1 (F2 para la demo)</span></p>
+    </div>
+  </div>
+
+  <div class="phase h2">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F4</span>
+        <h4>Patrones decorativos</h4>
+        <span class="badge b-todo">pendiente</span>
+      </div>
+      <p class="body">Generadores deterministas: <code>seigaiha</code>, <code>asanoha</code>, <code>sashiko</code>,
+      <code>mon</code>, <code>moiré</code> → halftone. <em>Weave</em> con cover: cada capa, vista sola, parece arte
+      (no ruido), manteniendo el reveal. Métrica de contraste expuesta; bajo umbral → aviso.</p>
+      <p class="deliv"><b>Entregable ▸</b> <span><code>pattern/{seigaiha,asanoha,sashiko,mon,moire}</code> + weave con cover</span></p>
+      <p class="deliv"><b>Cierre ▸</b> <span>capas con cover legibles como patrón + reveal correcto</span></p>
+      <p class="deliv"><b>Depende de ▸</b> <span>F1 — <strong>en paralelo con F2</strong></span></p>
+    </div>
+  </div>
+
+  <div class="phase h2">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F5</span>
+        <h4>Weaves multi-motivo</h4>
+        <span class="badge b-todo">pendiente</span>
+      </div>
+      <p class="body">Construcción de 3 capas donde el emparejamiento (capa pivote + capa B) revela un motivo y
+      (capa pivote + capa C) revela otro. La capa pivote no se reutiliza entre composiciones (el núcleo lo
+      impide).</p>
+      <p class="deliv"><b>Entregable ▸</b> <span><code>core/deny</code> (weave de 3 capas) + tests</span></p>
+      <p class="deliv"><b>Cierre ▸</b> <span>los dos emparejamientos reproducen sus dos motivos; independencia validada para las tres capas</span></p>
+      <p class="deliv"><b>Depende de ▸</b> <span>F1 (mejor con F2 para motivos reales)</span></p>
+    </div>
+  </div>
+
+  <!-- ===== HITO 3 ===== -->
+  <div class="milestone h3">
+    <div class="ring">参</div>
+    <div>
+      <div class="mt">Hito 3</div>
+      <h2>Refinado y extras</h2>
+    </div>
+  </div>
+
+  <div class="phase h3">
+    <div class="node"></div>
+    <div class="pcard">
+      <div class="head">
+        <span class="fno">F6</span>
+        <h4>Refinado</h4>
+        <span class="badge b-todo">pendiente</span>
+      </div>
+      <p class="body">Combinar covers (F4) con multi-motivo (F5). Exponer una <strong>métrica de contraste</strong>;
+      bajo umbral → <em>fallback</em> a capas ruido + aviso. Reporte HTML en <code>docs/contrast-report.html</code>.</p>
+      <span class="stretch-flag">★ stretch — combina F4 + F5</span>
+      <p class="deliv"><b>Entregable ▸</b> <span>weave con cover + métrica + fallback · reporte de contraste HTML</span></p>
+      <p class="deliv"><b>Cierre ▸</b> <span>métrica expuesta; bajo umbral → fallback + aviso</span></p>
+      <p class="deliv"><b>Depende de ▸</b> <span>F4, F5</span></p>
+    </div>
+  </div>
+
+  <!-- ===== OPCIONALES (enchufables) ===== -->
+  <div class="optgroup">
+    <span class="tag">Adaptadores opcionales · enchufables al núcleo (F1) · fuera del camino crítico</span>
+
+    <div class="ocard">
+      <div class="head">
+        <span class="fno">F4½</span>
+        <h4>Deformación uzumaki (渦)</h4>
+        <span class="badge b-opt" style="margin-left:auto">opcional</span>
+      </div>
+      <p class="body">Módulo <code>src/warp/</code>: un campo de deflexión en remolino parametrizado por Ω que
+      (1) genera covers en espiral —hermana de <code>seigaiha</code>/<code>moiré</code>— y (2) deforma cada capa,
+      reversible des-deformando con −Ω. Una capa deformada solo "encaja" con el Ω correcto. Enchufa por el
+      <strong>hook de transform</strong> de F1.</p>
+      <p class="deliv"><b>Cierre ▸</b> <span><code>warp(layer, Ω)</code> y su inverso fieles dentro de tolerancia; integrado como transform opcional en el render</span></p>
+    </div>
+
+    <div class="ocard">
+      <div class="head">
+        <span class="fno">F7</span>
+        <h4>Semilla del cielo (kumo 雲)</h4>
+        <span class="badge b-opt" style="margin-left:auto">opcional</span>
+      </div>
+      <p class="body">Módulo <code>src/entropy/</code>: un <code>SeedSource</code> alternativo que toma una foto del
+      cielo, la condensa y la <strong>mezcla</strong> con <code>systemSeed</code> (nunca lo reemplaza), con
+      <em>health-test</em> (detectar imagen congelada) y <em>fallback</em> a la semilla del sistema. Enchufa por el
+      <strong>seam <code>SeedSource</code></strong> de F1.</p>
+      <p class="deliv"><b>Cierre ▸</b> <span><code>skySeed</code> produce semilla mezclada y cae a <code>systemSeed</code> si la cámara falla; el <em>weave</em> funciona idéntico con cualquiera de los dos</span></p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>sukashi · plan de obra F0–F7 · índice y tabla canónica en <span class="accent">docs/phases/README.md</span></p>
+  <p>Estado vigente en <span class="accent">docs/STATUS.md</span> · diseño en <span class="accent">docs/plans/2026-06-15-sukashi-design.md</span></p>
+  <p>Estado: <strong>F0 (andamiaje) hecha</strong>. Camino crítico F0 → F6; F4½ y F7 son adaptadores opcionales enchufables al núcleo. Trunk de integración: <span class="accent">develop</span> (merges --no-ff).</p>
+</footer>
+
+</div>
+</body>
+</html>

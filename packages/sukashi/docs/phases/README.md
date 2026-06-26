@@ -4,6 +4,7 @@
 > Trunk de integración: **`develop`** (merges `--no-ff`). Tests/builds desde el repo principal.
 
 **Estado actual:** F0 ✅ hecha · siguiente: F1 (ver [`STATUS.md`](../STATUS.md)).
+**Visual del roadmap:** [`roadmap.html`](roadmap.html) — línea de tiempo F0→F7 (camino crítico + opcionales).
 
 ---
 
