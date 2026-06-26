@@ -116,7 +116,7 @@
 </head>
 <body>
 <div class="wrap">
-<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con dos adaptadores opcionales enchufables (F4½ y F7). F0 está hecha; el resto pendiente.</p>
+<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con dos adaptadores opcionales enchufables (F4½ y F7). F0–F4 están hechas; el resto pendiente.</p>
 
 <header class="hero">
   <p class="kicker">sukashi · 透かし · plan de obra</p>
@@ -148,7 +148,7 @@
   </div>
 
   <div class="meta">
-    <span class="chip">Estado: <b>F0 → F3 hechas</b> · siguiente <b>F4</b></span>
+    <span class="chip">Estado: <b>F0 · F1 · F2 · F3 · F4 hechas</b> · siguiente <b>F5</b></span>
     <span class="chip">Camino crítico = <b>F0 → F6</b></span>
     <span class="chip">Opcionales enchufables = <b>F4½ · F7</b></span>
     <span class="chip">Trunk de integración <b>develop</b> (merges --no-ff)</span>
@@ -249,25 +249,26 @@
       <code>mix-blend-mode: multiply</code>; capa superior arrastrable con <em>snap</em> a marcas de registro.
       <strong>Web de demo propia</strong> (Vite + TS, sin Storybook ni dependencia de shibui) desplegada en
       <strong>sukashi.web.app</strong>. Único punto que toca el DOM.</p>
-      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>web/shibui-sukashi.ts</code> (custom element vanilla) + <code>demo/</code> (showcase Vite) + target Firebase <code>sukashi</code> + pipeline CI (deploy solo en main)</span></p>
-      <p class="deliv"><b>✓ Cierre ▸</b> <span>desplegada y en vivo en <strong>sukashi.web.app</strong>: arrastrar una capa sobre otra revela el motivo</span></p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>web/shibui-sukashi.ts</code> + <code>demo/</code> (showcase) + target Firebase <code>sukashi</code> · en vivo</span></p>
+      <p class="deliv"><b>✓ Cierre ▸</b> <span>arrastrar una capa sobre otra revela el motivo en vivo</span></p>
       <p class="deliv"><b>Depende de ▸</b> <span>F1 (F2 para la demo)</span></p>
     </div>
   </div>
 
-  <div class="phase h2">
+  <div class="phase h2 done">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F4</span>
         <h4>Patrones decorativos</h4>
-        <span class="badge b-todo">pendiente</span>
+        <span class="badge b-done">hecho</span>
       </div>
       <p class="body">Generadores deterministas: <code>seigaiha</code>, <code>asanoha</code>, <code>sashiko</code>,
-      <code>mon</code>, <code>moiré</code> → halftone. <em>Weave</em> con cover: cada capa, vista sola, parece arte
-      (no ruido), manteniendo el reveal. Métrica de contraste expuesta; bajo umbral → aviso.</p>
-      <p class="deliv"><b>Entregable ▸</b> <span><code>pattern/{seigaiha,asanoha,sashiko,mon,moire}</code> + weave con cover</span></p>
-      <p class="deliv"><b>Cierre ▸</b> <span>capas con cover legibles como patrón + reveal correcto</span></p>
+      <code>mon</code>, <code>moiré</code> → halftone (trama Bayer). <code>kasaneCoverWeave</code> elige por celda la
+      tesela que mejor reproduce el cover; cada capa, vista sola, lleva la textura del patrón (no ruido),
+      manteniendo el reveal exacto. Métrica (<code>contrast</code>·<code>fidelity</code>) expuesta; bajo umbral → aviso.</p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>pattern/{seigaiha,asanoha,sashiko,mon,moire}</code> + <code>core/cover</code> + métrica · selector en la demo · 27 tests</span></p>
+      <p class="deliv"><b>✓ Cierre ▸</b> <span>capas con cover legibles como patrón + reveal correcto (error 0)</span></p>
       <p class="deliv"><b>Depende de ▸</b> <span>F1 — <strong>en paralelo con F2</strong></span></p>
     </div>
   </div>
@@ -351,7 +352,7 @@
 <footer>
   <p>sukashi · plan de obra F0–F7 · índice y tabla canónica en <span class="accent">docs/phases/README.md</span></p>
   <p>Estado vigente en <span class="accent">docs/STATUS.md</span> · diseño en <span class="accent">docs/plans/2026-06-15-sukashi-design.md</span></p>
-  <p>Estado: <strong>F0 → F3 hechas</strong> (componente <code>&lt;shibui-sukashi&gt;</code> + web de demo <strong>en vivo</strong> en <span class="accent">sukashi.web.app</span>) · siguiente <strong>F4</strong> (patrones decorativos). Camino crítico F0 → F6; F4½ y F7 son adaptadores opcionales enchufables al núcleo. Trunk de integración: <span class="accent">develop</span> (merges --no-ff).</p>
+  <p>Estado: <strong>F0 · F1 · F2 hechas</strong> · <strong>F3 en curso</strong> (componente <code>&lt;shibui-sukashi&gt;</code> + web de demo en <span class="accent">sukashi.web.app</span>). Camino crítico F0 → F6; F4½ y F7 son adaptadores opcionales enchufables al núcleo. Trunk de integración: <span class="accent">develop</span> (merges --no-ff).</p>
 </footer>
 
 </div>

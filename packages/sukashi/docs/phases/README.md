@@ -3,7 +3,7 @@
 > Plan de obra de `@shibui-ui/sukashi`. Cada fase es un incremento verificable.
 > Trunk de integración: **`develop`** (merges `--no-ff`). Tests/builds desde el repo principal.
 
-**Estado actual:** F0 → F3 ✅ hechas (demo en vivo en sukashi.web.app) · siguiente: F4 (ver [`STATUS.md`](../STATUS.md)).
+**Estado actual:** F0 · F1 · F2 · F3 · F4 ✅ hechas · siguiente: F5 (ver [`STATUS.md`](../STATUS.md)).
 **Visual del roadmap:** [`roadmap.html`](roadmap.html) — línea de tiempo F0→F7 (camino crítico + opcionales).
 
 ---
@@ -16,7 +16,7 @@
 | **F1** | Núcleo de composición | `Bitmap`, tabla de patrones, *weave* de 2 capas, `compose`, render SVG/PNG | ✅ hecha |
 | **F2** | Ingestión de motivo | rasterizar fuente (glifo/SVG/PNG) → bitmap; alineación de pares | ✅ hecha |
 | **F3** | Web component + demo | `<shibui-sukashi>` + web de demo propia (sukashi.web.app); superposición en vivo (`mix-blend-mode`) | ✅ hecha |
-| **F4** | Patrones decorativos | covers generativos (seigaiha, asanoha, sashiko, mon, moiré); capas con cover | — |
+| **F4** | Patrones decorativos | covers generativos (seigaiha, asanoha, sashiko, mon, moiré); capas con cover + métrica | ✅ hecha |
 | **F5** | Weaves multi-motivo | distintos emparejamientos de capas revelan distintos motivos | — |
 | **F6** | (stretch) Refinado | capas con cover + métrica de contraste y *fallback* | — |
 | **F4½** | (opcional) Deformación uzumaki | warp en remolino: covers en espiral + deformar/des-deformar capas con Ω | — |
@@ -47,8 +47,8 @@ En vez de Storybook, **web de demo propia** en `demo/` (Vite + TS, sin dependenc
 **Hecho cuando:** arrastrar una capa sobre otra revela el motivo en vivo.
 
 ### F4 — Patrones decorativos (covers generativos)
-Generadores deterministas: seigaiha, asanoha, sashiko, mon, moiré → halftone. *Weave* con cover: cada capa, vista sola, parece arte (no ruido), manteniendo el reveal.
-**Hecho cuando:** capas con cover legibles como patrón + reveal correcto.
+Generadores deterministas: seigaiha, asanoha, sashiko, mon, moiré → halftone (trama Bayer). `kasaneCoverWeave` elige por celda la tesela que mejor reproduce el cover en ambas capas, exponiendo una **métrica** (`contrast` · `fidelity` · `belowThreshold` · `warnings`). Cada capa, vista sola, lleva la textura del patrón —no ruido— manteniendo el reveal exacto.
+**Hecho cuando:** capas con cover legibles como patrón + reveal correcto. Detalle y compromiso (densidad fija 50% → textura, no tono) en [`../patterns.md`](../patterns.md).
 
 ### F5 — Weaves multi-motivo
 Construcción de 3 capas donde el emparejamiento (pivote + capa B) revela un motivo y (pivote + capa C) revela otro.

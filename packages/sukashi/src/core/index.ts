@@ -6,3 +6,10 @@ export { rngFrom, seeded, type Rng } from './rng';
 export { kasaneWeave, readBlock, type Layer, type WeaveOptions } from './weave';
 export { compose } from './compose';
 export { downsample, reconstructError } from './reconstruct';
+export {
+  kasaneCoverWeave,
+  type CoverPair,
+  type CoverWeaveOptions,
+  type CoverMetric,
+  type CoverWeaveResult,
+} from './cover';
