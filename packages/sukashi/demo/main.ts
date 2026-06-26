@@ -1,6 +1,7 @@
 import { defineSukashi, type ShibuiSukashi } from '../src/web';
 import { rasterize, coverageFromRGBA, type GraySource } from '../src/motif';
-import { kasaneWeave, type Bitmap } from '../src/core';
+import { kasaneWeave, kasaneCoverWeave, type Bitmap, type Layer } from '../src/core';
+import { PATTERNS_BY_NAME, type PatternName } from '../src/pattern';
 
 defineSukashi();
 
@@ -93,11 +94,36 @@ const overlay = document.getElementById('overlay') as ShibuiSukashi;
 const layerA = document.getElementById('layerA') as ShibuiSukashi;
 const layerB = document.getElementById('layerB') as ShibuiSukashi;
 const statusEl = document.getElementById('status') as HTMLElement;
+const splitStatus = document.getElementById('split-status') as HTMLElement;
+
+// Cada capa puede llevar un cover decorativo: vista sola parece arte, no ruido.
+const COVERS: ReadonlyArray<{ label: string; name: PatternName | null; scale: number }> = [
+  { label: 'Ruido', name: null, scale: 0 },
+  { label: 'Seigaiha', name: 'seigaiha', scale: 12 },
+  { label: 'Asanoha', name: 'asanoha', scale: 12 },
+  { label: 'Sashiko', name: 'sashiko', scale: 12 },
+  { label: 'Mon', name: 'mon', scale: 16 },
+  { label: 'Moiré', name: 'moire', scale: 6 },
+];
+let cover = COVERS[1] ?? COVERS[0]!; // por defecto, seigaiha
 
 let motif = makeMotif(drawFuji);
 
 function reweave(): void {
-  const layers = kasaneWeave(motif);
+  let layers: readonly [Layer, Layer];
+  if (cover.name) {
+    const c = PATTERNS_BY_NAME[cover.name]({ width: MOTIF * 2, height: MOTIF * 2, scale: cover.scale });
+    const res = kasaneCoverWeave(motif, { cover: c });
+    layers = res.layers;
+    const [fa, fb] = res.metric.fidelity;
+    splitStatus.textContent =
+      `Cada capa, sola, es un patrón ${cover.label.toLowerCase()} ` +
+      `(parecido A ${fa.toFixed(2)} · B ${fb.toFixed(2)}). El motivo solo existe en la superposición.`;
+  } else {
+    layers = kasaneWeave(motif);
+    splitStatus.textContent =
+      'Cada capa, por separado, es ruido uniforme. El motivo solo existe en la superposición.';
+  }
   overlay.layers = layers;
   layerA.layers = [layers[0]];
   layerB.layers = [layers[1]];
@@ -115,6 +141,20 @@ GLYPHS.forEach((g, i) => {
     reweave();
   });
   motifsEl.appendChild(b);
+});
+
+const coversEl = document.getElementById('covers') as HTMLElement;
+COVERS.forEach((c) => {
+  const b = document.createElement('button');
+  b.textContent = c.label;
+  if (c === cover) b.classList.add('on');
+  b.addEventListener('click', () => {
+    coversEl.querySelectorAll('button').forEach((x) => x.classList.remove('on'));
+    b.classList.add('on');
+    cover = c;
+    reweave();
+  });
+  coversEl.appendChild(b);
 });
 
 const overlayView = document.getElementById('overlay-view') as HTMLElement;
@@ -142,7 +182,7 @@ document.getElementById('reweave')?.addEventListener('click', reweave);
 
 overlay.addEventListener('sukashi-reveal', (e: Event) => {
   const aligned = (e as CustomEvent<{ aligned: boolean }>).detail.aligned;
-  statusEl.textContent = aligned ? 'alineado · el motivo se revela' : 'desalineado · solo ruido';
+  statusEl.textContent = aligned ? 'alineado · el motivo se revela' : 'desalineado · el motivo se disgrega';
   statusEl.classList.toggle('aligned', aligned);
 });
 
