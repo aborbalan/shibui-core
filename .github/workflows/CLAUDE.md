@@ -13,6 +13,7 @@ orchestrator.yml          ← único trigger externo (push / PR / dispatch)
   ├── ci-apps.yml          ← Apps: build React/Angular/Svelte + deploy Firebase
   ├── ci-api.yml           ← NestJS API: lint + build + test
   ├── ci-tauri.yml         ← Rust core: fmt + clippy + cargo test
+  ├── ci-sukashi.yml       ← Sukashi: type-check + tests + deploy demo (sukashi.web.app, solo main)
   └── release.yml          ← NPM publish (solo main + ci-lib exitoso)
 ```
 
@@ -35,6 +36,7 @@ Los outputs del job `detect-changes` son la API pública hacia los pipelines.
 | `cv` | `apps/app-cv/**` | Activa ci-apps para CV (deploy a `shibui-cv`) |
 | `api` | `apps/shibui-api/**` | Activa ci-api |
 | `tauri` | `apps/app-tauri/**` | Activa ci-tauri |
+| `sukashi` | `packages/sukashi/**` | Activa ci-sukashi (type-check + tests; deploy demo solo en main) |
 
 Cada output tiene lógica OR con su flag `force_*` de `workflow_dispatch`.
 
@@ -87,6 +89,7 @@ if: |
 | `force_cv` | Activa ci-apps para CV |
 | `force_api` | Activa ci-api |
 | `force_tauri` | Activa ci-tauri |
+| `force_sukashi` | Activa ci-sukashi |
 
 ---
 
@@ -94,4 +97,4 @@ if: |
 
 | Secreto | Usado en |
 |---|---|
-| `FIREBASE_TOKEN` | `ci-apps.yml` (deploy) · `ci-lib.yml` (deploy Storybook) |
+| `FIREBASE_TOKEN` | `ci-apps.yml` (deploy) · `ci-lib.yml` (deploy Storybook) · `ci-sukashi.yml` (deploy demo) |

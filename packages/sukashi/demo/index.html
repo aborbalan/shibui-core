@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>sukashi · 透かし — patrones por capas</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header>
+        <p class="kicker">sukashi · 透かし</p>
+        <h1>Patrones decorativos por capas</h1>
+        <p class="lede">
+          Dos capas de patrón que, superpuestas y alineadas, revelan un motivo. Arrastra la capa de
+          arriba: fuera de sitio es ruido; al encajar, el dibujo aparece.
+        </p>
+      </header>
+
+      <section class="controls" aria-label="Controles">
+        <div class="group">
+          <span class="lbl">Motivo</span>
+          <div id="motifs" class="btns"></div>
+        </div>
+        <div class="group">
+          <span class="lbl">Vista</span>
+          <div class="btns">
+            <button id="view-overlay" type="button" class="on">Superpuesta</button>
+            <button id="view-split" type="button">Capas por separado</button>
+          </div>
+        </div>
+        <div class="group">
+          <span class="lbl">Opciones</span>
+          <div class="btns">
+            <button id="snap" type="button" class="on">Imán (snap)</button>
+            <button id="reweave" type="button">Re-tejer</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="stagewrap">
+        <div id="overlay-view">
+          <shibui-sukashi id="overlay" mode="draggable" cell="7" snap></shibui-sukashi>
+          <p id="status" class="status"></p>
+        </div>
+        <div id="split-view" hidden>
+          <div class="split">
+            <figure><shibui-sukashi id="layerA" cell="7"></shibui-sukashi><figcaption>Capa A</figcaption></figure>
+            <figure><shibui-sukashi id="layerB" cell="7"></shibui-sukashi><figcaption>Capa B</figcaption></figure>
+          </div>
+          <p class="status">Cada capa, por separado, es solo patrón. El motivo solo existe en la superposición.</p>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
