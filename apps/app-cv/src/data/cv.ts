@@ -165,6 +165,7 @@ export const experience: ExperienceItem[] = [
 // ─────────────────────────────────────────────────────────────
 export const skills: SkillGroup[] = [
   { label: 'Core', items: ['Angular', 'TypeScript', 'RxJS', 'SCSS', 'Lit Elements'], primary: true },
+  { label: 'IA & agentes', items: ['Claude Code', 'Codex'], primary: true },
   { label: 'Styling', items: ['CSS', 'SCSS', 'Sass', 'Ant Design', 'Material'] },
   { label: 'Tooling', items: ['Nx', 'Storybook'] },
   { label: 'Familiar', items: ['React', 'Svelte', 'NestJS'] },
@@ -192,6 +193,7 @@ export const fullStack: SkillGroup[] = [
     label: 'Tooling & arquitectura',
     items: ['Nx', 'pnpm workspaces', 'Monorepo', 'Storybook', 'Vite', 'Tauri', 'Arq. hexagonal'],
   },
+  { label: 'IA & agentes', items: ['Claude Code', 'Codex'] },
 ];
 
 // ─────────────────────────────────────────────────────────────
