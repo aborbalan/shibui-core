@@ -9,6 +9,7 @@
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "report": "tsx scripts/gen-contrast-report.ts",
     "dev": "vite demo",
     "build:demo": "vite build demo",
     "preview": "vite preview demo",

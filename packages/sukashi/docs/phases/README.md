@@ -3,7 +3,7 @@
 > Plan de obra de `@shibui-ui/sukashi`. Cada fase es un incremento verificable.
 > Trunk de integración: **`develop`** (merges `--no-ff`). Tests/builds desde el repo principal.
 
-**Estado actual:** F0 · F1 · F2 · F3 · F4 · F5 ✅ hechas · siguiente: F6 (ver [`STATUS.md`](../STATUS.md)).
+**Estado actual:** F0 · F1 · F2 · F3 · F4 · F5 · F6 ✅ hechas — **camino crítico completo** · opcionales F4½ · F7 (ver [`STATUS.md`](../STATUS.md)).
 **Visual del roadmap:** [`roadmap.html`](roadmap.html) — línea de tiempo F0→F7 (camino crítico + opcionales).
 
 ---
@@ -18,7 +18,7 @@
 | **F3** | Web component + demo | `<shibui-sukashi>` + web de demo propia (sukashi.web.app); superposición en vivo (`mix-blend-mode`) | ✅ hecha |
 | **F4** | Patrones decorativos | covers generativos (seigaiha, asanoha, sashiko, mon, moiré); capas con cover + métrica | ✅ hecha |
 | **F5** | Weaves multi-motivo | distintos emparejamientos de capas revelan distintos motivos | ✅ hecha |
-| **F6** | (stretch) Refinado | capas con cover + métrica de contraste y *fallback* | — |
+| **F6** | (stretch) Refinado | multi-motivo con cover + métrica de contraste/fidelidad y *fallback* + reporte HTML | ✅ hecha |
 | **F4½** | (opcional) Deformación uzumaki | warp en remolino: covers en espiral + deformar/des-deformar capas con Ω | — |
 | **F7** | (opcional) Semilla del cielo | sembrar los patrones desde una foto del cielo (kumo), mezclada con la semilla del sistema | — |
 
@@ -54,8 +54,11 @@ Generadores deterministas: seigaiha, asanoha, sashiko, mon, moiré → halftone 
 `core/multiweave`: `kasaneMultiWeave(motifs)` teje una **capa pivote compartida** + un **pétalo por motivo**. Cada `compose([pivot, petals[i]])` revela `motifs[i]`; emparejamientos cruzados no. Es la generalización de `kasaneWeave` (pivote + N pétalos en vez de 2 capas con 1 motivo). El conjunto base de patrones es cerrado bajo complemento, así que cada capa vista sola queda uniforme (independencia).
 **Hecho cuando:** los dos emparejamientos reproducen sus dos motivos respectivos (error 0); independencia validada para las tres capas (χ²). ✅ 6 tests en `core/multiweave.test.ts`.
 
-### F6 — (stretch) Refinado
-Combinar covers (F4) con multi-motivo (F5). Exponer una **métrica de contraste**; bajo umbral → *fallback* y aviso. Reporte HTML en `docs/contrast-report.html`.
+### F6 — (stretch) Refinado ✅
+`core/multicover`: `kasaneMultiCoverWeave(motifs, { cover })` generaliza `kasaneCoverWeave` (F4) al reparto multi-motivo de F5 — un **pivote compartido + un pétalo por motivo, cada capa guiada por su cover**. El revelado sigue siendo estructural (contraste ≈ 0.5 por emparejamiento); lo que varía con los covers es la **fidelidad** de cada capa. La **métrica** expone `contrast[]` (por par) y `fidelity[]` (por capa); bajo umbral marca `warnings` y, con `fallback: true`, cae a capas ruido (`kasaneMultiWeave`) conservando el reveal exacto. `render/renderContrastReport` vuelca la métrica a HTML; `scripts/gen-contrast-report.ts` (`pnpm --filter @shibui-ui/sukashi report`) genera `docs/contrast-report.html`.
+**Hecho cuando:** métrica expuesta; bajo umbral → *fallback* + aviso; reporte HTML. ✅ 10 tests (`core/multicover.test.ts` + `render/report.test.ts`).
+
+> Nota de seguridad (heredada de F5): el pivote es **compartido** entre pétalos, así que quien posea dos pétalos obtiene `motivo_i XOR motivo_j`. Para garantía k-de-n estricta, cada secreto debería tejerse con su propio pivote independiente — pendiente de decisión.
 
 ### F4½ — (opcional) Deformación uzumaki (渦)
 Módulo `src/warp/`: un campo de deflexión en remolino parametrizado por Ω que (1) genera covers en espiral —hermana de seigaiha/moiré— y (2) **deforma** cada capa, reversible des-deformando con −Ω. Una capa deformada solo "encaja" con el Ω correcto.
