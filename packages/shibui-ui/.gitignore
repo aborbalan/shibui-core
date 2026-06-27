@@ -18,3 +18,10 @@ vite.config.ts.timestamp-*.mjs
 /blob-report/
 /playwright/.cache/
 /.lighthouseci/
+
+# Design sync — tooling & generated artifacts (do not commit)
+/.ds-sync/
+/ds-bundle/
+/.storybook-ref/
+/.design-sync/sb-reference/
+/.design-sync/.cache/
