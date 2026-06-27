@@ -4,9 +4,10 @@
 Se componen capas con texturas tradicionales (seigaiha, asanoha, sashiko, mon) que, al
 superponerse, revelan un **motivo emergente**.
 
-> **Estado:** F0 (andamiaje). **Sin API pública estable aún.** La fase vigente es la fuente
-> de verdad y vive en [`docs/STATUS.md`](docs/STATUS.md) + el plan de obra en
-> [`docs/phases/`](docs/phases/) — NO en este fichero. Aquí va lo estable.
+> **Estado:** F4 ✅ (covers generativos) · siguiente F5 (weaves multi-motivo). **API pública
+> aún en estabilización.** La fase vigente es la fuente de verdad y vive en
+> [`docs/STATUS.md`](docs/STATUS.md) + el plan de obra en [`docs/phases/`](docs/phases/)
+> — NO en este fichero. Aquí va lo estable.
 
 ---
 
