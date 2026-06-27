@@ -76,11 +76,19 @@ npx storybook build -c .storybook-ref -o .design-sync/sb-reference
 The `.storybook-ref/` directory is in `.gitignore` (since it's design-sync tooling, not
 part of the main project).
 
-### Accepted warnings (non-blocking)
+### Fonts — embedded (resolved 2026-06-27)
 
-- `[FONT_MISSING]` "Shippori Mincho" (--lib-font-body) and "DM Mono" (--lib-font-mono): loaded
-  from Google Fonts at runtime — no @font-face shipped, designs render with system font fallbacks.
-  Intentional: no woff2 assets in the repo. To fix, add via cfg.extraFonts.
+DM Mono and Shippori Mincho are embedded as woff2 subsets (latin + latin-ext only):
+- Source CSS: `.design-sync/fonts/shibui-fonts.css` (12 @font-face blocks)
+- Binaries: `.design-sync/fonts/*.woff2` (12 files, ≈ Google Fonts gstatic CDN hashes)
+- Config: `"extraFonts": [".design-sync/fonts/shibui-fonts.css"]`
+- Deployed: injected into `ds-bundle/styles.css` + copied to `ds-bundle/fonts/`
+
+CJK ranges of Shippori Mincho are intentionally excluded (360 extra @font-face blocks).
+The latin subsets cover UI labels, headings, and body text for western locales.
+
+On resync: the converter's `extractFonts()` reads `extraFonts`, rewrites URLs to `fonts/`
+prefix, copies woff2 to `ds-bundle/fonts/`, and injects rules into `styles.css` automatically.
 
 ### Re-sync risks
 - titleMap entries: verify against actual exports if shibui components are renamed

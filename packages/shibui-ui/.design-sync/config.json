@@ -7,6 +7,7 @@
   "buildCmd": "pnpm --filter @shibui-ui/ui build",
   "globalName": "ShibuiUiUi",
   "entry": ".ds-sync/shibui-pkg/index.js",
+  "extraFonts": [".design-sync/fonts/shibui-fonts.css"],
   "storyImports": {
     "shim": [".component"]
   },
