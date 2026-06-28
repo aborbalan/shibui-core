@@ -3,7 +3,7 @@
 > Plan de obra de `@shibui-ui/sukashi`. Cada fase es un incremento verificable.
 > Trunk de integración: **`develop`** (merges `--no-ff`). Tests/builds desde el repo principal.
 
-**Estado actual:** F0 · F1 · F2 · F3 · F4 · F5 · F6 ✅ hechas — **camino crítico completo** · opcionales F4½ · F7 (ver [`STATUS.md`](../STATUS.md)).
+**Estado actual:** F0 · F1 · F2 · F3 · F4 · F5 · F6 · F7 ✅ hechas — **camino crítico completo** · opcional restante F4½ (ver [`STATUS.md`](../STATUS.md)).
 **Visual del roadmap:** [`roadmap.html`](roadmap.html) — línea de tiempo F0→F7 (camino crítico + opcionales).
 
 ---
@@ -20,7 +20,7 @@
 | **F5** | Weaves multi-motivo | distintos emparejamientos de capas revelan distintos motivos | ✅ hecha |
 | **F6** | (stretch) Refinado | multi-motivo con cover + métrica de contraste/fidelidad y *fallback* + reporte HTML | ✅ hecha |
 | **F4½** | (opcional) Deformación uzumaki | warp en remolino: covers en espiral + deformar/des-deformar capas con Ω | — |
-| **F7** | (opcional) Semilla del cielo | sembrar los patrones desde una foto del cielo (kumo), mezclada con la semilla del sistema | — |
+| **F7** | (opcional) Semilla del cielo | sembrar los patrones desde una foto del cielo (kumo), mezclada con la semilla del sistema | ✅ hecha |
 
 > Los adaptadores **opcionales** (F4½, F7) son enchufables: el núcleo solo depende de las interfaces (`SeedSource` y el punto de enganche del transform), nunca de la cámara ni del warp. Ninguno está en el camino crítico.
 
@@ -65,6 +65,6 @@ Generadores deterministas: seigaiha, asanoha, sashiko, mon, moiré → halftone 
 Módulo `src/warp/`: un campo de deflexión en remolino parametrizado por Ω que (1) genera covers en espiral —hermana de seigaiha/moiré— y (2) **deforma** cada capa, reversible des-deformando con −Ω. Una capa deformada solo "encaja" con el Ω correcto.
 **Hecho cuando:** `warp(layer, Ω)` y su inverso son fieles dentro de tolerancia; integrado como transform opcional en el render.
 
-### F7 — (opcional) Semilla del cielo (kumo 雲)
-Módulo `src/entropy/`: un `SeedSource` alternativo que toma una foto del cielo, la condensa y la **mezcla** con `systemSeed` (nunca lo reemplaza), con *health-test* (detectar imagen congelada) y *fallback* a la semilla del sistema. Da a las capas un origen físico y poético.
-**Hecho cuando:** `skySeed` produce semilla mezclada y cae a `systemSeed` si la cámara falla; el `weave` funciona idéntico con cualquiera de los dos.
+### F7 — (opcional) Semilla del cielo (kumo 雲) ✅
+Módulo `src/entropy/`: `openSky(capture)` toma una foto del cielo, la condensa (SHA-256) y la **mezcla por XOR** con `systemSeed` (`mixSeed`, **nunca lo reemplaza** — al ser XOR sobre un CSPRNG no degrada aunque el cielo sea pobre), con *health-test* (imagen congelada / entropía baja) y *fallback* a la semilla del sistema. El adaptador de cámara `cameraSky` (browser-only) queda fuera del barrel node; el núcleo solo conoce la interfaz `SkyCapture` y es testeable en node. Detalle en [`../entropy.md`](../entropy.md).
+**Hecho cuando:** `openSky` produce semilla mezclada y cae a `systemSeed` si la cámara falla; el `weave` funciona idéntico con cualquiera de los dos. ✅ 27 tests (`src/entropy/*.test.ts`, incl. weave-compat error 0).
