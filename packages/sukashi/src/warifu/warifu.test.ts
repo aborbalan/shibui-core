@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { seal, open, openWithManifest, sealBytes, openBytes } from './warifu';
 import { manifestMatch, allSealed, type SealManifest } from './manifest';
 import { manifestFromTrustReport } from './hanko';
+import hankoReport from '../../demo/fixtures/hanko-trust-report.json';
 import { makeBitmap, setPixel, type Bitmap } from '../core/bitmap';
 import { compose } from '../core/compose';
 import { reconstructError } from '../core/reconstruct';
@@ -145,5 +146,30 @@ describe('adaptador hanko', () => {
     const manifest = manifestFromTrustReport(report);
     expect(allSealed(manifest)).toBe(false);
     expect(await manifestMatch(manifest)).toBeNull();
+  });
+});
+
+describe('e2e · Trust Report real de hanko (snapshot)', () => {
+  it('refleja el estado real: no todo sellado → la tablilla no abre hoy', async () => {
+    const manifest = manifestFromTrustReport(hankoReport);
+    expect(manifest.entries.length).toBe(hankoReport.total);
+    expect(hankoReport.trusted).toBeLessThan(hankoReport.total); // hoy 4/102
+    expect(allSealed(manifest)).toBe(false);
+    expect(await manifestMatch(manifest)).toBeNull();
+  });
+
+  it('cuando los mismos componentes estén todos sellados, la tablilla abre', async () => {
+    const roster = hankoReport.components.map((c) => c.tagName);
+    const sealed: SealManifest = { entries: roster.map((name) => ({ name, sealed: true })) };
+    const match = (await manifestMatch(sealed))!;
+
+    const motif = motivo();
+    const w = await seal(motif, match);
+
+    // Con el report real de hoy → cerrada.
+    expect(await openWithManifest(w, manifestFromTrustReport(hankoReport))).toBeNull();
+    // Con el proyecto entero sellado → revela (error 0).
+    const layers = await open(w, match);
+    expect(reconstructError(compose([...layers]), motif)).toBe(0);
   });
 });

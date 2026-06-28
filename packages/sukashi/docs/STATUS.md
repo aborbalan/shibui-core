@@ -9,9 +9,9 @@
 **F6 — (stretch) Refinado** ✅ <sub>(`kasaneMultiCoverWeave`: covers de F4 sobre multi-motivo de F5 + métrica contraste/fidelidad + fallback a ruido; pivote independiente por defecto; reporte HTML en `docs/contrast-report.html`; 11 tests)</sub>
 **F4½ — (opcional) Deformación uzumaki (渦)** ✅ <sub>(`warp`/`warpAll`/`unwarpAll`: remolino angular dependiente del radio, reversible con −Ω; cover en espiral `spiral` registrado como `uzumaki`; `compose(warpAll(L,Ω)) === warp(compose(L),Ω)`; Ω = estética, no la clave; 9 tests)</sub>
 **F7 — (opcional) Semilla del cielo (kumo 雲)** ✅ <sub>(`openSky`/`mixSeed`: `SeedSource` que mezcla por XOR una foto del cielo —SHA-256— con `systemSeed`, nunca lo reemplaza; health-test (congelado/entropía baja) + fallback; adaptador de cámara `cameraSky` browser-only; 27 tests)</sub>
-**F8 — (extensión) Tablilla partida (warifu 割符)** ✅ <sub>(núcleo incr.1: motivo que solo se compone cuando un manifiesto cumple; `manifestMatch`/`seal`/`open`/`sealBytes`+adaptador `manifestFromTrustReport` de hanko; condición por defecto `allSealed`; puro, no importa hanko/shibui; 12 tests)</sub>
+**F8 — (extensión) Tablilla partida (warifu 割符)** ✅ <sub>(motivo + bytes que solo se componen cuando un manifiesto cumple; `manifestMatch`/`seal`/`open`/`sealBytes`+adaptador `manifestFromTrustReport` de hanko; condición por defecto `allSealed`; puro, no importa hanko/shibui. Incr.2: demo «Candado · tablilla» con selector de manifiesto + e2e contra snapshot real del Trust Report; 14 tests)</sub>
 
-Siguiente: F8 incr.2 — demo (manifiesto sintético sellado/no → badge que se revela) + render del badge + e2e con el `report` real de hanko.
+Siguiente: **plan F0→F8 completo** — sin fases pendientes. Posible vNext: render del badge a SVG/PNG independiente + e2e en vivo contra el `report` desplegado de hanko.
 
 > Plan de obra completo (F0→F8) en [`phases/README.md`](phases/README.md) · visual en [`phases/roadmap.html`](phases/roadmap.html).
 > Detalle de F4 en [`patterns.md`](patterns.md) · F4½ en [`warp.md`](warp.md) · reporte de contraste de F6 en [`contrast-report.html`](contrast-report.html) · F7 en [`entropy.md`](entropy.md) · F8 en [`warifu.md`](warifu.md).

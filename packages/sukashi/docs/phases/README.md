@@ -3,7 +3,7 @@
 > Plan de obra de `@shibui-ui/sukashi`. Cada fase es un incremento verificable.
 > Trunk de integración: **`develop`** (merges `--no-ff`). Tests/builds desde el repo principal.
 
-**Estado actual:** F0 · F1 · F2 · F3 · F4 · F4½ · F5 · F6 · F7 ✅ · **F8** (núcleo) ✅ — extensión warifu (motivo sellado por el manifiesto de hanko), incr.1 hecho (ver [`STATUS.md`](../STATUS.md)).
+**Estado actual:** F0 · F1 · F2 · F3 · F4 · F4½ · F5 · F6 · F7 · **F8** ✅ — plan completo; F8 = extensión warifu (motivo sellado por el manifiesto de hanko), núcleo + demo + e2e (ver [`STATUS.md`](../STATUS.md)).
 **Visual del roadmap:** [`roadmap.html`](roadmap.html) — línea de tiempo F0→F7 (camino crítico + opcionales).
 
 ---
@@ -21,7 +21,7 @@
 | **F6** | (stretch) Refinado | multi-motivo con cover + métrica de contraste/fidelidad y *fallback* + reporte HTML | ✅ hecha |
 | **F4½** | (opcional) Deformación uzumaki | warp en remolino: covers en espiral + deformar/des-deformar capas con Ω | ✅ hecha |
 | **F7** | (opcional) Semilla del cielo | sembrar los patrones desde una foto del cielo (kumo), mezclada con la semilla del sistema | ✅ hecha |
-| **F8** | (extensión) Tablilla partida (warifu) | un motivo (y bytes) que solo se compone cuando un manifiesto cumple su condición; adaptador al Trust Report de hanko | ✅ núcleo (incr.1) |
+| **F8** | (extensión) Tablilla partida (warifu) | un motivo (y bytes) que solo se compone cuando un manifiesto cumple su condición; adaptador al Trust Report de hanko + demo | ✅ hecha |
 
 > Los adaptadores **opcionales** (F4½, F7) son enchufables: el núcleo solo depende de las interfaces (`SeedSource` y el punto de enganche del transform), nunca de la cámara ni del warp. Ninguno está en el camino crítico.
 
@@ -72,4 +72,4 @@ Módulo `src/entropy/`: `openSky(capture)` toma una foto del cielo, la condensa 
 
 ### F8 — (extensión) Tablilla partida (warifu 割符) ✅ núcleo
 Módulo `src/warifu/`: une sukashi con [hanko](../../../hanko/). Un *割符* (tablilla partida) reparte el motivo en una **mitad guardada** (`tally`, ruido sola) y una **mitad-manifiesto** que se regenera de un `match` — y el `match` solo existe si el manifiesto **cumple su condición** (`allSealed` por defecto: todos sellados). Reutiliza el `kasaneWeave` de F1 (`A` regenerable del `match`, `B`=`tally` guardada) y el `expandPool` de F7 (cero deps nuevas). Sirve dos usos del mismo reparto: **motivo visual** (`seal`/`open`/`openWithManifest`) y **bytes sellados** (`sealBytes`/`openBytes`). El adaptador `manifestFromTrustReport` mapea el Trust Report de hanko → `SealManifest` por tipado estructural (no importa hanko ni shibui). Detalle en [`../warifu.md`](../warifu.md).
-**Hecho cuando (incr.1):** núcleo puro testeable en node — `match` correcto revela (error 0), `match` equivocado / `tally` sola = ruido, bytes round-trip, adaptador hanko abre con report todo-sellado y no abre si algo queda sin sellar. ✅ 12 tests (`src/warifu/warifu.test.ts`). **Incr.2 (pendiente):** demo (toggle manifiesto sintético) + render del badge + e2e con el `report` real de hanko.
+**Hecho cuando:** (incr.1) núcleo puro testeable en node — `match` correcto revela (error 0), `match` equivocado / `tally` sola = ruido, bytes round-trip, adaptador hanko abre con report todo-sellado y no abre si algo queda sin sellar. (incr.2) demo «Candado · tablilla» con selector de manifiesto (Proyecto sellado → abre · Trust Report real hoy → cerrada · Casi → cerrada) + e2e contra un snapshot real del Trust Report (`demo/fixtures/hanko-trust-report.json`). ✅ 14 tests (`src/warifu/warifu.test.ts`).

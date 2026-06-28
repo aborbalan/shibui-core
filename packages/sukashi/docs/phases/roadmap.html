@@ -116,7 +116,7 @@
 </head>
 <body>
 <div class="wrap">
-<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con adaptadores opcionales enchufables (F4½ y F7) y una extensión F8 (warifu) que ata sukashi con hanko. F0–F7 hechas; F8 con su núcleo hecho.</p>
+<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con adaptadores opcionales enchufables (F4½ y F7) y una extensión F8 (warifu) que ata sukashi con hanko. F0–F8 hechas: plan completo.</p>
 
 <header class="hero">
   <p class="kicker">sukashi · 透かし · plan de obra</p>
@@ -148,9 +148,9 @@
   </div>
 
   <div class="meta">
-    <span class="chip">Estado: <b>F0 → F7 hechas</b> · <b>F8</b> núcleo ✓</span>
+    <span class="chip">Estado: <b>F0 → F8 hechas</b> · plan <b>completo</b></span>
     <span class="chip">Camino crítico = <b>F0 → F6</b> ✓</span>
-    <span class="chip">Opcionales: <b>F4½</b> ✓ · <b>F7</b> ✓ · extensión <b>F8</b> warifu</span>
+    <span class="chip">Opcionales: <b>F4½</b> ✓ · <b>F7</b> ✓ · extensión <b>F8</b> ✓</span>
     <span class="chip">Trunk de integración <b>develop</b> (merges --no-ff)</span>
     <span class="chip">Tests/builds desde el <b>repo principal</b></span>
   </div>
@@ -366,7 +366,7 @@
         <span class="fno">F8</span>
         <h4>Tablilla partida (warifu 割符)</h4>
         <span class="badge b-opt" style="margin-left:auto">extensión</span>
-        <span class="badge b-done">núcleo ✓</span>
+        <span class="badge b-done">hecho</span>
       </div>
       <p class="body">Módulo <code>src/warifu/</code>: ata sukashi con <strong>hanko</strong>. Una tablilla partida
       reparte el motivo en una <strong>mitad guardada</strong> (<code>tally</code>, ruido sola) y una
@@ -377,8 +377,8 @@
       (<code>seal</code>/<code>open</code>) y <strong>bytes sellados</strong> (<code>sealBytes</code>). El adaptador
       <code>manifestFromTrustReport</code> lee la forma del Trust Report de hanko por tipado estructural — sin
       importar hanko ni shibui.</p>
-      <p class="deliv"><b>✓ Hecho (incr.1) ▸</b> <span><code>warifu/{manifest,warifu,hanko}</code> puro node-safe · 12 tests (revelado error 0, <code>match</code> malo / <code>tally</code> sola = ruido, bytes round-trip, adaptador hanko) · <code>type-check</code> en verde · detalle en <code>docs/warifu.md</code></span></p>
-      <p class="deliv"><b>Incr.2 ▸</b> <span>demo (toggle manifiesto sintético) + render del badge + e2e con el <code>report</code> real de hanko</span></p>
+      <p class="deliv"><b>✓ Hecho (incr.1) ▸</b> <span><code>warifu/{manifest,warifu,hanko}</code> puro node-safe · revelado error 0, <code>match</code> malo / <code>tally</code> sola = ruido, bytes round-trip, adaptador hanko · detalle en <code>docs/warifu.md</code></span></p>
+      <p class="deliv"><b>✓ Hecho (incr.2) ▸</b> <span>demo <b>«Candado · tablilla»</b> con selector de manifiesto (Proyecto sellado → abre · Trust Report real hoy → cerrada · Casi → cerrada) + e2e contra snapshot real del Trust Report · 14 tests · <code>type-check</code> + build de la demo en verde</span></p>
     </div>
   </div>
 

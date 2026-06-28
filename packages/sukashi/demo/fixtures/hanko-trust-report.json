@@ -1,0 +1,417 @@
+{
+  "_note": "Snapshot REAL del Trust Report de hanko (recortado a tagName+trusted). Fuente: packages/hanko/hanko-report/trust-report.json",
+  "generatedAt": "2026-06-21T20:03:17.753Z",
+  "total": 102,
+  "trusted": 4,
+  "untrusted": 98,
+  "components": [
+    {
+      "tagName": "lib-accordion-item",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-aspect-ratio",
+      "trusted": true
+    },
+    {
+      "tagName": "lib-avatar",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-background",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-badge",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-bento-item",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-burger",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-button",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-canvas",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-card",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-checkbox",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-close-button",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-code-block",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-color-scale",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-content-pillar",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-copy-button",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-display-heading",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-divider",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-eyebrow",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-icon",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-kbd",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-label",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-counter",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-button-liquid",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-magnetic",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-progress",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-progress-circle",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-quote",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-radio",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-rating",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-reading-progress",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-ripple",
+      "trusted": true
+    },
+    {
+      "tagName": "lib-select-option",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-skeleton",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-spacer",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-sparkline",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-spinner",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-status-dot",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-step",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-switch",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-text-glitch",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-text-list",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-tooltip",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-visually-hidden",
+      "trusted": true
+    },
+    {
+      "tagName": "lib-breadcrumb",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-button-group",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-button-sep",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-button-split",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-checkbox-card",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-chip",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-color-picker",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-color-swatches",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-dropdown",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-editor-toolbar",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-empty-state",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-file-uploader",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-header",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-input",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-alert",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-metric-bar",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-modal",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-pagination",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-range-slider",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-segmented-control",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-select",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-tabs",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-tree-select",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-accordion",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-bar-chart",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-bento-grid",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-bubble-chart",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-carousel",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-combo-chart",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-cursor-follower",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-data-table",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-dialog",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-drawer",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-file-browser",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-footer",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-funnel-chart",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-gadget-frame",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-gauge",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-git-graph",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-horizontal-scroll-section",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-line-chart",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-login-form",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-parallax-container",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-parallax-text-stack",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-pie-chart",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-radar-chart",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-scatter-chart",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-scatter-chart-3d",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-sidebar",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-stagger-container",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-stepper",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-text-editor",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-timeline-item",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-timeline",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-toast-manager",
+      "trusted": true
+    },
+    {
+      "tagName": "lib-component-grid",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-glass-card",
+      "trusted": false
+    },
+    {
+      "tagName": "lib-spotlight-card",
+      "trusted": false
+    }
+  ]
+}

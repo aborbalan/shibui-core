@@ -11,6 +11,15 @@ import {
 } from '../src/core';
 import { PATTERNS_BY_NAME, type PatternName } from '../src/pattern';
 import { warpAll } from '../src/warp';
+import {
+  seal,
+  openWithManifest,
+  manifestMatch,
+  manifestFromTrustReport,
+  type SealManifest,
+  type Warifu,
+} from '../src/warifu';
+import hankoReport from './fixtures/hanko-trust-report.json';
 import { openSky } from '../src/entropy';
 import { cameraSky } from '../src/entropy/camera';
 
@@ -161,6 +170,7 @@ GLYPHS.forEach((g, i) => {
     b.classList.add('on');
     motif = makeMotif(g.draw);
     reweave();
+    void reseal();
   });
   motifsEl.appendChild(b);
 });
@@ -251,3 +261,75 @@ overlay.addEventListener('sukashi-reveal', (e: Event) => {
 reweave();
 statusEl.textContent = 'alineado · el motivo se revela — arrástralo para romperlo';
 statusEl.classList.add('aligned');
+
+// ── Candado · tablilla (warifu) ─────────────────────────────────────────────
+// El motivo se sella contra el roster de hanko: solo abre cuando todo está sellado.
+const tablilla = document.getElementById('tablilla') as ShibuiSukashi;
+const tablillaStatus = document.getElementById('tablilla-status') as HTMLElement;
+const manifestsEl = document.getElementById('manifests') as HTMLElement;
+
+const ROSTER: readonly string[] = hankoReport.components.map((c) => c.tagName);
+const sealedManifest: SealManifest = { entries: ROSTER.map((name) => ({ name, sealed: true })) };
+const almostManifest: SealManifest = {
+  entries: ROSTER.map((name, i) => ({ name, sealed: i !== ROSTER.length - 1 })),
+};
+
+interface ManifestSource {
+  readonly label: string;
+  readonly manifest: SealManifest;
+  readonly hint: string;
+}
+const SOURCES: readonly ManifestSource[] = [
+  {
+    label: 'Proyecto sellado',
+    manifest: sealedManifest,
+    hint: `los ${hankoReport.total} componentes sellados`,
+  },
+  {
+    label: 'Trust Report real (hoy)',
+    manifest: manifestFromTrustReport(hankoReport),
+    hint: `${hankoReport.trusted}/${hankoReport.total} sellados`,
+  },
+  { label: 'Casi (falta 1)', manifest: almostManifest, hint: 'todos menos uno' },
+];
+let manifestSource = SOURCES[0]!;
+
+// La tablilla se sella siempre contra el roster completo (el «futuro cumplido»).
+let targetMatch: Uint8Array | null = null;
+let lock: Warifu | null = null;
+
+async function reseal(): Promise<void> {
+  if (!targetMatch) targetMatch = await manifestMatch(sealedManifest);
+  lock = await seal(motif, targetMatch!);
+  await retally();
+}
+
+async function retally(): Promise<void> {
+  if (!lock) return;
+  const opened = await openWithManifest(lock, manifestSource.manifest);
+  if (opened) {
+    tablilla.layers = opened;
+    tablillaStatus.textContent = `abierta · las mitades encajan y el motivo se compone (${manifestSource.hint})`;
+    tablillaStatus.classList.add('aligned');
+  } else {
+    // Sin match: mostramos la mitad guardada sola — ruido. La tablilla sigue cerrada.
+    tablilla.layers = [lock.tally];
+    tablillaStatus.textContent = `cerrada · ${manifestSource.hint} — se abrirá cuando se cumpla hanko`;
+    tablillaStatus.classList.remove('aligned');
+  }
+}
+
+SOURCES.forEach((s) => {
+  const b = document.createElement('button');
+  b.textContent = s.label;
+  if (s === manifestSource) b.classList.add('on');
+  b.addEventListener('click', () => {
+    manifestsEl.querySelectorAll('button').forEach((x) => x.classList.remove('on'));
+    b.classList.add('on');
+    manifestSource = s;
+    void retally();
+  });
+  manifestsEl.appendChild(b);
+});
+
+void reseal();

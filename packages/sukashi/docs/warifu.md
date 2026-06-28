@@ -77,7 +77,17 @@ no el código. Cualquier fuente que produzca un manifiesto `{ name, sealed }` si
 - `openWithManifest`: cumplido revela, no cumplido `null`.
 - bytes: round-trip con el `match` correcto; `match` equivocado → incoherente.
 - adaptador hanko: report todo-sellado abre; report con algún componente sin sellar no abre.
+- **e2e (snapshot real)**: el test carga un recorte del Trust Report real de hanko
+  (`demo/fixtures/hanko-trust-report.json`, hoy 4/102) → `allSealed` falso → no abre; con los mismos
+  componentes todos sellados → revela (error 0).
+
+## Demo
+
+La demo (`demo/`) incluye la sección **«Candado · tablilla (warifu)»** con un selector de
+manifiesto: **Proyecto sellado** (los 102 sellados → la tablilla abre y compone el motivo) ·
+**Trust Report real (hoy)** (4/102 → cerrada) · **Casi (falta 1)** (cerrada). El motivo se sella
+contra el roster completo de hanko; solo el manifiesto entero sellado regenera la mitad que falta.
 
 > Nota de estado: hoy el consumer #1 (shibui) no está entero sellado, así que la tablilla
-> permanece cerrada — por diseño: se abre **cuando se cumpla hanko**. Los tests usan un manifiesto
-> sintético todo-sellado para demostrar el revelado.
+> permanece cerrada — por diseño: se abre **cuando se cumpla hanko**. El selector «Proyecto
+> sellado» muestra el estado cumplido (futuro) y revela el motivo.

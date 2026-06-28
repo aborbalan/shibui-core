@@ -30,6 +30,10 @@ h1 { font-size: 2rem; font-weight: 600; margin: 0 0 12px; letter-spacing: -0.01e
 .btns.slider { align-items: center; }
 .btns.slider input[type='range'] { accent-color: var(--ink); width: 160px; cursor: pointer; }
 .btns.slider .seed-status { max-width: none; margin: 0; min-width: 3ch; }
+.tablilla { margin-top: 36px; padding-top: 26px; border-top: 1px solid var(--line); }
+.t-title { font-size: 1.12rem; margin: 0 0 6px; }
+.t-lede { color: var(--soft); max-width: 64ch; margin: 0 0 18px; font-size: 0.92rem; line-height: 1.5; }
+.t-stage { margin-top: 16px; }
 button {
   font: inherit; font-size: 0.86rem; color: var(--ink);
   background: var(--panel); border: 1px solid var(--line); border-radius: 8px;

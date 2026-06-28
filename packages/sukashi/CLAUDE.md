@@ -4,7 +4,7 @@
 Se componen capas con texturas tradicionales (seigaiha, asanoha, sashiko, mon) que, al
 superponerse, revelan un **motivo emergente**.
 
-> **Estado:** F0 → F7 ✅ (camino crítico F0→F6 + opcionales F4½ uzumaki y F7 kumo) · **F8** warifu (núcleo ✅) — extensión que ata sukashi con hanko.
+> **Estado:** F0 → F8 ✅ — camino crítico F0→F6 + opcionales F4½ uzumaki y F7 kumo + extensión F8 warifu (motivo sellado por el manifiesto de hanko; núcleo + demo + e2e).
 > **API pública aún en estabilización.** La fase vigente es la fuente de verdad y vive en
 > [`docs/STATUS.md`](docs/STATUS.md) + el plan de obra en [`docs/phases/`](docs/phases/)
 > — NO en este fichero. Aquí va lo estable.
