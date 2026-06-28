@@ -1,0 +1,25 @@
+{
+  "name": "app-opencells",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Cockpit del ecosistema shibui — app de aprendizaje sobre Open Cells (Lit + channels + routing)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "firebase deploy --only hosting:opencells --project lib-ui-b67c5"
+  },
+  "dependencies": {
+    "@shibui-ui/ui": "workspace:*",
+    "@open-cells/core": "^1.1.2",
+    "@open-cells/page-controller": "^1.0.4",
+    "@open-cells/element-controller": "^1.0.4",
+    "lit": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "~5.9.3",
+    "vite": "^6.4.2"
+  }
+}
