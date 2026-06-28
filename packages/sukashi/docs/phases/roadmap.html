@@ -116,7 +116,7 @@
 </head>
 <body>
 <div class="wrap">
-<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con dos adaptadores opcionales enchufables (F4½ y F7). F0–F6 y el opcional F7 están hechos: el camino crítico está completo; solo queda el opcional F4½.</p>
+<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con dos adaptadores opcionales enchufables (F4½ y F7). Todo el plan F0–F7 está hecho: el camino crítico y ambos opcionales (F4½ uzumaki y F7 kumo) están completos.</p>
 
 <header class="hero">
   <p class="kicker">sukashi · 透かし · plan de obra</p>
@@ -148,9 +148,9 @@
   </div>
 
   <div class="meta">
-    <span class="chip">Estado: <b>F0 → F6 + F7 hechas</b> · camino crítico <b>completo</b></span>
+    <span class="chip">Estado: <b>F0 → F7 hechas</b> · plan <b>completo</b></span>
     <span class="chip">Camino crítico = <b>F0 → F6</b> ✓</span>
-    <span class="chip">Opcionales: <b>F7</b> ✓ hecho · <b>F4½</b> pendiente</span>
+    <span class="chip">Opcionales: <b>F4½</b> ✓ · <b>F7</b> ✓</span>
     <span class="chip">Trunk de integración <b>develop</b> (merges --no-ff)</span>
     <span class="chip">Tests/builds desde el <b>repo principal</b></span>
   </div>
@@ -331,12 +331,17 @@
         <span class="fno">F4½</span>
         <h4>Deformación uzumaki (渦)</h4>
         <span class="badge b-opt" style="margin-left:auto">opcional</span>
+        <span class="badge b-done">hecho</span>
       </div>
-      <p class="body">Módulo <code>src/warp/</code>: un campo de deflexión en remolino parametrizado por Ω que
-      (1) genera covers en espiral —hermana de <code>seigaiha</code>/<code>moiré</code>— y (2) deforma cada capa,
-      reversible des-deformando con −Ω. Una capa deformada solo "encaja" con el Ω correcto. Enchufa por el
-      <strong>hook de transform</strong> de F1.</p>
-      <p class="deliv"><b>Cierre ▸</b> <span><code>warp(layer, Ω)</code> y su inverso fieles dentro de tolerancia; integrado como transform opcional en el render</span></p>
+      <p class="body">Módulo <code>src/warp/</code>: un campo de deflexión en remolino parametrizado por Ω
+      (giro angular dependiente del radio, <code>falloff(ρ)=(1−ρ)²</code>) que
+      (1) genera covers en espiral —<code>spiral</code>, hermana de <code>seigaiha</code>/<code>moiré</code>,
+      registrada como cover <code>uzumaki</code>— y (2) deforma cada capa (<code>warpAll</code>),
+      reversible des-deformando con −Ω (<code>unwarpAll</code>). Como <code>compose</code> conmuta con un
+      remap idéntico, <code>compose(warpAll(L,Ω)) === warp(compose(L),Ω)</code>: la superposición revela el
+      motivo girado y <code>unwarpAll</code> lo endereza. <strong>Ω es estética/ofuscación, NO la clave.</strong></p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>warp/{warp,warpAll,unwarpAll,spiral}</code> puro node-safe · re-exportado en el barrel · cover <b>Uzumaki</b> + deslizador <b>Ω</b> en la demo · 9 tests + <code>type-check</code> en verde · detalle en <code>docs/warp.md</code></span></p>
+      <p class="deliv"><b>✓ Cierre ▸</b> <span><code>warp(layer, Ω)</code> y su inverso fieles dentro de tolerancia; <code>Ω=0</code> = identidad exacta; conmuta con <code>compose</code> (exacto)</span></p>
     </div>
 
     <div class="ocard">
