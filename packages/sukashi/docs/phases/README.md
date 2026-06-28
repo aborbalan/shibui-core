@@ -3,7 +3,7 @@
 > Plan de obra de `@shibui-ui/sukashi`. Cada fase es un incremento verificable.
 > Trunk de integración: **`develop`** (merges `--no-ff`). Tests/builds desde el repo principal.
 
-**Estado actual:** F0 · F1 · F2 · F3 · F4 ✅ hechas · siguiente: F5 (ver [`STATUS.md`](../STATUS.md)).
+**Estado actual:** F0 · F1 · F2 · F3 · F4 · F5 · F6 ✅ hechas — **camino crítico completo** · opcionales F4½ · F7 (ver [`STATUS.md`](../STATUS.md)).
 **Visual del roadmap:** [`roadmap.html`](roadmap.html) — línea de tiempo F0→F7 (camino crítico + opcionales).
 
 ---
@@ -17,8 +17,8 @@
 | **F2** | Ingestión de motivo | rasterizar fuente (glifo/SVG/PNG) → bitmap; alineación de pares | ✅ hecha |
 | **F3** | Web component + demo | `<shibui-sukashi>` + web de demo propia (sukashi.web.app); superposición en vivo (`mix-blend-mode`) | ✅ hecha |
 | **F4** | Patrones decorativos | covers generativos (seigaiha, asanoha, sashiko, mon, moiré); capas con cover + métrica | ✅ hecha |
-| **F5** | Weaves multi-motivo | distintos emparejamientos de capas revelan distintos motivos | — |
-| **F6** | (stretch) Refinado | capas con cover + métrica de contraste y *fallback* | — |
+| **F5** | Weaves multi-motivo | distintos emparejamientos de capas revelan distintos motivos | ✅ hecha |
+| **F6** | (stretch) Refinado | multi-motivo con cover + métrica de contraste/fidelidad y *fallback* + reporte HTML | ✅ hecha |
 | **F4½** | (opcional) Deformación uzumaki | warp en remolino: covers en espiral + deformar/des-deformar capas con Ω | — |
 | **F7** | (opcional) Semilla del cielo | sembrar los patrones desde una foto del cielo (kumo), mezclada con la semilla del sistema | — |
 
@@ -50,12 +50,16 @@ En vez de Storybook, **web de demo propia** en `demo/` (Vite + TS, sin dependenc
 Generadores deterministas: seigaiha, asanoha, sashiko, mon, moiré → halftone (trama Bayer). `kasaneCoverWeave` elige por celda la tesela que mejor reproduce el cover en ambas capas, exponiendo una **métrica** (`contrast` · `fidelity` · `belowThreshold` · `warnings`). Cada capa, vista sola, lleva la textura del patrón —no ruido— manteniendo el reveal exacto.
 **Hecho cuando:** capas con cover legibles como patrón + reveal correcto. Detalle y compromiso (densidad fija 50% → textura, no tono) en [`../patterns.md`](../patterns.md).
 
-### F5 — Weaves multi-motivo
-Construcción de 3 capas donde el emparejamiento (pivote + capa B) revela un motivo y (pivote + capa C) revela otro.
-**Hecho cuando:** los dos emparejamientos reproducen sus dos motivos respectivos; independencia validada para las tres capas.
+### F5 — Weaves multi-motivo ✅
+`core/multiweave`: `kasaneMultiWeave(motifs)` teje **un pivote + un pétalo por motivo**; `compose([pivots[i], petals[i]])` revela `motifs[i]`. El conjunto base de patrones es cerrado bajo complemento, así que cada capa vista sola queda uniforme (independencia marginal).
 
-### F6 — (stretch) Refinado
-Combinar covers (F4) con multi-motivo (F5). Exponer una **métrica de contraste**; bajo umbral → *fallback* y aviso. Reporte HTML en `docs/contrast-report.html`.
+**Seguridad — sin reutilización de pivote (default).** Por defecto cada secreto usa un **pivote independiente**, de modo que ningún subconjunto de capas filtra nada: es un reparto k-de-2 propio por motivo. El modo `sharedPivot: true` reutiliza un único pivote (más compacto, una capa menos) pero introduce la fuga clásica de *two-time pad* — quien tenga dos pétalos obtiene `motivo_i XOR motivo_j`. Esto honra el diseño original ("la capa pivote no se reutiliza; el núcleo lo impide"): la reutilización ya no es el comportamiento por defecto, sino una opción explícita y etiquetada.
+
+**Hecho cuando:** cada par reproduce su motivo (error 0); independencia marginal de cada capa (χ²); y la superposición de dos pétalos **no** reconstruye `motivo_i XOR motivo_j` en modo default (sí en `sharedPivot`, verificado como fuga conocida). ✅ 7 tests en `core/multiweave.test.ts`.
+
+### F6 — (stretch) Refinado ✅
+`core/multicover`: `kasaneMultiCoverWeave(motifs, { cover })` generaliza `kasaneCoverWeave` (F4) al reparto multi-motivo de F5 — **cada capa guiada por su cover**. El revelado sigue siendo estructural (contraste ≈ 0.5 por emparejamiento); lo que varía con los covers es la **fidelidad** de cada capa. Hereda la garantía de F5: por defecto **pivote independiente por secreto** (cada par es un `kasaneCoverWeave` propio, sin fuga cruzada); `sharedPivot: true` reutiliza un pivote común guiado por su cover. La **métrica** expone `contrast[]` (por par), `pivotFidelity[]` y `petalFidelity[]`; bajo umbral marca `warnings` y, con `fallback: true`, cae a capas ruido (`kasaneMultiWeave`) conservando el reveal exacto. `render/renderContrastReport` vuelca la métrica a HTML; `scripts/gen-contrast-report.ts` (`pnpm --filter @shibui-ui/sukashi report`) genera `docs/contrast-report.html`.
+**Hecho cuando:** métrica expuesta; bajo umbral → *fallback* + aviso; reporte HTML; sin fuga cruzada por defecto. ✅ 11 tests (`core/multicover.test.ts` + `render/report.test.ts`).
 
 ### F4½ — (opcional) Deformación uzumaki (渦)
 Módulo `src/warp/`: un campo de deflexión en remolino parametrizado por Ω que (1) genera covers en espiral —hermana de seigaiha/moiré— y (2) **deforma** cada capa, reversible des-deformando con −Ω. Una capa deformada solo "encaja" con el Ω correcto.

@@ -3,7 +3,7 @@
 > Patrones decorativos por capas (*sukashi-e* / moiré) para shibui-ui.
 > Compón capas con texturas tradicionales —seigaiha, asanoha, sashiko, mon— que al superponerse revelan un motivo emergente.
 
-**Estado:** F0 (andamiaje). Sin API pública aún. Ver fase actual en [`docs/STATUS.md`](docs/STATUS.md) y el plan de obra en [`docs/phases/`](docs/phases/).
+**Estado:** F0 → F6 hechas — camino crítico completo (solo quedan los opcionales F4½ y F7). API pública aún en estabilización. Ver fase actual en [`docs/STATUS.md`](docs/STATUS.md) y el plan de obra en [`docs/phases/`](docs/phases/).
 
 ## Scripts
 

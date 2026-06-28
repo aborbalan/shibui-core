@@ -10,7 +10,7 @@ export interface WeaveOptions {
   rng?: Rng;
 }
 
-function writeBlock(layer: Layer, bx: number, by: number, block: Block): void {
+export function writeBlock(layer: Layer, bx: number, by: number, block: Block): void {
   setPixel(layer, bx * 2, by * 2, block[0]); // TL
   setPixel(layer, bx * 2 + 1, by * 2, block[1]); // TR
   setPixel(layer, bx * 2, by * 2 + 1, block[2]); // BL

@@ -116,7 +116,7 @@
 </head>
 <body>
 <div class="wrap">
-<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con dos adaptadores opcionales enchufables (F4½ y F7). F0–F4 están hechas; el resto pendiente.</p>
+<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con dos adaptadores opcionales enchufables (F4½ y F7). F0–F6 están hechas: el camino crítico está completo; solo quedan los opcionales.</p>
 
 <header class="hero">
   <p class="kicker">sukashi · 透かし · plan de obra</p>
@@ -148,8 +148,8 @@
   </div>
 
   <div class="meta">
-    <span class="chip">Estado: <b>F0 · F1 · F2 · F3 · F4 hechas</b> · siguiente <b>F5</b></span>
-    <span class="chip">Camino crítico = <b>F0 → F6</b></span>
+    <span class="chip">Estado: <b>F0 → F6 hechas</b> · camino crítico <b>completo</b></span>
+    <span class="chip">Camino crítico = <b>F0 → F6</b> ✓</span>
     <span class="chip">Opcionales enchufables = <b>F4½ · F7</b></span>
     <span class="chip">Trunk de integración <b>develop</b> (merges --no-ff)</span>
     <span class="chip">Tests/builds desde el <b>repo principal</b></span>
@@ -273,19 +273,21 @@
     </div>
   </div>
 
-  <div class="phase h2">
+  <div class="phase h2 done">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F5</span>
         <h4>Weaves multi-motivo</h4>
-        <span class="badge b-todo">pendiente</span>
+        <span class="badge b-done">hecho</span>
       </div>
-      <p class="body">Construcción de 3 capas donde el emparejamiento (capa pivote + capa B) revela un motivo y
-      (capa pivote + capa C) revela otro. La capa pivote no se reutiliza entre composiciones (el núcleo lo
-      impide).</p>
-      <p class="deliv"><b>Entregable ▸</b> <span><code>core/deny</code> (weave de 3 capas) + tests</span></p>
-      <p class="deliv"><b>Cierre ▸</b> <span>los dos emparejamientos reproducen sus dos motivos; independencia validada para las tres capas</span></p>
+      <p class="body"><code>kasaneMultiWeave</code> teje <strong>un pivote + un pétalo por motivo</strong>:
+      <code>compose([pivots[i], petals[i]])</code> revela <code>motifs[i]</code>. Por defecto cada secreto usa un
+      <strong>pivote independiente</strong> (reparto k-de-2 propio, sin fuga cruzada); <code>sharedPivot</code> reutiliza
+      un pivote común —más compacto pero filtra <code>motivo_i XOR motivo_j</code>—. El conjunto base es cerrado bajo
+      complemento → cada capa vista sola queda uniforme.</p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>core/multiweave</code> (<code>kasaneMultiWeave</code>) + barrel · 7 tests</span></p>
+      <p class="deliv"><b>✓ Cierre ▸</b> <span>cada par revela su motivo (error 0); independencia marginal (χ²); sin fuga cruzada por defecto (verificada)</span></p>
       <p class="deliv"><b>Depende de ▸</b> <span>F1 (mejor con F2 para motivos reales)</span></p>
     </div>
   </div>
@@ -299,19 +301,23 @@
     </div>
   </div>
 
-  <div class="phase h3">
+  <div class="phase h3 done">
     <div class="node"></div>
     <div class="pcard">
       <div class="head">
         <span class="fno">F6</span>
         <h4>Refinado</h4>
-        <span class="badge b-todo">pendiente</span>
+        <span class="badge b-done">hecho</span>
       </div>
-      <p class="body">Combinar covers (F4) con multi-motivo (F5). Exponer una <strong>métrica de contraste</strong>;
-      bajo umbral → <em>fallback</em> a capas ruido + aviso. Reporte HTML en <code>docs/contrast-report.html</code>.</p>
+      <p class="body"><code>kasaneMultiCoverWeave</code> generaliza el cover de F4 al reparto multi-motivo de F5:
+      <strong>cada capa guiada por su cover</strong>. El revelado es estructural (contraste ≈ 0.5 por par); lo que varía
+      con los covers es la <strong>fidelidad</strong>. Hereda la garantía de F5: por defecto <strong>pivote independiente
+      por secreto</strong> (sin fuga cruzada); <code>sharedPivot</code> reutiliza un pivote común. La métrica expone
+      <code>contrast[]</code>, <code>pivotFidelity[]</code> y <code>petalFidelity[]</code>; bajo umbral avisa y, con
+      <code>fallback</code>, cae a capas ruido conservando el reveal exacto. Reporte HTML en <code>docs/contrast-report.html</code>.</p>
       <span class="stretch-flag">★ stretch — combina F4 + F5</span>
-      <p class="deliv"><b>Entregable ▸</b> <span>weave con cover + métrica + fallback · reporte de contraste HTML</span></p>
-      <p class="deliv"><b>Cierre ▸</b> <span>métrica expuesta; bajo umbral → fallback + aviso</span></p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>core/multicover</code> + <code>render/renderContrastReport</code> + <code>scripts/gen-contrast-report</code> · 11 tests</span></p>
+      <p class="deliv"><b>✓ Cierre ▸</b> <span>métrica expuesta; bajo umbral → fallback + aviso; reporte HTML; sin fuga cruzada por defecto</span></p>
       <p class="deliv"><b>Depende de ▸</b> <span>F4, F5</span></p>
     </div>
   </div>
@@ -352,7 +358,7 @@
 <footer>
   <p>sukashi · plan de obra F0–F7 · índice y tabla canónica en <span class="accent">docs/phases/README.md</span></p>
   <p>Estado vigente en <span class="accent">docs/STATUS.md</span> · diseño en <span class="accent">docs/plans/2026-06-15-sukashi-design.md</span></p>
-  <p>Estado: <strong>F0 · F1 · F2 hechas</strong> · <strong>F3 en curso</strong> (componente <code>&lt;shibui-sukashi&gt;</code> + web de demo en <span class="accent">sukashi.web.app</span>). Camino crítico F0 → F6; F4½ y F7 son adaptadores opcionales enchufables al núcleo. Trunk de integración: <span class="accent">develop</span> (merges --no-ff).</p>
+  <p>Estado: <strong>F0 → F6 hechas — camino crítico completo</strong>. Solo quedan los adaptadores opcionales <strong>F4½</strong> (deformación uzumaki) y <strong>F7</strong> (semilla del cielo), enchufables al núcleo. Componente <code>&lt;shibui-sukashi&gt;</code> + web de demo en <span class="accent">sukashi.web.app</span>; reporte de contraste de F6 en <span class="accent">docs/contrast-report.html</span>. Trunk de integración: <span class="accent">develop</span> (merges --no-ff).</p>
 </footer>
 
 </div>
