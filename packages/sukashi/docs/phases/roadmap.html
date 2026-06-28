@@ -281,12 +281,13 @@
         <h4>Weaves multi-motivo</h4>
         <span class="badge b-done">hecho</span>
       </div>
-      <p class="body"><code>kasaneMultiWeave</code> teje una <strong>capa pivote compartida</strong> + un
-      <strong>pétalo por motivo</strong>: cada <code>compose([pivot, petals[i]])</code> revela <code>motifs[i]</code> y los
-      emparejamientos cruzados no. Es la generalización de <code>kasaneWeave</code> (pivote + N pétalos en vez de 2
-      capas con 1 motivo). El conjunto base es cerrado bajo complemento → cada capa vista sola queda uniforme.</p>
-      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>core/multiweave</code> (<code>kasaneMultiWeave</code>) + barrel · 6 tests</span></p>
-      <p class="deliv"><b>✓ Cierre ▸</b> <span>ambos emparejamientos reproducen sus motivos (error 0); independencia validada para las tres capas (χ²)</span></p>
+      <p class="body"><code>kasaneMultiWeave</code> teje <strong>un pivote + un pétalo por motivo</strong>:
+      <code>compose([pivots[i], petals[i]])</code> revela <code>motifs[i]</code>. Por defecto cada secreto usa un
+      <strong>pivote independiente</strong> (reparto k-de-2 propio, sin fuga cruzada); <code>sharedPivot</code> reutiliza
+      un pivote común —más compacto pero filtra <code>motivo_i XOR motivo_j</code>—. El conjunto base es cerrado bajo
+      complemento → cada capa vista sola queda uniforme.</p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>core/multiweave</code> (<code>kasaneMultiWeave</code>) + barrel · 7 tests</span></p>
+      <p class="deliv"><b>✓ Cierre ▸</b> <span>cada par revela su motivo (error 0); independencia marginal (χ²); sin fuga cruzada por defecto (verificada)</span></p>
       <p class="deliv"><b>Depende de ▸</b> <span>F1 (mejor con F2 para motivos reales)</span></p>
     </div>
   </div>
@@ -309,13 +310,14 @@
         <span class="badge b-done">hecho</span>
       </div>
       <p class="body"><code>kasaneMultiCoverWeave</code> generaliza el cover de F4 al reparto multi-motivo de F5:
-      <strong>pivote compartido + un pétalo por motivo, cada capa guiada por su cover</strong>. El revelado es
-      estructural (contraste ≈ 0.5 por par); lo que varía con los covers es la <strong>fidelidad</strong>. La métrica
-      expone <code>contrast[]</code> y <code>fidelity[]</code>; bajo umbral avisa y, con <code>fallback</code>, cae a capas
-      ruido conservando el reveal exacto. Reporte HTML en <code>docs/contrast-report.html</code>.</p>
+      <strong>cada capa guiada por su cover</strong>. El revelado es estructural (contraste ≈ 0.5 por par); lo que varía
+      con los covers es la <strong>fidelidad</strong>. Hereda la garantía de F5: por defecto <strong>pivote independiente
+      por secreto</strong> (sin fuga cruzada); <code>sharedPivot</code> reutiliza un pivote común. La métrica expone
+      <code>contrast[]</code>, <code>pivotFidelity[]</code> y <code>petalFidelity[]</code>; bajo umbral avisa y, con
+      <code>fallback</code>, cae a capas ruido conservando el reveal exacto. Reporte HTML en <code>docs/contrast-report.html</code>.</p>
       <span class="stretch-flag">★ stretch — combina F4 + F5</span>
-      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>core/multicover</code> + <code>render/renderContrastReport</code> + <code>scripts/gen-contrast-report</code> · 10 tests</span></p>
-      <p class="deliv"><b>✓ Cierre ▸</b> <span>métrica expuesta; bajo umbral → fallback + aviso; reporte de contraste HTML</span></p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>core/multicover</code> + <code>render/renderContrastReport</code> + <code>scripts/gen-contrast-report</code> · 11 tests</span></p>
+      <p class="deliv"><b>✓ Cierre ▸</b> <span>métrica expuesta; bajo umbral → fallback + aviso; reporte HTML; sin fuga cruzada por defecto</span></p>
       <p class="deliv"><b>Depende de ▸</b> <span>F4, F5</span></p>
     </div>
   </div>

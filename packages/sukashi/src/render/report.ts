@@ -30,9 +30,11 @@ function statusBadge(entry: ContrastReportEntry): string {
 function row(entry: ContrastReportEntry): string {
   const m = entry.metric;
   const contrast = m.contrast.map((c) => pct(c)).join(' · ');
-  const fidelity = m.fidelity
-    .map((f, i) => `${i === 0 ? 'pivote' : `p${i - 1}`} ${pct(f)}`)
+  const pivotFid = m.pivotFidelity
+    .map((f, i) => `${m.pivotFidelity.length > 1 ? `piv${i}` : 'pivote'} ${pct(f)}`)
     .join(' · ');
+  const petalFid = m.petalFidelity.map((f, i) => `p${i} ${pct(f)}`).join(' · ');
+  const fidelity = `${pivotFid} · ${petalFid}`;
   const warns = m.warnings.length
     ? `<ul class="warns">${m.warnings.map((w) => `<li>${esc(w)}</li>`).join('')}</ul>`
     : '<span class="muted">—</span>';

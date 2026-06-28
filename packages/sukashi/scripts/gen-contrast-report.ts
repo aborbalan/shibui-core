@@ -70,6 +70,10 @@ run('rombo × anillo · covers distintos', 'seigaiha + asanoha + sashiko', [smal
 
 run('rombo grande × anillo · moiré', 'moire', [big, anillo], moire({ width: S, height: S, scale: 8 }));
 
+run('rombo × anillo · pivote compartido', 'seigaiha (sharedPivot)', [small, anillo], seigaiha({ width: S, height: S, scale: 10 }), {
+  sharedPivot: true,
+});
+
 run('umbral de fidelidad exigente (aviso)', 'seigaiha', [small, anillo], seigaiha({ width: S, height: S, scale: 10 }), {
   minFidelity: 0.95,
 });

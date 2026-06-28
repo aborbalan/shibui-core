@@ -5,7 +5,8 @@ import type { MultiCoverMetric } from '../core/multicover';
 function metric(over: Partial<MultiCoverMetric> = {}): MultiCoverMetric {
   return {
     contrast: [0.5, 0.5],
-    fidelity: [0.8, 0.7, 0.72],
+    pivotFidelity: [0.8],
+    petalFidelity: [0.7, 0.72],
     belowThreshold: false,
     warnings: [],
     ...over,

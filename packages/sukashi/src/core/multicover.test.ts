@@ -31,11 +31,32 @@ describe('kasaneMultiCoverWeave — multi-motivo con cover (F6)', () => {
   const m2 = diamond(N, 0.5);
   const cover = seigaiha({ width: N * 2, height: N * 2, scale: 10 });
 
-  it('cada emparejamiento (pivote + pétalo) revela su motivo sin error', () => {
-    const { pivot, petals } = kasaneMultiCoverWeave([m1, m2], { cover, rng: seeded(7) });
+  it('cada par (pivote_i + pétalo_i) revela su motivo sin error', () => {
+    const { pivots, petals } = kasaneMultiCoverWeave([m1, m2], { cover, rng: seeded(7) });
     expect(petals).toHaveLength(2);
-    expect(reconstructError(compose([pivot, petals[0]!]), m1)).toBe(0);
-    expect(reconstructError(compose([pivot, petals[1]!]), m2)).toBe(0);
+    expect(reconstructError(compose([pivots[0]!, petals[0]!]), m1)).toBe(0);
+    expect(reconstructError(compose([pivots[1]!, petals[1]!]), m2)).toBe(0);
+  });
+
+  it('por defecto usa pivotes independientes (un pivote por secreto)', () => {
+    const { pivots, sharedPivot, metric } = kasaneMultiCoverWeave([m1, m2], { cover, rng: seeded(7) });
+    expect(sharedPivot).toBe(false);
+    expect(pivots).toHaveLength(2);
+    expect(pivots[0]).not.toBe(pivots[1]); // capas distintas
+    expect(metric.pivotFidelity).toHaveLength(2);
+  });
+
+  it('sharedPivot reutiliza una única capa pivote y conserva el reveal', () => {
+    const { pivots, petals, sharedPivot, metric } = kasaneMultiCoverWeave([m1, m2], {
+      cover,
+      rng: seeded(7),
+      sharedPivot: true,
+    });
+    expect(sharedPivot).toBe(true);
+    expect(pivots[0]).toBe(pivots[1]); // misma referencia
+    expect(metric.pivotFidelity).toHaveLength(1);
+    expect(reconstructError(compose([pivots[0]!, petals[0]!]), m1)).toBe(0);
+    expect(reconstructError(compose([pivots[1]!, petals[1]!]), m2)).toBe(0);
   });
 
   it('el contraste de revelado es estructural (≈ 0.5) en cada par', () => {
@@ -48,15 +69,15 @@ describe('kasaneMultiCoverWeave — multi-motivo con cover (F6)', () => {
     const a = seigaiha({ width: N * 2, height: N * 2, scale: 10, seed: 0 });
     const b = asanoha({ width: N * 2, height: N * 2, scale: 12, seed: 1 });
     const c = seigaiha({ width: N * 2, height: N * 2, scale: 14, seed: 2 });
-    const { pivot, petals, metric } = kasaneMultiCoverWeave([m1, m2], {
+    const { pivots, petals, metric } = kasaneMultiCoverWeave([m1, m2], {
       cover: { pivot: a, petals: [b, c] },
       rng: seeded(3),
     });
-    expect(metric.fidelity).toHaveLength(3);
-    expect(metric.fidelity[0]).toBeGreaterThan(0.6);
-    expect(fidelityVs(pivot, a)).toBeCloseTo(metric.fidelity[0]!, 5);
-    expect(fidelityVs(petals[0]!, b)).toBeCloseTo(metric.fidelity[1]!, 5);
-    expect(fidelityVs(petals[1]!, c)).toBeCloseTo(metric.fidelity[2]!, 5);
+    expect(metric.petalFidelity).toHaveLength(2);
+    expect(metric.pivotFidelity[0]).toBeGreaterThan(0.6);
+    expect(fidelityVs(pivots[0]!, a)).toBeCloseTo(metric.pivotFidelity[0]!, 5);
+    expect(fidelityVs(petals[0]!, b)).toBeCloseTo(metric.petalFidelity[0]!, 5);
+    expect(fidelityVs(petals[1]!, c)).toBeCloseTo(metric.petalFidelity[1]!, 5);
   });
 
   it('en buena cobertura no marca aviso ni cae a ruido', () => {
@@ -67,7 +88,7 @@ describe('kasaneMultiCoverWeave — multi-motivo con cover (F6)', () => {
   });
 
   it('fallback: bajo umbral inalcanzable devuelve capas ruido con aviso y reveal intacto', () => {
-    const { pivot, petals, metric, fellBack } = kasaneMultiCoverWeave([m1, m2], {
+    const { pivots, petals, metric, fellBack } = kasaneMultiCoverWeave([m1, m2], {
       cover,
       rng: seeded(7),
       minFidelity: 0.99, // inalcanzable → fuerza fallback
@@ -75,9 +96,8 @@ describe('kasaneMultiCoverWeave — multi-motivo con cover (F6)', () => {
     });
     expect(fellBack).toBe(true);
     expect(metric.warnings.some((w) => /fallback/.test(w))).toBe(true);
-    // El fallback conserva el revelado exacto de ambos motivos.
-    expect(reconstructError(compose([pivot, petals[0]!]), m1)).toBe(0);
-    expect(reconstructError(compose([pivot, petals[1]!]), m2)).toBe(0);
+    expect(reconstructError(compose([pivots[0]!, petals[0]!]), m1)).toBe(0);
+    expect(reconstructError(compose([pivots[1]!, petals[1]!]), m2)).toBe(0);
   });
 
   it('sin fallback solo avisa (no cambia las capas) cuando cae bajo umbral', () => {

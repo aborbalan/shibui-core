@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { makeBitmap, setPixel } from './bitmap';
+import { makeBitmap, setPixel, type Bitmap } from './bitmap';
 import { kasaneMultiWeave } from './multiweave';
 import { readBlock } from './weave';
 import { patternIndex } from './patterns';
@@ -17,8 +17,14 @@ function chiSquareUniform(counts: readonly number[]): number {
   return chi;
 }
 
+function xor(a: Bitmap, b: Bitmap): Bitmap {
+  const out = makeBitmap(a.width, a.height);
+  for (let i = 0; i < out.data.length; i++) out.data[i] = (a.data[i] ?? 0) ^ (b.data[i] ?? 0);
+  return out;
+}
+
 describe('kasaneMultiWeave — weaves multi-motivo', () => {
-  it('cada emparejamiento (pivote + pétalo) reproduce su motivo sin error', () => {
+  it('cada par (pivote + pétalo) reproduce su motivo sin error', () => {
     const m1 = makeBitmap(4, 4);
     setPixel(m1, 1, 1, 1);
     setPixel(m1, 2, 1, 1);
@@ -29,37 +35,23 @@ describe('kasaneMultiWeave — weaves multi-motivo', () => {
     setPixel(m2, 3, 3, 1);
     setPixel(m2, 2, 2, 1);
 
-    const { pivot, petals } = kasaneMultiWeave([m1, m2], { rng: seeded(42) });
+    const { pivots, petals } = kasaneMultiWeave([m1, m2], { rng: seeded(42) });
 
-    expect(pivot.width).toBe(8);
-    expect(pivot.height).toBe(8);
+    expect(pivots[0]!.width).toBe(8);
     expect(petals).toHaveLength(2);
-    expect(reconstructError(compose([pivot, petals[0]!]), m1)).toBe(0);
-    expect(reconstructError(compose([pivot, petals[1]!]), m2)).toBe(0);
+    expect(reconstructError(compose([pivots[0]!, petals[0]!]), m1)).toBe(0);
+    expect(reconstructError(compose([pivots[1]!, petals[1]!]), m2)).toBe(0);
   });
 
-  it('un emparejamiento no revela el motivo del otro (motivos distintos)', () => {
-    const m1 = makeBitmap(4, 4);
-    setPixel(m1, 1, 1, 1);
-    const m2 = makeBitmap(4, 4);
-    setPixel(m2, 3, 0, 1);
-
-    const { pivot, petals } = kasaneMultiWeave([m1, m2], { rng: seeded(7) });
-
-    // pivote + pétalo cruzado no debe reconstruir el motivo del otro pétalo.
-    expect(reconstructError(compose([pivot, petals[1]!]), m1)).toBeGreaterThan(0);
-    expect(reconstructError(compose([pivot, petals[0]!]), m2)).toBeGreaterThan(0);
-  });
-
-  it('cada bloque de pivote y pétalos tiene exactamente 2 celdas de tinta', () => {
+  it('cada bloque de cada capa tiene exactamente 2 celdas de tinta', () => {
     const m1 = makeBitmap(3, 3);
     setPixel(m1, 1, 1, 1);
     const m2 = makeBitmap(3, 3);
     setPixel(m2, 2, 0, 1);
 
-    const { pivot, petals } = kasaneMultiWeave([m1, m2], { rng: seeded(99) });
+    const { pivots, petals } = kasaneMultiWeave([m1, m2], { rng: seeded(99) });
 
-    for (const layer of [pivot, ...petals]) {
+    for (const layer of [...pivots, ...petals]) {
       for (let by = 0; by < 3; by++) {
         for (let bx = 0; bx < 3; bx++) {
           const block = readBlock(layer, bx, by);
@@ -78,9 +70,8 @@ describe('kasaneMultiWeave — weaves multi-motivo', () => {
     const a = kasaneMultiWeave([m1, m2], { rng: seeded(123) });
     const b = kasaneMultiWeave([m1, m2], { rng: seeded(123) });
 
-    expect(Array.from(a.pivot.data)).toEqual(Array.from(b.pivot.data));
     expect(Array.from(a.petals[0]!.data)).toEqual(Array.from(b.petals[0]!.data));
-    expect(Array.from(a.petals[1]!.data)).toEqual(Array.from(b.petals[1]!.data));
+    expect(Array.from(a.pivots[1]!.data)).toEqual(Array.from(b.pivots[1]!.data));
   });
 
   it('rechaza motivos no alineados y la lista vacía', () => {
@@ -90,7 +81,7 @@ describe('kasaneMultiWeave — weaves multi-motivo', () => {
     expect(() => kasaneMultiWeave([])).toThrow(/al menos un motivo/);
   });
 
-  it('independencia: las tres capas son uniformes con independencia del motivo (χ² bajo)', () => {
+  it('independencia marginal: cada capa es uniforme con independencia del motivo (χ² bajo)', () => {
     const size = 64;
     const m1 = makeBitmap(size, size);
     const m2 = makeBitmap(size, size);
@@ -98,13 +89,12 @@ describe('kasaneMultiWeave — weaves multi-motivo', () => {
     for (let i = 0; i < m1.data.length; i++) m1.data[i] = motifRng.nextInt(2);
     for (let i = 0; i < m2.data.length; i++) m2.data[i] = motifRng.nextInt(2);
 
-    const { pivot, petals } = kasaneMultiWeave([m1, m2], { rng: seeded(555) });
+    const { pivots, petals } = kasaneMultiWeave([m1, m2], { rng: seeded(555) });
 
-    // Para cada capa, la distribución de patrones debe ser uniforme tanto donde su
-    // motivo de referencia es fondo como donde es tinta. El pivote se contrasta contra m1.
-    const checks: ReadonlyArray<readonly [typeof pivot, typeof m1]> = [
-      [pivot, m1],
+    const checks: ReadonlyArray<readonly [Bitmap, Bitmap]> = [
+      [pivots[0]!, m1],
       [petals[0]!, m1],
+      [pivots[1]!, m2],
       [petals[1]!, m2],
     ];
 
@@ -123,5 +113,33 @@ describe('kasaneMultiWeave — weaves multi-motivo', () => {
       expect(chiSquareUniform(byFondo)).toBeLessThan(30);
       expect(chiSquareUniform(byTinta)).toBeLessThan(30);
     }
+  });
+
+  describe('fuga cruzada entre pétalos (reutilización de pivote)', () => {
+    const size = 32;
+    const m1 = makeBitmap(size, size);
+    const m2 = makeBitmap(size, size);
+    const motifRng = seeded(77);
+    for (let i = 0; i < m1.data.length; i++) m1.data[i] = motifRng.nextInt(2);
+    for (let i = 0; i < m2.data.length; i++) m2.data[i] = motifRng.nextInt(2);
+
+    it('default (pivote independiente): superponer dos pétalos NO revela motivo1 XOR motivo2', () => {
+      const { petals, sharedPivot } = kasaneMultiWeave([m1, m2], { rng: seeded(9) });
+      expect(sharedPivot).toBe(false);
+      // Sin pivote compartido, la superposición de pétalos no reconstruye el XOR: error alto.
+      const err = reconstructError(compose([petals[0]!, petals[1]!]), xor(m1, m2));
+      expect(err).toBeGreaterThan(0.2);
+    });
+
+    it('sharedPivot: superponer dos pétalos SÍ revela motivo1 XOR motivo2 (fuga conocida)', () => {
+      const { petals, sharedPivot } = kasaneMultiWeave([m1, m2], {
+        rng: seeded(9),
+        sharedPivot: true,
+      });
+      expect(sharedPivot).toBe(true);
+      // Con pivote compartido, los pétalos son complementarios donde los motivos difieren → XOR exacto.
+      const err = reconstructError(compose([petals[0]!, petals[1]!]), xor(m1, m2));
+      expect(err).toBe(0);
+    });
   });
 });
