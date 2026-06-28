@@ -116,7 +116,7 @@
 </head>
 <body>
 <div class="wrap">
-<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con dos adaptadores opcionales enchufables (F4½ y F7). F0–F6 están hechas: el camino crítico está completo; solo quedan los opcionales.</p>
+<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con dos adaptadores opcionales enchufables (F4½ y F7). F0–F6 y el opcional F7 están hechos: el camino crítico está completo; solo queda el opcional F4½.</p>
 
 <header class="hero">
   <p class="kicker">sukashi · 透かし · plan de obra</p>
@@ -148,9 +148,9 @@
   </div>
 
   <div class="meta">
-    <span class="chip">Estado: <b>F0 → F6 hechas</b> · camino crítico <b>completo</b></span>
+    <span class="chip">Estado: <b>F0 → F6 + F7 hechas</b> · camino crítico <b>completo</b></span>
     <span class="chip">Camino crítico = <b>F0 → F6</b> ✓</span>
-    <span class="chip">Opcionales enchufables = <b>F4½ · F7</b></span>
+    <span class="chip">Opcionales: <b>F7</b> ✓ hecho · <b>F4½</b> pendiente</span>
     <span class="chip">Trunk de integración <b>develop</b> (merges --no-ff)</span>
     <span class="chip">Tests/builds desde el <b>repo principal</b></span>
   </div>
@@ -344,12 +344,16 @@
         <span class="fno">F7</span>
         <h4>Semilla del cielo (kumo 雲)</h4>
         <span class="badge b-opt" style="margin-left:auto">opcional</span>
+        <span class="badge b-done">hecho</span>
       </div>
-      <p class="body">Módulo <code>src/entropy/</code>: un <code>SeedSource</code> alternativo que toma una foto del
-      cielo, la condensa y la <strong>mezcla</strong> con <code>systemSeed</code> (nunca lo reemplaza), con
-      <em>health-test</em> (detectar imagen congelada) y <em>fallback</em> a la semilla del sistema. Enchufa por el
-      <strong>seam <code>SeedSource</code></strong> de F1.</p>
-      <p class="deliv"><b>Cierre ▸</b> <span><code>skySeed</code> produce semilla mezclada y cae a <code>systemSeed</code> si la cámara falla; el <em>weave</em> funciona idéntico con cualquiera de los dos</span></p>
+      <p class="body">Módulo <code>src/entropy/</code>: <code>openSky(capture)</code> toma una foto del
+      cielo, la condensa (SHA-256) y la <strong>mezcla por XOR</strong> con <code>systemSeed</code>
+      (<strong>nunca lo reemplaza</strong> — XOR sobre un CSPRNG no degrada aunque el cielo sea pobre), con
+      <em>health-test</em> (imagen congelada / entropía baja) y <em>fallback</em> a la semilla del sistema.
+      El adaptador de cámara <code>cameraSky</code> (browser-only) queda fuera del barrel node; el núcleo solo
+      conoce la interfaz <code>SkyCapture</code>. Enchufa por el <strong>seam <code>SeedSource</code></strong> de F1.</p>
+      <p class="deliv"><b>✓ Hecho ▸</b> <span><code>entropy/{condense,health,sky,camera}</code> · barrel node-safe · toggle 🌥 en la demo · 27 tests + <code>type-check</code> en verde · detalle en <code>docs/entropy.md</code></span></p>
+      <p class="deliv"><b>✓ Cierre ▸</b> <span><code>openSky</code> produce semilla mezclada y cae a <code>systemSeed</code> si la cámara falla; el <em>weave</em> funciona idéntico con cualquiera de los dos (error 0)</span></p>
     </div>
   </div>
 
@@ -358,7 +362,7 @@
 <footer>
   <p>sukashi · plan de obra F0–F7 · índice y tabla canónica en <span class="accent">docs/phases/README.md</span></p>
   <p>Estado vigente en <span class="accent">docs/STATUS.md</span> · diseño en <span class="accent">docs/plans/2026-06-15-sukashi-design.md</span></p>
-  <p>Estado: <strong>F0 → F6 hechas — camino crítico completo</strong>. Solo quedan los adaptadores opcionales <strong>F4½</strong> (deformación uzumaki) y <strong>F7</strong> (semilla del cielo), enchufables al núcleo. Componente <code>&lt;shibui-sukashi&gt;</code> + web de demo en <span class="accent">sukashi.web.app</span>; reporte de contraste de F6 en <span class="accent">docs/contrast-report.html</span>. Trunk de integración: <span class="accent">develop</span> (merges --no-ff).</p>
+  <p>Estado: <strong>F0 → F6 + F7 hechas — camino crítico completo</strong>. Solo queda el adaptador opcional <strong>F4½</strong> (deformación uzumaki), enchufable al núcleo; <strong>F7</strong> (semilla del cielo) ✓ hecha. Componente <code>&lt;shibui-sukashi&gt;</code> + web de demo en <span class="accent">sukashi.web.app</span>; reporte de contraste de F6 en <span class="accent">docs/contrast-report.html</span>; detalle de F7 en <span class="accent">docs/entropy.md</span>. Trunk de integración: <span class="accent">develop</span> (merges --no-ff).</p>
 </footer>
 
 </div>

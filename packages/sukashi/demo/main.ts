@@ -1,7 +1,17 @@
 import { defineSukashi, type ShibuiSukashi } from '../src/web';
 import { rasterize, coverageFromRGBA, type GraySource } from '../src/motif';
-import { kasaneWeave, kasaneCoverWeave, type Bitmap, type Layer } from '../src/core';
+import {
+  kasaneWeave,
+  kasaneCoverWeave,
+  rngFrom,
+  systemSeed,
+  type Bitmap,
+  type Layer,
+  type SeedSource,
+} from '../src/core';
 import { PATTERNS_BY_NAME, type PatternName } from '../src/pattern';
+import { openSky } from '../src/entropy';
+import { cameraSky } from '../src/entropy/camera';
 
 defineSukashi();
 
@@ -109,18 +119,21 @@ let cover = COVERS[1] ?? COVERS[0]!; // por defecto, seigaiha
 
 let motif = makeMotif(drawFuji);
 
+// Fuente de semilla: sistema por defecto; «Del cielo» (kumo) la mezcla sin reemplazarla.
+let seedSource: SeedSource = systemSeed;
+
 function reweave(): void {
   let layers: readonly [Layer, Layer];
   if (cover.name) {
     const c = PATTERNS_BY_NAME[cover.name]({ width: MOTIF * 2, height: MOTIF * 2, scale: cover.scale });
-    const res = kasaneCoverWeave(motif, { cover: c });
+    const res = kasaneCoverWeave(motif, { cover: c, rng: rngFrom(seedSource) });
     layers = res.layers;
     const [fa, fb] = res.metric.fidelity;
     splitStatus.textContent =
       `Cada capa, sola, es un patrón ${cover.label.toLowerCase()} ` +
       `(parecido A ${fa.toFixed(2)} · B ${fb.toFixed(2)}). El motivo solo existe en la superposición.`;
   } else {
-    layers = kasaneWeave(motif);
+    layers = kasaneWeave(motif, { rng: rngFrom(seedSource) });
     splitStatus.textContent =
       'Cada capa, por separado, es ruido uniforme. El motivo solo existe en la superposición.';
   }
@@ -179,6 +192,36 @@ snapBtn.addEventListener('click', () => {
 });
 
 document.getElementById('reweave')?.addEventListener('click', reweave);
+
+// Semilla: sistema (default) vs. del cielo (kumo).
+const seedStatus = document.getElementById('seed-status') as HTMLElement;
+const seedSystemBtn = document.getElementById('seed-system') as HTMLButtonElement;
+const seedSkyBtn = document.getElementById('seed-sky') as HTMLButtonElement;
+
+function setSeedButtons(skyOn: boolean): void {
+  seedSkyBtn.classList.toggle('on', skyOn);
+  seedSystemBtn.classList.toggle('on', !skyOn);
+}
+
+seedSystemBtn.addEventListener('click', () => {
+  seedSource = systemSeed;
+  setSeedButtons(false);
+  seedStatus.textContent = 'Sembrado con la aleatoriedad del sistema.';
+  reweave();
+});
+
+seedSkyBtn.addEventListener('click', async () => {
+  seedSkyBtn.disabled = true;
+  seedStatus.textContent = 'Mirando al cielo…';
+  const sky = await openSky(cameraSky());
+  seedSource = sky.source;
+  setSeedButtons(sky.usedSky);
+  seedStatus.textContent = sky.usedSky
+    ? `Mezclado con el cielo (${sky.entropy?.toFixed(1)} bits/byte) — sin reemplazar la semilla del sistema.`
+    : `Sin cielo (${sky.reason}); se mantiene la semilla del sistema.`;
+  seedSkyBtn.disabled = false;
+  reweave();
+});
 
 overlay.addEventListener('sukashi-reveal', (e: Event) => {
   const aligned = (e as CustomEvent<{ aligned: boolean }>).detail.aligned;

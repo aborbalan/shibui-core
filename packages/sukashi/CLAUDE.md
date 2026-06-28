@@ -4,7 +4,7 @@
 Se componen capas con texturas tradicionales (seigaiha, asanoha, sashiko, mon) que, al
 superponerse, revelan un **motivo emergente**.
 
-> **Estado:** F0 → F6 ✅ — **camino crítico completo** (solo quedan los opcionales F4½ y F7).
+> **Estado:** F0 → F6 ✅ — **camino crítico completo** · F7 (semilla del cielo) ✅ — solo queda el opcional F4½.
 > **API pública aún en estabilización.** La fase vigente es la fuente de verdad y vive en
 > [`docs/STATUS.md`](docs/STATUS.md) + el plan de obra en [`docs/phases/`](docs/phases/)
 > — NO en este fichero. Aquí va lo estable.
@@ -20,6 +20,7 @@ src/
   pattern/   → covers generativos: seigaiha · asanoha · sashiko · mon · moiré
   render/    → export a SVG / Canvas / PNG
   web/       → custom element <shibui-sukashi>
+  entropy/   → (opcional) semilla del cielo (kumo); adaptador de cámara fuera del barrel node
   index.ts   → API pública (barrel)
 ```
 

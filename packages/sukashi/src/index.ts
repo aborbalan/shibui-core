@@ -3,3 +3,4 @@ export * from './core';
 export * from './motif';
 export * from './pattern';
 export * from './render';
+export * from './entropy';
