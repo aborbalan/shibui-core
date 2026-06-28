@@ -116,11 +116,11 @@
 </head>
 <body>
 <div class="wrap">
-<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con dos adaptadores opcionales enchufables (F4½ y F7). Todo el plan F0–F7 está hecho: el camino crítico y ambos opcionales (F4½ uzumaki y F7 kumo) están completos.</p>
+<p class="sr-only">Plan de obra de sukashi: camino crítico de fases F0 a F6, con adaptadores opcionales enchufables (F4½ y F7) y una extensión F8 (warifu) que ata sukashi con hanko. F0–F7 hechas; F8 con su núcleo hecho.</p>
 
 <header class="hero">
   <p class="kicker">sukashi · 透かし · plan de obra</p>
-  <h1>Fases de desarrollo <span class="arc">F0 → F7</span></h1>
+  <h1>Fases de desarrollo <span class="arc">F0 → F8</span></h1>
   <p class="lede">Librería de <strong>patrones decorativos por capas</strong> (<em>sukashi-e</em> / moiré). Capas con
   texturas tradicionales que, al superponerse, revelan un motivo emergente. Cada fase es un incremento
   verificable y solo arranca cuando la anterior está estable. Los adaptadores opcionales son enchufables al
@@ -148,9 +148,9 @@
   </div>
 
   <div class="meta">
-    <span class="chip">Estado: <b>F0 → F7 hechas</b> · plan <b>completo</b></span>
+    <span class="chip">Estado: <b>F0 → F7 hechas</b> · <b>F8</b> núcleo ✓</span>
     <span class="chip">Camino crítico = <b>F0 → F6</b> ✓</span>
-    <span class="chip">Opcionales: <b>F4½</b> ✓ · <b>F7</b> ✓</span>
+    <span class="chip">Opcionales: <b>F4½</b> ✓ · <b>F7</b> ✓ · extensión <b>F8</b> warifu</span>
     <span class="chip">Trunk de integración <b>develop</b> (merges --no-ff)</span>
     <span class="chip">Tests/builds desde el <b>repo principal</b></span>
   </div>
@@ -360,12 +360,32 @@
       <p class="deliv"><b>✓ Hecho ▸</b> <span><code>entropy/{condense,health,sky,camera}</code> · barrel node-safe · toggle 🌥 en la demo · 27 tests + <code>type-check</code> en verde · detalle en <code>docs/entropy.md</code></span></p>
       <p class="deliv"><b>✓ Cierre ▸</b> <span><code>openSky</code> produce semilla mezclada y cae a <code>systemSeed</code> si la cámara falla; el <em>weave</em> funciona idéntico con cualquiera de los dos (error 0)</span></p>
     </div>
+
+    <div class="ocard">
+      <div class="head">
+        <span class="fno">F8</span>
+        <h4>Tablilla partida (warifu 割符)</h4>
+        <span class="badge b-opt" style="margin-left:auto">extensión</span>
+        <span class="badge b-done">núcleo ✓</span>
+      </div>
+      <p class="body">Módulo <code>src/warifu/</code>: ata sukashi con <strong>hanko</strong>. Una tablilla partida
+      reparte el motivo en una <strong>mitad guardada</strong> (<code>tally</code>, ruido sola) y una
+      <strong>mitad-manifiesto</strong> que se regenera de un <code>match</code> — y el <code>match</code> solo
+      existe si el manifiesto <strong>cumple su condición</strong> (<code>allSealed</code>: todos sellados ⇔ el
+      proyecto entero verificado, <code>untrusted === 0</code>). Reutiliza <code>kasaneWeave</code> (F1) y
+      <code>expandPool</code> (F7) → cero deps. Sirve dos usos del mismo reparto: <strong>motivo visual</strong>
+      (<code>seal</code>/<code>open</code>) y <strong>bytes sellados</strong> (<code>sealBytes</code>). El adaptador
+      <code>manifestFromTrustReport</code> lee la forma del Trust Report de hanko por tipado estructural — sin
+      importar hanko ni shibui.</p>
+      <p class="deliv"><b>✓ Hecho (incr.1) ▸</b> <span><code>warifu/{manifest,warifu,hanko}</code> puro node-safe · 12 tests (revelado error 0, <code>match</code> malo / <code>tally</code> sola = ruido, bytes round-trip, adaptador hanko) · <code>type-check</code> en verde · detalle en <code>docs/warifu.md</code></span></p>
+      <p class="deliv"><b>Incr.2 ▸</b> <span>demo (toggle manifiesto sintético) + render del badge + e2e con el <code>report</code> real de hanko</span></p>
+    </div>
   </div>
 
 </div>
 
 <footer>
-  <p>sukashi · plan de obra F0–F7 · índice y tabla canónica en <span class="accent">docs/phases/README.md</span></p>
+  <p>sukashi · plan de obra F0–F8 · índice y tabla canónica en <span class="accent">docs/phases/README.md</span></p>
   <p>Estado vigente en <span class="accent">docs/STATUS.md</span> · diseño en <span class="accent">docs/plans/2026-06-15-sukashi-design.md</span></p>
   <p>Estado: <strong>F0 → F6 + F7 hechas — camino crítico completo</strong>. Solo queda el adaptador opcional <strong>F4½</strong> (deformación uzumaki), enchufable al núcleo; <strong>F7</strong> (semilla del cielo) ✓ hecha. Componente <code>&lt;shibui-sukashi&gt;</code> + web de demo en <span class="accent">sukashi.web.app</span>; reporte de contraste de F6 en <span class="accent">docs/contrast-report.html</span>; detalle de F7 en <span class="accent">docs/entropy.md</span>. Trunk de integración: <span class="accent">develop</span> (merges --no-ff).</p>
 </footer>
