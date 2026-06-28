@@ -9,6 +9,13 @@ export {
   type MultiWeaveOptions,
   type MultiWeaveResult,
 } from './multiweave';
+export {
+  kasaneMultiCoverWeave,
+  type MultiCover,
+  type MultiCoverWeaveOptions,
+  type MultiCoverMetric,
+  type MultiCoverWeaveResult,
+} from './multicover';
 export { compose } from './compose';
 export { downsample, reconstructError } from './reconstruct';
 export {
