@@ -10,6 +10,7 @@ import {
   type SeedSource,
 } from '../src/core';
 import { PATTERNS_BY_NAME, type PatternName } from '../src/pattern';
+import { warpAll } from '../src/warp';
 import { openSky } from '../src/entropy';
 import { cameraSky } from '../src/entropy/camera';
 
@@ -114,6 +115,7 @@ const COVERS: ReadonlyArray<{ label: string; name: PatternName | null; scale: nu
   { label: 'Sashiko', name: 'sashiko', scale: 12 },
   { label: 'Mon', name: 'mon', scale: 16 },
   { label: 'Moiré', name: 'moire', scale: 6 },
+  { label: 'Uzumaki', name: 'uzumaki', scale: 9 },
 ];
 let cover = COVERS[1] ?? COVERS[0]!; // por defecto, seigaiha
 
@@ -121,6 +123,9 @@ let motif = makeMotif(drawFuji);
 
 // Fuente de semilla: sistema por defecto; «Del cielo» (kumo) la mezcla sin reemplazarla.
 let seedSource: SeedSource = systemSeed;
+
+// Remolino uzumaki (Ω en radianes): deforma ambas capas por igual. 0 = sin deformación.
+let swirl = 0;
 
 function reweave(): void {
   let layers: readonly [Layer, Layer];
@@ -136,6 +141,10 @@ function reweave(): void {
     layers = kasaneWeave(motif, { rng: rngFrom(seedSource) });
     splitStatus.textContent =
       'Cada capa, por separado, es ruido uniforme. El motivo solo existe en la superposición.';
+  }
+  if (swirl !== 0) {
+    const [a, b] = warpAll([layers[0], layers[1]], swirl);
+    layers = [a!, b!];
   }
   overlay.layers = layers;
   layerA.layers = [layers[0]];
@@ -192,6 +201,16 @@ snapBtn.addEventListener('click', () => {
 });
 
 document.getElementById('reweave')?.addEventListener('click', reweave);
+
+// Remolino: el deslizador (grados) deforma ambas capas; conmuta con el reveal (motivo girado).
+const swirlEl = document.getElementById('swirl') as HTMLInputElement;
+const swirlVal = document.getElementById('swirl-val') as HTMLElement;
+swirlEl.addEventListener('input', () => {
+  const deg = Number(swirlEl.value);
+  swirl = (deg * Math.PI) / 180;
+  swirlVal.textContent = `${deg}°`;
+  reweave();
+});
 
 // Semilla: sistema (default) vs. del cielo (kumo).
 const seedStatus = document.getElementById('seed-status') as HTMLElement;
