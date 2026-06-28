@@ -27,6 +27,9 @@ h1 { font-size: 2rem; font-weight: 600; margin: 0 0 12px; letter-spacing: -0.01e
 .group { display: flex; flex-direction: column; gap: 8px; }
 .lbl { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); }
 .btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.btns.slider { align-items: center; }
+.btns.slider input[type='range'] { accent-color: var(--ink); width: 160px; cursor: pointer; }
+.btns.slider .seed-status { max-width: none; margin: 0; min-width: 3ch; }
 button {
   font: inherit; font-size: 0.86rem; color: var(--ink);
   background: var(--panel); border: 1px solid var(--line); border-radius: 8px;

@@ -3,7 +3,7 @@
 > Plan de obra de `@shibui-ui/sukashi`. Cada fase es un incremento verificable.
 > Trunk de integración: **`develop`** (merges `--no-ff`). Tests/builds desde el repo principal.
 
-**Estado actual:** F0 · F1 · F2 · F3 · F4 · F5 · F6 · F7 ✅ hechas — **camino crítico completo** · opcional restante F4½ (ver [`STATUS.md`](../STATUS.md)).
+**Estado actual:** F0 · F1 · F2 · F3 · F4 · F4½ · F5 · F6 · F7 ✅ — **plan F0→F7 completo**, sin fases pendientes (ver [`STATUS.md`](../STATUS.md)).
 **Visual del roadmap:** [`roadmap.html`](roadmap.html) — línea de tiempo F0→F7 (camino crítico + opcionales).
 
 ---
@@ -19,7 +19,7 @@
 | **F4** | Patrones decorativos | covers generativos (seigaiha, asanoha, sashiko, mon, moiré); capas con cover + métrica | ✅ hecha |
 | **F5** | Weaves multi-motivo | distintos emparejamientos de capas revelan distintos motivos | ✅ hecha |
 | **F6** | (stretch) Refinado | multi-motivo con cover + métrica de contraste/fidelidad y *fallback* + reporte HTML | ✅ hecha |
-| **F4½** | (opcional) Deformación uzumaki | warp en remolino: covers en espiral + deformar/des-deformar capas con Ω | — |
+| **F4½** | (opcional) Deformación uzumaki | warp en remolino: covers en espiral + deformar/des-deformar capas con Ω | ✅ hecha |
 | **F7** | (opcional) Semilla del cielo | sembrar los patrones desde una foto del cielo (kumo), mezclada con la semilla del sistema | ✅ hecha |
 
 > Los adaptadores **opcionales** (F4½, F7) son enchufables: el núcleo solo depende de las interfaces (`SeedSource` y el punto de enganche del transform), nunca de la cámara ni del warp. Ninguno está en el camino crítico.
@@ -61,9 +61,9 @@ Generadores deterministas: seigaiha, asanoha, sashiko, mon, moiré → halftone 
 `core/multicover`: `kasaneMultiCoverWeave(motifs, { cover })` generaliza `kasaneCoverWeave` (F4) al reparto multi-motivo de F5 — **cada capa guiada por su cover**. El revelado sigue siendo estructural (contraste ≈ 0.5 por emparejamiento); lo que varía con los covers es la **fidelidad** de cada capa. Hereda la garantía de F5: por defecto **pivote independiente por secreto** (cada par es un `kasaneCoverWeave` propio, sin fuga cruzada); `sharedPivot: true` reutiliza un pivote común guiado por su cover. La **métrica** expone `contrast[]` (por par), `pivotFidelity[]` y `petalFidelity[]`; bajo umbral marca `warnings` y, con `fallback: true`, cae a capas ruido (`kasaneMultiWeave`) conservando el reveal exacto. `render/renderContrastReport` vuelca la métrica a HTML; `scripts/gen-contrast-report.ts` (`pnpm --filter @shibui-ui/sukashi report`) genera `docs/contrast-report.html`.
 **Hecho cuando:** métrica expuesta; bajo umbral → *fallback* + aviso; reporte HTML; sin fuga cruzada por defecto. ✅ 11 tests (`core/multicover.test.ts` + `render/report.test.ts`).
 
-### F4½ — (opcional) Deformación uzumaki (渦)
-Módulo `src/warp/`: un campo de deflexión en remolino parametrizado por Ω que (1) genera covers en espiral —hermana de seigaiha/moiré— y (2) **deforma** cada capa, reversible des-deformando con −Ω. Una capa deformada solo "encaja" con el Ω correcto.
-**Hecho cuando:** `warp(layer, Ω)` y su inverso son fieles dentro de tolerancia; integrado como transform opcional en el render.
+### F4½ — (opcional) Deformación uzumaki (渦) ✅
+Módulo `src/warp/`: un campo de deflexión en remolino parametrizado por Ω (giro angular dependiente del radio, `falloff(ρ)=(1−ρ)²`) que (1) genera covers en espiral —`spiral`, hermana de seigaiha/moiré, registrada como cover `uzumaki`— y (2) **deforma** cada capa (`warpAll`), reversible des-deformando con −Ω (`unwarpAll`). Como `compose` conmuta con un remap idéntico, `compose(warpAll(L,Ω)) === warp(compose(L),Ω)` (exacto): la superposición revela el motivo girado y `unwarpAll` lo endereza. **Ω es estética/ofuscación, NO la clave.** Detalle en [`../warp.md`](../warp.md).
+**Hecho cuando:** `warp(layer, Ω)` y su inverso son fieles dentro de tolerancia; warp puro y testeable en node, re-exportado en el barrel y usado en la demo (cover Uzumaki + deslizador Ω). ✅ 9 tests (`src/warp/uzumaki.test.ts`).
 
 ### F7 — (opcional) Semilla del cielo (kumo 雲) ✅
 Módulo `src/entropy/`: `openSky(capture)` toma una foto del cielo, la condensa (SHA-256) y la **mezcla por XOR** con `systemSeed` (`mixSeed`, **nunca lo reemplaza** — al ser XOR sobre un CSPRNG no degrada aunque el cielo sea pobre), con *health-test* (imagen congelada / entropía baja) y *fallback* a la semilla del sistema. El adaptador de cámara `cameraSky` (browser-only) queda fuera del barrel node; el núcleo solo conoce la interfaz `SkyCapture` y es testeable en node. Detalle en [`../entropy.md`](../entropy.md).
