@@ -5,3 +5,4 @@ export * from './pattern';
 export * from './render';
 export * from './entropy';
 export * from './warp';
+export * from './warifu';
