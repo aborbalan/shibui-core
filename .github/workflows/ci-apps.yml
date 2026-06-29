@@ -18,6 +18,9 @@ on:
       cv:
         type: string
         required: true
+      opencells:
+        type: string
+        required: true
       ref:
         type: string
         required: true
@@ -133,17 +136,44 @@ jobs:
           path: apps/app-cv/dist/
           retention-days: 1
 
+  build-opencells:
+    name: 📦 Build Open Cells App
+    runs-on: ubuntu-latest
+    if: inputs.opencells == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 🏗️ Build UI lib (peer dependency)
+        run: pnpm --filter @shibui-ui/ui build
+      - name: 📦 Build Open Cells App
+        run: pnpm --filter app-opencells build
+      - name: 📤 Upload Open Cells dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: opencells-dist-${{ github.run_id }}
+          path: apps/app-opencells/dist/
+          retention-days: 1
+
   deploy-apps:
     name: 🚀 Deploy Apps to Firebase
     runs-on: ubuntu-latest
-    needs: [build-react, build-angular, build-svelte, build-cv]
+    needs: [build-react, build-angular, build-svelte, build-cv, build-opencells]
     if: |
       always() &&
       (inputs.ref == 'refs/heads/main' || inputs.ref == 'refs/heads/develop') &&
       needs.build-react.result != 'failure' &&
       needs.build-angular.result != 'failure' &&
       needs.build-svelte.result != 'failure' &&
-      needs.build-cv.result != 'failure'
+      needs.build-cv.result != 'failure' &&
+      needs.build-opencells.result != 'failure'
     env:
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
     steps:
@@ -195,3 +225,12 @@ jobs:
       - name: 🚀 Deploy CV App
         if: needs.build-cv.result == 'success'
         run: pnpm exec firebase deploy --only hosting:cv --non-interactive --project lib-ui-b67c5
+      - name: 📥 Download Open Cells dist artifact
+        if: needs.build-opencells.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: opencells-dist-${{ github.run_id }}
+          path: apps/app-opencells/dist/
+      - name: 🚀 Deploy Open Cells App
+        if: needs.build-opencells.result == 'success'
+        run: pnpm exec firebase deploy --only hosting:opencells --non-interactive --project lib-ui-b67c5

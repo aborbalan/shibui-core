@@ -74,8 +74,20 @@
         {
           "source": "/trust-report.json",
           "headers": [
-            { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+            { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
+            { "key": "Access-Control-Allow-Origin", "value": "*" }
           ]
+        }
+      ]
+    },
+    {
+      "target": "opencells",
+      "public": "apps/app-opencells/dist",
+      "ignore": ["**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
         }
       ]
     },

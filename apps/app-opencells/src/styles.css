@@ -1,0 +1,27 @@
+/* Plomería de estilos globales. Los componentes shibui traen sus propios
+   estilos (Shadow DOM); aquí solo el reset y el lienzo de la app. Los colores
+   salen de los tokens de @shibui/ui según el data-katachi del <html>. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+body {
+  font-family: var(--lib-font-sans, system-ui, sans-serif);
+  background: var(--bg-base, #0c0c0c);
+  color: var(--text-base, #e8e8e8);
+}
+
+/* Contenedor del router de Open Cells: ocupa el alto y deja respirar. */
+#app-content {
+  display: block;
+  min-height: 100vh;
+}
