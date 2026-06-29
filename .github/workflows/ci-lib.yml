@@ -330,6 +330,11 @@ jobs:
         run: pnpm --filter @shibui-ui/hanko observe
       - name: 判 Generar Trust Report (Etapa 2) — 4 capas sobre el CEM + observaciones
         run: pnpm --filter @shibui-ui/hanko report
+      - name: 判 Assets de la página (shibui-ui.js + tokens.css) — visualización con @shibui/ui
+        # El HTML del report usa web components de shibui (sin import en el core):
+        # este step deja el bundle de registro + tokens junto al index.html que se
+        # despliega. Si fallara, la página degrada a sus colores de fallback.
+        run: pnpm --filter @shibui-ui/hanko assets:page
       - name: 📤 Subir trust-report.json (refresco de baseline ante delta de plataforma)
         # Si el gate de 4 capas marcara una regresión espuria por delta Linux↔local,
         # se refresca dogfood/baseline.json desde este artefacto (ver dogfood/BASELINE.md).
