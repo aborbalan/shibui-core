@@ -59,10 +59,10 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "@vitest/browser": "4.1.6",
+    "@vitest/browser": "4.1.8",
     "@vitest/browser-playwright": "4.1.4",
     "axe-core": "^4.10.0",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.28.1",
     "playwright": "^1.55.1",
     "tsx": "^4.19.2",
     "typescript": "^5.9.3",
