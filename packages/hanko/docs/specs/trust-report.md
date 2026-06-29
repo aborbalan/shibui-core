@@ -73,6 +73,23 @@ un CEM nativo vale más que uno inferido del runtime: el reporte lo expone para 
 - **HTML** — documento autónomo con la marca washi de hanko: resumen (total/sellados/sin sello), tabla por
   componente con las 4 capas (`✓`/`✗`/`–`) y origen, y un bloque de hallazgos plegable. Puro (string in → string out).
 
+### Visualización con `@shibui-ui/ui` (dogfood de la capa de presentación)
+
+El HTML se construye con **web components de shibui** (`lib-card`, `lib-badge`, `lib-progress`,
+`lib-accordion`, `lib-alert`, `lib-eyebrow`, `lib-divider`) y el tema oscuro `data-katachi="kintsugi"`.
+Es deliberado y **no viola el principio nº1** («el core nunca importa shibui»):
+
+- `render.ts` **no importa** la librería — solo emite *tags* como texto y referencia, por `<script src>` /
+  `<link href>`, dos assets relativos. `genericity.test.ts` (escanea imports de TS en `src/`) sigue verde.
+- Los assets viven FUERA de `src/`: `dogfood/bundle-shibui-page.ts` (script `assets:page`) genera
+  `shibui-ui.js` (bundle IIFE de registro vía `dogfood/shibui-page-glue.ts`, mismo truco que la sonda:
+  `treeShaking:false` + `ignoreAnnotations`) y copia `tokens.css` del dist de shibui, junto al `index.html`.
+- **Degradación elegante:** si los assets faltan (p.ej. `pnpm report` a secas, sin `assets:page`), los custom
+  elements no se definen pero el texto de los slots sigue legible; el `<style>` usa `var(--token, #fallback)`.
+- **Frontera:** el *motor* de informes no depende de shibui para **evaluar**; solo la **visualización** lo usa.
+  Scripts: `report:page` (= `report` + `assets:page`) para preview local completo; `report:full` lo incluye.
+  CI: el job `deploy-hanko-report` corre `assets:page` antes del deploy.
+
 ## Criterios de aceptación (F6 · incremento 1)
 
 1. `buildTrustReport` marca `trusted` solo si hay ≥1 capa evaluada y todas pasan.
