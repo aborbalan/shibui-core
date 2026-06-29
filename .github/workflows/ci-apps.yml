@@ -225,12 +225,6 @@ jobs:
       - name: 🚀 Deploy CV App
         if: needs.build-cv.result == 'success'
         run: pnpm exec firebase deploy --only hosting:cv --non-interactive --project lib-ui-b67c5
-      - name: 📥 Download Open Cells dist artifact
-        if: needs.build-opencells.result == 'success'
-        uses: actions/download-artifact@v4
-        with:
-          name: opencells-dist-${{ github.run_id }}
-          path: apps/app-opencells/dist/
-      - name: 🚀 Deploy Open Cells App
-        if: needs.build-opencells.result == 'success'
-        run: pnpm exec firebase deploy --only hosting:opencells --non-interactive --project lib-ui-b67c5
+      # NOTA: el deploy de Open Cells está deshabilitado a propósito mientras la app
+      # está en desarrollo por hitos. build-opencells sigue corriendo (valida el build);
+      # solo se omite el despliegue a Firebase. Reactivar cuando la app esté lista.
