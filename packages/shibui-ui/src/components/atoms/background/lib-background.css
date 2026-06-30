@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-BACKGROUND — Shibui UI
-   55 variantes: 16 light · 16 dark · 8 gradient · 9 animated · 6 canvas
+   58 variantes: 17 light · 18 dark · 8 gradient · 9 animated · 6 canvas
    ============================================================ */
 
 @layer reset {
@@ -196,6 +196,42 @@
         background-image:
             linear-gradient(125deg, transparent 30%, rgb(184, 90, 30, 0.07) 50%, transparent 70%),
             linear-gradient(45deg, transparent 20%, rgb(184, 90, 30, 0.04) 60%, transparent 80%);
+    }
+
+    /* 13a · kintsugi-veins — 金継ぎ脈 vetas de oro reparando la grieta
+       Dos trazos por costura: underlay mate (anchura) + highlight brillante
+       (filo) → ilusión de laca dorada. SVG con grietas ramificadas. */
+    :host([theme="kintsugi-veins"]) .bg-base {
+        background-color: var(--color-washi-950);
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(140,108,50)' stroke-width='3' opacity='0.45'/%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(224,190,110)' stroke-width='1.1' opacity='0.9'/%3E%3C/g%3E%3C/svg%3E"),
+            radial-gradient(ellipse 70% 60% at 50% 50%, rgb(184, 90, 30, 0.05) 0%, transparent 70%);
+        background-size: 480px 480px, auto;
+        background-position: center, center;
+    }
+
+    /* 13b · kintsugi-gold — 金 laca negra con pooling de oro rico
+       Más generoso: charcos de oro cálido + sheen diagonal + vetas brillantes. */
+    :host([theme="kintsugi-gold"]) .bg-base {
+        background-color: #0A0705;
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(150,116,54)' stroke-width='3.2' opacity='0.5'/%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(240,210,140)' stroke-width='1.2' opacity='0.95'/%3E%3C/g%3E%3C/svg%3E"),
+            radial-gradient(ellipse 55% 45% at 30% 35%, rgb(224, 190, 110, 0.10) 0%, transparent 60%),
+            radial-gradient(ellipse 50% 40% at 75% 70%, rgb(184, 90, 30, 0.10) 0%, transparent 60%),
+            linear-gradient(135deg, transparent 30%, rgb(224, 190, 110, 0.05) 50%, transparent 70%);
+        background-size: 520px 520px, auto, auto, auto;
+        background-position: center, center, center, center;
+    }
+
+    /* 13c · kintsugi-light — 金繕い costuras de oro sobre cerámica pálida
+       Kintsugi en clave light: oro bronce más oscuro para leer sobre washi. */
+    :host([theme="kintsugi-light"]) .bg-base {
+        background-color: var(--color-washi-100);
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(120,85,38)' stroke-width='3' opacity='0.32'/%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(190,142,66)' stroke-width='1.1' opacity='0.7'/%3E%3C/g%3E%3C/svg%3E"),
+            radial-gradient(ellipse 60% 50% at 40% 40%, rgb(212, 165, 86, 0.07) 0%, transparent 65%);
+        background-size: 480px 480px, auto;
+        background-position: center, center;
     }
 
     /* 14 · ash-grid — cuadrícula ceniza */

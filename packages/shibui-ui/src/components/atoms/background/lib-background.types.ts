@@ -1,9 +1,9 @@
 /* ============================================================
    LIB-BACKGROUND — Tipos e interfaces públicas
-   55 variantes: 16 light · 16 dark · 8 gradient · 9 animated · 6 canvas
+   58 variantes: 17 light · 18 dark · 8 gradient · 9 animated · 6 canvas
    ============================================================ */
 
-/** 16 fondos light inspirados en papel y textil japonés */
+/** 17 fondos light inspirados en papel y textil japonés */
 export type LibBackgroundLight =
   | 'washi'
   | 'washi-grain'
@@ -21,13 +21,16 @@ export type LibBackgroundLight =
   | 'shibori'     /* 絞り  tie-dye concentric circles */
   | 'ori'         /* 織   diagonal woven textile */
   | 'chirimen'    /* 縮緬  crepe silk fine crinkle */
-  | 'celadon-wash'; /* 青磁洗い  light celadon-tinted paper */
+  | 'celadon-wash' /* 青磁洗い  light celadon-tinted paper */
+  | 'kintsugi-light'; /* 金繕い  costuras de oro sobre cerámica pálida */
 
-/** 16 fondos dark derivados de la tinta sumi */
+/** 18 fondos dark derivados de la tinta sumi */
 export type LibBackgroundDark =
   | 'sumi'
   | 'sumi-grain'
   | 'kintsugi'
+  | 'kintsugi-veins' /* 金継ぎ脈  vetas de oro reparando la grieta sobre sumi */
+  | 'kintsugi-gold'  /* 金        laca negra con pooling de oro rico + vetas */
   | 'ash-grid'
   | 'ink-dot'
   | 'mokume'
@@ -100,7 +103,8 @@ export const BG_CANVAS_VARIANTS = new Set<LibBackgroundTheme>([
 
 /** Set de variantes oscuras (para decidir color de demo content) */
 export const BG_DARK_VARIANTS = new Set<LibBackgroundTheme>([
-  'sumi', 'sumi-grain', 'kintsugi', 'ash-grid', 'ink-dot',
+  'sumi', 'sumi-grain', 'kintsugi', 'kintsugi-veins', 'kintsugi-gold',
+  'ash-grid', 'ink-dot',
   'mokume', 'kumo', 'temari', 'dusk', 'embers',
   'obsidian', 'forge', 'void', 'yami', 'midnight', 'celadon',
   'noctiluca', 'aurora-drift', 'scan', 'particles', 'rain',
