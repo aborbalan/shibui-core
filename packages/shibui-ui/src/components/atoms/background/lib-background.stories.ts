@@ -76,13 +76,14 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-**lib-background** — 55 fondos decorativos derivados de los tokens Shibui.
+**lib-background** — 58 fondos decorativos derivados de los tokens Shibui.
 
 Úsalo como contenedor de sección, hero, card o panel. El contenido se proyecta en el \`slot\` por defecto.
 
 **Categorías:**
-- **Light (16)** — papeles y textiles japoneses: seigaiha, tatami, kagome, shoji, celadon-wash…
-- **Dark (16)** — tinta sumi: kintsugi, ash-grid, forge, obsidian, celadon…
+- **Light (17)** — papeles y textiles japoneses: seigaiha, tatami, kagome, shoji, celadon-wash, kintsugi-light…
+- **Dark (18)** — tinta sumi: kintsugi, kintsugi-veins, kintsugi-gold, ash-grid, forge, obsidian, celadon…
+- **Kintsugi (4)** — 金継ぎ la grieta reparada con oro: kintsugi, kintsugi-veins, kintsugi-gold, kintsugi-light…
 - **Gradient (8)** — mesh radial: aurora-light, sakura, twilight, jade-deep…
 - **Animated CSS (9)** — sin JS: breathing, pulse, fog, static, glitch…
 - **Canvas (6)** — generativo: particles, fireflies, ink-wash, constellation…
@@ -119,10 +120,13 @@ const meta: Meta = {
         "ori",
         "chirimen",
         "celadon-wash",
+        "kintsugi-light",
         /* Dark */
         "sumi",
         "sumi-grain",
         "kintsugi",
+        "kintsugi-veins",
+        "kintsugi-gold",
         "ash-grid",
         "ink-dot",
         "mokume",
@@ -320,6 +324,40 @@ export const Celadon: Story = {
   `,
 };
 
+/* ── Kintsugi ── */
+export const Kintsugi: Story = {
+  name: "Kintsugi — 金継ぎ la grieta dorada (4)",
+  render: (): TemplateResult => html`
+    <div
+      style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:24px;background:#F2EDE6;"
+    >
+      ${(
+        [
+          { variant: "kintsugi",       label: "kintsugi · dark · filamentos sutiles",   dark: true  },
+          { variant: "kintsugi-veins", label: "kintsugi-veins · dark · vetas de oro",    dark: true  },
+          { variant: "kintsugi-gold",  label: "kintsugi-gold · dark · laca + oro rico",  dark: true  },
+          { variant: "kintsugi-light", label: "kintsugi-light · light · oro sobre washi", dark: false },
+        ] as Array<{ variant: LibBackgroundTheme; label: string; dark: boolean }>
+      ).map(
+        ({ variant, label, dark }) => html`
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <lib-background
+              theme="${variant}"
+              style="height:240px;border-radius:2px;display:block;"
+            >
+              ${dark ? DEMO_DARK : DEMO_LIGHT}
+            </lib-background>
+            <span
+              style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:#9A8878;"
+              >${label}</span
+            >
+          </div>
+        `,
+      )}
+    </div>
+  `,
+};
+
 /* ── Animated ── */
 export const Animated: Story = {
   name: "Animated — CSS puro (9)",
@@ -418,7 +456,7 @@ export const KatachiCoverage: Story = {
       ${(
         [
           { katachi: "wabi · 侘び",     variants: ["washi", "washi-grain", "tatami"],                          dark: false },
-          { katachi: "kintsugi · 金継ぎ", variants: ["kintsugi"],                                               dark: true  },
+          { katachi: "kintsugi · 金継ぎ", variants: ["kintsugi", "kintsugi-veins", "kintsugi-gold"],            dark: true  },
           { katachi: "sabi · 寂び",     variants: ["sumi", "ash-grid", "ink-dot"],                             dark: true  },
           { katachi: "terminal",        variants: ["glitch", "scan", "static"],                                dark: true  },
           { katachi: "shizen · 自然",   variants: ["particles", "rain", "constellation", "fireflies"],         dark: true  },
