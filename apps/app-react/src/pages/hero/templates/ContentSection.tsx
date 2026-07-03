@@ -42,7 +42,7 @@ export const ContentSection: React.FC<ContentSectionProps> = ({
 
       {/* Eyebrow */}
       <LibEyebrow
-        color={surface === 'dark' ? 'dark' : 'kaki'}
+        surface={surface === 'dark' ? 'inverse' : 'default'}
         size="sm"
         style={{ marginBottom: 'var(--lib-space-md)', display: 'inline-flex' } as React.CSSProperties}
       >
