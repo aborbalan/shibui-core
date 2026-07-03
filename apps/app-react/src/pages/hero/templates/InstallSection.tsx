@@ -33,7 +33,7 @@ export const InstallSection: React.FC = () => (
   }}>
 
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--lib-space-sm)' }}>
-      <LibEyebrow color="dark" size="sm">
+      <LibEyebrow surface="inverse" size="sm">
         INICIO RÁPIDO
       </LibEyebrow>
       <h2 style={{

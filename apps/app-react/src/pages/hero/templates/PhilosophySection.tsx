@@ -59,7 +59,7 @@ export const PhilosophySection: React.FC<PhilosophySectionProps> = ({
         <div>
           {/* Eyebrow */}
           <lib-eyebrow
-            color="dark"
+            surface="inverse"
             size="sm"
             style={{ marginBottom: '1.5rem', display: 'inline-flex' } as React.CSSProperties}
           >
