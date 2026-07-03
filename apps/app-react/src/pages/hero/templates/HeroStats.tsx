@@ -33,7 +33,7 @@ export const HeroStats: React.FC<HeroStatsProps> = ({
       display:       'flex',
       alignItems:    'stretch',
       gap:           0,
-      borderTop:     '1px solid rgba(255,255,255,0.06)',
+      borderTop:     '1px solid color-mix(in oklch, var(--color-white), transparent 94%)',
       paddingTop:    '2.5rem',
       opacity:       0,
       animation:     `fadeUp 0.9s 0.6s ${EASE} forwards`,
@@ -70,7 +70,7 @@ export const HeroStats: React.FC<HeroStatsProps> = ({
                 fontWeight:    300,
                 letterSpacing: '-0.02em',
                 lineHeight:    1,
-                color:         'rgba(250,247,244,0.65)',
+                color:         'color-mix(in oklch, var(--color-washi-50), transparent 35%)',
               }}>
                 {stat.text}
               </span>
@@ -89,7 +89,7 @@ export const HeroStats: React.FC<HeroStatsProps> = ({
                   fontWeight:    300,
                   letterSpacing: '-0.02em',
                   lineHeight:    1,
-                  color:         'rgba(250,247,244,0.65)',
+                  color:         'color-mix(in oklch, var(--color-washi-50), transparent 35%)',
                 } as React.CSSProperties}
               />
             )}
@@ -100,7 +100,7 @@ export const HeroStats: React.FC<HeroStatsProps> = ({
               fontSize:      '0.6rem',
               letterSpacing: '0.2em',
               textTransform: 'uppercase',
-              color:         'rgba(250,247,244,0.18)',
+              color:         'color-mix(in oklch, var(--color-washi-50), transparent 82%)',
             }}>
               {stat.label}
             </span>

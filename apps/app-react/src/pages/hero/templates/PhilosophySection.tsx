@@ -41,9 +41,9 @@ export const PhilosophySection: React.FC<PhilosophySectionProps> = ({
 }) => {
   return (
     <section style={{
-      background:  'var(--color-washi-950, #120E0A)',
-      borderTop:   '1px solid rgba(255,255,255,.05)',
-      borderBottom:'1px solid rgba(255,255,255,.05)',
+      background:  'var(--color-washi-950)',
+      borderTop:   '1px solid color-mix(in oklch, var(--color-white), transparent 95%)',
+      borderBottom:'1px solid color-mix(in oklch, var(--color-white), transparent 95%)',
       padding:     'clamp(4rem, 10vh, 7rem) clamp(1.5rem, 5vw, 5rem)',
     }}>
       <div style={{
@@ -59,7 +59,7 @@ export const PhilosophySection: React.FC<PhilosophySectionProps> = ({
         <div>
           {/* Eyebrow */}
           <lib-eyebrow
-            color="dark"
+            surface="inverse"
             size="sm"
             style={{ marginBottom: '1.5rem', display: 'inline-flex' } as React.CSSProperties}
           >
@@ -73,7 +73,7 @@ export const PhilosophySection: React.FC<PhilosophySectionProps> = ({
             fontWeight:    300,
             letterSpacing: '-0.02em',
             lineHeight:    1.35,
-            color:         'rgba(250, 247, 244, 0.55)',
+            color:         'color-mix(in oklch, var(--color-washi-50), transparent 45%)',
           }}>
             <span>{quote}</span>
             <em style={{
@@ -94,7 +94,7 @@ export const PhilosophySection: React.FC<PhilosophySectionProps> = ({
             fontSize:      '0.65rem',
             letterSpacing: '0.2em',
             textTransform: 'uppercase' as const,
-            color:         'rgba(250, 247, 244, 0.18)',
+            color:         'color-mix(in oklch, var(--color-washi-50), transparent 82%)',
             marginTop:     '1.5rem',
           }}>
             {cite}
@@ -142,7 +142,7 @@ export const PhilosophySection: React.FC<PhilosophySectionProps> = ({
                 <p style={{
                   fontFamily: 'var(--lib-font-body, "Shippori Mincho", serif)',
                   fontSize:   '0.82rem',
-                  color:      'rgba(250, 247, 244, 0.25)',
+                  color:      'color-mix(in oklch, var(--color-washi-50), transparent 75%)',
                   lineHeight: 1.8,
                   margin:     0,
                 }}>
