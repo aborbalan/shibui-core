@@ -31,7 +31,7 @@ export const HomePage: React.FC = () => {
           <div style={{ flex: 1, paddingBottom: '30px' }}>
             <HeroStats></HeroStats>
           </div>
-          <div style={{ flex: 1, paddingBottom: '30px' }}>
+          <div id="features" style={{ flex: 1, paddingBottom: '30px', scrollMarginTop: '90px' }}>
             <Features />
           </div>
           <div style={{ flex: 1, paddingBottom: '30px' }}>
@@ -44,13 +44,13 @@ export const HomePage: React.FC = () => {
               surface="transparent"
             />
           </div>
-          <div style={{ flex: 1, paddingBottom: '30px' }}>
+          <div id="componentes" style={{ flex: 1, paddingBottom: '30px', scrollMarginTop: '90px' }}>
             <CardsSection></CardsSection>
           </div>
-          <div style={{ flex: 1, paddingBottom: '30px' }}>
+          <div id="install" style={{ flex: 1, paddingBottom: '30px', scrollMarginTop: '90px' }}>
             <InstallSection />
           </div>
-          <div style={{ flex: 1, paddingBottom: '30px' }}>
+          <div id="philosophy" style={{ flex: 1, paddingBottom: '30px', scrollMarginTop: '90px' }}>
             <PhilosophySection></PhilosophySection>
           </div>
           <div style={{ flex: 1, paddingBottom: '30px' }}>
