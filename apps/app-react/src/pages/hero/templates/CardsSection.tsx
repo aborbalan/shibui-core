@@ -58,7 +58,7 @@ export const CardsSection: React.FC<CardsSectionProps> = ({
     <section
       data-katachi="celadon"
       style={{
-        background: 'var(--color-washi-950, #120E0A)',
+        background: 'var(--color-washi-950)',
       }}
     >
       <LibComponentGrid transparent style={{ '--cg-gap': '0' } as React.CSSProperties}>

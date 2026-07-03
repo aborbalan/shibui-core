@@ -43,7 +43,7 @@ export const InstallSection: React.FC = () => (
         letterSpacing: 'var(--tracking-tight)',
         lineHeight: 'var(--leading-tight)',
         margin: 0,
-        color: 'rgba(250,247,244,0.9)',
+        color: 'color-mix(in oklch, var(--color-washi-50), transparent 10%)',
       }}>
         De npm a componente{' '}
         <em style={{ fontStyle: 'normal', color: 'var(--color-kaki-400)' }}>
@@ -67,7 +67,7 @@ export const InstallSection: React.FC = () => (
             fontFamily: 'var(--lib-font-mono)',
             fontSize: '0.625rem',
             letterSpacing: 'var(--tracking-wider)',
-            color: 'rgba(250,247,244,0.2)',
+            color: 'color-mix(in oklch, var(--color-washi-50), transparent 80%)',
             paddingTop: 'var(--lib-space-md)',
             textAlign: 'right',
           }}>

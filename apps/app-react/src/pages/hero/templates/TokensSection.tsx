@@ -43,8 +43,8 @@ const DEFAULT_SPACING: SpacingItem[] = [
 ];
 
 const DEFAULT_EASING: EasingItem[] = [
-  { name: 'ease-out',    color: '#4E9482', curve: 'cubic-bezier(0,0,0.2,1)' },
-  { name: 'ease-bounce', color: '#4E9482', curve: 'cubic-bezier(0.34,1.4,0.64,1)' },
+  { name: 'ease-out',    color: 'var(--color-celadon-400)', curve: 'cubic-bezier(0,0,0.2,1)' },
+  { name: 'ease-bounce', color: 'var(--color-celadon-400)', curve: 'cubic-bezier(0.34,1.4,0.64,1)' },
 ];
 
 /* ── Helpers de estilo compartidos ── */
@@ -59,7 +59,7 @@ const LABEL_MONO: React.CSSProperties = {
 };
 
 const DIVIDER: React.CSSProperties = {
-  borderTop:    '1px solid rgba(255,255,255,0.07)',
+  borderTop:    '1px solid color-mix(in oklch, var(--color-white), transparent 93%)',
   margin:       '1.25rem 0',
 };
 
@@ -82,7 +82,7 @@ const TypographyColumn: React.FC<{
       fontWeight:    300,
       letterSpacing: '-0.02em',
       lineHeight:    1.2,
-      color:         'rgba(250,247,244,0.55)',
+      color:         'color-mix(in oklch, var(--color-washi-50), transparent 45%)',
       margin:        '0 0 1.25rem 0',
     }}>
       {displaySample}{' '}
@@ -98,7 +98,7 @@ const TypographyColumn: React.FC<{
     <p style={{
       fontFamily: 'var(--lib-font-body, "Shippori Mincho", serif)',
       fontSize:   '0.9375rem',
-      color:      'rgba(250,247,244,0.4)',
+      color:      'color-mix(in oklch, var(--color-washi-50), transparent 60%)',
       lineHeight: 1.8,
       margin:     '0 0 1.25rem 0',
     }}>
@@ -113,7 +113,7 @@ const TypographyColumn: React.FC<{
       fontFamily:    'var(--lib-font-mono, "DM Mono", monospace)',
       fontSize:      '0.8125rem',
       letterSpacing: '0.08em',
-      color:         'rgba(250,247,244,0.35)',
+      color:         'color-mix(in oklch, var(--color-washi-50), transparent 65%)',
       margin:        '0 0 1.25rem 0',
     }}>
       {monoSample}
@@ -133,7 +133,7 @@ const TypographyColumn: React.FC<{
               : 'var(--lib-font-display, "Cormorant Garamond", serif)',
             fontSize:      sizes[i],
             fontWeight:    300,
-            color:         `rgba(250,247,244,${0.15 + i * 0.08})`,
+            color:         `color-mix(in oklch, var(--color-washi-50), transparent ${85 - i * 8}%)`,
             letterSpacing: i < 3 ? '0.1em' : '-0.02em',
           }}>
             {size}
@@ -172,7 +172,7 @@ const SpacingColumn: React.FC<{
             fontFamily:    'var(--lib-font-mono, "DM Mono", monospace)',
             fontSize:      '0.6rem',
             letterSpacing: '0.14em',
-            color:         'rgba(250,247,244,0.25)',
+            color:         'color-mix(in oklch, var(--color-washi-50), transparent 75%)',
             textTransform: 'uppercase' as const,
           }}>
             {item.name}
@@ -193,7 +193,7 @@ const SpacingColumn: React.FC<{
           <div style={{
             width:    '64px',
             height:   '5px',
-            background: 'rgba(78,148,130,0.2)',
+            background: 'color-mix(in oklch, var(--color-celadon-400), transparent 80%)',
             position: 'relative',
             overflow: 'hidden',
             flexShrink: 0,
@@ -212,7 +212,7 @@ const SpacingColumn: React.FC<{
             fontFamily:    'var(--lib-font-mono, "DM Mono", monospace)',
             fontSize:      '0.6rem',
             letterSpacing: '0.14em',
-            color:         'rgba(250,247,244,0.25)',
+            color:         'color-mix(in oklch, var(--color-washi-50), transparent 75%)',
             textTransform: 'uppercase' as const,
           }}>
             {item.name}
@@ -253,10 +253,10 @@ export const TokensSection: React.FC<TokensSectionProps> = ({
 }) => {
   return (
     <section style={{
-      background:  'var(--color-washi-950, #120E0A)',
+      background:  'var(--color-washi-950)',
       padding:     'clamp(3rem,6vh,5rem) clamp(1.5rem,5vw,3rem)',
-      borderTop:   '1px solid rgba(255,255,255,0.05)',
-      borderBottom:'1px solid rgba(255,255,255,0.05)',
+      borderTop:   '1px solid color-mix(in oklch, var(--color-white), transparent 95%)',
+      borderBottom:'1px solid color-mix(in oklch, var(--color-white), transparent 95%)',
     }}>
       <div style={{
         maxWidth:             '1200px',
@@ -264,18 +264,18 @@ export const TokensSection: React.FC<TokensSectionProps> = ({
         display:              'grid',
         gridTemplateColumns:  '1fr 1fr 1fr',
         gap:                  '1px',
-        background:           'rgba(255,255,255,0.05)',
+        background:           'color-mix(in oklch, var(--color-white), transparent 95%)',
       }}>
 
         {/* ── Col 1: Color ── */}
-        <div style={{ background: 'var(--color-washi-950, #120E0A)', padding: '1.5rem 1.75rem' }}>
+        <div style={{ background: 'var(--color-washi-950)', padding: '1.5rem 1.75rem' }}>
           <ColorPalette
             eyebrow={paletteEyebrow}
             swatches={PALETTE_WASHI.swatches}
           />
         </div>
         {/* ── Col 2: Tipografía ── */}
-        <div style={{ background: 'var(--color-washi-950, #120E0A)', padding: '1.5rem 1.75rem' }}>
+        <div style={{ background: 'var(--color-washi-950)', padding: '1.5rem 1.75rem' }}>
           <TypographyColumn
             displaySample={displaySample}
             displayAccent={displayAccent}
@@ -285,7 +285,7 @@ export const TokensSection: React.FC<TokensSectionProps> = ({
         </div>
 
         {/* ── Col 3: Espaciado ── */}
-        <div style={{ background: 'var(--color-washi-950, #120E0A)', padding: '1.5rem 1.75rem' }}>
+        <div style={{ background: 'var(--color-washi-950)', padding: '1.5rem 1.75rem' }}>
           <SpacingColumn
             spacingItems={spacingItems}
             easingItems={easingItems}
