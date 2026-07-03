@@ -2,22 +2,22 @@ import React from 'react';
 
 const FEATURE_DATA = [
   {
-    icon: ' lightning',
+    icon: 'globe',
     title: 'Agnóstico y Ligero',
     description: 'Construido con Web Components nativos. Funciona en React, Vue, Svelte o HTML puro sin dependencias pesadas.'
   },
   {
-    icon: 'shield-check',
+    icon: 'shield',
     title: 'Accesibilidad Nativa',
     description: 'Cumple con los estándares WCAG desde el núcleo. Gestión de foco, ARIA y navegación por teclado out-of-the-box.'
   },
   {
-    icon: 'palette',
+    icon: 'atom',
     title: 'Tokens de Autor',
     description: 'Sistema basado en OKLCH para colores perceptualmente uniformes y una escala editorial japonesa.'
   },
   {
-    icon: 'intersect',
+    icon: 'plugin',
     title: 'Composición Total',
     description: 'Uso extensivo de Slots para que puedas insertar lo que quieras donde quieras sin romper el diseño.'
   }

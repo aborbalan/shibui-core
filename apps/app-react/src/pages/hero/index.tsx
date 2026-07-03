@@ -8,6 +8,8 @@ import CardsSection from './templates/CardsSection';
 import PhilosophySection from './templates/PhilosophySection';
 import CardsShowcase from './templates/CardsShowcase';
 import TokensSection from './templates/TokensSection';
+import { Features } from '../home/Features';
+import InstallSection from './templates/InstallSection';
 
 export const HomePage: React.FC = () => {
   return (
@@ -30,6 +32,9 @@ export const HomePage: React.FC = () => {
             <HeroStats></HeroStats>
           </div>
           <div style={{ flex: 1, paddingBottom: '30px' }}>
+            <Features />
+          </div>
+          <div style={{ flex: 1, paddingBottom: '30px' }}>
             <ContentSection
               eyebrow="03 · Proyectos"
               headingLine1="Arquitectura que"
@@ -41,6 +46,9 @@ export const HomePage: React.FC = () => {
           </div>
           <div style={{ flex: 1, paddingBottom: '30px' }}>
             <CardsSection></CardsSection>
+          </div>
+          <div style={{ flex: 1, paddingBottom: '30px' }}>
+            <InstallSection />
           </div>
           <div style={{ flex: 1, paddingBottom: '30px' }}>
             <PhilosophySection></PhilosophySection>
