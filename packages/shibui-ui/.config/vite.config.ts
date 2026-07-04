@@ -40,8 +40,12 @@ const config: UserConfig & { test?: InlineConfig } = {
       formats: ['es']
     },
     rollupOptions: {
-      // Externalize Lit as peer dependency
-      external: ['lit', 'lit/decorators.js', 'lit/directive.js', 'lit/directives/*'],
+      // Externalize Lit as peer dependency. Rollup no soporta globs string
+      // ('lit/directives/*' no matchea nada): con regex cubrimos también los
+      // subpaths (lit/directives/…) y los internals (lit-html, @lit/…). Si se
+      // inlinan, el dist arrastra una segunda copia de lit-html incompatible
+      // con la externa (`currentDirective._$initialize is not a function`).
+      external: [/^lit(\/|$)/, /^lit-html(\/|$)/, /^lit-element(\/|$)/, /^@lit(-labs)?\//],
       output: {
         // Preserve export names for tree-shaking
         preserveModules: true,
