@@ -4,7 +4,10 @@ Componentes organizados por nivel de diseño atómico. Para convenciones de estr
 
 > 📊 El **módulo de gráficas** (bar, scatter, line/area, pie/donut, gauge, radar, bubble, combo, sparkline) y su capa compartida `src/shared/charts` tienen documentación propia en [`charts.md`](./charts.md).
 
-> ⚠️ **Nota:** `text-glitch` tiene un typo en el barrel `src/index.ts` (`text-glich`). Pendiente de corregir.
+> ⚠️ **Fuente de verdad:** este catálogo es orientativo y puede ir por detrás del código.
+> La lista real de componentes son los `*.component.ts` bajo `src/components/`. Las filas
+> marcadas con 🔮 **(backlog)** describen componentes **aún no implementados** — ver
+> `BACKLOG.md`. No importarlos hasta que existan en `src`.
 
 ---
 
@@ -33,7 +36,7 @@ Elementos indivisibles, stateless. Reciben datos vía propiedades y comunican ac
 | `label` | Etiqueta de texto para inputs y elementos de formulario |
 | `liquid-button` | Botón con efecto líquido interactivo |
 | `magnetic` | Efecto magnético de atracción al cursor |
-| `lib-panel` | Contenedor panel para organizar secciones |
+| `lib-panel` 🔮 | Contenedor panel para organizar secciones **(backlog — no existe en `src`)** |
 | `progress` | Barra de progreso lineal |
 | `progress-circle` | Indicador de progreso circular |
 | `radio` | Control de selección única para grupos de opciones |
@@ -61,7 +64,7 @@ Grupos funcionales simples formados por combinación de átomos. Gestionan estad
 
 | Componente | Descripción |
 |---|---|
-| `avatar-group` | Grupo de avatares apilados |
+| `avatar-group` 🔮 | Grupo de avatares apilados **(backlog — no existe en `src`)** |
 | `breadcrumb` | Navegación que muestra la ubicación actual en la jerarquía |
 | `button-group` | Colección de botones relacionados agrupados |
 | `chip` | Etiqueta interactiva compacta para filtros o selecciones |
@@ -69,17 +72,17 @@ Grupos funcionales simples formados por combinación de átomos. Gestionan estad
 | `dropdown` | Menú desplegable con opciones |
 | `empty-state` | Estado vacío con mensaje e ilustración |
 | `file-uploader` | Control para subir ficheros |
-| `form-field` | Campo de formulario completo con label, input y mensaje de error |
+| `form-field` 🔮 | Campo de formulario completo con label, input y mensaje de error **(backlog — no existe en `src`)** |
 | `input` | Campo de texto con slots prefix/suffix y estados de validación |
 | `lib-alert` | Alerta para mensajes informativos, de aviso, error o éxito |
 | `modal` | Ventana overlay para mostrar contenido sobre la interfaz principal |
-| `multiselect` | Dropdown con selección múltiple |
+| `multiselect` 🔮 | Dropdown con selección múltiple — **no se implementa como componente propio**: usar `lib-select` con la prop `multiple` |
 | `pagination` | Control de paginación |
-| `profile-card` | Tarjeta de perfil combinando avatar, nombre e información adicional |
+| `profile-card` 🔮 | Tarjeta de perfil combinando avatar, nombre e información adicional **(backlog — no existe en `src`)** |
 | `range-slider` | Control deslizante para selección de rango numérico |
 | `segmented-control` | Selector de opciones mutuamente excluyentes en formato segmentado |
 | `select` | Dropdown para selección única |
-| `table-search` | Búsqueda integrada para tablas |
+| `table-search` 🔮 | Búsqueda integrada para tablas **(backlog — no existe en `src`)** |
 | `tabs` | Navegación por pestañas para organizar contenido en vistas separadas |
 | `tree-select` | Selector con estructura de árbol jerárquico |
 
@@ -96,8 +99,8 @@ Secciones complejas y autónomas formadas por moléculas y átomos. Gestionan l�
 | `data-table` | Tabla de datos con funcionalidades avanzadas |
 | `dialog` | Ventana modal que requiere interacción del usuario |
 | `drawer` | Panel lateral deslizante |
-| `lib-auth-form` | Formulario de autenticación (login y registro) |
-| `lib-list` | Lista compleja con filtrado, ordenación y paginación |
+| `lib-auth-form` 🔮 | Formulario de autenticación (login y registro) — **backlog**; hoy existe `lib-login-form` (solo login) |
+| `lib-list` 🔮 | Lista compleja con filtrado, ordenación y paginación **(backlog — no existe en `src`)** |
 | `sidebar` | Panel de navegación lateral colapsable |
 | `stepper` | Flujo de pasos secuenciales |
 | `timeline` | Visualización cronológica de eventos |

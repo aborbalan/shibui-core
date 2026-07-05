@@ -1074,11 +1074,10 @@ style={{ color: 'var(--text-accent, #B85A1E)' }}
 3. **Eventos** siempre con tipo `CustomEvent` explícito — nunca `any`.
 4. **Array props** se pasan directamente sin `.prop=` — el wrapper lo gestiona.
 5. **Los tokens `--lib-*`** deben estar disponibles. Si no hay estilos, verificar que se importa `@shibui-ui/ui/tokens`.
-6. **`lib-text-glitch`** tiene un typo en el barrel (`text-glich`). Si hay error de importación, importar directamente desde la ruta del componente.
-7. **No existe `lib-multiselect` como componente independiente** — usar `lib-select` con la prop `multiple`.
-8. **`lib-modal`** necesita `open` booleano explícito para mostrarse. No tiene estado interno de visibilidad.
-9. **`lib-toast-manager`** debe instanciarse una vez en el árbol. Los toasts se disparan vía `CustomEvent` global.
-10. **El evento de cierre** de modal, drawer y dialog es siempre `onUiLib[Componente]Close`.
+6. **No existe `lib-multiselect` como componente independiente** — usar `lib-select` con la prop `multiple`.
+7. **`lib-modal`** necesita `open` booleano explícito para mostrarse. No tiene estado interno de visibilidad.
+8. **`lib-toast-manager`** debe instanciarse una vez en el árbol. Los toasts se disparan vía `CustomEvent` global.
+9. **El evento de cierre** de modal, drawer y dialog es siempre `onUiLib[Componente]Close`.
 
 ## 📄 Licencia
 
