@@ -26,6 +26,7 @@ export * from './label/lib-label.component';
 export * from './counter/lib-counter.component';
 export * from './liquid-button/lib-liquid-button.component';
 export * from './magnetic/lib-magnetic.component';
+export * from './panel/lib-panel.component';
 export * from './progress/lib-progress.component';
 export * from './progress-circle/lib-progress-circle.component';
 export * from './quote/lib-quote.component';

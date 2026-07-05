@@ -1,3 +1,4 @@
+export * from './avatar-group/lib-avatar-group.component';
 export * from './breadcrumb/lib-breadcrumb.component';
 export * from './button-group/lib-button-group.component';
 export * from './checkbox-card/lib-checkbox-card.component';

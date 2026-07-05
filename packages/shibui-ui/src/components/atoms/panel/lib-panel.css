@@ -1,0 +1,127 @@
+/* ══════════════════════════════════════════════════════════════
+   lib-panel.css
+   Shibui UI · Átomo — Panel / 枠
+   Superficie contenedora. Consume tokens semánticos → katachi-aware.
+   ══════════════════════════════════════════════════════════════ */
+
+@layer tokens, reset, components;
+
+@layer tokens {
+  :host {
+    --panel-pad: var(--lib-space-md);
+    --panel-bg: var(--bg-surface);
+    --panel-border: 1px solid var(--border-subtle);
+    --panel-radius: var(--radius-lg);
+    --panel-shadow: none;
+    --panel-gap: var(--lib-space-md);
+  }
+}
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@layer components {
+  :host {
+    display: block;
+  }
+
+  :host([hidden]) {
+    display: none;
+  }
+
+  .panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--panel-gap);
+    background: var(--panel-bg);
+    border: var(--panel-border);
+    border-radius: var(--panel-radius);
+    box-shadow: var(--panel-shadow);
+    color: var(--text-primary);
+    padding: var(--panel-pad);
+  }
+
+  /* ── Cabecera / pie ── */
+  .panel__header,
+  .panel__footer {
+    display: flex;
+    align-items: center;
+    gap: var(--lib-space-sm);
+  }
+
+  .panel__header[hidden],
+  .panel__footer[hidden] {
+    display: none;
+  }
+
+  .panel__header {
+    justify-content: space-between;
+  }
+
+  .panel__title {
+    font-family: var(--lib-font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-normal);
+    color: var(--text-primary);
+  }
+
+  .panel__body {
+    min-width: 0;
+  }
+
+  .panel__footer {
+    justify-content: flex-end;
+  }
+
+  /* ══════════════════════════════════════
+     VARIANTES
+     ══════════════════════════════════════ */
+
+  :host([variant='elevated']) {
+    --panel-bg: var(--bg-elevated);
+    --panel-border: 1px solid transparent;
+    --panel-shadow: var(--shadow-md);
+  }
+
+  :host([variant='outline']) {
+    --panel-bg: transparent;
+    --panel-border: 1px solid var(--border-default);
+  }
+
+  /* ══════════════════════════════════════
+     PADDING
+     ══════════════════════════════════════ */
+
+  :host([padding='none']) {
+    --panel-pad: 0;
+  }
+
+  :host([padding='sm']) {
+    --panel-pad: var(--lib-space-sm);
+    --panel-gap: var(--lib-space-sm);
+  }
+
+  :host([padding='lg']) {
+    --panel-pad: var(--lib-space-lg);
+    --panel-gap: var(--lib-space-lg);
+  }
+
+  /* ══════════════════════════════════════
+     EFECTOS KATACHI — context-driven
+     Panel es una superficie estructural (marker): hereda los tokens
+     semánticos por katachi. El único efecto declarado es la sombra
+     brutal, que sabi/kintsugi encienden vía --lib-effect-brutal-shadow.
+     ══════════════════════════════════════ */
+
+  .panel {
+    box-shadow: var(--lib-effect-brutal-shadow, var(--panel-shadow));
+  }
+}

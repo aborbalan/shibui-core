@@ -305,6 +305,71 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
     }
   },
   {
+    "id": "cmp-lib-avatar-group",
+    "name": "Avatar Group",
+    "slug": "lib-avatar-group",
+    "tagName": "lib-avatar-group",
+    "description": "`<lib-avatar-group>` — Pila de `<lib-avatar>` solapados con overflow \"+N\".\n\nAgrupa avatares con solape y anillo de separación. Unifica el tamaño de los\navatares hijos al `size` del grupo. Con `max` limita cuántos se muestran y\ncolapsa el resto en un contador \"+N\".",
+    "version": "1.0.0",
+    "status": "stable",
+    "categoryId": "cat-0004-0000-0000-000000000000",
+    "packageName": "@shibui-ui/ui",
+    "tags": [],
+    "docsUrl": null,
+    "api": {
+      "props": [
+        {
+          "name": "size",
+          "type": "LibAvatarSize",
+          "default": "'md'",
+          "description": "Tamaño aplicado a todos los avatares del grupo.",
+          "attribute": "size",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "2xl"
+          ]
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "default": "0",
+          "description": "Máximo de avatares visibles (0 = mostrar todos).",
+          "attribute": "max"
+        },
+        {
+          "name": "total",
+          "type": "number",
+          "default": "0",
+          "description": "Total real de avatares para el contador \"+N\" (0 = usar los del slot).",
+          "attribute": "total"
+        },
+        {
+          "name": "spacing",
+          "type": "LibAvatarGroupSpacing",
+          "default": "'normal'",
+          "description": "Grado de solape entre avatares.",
+          "attribute": "spacing",
+          "options": [
+            "tight",
+            "normal",
+            "loose"
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "Uno o más `<lib-avatar>`."
+        }
+      ],
+      "events": []
+    }
+  },
+  {
     "id": "cmp-lib-background",
     "name": "Background",
     "slug": "lib-background",
@@ -5472,6 +5537,70 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "description": "— { detail: { page: number, prev: number } }"
         }
       ]
+    }
+  },
+  {
+    "id": "cmp-lib-panel",
+    "name": "Panel",
+    "slug": "lib-panel",
+    "tagName": "lib-panel",
+    "description": "`<lib-panel>` — Contenedor de superficie para agrupar secciones de UI.\n\nSuperficie neutra que consume tokens semánticos (`--bg-surface`,\n`--border-subtle`, `--text-primary`), por lo que hereda el katachi del\nancestro automáticamente sin props de contexto. Ofrece cabecera y pie\nopcionales vía slots.",
+    "version": "1.0.0",
+    "status": "stable",
+    "categoryId": "cat-0004-0000-0000-000000000000",
+    "packageName": "@shibui-ui/ui",
+    "tags": [],
+    "docsUrl": null,
+    "api": {
+      "props": [
+        {
+          "name": "variant",
+          "type": "LibPanelVariant",
+          "default": "'surface'",
+          "description": "Tratamiento visual de la superficie.",
+          "attribute": "variant",
+          "options": [
+            "surface",
+            "elevated",
+            "outline"
+          ]
+        },
+        {
+          "name": "padding",
+          "type": "LibPanelPadding",
+          "default": "'md'",
+          "description": "Padding interno del panel.",
+          "attribute": "padding",
+          "options": [
+            "none",
+            "sm",
+            "md",
+            "lg"
+          ]
+        },
+        {
+          "name": "heading",
+          "type": "string",
+          "default": "''",
+          "description": "Título opcional renderizado en la cabecera.",
+          "attribute": "heading"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "Contenido principal del panel."
+        },
+        {
+          "name": "header",
+          "description": "Contenido de cabecera (acciones, etc.). Se muestra junto al `heading`."
+        },
+        {
+          "name": "footer",
+          "description": "Contenido de pie (acciones, metadata)."
+        }
+      ],
+      "events": []
     }
   },
   {

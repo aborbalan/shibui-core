@@ -678,6 +678,35 @@
 
 ---
 
+### `lib-panel` · ✅
+
+> **Nota:** Superficie estructural (marker). Consume tokens semánticos
+> (`--bg-surface`/`--bg-elevated`/`--border-*`/`--text-primary`), por lo que adapta a
+> todos los katachi por herencia sin overrides propios. Variantes: `surface` · `elevated` · `outline`.
+
+#### Superficies
+
+| Superficie | Estado | Notas |
+|------------|--------|-------|
+| light | ✅ | Tokens semánticos por defecto |
+| dark | ✅ | Vía `--bg-*` invertidos |
+| kintsugi | ✅ | Hereda; `elevated` recibe la sombra brutal/gold-ring |
+| glitch | ✅ | Hereda superficie terminal |
+| celadón | ✅ | Hereda |
+| washi | ✅ | Hereda |
+
+#### Efectos
+
+| Efecto | Superficie | Estado | Notas |
+|--------|------------|--------|-------|
+| glass | — | `—` | No aplica: superficie opaca |
+| spotlight | — | `—` | No aplica |
+| kintsugi-border | — | `—` | No aplica |
+| shadow-brutal | sabi / kintsugi | ✅ | `--lib-effect-brutal-shadow` sobre `.panel` (fallback a `--panel-shadow`) |
+| metal-texture | — | `—` | No aplica |
+
+---
+
 ### `lib-progress` · ✅
 
 > **CSS verificado.** Tones: `default` (washi-900) · `kaki` · `celadon` · `error`. Sin superficie dark
@@ -1112,6 +1141,21 @@
 ---
 
 ## Moléculas
+
+---
+
+### `lib-avatar-group` · ✅
+
+> **Nota:** Compositor estructural (marker). No tiene superficie propia: solo solapa
+> los `lib-avatar` del slot y dibuja el anillo de separación con `--bg-base` +
+> la burbuja "+N" sobre `--bg-elevated`. Los avatares gestionan su propia superficie.
+
+#### Superficies / Efectos
+
+| | Estado |
+|-|--------|
+| Superficies | `↑ hijos` (lib-avatar) |
+| Efectos | `—` |
 
 ---
 
