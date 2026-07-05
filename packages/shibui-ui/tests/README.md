@@ -1,4 +1,4 @@
-# Tests — `@shibui/ui`
+# Tests — `@shibui-ui/ui`
 
 Dos capas de testing conviven en el paquete:
 

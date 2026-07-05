@@ -22,7 +22,7 @@ Gestionado con **pnpm workspaces** (pnpm@9.15.0, Node >=20).
 
 Workspaces declarados en `pnpm-workspace.yaml`:
 - `apps/*` — app-react, app-angular, app-svelte, app-cv, app-tauri, shibui-api
-- `packages/*` — shibui-ui (`@shibui/ui`)
+- `packages/*` — shibui-ui (`@shibui-ui/ui`)
 - `cloudflare/*` — cf-cache-worker
 
 > `app-tauri` requiere **Rust toolchain estable** (`rustup install stable`) además de Node+pnpm. Es una app de escritorio Tauri 2 + React 19 con backend Rust (`crate core/`).
@@ -62,7 +62,7 @@ Cada app/package gestiona las suyas.
 | `pnpm start:api` | Dev server NestJS |
 | `pnpm start:tauri` | Dev app Tauri (Vite + ventana nativa) — requiere Rust |
 | `pnpm dev:all` | Las tres apps web frontend en paralelo (sin Tauri) |
-| `pnpm build:shibui` | Build de `@shibui/ui` |
+| `pnpm build:shibui` | Build de `@shibui-ui/ui` |
 | `pnpm type-check` | `tsc --noEmit` sobre shibui-ui |
 | `pnpm lint` | ESLint sobre shibui-ui |
 

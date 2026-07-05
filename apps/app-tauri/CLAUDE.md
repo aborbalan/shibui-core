@@ -27,7 +27,7 @@ App de escritorio nativa (Windows/macOS/Linux) construida con Tauri 2 y React 19
 ```
 src/
   App.tsx / App.css
-  main.tsx                      → Bootstrap React + import @shibui/ui
+  main.tsx                      → Bootstrap React + import @shibui-ui/ui
   custom-elements.d.ts          → Tipos JSX para lib-* (igual que app-react)
   shell/
     AppShell.tsx                → Router principal (lazy pages)
@@ -170,7 +170,7 @@ El CI (`ci-tauri.yml`) corre `cargo fmt --check`, `cargo clippy` y `cargo test` 
 
 ```typescript
 // main.tsx — registra todos los custom elements globalmente
-import '@shibui/ui';
+import '@shibui-ui/ui';
 ```
 
 ```typescript

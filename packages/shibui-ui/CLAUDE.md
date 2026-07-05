@@ -1,4 +1,4 @@
-# Shibui UI (`@shibui/ui`) — Librería de componentes Lit
+# Shibui UI (`@shibui-ui/ui`) — Librería de componentes Lit
 
 ## Visión general
 
@@ -76,7 +76,7 @@ packages/shibui-ui/
 
 ```bash
 pnpm storybook       # Arranca Storybook
-pnpm build:shibui    # Build de @shibui/ui
+pnpm build:shibui    # Build de @shibui-ui/ui
 pnpm type-check      # tsc --noEmit
 pnpm lint            # ESLint
 ```

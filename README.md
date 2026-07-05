@@ -97,7 +97,7 @@ pnpm dev:all          # React + Svelte + Angular en paralelo
 | `pnpm start:api` | Dev server NestJS |
 | `pnpm start:tauri` | Dev app Tauri (Vite + ventana nativa) — requiere Rust |
 | `pnpm dev:all` | React + Svelte + Angular en paralelo (sin Tauri) |
-| `pnpm build:shibui` | Build de `@shibui/ui` |
+| `pnpm build:shibui` | Build de `@shibui-ui/ui` |
 | `pnpm build:api` · `build:react` · `build:cv` | Builds individuales |
 | `pnpm type-check` | `tsc --noEmit` sobre shibui-ui |
 | `pnpm lint` | ESLint sobre shibui-ui |

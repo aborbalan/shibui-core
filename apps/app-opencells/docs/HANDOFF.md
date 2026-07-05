@@ -33,7 +33,7 @@ Rama: `feature/app-opencells` (desde `develop`) · Estado dev: pendiente de 1er 
   la continuidad va por plan + este HANDOFF + memoria, no por el worktree.
 - `pnpm install` y `pnpm start:opencells` desde el **REPO PRINCIPAL** (en worktree Windows
   `pnpm install` cuelga). En worktree, node_modules vía junctions desde el repo principal.
-- Antes de arrancar: `pnpm build:shibui` (los tipos de `@shibui/ui` salen de su `dist`).
+- Antes de arrancar: `pnpm build:shibui` (los tipos de `@shibui-ui/ui` salen de su `dist`).
 - Datos dev: `src/data/trust-report.fixture.json`.
 
 ## SIGUIENTE: Hito 1 — Bootstrap (`startApp`, una ruta, un page controller)

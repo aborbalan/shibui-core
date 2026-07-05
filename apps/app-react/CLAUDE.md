@@ -135,7 +135,7 @@ queryKeys.auth.me
 
 ```typescript
 // main.tsx — registra todos los custom elements globalmente
-import '@shibui/ui';
+import '@shibui-ui/ui';
 ```
 
 ```typescript
