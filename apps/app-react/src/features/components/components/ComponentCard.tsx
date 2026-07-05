@@ -1,6 +1,7 @@
 import React from "react";
 import { LibCard, LibBadge } from "@shibui-ui/ui/react";
 import type { ComponentDto } from "../../../data/api/domain/components/api/components.api";
+import { ComponentPreview } from "./ComponentPreview";
 
 interface ComponentCardProps {
   component: ComponentDto;
@@ -29,7 +30,9 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({ component, onSelec
       </LibBadge>
 
       <h3 slot="title">{component.name}</h3>
-      <p slot="description">{component.description}</p>
+      <p>{component.description}</p>
+
+      <ComponentPreview tagName={component.tagName} />
 
       <span
         slot="footer"
