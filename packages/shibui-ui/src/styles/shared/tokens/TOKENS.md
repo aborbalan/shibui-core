@@ -25,6 +25,7 @@ Los **componentes siempre consumen tokens semánticos**. Los primitivos solo exi
 | [`_palette.css`](./_palette.css) | Paletas de color crudas (washi, ink, kaki, celadón) |
 | [`_typography.css`](./_typography.css) | Escala de tamaños, pesos, familias, interlineado, tracking |
 | [`_spacing.css`](./_spacing.css) | Espaciado, z-index, radios de borde |
+| [`_breakpoints.css`](./_breakpoints.css) | Escala responsive canónica (`--bp-*`) |
 | [`_motion.css`](./_motion.css) | Duraciones, curvas de Bézier, transiciones compuestas |
 | [`_state.css`](./_state.css) | Colores de estado (error, warning, success, info, disabled) |
 | [`_semantic.css`](./_semantic.css) | Tokens de superficie (bg, text, border, shadows) + dark mode |
@@ -231,6 +232,27 @@ Variantes de radio mínimo para el estilo editorial de Shibui. El máximo permit
 
 ---
 
+## Breakpoints — `_breakpoints.css`
+
+Escala responsive canónica de la librería. Fuente de verdad única de los cortes.
+
+| Token | Valor | Objetivo |
+|---|---|---|
+| `--bp-xs` | `480px` | Móvil grande / phablet |
+| `--bp-sm` | `640px` | Tablet vertical pequeña |
+| `--bp-md` | `768px` | Tablet |
+| `--bp-lg` | `1024px` | Tablet horizontal / laptop |
+| `--bp-xl` | `1280px` | Desktop |
+| `--bp-2xl` | `1536px` | Desktop ancho |
+
+> ⚠️ Las CSS custom properties **no** son válidas dentro de la condición de un media
+> query (`@media (min-width: var(--bp-md))` no funciona en navegador; `@custom-media`
+> no existe sin PostCSS). Estos tokens sirven como fuente de verdad documental (al
+> escribir un `@media`, usar el px de la tabla), en **container queries**
+> (`@container (min-width: var(--bp-md))` sí es válido) y para lectura desde JS.
+
+---
+
 ## Motion — `_motion.css`
 
 ### Duraciones
@@ -281,18 +303,22 @@ transition: background var(--transition-base), border-color var(--transition-fas
 
 ### Fondos y bordes sutiles
 
-Pares de fondo + borde para usar en badges, alerts y banners de estado. Los fondos son casi blancos para no interferir con el contenido.
+Pares de fondo + borde para usar en badges, alerts y banners de estado. **Derivados**
+del color de estado con `color-mix(... transparent N%)`, no HEX opaco: son tintes
+translúcidos que se componen sobre la superficie del contexto, así que **adaptan por
+katachi** (antes, el HEX casi-blanco de `subtle` rompía en los katachi oscuros).
+Cambiar `--color-<estado>` reajusta automáticamente su `subtle` y su `border`.
 
-| Token | Hex | Uso |
+| Token | Derivación | Uso |
 |---|---|---|
-| `--color-error-subtle` | `#FFF0EE` | Fondo de badge/alert error |
-| `--color-error-border` | `#F5C4BC` | Borde de badge/alert error |
-| `--color-warning-subtle` | `#FDF8EE` | Fondo de badge/alert warning |
-| `--color-warning-border` | `#F5E0A0` | Borde de badge/alert warning |
-| `--color-success-subtle` | `#EFF5F1` | Fondo de badge/alert success |
-| `--color-success-border` | `#BDD8C5` | Borde de badge/alert success |
-| `--color-info-subtle` | `#EFF5F3` | Fondo de badge/alert info |
-| `--color-info-border` | `#A8D0C4` | Borde de badge/alert info |
+| `--color-error-subtle` | `color-mix(in oklch, var(--color-error), transparent 90%)` | Fondo de badge/alert error |
+| `--color-error-border` | `color-mix(in oklch, var(--color-error), transparent 50%)` | Borde de badge/alert error |
+| `--color-warning-subtle` | `color-mix(in oklch, var(--color-warning), transparent 90%)` | Fondo de badge/alert warning |
+| `--color-warning-border` | `color-mix(in oklch, var(--color-warning), transparent 50%)` | Borde de badge/alert warning |
+| `--color-success-subtle` | `color-mix(in oklch, var(--color-success), transparent 90%)` | Fondo de badge/alert success |
+| `--color-success-border` | `color-mix(in oklch, var(--color-success), transparent 50%)` | Borde de badge/alert success |
+| `--color-info-subtle` | `color-mix(in oklch, var(--color-info), transparent 90%)` | Fondo de badge/alert info |
+| `--color-info-border` | `color-mix(in oklch, var(--color-info), transparent 50%)` | Borde de badge/alert info |
 
 ### Textos de estado
 

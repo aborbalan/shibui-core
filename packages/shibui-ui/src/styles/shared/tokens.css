@@ -1,6 +1,7 @@
 @import url('./tokens/_palette.css');
 @import url('./tokens/_typography.css');
 @import url('./tokens/_spacing.css');
+@import url('./tokens/_breakpoints.css');
 @import url('./tokens/_motion.css');
 @import url('./tokens/_state.css');
 @import url('./tokens/_semantic.css');

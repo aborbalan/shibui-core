@@ -9,6 +9,7 @@ import type { Preview } from '@storybook/web-components-vite';
 import '../src/styles/shared/tokens/_palette.css';
 import '../src/styles/shared/tokens/_typography.css';
 import '../src/styles/shared/tokens/_spacing.css';
+import '../src/styles/shared/tokens/_breakpoints.css';
 import '../src/styles/shared/tokens/_motion.css';
 import '../src/styles/shared/tokens/_state.css';
 import '../src/styles/shared/tokens/_semantic.css';

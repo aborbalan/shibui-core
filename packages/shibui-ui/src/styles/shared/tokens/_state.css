@@ -5,15 +5,22 @@
   --color-success: oklch(38.41% 0.063 147.16deg); /* #2A5C3A */
   --color-info:    oklch(58.33% 0.068 171.21deg); /* #4E9482 */
 
-  /* --- Fondos y bordes sutiles --- */
-  --color-error-subtle:    #FFF0EE;
-  --color-error-border:    #F5C4BC;
-  --color-warning-subtle:  #FDF8EE;
-  --color-warning-border:  #F5E0A0;
-  --color-success-subtle:  #EFF5F1;
-  --color-success-border:  #BDD8C5;
-  --color-info-subtle:     #EFF5F3;
-  --color-info-border:     #A8D0C4;
+  /* --- Fondos y bordes sutiles ---
+     Derivados del color de estado vía color-mix con transparencia, en lugar de
+     HEX opaco. Ventajas:
+       · Única fuente de verdad: cambiar `--color-error` reajusta subtle + border.
+       · Katachi-aware: al ser tintes translúcidos se componen sobre la superficie
+         del contexto (antes, el HEX casi-blanco de `subtle` rompía en los katachi
+         oscuros — wabi/kintsugi/terminal — pintando una caja clara).
+     `subtle` = 10% del color de estado · `border` = 50% del color de estado. */
+  --color-error-subtle:    color-mix(in oklch, var(--color-error), transparent 90%);
+  --color-error-border:    color-mix(in oklch, var(--color-error), transparent 50%);
+  --color-warning-subtle:  color-mix(in oklch, var(--color-warning), transparent 90%);
+  --color-warning-border:  color-mix(in oklch, var(--color-warning), transparent 50%);
+  --color-success-subtle:  color-mix(in oklch, var(--color-success), transparent 90%);
+  --color-success-border:  color-mix(in oklch, var(--color-success), transparent 50%);
+  --color-info-subtle:     color-mix(in oklch, var(--color-info), transparent 90%);
+  --color-info-border:     color-mix(in oklch, var(--color-info), transparent 50%);
 
   /* --- Textos de estado --- */
   --text-error:   var(--color-error);

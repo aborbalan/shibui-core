@@ -54,8 +54,8 @@ const config: UserConfig & { test?: InlineConfig } = {
             const tokensDir = resolve(dirname, '../src/styles/shared/tokens');
             const partials = [
               '_palette.css', '_typography.css', '_spacing.css',
-              '_motion.css', '_state.css', '_semantic.css', '_effects.css',
-              '_katachi.css',
+              '_breakpoints.css', '_motion.css', '_state.css',
+              '_semantic.css', '_effects.css', '_katachi.css',
             ];
             const source = partials
               .map(f => fs.readFileSync(resolve(tokensDir, f), 'utf-8'))

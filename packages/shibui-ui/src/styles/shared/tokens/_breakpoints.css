@@ -1,0 +1,28 @@
+:root {
+  /* --- Breakpoints (escala responsive canónica) ---
+     Fuente de verdad de los cortes responsive de la librería.
+
+     ⚠️  Uso: las CSS custom properties NO son válidas dentro de la condición de
+     un media query (`@media (min-width: var(--bp-md))` no funciona en navegador,
+     y `@custom-media` no existe sin PostCSS). Por eso estos tokens sirven para:
+       1. Documentar la escala única — al escribir un `@media`, usar el px de la
+          tabla de abajo, no un valor arbitrario.
+       2. Container queries: `@container (min-width: var(--bp-md))` SÍ es válido.
+       3. Lectura desde JS (`getComputedStyle(...).getPropertyValue('--bp-md')`).
+
+     | Token      | px      | Objetivo                         |
+     |------------|---------|----------------------------------|
+     | --bp-xs    |  480px  | móvil grande / phablet           |
+     | --bp-sm    |  640px  | tablet vertical pequeña          |
+     | --bp-md    |  768px  | tablet                           |
+     | --bp-lg    | 1024px  | tablet horizontal / laptop       |
+     | --bp-xl    | 1280px  | desktop                          |
+     | --bp-2xl   | 1536px  | desktop ancho                    |
+  */
+  --bp-xs:  480px;
+  --bp-sm:  640px;
+  --bp-md:  768px;
+  --bp-lg:  1024px;
+  --bp-xl:  1280px;
+  --bp-2xl: 1536px;
+}
