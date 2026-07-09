@@ -1,6 +1,6 @@
 /* ============================================================
    LIB-BACKGROUND — Tipos e interfaces públicas
-   58 variantes: 17 light · 18 dark · 8 gradient · 9 animated · 6 canvas
+   62 variantes: 17 light · 21 dark · 8 gradient · 10 animated · 6 canvas
    ============================================================ */
 
 /** 17 fondos light inspirados en papel y textil japonés */
@@ -24,7 +24,7 @@ export type LibBackgroundLight =
   | 'celadon-wash' /* 青磁洗い  light celadon-tinted paper */
   | 'kintsugi-light'; /* 金繕い  costuras de oro sobre cerámica pálida */
 
-/** 18 fondos dark derivados de la tinta sumi */
+/** 21 fondos dark derivados de la tinta sumi */
 export type LibBackgroundDark =
   | 'sumi'
   | 'sumi-grain'
@@ -44,7 +44,11 @@ export type LibBackgroundDark =
   | 'void'        /* 虚空   vignette radial, oscuridad pura */
   | 'yami'        /* 闇     degradado de profundidad casi imperceptible */
   | 'midnight'    /* 深夜   matriz de puntos finos sobre near-black */
-  | 'celadon';    /* 青磁   dark jade surface — deep celadon grid */
+  | 'celadon'     /* 青磁   dark jade surface — deep celadon grid */
+  /* ── Terminal · CRT (katachi "terminal") ── */
+  | 'phosphor'    /* 燐    pantalla de fósforo verde monocromo */
+  | 'crt'         /* CRT   scanlines densos + curvatura del tubo */
+  | 'amber';      /* 琥珀   fósforo ámbar monocromo (DEC/IBM) */
 
 /** 8 fondos de gradiente mesh */
 export type LibBackgroundGradient =
@@ -58,7 +62,7 @@ export type LibBackgroundGradient =
   | 'twilight'    /* 黄昏  kaki cálido a oscuro */
   | 'jade-deep';  /* 翡翠  celadón profundo con humo */
 
-/** 9 fondos animados en CSS puro */
+/** 10 fondos animados en CSS puro */
 export type LibBackgroundAnimated =
   | 'breathing'
   | 'aurora-drift'
@@ -69,7 +73,8 @@ export type LibBackgroundAnimated =
   | 'pulse'       /* anillos kintsugi expandiéndose desde el centro */
   | 'fog'         /* niebla lenta cruzando de izquierda a derecha */
   | 'static'      /* ruido CRT — estética glitch */
-  | 'glitch';     /* CRT terminal — scanlines + horizontal RGB jitter */
+  | 'glitch'      /* CRT terminal — scanlines + horizontal RGB jitter */
+  | 'matrix';     /* 雨    lluvia digital — columnas de fósforo cayendo */
 
 /** 6 fondos generativos en Canvas 2D */
 export type LibBackgroundCanvas =
@@ -81,7 +86,7 @@ export type LibBackgroundCanvas =
   | 'fireflies'   /* partículas luminosas con movimiento orgánico */
   | 'ink-wash';   /* manchas de tinta expandiéndose sobre papel */
 
-/** Unión completa de las 55 variantes */
+/** Unión completa de las 62 variantes */
 export type LibBackgroundTheme =
   | LibBackgroundLight
   | LibBackgroundDark
@@ -110,4 +115,5 @@ export const BG_DARK_VARIANTS = new Set<LibBackgroundTheme>([
   'noctiluca', 'aurora-drift', 'scan', 'particles', 'rain',
   'constellation', 'twilight', 'jade-deep', 'pulse', 'fog',
   'static', 'glitch', 'fireflies', 'ink-wash',
+  'phosphor', 'crt', 'amber', 'matrix',
 ]);
