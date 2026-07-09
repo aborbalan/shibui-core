@@ -76,16 +76,17 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-**lib-background** — 58 fondos decorativos derivados de los tokens Shibui.
+**lib-background** — 62 fondos decorativos derivados de los tokens Shibui.
 
 Úsalo como contenedor de sección, hero, card o panel. El contenido se proyecta en el \`slot\` por defecto.
 
 **Categorías:**
 - **Light (17)** — papeles y textiles japoneses: seigaiha, tatami, kagome, shoji, celadon-wash, kintsugi-light…
-- **Dark (18)** — tinta sumi: kintsugi, kintsugi-veins, kintsugi-gold, ash-grid, forge, obsidian, celadon…
+- **Dark (21)** — tinta sumi: kintsugi, kintsugi-veins, kintsugi-gold, ash-grid, forge, obsidian, celadon…
 - **Kintsugi (4)** — 金継ぎ la grieta reparada con oro: kintsugi, kintsugi-veins, kintsugi-gold, kintsugi-light…
 - **Gradient (8)** — mesh radial: aurora-light, sakura, twilight, jade-deep…
-- **Animated CSS (9)** — sin JS: breathing, pulse, fog, static, glitch…
+- **Animated CSS (10)** — sin JS: breathing, pulse, fog, static, glitch, matrix…
+- **Terminal · CRT (7)** — katachi \`terminal\`: phosphor, crt, amber, matrix, glitch, scan, static…
 - **Canvas (6)** — generativo: particles, fireflies, ink-wash, constellation…
 - **Celadon (4)** — familia jade completa: celadon-wash, celadon-mist, celadon, jade-deep…
 
@@ -140,6 +141,10 @@ const meta: Meta = {
         "yami",
         "midnight",
         "celadon",
+        /* Terminal · CRT */
+        "phosphor",
+        "crt",
+        "amber",
         /* Gradient */
         "aurora-light",
         "kaki-glow",
@@ -159,6 +164,7 @@ const meta: Meta = {
         "fog",
         "static",
         "glitch",
+        "matrix",
         /* Canvas */
         "particles",
         "rain",
@@ -358,6 +364,29 @@ export const Kintsugi: Story = {
   `,
 };
 
+/* ── Terminal · CRT ── */
+export const Terminal: Story = {
+  name: "Terminal — CRT · fósforo (7)",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Familia del katachi `terminal`: superficies CRT de fósforo verde (`phosphor`, `crt`) y su variante ámbar (`amber`), la lluvia digital animada (`matrix`), y los efectos existentes `glitch` / `scan` / `static`. Todas son dark — el texto va en tono claro.",
+      },
+    },
+  },
+  render: (): TemplateResult =>
+    bgGrid([
+      { variant: "phosphor", label: "59 · 燐 phosphor", dark: true },
+      { variant: "crt", label: "60 · CRT scanlines", dark: true },
+      { variant: "amber", label: "61 · 琥珀 amber", dark: true },
+      { variant: "matrix", label: "62 · 雨 matrix rain", dark: true },
+      { variant: "glitch", label: "50 · glitch · 6s", dark: true },
+      { variant: "scan", label: "44 · scan · 5s", dark: true },
+      { variant: "static", label: "49 · static · CRT", dark: true },
+    ]),
+};
+
 /* ── Animated ── */
 export const Animated: Story = {
   name: "Animated — CSS puro (9)",
@@ -458,7 +487,7 @@ export const KatachiCoverage: Story = {
           { katachi: "wabi · 侘び",     variants: ["washi", "washi-grain", "tatami"],                          dark: false },
           { katachi: "kintsugi · 金継ぎ", variants: ["kintsugi", "kintsugi-veins", "kintsugi-gold"],            dark: true  },
           { katachi: "sabi · 寂び",     variants: ["sumi", "ash-grid", "ink-dot"],                             dark: true  },
-          { katachi: "terminal",        variants: ["glitch", "scan", "static"],                                dark: true  },
+          { katachi: "terminal",        variants: ["phosphor", "crt", "amber", "matrix"],                     dark: true  },
           { katachi: "shizen · 自然",   variants: ["particles", "rain", "constellation", "fireflies"],         dark: true  },
           { katachi: "celadon · 青磁",  variants: ["celadon-wash", "celadon-mist", "celadon", "jade-deep"],   dark: false },
         ] as Array<{ katachi: string; variants: LibBackgroundTheme[]; dark: boolean }>

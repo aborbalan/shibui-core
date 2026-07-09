@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-BACKGROUND — Shibui UI
-   58 variantes: 17 light · 18 dark · 8 gradient · 9 animated · 6 canvas
+   62 variantes: 17 light · 21 dark · 8 gradient · 10 animated · 6 canvas
    ============================================================ */
 
 @layer reset {
@@ -965,6 +965,121 @@
 
         100% {
             transform: translateX(200%);
+        }
+    }
+
+    /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
+       TERMINAL · CRT — Nuevas (59–62) · katachi "terminal"
+       Fósforo verde monocromo + variante ámbar + lluvia digital.
+       Complementan glitch / scan / static con superficies CRT
+       estáticas y una cascada animada en CSS puro.
+    ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
+
+    /* 59 · phosphor — 燐 pantalla de fósforo verde monocromo
+       Base near-black con tinte verde + bloom central de fósforo +
+       scanlines finos; el overlay añade la vignette del tubo. */
+    :host([theme="phosphor"]) .bg-base {
+        background-color: #040806;
+        background-image:
+            repeating-linear-gradient(0deg,
+                transparent 0,
+                transparent 2px,
+                rgb(130, 225, 165, 0.04) 2px,
+                rgb(130, 225, 165, 0.04) 3px),
+            radial-gradient(ellipse 75% 60% at 50% 42%,
+                rgb(78, 148, 130, 0.13) 0%,
+                transparent 70%);
+    }
+
+    :host([theme="phosphor"]) .bg-overlay {
+        background: radial-gradient(ellipse 92% 82% at 50% 50%,
+                transparent 55%,
+                rgb(0, 0, 0, 0.55) 100%);
+    }
+
+    /* 60 · crt — pantalla CRT: scanlines densos + curvatura del tubo.
+       Dos vignettes elípticas cruzadas simulan el bombeado del cristal. */
+    :host([theme="crt"]) .bg-base {
+        background-color: #050807;
+        background-image:
+            repeating-linear-gradient(0deg,
+                transparent 0,
+                transparent 2px,
+                rgb(0, 0, 0, 0.38) 2px,
+                rgb(0, 0, 0, 0.38) 4px),
+            radial-gradient(ellipse 80% 62% at 50% 40%,
+                rgb(78, 148, 130, 0.10) 0%,
+                transparent 72%);
+    }
+
+    :host([theme="crt"]) .bg-overlay {
+        background:
+            radial-gradient(ellipse 68% 100% at 50% 50%,
+                transparent 60%,
+                rgb(0, 0, 0, 0.70) 100%),
+            radial-gradient(ellipse 100% 55% at 50% 50%,
+                transparent 65%,
+                rgb(0, 0, 0, 0.55) 100%);
+    }
+
+    /* 61 · amber — 琥珀 CRT de fósforo ámbar monocromo (DEC/IBM).
+       Misma anatomía que phosphor pero en la tradición cálida kaki. */
+    :host([theme="amber"]) .bg-base {
+        background-color: #0A0603;
+        background-image:
+            repeating-linear-gradient(0deg,
+                transparent 0,
+                transparent 2px,
+                rgb(250, 180, 80, 0.05) 2px,
+                rgb(250, 180, 80, 0.05) 3px),
+            radial-gradient(ellipse 75% 60% at 50% 42%,
+                rgb(217, 114, 52, 0.15) 0%,
+                transparent 70%);
+    }
+
+    :host([theme="amber"]) .bg-overlay {
+        background: radial-gradient(ellipse 92% 82% at 50% 50%,
+                transparent 55%,
+                rgb(0, 0, 0, 0.55) 100%);
+    }
+
+    /* 62 · matrix — 雨 lluvia digital: columnas de fósforo cayendo.
+       Base = rejilla de columnas; overlay = dos capas de trazos
+       verticales con tamaños/periodos distintos que caen desfasadas. */
+    :host([theme="matrix"]) .bg-base {
+        background-color: #030705;
+        background-image:
+            repeating-linear-gradient(90deg,
+                transparent 0,
+                transparent 10px,
+                rgb(78, 148, 130, 0.05) 10px,
+                rgb(78, 148, 130, 0.05) 11px);
+    }
+
+    :host([theme="matrix"]) .bg-overlay {
+        background-image:
+            repeating-linear-gradient(180deg,
+                transparent 0,
+                rgb(130, 225, 165, 0.16) 5px,
+                transparent 14px,
+                transparent 90px),
+            repeating-linear-gradient(180deg,
+                transparent 0,
+                rgb(78, 148, 130, 0.11) 4px,
+                transparent 12px,
+                transparent 150px);
+        background-size: 11px 200px, 22px 340px;
+        background-position: 0 0, 11px 0;
+        animation: bg-matrix-fall 3.2s linear infinite;
+    }
+
+    @keyframes bg-matrix-fall {
+        0% {
+            background-position: 0 0, 11px 0;
+        }
+
+        100% {
+            background-position: 0 200px, 11px 340px;
         }
     }
 
