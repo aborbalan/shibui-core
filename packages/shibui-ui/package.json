@@ -81,7 +81,7 @@
   ],
   "author": "",
   "license": "MIT",
-  "sideEffects": ["*.css", "*.component.ts", "*.component.js", "dist/index.js"],
+  "sideEffects": ["*.css", "*.component.ts", "*.component.js", "dist/*.js"],
   "peerDependencies": {
     "lit": "^3.0.0",
     "react": ">=18.0.0"
