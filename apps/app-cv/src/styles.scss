@@ -19,6 +19,8 @@ body {
   line-height: var(--leading-relaxed, 1.8);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Cross-fade suave de la superficie al cambiar de katachi. */
+  transition: background 300ms ease, color 300ms ease;
 }
 
 *,
