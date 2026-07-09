@@ -136,8 +136,8 @@ importers:
         specifier: ^21.1.0
         version: 21.2.8(@angular/common@21.2.8(@angular/core@21.2.8(@angular/compiler@21.2.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.2.8(@angular/compiler@21.2.8)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@21.2.8(@angular/common@21.2.8(@angular/core@21.2.8(@angular/compiler@21.2.8)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@21.2.8(@angular/compiler@21.2.8)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
       '@shibui-ui/ui':
-        specifier: '*'
-        version: 1.7.0(@types/react@19.2.14)(lit@3.3.2)
+        specifier: workspace:*
+        version: link:../../packages/shibui-ui
       rxjs:
         specifier: ~7.8.0
         version: 7.8.2
