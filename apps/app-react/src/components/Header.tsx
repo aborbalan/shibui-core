@@ -74,6 +74,7 @@ export interface ShibuiHeaderProps {
 const DEFAULT_LINKS: NavLink[] = [
   { id: 'componentes', label: 'Componentes', href: '#componentes' },
   { id: 'tokens', label: 'Tokens', href: '#tokens' },
+  { id: 'install', label: 'Instalación', href: '#install' },
   { id: 'philosophy', label: 'Filosofía', href: '/philosophy' },
   { id: 'about', label: 'Sobre mí', href: '/about' }
 ];
