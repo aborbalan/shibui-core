@@ -9,7 +9,7 @@ import type { LibBackgroundTheme } from './lib-background.types';
 /**
  * @element lib-background
  *
- * Fondo decorativo con 55 variantes. Úsalo como contenedor raíz
+ * Fondo decorativo con 62 variantes. Úsalo como contenedor raíz
  * de secciones, heroes, cards o paneles. El contenido se coloca
  * en el slot por defecto.
  *
