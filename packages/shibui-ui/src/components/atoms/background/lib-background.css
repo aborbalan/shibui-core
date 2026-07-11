@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-BACKGROUND — Shibui UI
-   62 variantes: 17 light · 21 dark · 8 gradient · 10 animated · 6 canvas
+   66 variantes: 21 light · 21 dark · 8 gradient · 10 animated · 6 canvas
    ============================================================ */
 
 @layer reset {
@@ -572,6 +572,80 @@
                 transparent 3px,
                 rgb(78, 148, 130, 0.025) 3px,
                 rgb(78, 148, 130, 0.025) 4px);
+    }
+
+    /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
+       SABI · 寂び — Nuevas (63–66) · katachi "sabi"
+       Superficie envejecida en clave light: papel amarilleado con
+       foxing, pátina de óxido, índigo desteñido y craquelado de
+       esmalte. La belleza de lo que ha vivido.
+    ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
+
+    /* 63 · foxed — 寂紙 papel amarilleado con motas de foxing
+       Motas ferrosas pequeñas y dispersas + un ligero moteado cálido. */
+    :host([theme="foxed"]) .bg-base {
+        background-color: #ECE2CE;
+        background-image:
+            radial-gradient(circle at 18% 24%, rgb(150, 100, 60, 0.16) 0%, transparent 6%),
+            radial-gradient(circle at 62% 16%, rgb(140, 92, 55, 0.13) 0%, transparent 5%),
+            radial-gradient(circle at 82% 44%, rgb(150, 100, 60, 0.14) 0%, transparent 7%),
+            radial-gradient(circle at 34% 62%, rgb(135, 88, 52, 0.12) 0%, transparent 5%),
+            radial-gradient(circle at 72% 78%, rgb(150, 100, 60, 0.15) 0%, transparent 6%),
+            radial-gradient(circle at 12% 82%, rgb(140, 92, 55, 0.11) 0%, transparent 5%),
+            radial-gradient(circle at 46% 40%, rgb(135, 88, 52, 0.10) 0%, transparent 4%),
+            radial-gradient(ellipse 120% 100% at 50% 0%, rgb(180, 150, 110, 0.10) 0%, transparent 60%);
+    }
+
+    :host([theme="foxed"]) .bg-overlay {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='fox'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23fox)' opacity='0.05'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        mix-blend-mode: multiply;
+    }
+
+    /* 64 · rust — 錆 pátina de óxido ferroso, manchas cálidas que sangran */
+    :host([theme="rust"]) .bg-base {
+        background-color: #E7DAC4;
+        background-image:
+            radial-gradient(ellipse 40% 34% at 22% 30%, rgb(150, 82, 40, 0.20) 0%, transparent 62%),
+            radial-gradient(ellipse 34% 40% at 78% 68%, rgb(128, 68, 34, 0.17) 0%, transparent 60%),
+            radial-gradient(ellipse 30% 24% at 62% 20%, rgb(165, 95, 50, 0.12) 0%, transparent 58%),
+            radial-gradient(ellipse 26% 30% at 34% 80%, rgb(120, 62, 30, 0.13) 0%, transparent 60%),
+            radial-gradient(ellipse 20% 18% at 88% 34%, rgb(150, 82, 40, 0.10) 0%, transparent 58%);
+    }
+
+    :host([theme="rust"]) .bg-overlay {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='rst'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6 0.7' numOctaves='4' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.55  0 0 0 0 0.30  0 0 0 0 0.14  0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23rst)' opacity='0.10'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        mix-blend-mode: multiply;
+    }
+
+    /* 65 · aizome — 褪せ藍 índigo textil desteñido y gastado
+       Base azul-gris apagado + trama tejida en índigo + parches
+       blanqueados (desgaste). */
+    :host([theme="aizome"]) .bg-base {
+        background-color: #D3D6DC;
+        background-image:
+            radial-gradient(ellipse 45% 40% at 25% 30%, rgb(244, 242, 236, 0.45) 0%, transparent 55%),
+            radial-gradient(ellipse 40% 35% at 75% 72%, rgb(244, 242, 236, 0.34) 0%, transparent 55%),
+            repeating-linear-gradient(-45deg,
+                transparent 0,
+                transparent 7px,
+                rgb(70, 92, 128, 0.10) 7px,
+                rgb(70, 92, 128, 0.10) 9px),
+            repeating-linear-gradient(45deg,
+                transparent 0,
+                transparent 7px,
+                rgb(70, 92, 128, 0.07) 7px,
+                rgb(70, 92, 128, 0.07) 9px);
+    }
+
+    /* 66 · craquele — 貫入 craquelado de esmalte envejecido
+       Red de grietas finas (SVG) sobre cerámica pálida. */
+    :host([theme="craquele"]) .bg-base {
+        background-color: #EAE0CF;
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cg fill='none' stroke='rgb(120,100,82)' stroke-width='0.8' stroke-linejoin='round' opacity='0.5'%3E%3Cpath d='M0,42 L70,55 L150,40 L220,58 L300,46 M0,150 L60,140 L140,158 L210,145 L300,155 M0,255 L80,245 L160,262 L230,250 L300,258 M55,0 L48,70 L62,150 L52,225 L60,300 M150,0 L162,72 L148,150 L160,228 L150,300 M235,0 L228,68 L242,148 L232,226 L240,300'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: 300px 300px;
     }
 
     /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
