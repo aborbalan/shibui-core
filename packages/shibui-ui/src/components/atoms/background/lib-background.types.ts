@@ -1,9 +1,9 @@
 /* ============================================================
    LIB-BACKGROUND — Tipos e interfaces públicas
-   62 variantes: 17 light · 21 dark · 8 gradient · 10 animated · 6 canvas
+   66 variantes: 21 light · 21 dark · 8 gradient · 10 animated · 6 canvas
    ============================================================ */
 
-/** 17 fondos light inspirados en papel y textil japonés */
+/** 21 fondos light inspirados en papel y textil japonés */
 export type LibBackgroundLight =
   | 'washi'
   | 'washi-grain'
@@ -22,7 +22,12 @@ export type LibBackgroundLight =
   | 'ori'         /* 織   diagonal woven textile */
   | 'chirimen'    /* 縮緬  crepe silk fine crinkle */
   | 'celadon-wash' /* 青磁洗い  light celadon-tinted paper */
-  | 'kintsugi-light'; /* 金繕い  costuras de oro sobre cerámica pálida */
+  | 'kintsugi-light' /* 金繕い  costuras de oro sobre cerámica pálida */
+  /* ── Sabi · 寂び (superficie envejecida, katachi "sabi") ── */
+  | 'foxed'       /* 寂紙  papel amarilleado con motas de foxing */
+  | 'rust'        /* 錆   pátina de óxido ferroso, manchas cálidas */
+  | 'aizome'      /* 褪せ藍  índigo textil desteñido y gastado */
+  | 'craquele';   /* 貫入  craquelado de esmalte envejecido */
 
 /** 21 fondos dark derivados de la tinta sumi */
 export type LibBackgroundDark =
@@ -86,7 +91,7 @@ export type LibBackgroundCanvas =
   | 'fireflies'   /* partículas luminosas con movimiento orgánico */
   | 'ink-wash';   /* manchas de tinta expandiéndose sobre papel */
 
-/** Unión completa de las 62 variantes */
+/** Unión completa de las 66 variantes */
 export type LibBackgroundTheme =
   | LibBackgroundLight
   | LibBackgroundDark
