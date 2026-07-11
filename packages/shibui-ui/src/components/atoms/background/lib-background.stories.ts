@@ -76,14 +76,15 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-**lib-background** — 62 fondos decorativos derivados de los tokens Shibui.
+**lib-background** — 66 fondos decorativos derivados de los tokens Shibui.
 
 Úsalo como contenedor de sección, hero, card o panel. El contenido se proyecta en el \`slot\` por defecto.
 
 **Categorías:**
-- **Light (17)** — papeles y textiles japoneses: seigaiha, tatami, kagome, shoji, celadon-wash, kintsugi-light…
+- **Light (21)** — papeles y textiles japoneses: seigaiha, tatami, kagome, shoji, celadon-wash, kintsugi-light…
 - **Dark (21)** — tinta sumi: kintsugi, kintsugi-veins, kintsugi-gold, ash-grid, forge, obsidian, celadon…
 - **Kintsugi (4)** — 金継ぎ la grieta reparada con oro: kintsugi, kintsugi-veins, kintsugi-gold, kintsugi-light…
+- **Sabi (4)** — 寂び la belleza del envejecer: foxed, rust, aizome, craquele…
 - **Gradient (8)** — mesh radial: aurora-light, sakura, twilight, jade-deep…
 - **Animated CSS (10)** — sin JS: breathing, pulse, fog, static, glitch, matrix…
 - **Terminal · CRT (7)** — katachi \`terminal\`: phosphor, crt, amber, matrix, glitch, scan, static…
@@ -122,6 +123,11 @@ const meta: Meta = {
         "chirimen",
         "celadon-wash",
         "kintsugi-light",
+        /* Sabi · 寂び */
+        "foxed",
+        "rust",
+        "aizome",
+        "craquele",
         /* Dark */
         "sumi",
         "sumi-grain",
@@ -364,6 +370,26 @@ export const Kintsugi: Story = {
   `,
 };
 
+/* ── Sabi ── */
+export const Sabi: Story = {
+  name: "Sabi — 寂び superficie envejecida (4)",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Familia del katachi `sabi` (寂び, la belleza del envejecer): superficies *light* con pátina. `foxed` (papel amarilleado con foxing), `rust` (óxido ferroso), `aizome` (índigo textil desteñido) y `craquele` (craquelado de esmalte). Todas claras — el texto va en tono oscuro.",
+      },
+    },
+  },
+  render: (): TemplateResult =>
+    bgGrid([
+      { variant: "foxed", label: "63 · 寂紙 foxed" },
+      { variant: "rust", label: "64 · 錆 rust" },
+      { variant: "aizome", label: "65 · 褪せ藍 aizome" },
+      { variant: "craquele", label: "66 · 貫入 craquele" },
+    ], 2),
+};
+
 /* ── Terminal · CRT ── */
 export const Terminal: Story = {
   name: "Terminal — CRT · fósforo (7)",
@@ -486,7 +512,7 @@ export const KatachiCoverage: Story = {
         [
           { katachi: "wabi · 侘び",     variants: ["washi", "washi-grain", "tatami"],                          dark: false },
           { katachi: "kintsugi · 金継ぎ", variants: ["kintsugi", "kintsugi-veins", "kintsugi-gold"],            dark: true  },
-          { katachi: "sabi · 寂び",     variants: ["sumi", "ash-grid", "ink-dot"],                             dark: true  },
+          { katachi: "sabi · 寂び",     variants: ["foxed", "rust", "aizome", "craquele"],                     dark: false },
           { katachi: "terminal",        variants: ["phosphor", "crt", "amber", "matrix"],                     dark: true  },
           { katachi: "shizen · 自然",   variants: ["particles", "rain", "constellation", "fireflies"],         dark: true  },
           { katachi: "celadon · 青磁",  variants: ["celadon-wash", "celadon-mist", "celadon", "jade-deep"],   dark: false },

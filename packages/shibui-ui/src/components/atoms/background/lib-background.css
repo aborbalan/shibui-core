@@ -2,7 +2,7 @@
 
 /* ============================================================
    LIB-BACKGROUND — Shibui UI
-   62 variantes: 17 light · 21 dark · 8 gradient · 10 animated · 6 canvas
+   66 variantes: 21 light · 21 dark · 8 gradient · 10 animated · 6 canvas
    ============================================================ */
 
 @layer reset {
@@ -572,6 +572,99 @@
                 transparent 3px,
                 rgb(78, 148, 130, 0.025) 3px,
                 rgb(78, 148, 130, 0.025) 4px);
+    }
+
+    /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
+       SABI · 寂び — Nuevas (63–66) · katachi "sabi"
+       Superficie envejecida en clave light: papel amarilleado con
+       foxing, pátina de óxido, índigo desteñido y craquelado de
+       esmalte. La belleza de lo que ha vivido.
+    ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
+
+    /* 63 · foxed — 寂紙 papel amarilleado con motas de foxing
+       Specks px con núcleo denso (varios tamaños + specks oscuros) sobre
+       un amarilleo desigual; overlay = mancha orgánica (turbulence de baja
+       frecuencia) + grano de papel, ambos en multiply. */
+    :host([theme="foxed"]) .bg-base {
+        background-color: #EBE1CA;
+        background-image:
+            radial-gradient(circle at 16% 22%, rgb(150, 96, 54, 0.30) 0, rgb(150, 96, 54, 0.12) 3px, transparent 8px),
+            radial-gradient(circle at 24% 41%, rgb(140, 88, 50, 0.20) 0, transparent 6px),
+            radial-gradient(circle at 61% 15%, rgb(150, 96, 54, 0.26) 0, rgb(150, 96, 54, 0.10) 3px, transparent 9px),
+            radial-gradient(circle at 40% 31%, rgb(120, 72, 40, 0.28) 0, transparent 2.5px),
+            radial-gradient(circle at 82% 45%, rgb(150, 96, 54, 0.24) 0, rgb(150, 96, 54, 0.10) 4px, transparent 10px),
+            radial-gradient(circle at 47% 57%, rgb(140, 88, 50, 0.18) 0, transparent 7px),
+            radial-gradient(circle at 33% 70%, rgb(150, 96, 54, 0.26) 0, rgb(150, 96, 54, 0.10) 3px, transparent 8px),
+            radial-gradient(circle at 78% 30%, rgb(120, 72, 40, 0.30) 0, transparent 2.5px),
+            radial-gradient(circle at 70% 73%, rgb(150, 96, 54, 0.22) 0, transparent 6px),
+            radial-gradient(circle at 88% 67%, rgb(120, 72, 40, 0.26) 0, transparent 2.5px),
+            radial-gradient(circle at 13% 82%, rgb(150, 96, 54, 0.24) 0, rgb(150, 96, 54, 0.10) 3px, transparent 9px),
+            radial-gradient(circle at 55% 86%, rgb(140, 88, 50, 0.18) 0, transparent 7px),
+            radial-gradient(ellipse 60% 50% at 20% 15%, rgb(190, 160, 110, 0.14) 0%, transparent 70%),
+            radial-gradient(ellipse 55% 45% at 85% 80%, rgb(175, 140, 95, 0.12) 0%, transparent 70%);
+    }
+
+    :host([theme="foxed"]) .bg-overlay {
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='fs'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.014' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.58  0 0 0 0 0.42  0 0 0 0 0.24  0 0 0 0.6 -0.12'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23fs)' opacity='0.5'/%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='fg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23fg)' opacity='0.05'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        mix-blend-mode: multiply;
+    }
+
+    /* 64 · rust — 錆 pátina de óxido ferroso, manchas cálidas que sangran
+       Blooms con núcleo naranja → borde hierro oscuro, churretones
+       verticales desde el borde superior y óxido concentrado en esquinas;
+       overlay = dos capas de turbulence (picadura gruesa + grano fino). */
+    :host([theme="rust"]) .bg-base {
+        background-color: #E2D3BA;
+        background-image:
+            radial-gradient(ellipse 3.5% 22% at 30% 0%, rgb(120, 58, 28, 0.13) 0%, transparent 70%),
+            radial-gradient(ellipse 3% 30% at 58% 0%, rgb(140, 70, 34, 0.11) 0%, transparent 72%),
+            radial-gradient(ellipse 4% 18% at 82% 0%, rgb(120, 58, 28, 0.10) 0%, transparent 68%),
+            radial-gradient(ellipse 42% 36% at 24% 34%, rgb(198, 110, 52, 0.22) 0%, rgb(120, 58, 28, 0.20) 44%, transparent 72%),
+            radial-gradient(ellipse 36% 40% at 76% 66%, rgb(180, 98, 46, 0.20) 0%, rgb(105, 50, 24, 0.18) 46%, transparent 70%),
+            radial-gradient(ellipse 30% 26% at 60% 22%, rgb(200, 116, 58, 0.14) 0%, rgb(130, 62, 30, 0.12) 50%, transparent 66%),
+            radial-gradient(ellipse 55% 45% at 4% 96%, rgb(110, 52, 24, 0.20) 0%, transparent 62%),
+            radial-gradient(ellipse 45% 38% at 96% 8%, rgb(120, 58, 28, 0.14) 0%, transparent 60%);
+    }
+
+    :host([theme="rust"]) .bg-overlay {
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='rp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.15' numOctaves='3' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.52  0 0 0 0 0.28  0 0 0 0 0.13  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23rp)' opacity='0.12'/%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='rg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.5  0 0 0 0 0.27  0 0 0 0 0.12  0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23rg)' opacity='0.1'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        mix-blend-mode: multiply;
+    }
+
+    /* 65 · aizome — 褪せ藍 índigo textil desteñido y gastado
+       Base azul-gris apagado + trama tejida en índigo + parches
+       blanqueados (desgaste). */
+    :host([theme="aizome"]) .bg-base {
+        background-color: #D3D6DC;
+        background-image:
+            radial-gradient(ellipse 45% 40% at 25% 30%, rgb(244, 242, 236, 0.45) 0%, transparent 55%),
+            radial-gradient(ellipse 40% 35% at 75% 72%, rgb(244, 242, 236, 0.34) 0%, transparent 55%),
+            repeating-linear-gradient(-45deg,
+                transparent 0,
+                transparent 7px,
+                rgb(70, 92, 128, 0.10) 7px,
+                rgb(70, 92, 128, 0.10) 9px),
+            repeating-linear-gradient(45deg,
+                transparent 0,
+                transparent 7px,
+                rgb(70, 92, 128, 0.07) 7px,
+                rgb(70, 92, 128, 0.07) 9px);
+    }
+
+    /* 66 · craquele — 貫入 craquelado de esmalte envejecido
+       Red de celdas irregulares (malla jitter determinista y tileable:
+       craquelado primario grueso + secundario fino) con bisel de luz
+       para dar profundidad de esmalte. */
+    :host([theme="craquele"]) .bg-base {
+        background-color: #EAE0CF;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cg fill='none' stroke-linejoin='round' stroke-linecap='round'%3E%3Cg transform='translate(0.8,0.8)' stroke='rgb(250,244,230)' stroke-width='0.9' opacity='0.35'%3E%3Cpath d='M0,56.3 L39.3,39.5 L105.5,39.5 L139.8,40.1 L189.2,58.3 L237.8,41.6 L300,56.3 M0,84.5 L60.6,104.9 L98.5,96.4 L148.4,92.9 L189.8,110.3 L244.1,102.4 L300,84.5 M0,138.4 L47.6,146 L89.9,160.1 L147,157.9 L184.2,152.2 L243,152.4 L300,138.4 M0,191.8 L50.9,201.7 L102.2,214.5 L157.7,189.5 L197.8,196.2 L248.1,199 L300,191.8 M0,237.3 L51.5,251.5 L104.5,235.9 L137.2,255.9 L192.3,233.4 L262.2,265.5 L300,237.3 M37.4,0 L39.3,39.5 L60.6,104.9 L47.6,146 L50.9,201.7 L51.5,251.5 L37.4,300 M91.8,0 L105.5,39.5 L98.5,96.4 L89.9,160.1 L102.2,214.5 L104.5,235.9 L91.8,300 M144.2,0 L139.8,40.1 L148.4,92.9 L147,157.9 L157.7,189.5 L137.2,255.9 L144.2,300 M190.8,0 L189.2,58.3 L189.8,110.3 L184.2,152.2 L197.8,196.2 L192.3,233.4 L190.8,300 M238.3,0 L237.8,41.6 L244.1,102.4 L243,152.4 L248.1,199 L262.2,265.5 L238.3,300'/%3E%3C/g%3E%3Cpath d='M0,56.3 L39.3,39.5 L105.5,39.5 L139.8,40.1 L189.2,58.3 L237.8,41.6 L300,56.3 M0,84.5 L60.6,104.9 L98.5,96.4 L148.4,92.9 L189.8,110.3 L244.1,102.4 L300,84.5 M0,138.4 L47.6,146 L89.9,160.1 L147,157.9 L184.2,152.2 L243,152.4 L300,138.4 M0,191.8 L50.9,201.7 L102.2,214.5 L157.7,189.5 L197.8,196.2 L248.1,199 L300,191.8 M0,237.3 L51.5,251.5 L104.5,235.9 L137.2,255.9 L192.3,233.4 L262.2,265.5 L300,237.3 M37.4,0 L39.3,39.5 L60.6,104.9 L47.6,146 L50.9,201.7 L51.5,251.5 L37.4,300 M91.8,0 L105.5,39.5 L98.5,96.4 L89.9,160.1 L102.2,214.5 L104.5,235.9 L91.8,300 M144.2,0 L139.8,40.1 L148.4,92.9 L147,157.9 L157.7,189.5 L137.2,255.9 L144.2,300 M190.8,0 L189.2,58.3 L189.8,110.3 L184.2,152.2 L197.8,196.2 L192.3,233.4 L190.8,300 M238.3,0 L237.8,41.6 L244.1,102.4 L243,152.4 L248.1,199 L262.2,265.5 L238.3,300' stroke='rgb(108,86,66)' stroke-width='0.9' opacity='0.55'/%3E%3Cpath d='M0,31.9 L36.3,30.2 L73.8,30.4 L117.6,37.8 L146.9,38.5 L185.7,38.6 L222.7,37 L264.4,30.4 L300,31.9 M0,67.6 L40.6,74.8 L69.1,68.2 L112.1,76.7 L142.1,81.9 L184.3,79.2 L226.7,76.7 L261.7,80 L300,67.6 M0,111 L31.4,117.7 L73.7,112.6 L109.4,108.6 L144,119 L185.5,111.1 L222.6,111.8 L265.3,113.2 L300,111 M0,142.2 L43.6,154.5 L82.6,142.9 L114.1,146.4 L149.8,155.1 L184.9,149.6 L218.2,143.9 L264,147.1 L300,142.2 M0,192.6 L30.4,182.4 L71.6,183.5 L115.9,186.6 L147.1,185.5 L189.6,188.2 L217.6,186 L267.4,187.9 L300,192.6 M0,224.6 L44,226.3 L69.2,220.3 L114.5,226.4 L146.4,227.4 L192.4,225.2 L222,224 L270.4,221.7 L300,224.6 M0,255.8 L37.4,265.5 L70.5,254.6 L110.9,256.4 L155.6,261.1 L187.8,262.8 L220.9,259.5 L254.7,267.2 L300,255.8 M40.1,0 L36.3,30.2 L40.6,74.8 L31.4,117.7 L43.6,154.5 L30.4,182.4 L44,226.3 L37.4,265.5 L40.1,300 M72.7,0 L73.8,30.4 L69.1,68.2 L73.7,112.6 L82.6,142.9 L71.6,183.5 L69.2,220.3 L70.5,254.6 L72.7,300 M106,0 L117.6,37.8 L112.1,76.7 L109.4,108.6 L114.1,146.4 L115.9,186.6 L114.5,226.4 L110.9,256.4 L106,300 M145.4,0 L146.9,38.5 L142.1,81.9 L144,119 L149.8,155.1 L147.1,185.5 L146.4,227.4 L155.6,261.1 L145.4,300 M181,0 L185.7,38.6 L184.3,79.2 L185.5,111.1 L184.9,149.6 L189.6,188.2 L192.4,225.2 L187.8,262.8 L181,300 M221.1,0 L222.7,37 L226.7,76.7 L222.6,111.8 L218.2,143.9 L217.6,186 L222,224 L220.9,259.5 L221.1,300 M267.5,0 L264.4,30.4 L261.7,80 L265.3,113.2 L264,147.1 L267.4,187.9 L270.4,221.7 L254.7,267.2 L267.5,300' stroke='rgb(126,106,86)' stroke-width='0.5' opacity='0.28'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: 300px 300px;
     }
 
     /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
