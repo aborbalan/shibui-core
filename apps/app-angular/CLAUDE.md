@@ -51,14 +51,12 @@ src/
   shared/
     components/             → Header, Footer
     services/               → route-tracker.service.ts
-  core/
+  core/                     → Solo existen auth/ y services/ (el resto es planificado)
     auth/
       auth.service.ts       → Signal-based: isAuthenticated, login, logout (sessionStorage)
       auth.guard.ts         → CanActivateFn que redirige a /admin/login
     services/               → Singletons globales (BackgroundService…)
-    interceptors/           → HTTP interceptors
-    models/                 → Interfaces y tipos globales
-    constants/
+    # interceptors/ · models/ · constants/ → planificados, aún sin crear
   templates/
     layouts/
       main-layout/          → Layout raíz (contiene router-outlet)

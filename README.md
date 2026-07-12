@@ -31,6 +31,7 @@ Workspaces declarados en [`pnpm-workspace.yaml`](pnpm-workspace.yaml):
 | `app-angular` | `app-angular` | Angular | Showcase de consumo en Angular |
 | `app-svelte` | `app-svelte` | Svelte 5 + Vite | Showcase de consumo en Svelte |
 | `app-cv` | `app-cv` | Angular | CV / portfolio (deploy a `shibui-cv`) |
+| `app-opencells` | `app-opencells` | OpenCells | Showcase / laboratorio de consumo |
 | `app-tauri` | `@shibui/app-tauri` | Tauri 2 + React 19 + **Rust** | App de escritorio nativa |
 | `shibui-api` | `@shibui-ui/api` | NestJS | API backend |
 
@@ -39,9 +40,10 @@ Workspaces declarados en [`pnpm-workspace.yaml`](pnpm-workspace.yaml):
 | Workspace | Nombre paquete | Rol |
 |---|---|---|
 | `shibui-ui` | `@shibui-ui/ui` | **Librería UI** (Web Components + Lit) — fuente de verdad |
+| `sukashi` | `@shibui-ui/sukashi` | 透かし — motor generativo de patrones (demo en `sukashi.web.app`) |
+| `hanko` | `@shibui-ui/hanko` | 判子 — motor de verificación de confianza (*trust*) manifest-driven |
 | `consumer-tests` | `@shibui/consumer-tests` | Consumer contract tests (React 19 × Svelte 5 × Angular 21) |
 | `consumer-tests-angular` | `@shibui/consumer-tests-angular` | Fixture Angular 21 para los consumer tests |
-| `hanko` | `@shibui-ui/hanko` | 判子 — motor de verificación de confianza (*trust*) manifest-driven |
 
 ### `cloudflare/*`
 
@@ -94,11 +96,12 @@ pnpm dev:all          # React + Svelte + Angular en paralelo
 | `pnpm start:svelte` | Dev app Svelte |
 | `pnpm start:angular` | Dev app Angular |
 | `pnpm start:cv` | Dev app CV (Angular) |
+| `pnpm start:opencells` | Dev app OpenCells |
 | `pnpm start:api` | Dev server NestJS |
 | `pnpm start:tauri` | Dev app Tauri (Vite + ventana nativa) — requiere Rust |
 | `pnpm dev:all` | React + Svelte + Angular en paralelo (sin Tauri) |
-| `pnpm build:shibui` | Build de `@shibui/ui` |
-| `pnpm build:api` · `build:react` · `build:cv` | Builds individuales |
+| `pnpm build:shibui` | Build de `@shibui-ui/ui` |
+| `pnpm build:api` · `build:react` · `build:cv` · `build:opencells` | Builds individuales |
 | `pnpm type-check` | `tsc --noEmit` sobre shibui-ui |
 | `pnpm lint` | ESLint sobre shibui-ui |
 | `pnpm test:consumers` | Consumer contract tests (build + Playwright) |
@@ -151,14 +154,16 @@ Punto de entrada único: [`.github/workflows/orchestrator.yml`](.github/workflow
 
 | Cambio en | Pipeline |
 |---|---|
-| `packages/shibui-ui/**` | `ci-lib.yml` + `ci-apps.yml` |
+| `packages/shibui-ui/**` · `packages/hanko/**` · `packages/consumer-tests*/**` | `ci-lib.yml` + `ci-apps.yml` |
 | `apps/app-react\|angular\|svelte/**` | `ci-apps.yml` |
 | `apps/app-cv/**` | `ci-apps.yml` (deploy a `shibui-cv.web.app`) |
+| `apps/app-opencells/**` | `ci-apps.yml` |
 | `apps/shibui-api/**` | `ci-api.yml` |
 | `apps/app-tauri/**` | `ci-tauri.yml` (fmt + clippy + tests crate `core/`) |
+| `packages/sukashi/**` | `ci-sukashi.yml` (deploy demo a `sukashi.web.app`, solo `main`) |
 | `main` + UI cambiada | `release.yml` (tras `ci-lib`) |
 
-Deploy a **Firebase Hosting** (targets en [`.firebaserc`](.firebaserc)). Secreto necesario: `FIREBASE_TOKEN`.
+Deploy a **Firebase Hosting** (targets en [`.firebaserc`](.firebaserc)). Secretos necesarios: `FIREBASE_TOKEN` (deploys), `VITE_API_URL` (build React), `NPM_SECRET` (publish npm), `DISCORD_WEBHOOK` (notify).
 
 ---
 

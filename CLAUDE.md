@@ -21,9 +21,9 @@ de cuándo usar cada tool.
 Gestionado con **pnpm workspaces** (pnpm@9.15.0, Node >=20).
 
 Workspaces declarados en `pnpm-workspace.yaml`:
-- `apps/*` — app-react, app-angular, app-svelte, app-cv, app-tauri, shibui-api
-- `packages/*` — shibui-ui (`@shibui/ui`)
-- `cloudflare/*` — cf-cache-worker
+- `apps/*` — app-react, app-angular, app-svelte, app-cv, app-opencells, app-tauri, shibui-api (`@shibui-ui/api`)
+- `packages/*` — shibui-ui (`@shibui-ui/ui`), sukashi (`@shibui-ui/sukashi`), hanko (`@shibui-ui/hanko`), consumer-tests (`@shibui/consumer-tests`), consumer-tests-angular
+- `cloudflare/*` — cf-cache-worker (`@shibui-api/cf-cache-worker`)
 
 > `app-tauri` requiere **Rust toolchain estable** (`rustup install stable`) además de Node+pnpm. Es una app de escritorio Tauri 2 + React 19 con backend Rust (`crate core/`).
 
@@ -55,16 +55,25 @@ Cada app/package gestiona las suyas.
 | Script | Qué hace |
 |---|---|
 | `pnpm storybook` | Dev Storybook de shibui-ui |
+| `pnpm build-storybook` | Build estático de Storybook |
 | `pnpm start:react` | Dev app React |
 | `pnpm start:svelte` | Dev app Svelte |
 | `pnpm start:angular` | Dev app Angular |
 | `pnpm start:cv` | Dev app CV (Angular) |
+| `pnpm start:opencells` | Dev app OpenCells |
 | `pnpm start:api` | Dev server NestJS |
 | `pnpm start:tauri` | Dev app Tauri (Vite + ventana nativa) — requiere Rust |
 | `pnpm dev:all` | Las tres apps web frontend en paralelo (sin Tauri) |
-| `pnpm build:shibui` | Build de `@shibui/ui` |
+| `pnpm build:shibui` | Build de `@shibui-ui/ui` |
+| `pnpm build:api` | Build de `@shibui-ui/api` |
+| `pnpm build:react` | Build app React |
+| `pnpm build:cv` | Build app CV |
+| `pnpm build:opencells` | Build app OpenCells |
 | `pnpm type-check` | `tsc --noEmit` sobre shibui-ui |
 | `pnpm lint` | ESLint sobre shibui-ui |
+| `pnpm test:consumers` | Consumer contract tests (React × Svelte × Angular) |
+| `pnpm test:consumers:react` · `:svelte` · `:angular` | Consumer tests por framework |
+| `pnpm worker:cf:dev` · `worker:cf:deploy` | Dev/deploy del Cloudflare cache worker |
 
 ---
 
@@ -72,18 +81,24 @@ Cada app/package gestiona las suyas.
 
 **pre-commit:**
 1. `pnpm --filter @shibui-ui/ui type-check`
-2. `lint-staged` (en `packages/shibui-ui`)
-3. `stylelint --fix` sobre `src/**/*.css`
+2. Si cambió algún `packages/shibui-ui/src/components/**/*.component.ts`, regenera el
+   manifiesto y los datos de la API (`analyze` + `generate:components-api`) y añade
+   `apps/shibui-api/src/domain/components/data/components.generated.ts` al commit.
+3. `lint-staged` (en `packages/shibui-ui`)
+4. `stylelint --fix` sobre `src/**/*.css`
 
 **commit-msg:**  
 `commitlint` con config en `.config/commitlint.config.cjs`
+
+**pre-push:**  
+GitFlow guard — bloquea el push directo a `main` (solo se actualiza desde `develop` vía PR).
 
 ---
 
 ## GitFlow
 
 ```
-main → develop → feature/*
+feature/* · fix/* · chore/*  ──►  develop  ──PR──►  main
 ```
 
 - `feature/*` siempre se abre desde `develop` actualizado
@@ -148,16 +163,18 @@ Punto de entrada único: `.github/workflows/orchestrator.yml`
 
 | Cambio detectado en | Pipeline activado |
 |---|---|
-| `packages/shibui-ui/**` | `ci-lib.yml` + `ci-apps.yml` |
+| `packages/shibui-ui/**` · `packages/hanko/**` · `packages/consumer-tests*/**` | `ci-lib.yml` + `ci-apps.yml` |
 | `apps/app-react\|angular\|svelte/**` | `ci-apps.yml` |
 | `apps/app-cv/**` | `ci-apps.yml` (deploy a `shibui-cv.web.app`) |
+| `apps/app-opencells/**` | `ci-apps.yml` |
 | `apps/shibui-api/**` | `ci-api.yml` |
 | `apps/app-tauri/**` | `ci-tauri.yml` (fmt + clippy + tests sobre crate `core/`) |
+| `packages/sukashi/**` | `ci-sukashi.yml` (type-check + tests; deploy demo a `sukashi.web.app` solo en `main`) |
 | `main` + UI cambiada | `release.yml` (tras `ci-lib` exitoso) |
 
-Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_cv`, `force_api`.
+Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_cv`, `force_opencells`, `force_api`, `force_tauri`, `force_sukashi`, `force_hanko_issues`.
 
-Secretos necesarios en GitHub repo: `FIREBASE_TOKEN`
+Secretos necesarios en GitHub repo: `FIREBASE_TOKEN` (deploys Firebase), `VITE_API_URL` (build React en `ci-apps.yml`), `NPM_SECRET` (publish en `release.yml`), `DISCORD_WEBHOOK` (`notify.yml`).
 
 ### Consumer Contract Tests — ejecución selectiva
 

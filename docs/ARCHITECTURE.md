@@ -25,7 +25,7 @@ Los estilos son ficheros .css planos (no .css.ts) importados con el sufijo
 
 *.html.ts: El template (HTML-in-TS) usando la sintaxis html de Lit.
 
-*.css.ts: Estilos encapsulados mediante Shadow DOM.
+*.css: Estilos planos scoped al Shadow DOM (importados con `?inline` y aplicados vía `unsafeCSS()`).
 
 3. El Motor de Metadatos (JSDoc + CEM)
 Para que otros frameworks "entiendan" nuestros Web Components, extraemos metadatos automáticamente.

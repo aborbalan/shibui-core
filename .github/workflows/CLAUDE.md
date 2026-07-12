@@ -1,7 +1,9 @@
 # CI/CD Workflows — Shibui Ecosystem
 
-Punto de entrada único: `orchestrator.yml`. El resto de workflows son
-`workflow_call` (reusables) invocados por el orquestador.
+Punto de entrada único: `orchestrator.yml`. Los pipelines de CI son
+`workflow_call` (reusables) invocados por el orquestador. `notify.yml` es la
+excepción: se dispara por `workflow_run` cuando el orquestador termina, no es
+un `workflow_call`.
 
 ---
 
@@ -9,12 +11,14 @@ Punto de entrada único: `orchestrator.yml`. El resto de workflows son
 
 ```
 orchestrator.yml          ← único trigger externo (push / PR / dispatch)
-  ├── ci-lib.yml           ← UI library: quality + build + tests + deploy Storybook
-  ├── ci-apps.yml          ← Apps: build React/Angular/Svelte + deploy Firebase
-  ├── ci-api.yml           ← NestJS API: lint + build + test
+  ├── ci-lib.yml           ← UI library: quality + build + tests + deploy Storybook + hanko (test/seal/report)
+  ├── ci-apps.yml          ← Apps: build React/Angular/Svelte/CV/OpenCells + deploy Firebase
+  ├── ci-api.yml           ← NestJS API: lint + build + test + deploy docs (Firebase Hosting)
   ├── ci-tauri.yml         ← Rust core: fmt + clippy + cargo test
   ├── ci-sukashi.yml       ← Sukashi: type-check + tests + deploy demo (sukashi.web.app, solo main)
   └── release.yml          ← NPM publish (solo main + ci-lib exitoso)
+
+notify.yml                 ← workflow_run: notifica a Discord al completar el orquestador
 ```
 
 ---
@@ -28,12 +32,13 @@ Los outputs del job `detect-changes` son la API pública hacia los pipelines.
 
 | Output | Rutas vigiladas | Uso |
 |---|---|---|
-| `ui` | `packages/shibui-ui/**` · `packages/consumer-tests/**` · `packages/consumer-tests-angular/**` | Activa `ci-lib.yml` completo |
-| `ui_behavior` | `packages/shibui-ui/src/**/*.ts` · tokens `_katachi.css` · `_semantic.css` · `packages/consumer-tests/**` | Activa solo los Consumer Contract Tests dentro de ci-lib |
+| `ui` | `packages/shibui-ui/**` · `packages/hanko/**` · `packages/consumer-tests/**` · `packages/consumer-tests-angular/**` | Activa `ci-lib.yml` completo |
+| `ui_behavior` | `packages/shibui-ui/src/**/*.ts` · tokens `_katachi.css` · `_semantic.css` · `packages/consumer-tests/**` · `packages/consumer-tests-angular/**` | Activa solo los Consumer Contract Tests dentro de ci-lib |
 | `react` | `apps/app-react/**` | Activa ci-apps para React |
 | `angular` | `apps/app-angular/**` | Activa ci-apps para Angular |
 | `svelte` | `apps/app-svelte/**` | Activa ci-apps para Svelte |
 | `cv` | `apps/app-cv/**` | Activa ci-apps para CV (deploy a `shibui-cv`) |
+| `opencells` | `apps/app-opencells/**` | Activa ci-apps para OpenCells |
 | `api` | `apps/shibui-api/**` | Activa ci-api |
 | `tauri` | `apps/app-tauri/**` | Activa ci-tauri |
 | `sukashi` | `packages/sukashi/**` | Activa ci-sukashi (type-check + tests; deploy demo solo en main) |
@@ -45,11 +50,14 @@ Cada output tiene lógica OR con su flag `force_*` de `workflow_dispatch`.
 ## ci-lib.yml: jobs y condiciones
 
 ```
-quality          → siempre (type-check + lint)
-build-ui         → siempre (needs: quality)
-test-stories     → siempre (needs: quality, paralelo con build-ui)
-test-consumers   → CONDICIONAL (needs: build-ui) ← ver abajo
-deploy-storybook → solo develop/main (needs: build-ui)
+quality            → siempre (type-check + lint)
+build-ui           → siempre (needs: quality)
+test-stories       → siempre (needs: quality, paralelo con build-ui)
+test-consumers     → CONDICIONAL (needs: build-ui) ← ver abajo
+deploy-storybook   → solo develop/main (needs: build-ui)
+hanko-test         → tests del harness de confianza (packages/hanko)
+hanko-seal         → genera/sella el Trust Report (needs: hanko-test)
+deploy-hanko-report→ publica el Trust Report (needs: hanko-seal)
 ```
 
 ### Consumer Contract Tests — doble filtro
@@ -87,9 +95,11 @@ if: |
 | `force_angular` | Activa ci-apps para Angular |
 | `force_svelte` | Activa ci-apps para Svelte |
 | `force_cv` | Activa ci-apps para CV |
+| `force_opencells` | Activa ci-apps para OpenCells |
 | `force_api` | Activa ci-api |
 | `force_tauri` | Activa ci-tauri |
 | `force_sukashi` | Activa ci-sukashi |
+| `force_hanko_issues` | Activa la emisión de issues del harness hanko en ci-lib |
 
 ---
 
@@ -97,4 +107,7 @@ if: |
 
 | Secreto | Usado en |
 |---|---|
-| `FIREBASE_TOKEN` | `ci-apps.yml` (deploy) · `ci-lib.yml` (deploy Storybook) · `ci-sukashi.yml` (deploy demo) |
+| `FIREBASE_TOKEN` | `ci-apps.yml` (deploy) · `ci-lib.yml` (deploy Storybook + hanko report) · `ci-api.yml` (deploy docs) · `ci-sukashi.yml` (deploy demo) |
+| `VITE_API_URL` | `ci-apps.yml` (build React) |
+| `NPM_SECRET` | `release.yml` (`NODE_AUTH_TOKEN` para publish) |
+| `DISCORD_WEBHOOK` | `notify.yml` |

@@ -31,7 +31,7 @@ contrato duplicado es frágil.
 
 | App | Runner hoy | Mock HTTP disponible | Tests de capa de datos hoy |
 |---|---|---|---|
-| **Angular** | `ng test` (Jasmine; `@types/jasmine`) — y `vitest` ya en devDeps | `HttpClientTestingModule` + `HttpTestingController` (nativo Angular) | ❌ (hay `.spec.ts` de componentes UI, no de `data/services`) |
+| **Angular** | `ng test` con **Vitest** (builder `@angular/build:unit-test`; `@types/jasmine` sigue en devDeps por legacy) | `HttpClientTestingModule` + `HttpTestingController` (nativo Angular) | ❌ (hay `.spec.ts` de componentes UI, no de `data/services`) |
 | **React** | `vitest` | **MSW** (`msw` ya instalado, handlers en `src/test/mocks/`) | ✅ **ya existe** — `data/api/domain/about/api/about.api.test.ts` y `…/hooks/useAbout.test.ts` |
 | **Svelte** | — (sin runner) | — | ❌ (no hay tooling de test aún) |
 

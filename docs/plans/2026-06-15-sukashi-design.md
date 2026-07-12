@@ -1,6 +1,13 @@
 # sukashi — biblioteca de patrones decorativos por capas (diseño)
 
-> Fecha: 2026-06-15 · Paquete: `@shibui-ui/sukashi` · Estado: diseño aprobado
+> Fecha: 2026-06-15 · Paquete: `@shibui-ui/sukashi` · Estado: **implementado** (documento histórico de diseño)
+>
+> ⚠️ Este documento es el **plan de diseño original** y se conserva como registro histórico.
+> El paquete ya está implementado y desplegado (F0→F8 completadas). Para el estado y la
+> estructura reales, ver [`packages/sukashi/docs/STATUS.md`](../../packages/sukashi/docs/STATUS.md)
+> y [`packages/sukashi/docs/phases/README.md`](../../packages/sukashi/docs/phases/README.md).
+> La estructura final añadió los módulos `entropy/`, `warifu/` y `warp/` (no previstos aquí) y
+> no incluye la carpeta `stories/` que planteaba este diseño.
 
 ## Resumen
 
