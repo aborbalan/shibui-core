@@ -35,7 +35,7 @@ main/
 componente en `AreaView.tsx` (las construidas reutilizan `DashboardPage` y
 `FilesPage`; el resto caen al `SectionPlaceholder`).
 
-> **Iconos**: usar solo nombres presentes en el registry de `@shibui/ui`
+> **Iconos**: usar solo nombres presentes en el registry de `@shibui-ui/ui`
 > (`folder`, `shield`, `chart-line`, `desktop`, `menu`, `home`, `plus`…).
 > `code`/`folder-open`/`gear-six` NO existen en el registry y no renderizan.
 

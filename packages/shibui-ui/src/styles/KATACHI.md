@@ -247,7 +247,7 @@ llevan el bloque KATACHI documentado:
 ### ✅ Fase 0 — Identidades Katachi confirmadas
 
 Los 6 katachis definitivos (shizen, celadon, sabi, kintsugi, wabi, terminal) y sus características:
-- `celadon` redefinido de dark jade a **light pale jade**
+- `celadon` es **dark jade** (`--katachi-family: dark`); tras una iteración intermedia como light pale jade, volvió a contexto oscuro (ver `celadon-katachi.md` / `celadon-audit.md`)
 - `wabi` redefinido de dark-glass a **kuroi · pure darkness (no effects)**
 - `terminal` con CRT phosphor verde correcto
 - Efectos signature documentados por katachi

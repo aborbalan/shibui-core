@@ -1,4 +1,4 @@
-# Compatibilidad Mobile — Componentes `@shibui/ui`
+# Compatibilidad Mobile — Componentes `@shibui-ui/ui`
 
 > Última revisión: 2026-05-12  
 > Versión de referencia: rama `develop`

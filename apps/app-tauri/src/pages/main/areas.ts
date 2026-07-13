@@ -1,7 +1,7 @@
 /**
  * Catálogo de áreas que el Hub puede abrir como pestañas.
  *
- * Los iconos usan SOLO nombres presentes en el registry de @shibui/ui
+ * Los iconos usan SOLO nombres presentes en el registry de @shibui-ui/ui
  * (folder, shield, chart-line, desktop, menu…). No usar code/folder-open/
  * gear-six: no existen en el registry y no renderizan.
  */
