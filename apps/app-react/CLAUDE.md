@@ -66,7 +66,9 @@ Dos mundos separados en `AppShell.tsx`, todos los pages son lazy-loaded:
 |---|---|---|
 | `/`, `/home` | Público | `PublicLayout` |
 | `/about` | Público | `PublicLayout` |
+| `/philosophy` | Público | `PublicLayout` |
 | `/componentes` | Público | `PublicLayout` |
+| `/componentes/:slug` | Público | `PublicLayout` |
 | `/tokens` | Público | `PublicLayout` |
 | `/admin/login` | Público | Sin layout |
 | `/admin/kitchen-sink` | Protegido | `AdminLayout` + `AuthGuard` |
@@ -135,7 +137,7 @@ queryKeys.auth.me
 
 ```typescript
 // main.tsx — registra todos los custom elements globalmente
-import '@shibui/ui';
+import '@shibui-ui/ui';
 ```
 
 ```typescript

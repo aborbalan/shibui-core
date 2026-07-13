@@ -9,14 +9,14 @@ Un **proyecto guiado para aprender Open Cells** (framework SPA de BBVA: `startAp
 routing + page controllers + **channels** pub/sub RxJS), construido como producto real:
 un **cockpit** que agrega la salud del monorepo shibui leyendo el `trust-report.json` de
 **hanko** (`https://hanko-report.web.app/trust-report.json`). Es consumidor **nativo** de
-`@shibui/ui` (Lit, sin wrapper).
+`@shibui-ui/ui` (Lit, sin wrapper).
 
 ## Modo de trabajo — NO romperlo
 
 - **Claude = tutor por hitos.** En cada hito: explico el concepto → propongo el ejercicio
   con criterios de aceptación → **el usuario escribe el código** → reviso y corrijo.
 - **Claude NO escribe el código Open Cells de la app.** El usuario escribe `startApp`,
-  rutas, page controllers, channels y los widgets con `@shibui/ui`. Claude solo hace
+  rutas, page controllers, channels y los widgets con `@shibui-ui/ui`. Claude solo hace
   **plomería** (workspace, build, CI, deploy, fixtures, tipos/tooling) y **review**.
 - **Learning in public:** cada hito cierra con un **post de LinkedIn** que redacta el
   **usuario** (Claude lo revisa) en `docs/linkedin/hito-N.md`.
