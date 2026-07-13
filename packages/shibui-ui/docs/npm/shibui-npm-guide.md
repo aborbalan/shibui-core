@@ -1,8 +1,8 @@
-# 🎌 Guía de Despliegue NPM — `@shibui/ui`
+# 🎌 Guía de Despliegue NPM — `@shibui-ui/ui`
 
 > **Shibui (渋い)** — Elegancia discreta. Belleza funcional que no se impone.
 
-Este documento recoge la configuración técnica, la identidad de marca y el flujo completo de publicación para la librería de componentes `@shibui/ui`.
+Este documento recoge la configuración técnica, la identidad de marca y el flujo completo de publicación para la librería de componentes `@shibui-ui/ui`.
 
 ---
 
@@ -10,7 +10,7 @@ Este documento recoge la configuración técnica, la identidad de marca y el flu
 
 | Campo | Valor |
 |---|---|
-| Scope NPM | `@shibui/ui` |
+| Scope NPM | `@shibui-ui/ui` |
 | Org sugerida | `shibui-studio` o `shibui-lab` |
 | Filosofía | Ligero, agnóstico, sin complejidad innecesaria |
 
@@ -26,16 +26,16 @@ Puntos de entrada para que el consumidor encuentre los componentes y sus tipos c
 
 ```json
 {
-  "name": "@shibui/ui",
-  "version": "0.0.1",
+  "name": "@shibui-ui/ui",
+  "version": "1.0.0",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./dist/index.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "types": "./dist/index.ts"
+      "types": "./dist/index.d.ts"
     }
   },
   "files": ["dist"],
@@ -93,7 +93,7 @@ Antes de publicar, valida la librería instalándola en un proyecto real sin nec
 
 4. Importar los componentes normalmente:
    ```ts
-   import '@shibui/ui/lib-data-table';
+   import '@shibui-ui/ui/lib-data-table';
    ```
 
 ---
@@ -101,7 +101,7 @@ Antes de publicar, valida la librería instalándola en un proyecto real sin nec
 ## 5. Checklist de Publicación
 
 - [ ] `npm run build` ejecutado sin errores
-- [ ] Tipos generados en `/dist/index.ts`
+- [ ] Tipos generados en `/dist/index.d.ts`
 - [ ] Probado localmente con `.tgz`
 - [ ] `"private": true` eliminado del `package.json`
 - [ ] Versión actualizada en `package.json`

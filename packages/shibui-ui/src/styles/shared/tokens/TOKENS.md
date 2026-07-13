@@ -1,4 +1,4 @@
-# Design Tokens — `@shibui/ui`
+# Design Tokens — `@shibui-ui/ui`
 
 Referencia completa de todos los tokens del sistema de diseño.  
 Todos están definidos como CSS custom properties en `:root` (no `:host, :root`) y se importan automáticamente cuando se usa `tokens.css?inline`.

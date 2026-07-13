@@ -29,7 +29,7 @@ Reglas a aseverar (cada una = un `test`/`it`):
 |---|---|---|
 | C1 | `size` canónico | `options ⊆ ['xs','sm','md','lg','xl']` (+ `'full'` si overlay, `'2xl'` si avatar/display) |
 | C2 | `tone` canónico | `options ⊆ ['default','accent','info','success','warning','error','muted']` |
-| C2b | `surface` canónico | `options ⊆ ['default','inverse','on-dark']` |
+| C2b | `surface` canónico | `options ⊆ ['default','light','dark','inverse']` (`on-dark` fue renombrado a `dark`) |
 | C3 | `tint` canónico | `options ⊆ ['neutral','warm','cool','inverse']` |
 | C4 | `variant` = tratamiento | `options ⊆ ['solid','outlined','ghost','subtle']` **salvo** componentes con variant propio documentado (allowlist) |
 | C5 | sin `danger` | ningún `options` contiene `'danger'` (debe ser `'error'`) |
@@ -50,9 +50,10 @@ Patrón de implementación:
 import { COMPONENTS_GENERATED } from '../../../apps/shibui-api/.../components.generated';
 const LIB_SIZE = ['xs','sm','md','lg','xl'];
 const OVERLAY = [...LIB_SIZE,'full'];
-const LIB_TONE = ['default','accent','info','success','warning','error'];
-// allowlist de variants no-canónicos legítimos (tabs, gadget-frame…)
-const VARIANT_ALLOW = new Set(['lib-tabs','lib-gadget-frame', /* … */]);
+const LIB_TONE = ['default','accent','info','success','warning','error','muted'];
+// allowlist de variants no-canónicos legítimos (p.ej. tabs).
+// OJO: lib-gadget-frame NO va aquí — su eje estético es `theme` ('default'|'glass'), no `variant`.
+const VARIANT_ALLOW = new Set(['lib-tabs', /* … */]);
 
 describe('manifest cohesion', () => {
   for (const c of COMPONENTS_GENERATED) {

@@ -34,7 +34,7 @@ ejecutado; algunos destinos tentativos cambiaron al ejecutar (ver notas).
 - `LibSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'` · default `md`. Subconjunto contiguo permitido; nunca nombres nuevos.
 - `LibOverlaySize = LibSize | 'full'` (dialog, drawer, modal).
 - `LibAvatarSize = LibSize | '2xl'` · `LibDisplaySize = LibSize | '2xl'` (extensiones documentadas).
-- `LibTone = 'default' | 'accent' | 'info' | 'success' | 'warning' | 'error'` · default `default`.
+- `LibTone = LibSemanticTone | 'muted'` = `'default' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'muted'` · default `default`.
 - `LibVariant = 'solid' | 'outlined' | 'ghost' | 'subtle'` · default `solid` (tratamiento visual).
   Extensiones documentadas vía `VARIANT_EXTRA` (lista cerrada): card→`featured`, modal→`editorial`,
   close-button→`filled-round`.

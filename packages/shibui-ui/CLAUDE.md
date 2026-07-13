@@ -1,4 +1,4 @@
-# Shibui UI (`@shibui/ui`) — Librería de componentes Lit
+# Shibui UI (`@shibui-ui/ui`) — Librería de componentes Lit
 
 ## Visión general
 
@@ -76,7 +76,7 @@ packages/shibui-ui/
 
 ```bash
 pnpm storybook       # Arranca Storybook
-pnpm build:shibui    # Build de @shibui/ui
+pnpm build:shibui    # Build de @shibui-ui/ui
 pnpm type-check      # tsc --noEmit
 pnpm lint            # ESLint
 ```
@@ -188,7 +188,7 @@ Seis identidades visuales selladas. Los efectos se activan **automáticamente** 
 | ID | Familia | Concepto | Efecto signature |
 |---|---|---|---|
 | `shizen` | light | Natural, base, zero-point | ninguno |
-| `celadon` | light | Jade pálido, frío (≠ dark — es la alternativa cool a shizen) | glaze cerámico sutil |
+| `celadon` | dark | Jade hondo, cerámica oscura, alternativa cool oscura | glaze cerámico sutil |
 | `sabi` | light | Papel envejecido, handcraft | brutal offset shadow |
 | `kintsugi` | dark | Reparado con oro (único dark-first) | seam dorada animada + anillo |
 | `wabi` | dark | Kuroi · oscuridad pura, el anti-kintsugi | ninguno (silencio) |

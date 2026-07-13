@@ -214,8 +214,8 @@ export const ContextCodeBlock: Story = {
 const _katachi = createKatachiStories<object>(() => html`
   <div style="display:flex;flex-direction:column;gap:var(--lib-space-sm);max-width:400px;">
     <div style="display:flex;align-items:center;gap:var(--lib-space-sm);padding:var(--lib-space-sm) var(--lib-space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);font-family:var(--lib-font-mono);font-size:12px;color:var(--text-primary);">
-      <span style="flex:1;">npm install @shibui/ui</span>
-      <lib-copy-button value="npm install @shibui/ui" icon-only size="sm"></lib-copy-button>
+      <span style="flex:1;">npm install @shibui-ui/ui</span>
+      <lib-copy-button value="npm install @shibui-ui/ui" icon-only size="sm"></lib-copy-button>
     </div>
     <div style="display:flex;gap:var(--lib-space-sm);flex-wrap:wrap;align-items:center;">
       <lib-copy-button variant="ghost"    value="ghost"    label="Ghost"    size="sm"></lib-copy-button>

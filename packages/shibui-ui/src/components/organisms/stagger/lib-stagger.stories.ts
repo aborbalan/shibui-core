@@ -343,7 +343,7 @@ const _katachi = createKatachiStories<object>(() => html`
     <div>
       <p style="font-family:var(--lib-font-mono);font-size:9px;color:var(--text-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--lib-space-xs);">direction fade · delay 150</p>
       <lib-stagger-container delay="150" direction="fade">
-        ${['Design System · @shibui/ui', 'Lit · Web Components · TypeScript', 'Katachi · 6 aesthetic contexts'].map(txt => html`
+        ${['Design System · @shibui-ui/ui', 'Lit · Web Components · TypeScript', 'Katachi · 6 aesthetic contexts'].map(txt => html`
           <div style="height:48px;margin-bottom:var(--lib-space-xs);display:flex;align-items:center;padding:0 var(--lib-space-md);background:var(--bg-surface);border:1px solid var(--border-subtle);font-family:var(--lib-font-mono);font-size:var(--text-xs);color:var(--text-secondary);">${txt}</div>
         `)}
       </lib-stagger-container>
