@@ -180,9 +180,9 @@ export const education: CvEntry[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────
-// EXPERIENCIA — orden cronológico inverso. Se destaca lo escultórico.
+// EXPERIENCIA EN ESCULTURA — orden cronológico inverso.
 // ─────────────────────────────────────────────────────────────
-export const experience: CvEntry[] = [
+export const sculptureExperience: CvEntry[] = [
   {
     role: 'Tallista — «Pasión por la Escultura»',
     place: 'Anglada',
@@ -195,6 +195,12 @@ export const experience: CvEntry[] = [
     period: 'may 2024',
     highlight: true,
   },
+];
+
+// ─────────────────────────────────────────────────────────────
+// OTRA EXPERIENCIA — fuera de la escultura, orden cronológico inverso.
+// ─────────────────────────────────────────────────────────────
+export const otherExperience: CvEntry[] = [
   {
     role: 'Agente comercial (seguros)',
     place: 'Santa Lucía',
@@ -209,6 +215,11 @@ export const experience: CvEntry[] = [
     role: 'Dependienta',
     place: 'Pastelería Tolosana',
     period: 'nov 2023 – ago 2024',
+  },
+  {
+    role: 'Dependienta de panadería',
+    place: 'Eroski',
+    period: 'feb – may',
   },
   {
     role: 'Dependienta de panadería',
@@ -230,3 +241,8 @@ export const languages: LanguageItem[] = [
   { name: 'Inglés', level: 'Medio' },
   { name: 'Francés', level: 'Básico' },
 ];
+
+// ─────────────────────────────────────────────────────────────
+// OTROS — datos varios (permiso de conducir, etc.)
+// ─────────────────────────────────────────────────────────────
+export const extras: string[] = ['Carnet de conducir'];

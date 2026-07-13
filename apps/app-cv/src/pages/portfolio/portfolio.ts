@@ -5,8 +5,10 @@ import {
   artist,
   artworks,
   education,
-  experience,
+  extras,
   languages,
+  otherExperience,
+  sculptureExperience,
   software,
 } from '@data/portfolio';
 
@@ -93,9 +95,9 @@ import {
             </div>
 
             <div class="cv__col">
-              <h3 class="cv__label">Experiencia</h3>
+              <h3 class="cv__label">Experiencia en escultura</h3>
               <ul class="cv__list">
-                @for (e of experience; track e.role) {
+                @for (e of sculptureExperience; track e.role) {
                   <li class="cv__item" [class.cv__item--hl]="e.highlight">
                     <div class="cv__head">
                       <span class="cv__role">{{ e.role }}</span>
@@ -105,6 +107,32 @@ import {
                   </li>
                 }
               </ul>
+            </div>
+          </div>
+
+          <div class="cv__grid cv__grid--tight">
+            <div class="cv__col">
+              <h3 class="cv__label">Otra experiencia</h3>
+              <ul class="cv__list">
+                @for (e of otherExperience; track e.role + e.period) {
+                  <li class="cv__item">
+                    <div class="cv__head">
+                      <span class="cv__role">{{ e.role }}</span>
+                      <span class="cv__period">{{ e.period }}</span>
+                    </div>
+                    <span class="cv__place">{{ e.place }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
+
+            <div class="cv__col">
+              <h3 class="cv__label">Otros</h3>
+              <div class="cv__chips">
+                @for (x of extras; track x) {
+                  <lib-chip color="default">{{ x }}</lib-chip>
+                }
+              </div>
             </div>
           </div>
 
@@ -346,9 +374,11 @@ export class PortfolioPage {
   protected readonly artist = artist;
   protected readonly artworks = artworks;
   protected readonly education = education;
-  protected readonly experience = experience;
+  protected readonly sculptureExperience = sculptureExperience;
+  protected readonly otherExperience = otherExperience;
   protected readonly software = software;
   protected readonly languages = languages;
+  protected readonly extras = extras;
   protected readonly year = new Date().getFullYear();
 
   constructor() {
