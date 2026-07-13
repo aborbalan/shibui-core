@@ -245,4 +245,4 @@ export const languages: LanguageItem[] = [
 // ─────────────────────────────────────────────────────────────
 // OTROS — datos varios (permiso de conducir, etc.)
 // ─────────────────────────────────────────────────────────────
-export const extras: string[] = ['Carnet de conducir de coche'];
+export const extras: string[] = ['Carnet de conducir B'];
