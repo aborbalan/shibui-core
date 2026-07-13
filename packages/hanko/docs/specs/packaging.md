@@ -15,7 +15,7 @@ El principio *"el `core` NUNCA importa de `@shibui-ui/ui`"* deja de ser aspiraci
 
 - Recorre **todos** los `.ts` de `src/` (incluidos tests).
 - Extrae los especificadores de `import` / `export … from` / `import()` / import lateral.
-- **Falla** si alguno casa `@shibui-ui/ui` · `@shibui-ui/ui` · `../…/shibui-ui/…`.
+- **Falla** si alguno casa `@shibui-ui/ui` · legacy `@shibui/ui` · `../…/shibui-ui/…`.
 - Se **autovalida**: un segundo caso comprueba que el patrón sí detecta un import prohibido (un regex roto
   no pasaría en silencio).
 
