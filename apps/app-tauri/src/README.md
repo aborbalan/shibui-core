@@ -10,7 +10,7 @@ Todo el código del frontend (la parte que se ve y se ejecuta en la ventana). El
 
 ```
 src/
-├── main.tsx            ← arranque: monta <App> en el DOM e importa @shibui/ui
+├── main.tsx            ← arranque: monta <App> en el DOM e importa @shibui-ui/ui
 ├── App.tsx             ← raíz: Router + AuthProvider + LibCanvas (tema) + WindowInitializer
 ├── App.css             ← reset global + estilos de react-grid-layout
 │
@@ -28,7 +28,7 @@ Cada subcarpeta importante tiene su propio `README.md` con el detalle. Este fich
 
 ## El flujo de arranque, en orden
 
-1. **`main.tsx`** monta React e importa `@shibui/ui` (registra todos los web components `<lib-*>`).
+1. **`main.tsx`** monta React e importa `@shibui-ui/ui` (registra todos los web components `<lib-*>`).
 2. **`App.tsx`** envuelve la app con:
    - `MemoryRouter` (el enrutado vive en memoria, no en la URL — es una app de escritorio).
    - `AuthProvider` (estado de sesión).

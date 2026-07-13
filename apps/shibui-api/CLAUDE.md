@@ -37,6 +37,7 @@ src/
     categories/
     components/
     examples/
+    tokens/
     users/
   scripts/
     generate-openapi.ts     → Genera openapi.json + index.html en docs-dist/
