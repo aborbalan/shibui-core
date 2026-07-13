@@ -3,7 +3,7 @@
 > Patrones decorativos por capas (*sukashi-e* / moiré) para shibui-ui.
 > Genera capas con texturas tradicionales que, al superponerse, revelan un motivo emergente.
 
-**Estado:** F0 → F6 hechas — camino crítico completo (solo quedan los opcionales F4½ y F7). Fase actual en [`STATUS.md`](STATUS.md).
+**Estado:** **F0 → F8 ✅** — camino crítico (F0→F6) + opcionales F4½ y F7 + extensión F8 (warifu) completados. Fase actual en [`STATUS.md`](STATUS.md).
 
 > 🔄 **¿Retomando en una sesión nueva?** Empieza por
 > [`docs/phases/README.md`](phases/README.md): tiene el estado actual, el orden de fases y el próximo paso accionable.

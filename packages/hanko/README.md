@@ -3,9 +3,10 @@
 > Motor de verificación de **confianza** (*trust*) **manifest-driven** para Web Components.
 > El sello que estampa cada componente que cumple su contrato declarado.
 
-**Estado:** Hito 1 cerrado (F0·F1·F2 en `develop` + `main`; sello CI 102/102). Hito 2 a fondo —
-**F3·F4·F5 en curso** (motores puros hechos); el harness de runtime (incr. 2) está escrito, pendiente de
-validar en navegador.
+**Estado (2026-06-22):** **F0–F7 ✅ TERMINADAS.** Hito 1 (F0·F1·F2), Hito 2 (F3·F4·F5, capas de
+verificación), Hito 3 (F6 Trust Report + gate) y F7 (desacople + empaquetado publicable) cerrados.
+El harness de runtime está validado en navegador; el paquete es publicable (`private` retirado) y
+solo queda ejecutar manualmente el primer `npm publish`. Ver `docs/phases/README.md` para el detalle.
 Construido **desde 0** (no hereda la infra de test de `@shibui-ui/ui`, que es a medida).
 
 > 🔄 **¿Retomando en una sesión nueva de Claude?** Empieza por
@@ -33,7 +34,7 @@ verifica que la **implementación** lo honra (grande, ilegible).
 1. **Genérico de nacimiento.** El `core` **nunca** importa de `@shibui-ui/ui`. Recibe `hanko.config.ts` + el manifest.
 2. **CEM es el único idioma del core.** Todo lo ajeno se normaliza en el borde de ingestión (ver caso especial).
 3. **Generalizar desde el uso, no especular.** No se añade una opción al core hasta que un consumer real la necesita.
-4. **shibui-ui = consumer #1** (≈99 componentes). Uso local primero; publicación a npm diferida.
+4. **shibui-ui = consumer #1** (≈99 componentes). Uso local primero; el paquete ya es publicable (F7, `private` retirado) — solo queda ejecutar el primer `npm publish` manualmente.
 
 ## Estrategia de validación
 
