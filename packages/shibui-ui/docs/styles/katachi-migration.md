@@ -72,7 +72,7 @@ Para autocompletado y type-safety en TS:
 ```
 
 ```ts
-import type { KatachiId } from '@shibui/ui';
+import type { KatachiId } from '@shibui-ui/ui';
 
 const current: KatachiId = 'kintsugi'; // ← autocompleta los 6 ids
 ```
@@ -184,8 +184,8 @@ Ningún cambio adicional. El `<lib-canvas>` está tipado en `custom-elements.d.t
 del paquete; tu IDE autocompleta `katachi`, `display`, `pad`.
 
 ```tsx
-import '@shibui/ui';
-import type { KatachiId } from '@shibui/ui';
+import '@shibui-ui/ui';
+import type { KatachiId } from '@shibui-ui/ui';
 
 function App() {
   return (

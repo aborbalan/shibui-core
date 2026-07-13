@@ -9,40 +9,23 @@ El directorio `/core` contiene la columna vertebral de la aplicación. Aquí res
 
 ---
 
-## 📂 Estructura de Directorios
+## 📂 Estructura de Directorios (real)
 
-### 1. `/api`
-Configuración de clientes HTTP (Axios, Fetch).
-- **Interceptores:** Manejo de tokens JWT, refresco de sesión y gestión global de errores (401, 403, 500).
-- **Configuración:** Base URL y timeouts.
+> La capa de datos (cliente HTTP, dominios, query keys) **no vive en `/core`** sino en
+> `src/data/` (ver `CLAUDE.md` de app-react). `/core` solo contiene infraestructura de
+> app. No existe alias `@core`: se importa por ruta relativa.
 
-### 2. `/config`
-Variables de entorno y configuración de librerías externas.
-- Validación de `process.env`.
-- Configuración de Firebase, Sentry, i18n, etc.
+### 1. `/auth`
+Contexto e infraestructura de autenticación.
+- `AuthContext`, `AuthProvider`, `AuthGuard`.
 
-### 3. `/constants`
-Valores inmutables utilizados en todo el proyecto.
-- `routes.ts`: Diccionario de rutas de la aplicación.
-- `api-endpoints.ts`: Endpoints de los microservicios.
-- `storage-keys.ts`: Nombres de las llaves en LocalStorage.
+### 2. `/hooks`
+Hooks transversales que no pertenecen a un dominio.
+- `useAuth`, `useAdminShortcut`.
 
-### 4. `/guards`
-Lógica de protección de rutas (Middleware).
-- Verificación de autenticación.
-- Control de acceso por roles (RBAC).
-
-### 5. `/types`
-Definiciones de TypeScript globales.
-- Interfaces de respuestas de API comunes.
-- Modelos de datos base (Entities).
-- Tipos de utilidad generales.
-
-### 6. `/utils`
-Funciones puras de ayuda que no dependen de React.
-- Formateadores de moneda y fechas.
-- Validadores de esquemas.
-- Manipulación de arrays/objetos complejos.
+### 3. `/data/constants`
+Valores estáticos y datos JSON.
+- `colors.ts` y otros datos estáticos.
 
 ---
 

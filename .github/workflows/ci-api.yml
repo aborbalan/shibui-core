@@ -114,8 +114,9 @@ jobs:
         run: pnpm exec firebase deploy --only hosting:shibui-api --non-interactive --project lib-ui-b67c5
 
   # ─────────────────────────────────────────
-  # JOB 4 — Deploy NestJS a Cloud Run
-  # Solo en main/develop. OIDC sin secrets que rotar.
+  # JOB 4 — Deploy Cloudflare Cache Worker (DESHABILITADO)
+  # Bloque en pausa: despliega cloudflare/worker con CF_API_TOKEN/CF_ACCOUNT_ID.
+  # Reactivar descomentando cuando el worker entre en producción.
   # ─────────────────────────────────────────
   #deploy-worker:
   #  name: Deploy Cloudflare Cache Worker

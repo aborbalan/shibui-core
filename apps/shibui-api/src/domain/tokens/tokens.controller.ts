@@ -14,7 +14,7 @@ export class TokensController {
   constructor(private readonly tokensService: TokensService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Get all design tokens from @shibui/ui' })
+  @ApiOperation({ summary: 'Get all design tokens from @shibui-ui/ui' })
   @ApiResponse({ status: 200, description: 'Full list of design tokens' })
   findAll() {
     return this.tokensService.findAll();

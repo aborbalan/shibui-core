@@ -112,7 +112,7 @@ export function logout(): void { /* limpia sessionStorage */ }
 ```typescript
 // App.svelte — import dinámico en onMount para evitar problemas con SSR/Vite
 onMount(async () => {
-  await import('@shibui/ui');
+  await import('@shibui-ui/ui');
 });
 ```
 
@@ -157,4 +157,4 @@ pnpm check                 # svelte-check (type-check de templates)
 
 ## Variables de entorno
 
-Sin variables de entorno configuradas. Los tokens CSS se cargan automáticamente desde `node_modules/@shibui/ui/dist/` vía Vite (a diferencia de Angular, que requiere configuración explícita en `angular.json`).
+Sin variables de entorno configuradas. Los tokens CSS se cargan automáticamente desde `node_modules/@shibui-ui/ui/dist/` vía Vite (a diferencia de Angular, que requiere configuración explícita en `angular.json`).

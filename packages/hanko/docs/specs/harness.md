@@ -4,7 +4,9 @@
 > `dogfood/probe-shibui.ts` (Etapa 1 del puente de F6). **Validado en navegador** (Playwright/chromium): tests
 > `*.browser.test.ts` verdes + dogfood real sobre los ~102 componentes de shibui. Calibraciones async, D, C,
 > F4-cierre, **F3-cierre (reflexión)** y **F5-cierre (resiliencia)** **resueltas** — ver §Calibración. Con F3, F4
-> y F5 cerradas, las tres capas emiten señal honesta (Trust Report: 102 · **49 sellados**).
+> y F5 cerradas, las tres capas emiten señal honesta. **Suelo canónico medido (2026-06-22):
+> 102 · 48 sellados** (fuente: `dogfood/baseline.json`, `trusted: 48`; ver también
+> `trust-report.md`). Los deltas por paso de la §Calibración son el registro histórico.
 > **Fase:** incremento 2 común a F3 (contrato), F4 (a11y) y F5 (resiliencia).
 
 ---

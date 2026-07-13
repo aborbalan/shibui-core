@@ -1,7 +1,9 @@
 # Katachi · 形 · Identidades estéticas selladas
 
-> **Estado**: Fase 2 completada (lib-card, lib-glass-card, lib-badge, lib-eyebrow, lib-chip,
-> lib-spinner, lib-sidebar, lib-header). Fase 3 (componentes restantes) en progreso.
+> **Estado**: Fases 1+2+3 completadas — **cobertura completa** (77 componentes con bloque
+> KATACHI, ver sección "Estado de la transición" más abajo). Todos los componentes de la
+> "segunda oleada" (lib-avatar, lib-tabs, lib-dropdown, lib-checkbox, lib-radio, lib-switch…)
+> ya están migrados.
 > Última actualización: 2026-05-29
 
 ---
@@ -31,19 +33,19 @@ lo indica.
 
 ## Los seis Katachi
 
-Tres light · tres dark. `shizen` es el default del sistema (sin `data-katachi` = shizen).
+Dos light · cuatro dark. `shizen` es el default del sistema (sin `data-katachi` = shizen).
 
 | ID         | Kanji  | Familia | Concepto                            | Efecto principal             | Acento         |
 |------------|--------|---------|-------------------------------------|------------------------------|----------------|
 | `shizen`   | 自然    | light   | Natural, base, zero-point           | ninguno (silencio)           | kaki-500       |
-| `celadon`  | 青磁    | light   | Jade pálido, frío, alternativa cool | glaze cerámico sutil         | celadon-500    |
+| `celadon`  | 青磁    | dark    | Jade hondo, cerámica oscura, cool   | glaze cerámico sutil         | celadon-400    |
 | `sabi`     | 寂び    | light   | Papel envejecido, handcraft         | shadow-brutal offset         | kaki-600       |
 | `kintsugi` | 金継ぎ  | dark    | Reparado con oro (único dark-1st)   | seam dorada animada          | kaki-400       |
 | `wabi`     | 侘び    | dark    | Kuroi · oscuridad pura, silencio    | ninguno (el anti-kintsugi)   | (gris cálido)  |
 | `terminal` | —      | dark    | CRT retro, phosphor verde           | scanlines + glitch-drift     | celadon-300    |
 
 **Notas importantes:**
-- `celadon` es **light** (jade pálido, `oklch(97% 0.012 175deg)`). No es dark.
+- `celadon` es **dark** (`--katachi-family: dark`, cerámica jade oscura). Ver `celadon-katachi.md` y `celadon-audit.md`.
 - `wabi` es **oscuridad pura sin efectos** — lo opuesto a kintsugi: no hay oro, no hay animaciones.
 - Los efectos son **automáticos** — ningún componente necesita leer el ID del katachi.
 
@@ -245,7 +247,7 @@ llevan el bloque KATACHI documentado:
 ### ✅ Fase 0 — Identidades Katachi confirmadas
 
 Los 6 katachis definitivos (shizen, celadon, sabi, kintsugi, wabi, terminal) y sus características:
-- `celadon` redefinido de dark jade a **light pale jade**
+- `celadon` es **dark jade** (`--katachi-family: dark`); tras una iteración intermedia como light pale jade, volvió a contexto oscuro (ver `celadon-katachi.md` / `celadon-audit.md`)
 - `wabi` redefinido de dark-glass a **kuroi · pure darkness (no effects)**
 - `terminal` con CRT phosphor verde correcto
 - Efectos signature documentados por katachi
@@ -280,9 +282,9 @@ la migración); recuperable desde el historial de git si hiciera falta.
 - Anillo dorado permanente en kintsugi vía `--lib-effect-brutal-shadow`
 - Barra de seam de 2px → 3px
 
-### 🔲 Fase 3 — Segunda oleada de componentes
+### ✅ Fase 3 — Segunda oleada de componentes (completada)
 
-Pendiente:
+Migrados (ver tabla "Estado de la transición — cobertura completa"):
 - `lib-avatar` (`color` → `tone`)
 - `lib-liquid-button`, `lib-burger-button`
 - `lib-kbd`, `lib-tooltip`, `lib-tabs`, `lib-dropdown`

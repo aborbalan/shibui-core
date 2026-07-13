@@ -14,12 +14,14 @@ La carpeta `/core` gestiona los cimientos técnicos que permiten que la app func
 - **Configuración:** Constantes globales, configuraciones de entorno o tokens de inyección (Injection Tokens).
 
 ## 🧱 Estructura Sugerida
-Para mantener la limpieza, se organiza por funcionalidad técnica:
+Objetivo a medio plazo. **Estado real hoy:** solo existen `auth/` (con `auth.service.ts`
+y `auth.guard.ts`) y `services/`. Los guards viven dentro de `auth/`, no en una carpeta
+`guards/` propia; `interceptors/`, `models/` y `constants/` aún no se han creado.
 
 ```text
 /core
-├── services/       # Lógica de negocio persistente (Signals globales)
-├── guards/         # Seguridad y acceso a rutas
-├── interceptors/   # Transformación de peticiones/respuestas HTTP
-├── models/         # Interfaces y tipos compartidos en toda la app
-└── constants/      # Valores estáticos y configuraciones
+├── auth/           # AuthService + auth.guard.ts (existe)
+├── services/       # Lógica de negocio persistente (Signals globales) (existe)
+├── interceptors/   # Transformación de peticiones/respuestas HTTP (planificado)
+├── models/         # Interfaces y tipos compartidos en toda la app (planificado)
+└── constants/      # Valores estáticos y configuraciones (planificado)

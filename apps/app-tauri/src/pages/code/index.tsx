@@ -11,7 +11,7 @@ import './code.css';
  *   derecha    → editor multi-fichero (`lib-text-editor`)
  *
  * Opera sobre el proyecto abierto del servicio compartido (`useProject`). Si no
- * hay proyecto, muestra un empty-state. Usa los wrappers React de @shibui/ui
+ * hay proyecto, muestra un empty-state. Usa los wrappers React de @shibui-ui/ui
  * (no los elementos intrinsic) para que los eventos `onUiLib*` se conecten.
  */
 export function CodePage() {

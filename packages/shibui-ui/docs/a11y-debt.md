@@ -1,4 +1,4 @@
-# Deuda de accesibilidad — `@shibui/ui`
+# Deuda de accesibilidad — `@shibui-ui/ui`
 
 Registro de issues de accesibilidad conocidos y aceptados temporalmente. Cada entrada debe incluir la ratio medida, el umbral WCAG, y el motivo por el que está en esta lista en lugar de corregirse.
 

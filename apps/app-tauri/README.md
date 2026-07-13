@@ -32,10 +32,12 @@ Dashboard de escritorio para monitorización del sistema y gestión de ficheros,
 
 ```bash
 # Desde la raíz del monorepo:
-pnpm --filter app-tauri tauri:dev   # arranca Vite + ventana Tauri nativa
+pnpm start:tauri                              # arranca Vite + ventana Tauri nativa
+# equivalente:
+pnpm --filter @shibui/app-tauri tauri dev
 
 # Solo frontend (sin ventana nativa):
-pnpm --filter app-tauri dev
+pnpm --filter @shibui/app-tauri dev
 
 # Tests de la crate Rust:
 cd apps/app-tauri && cargo test
@@ -53,19 +55,23 @@ apps/app-tauri/
 │   ├── App.css                 # Reset global y estilos react-grid-layout
 │   ├── core/                   # Infraestructura transversal
 │   │   ├── auth/               # AuthProvider, AuthGuard, AuthContext
-│   │   └── hooks/              # useAuth
-│   ├── shell/                  # Enrutado y layouts
-│   │   ├── AppShell.tsx        # Definición de rutas
-│   │   └── layouts/
-│   │       └── DashboardLayout.tsx  # Sidebar + <Outlet>
-│   ├── pages/
-│   │   ├── hub/                # Página de inicio con cards de navegación
-│   │   ├── dashboard/          # Grid de gadgets
-│   │   ├── files/              # Explorador de ficheros a pantalla completa
+│   │   ├── hooks/              # useAuth
+│   │   ├── project/           # ProjectContext, ProjectProvider (proyecto activo)
+│   │   └── windows.ts         # Gestión de ventanas Tauri
+│   ├── shell/                  # Enrutado (ya NO hay sidebar/DashboardLayout)
+│   │   ├── AppShell.tsx        # Rutas: /login, / (MainShell), /workspace
+│   │   └── WorkspaceTabs.tsx   # Tabs del workspace
+│   ├── pages/                  # Ya NO existe hub/ (la sustituye main/)
+│   │   ├── main/               # MainShell — pantalla principal (ruta /)
+│   │   ├── workspace/          # Workspace con tabs (ruta /workspace)
+│   │   ├── branches/           # Vista de ramas git
+│   │   ├── dashboard/ code/ files/  # Secciones montadas dentro de main/workspace (no rutas)
 │   │   ├── login/              # Pantalla de login
 │   │   └── section-placeholder/  # Stub para secciones en desarrollo
 │   ├── gadgets/                # Widgets del dashboard
 │   │   ├── GadgetFrame.tsx     # Wrapper común (header draggable)
+│   │   ├── AgentGadget/
+│   │   ├── GitGraphGadget/
 │   │   ├── CpuGadget/
 │   │   ├── RamGadget/
 │   │   ├── DiskGadget/

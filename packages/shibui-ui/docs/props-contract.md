@@ -1,4 +1,4 @@
-# Contrato de props — Source of Truth (`@shibui/ui`)
+# Contrato de props — Source of Truth (`@shibui-ui/ui`)
 
 > **Este documento es la fuente de verdad** de QUÉ props transversales usa el design
 > system y POR QUÉ. Si un componente nuevo necesita un prop de color, tamaño, estilo o

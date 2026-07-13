@@ -1,6 +1,11 @@
-# 📂 Directorio: /store (Estado Global - NgRx)
+# 📂 Directorio: /store (Estado Global - NgRx) — PLANIFICADO, SIN IMPLEMENTAR
 
-Este directorio centraliza la gestión del estado complejo y reactivo de la aplicación utilizando el patrón **Redux**. Es el almacén de datos global que permite que diferentes partes de la app reaccionen a cambios de información de forma predecible.
+> ⚠️ **Estado real:** NgRx está **planificado pero no implementado**. Esta carpeta no
+> contiene código todavía (solo esta nota de diseño). No añadir NgRx hasta que exista
+> estado complejo real que lo justifique (ver `CLAUDE.md` de app-angular). Lo que sigue
+> describe el patrón previsto para cuando se implemente.
+
+Este directorio centralizará la gestión del estado complejo y reactivo de la aplicación utilizando el patrón **Redux**. Será el almacén de datos global que permita que diferentes partes de la app reaccionen a cambios de información de forma predecible.
 
 ---
 

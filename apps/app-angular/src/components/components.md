@@ -18,9 +18,13 @@ Los componentes de esta carpeta se centran exclusivamente en la capa de presenta
 ## 🧱 Estructura Sugerida
 Para mantener la escalabilidad, cada componente vive en su propia carpeta:
 
+> Convención real de nombres: **sin infijo `.component.`** (p. ej. `content-section.ts`,
+> no `content-section.component.ts`).
+
 ```text
 /components
-└── card/
-    ├── card.component.ts   # Lógica visual y definición de inputs/outputs
-    ├── card.component.html # Estructura HTML pura
-    └── card.component.scss # Estilos específicos del componente
+└── content-section/
+    ├── content-section.ts   # Lógica visual y definición de inputs/outputs
+    ├── content-section.html  # Estructura HTML pura
+    ├── content-section.scss  # Estilos específicos del componente
+    └── content-section.spec.ts # Tests (Vitest)

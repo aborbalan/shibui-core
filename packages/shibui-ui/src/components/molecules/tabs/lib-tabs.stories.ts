@@ -572,7 +572,7 @@ export const EditorLike: Story = {
       >
         <div slot="ed-main">
           <pre style="font-family: var(--lib-font-mono); font-size: 9px; line-height: 1.9; color: rgba(250,247,244,.35);">
-import { LibTabs } from '@shibui/ui';
+import { LibTabs } from '@shibui-ui/ui';
 
 const tabs = document.querySelector('lib-tabs');
 tabs?.addEventListener('ui-lib-tab-close', (e) => {
