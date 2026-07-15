@@ -11,7 +11,7 @@ App Svelte que consume `@shibui-ui/ui` y ofrece un panel admin con kitchen-sink 
 - **Vite** — bundler y dev server
 - **Router hash custom** — `src/lib/router.ts` (~30 LOC, sin dependencias externas)
 
-No usa SvelteKit ni `svelte-spa-router`. El router custom hash-based sirve para 3 rutas y evita una dependencia más.
+No usa SvelteKit ni `svelte-spa-router`. El router custom hash-based sirve las rutas públicas (Hero/Home, About, Philosophy, Componentes, ComponenteDetail, Tokens) más el área admin (Login, Kitchen), y evita una dependencia más.
 
 ---
 
@@ -20,15 +20,22 @@ No usa SvelteKit ni `svelte-spa-router`. El router custom hash-based sirve para 
 ```
 src/
   App.svelte                → Host del router + listener Ctrl+Shift+A → /#/admin/login
-  main.ts                   → Bootstrap: import '@shibui-ui/ui' + '@shibui-ui/ui/tokens' (statico, evita FOUC)
+                              (registra @shibui-ui/ui con import dinámico en onMount)
+  main.ts                   → Bootstrap: solo import '@shibui-ui/ui/tokens' (estático, evita FOUC)
   app.css                   → Estilos globales
   shibui-elements.d.ts      → Augment de svelte/elements para tipar lib-*
   lib/
     router.ts               → Mini hash-router: writable<string> + navigate()
     auth.ts                 → Store sessionStorage-based: isAuthenticated, login, logout
-    Counter.svelte          → Demo component
+    Header.svelte           → Header compartido (rutas públicas)
+    Counter.svelte          → Demo component (legacy)
   routes/
-    Home.svelte             → Página pública
+    Hero.svelte             → Home pública (/, /home)
+    About.svelte            → /#/about
+    Philosophy.svelte       → /#/philosophy
+    Componentes.svelte      → /#/componentes
+    ComponenteDetail.svelte → /#/componentes/:slug (detalle)
+    Tokens.svelte           → /#/tokens
     Login.svelte            → /#/admin/login (password 'shibui-dev')
     Kitchen.svelte          → /#/admin/kitchen-sink (container del kitchen)
     kitchen/
@@ -49,7 +56,12 @@ Hash-based, gestionado en `App.svelte`:
 
 | Ruta | Acceso |
 |---|---|
-| `/#/` | Público — `Home.svelte` |
+| `/#/`, `/#/home` | Público — `Hero.svelte` |
+| `/#/about` | Público — `About.svelte` |
+| `/#/philosophy` | Público — `Philosophy.svelte` |
+| `/#/componentes` | Público — `Componentes.svelte` |
+| `/#/componentes/:slug` | Público — `ComponenteDetail.svelte` |
+| `/#/tokens` | Público — `Tokens.svelte` |
 | `/#/admin/login` | Público — `Login.svelte` |
 | `/#/admin/kitchen-sink` | Protegido (gated por `isAuthenticated` store) — `Kitchen.svelte` |
 
@@ -103,9 +115,15 @@ El guard se aplica inline en `App.svelte`:
 ## Integración con Shibui UI
 
 ```typescript
-// main.ts
-import '@shibui-ui/ui';          // registra todos los custom elements
-import '@shibui-ui/ui/tokens';   // carga tokens.css estáticamente (evita FOUC)
+// main.ts — solo tokens de forma estática (evita FOUC)
+import '@shibui-ui/ui/tokens';   // carga tokens.css estáticamente
+```
+
+```typescript
+// App.svelte — registro de los custom elements con import dinámico en onMount
+onMount(async () => {
+  await import('@shibui-ui/ui'); // registra todos los lib-*
+});
 ```
 
 ```typescript

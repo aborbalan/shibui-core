@@ -8,10 +8,10 @@ Este fichero complementa `CLAUDE.md` (arquitectura y convenciones) y `CONTRIBUTI
 ## Reglas de sesión
 
 ### Componentes nuevos
-- Seguir siempre la estructura de 5 ficheros: `index.ts`, `.component.ts`, `.html.ts`, `.css`, `.stories.ts`
+- Seguir la estructura real de ficheros: `.component.ts`, `.html.ts`, `.css`, `.stories.ts` y `.types.ts` (tipos locales, solo si los tiene; ~60% los tiene). **No** hay `index.ts` por componente — el barrel es a nivel de capa (`src/components/{atoms,molecules,organisms}/index.ts`)
 - Proponer siempre la Storybook story junto al componente, nunca por separado
 - Usar tokens `--lib-*` para todos los valores visuales — nunca hardcodear colores ni espaciados
-- Los tipos siempre desde `src/models/`, nunca definirlos inline
+- Los tipos COMPARTIDOS entre componentes desde `models/` (raíz del paquete); los tipos LOCALES en el `.types.ts` del componente; nunca inline en el `.component.ts`
 - Los efectos glass y spotlight son opcionales — no añadirlos salvo que se pida explícitamente
 
 ### Componentes existentes

@@ -82,14 +82,14 @@ Seguir este orden sin saltarse pasos:
 
 - [ ] Rama `feature/lib-[nombre]` abierta desde `develop` actualizado
 - [ ] Carpeta creada en `src/components/[atoms|molecules|organisms]/lib-[nombre]/`
-- [ ] `index.ts` — barrel export
 - [ ] `lib-[nombre].component.ts` — LitElement con `@customElement`, `@property` y `render()`
 - [ ] `lib-[nombre].html.ts` — template function pura (`TemplateResult`)
 - [ ] `lib-[nombre].css` — estilos con `@layer tokens, reset, components` y tokens `--lib-*`
 - [ ] `lib-[nombre].stories.ts` — historia de Storybook con Args
-- [ ] Componente registrado en `packages/shibui-ui/src/index.ts`
-- [ ] `npm run type-check` pasa sin errores
-- [ ] `npm run lint` pasa sin errores
+- [ ] `lib-[nombre].types.ts` — tipos del contrato de props (recomendado; ~60% de componentes lo tiene)
+- [ ] Componente registrado en el barrel de su capa / `packages/shibui-ui/src/index.ts` (no hay `index.ts` por componente salvo excepciones en organisms)
+- [ ] `pnpm type-check` pasa sin errores
+- [ ] `pnpm lint` pasa sin errores
 - [ ] Story visible y funcional en Storybook
 - [ ] Ritual de cierre ejecutado (push + merge a `develop`)
 
@@ -123,14 +123,16 @@ Ver [`apps/app-tauri/src-tauri/README.md`](apps/app-tauri/src-tauri/README.md) p
 
 ## CI/CD
 
-El pipeline se ejecuta en cada push a `develop` y en cada PR hacia `main`.
+El orquestador (`.github/workflows/orchestrator.yml`) se ejecuta en cada push a
+`main`, `develop`, `feature/**`, `fix/**`, `chore/**` y en cada PR hacia `develop`
+o `main`. Un `paths-filter` decide qué pipelines corren según lo que cambió.
 
 ```
-npm ci → lint → build-storybook → lighthouse → firebase deploy
+pnpm install → type-check + lint → build → tests → deploy (Firebase / npm)
 ```
 
-- **Firebase Hosting** — despliega el Storybook como preview en cada PR.
-- **Semantic Release** — genera versión y tag en NPM automáticamente al mergear a `main`.
-- **Secretos necesarios** — `FIREBASE_TOKEN` en GitHub repository secrets.
+- **Firebase Hosting** — despliega el Storybook (`ci-lib.yml`) y las apps (`ci-apps.yml`, `ci-api.yml`, `ci-sukashi.yml`) en `develop`/`main`.
+- **Publish npm** — `release.yml` publica `@shibui-ui/ui` al mergear a `main` (tras `ci-lib` exitoso).
+- **Secretos necesarios** — `FIREBASE_TOKEN`, `VITE_API_URL`, `NPM_SECRET`, `DISCORD_WEBHOOK` en GitHub repository secrets.
 
-Ningún código llega a `main` sin pasar lint y Lighthouse en CI.
+Ningún código llega a `main` sin pasar type-check y lint en CI.

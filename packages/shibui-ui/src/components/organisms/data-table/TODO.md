@@ -28,8 +28,9 @@ tbody tr:hover { background: var(--bg-surface); }
 tbody tr:hover { background: var(--lib-comp-bg-hover, var(--bg-surface)); }
 ```
 
-En kintsugi, `--bg-surface` = `oklch(11.39% 0.009 84.7deg)` (oscuro, legible).
-En light katachis (shizen, celadon, sabi), `--bg-surface` da el hover claro correcto.
+En katachis dark (kintsugi, celadon, wabi, terminal), `--bg-surface` es oscuro (p. ej. kintsugi
+`oklch(11.39% 0.009 84.7deg)`, legible).
+En light katachis (shizen, sabi), `--bg-surface` da el hover claro correcto.
 
 **Afecta a**:
 - Todas las variants de tabla (lines, zebra, card)

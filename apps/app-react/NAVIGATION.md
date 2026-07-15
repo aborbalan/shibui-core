@@ -18,7 +18,7 @@ app-react/
 │   ├── /componentes                → ComponentsPage
 │   │     ├── Barra de búsqueda (ya implementada en header)
 │   │     └── Grid de componentes del design system
-│   │         └── /componentes/:slug   → [NUEVO] Detalle de un componente
+│   │         └── /componentes/:slug   → ✅ ComponentDetailPage — Detalle de un componente
 │   │               ├── Descripción + uso
 │   │               ├── Preview en vivo
 │   │               ├── Props / API
@@ -31,7 +31,7 @@ app-react/
 │   │     ├── #espaciado            → Spacing scale
 │   │     └── #sombras              → Elevación / shadows
 │   │
-│   ├── /filosofia                  → [NUEVA PÁGINA] FilosofiaPage
+│   ├── /philosophy                 → ✅ PhilosophyPage (ruta en inglés)
 │   │     ├── Principios del sistema (PhilosophySection reutilizable)
 │   │     └── Decisiones de diseño documentadas
 │   │
@@ -76,7 +76,7 @@ app-react/
 |-------|------|--------|
 | Componentes | `/componentes` | ✅ Existe |
 | Tokens | `/tokens` | ✅ Existe |
-| Filosofía | `/filosofia` | ❌ Falta Route + Page |
+| Filosofía | `/philosophy` | ✅ Existe (ruta en inglés `philosophy`, no `filosofia`) |
 | About | `/about` | ✅ Existe |
 
 ---
@@ -106,14 +106,14 @@ app-react/
 | `/admin/kitchen-sink` | ✅ Existe | — |
 | `/admin/tokens` | ❌ Falta | Alta — sidebar roto |
 | `/admin/componentes` | ❌ Falta | Alta — sidebar roto |
-| `/filosofia` | ❌ Falta | Media |
-| `/componentes/:slug` | ❌ Falta | Baja (futura) |
+| `/philosophy` | ✅ Existe (`PhilosophyPage`, ruta en inglés) | — |
+| `/componentes/:slug` | ✅ Existe (`ComponentDetailPage`) | — |
 
 ---
 
 ## Notas
 
 - `/admin/tokens` y `/admin/componentes` son prioridad: el sidebar ya las enlaza y generan 404.
-- `/filosofia` tiene contenido reutilizable en `PhilosophySection` (HomePage) — solo hay que extraer y envolver.
-- `/componentes/:slug` no bloquea nada; `components.data.ts` ya tiene estructura para detalle individual.
+- `/philosophy` ya está implementada como `PhilosophyPage` (`src/pages/philosophy/`).
+- `/componentes/:slug` ya está implementada como `ComponentDetailPage`.
 - El Kitchen Sink como página única está bien; los tabs/accordion son mejora de UX interna, no cambio de routing.

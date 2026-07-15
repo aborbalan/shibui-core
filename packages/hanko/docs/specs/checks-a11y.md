@@ -141,7 +141,7 @@ El sello a11y declara su cobertura — nunca finge haber comprobado lo que el ha
   su subárbol (Shadow DOM incluido), sondea interactividad/teclado/nombre y construye la `A11yObservation` real.
 - Calibrado contra shibui-ui real (102 componentes) en **C** (nombre aportable) y **F4-cierre** (teclado real ·
   landmarks · foco diferido) — ver secciones arriba.
-- Agregado al sello vía el Trust Report (F6). Estado dogfood: **47 sellados · 4 `a11y/name` reales** (deuda de
+- Agregado al sello vía el Trust Report (F6). Estado dogfood (2026-06-22, `baseline.json`): **48 sellados · 4 `a11y/name` reales** (deuda de
   shibui, documentada arriba).
 
 ## Criterios de «F4 terminada»

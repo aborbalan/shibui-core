@@ -17,7 +17,7 @@ export class ContentSectionComponent {
   headingLine2Prefix = input<string>('necesitas,');
   headingAccent = input<string>('nada más');
   description = input<string>('Cada componente existe porque tiene un propósito claro...');
-  surface = input<ContentSectionSurface>('dark');
+  surface = input<ContentSectionSurface>('transparent');
 
   readonly SURFACES: Record<ContentSectionSurface, string> = {
     dark: 'var(--color-washi-950)',

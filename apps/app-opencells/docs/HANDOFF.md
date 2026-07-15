@@ -33,7 +33,7 @@ Rama: `feature/app-opencells` (desde `develop`) · Estado dev: pendiente de 1er 
   la continuidad va por plan + este HANDOFF + memoria, no por el worktree.
 - `pnpm install` y `pnpm start:opencells` desde el **REPO PRINCIPAL** (en worktree Windows
   `pnpm install` cuelga). En worktree, node_modules vía junctions desde el repo principal.
-- Antes de arrancar: `pnpm build:shibui` (los tipos de `@shibui/ui` salen de su `dist`).
+- Antes de arrancar: `pnpm build:shibui` (los tipos de `@shibui-ui/ui` salen de su `dist`).
 - Datos dev: `src/data/trust-report.fixture.json`.
 
 ## SIGUIENTE: Hito 1 — Bootstrap (`startApp`, una ruta, un page controller)
@@ -45,9 +45,12 @@ element LitElement con `PageController` y hooks `onPageEnter`/`onPageLeave`).
 1. `src/main.ts`: importar `startApp` + `routes` y llamar
    `startApp({ routes, mainNode: 'app-content' })`.
 2. `src/router/routes.ts`: ruta `/` → `home-page` con
-   `action: async () => { await import('../pages/home/home-page.js'); }`.
-3. `src/pages/home/home-page.ts`: `@customElement('home-page')` extendiendo `LitElement`,
-   `pageController = new PageController(this)`, `render()` con `<h1>` + `<lib-button tone="accent">`.
+   `action: async () => { await import('../pages/home/home-page.component'); }`
+   (import **sin extensión**, como en CURRICULUM §Gotchas).
+3. `src/pages/home/home-page.component.ts`: `@customElement('home-page')` extendiendo
+   `LitElement`, `pageController = new PageController(this)`, `render()` con `<h1>` +
+   `<lib-button tone="accent">`. Separación de ficheros como la librería
+   (`.component.ts` / `.html.ts` / `.css` / `.types.ts`).
 
 **Criterios de aceptación**: `pnpm start:opencells` muestra la home con el botón shibui
 estilado bajo `data-katachi="terminal"`; consola sin warning de doble registro de Lit.

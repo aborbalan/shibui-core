@@ -5,7 +5,7 @@ App de **aprendizaje de [Open Cells](https://www.opencells.dev)** (framework SPA
 real: un **cockpit** que agrega la salud del monorepo shibui a partir del Trust Report de
 **hanko**.
 
-Es un consumidor **nativo** de `@shibui/ui`: usa los web components (`<lib-button>`, …)
+Es un consumidor **nativo** de `@shibui-ui/ui`: usa los web components (`<lib-button>`, …)
 directamente, sin wrapper, porque Open Cells y la librería son ambos Lit.
 
 ## Cómo se trabaja aquí
@@ -17,7 +17,7 @@ La **plomería** (workspace, build, deploy, fixtures) está hecha; el **código 
 ```bash
 # desde la raíz del monorepo (repo principal en Windows)
 pnpm install
-pnpm build:shibui      # @shibui/ui necesita su dist para los tipos
+pnpm build:shibui      # @shibui-ui/ui necesita su dist para los tipos
 pnpm start:opencells   # dev server (Vite)
 ```
 
@@ -26,7 +26,7 @@ pnpm start:opencells   # dev server (Vite)
 | Ruta | Qué es |
 |---|---|
 | `index.html` | Monta `<app-index id="app-content">` (nodo del router) |
-| `src/main.ts` | Plomería: registra `@shibui/ui` + tokens. **El Hito 1 empieza aquí.** |
+| `src/main.ts` | Plomería: registra `@shibui-ui/ui` + tokens. **El Hito 1 empieza aquí.** |
 | `src/router/routes.ts` | Mapa de rutas de Open Cells |
 | `src/pages/` | Páginas (page controllers LitElement) |
 | `src/data/` | Tipos + fixture del Trust Report |

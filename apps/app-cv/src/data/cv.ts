@@ -226,7 +226,7 @@ const REPO = 'https://github.com/aborbalan/shibui-core/tree/main';
 
 export const projects: ProjectItem[] = [
   {
-    name: '@shibui/ui',
+    name: '@shibui-ui/ui',
     tag: 'Sistema de diseño',
     description:
       'Librería de Web Components (Lit) agnóstica de framework con el sistema de diseño Katachi: el mismo componente, idéntico, consumido desde React, Angular y Svelte.',

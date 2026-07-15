@@ -36,7 +36,7 @@ arranque, `../CLAUDE.md`.
   suscribe y muestra un KPI (`trusted/total`) con `lib-card` + `lib-badge`.
 - **Aceptación**: el dato fluye loader→channel→página sin acoplarlos.
 
-### H4 — Datos reales + visualización con `@shibui/ui`
+### H4 — Datos reales + visualización con `@shibui-ui/ui`
 - **Concepto**: datos async en templates Lit; derivar series; fixture (dev) vs URL live (prod).
 - **Ejercicio**: el loader hace `fetch` del `trust-report.json` real; sellados por capa en
   `lib-bar-chart` + `lib-gauge` de % cobertura; loading/error con `lib-spinner`.
@@ -72,7 +72,7 @@ no empezar un hito sin cerrar el handoff del anterior.
   (ambient `declare module` con las firmas, tomadas de `types/bridge.ts`). Issue upstream:
   pendiente de abrir; al abrirlo, enlazarlo en un comentario del `.d.ts`.
 - **Un solo Lit.** `@open-cells/core` no depende de Lit → la app trae Lit ^3 (peer de
-  `@shibui/ui`). Verificar que no hay doble Lit tras instalar.
+  `@shibui-ui/ui`). Verificar que no hay doble Lit tras instalar.
 - **Imports sin extensión** (proyecto Vite + `moduleResolution: bundler`, como la librería):
   `import('../pages/home/home-page.component')`, no `.js` ni `.ts`.
 - **Entorno Windows**: instalar/arrancar desde el **repo principal**; `pnpm build:shibui`

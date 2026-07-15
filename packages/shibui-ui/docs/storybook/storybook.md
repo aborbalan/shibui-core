@@ -2,88 +2,66 @@
 
 ## Instrucción General
 
-Cuando generes o modifiques archivos de historias (`.stories.ts` / `.stories.js`), el campo `title` **debe seguir la jerarquía funcional** definida a continuación. No uses rutas arbitrarias ni nombres de carpetas del proyecto. Usa siempre la categoría correcta según el tipo de componente.
+Cuando generes o modifiques archivos de historias (`.stories.ts`), el campo `title`
+**debe seguir la taxonomía de plataforma** del design system. El patrón es:
+
+```
+<Plataforma>/<Categoría>/<Componente>
+```
+
+> Fuente de verdad: sección "Storybook · Taxonomía macro" del `CLAUDE.md` de shibui-ui.
+> Este documento la resume; ante divergencia, manda `CLAUDE.md`.
+
+Hay **tres nodos raíz** (plataformas):
+
+- `Universal/` — componentes compartidos por web y escritorio
+- `Web/` — comportamiento exclusivo de browser (motion, scroll, cursor…)
+- `Desktop/` — exclusivos de la app Tauri
+
+No uses categorías sin plataforma (`Forms/Button` es incorrecto; lo correcto es
+`Universal/Forms/Button`).
 
 ---
 
-## Jerarquía de Categorías
+## Categorías por plataforma
 
-### 1. `Forms`
-Componentes que capturan o gestionan entrada de usuario.
+### `Universal/`
 
-**Componentes incluidos:** `Button`, `Checkbox`, `Input`, `Form Field`, `Copy Button`, `Close Button`
+| Categoría | Ejemplos |
+|---|---|
+| `Foundations/` | Color Palette, Typography, Spacing, Katachi · System |
+| `Actions/` | Button, Button Liquid, Burger, Close Button, Copy Button, Magnetic, Chip |
+| `Content/` | Card, Avatar, Badge, Icon, Code Block, Quote, Text List, Timeline… |
+| `Forms/` | Input, Select, Checkbox, Radio, Switch, Rating, Color Picker, File Uploader… |
+| `Feedback/` | Spinner, Skeleton, Toast Manager, Progress, Status Dot, Alert, Empty State… |
+| `Navigation/` | Sidebar, Tabs, Breadcrumb, Dropdown, Stepper, Pagination… |
+| `Layout/` | Accordion, Bento Grid, Aspect Ratio, Header, Footer… |
+| `Data/` | Counter, Data Table |
+| `Charts/` | Bar Chart, Scatter Chart, Scatter Chart 3D |
+| `Overlay/` | Dialog, Drawer, Modal, Tooltip |
+| `Utilities/` | Background, Canvas, Visually Hidden |
 
-```ts
-title: 'Forms/Button'
-title: 'Forms/Checkbox'
-title: 'Forms/Input'
-title: 'Forms/FormField'
-title: 'Forms/CopyButton'
-title: 'Forms/CloseButton'
-```
+### `Web/`
 
----
+| Categoría | Componentes |
+|---|---|
+| `Motion/` | Carousel, Cursor Follower, Horizontal Scroll Section, Parallax Container, Parallax Text Stack, Ripple, Stagger |
 
-### 2. `Data Display`
-Componentes para mostrar información o estados de carga.
+### `Desktop/`
 
-**Componentes incluidos:** `Avatar`, `Badge`, `Status Dot`, `Skeleton`, `Spinner`, `TextList`, `List`
-
-```ts
-title: 'Data Display/Avatar'
-title: 'Data Display/Badge'
-title: 'Data Display/StatusDot'
-title: 'Data Display/Skeleton'
-title: 'Data Display/Spinner'
-title: 'Data Display/TextList'
-title: 'Data Display/List'
-```
-
----
-
-### 3. `Feedback & Overlays`
-Componentes que interrumpen o informan al usuario sobre acciones.
-
-**Componentes incluidos:** `Alert`, `Modal`
-
-```ts
-title: 'Feedback & Overlays/Alert'
-title: 'Feedback & Overlays/Modal'
-```
-
----
-
-### 4. `Navigation`
-Componentes para moverse a través de la interfaz.
-
-**Componentes incluidos:** `Breadcrumb`, `Tabs`, `Button Group`
-
-```ts
-title: 'Navigation/Breadcrumb'
-title: 'Navigation/Tabs'
-title: 'Navigation/ButtonGroup'
-```
-
----
-
-### 5. `Layout & Surfaces`
-Contenedores y elementos de estructura física de la interfaz.
-
-**Componentes incluidos:** `Card`, `Glass Card`, `Kbd` (teclado)
-
-```ts
-title: 'Layout & Surfaces/Card'
-title: 'Layout & Surfaces/GlassCard'
-title: 'Layout & Surfaces/Kbd'
-```
+| Categoría | Componentes |
+|---|---|
+| `Layout/` | Gadget Frame |
+| `Editor/` | Editor Toolbar, Text Editor |
+| `Data/` | Metric Bar |
 
 ---
 
 ## Reglas de Aplicación
 
-- **Siempre** asigna la categoría antes de generar el archivo de historia.
-- Si el componente no aparece en la lista anterior, elige la categoría más apropiada por su función y documenta la decisión en un comentario.
-- El nombre del componente en el `title` debe estar en **PascalCase** y sin espacios (e.g., `Form Field` → `FormField`).
+- **Siempre** asigna plataforma + categoría antes de generar el archivo de historia.
+- Si el componente no aparece arriba, elige la plataforma y categoría más apropiadas por su
+  función y documenta la decisión en un comentario.
 - No crees subcategorías adicionales sin aprobación explícita.
 
 ---
@@ -91,21 +69,19 @@ title: 'Layout & Surfaces/Kbd'
 ## Ejemplo Completo de Historia
 
 ```ts
-// Button.stories.ts
-import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './Button';
+// lib-button.stories.ts
+import type { Meta, StoryObj } from '@storybook/web-components';
+import { html } from 'lit';
 
-const meta: Meta<typeof Button> = {
-  title: 'Forms/Button',  // ✅ Categoría correcta
-  component: Button,
+const meta: Meta = {
+  title: 'Universal/Actions/Button',  // ✅ <Plataforma>/<Categoría>/<Componente>
+  component: 'lib-button',
 };
 
 export default meta;
-type Story = StoryObj<typeof Button>;
+type Story = StoryObj;
 
-export const Primary: Story = {
-  args: {
-    label: 'Click me',
-  },
+export const Playground: Story = {
+  args: { label: 'Click me' },
 };
 ```

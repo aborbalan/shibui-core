@@ -16,10 +16,13 @@ Los componentes de esta carpeta actúan como el "cerebro" de la vista:
 ## 🧱 Estructura Sugerida
 Cada página suele estar encapsulada en su propia carpeta para mantener el orden:
 
+> Convención real de nombres: **sin infijo `.component.`** (p. ej. `hero.ts`,
+> no `hero.component.ts`).
+
 ```text
 /pages
 └── hero/
-    ├── ui/                 # (Opcional) Componentes específicos que solo usa esta página
-    ├── hero.component.ts   # El orquestador principal
-    ├── hero.component.html # Estructura de alto nivel (layout de la página)
-    └── hero.component.scss # Estilos de posicionamiento global de la página
+    ├── ui/          # (Opcional) Componentes específicos que solo usa esta página
+    ├── hero.ts      # El orquestador principal
+    ├── hero.html    # Estructura de alto nivel (layout de la página)
+    └── hero.scss    # Estilos de posicionamiento global de la página

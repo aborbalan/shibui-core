@@ -1,7 +1,10 @@
 # Backlog de Componentes — Shibui UI
 
 Componentes detectados como candidatos durante el desarrollo de apps consumidoras.
-No están implementados. Cuando se aborden, seguir la estructura de 5 ficheros definida en `CLAUDE.md`.
+La mayoría **no están implementados**; los que ya lo están se marcan con **✅ implementado**
+en su encabezado (p. ej. `lib-gadget-frame`, `lib-metric-bar`, `lib-editor-toolbar`).
+Cuando se aborde uno pendiente, seguir la estructura de ficheros definida en `CLAUDE.md`
+(`.component.ts` / `.html.ts` / `.css` / `.stories.ts` / `.types.ts`; sin `index.ts` por componente).
 
 ---
 
@@ -52,13 +55,13 @@ Describe **qué problema resuelve** en contexto `app`, ortogonal al nivel atómi
 
 > **`app/chart` — estrategia pendiente.** Requiere librería de renderizado externa
 > (Chart.js, ECharts, D3…). Decisión abierta: wrappers con tema shibui, sub-paquete
-> `@shibui/ui-charts` con `peerDependencies`, o adaptadores por librería.
+> `@shibui-ui/ui-charts` con `peerDependencies`, o adaptadores por librería.
 > **No implementar hasta cerrar la estrategia.**
 
 ---
 
 **A futuro:** si el catálogo `app` crece lo suficiente, se puede separar en un sub-paquete
-(`@shibui/ui-app`) sin romper la API compartida.
+(`@shibui-ui/ui-app`) sin romper la API compartida.
 
 Cada candidato en este backlog está marcado con sus tres ejes.
 

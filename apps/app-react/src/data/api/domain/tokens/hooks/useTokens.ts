@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { tokensApi, type TokenCategory } from "../api/tokens.api";
 import { queryKeys } from "../../../query-keys";
 
-/** Todos los design tokens disponibles en @shibui/ui. */
+/** Todos los design tokens disponibles en @shibui-ui/ui. */
 export function useTokens() {
   return useQuery({
     queryKey: queryKeys.tokens.all,

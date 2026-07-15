@@ -25,7 +25,7 @@ Los estilos son ficheros .css planos (no .css.ts) importados con el sufijo
 
 *.html.ts: El template (HTML-in-TS) usando la sintaxis html de Lit.
 
-*.css.ts: Estilos encapsulados mediante Shadow DOM.
+*.css: Estilos planos scoped al Shadow DOM (importados con `?inline` y aplicados vía `unsafeCSS()`).
 
 3. El Motor de Metadatos (JSDoc + CEM)
 Para que otros frameworks "entiendan" nuestros Web Components, extraemos metadatos automáticamente.
@@ -59,17 +59,17 @@ generate:wrappers: (Usando tsx) Ejecuta los mappers que inyectan los wrappers de
 6. Distribución (Exports)
 El package.json actúa como un mapa de rutas, permitiendo importar solo lo que necesitas:
 
-@shibui/ui: Web Components estándar.
+@shibui-ui/ui: Web Components estándar.
 
-@shibui/ui/react: Wrappers tipados para React.
+@shibui-ui/ui/react: Wrappers tipados para React.
 
-@shibui/ui/svelte: Definiciones de tipos para Svelte.
+@shibui-ui/ui/svelte: Definiciones de tipos para Svelte.
 
 7. Capa Desktop — app-tauri
 Además de las apps web, el ecosistema incluye una aplicación de escritorio nativa construida con Tauri 2.
 
 Stack:
-- Frontend: React 19 + TypeScript 5 + Vite 7 (consume @shibui/ui igual que las otras apps)
+- Frontend: React 19 + TypeScript 5 + Vite 7 (consume @shibui-ui/ui igual que las otras apps)
 - Desktop runtime: Tauri 2 (WebView nativa, sin Electron)
 - Backend: Rust 2021, crate independiente `app-tauri-core`
 

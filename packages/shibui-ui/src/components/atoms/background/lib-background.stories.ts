@@ -76,15 +76,16 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-**lib-background** — 66 fondos decorativos derivados de los tokens Shibui.
+**lib-background** — 70 fondos decorativos derivados de los tokens Shibui.
 
 Úsalo como contenedor de sección, hero, card o panel. El contenido se proyecta en el \`slot\` por defecto.
 
 **Categorías:**
-- **Light (21)** — papeles y textiles japoneses: seigaiha, tatami, kagome, shoji, celadon-wash, kintsugi-light…
+- **Light (25)** — papeles y textiles japoneses: seigaiha, tatami, kagome, shoji, celadon-wash, koke, komorebi…
 - **Dark (21)** — tinta sumi: kintsugi, kintsugi-veins, kintsugi-gold, ash-grid, forge, obsidian, celadon…
 - **Kintsugi (4)** — 金継ぎ la grieta reparada con oro: kintsugi, kintsugi-veins, kintsugi-gold, kintsugi-light…
 - **Sabi (4)** — 寂び la belleza del envejecer: foxed, rust, aizome, craquele…
+- **Shizen (4)** — 自然 la naturaleza serena: koke, komorebi, karesansui, wakaba…
 - **Gradient (8)** — mesh radial: aurora-light, sakura, twilight, jade-deep…
 - **Animated CSS (10)** — sin JS: breathing, pulse, fog, static, glitch, matrix…
 - **Terminal · CRT (7)** — katachi \`terminal\`: phosphor, crt, amber, matrix, glitch, scan, static…
@@ -128,6 +129,11 @@ const meta: Meta = {
         "rust",
         "aizome",
         "craquele",
+        /* Shizen · 自然 */
+        "koke",
+        "komorebi",
+        "karesansui",
+        "wakaba",
         /* Dark */
         "sumi",
         "sumi-grain",
@@ -390,6 +396,26 @@ export const Sabi: Story = {
     ], 2),
 };
 
+/* ── Shizen ── */
+export const Shizen: Story = {
+  name: "Shizen — 自然 naturaleza serena (4)",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Familia del katachi `shizen` (自然, la naturaleza, el katachi zero-point): superficies *light* orgánicas en verdes cálidos de follaje. `koke` (musgo), `komorebi` (luz filtrada entre las hojas), `karesansui` (jardín seco de arena rastrillada) y `wakaba` (hojas nuevas dispersas). Todas claras — el texto va en tono oscuro.",
+      },
+    },
+  },
+  render: (): TemplateResult =>
+    bgGrid([
+      { variant: "koke", label: "67 · 苔 koke" },
+      { variant: "komorebi", label: "68 · 木漏れ日 komorebi" },
+      { variant: "karesansui", label: "69 · 枯山水 karesansui" },
+      { variant: "wakaba", label: "70 · 若葉 wakaba" },
+    ], 2),
+};
+
 /* ── Terminal · CRT ── */
 export const Terminal: Story = {
   name: "Terminal — CRT · fósforo (7)",
@@ -514,7 +540,7 @@ export const KatachiCoverage: Story = {
           { katachi: "kintsugi · 金継ぎ", variants: ["kintsugi", "kintsugi-veins", "kintsugi-gold"],            dark: true  },
           { katachi: "sabi · 寂び",     variants: ["foxed", "rust", "aizome", "craquele"],                     dark: false },
           { katachi: "terminal",        variants: ["phosphor", "crt", "amber", "matrix"],                     dark: true  },
-          { katachi: "shizen · 自然",   variants: ["particles", "rain", "constellation", "fireflies"],         dark: true  },
+          { katachi: "shizen · 自然",   variants: ["koke", "komorebi", "karesansui", "wakaba"],               dark: false },
           { katachi: "celadon · 青磁",  variants: ["celadon-wash", "celadon-mist", "celadon", "jade-deep"],   dark: false },
         ] as Array<{ katachi: string; variants: LibBackgroundTheme[]; dark: boolean }>
       ).map(

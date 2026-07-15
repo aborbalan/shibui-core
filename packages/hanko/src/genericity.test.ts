@@ -26,7 +26,7 @@ const SRC = dirname(fileURLToPath(import.meta.url));
 const SPECIFIER =
   /(?:import|export)\b[^'"]*?\bfrom\s*['"]([^'"]+)['"]|import\s*\(\s*['"]([^'"]+)['"]\s*\)|import\s+['"]([^'"]+)['"]/g;
 
-/** Importar la lib UI (`@shibui-ui/ui` / `@shibui/ui`) o trepar a `shibui-ui/` está prohibido. */
+/** Importar la lib UI (`@shibui-ui/ui` / legacy `@shibui/ui`) o trepar a `shibui-ui/` está prohibido. */
 const FORBIDDEN = /@shibui(-ui)?\/ui(\/|$)|(\.\.\/)+shibui-ui(\/|$)/;
 
 function tsFiles(dir: string): string[] {

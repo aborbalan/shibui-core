@@ -17,7 +17,7 @@ This documentation mirrors the `src/` folder structure to make it easy to find r
 1.  **Strict TypeScript**: Typed code to prevent development errors.
 2.  **Modern Native CSS**: Use of CSS Variables and Layers. Avoid heavy style dependencies.
 3.  **Modular Architecture**: Focused on real tree-shaking (Zero-Bloat).
-4.  **Hybrid Pattern**: Solid logic with an elegant, easy-to-customize base design.
+4.  **Framework-agnostic**: No framework dependencies. Works in React, Angular, Svelte and Vanilla JS.
 5.  **Accessibility (a11y)**: WAI-ARIA from the start.
 
 ## Gold Rule (from README.md)

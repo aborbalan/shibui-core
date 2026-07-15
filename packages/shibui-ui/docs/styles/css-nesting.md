@@ -253,9 +253,9 @@ Estructura plana eficiente — sin beneficio de nesting.
 Desde `packages/shibui-ui/`:
 
 ```bash
-pnpm --filter @shibui/ui stylelint   # linter CSS
+pnpm --filter @shibui-ui/ui stylelint   # linter CSS
 pnpm build:shibui                    # build sin errores
-pnpm --filter @shibui/ui type-check  # sin regresiones TS
+pnpm --filter @shibui-ui/ui type-check  # sin regresiones TS
 ```
 
 Storybook visual es opcional pero recomendado para componentes con efectos (spotlight, glass, katachi).

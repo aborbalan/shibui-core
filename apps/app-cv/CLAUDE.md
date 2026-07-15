@@ -91,19 +91,23 @@ src/
     app.config.ts         → ApplicationConfig — provideRouter + provideHttpClient
     app.html / app.scss
   routes/
-    app.routes.ts         → Rutas raíz (home lazy)
+    app.routes.ts         → Rutas raíz: '' (home lazy) y 'sandra' (portfolio lazy)
   data/
     cv.ts                 → Fuente única de verdad: tipos + datos ESTÁTICOS
                             (profile, experience, skills, education). ⚠️ varios
                             campos son placeholder (TODO) — rellenar antes de desplegar.
+    katachi.ts            → Datos del switcher de katachi
+    portfolio.ts          → Datos del portfolio de Sandra Ortega Arévalo
   pages/
     home/home.ts          → Smart: inyecta cv.ts y reparte a las secciones por inputs
+    portfolio/portfolio.ts → Página independiente del portfolio (ruta 'sandra')
   components/             → Secciones dumb (solo input())
     hero/                 → Above the fold: nombre + título + tagline + 3 links
     experience/           → lib-timeline (cronológico inverso) + chips de stack
     skills/               → Grid Core/Tooling/Familiar con lib-chip
     education/            → Lista breve al final
     section-heading/      → Cabecera reutilizable (lib-eyebrow + h2)
+    gallery/ · katachi-switcher/ · languages/ · projects/ → Secciones del portfolio
   typings.d.ts            → Tipos para imports ?raw, ?inline y *.svg
   styles.scss             → Base global (superficie/texto heredan tokens shizen)
   main.ts                 → Bootstrap + import @shibui-ui/ui

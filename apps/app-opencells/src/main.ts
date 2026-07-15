@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────────────────────────────────
 // PLOMERÍA — esto ya está hecho (no hace falta tocarlo).
-// Importar el barrel de @shibui/ui registra TODOS los web components
+// Importar el barrel de @shibui-ui/ui registra TODOS los web components
 // (lib-button, lib-card, …) como custom elements. Los tokens dan el sistema
 // de diseño (colores, espacios) que leen los componentes vía variables CSS.
 // ─────────────────────────────────────────────────────────────────────────

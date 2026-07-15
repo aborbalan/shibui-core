@@ -27,21 +27,23 @@ App de escritorio nativa (Windows/macOS/Linux) construida con Tauri 2 y React 19
 ```
 src/
   App.tsx / App.css
-  main.tsx                      → Bootstrap React + import @shibui/ui
+  main.tsx                      → Bootstrap React + import @shibui-ui/ui
   custom-elements.d.ts          → Tipos JSX para lib-* (igual que app-react)
-  shell/
-    AppShell.tsx                → Router principal (lazy pages)
-    layouts/
-      DashboardLayout.tsx       → Sidebar + Outlet (react-grid-layout)
-    README.md                   → Documentación del shell y DashboardLayout
-  pages/
-    dashboard/                  → Grid de gadgets (DashboardPage)
-    hub/                        → Pantalla de bienvenida standalone
-    files/                      → Explorador de ficheros a pantalla completa
+  shell/                        → Ya NO hay sidebar ni DashboardLayout
+    AppShell.tsx                → Router: /login, / (MainShell), /workspace
+    WorkspaceTabs.tsx           → Tabs del workspace
+    README.md                   → Documentación del shell (arquitectura sin sidebar)
+  pages/                        → Ya NO existe hub/ (la sustituye main/)
+    main/                       → MainShell — pantalla principal (ruta /)
+    workspace/                  → Workspace con tabs (ruta /workspace)
+    branches/                   → Vista de ramas git
+    dashboard/ · code/ · files/ → Secciones (ya no son rutas propias; se montan dentro del workspace/main)
     login/                      → Login (sessionStorage, password 'shibui-dev')
     section-placeholder/        → Placeholder para secciones futuras
   gadgets/
     GadgetFrame.tsx             → Wrapper visual común (header draggable, contenido scrollable)
+    AgentGadget/
+    GitGraphGadget/
     NotesGadget/
     SystemMonitorGadget/
     CpuGadget/
@@ -61,7 +63,9 @@ src/
       AuthGuard.tsx             → Redirige a /login si no autenticado
     hooks/
       useAuth.ts
-    README.md                   → Documentación del sistema de auth
+    project/                    → ProjectContext.ts + ProjectProvider.tsx (proyecto activo)
+    windows.ts                  → Gestión de ventanas Tauri
+    README.md                   → Documentación del sistema de auth y project
 ```
 
 ### Estructura Rust (`src-tauri/` + `core/`)
@@ -90,18 +94,17 @@ core/                           → Crate Rust independiente (app-tauri-core)
 
 Todas las rutas son lazy-loaded. Todas protegidas por `<AuthGuard>` excepto `/login`.
 
-| Ruta | Componente | Layout |
+| Ruta | Componente | Acceso |
 |---|---|---|
-| `/login` | `LoginPage` | sin layout |
-| `/` | `HubPage` | sin sidebar (standalone) |
-| `/dashboard` | `DashboardPage` | `DashboardLayout` (sidebar) |
-| `/files` | `FilesPage` | `DashboardLayout` (sidebar) |
-| `/code` | `SectionPlaceholder` | `DashboardLayout` (sidebar) |
-| `/security` | `SectionPlaceholder` | `DashboardLayout` (sidebar) |
-| `/settings` | `SectionPlaceholder` | `DashboardLayout` (sidebar) |
+| `/login` | `LoginPage` | sin guard |
+| `/` | `MainShell` | protegida (`AuthGuard`) |
+| `/workspace` | `WorkspacePage` | protegida (`AuthGuard`) |
 | `*` | redirect a `/` | — |
 
-**Patrón clave**: `/` (Hub) vive fuera del `DashboardLayout`. Es una pantalla standalone sin sidebar. Las demás secciones comparten un `<Route>` sin `path` que envuelve con `DashboardLayout`.
+**Patrón clave**: **ya no hay sidebar ni `DashboardLayout`**. Solo tres rutas reales
+(`/login`, `/`, `/workspace`). Las antiguas secciones (Dashboard, Files, Code…) dejaron
+de ser rutas propias y se montan dentro de `MainShell`/`WorkspacePage`. Ver
+`src/shell/README.md` y `src/pages/README.md` para el detalle de la arquitectura actual.
 
 ---
 
@@ -170,7 +173,7 @@ El CI (`ci-tauri.yml`) corre `cargo fmt --check`, `cargo clippy` y `cargo test` 
 
 ```typescript
 // main.tsx — registra todos los custom elements globalmente
-import '@shibui/ui';
+import '@shibui-ui/ui';
 ```
 
 ```typescript
@@ -186,4 +189,5 @@ declare module 'react' {
 }
 ```
 
-El sidebar usa `<lib-sidebar variant="terminal">` de Shibui UI directamente en `DashboardLayout.tsx`.
+Los componentes `<lib-*>` de Shibui UI se usan directamente en las páginas (`MainShell`,
+`WorkspacePage`) y en los gadgets. (Ya no hay `DashboardLayout` ni `<lib-sidebar>`.)
