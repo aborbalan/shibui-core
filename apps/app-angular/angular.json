@@ -50,7 +50,10 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "define": {
+                "__API_URL__": "'https://shibui-core.onrender.com'"
+              }
             },
             "development": {
               "optimization": false,
