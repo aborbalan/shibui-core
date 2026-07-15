@@ -6,7 +6,7 @@
     font-family: var(--lib-font-mono, 'DM Mono', monospace);
     font-size: 0.75rem;
     letter-spacing: 0.12em;
-    color: rgba(250, 247, 244, 0.2);
+    color: var(--text-muted);
   }
 }
 
@@ -19,7 +19,7 @@
     .category-description {
       font-family: var(--lib-font-body);
       font-size: 0.82rem;
-      color: rgba(250, 247, 244, 0.3);
+      color: var(--text-secondary);
       margin: 0.5rem 0 0 0;
     }
   }
@@ -28,6 +28,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1px;
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--border-subtle);
   }
 }

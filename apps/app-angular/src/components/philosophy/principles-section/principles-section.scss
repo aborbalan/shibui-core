@@ -16,14 +16,14 @@
     gap: 1.5rem;
     align-items: flex-start;
     padding: clamp(1.5rem, 3vw, 2rem);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 1px solid var(--border-subtle);
   }
 
   .principle-num {
     font-family: var(--lib-font-mono, 'DM Mono', monospace);
     font-size: 0.6rem;
     letter-spacing: 0.15em;
-    color: rgba(184, 90, 30, 0.55);
+    color: var(--text-accent);
     line-height: 1;
     flex-shrink: 0;
     padding-top: 0.2rem;
@@ -34,14 +34,14 @@
     font-size: 0.65rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(250, 247, 244, 0.70);
+    color: var(--text-primary);
     margin: 0 0 0.6rem 0;
   }
 
   .principle-description {
     font-family: var(--lib-font-body, 'Shippori Mincho', serif);
     font-size: clamp(0.82rem, 1.2vw, 0.92rem);
-    color: rgba(250, 247, 244, 0.60);
+    color: var(--text-secondary);
     line-height: 1.9;
     margin: 0;
   }
