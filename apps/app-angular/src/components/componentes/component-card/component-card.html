@@ -1,12 +1,14 @@
-<div class="component-card" (click)="onSelect()" (keydown.enter)="onSelect()" tabindex="0" role="button">
-  <div class="card-header">
-    <span class="tag-name">{{ component().tagName }}</span>
-    <lib-badge [tone]="component().status === 'stable' ? 'info' : component().status === 'deprecated' ? 'warning' : 'strong'">
-      {{ component().status }}
-    </lib-badge>
-  </div>
+<lib-card
+  class="component-card"
+  clickable
+  (click)="onSelect()"
+  (keydown.enter)="onSelect()"
+>
+  <lib-badge slot="tag" [tone]="statusTone()" size="sm" pill>
+    {{ component().status }}
+  </lib-badge>
 
-  <h3 class="card-name">{{ component().name }}</h3>
+  <h3 slot="title" class="card-name">{{ component().name }}</h3>
 
   @if (component().description) {
     <p class="card-description">{{ component().description }}</p>
@@ -15,8 +17,10 @@
   @if (component().tags.length > 0) {
     <div class="card-tags">
       @for (tag of component().tags.slice(0, 3); track tag) {
-        <lib-badge tone="strong">{{ tag }}</lib-badge>
+        <lib-badge tone="neutral" size="sm">{{ tag }}</lib-badge>
       }
     </div>
   }
-</div>
+
+  <span slot="footer" class="tag-name">{{ component().tagName }}</span>
+</lib-card>

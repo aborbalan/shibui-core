@@ -1,63 +1,33 @@
-.component-card {
-  background: transparent;
-  border: 1px solid var(--border-subtle);
-  padding: 1.25rem 1.5rem;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
+/* La "chrome" de la card (borde, fondo, hover, foco) la aporta <lib-card>.
+   Aquí solo se maquetan los elementos que la app sloteea dentro. */
+
+.card-name {
+  margin: 0;
+}
+
+.card-description {
+  margin: 0.5rem 0 0;
+  font-family: var(--lib-font-body, 'Shippori Mincho', serif);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-tags {
   display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+}
 
-  &:hover {
-    border-color: color-mix(in oklch, var(--color-kaki-500), transparent 60%);
-    background: var(--bg-surface);
-  }
-
-  &:focus-visible {
-    outline: 1px solid rgba(184, 90, 30, 0.5);
-    outline-offset: 2px;
-  }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-
-    .tag-name {
-      font-family: var(--lib-font-mono, 'DM Mono', monospace);
-      font-size: 0.6rem;
-      letter-spacing: 0.14em;
-      color: rgba(184, 90, 30, 0.55);
-      text-transform: lowercase;
-    }
-  }
-
-  .card-name {
-    font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--text-primary);
-    margin: 0;
-    letter-spacing: -0.01em;
-  }
-
-  .card-description {
-    font-family: var(--lib-font-body, 'Shippori Mincho', serif);
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .card-tags {
-    display: flex;
-    gap: 0.35rem;
-    flex-wrap: wrap;
-    margin-top: 0.25rem;
-  }
+.tag-name {
+  font-family: var(--lib-font-mono, 'DM Mono', monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: lowercase;
 }
