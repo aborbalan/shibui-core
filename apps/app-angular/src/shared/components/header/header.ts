@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeaderAction, NavLink } from '@shibui-ui/ui/components/molecules/header/lib-header.types';
+import { HeaderAction, NavLink } from './header.types';
 
 @Component({
   selector: 'app-header',
