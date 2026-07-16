@@ -1,1 +1,24 @@
-<p>hero-stats works!</p>
+<div class="hero-stats">
+  @for (stat of stats(); track stat.label; let i = $index) {
+    @if (i > 0) {
+      <div class="hero-stats__divider" aria-hidden="true"></div>
+    }
+    <div class="hero-stats__item">
+      @if (stat.text) {
+        <span class="hero-stats__value">{{ stat.text }}</span>
+      } @else {
+        <lib-counter
+          class="hero-stats__value"
+          [attr.value]="stat.value"
+          [attr.suffix]="stat.suffix ?? ''"
+          [attr.prefix]="stat.prefix ?? ''"
+          thousands=""
+          size="md"
+          tone="on-dark"
+          play-on-visible
+        ></lib-counter>
+      }
+      <span class="hero-stats__label">{{ stat.label }}</span>
+    </div>
+  }
+</div>

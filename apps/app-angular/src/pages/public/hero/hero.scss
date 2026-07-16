@@ -1,9 +1,32 @@
-.hero-wrapper{
-    padding: 20px;
-    .hero-intro-wrapper{
-        margin-bottom: 20px;
-        .button-group{
-            margin-top: 20px;
-        }
-    }
+.hero-wrapper {
+  display: flex;
+  flex-direction: column;
 }
+
+/* Secciones claras (intro, stats, content-sections): centradas con gutters. */
+.hero-lead {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(3rem, 7vh, 6rem) clamp(1.5rem, 4vw, 3rem);
+  box-sizing: border-box;
+}
+
+.hero-lead--top {
+  padding-top: clamp(2.5rem, 5vh, 4rem);
+}
+
+.hero-intro-wrapper {
+  margin-bottom: clamp(2rem, 5vh, 3.5rem);
+
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+}
+
+/* Las bandas oscuras (features, cards, showcase, tokens, filosofía) traen su
+   propio fondo washi-950 + contexto celadon y se centran por dentro, así que
+   van a sangre (full-bleed) sin gutters del wrapper. */
