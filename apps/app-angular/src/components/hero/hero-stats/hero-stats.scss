@@ -1,0 +1,42 @@
+/* Sección clara (home shizen): usa tokens semánticos → texto oscuro legible.
+   Dentro de un contexto data-katachi oscuro se adaptaría automáticamente. */
+.hero-stats {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 0;
+  border-top: 1px solid var(--border-subtle, color-mix(in oklch, currentColor, transparent 90%));
+  padding-top: 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.6s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.hero-stats__divider {
+  align-self: stretch;
+  width: 1px;
+  margin: 0 2.5rem;
+  background: var(--border-subtle, color-mix(in oklch, currentColor, transparent 85%));
+}
+
+.hero-stats__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.hero-stats__value {
+  font-family: var(--lib-font-display, 'Cormorant Garamond', serif);
+  font-size: 2.8rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.hero-stats__label {
+  font-family: var(--lib-font-mono, 'DM Mono', monospace);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted, var(--text-secondary));
+}
