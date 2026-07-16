@@ -1,32 +1,80 @@
 <div class="hero-wrapper">
-  <div class="hero-intro-wrapper">
-    <lib-eyebrow>Design System · v1.0.0 · Zaragoza</lib-eyebrow>
-    <lib-display-heading
-      line1="La belleza
-        de lo"
-      surface="light"
-      accent="austero"
-      description="66 componentes. Sin dependencias externas. CSS puro y vanilla JS bajo principios estéticos japoneses — wabi-sabi, kintsugi y ma. Donde cada elemento justifica su presencia."
-    ></lib-display-heading>
+  <!-- Intro + stats + primer content-section (sección clara) -->
+  <div class="hero-lead hero-lead--top">
+    <div class="hero-intro-wrapper">
+      <lib-eyebrow>Design System · v1.0.0 · Zaragoza</lib-eyebrow>
+      <lib-display-heading
+        line1="La belleza de lo"
+        surface="light"
+        accent="austero"
+        description="66 componentes. Sin dependencias externas. CSS puro y vanilla JS bajo principios estéticos japoneses — wabi-sabi, kintsugi y ma. Donde cada elemento justifica su presencia."
+      ></lib-display-heading>
 
-    <div class="button-group">
-      <lib-button variant="solid">VER COMPONENTES</lib-button>
-      <lib-button variant="ghost">LEER FILOSOFÍA</lib-button>
+      <div class="button-group">
+        <lib-button variant="solid" (click)="scrollTo('componentes')">VER COMPONENTES</lib-button>
+        <lib-button variant="ghost" (click)="scrollTo('philosophy')">LEER FILOSOFÍA</lib-button>
+      </div>
     </div>
-  </div>
 
-  <lib-divider>sobre...</lib-divider>
+    <lib-divider>sobre...</lib-divider>
 
-  <div>
+    <app-hero-stats />
+
     <app-content-section
-      [eyebrow]="'03 · Proyectos'"
-      [headingLine1]="'Arquitectura que'"
-      [headingLine2Prefix]="'perdura,'"
+      eyebrow="03 · Proyectos"
+      headingLine1="Arquitectura que"
+      headingLine2Prefix="perdura,"
       headingAccent="zero deps"
-      description="Cada decisión técnica tiene un porqué."
+      description="Cada decisión técnica tiene un porqué. Sin ornamento superfluo, sin dependencias."
       surface="transparent"
     ></app-content-section>
   </div>
 
-  <div></div>
+  <!-- Features (banda oscura celadon, full-bleed) -->
+  <div id="features"><app-features /></div>
+
+  <!-- Componentes -->
+  <div class="hero-lead">
+    <app-content-section
+      eyebrow="66 · Componentes"
+      headingLine1="Todo lo que"
+      headingLine2Prefix="necesitas,"
+      headingAccent="nada más"
+      description="Átomos, moléculas y organismos. Cuatro variantes estéticas por pieza: light, dark, kintsugi y glitch."
+      surface="transparent"
+    ></app-content-section>
+  </div>
+  <div id="componentes"><app-cards-section /></div>
+
+  <!-- Instalación -->
+  <div id="install"><app-install-section /></div>
+
+  <!-- Filosofía -->
+  <div id="philosophy"><app-philosophy-section /></div>
+
+  <!-- Variantes estéticas -->
+  <div class="hero-lead">
+    <app-content-section
+      eyebrow="Variantes estéticas"
+      headingLine1="Un sistema"
+      headingLine2Prefix=""
+      headingAccent="seis pieles"
+      description="Cada componente existe en múltiples superficies. La misma lógica, la misma API, seis expresiones visuales coherentes."
+      surface="transparent"
+    ></app-content-section>
+  </div>
+  <div><app-cards-showcase /></div>
+
+  <!-- Design tokens -->
+  <div class="hero-lead">
+    <app-content-section
+      eyebrow="Design tokens"
+      headingLine1="La gramática"
+      headingLine2Prefix="del"
+      headingAccent="sistema"
+      description="Colores, tipografías y espaciado como variables CSS. Cambia un token, transforma todo el sistema."
+      surface="transparent"
+    ></app-content-section>
+  </div>
+  <div><app-tokens-section /></div>
 </div>
