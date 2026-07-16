@@ -6,14 +6,17 @@
 }
 
 .content-area {
-  flex: 1; /* Ocupa todo el espacio restante */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  * {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+  min-height: 0; /* permite que el hijo flex encoja y active el scroll */
+  overflow-y: auto; /* el contenido de las páginas hace scroll aquí */
+
+  /* lib-background clipa (overflow:hidden en su :host): debe CRECER con el
+     contenido, nunca quedar fijado a la altura del viewport. flex:1 0 auto
+     lo hace rellenar cuando la página es corta y crecer cuando es larga. */
+  lib-background {
+    flex: 1 0 auto;
   }
 }
 
