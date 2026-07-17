@@ -962,6 +962,43 @@
         }
     }
 
+    /* ══════════════════════════════════════════
+        COMPACT — barra de una sola fila (sticky)
+        Ortogonal al theme: hereda la superficie
+        --ft-* pero colapsa el layout a una fila.
+        ══════════════════════════════════════════ */
+
+    /* Garantiza el filo superior en todos los temas (sabi lo quita) */
+    :host([compact]) footer {
+        border-top: 1px solid var(--ft-border);
+    }
+
+    .ft-inner.ft-compact {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: var(--lib-space-sm, 0.5rem) var(--lib-space-lg, 1.5rem);
+        padding-block: var(--lib-space-sm, 0.5rem);
+    }
+
+    .ft-compact-brand {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: var(--lib-space-sm, 0.5rem) var(--lib-space-md, 1rem);
+    }
+
+    .ft-compact-name {
+        font-size: 0.9375rem;
+        letter-spacing: 0.12em;
+    }
+
+    .ft-compact-links {
+        display: flex;
+        gap: var(--lib-space-md, 1rem);
+    }
+
     /* ── Responsive ── */
     @media (width <=768px) {
         .ft-inverse-grid,

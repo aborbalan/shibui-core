@@ -431,9 +431,41 @@ export function renderCeladon(ctx: LibFooter): TemplateResult {
 }
 
 /* ────────────────────────────────────────────────────────────
+   COMPACT · barra de una sola fila (sticky-friendly)
+   Ortogonal al theme: conserva la superficie (--ft-*) del tema
+   activo pero colapsa el layout a marca + copyright + legales.
+   ──────────────────────────────────────────────────────────── */
+export function renderCompact(ctx: LibFooter): TemplateResult {
+  return html`
+    <footer class="ft-compact-footer">
+      <div class="ft-inner ft-compact">
+
+        <div class="ft-compact-brand">
+          <span class="ft-brand ft-compact-name">
+            ${ctx.brandName} <em>${ctx.brandKanji}</em>
+          </span>
+          <span class="ft-copyright">© ${ctx.year} · ${ctx.brandName} DS · ${ctx.location}</span>
+        </div>
+
+        ${(ctx.legalLinks?.length ?? 0) > 0
+          ? html`<nav class="ft-compact-links" aria-label="Legal">
+              ${(ctx.legalLinks ?? []).map(link => html`
+                <a href="${link.href}" class="ft-link-mono">${link.label}</a>
+              `)}
+            </nav>`
+          : nothing}
+
+      </div>
+    </footer>
+  `;
+}
+
+/* ────────────────────────────────────────────────────────────
    Dispatcher — decide qué template renderizar
    ──────────────────────────────────────────────────────────── */
 export function renderFooter(ctx: LibFooter): TemplateResult {
+  if (ctx.compact) return renderCompact(ctx);
+
   switch (ctx.theme) {
     case 'social':    return renderSocial(ctx);
     case 'accordion': return renderAccordion(ctx);

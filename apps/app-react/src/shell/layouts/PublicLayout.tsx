@@ -23,7 +23,9 @@ export function PublicLayout() {
 
   return (
     <LibBackground theme="jade-deep">
-      <div style={{ width: '100%', minHeight: '100vh' }}>
+      {/* Reservamos abajo la altura de la barra sticky del footer para que el
+          último contenido no quede oculto tras ella. */}
+      <div style={{ width: '100%', minHeight: '100vh', paddingBottom: 'var(--app-footer-h, 3.5rem)' }}>
         <ShibuiHeader
           showSearch={activeId === 'componentes'}
           theme="celadon"
@@ -37,7 +39,19 @@ export function PublicLayout() {
           }}
         />
         <Outlet />
-        <Footer />
+      </div>
+
+      {/* Footer compacto pegado al viewport — simétrico al header fixed */}
+      <div
+        style={{
+          position: 'fixed',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 'var(--z-overlay)' as unknown as number,
+        }}
+      >
+        <Footer compact />
       </div>
     </LibBackground>
   );
