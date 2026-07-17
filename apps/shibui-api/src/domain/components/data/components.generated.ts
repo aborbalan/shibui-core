@@ -4036,6 +4036,13 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           ]
         },
         {
+          "name": "compact",
+          "type": "boolean",
+          "default": "false",
+          "description": "Modo compacto: colapsa cualquier `theme` en una barra de una sola fila\n(marca + copyright + enlaces legales), conservando la superficie del tema.\nPensado para footers pegados al viewport (sticky/pinned) que no deben\ncomerse una franja grande de pantalla.",
+          "attribute": "compact"
+        },
+        {
           "name": "decoration",
           "type": "string",
           "default": "''",

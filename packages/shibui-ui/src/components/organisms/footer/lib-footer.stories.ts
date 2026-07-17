@@ -324,6 +324,37 @@ export const AllVariants: Story = {
   parameters: { layout: 'fullscreen' },
 };
 
+/* ══════════════════════════════════════════
+   08 · Compact (sticky-friendly)
+   ══════════════════════════════════════════ */
+export const Compact: Story = {
+  name: '08 · Compact — barra sticky',
+  render: () => html`
+    <div style="display:flex;flex-direction:column;">
+      <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#B8A99A;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);background:oklch(15% 0.02 180deg);">compact · celadon</p>
+      <lib-footer
+        compact
+        theme="celadon"
+        brand-name="shibui"
+        brand-kanji="渋"
+        location="Zaragoza"
+        .legalLinks=${DEFAULT_LEGAL_LINKS}
+      ></lib-footer>
+
+      <p style="font-family:'DM Mono',monospace;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:#9A8878;padding:.75rem 1rem;border-bottom:1px solid #E5DDD3;background:#fff;">compact · shizen</p>
+      <lib-footer
+        compact
+        theme="shizen"
+        brand-name="shibui"
+        brand-kanji="渋"
+        location="Zaragoza"
+        .legalLinks=${DEFAULT_LEGAL_LINKS}
+      ></lib-footer>
+    </div>
+  `,
+  parameters: { layout: 'fullscreen' },
+};
+
 /* ═══════════════════════════════════════════════════════════════
    KATACHI · 形 · Las 6 historias estándar
    lib-footer define tokens internos (--ft-*) envueltos con
