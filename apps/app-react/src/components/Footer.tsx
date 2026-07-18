@@ -6,6 +6,8 @@ type FooterTheme = 'social' | 'accordion' | 'inverse' | 'glitch' | 'celadon' | '
 
 interface FooterProps {
   theme?: FooterTheme;
+  /** Modo compacto: barra de una sola fila, para footers sticky/pinned */
+  compact?: boolean;
   brandName?: string;
   brandKanji?: string;
   brandSub?: string;
@@ -77,6 +79,7 @@ const GLITCH_NAV_LINKS: FooterLink[] = [
 
 export const Footer: React.FC<FooterProps> = ({
   theme        = 'celadon',
+  compact      = false,
   brandName    = 'shibui',
   brandKanji   = '渋い',
   brandSub     = 'Design System · Zaragoza',
@@ -98,6 +101,7 @@ export const Footer: React.FC<FooterProps> = ({
   return (
     <LibFooter
       theme={theme}
+      compact={compact}
       brand-name={brandName}
       brand-kanji={brandKanji}
       brand-sub={brandSub}

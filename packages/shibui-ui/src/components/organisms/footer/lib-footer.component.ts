@@ -12,6 +12,7 @@ import sharedTokens from '../../../styles/shared/tokens.css?inline';
  * @tag lib-footer
  *
  * @attr {string}  theme        - Estilo del footer: 'social' | 'accordion' | 'inverse' | 'glitch' | 'celadon' | 'sabi' | 'shizen'
+ * @attr {boolean} compact      - Modo compacto: barra de una sola fila (marca + copyright + enlaces legales). Pensado para footers sticky/pinned; conserva la superficie del `theme`.
  * @attr {string}  brand-name   - Nombre de marca (ej: "shibui")
  * @attr {string}  brand-kanji  - Caracter kanji decorativo (ej: "渋")
  * @attr {string}  brand-sub    - Subtítulo bajo el logo (ej: "Design System · Zaragoza")
@@ -44,6 +45,15 @@ export class LibFooter extends LitElement {
 
   @property({ type: String, reflect: true })
   theme: FooterTheme = 'social';
+
+  /**
+   * Modo compacto: colapsa cualquier `theme` en una barra de una sola fila
+   * (marca + copyright + enlaces legales), conservando la superficie del tema.
+   * Pensado para footers pegados al viewport (sticky/pinned) que no deben
+   * comerse una franja grande de pantalla.
+   */
+  @property({ type: Boolean, reflect: true })
+  compact = false;
 
   /**
    * Decoraciones celadon opt-in (Bar), separadas por espacio
