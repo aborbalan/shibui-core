@@ -33,7 +33,6 @@ export const HeroStats: React.FC<HeroStatsProps> = ({
       display:       'flex',
       alignItems:    'stretch',
       gap:           0,
-      borderTop:     '1px solid color-mix(in oklch, var(--color-white), transparent 94%)',
       paddingTop:    '2.5rem',
       opacity:       0,
       animation:     `fadeUp 0.9s 0.6s ${EASE} forwards`,
