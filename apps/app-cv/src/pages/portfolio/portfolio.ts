@@ -23,7 +23,9 @@ import {
   imports: [Gallery],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <lib-background variant="kaki-glow" class="bg">
+    <!-- theme=washi explícito: congela el aspecto que /sandra ha tenido siempre
+         (con la prop mal llamada variant= se renderizaba el default washi). -->
+    <lib-background theme="washi" class="bg">
       <main class="page">
         <!-- Hero -->
         <header class="intro">

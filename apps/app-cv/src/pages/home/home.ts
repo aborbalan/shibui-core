@@ -17,7 +17,7 @@ import { profile, experience, projects, skills, fullStack, education, languages 
   imports: [Hero, Experience, Projects, Skills, Education, Languages],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <lib-background variant="kaki-glow" class="bg">
+    <lib-background theme="kaki-glow" class="bg">
       <main class="page">
         <cv-hero [profile]="profile" />
 
