@@ -23,8 +23,8 @@ import {
   imports: [Gallery],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <!-- theme=washi explícito: congela el aspecto que /sandra ha tenido siempre
-         (con la prop mal llamada variant= se renderizaba el default washi). -->
+    <!-- Decisión: /sandra se queda en washi (papel neutro que no compite con
+         las fotos); el fondo kaki-glow del rediseño es solo de la home. -->
     <lib-background theme="washi" class="bg">
       <main class="page">
         <!-- Hero -->

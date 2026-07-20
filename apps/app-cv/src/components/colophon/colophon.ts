@@ -1,5 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
-import { EducationItem, LanguageItem, Profile, REPO } from '@data/cv';
+import { EducationItem, LanguageItem, Profile, signature } from '@data/cv';
 
 /**
  * Colofón: banda final compacta que fusiona educación, idiomas, ubicación
@@ -13,10 +13,12 @@ import { EducationItem, LanguageItem, Profile, REPO } from '@data/cv';
   template: `
     <footer class="col">
       <div class="col__grid">
-        <section class="col__block" aria-label="Educación">
-          <lib-eyebrow tone="neutral" line="none" size="sm">Educación</lib-eyebrow>
+        <section class="col__block">
+          <!-- h2 real: las secciones del colofón no desaparecen del outline
+               de encabezados (AT); el eyebrow pone el look, el h2 la semántica. -->
+          <h2 class="col__label"><lib-eyebrow tone="default" line="none" size="sm">Educación</lib-eyebrow></h2>
           <ul class="col__list">
-            @for (item of education(); track item.title) {
+            @for (item of education(); track $index) {
               <li class="col__item">
                 <span class="col__name">{{ item.title }}</span>
                 <span class="col__meta">{{ item.place }} · {{ item.period }}</span>
@@ -25,17 +27,17 @@ import { EducationItem, LanguageItem, Profile, REPO } from '@data/cv';
           </ul>
         </section>
 
-        <section class="col__block" aria-label="Idiomas y ubicación">
-          <lib-eyebrow tone="neutral" line="none" size="sm">Idiomas</lib-eyebrow>
+        <section class="col__block">
+          <h2 class="col__label"><lib-eyebrow tone="default" line="none" size="sm">Idiomas</lib-eyebrow></h2>
           <ul class="col__list">
-            @for (item of languages(); track item.name) {
+            @for (item of languages(); track $index) {
               <li class="col__item">
                 <span class="col__name">{{ item.name }}</span>
                 <span class="col__meta">{{ item.level }}</span>
               </li>
             }
           </ul>
-          <lib-eyebrow tone="neutral" line="none" size="sm">Ubicación</lib-eyebrow>
+          <h2 class="col__label"><lib-eyebrow tone="default" line="none" size="sm">Ubicación</lib-eyebrow></h2>
           <p class="col__loc">{{ profile().location }}</p>
         </section>
       </div>
@@ -44,8 +46,8 @@ import { EducationItem, LanguageItem, Profile, REPO } from '@data/cv';
         <span class="col__meta">
           © {{ year }} {{ profile().firstName }} {{ profile().lastName }}
         </span>
-        <a class="mono-link" [href]="codeUrl" target="_blank" rel="noopener noreferrer">
-          Construido con &#64;shibui-ui/ui — ver código ↗
+        <a class="mono-link" [href]="sig.href" target="_blank" rel="noopener noreferrer">
+          {{ sig.text }} ↗
         </a>
       </div>
     </footer>
@@ -64,6 +66,11 @@ import { EducationItem, LanguageItem, Profile, REPO } from '@data/cv';
         display: flex;
         flex-direction: column;
         gap: var(--lib-space-md, 16px);
+      }
+      /* h2 semántico sin la voz tipográfica de un heading: la pone el eyebrow */
+      .col__label {
+        margin: 0;
+        font: inherit;
       }
       .col__list {
         list-style: none;
@@ -113,6 +120,5 @@ export class Colophon {
   readonly profile = input.required<Profile>();
 
   protected readonly year = new Date().getFullYear();
-  /** Deep-link a la propia app dentro del monorepo público. */
-  protected readonly codeUrl = `${REPO}/apps/app-cv`;
+  protected readonly sig = signature;
 }

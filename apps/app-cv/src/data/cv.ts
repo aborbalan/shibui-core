@@ -13,10 +13,7 @@ export interface Profile {
   firstName: string;
   /** Apellidos (acento itálico del titular) */
   lastName: string;
-  /**
-   * Titular completo, segmentos separados por ' · '. El hero lo trocea
-   * tipográficamente: 1er segmento = kicker eyebrow; el resto, línea meta.
-   */
+  /** Titular completo; segmentos separados por ' · '. */
   title: string;
   /** Tagline de una línea: qué hago y para qué sirve */
   tagline: string;
@@ -227,6 +224,12 @@ export const education: EducationItem[] = [
 // su demo en vivo y/o a su subcarpeta dentro del monorepo público.
 // ─────────────────────────────────────────────────────────────
 export const REPO = 'https://github.com/aborbalan/shibui-core/tree/main';
+
+/** Firma del colofón — contenido editable aquí, como el resto del CV. */
+export const signature = {
+  text: 'Construido con @shibui-ui/ui — ver código',
+  href: `${REPO}/apps/app-cv`,
+};
 
 export const projects: ProjectItem[] = [
   {

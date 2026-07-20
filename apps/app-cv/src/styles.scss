@@ -14,6 +14,9 @@ body {
  * motion de shibui que escuche window) no se ejecutaba nunca. `clip` recorta
  * sin crear scroll container: el documento vuelve a ser el scroller. */
 html {
+  /* Fallback para motores sin `clip` (iOS Safari <16): `hidden` solo en html
+   * no roba el scroll del documento (el bug era height:100% + hidden en body). */
+  overflow-x: hidden;
   overflow-x: clip;
 }
 
@@ -39,10 +42,10 @@ a {
   color: var(--text-link, inherit);
 }
 
-/* Enlace mono con subrayado animado — patrón compartido por hero, proyectos
- * y colofón. Vive en global (encapsulación emulada lo permite) para no
- * duplicarlo en cada componente: el budget anyComponentStyle solo mide los
- * estilos declarados en los componentes. */
+/* Enlace mono con subrayado animado — patrón único compartido por hero,
+ * proyectos y colofón (los tres lo consumen vía class="mono-link"). Vive en
+ * global (encapsulación emulada lo permite) para no duplicarlo en cada
+ * componente: el budget anyComponentStyle solo mide estilos de componente. */
 .mono-link {
   position: relative;
   font-family: var(--lib-font-mono, monospace);
