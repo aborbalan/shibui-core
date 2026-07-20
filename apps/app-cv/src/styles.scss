@@ -4,11 +4,17 @@
  */
 html,
 body {
-  height: 100%;
   margin: 0;
   padding: 0;
-  /* guard anti-scroll horizontal en móvil */
-  overflow-x: hidden;
+}
+
+/* Guard anti-scroll horizontal, SOLO en html y con `clip`: `hidden` (y el
+ * antiguo height:100%) convertían al body en el contenedor de scroll, con lo
+ * que window.scrollY quedaba clavado a 0 y el parallax del hero (y cualquier
+ * motion de shibui que escuche window) no se ejecutaba nunca. `clip` recorta
+ * sin crear scroll container: el documento vuelve a ser el scroller. */
+html {
+  overflow-x: clip;
 }
 
 body {
