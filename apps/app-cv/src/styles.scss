@@ -39,6 +39,40 @@ a {
   color: var(--text-link, inherit);
 }
 
+/* Enlace mono con subrayado animado — patrón compartido por hero, proyectos
+ * y colofón. Vive en global (encapsulación emulada lo permite) para no
+ * duplicarlo en cada componente: el budget anyComponentStyle solo mide los
+ * estilos declarados en los componentes. */
+.mono-link {
+  position: relative;
+  font-family: var(--lib-font-mono, monospace);
+  font-size: var(--text-sm, 0.8125rem);
+  letter-spacing: var(--tracking-wide, 0.08em);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-primary);
+  padding-bottom: 2px;
+  transition: color 0.2s ease;
+}
+.mono-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--text-accent, currentColor);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.mono-link:hover {
+  color: var(--text-accent);
+}
+.mono-link:hover::after {
+  transform: scaleX(1);
+}
+
 /* ─────────────────────────────────────────────────────────────
  * Versión imprimible / PDF
  * El katachi base (shizen) ya es papel claro con tinta oscura, así
@@ -78,8 +112,7 @@ a {
 
   /* Mantener juntas las secciones cortas dentro de una página. */
   cv-skills,
-  cv-education,
-  cv-languages {
+  cv-colophon {
     break-inside: avoid;
   }
 

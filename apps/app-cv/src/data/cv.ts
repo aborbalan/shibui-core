@@ -226,7 +226,7 @@ export const education: EducationItem[] = [
 // un solo repo cohesionado, no repos dispersos → cada card enlaza a
 // su demo en vivo y/o a su subcarpeta dentro del monorepo público.
 // ─────────────────────────────────────────────────────────────
-const REPO = 'https://github.com/aborbalan/shibui-core/tree/main';
+export const REPO = 'https://github.com/aborbalan/shibui-core/tree/main';
 
 export const projects: ProjectItem[] = [
   {
