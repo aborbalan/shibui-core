@@ -1,10 +1,14 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, computed } from '@angular/core';
 import { Hero } from '@components/hero/hero';
 import { Experience } from '@components/experience/experience';
 import { Projects } from '@components/projects/projects';
 import { Skills } from '@components/skills/skills';
 import { Colophon } from '@components/colophon/colophon';
+import { KatachiBand } from '@components/katachi-band/katachi-band';
+import { TokenSpecimen } from '@components/token-specimen/token-specimen';
 import { profile, experience, projects, skills, fullStack, education, languages } from '@data/cv';
+import { KATACHI_BG } from '@data/katachi';
+import { katachi, setKatachi } from '../../state/katachi.store';
 
 /**
  * Página única del CV. Smart component: inyecta los datos estáticos
@@ -13,15 +17,23 @@ import { profile, experience, projects, skills, fullStack, education, languages 
 @Component({
   selector: 'cv-home',
   standalone: true,
-  imports: [Hero, Experience, Projects, Skills, Colophon],
+  imports: [Hero, Experience, Projects, Skills, Colophon, KatachiBand, TokenSpecimen],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <lib-background theme="kaki-glow" class="bg">
+    <!-- Superficie art-directed afín al katachi activo (los temas de
+         lib-background no reaccionan solos al katachi). -->
+    <lib-background [attr.theme]="bgTheme()" class="bg">
       <main class="page">
         <cv-hero [profile]="profile" />
 
         <lib-divider></lib-divider>
         <cv-projects [items]="projects" />
+
+        <lib-divider class="no-print"></lib-divider>
+        <div class="no-print">
+          <cv-katachi-band [value]="katachi()" (valueChange)="setKatachi($event)" />
+          <cv-token-specimen [katachi]="katachi()" />
+        </div>
 
         <lib-divider></lib-divider>
         <cv-experience [items]="experience" />
@@ -71,4 +83,8 @@ export class HomePage {
   protected readonly fullStack = fullStack;
   protected readonly education = education;
   protected readonly languages = languages;
+
+  protected readonly katachi = katachi;
+  protected readonly setKatachi = setKatachi;
+  protected readonly bgTheme = computed(() => KATACHI_BG[katachi()]);
 }
