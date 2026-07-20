@@ -37,10 +37,14 @@ import { SectionHeading } from '../section-heading/section-heading';
             @if (p.demo || p.code) {
               <div slot="footer" class="pr__links">
                 @if (p.demo) {
-                  <a [href]="p.demo" target="_blank" rel="noopener noreferrer">Demo ↗</a>
+                  <a class="mono-link" [href]="p.demo" target="_blank" rel="noopener noreferrer"
+                    >Demo ↗</a
+                  >
                 }
                 @if (p.code) {
-                  <a [href]="p.code" target="_blank" rel="noopener noreferrer">Código ↗</a>
+                  <a class="mono-link" [href]="p.code" target="_blank" rel="noopener noreferrer"
+                    >Código ↗</a
+                  >
                 }
               </div>
             }
@@ -86,35 +90,7 @@ import { SectionHeading } from '../section-heading/section-heading';
         flex-wrap: wrap;
         gap: var(--lib-space-lg, 24px);
       }
-      .pr__links a {
-        position: relative;
-        font-family: var(--lib-font-mono, monospace);
-        font-size: var(--text-sm, 0.8125rem);
-        letter-spacing: var(--tracking-wide, 0.08em);
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--text-primary);
-        padding-bottom: 2px;
-        transition: color 0.2s ease;
-      }
-      .pr__links a::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 1px;
-        background: var(--text-accent, currentColor);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.25s ease;
-      }
-      .pr__links a:hover {
-        color: var(--text-accent);
-      }
-      .pr__links a:hover::after {
-        transform: scaleX(1);
-      }
+      /* Los enlaces usan .mono-link global; aquí solo el layout del footer. */
     `,
   ],
 })

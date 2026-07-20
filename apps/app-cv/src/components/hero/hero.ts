@@ -4,6 +4,7 @@ import {
   DestroyRef,
   ElementRef,
   afterNextRender,
+  computed,
   inject,
   input,
 } from '@angular/core';
@@ -33,16 +34,29 @@ import { Profile } from '@data/cv';
           [line1]="profile().firstName"
           [accent]="profile().lastName"
         >
-          <lib-eyebrow slot="eyebrow" tone="accent" size="lg">{{ profile().title }}</lib-eyebrow>
+          <div slot="eyebrow" class="hero__kicker">
+            <lib-eyebrow tone="accent" size="lg">{{ titleParts().head }}</lib-eyebrow>
+            @if (titleParts().meta.length) {
+              <p class="hero__kicker-meta">
+                @for (seg of titleParts().meta; track $index) {
+                  <span class="hero__kicker-seg">{{ seg }}</span>
+                }
+              </p>
+            }
+          </div>
         </lib-display-heading>
 
         <p class="hero__tagline">{{ profile().tagline }}</p>
 
         <div class="hero__actions">
           <nav class="hero__links" aria-label="Contacto">
-            <a [href]="profile().github" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a [href]="profile().linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a [href]="'mailto:' + profile().email">Email</a>
+            <a class="mono-link" [href]="profile().github" target="_blank" rel="noopener noreferrer"
+              >GitHub</a
+            >
+            <a class="mono-link" [href]="profile().linkedin" target="_blank" rel="noopener noreferrer"
+              >LinkedIn</a
+            >
+            <a class="mono-link" [href]="'mailto:' + profile().email">Email</a>
           </nav>
 
           <button type="button" class="hero__print no-print" (click)="onPrint()">
@@ -90,6 +104,32 @@ import { Profile } from '@data/cv';
         gap: var(--lib-space-lg, 24px);
         padding-block: var(--lib-space-xl, 32px);
       }
+      .hero__kicker {
+        display: flex;
+        flex-direction: column;
+        gap: var(--lib-space-xs, 4px);
+      }
+      /* Segunda línea del titular: especialidades en mono muted. Cada
+         segmento es no-partible: los saltos caen siempre en los separadores. */
+      .hero__kicker-meta {
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--lib-space-xs, 4px) var(--lib-space-sm, 8px);
+        font-family: var(--lib-font-mono, monospace);
+        font-size: var(--text-xs, 0.6875rem);
+        letter-spacing: var(--tracking-wide, 0.08em);
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      .hero__kicker-seg {
+        white-space: nowrap;
+      }
+      /* Separador decorativo entre segmentos, en CSS (con alt vacío para AT). */
+      .hero__kicker-seg:not(:last-child)::after {
+        content: '·' / '';
+        margin-left: var(--lib-space-sm, 8px);
+      }
       .hero__tagline {
         margin: 0;
         max-width: 46ch;
@@ -136,35 +176,9 @@ import { Profile } from '@data/cv';
         outline: 2px solid var(--border-focus, currentColor);
         outline-offset: 2px;
       }
-      .hero__links a {
-        position: relative;
-        font-family: var(--lib-font-mono, monospace);
-        font-size: var(--text-sm, 0.8125rem);
-        letter-spacing: var(--tracking-wide, 0.08em);
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--text-primary);
-        /* tap target cómodo en móvil */
+      /* tap target cómodo en móvil (el resto lo da .mono-link global) */
+      .hero__links .mono-link {
         padding: 4px 0 6px;
-        transition: color 0.2s ease;
-      }
-      .hero__links a::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 1px;
-        background: var(--text-accent, currentColor);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.25s ease;
-      }
-      .hero__links a:hover {
-        color: var(--text-accent);
-      }
-      .hero__links a:hover::after {
-        transform: scaleX(1);
       }
 
       /* Parallax: --p (0→1) lo escribe el componente al hacer scroll.
@@ -204,6 +218,12 @@ import { Profile } from '@data/cv';
 })
 export class Hero {
   readonly profile = input.required<Profile>();
+
+  /** Titular troceado por ' · ': head = rol (eyebrow), meta = especialidades. */
+  protected readonly titleParts = computed(() => {
+    const [head = '', ...meta] = this.profile().title.split(' · ');
+    return { head, meta };
+  });
 
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly destroyRef = inject(DestroyRef);

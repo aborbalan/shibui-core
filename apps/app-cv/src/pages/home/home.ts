@@ -3,8 +3,7 @@ import { Hero } from '@components/hero/hero';
 import { Experience } from '@components/experience/experience';
 import { Projects } from '@components/projects/projects';
 import { Skills } from '@components/skills/skills';
-import { Education } from '@components/education/education';
-import { Languages } from '@components/languages/languages';
+import { Colophon } from '@components/colophon/colophon';
 import { profile, experience, projects, skills, fullStack, education, languages } from '@data/cv';
 
 /**
@@ -14,32 +13,24 @@ import { profile, experience, projects, skills, fullStack, education, languages 
 @Component({
   selector: 'cv-home',
   standalone: true,
-  imports: [Hero, Experience, Projects, Skills, Education, Languages],
+  imports: [Hero, Experience, Projects, Skills, Colophon],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <lib-background variant="kaki-glow" class="bg">
+    <lib-background theme="kaki-glow" class="bg">
       <main class="page">
         <cv-hero [profile]="profile" />
-
-        <lib-divider></lib-divider>
-        <cv-experience [items]="experience" />
 
         <lib-divider></lib-divider>
         <cv-projects [items]="projects" />
 
         <lib-divider></lib-divider>
+        <cv-experience [items]="experience" />
+
+        <lib-divider></lib-divider>
         <cv-skills [groups]="skills" [fullStack]="fullStack" />
 
         <lib-divider></lib-divider>
-        <cv-education [items]="education" />
-
-        <lib-divider></lib-divider>
-        <cv-languages [items]="languages" />
-
-        <footer class="page__foot">
-          <span>© {{ year }} {{ profile.firstName }} {{ profile.lastName }}</span>
-          <span>{{ profile.location }}</span>
-        </footer>
+        <cv-colophon [education]="education" [languages]="languages" [profile]="profile" />
       </main>
     </lib-background>
   `,
@@ -62,25 +53,12 @@ import { profile, experience, projects, skills, fullStack, education, languages 
         display: block;
         margin-block: var(--lib-space-xl, 32px);
       }
-      .page > cv-experience,
       .page > cv-projects,
+      .page > cv-experience,
       .page > cv-skills,
-      .page > cv-education,
-      .page > cv-languages {
+      .page > cv-colophon {
         display: block;
         scroll-margin-top: var(--lib-space-xl, 32px);
-      }
-      .page__foot {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: var(--lib-space-sm, 8px);
-        margin-top: var(--lib-space-xl, 32px);
-        padding-top: var(--lib-space-lg, 24px);
-        font-family: var(--lib-font-mono, monospace);
-        font-size: var(--text-xs, 0.6875rem);
-        letter-spacing: var(--tracking-wide, 0.08em);
-        color: var(--text-muted);
       }
     `,
   ],
@@ -93,5 +71,4 @@ export class HomePage {
   protected readonly fullStack = fullStack;
   protected readonly education = education;
   protected readonly languages = languages;
-  protected readonly year = new Date().getFullYear();
 }

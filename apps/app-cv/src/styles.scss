@@ -4,11 +4,20 @@
  */
 html,
 body {
-  height: 100%;
   margin: 0;
   padding: 0;
-  /* guard anti-scroll horizontal en móvil */
+}
+
+/* Guard anti-scroll horizontal, SOLO en html y con `clip`: `hidden` (y el
+ * antiguo height:100%) convertían al body en el contenedor de scroll, con lo
+ * que window.scrollY quedaba clavado a 0 y el parallax del hero (y cualquier
+ * motion de shibui que escuche window) no se ejecutaba nunca. `clip` recorta
+ * sin crear scroll container: el documento vuelve a ser el scroller. */
+html {
+  /* Fallback para motores sin `clip` (iOS Safari <16): `hidden` solo en html
+   * no roba el scroll del documento (el bug era height:100% + hidden en body). */
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -31,6 +40,40 @@ body {
 
 a {
   color: var(--text-link, inherit);
+}
+
+/* Enlace mono con subrayado animado — patrón único compartido por hero,
+ * proyectos y colofón (los tres lo consumen vía class="mono-link"). Vive en
+ * global (encapsulación emulada lo permite) para no duplicarlo en cada
+ * componente: el budget anyComponentStyle solo mide estilos de componente. */
+.mono-link {
+  position: relative;
+  font-family: var(--lib-font-mono, monospace);
+  font-size: var(--text-sm, 0.8125rem);
+  letter-spacing: var(--tracking-wide, 0.08em);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-primary);
+  padding-bottom: 2px;
+  transition: color 0.2s ease;
+}
+.mono-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--text-accent, currentColor);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.mono-link:hover {
+  color: var(--text-accent);
+}
+.mono-link:hover::after {
+  transform: scaleX(1);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -72,9 +115,20 @@ a {
 
   /* Mantener juntas las secciones cortas dentro de una página. */
   cv-skills,
-  cv-education,
-  cv-languages {
+  cv-colophon {
     break-inside: avoid;
+  }
+
+  /* Con Proyectos en primera página, las cards y los hitos del timeline
+   * pueden caer en el corte: cada pieza entera o a la página siguiente. */
+  cv-projects lib-card,
+  lib-timeline-item {
+    break-inside: avoid;
+  }
+
+  /* Un heading nunca se queda huérfano al pie de página. */
+  cv-section-heading {
+    break-after: avoid;
   }
 
   /* Enlaces en tinta negra, sin adornos, para legibilidad impresa. */

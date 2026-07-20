@@ -102,12 +102,13 @@ src/
     home/home.ts          → Smart: inyecta cv.ts y reparte a las secciones por inputs
     portfolio/portfolio.ts → Página independiente del portfolio (ruta 'sandra')
   components/             → Secciones dumb (solo input())
-    hero/                 → Above the fold: nombre + título + tagline + 3 links
-    experience/           → lib-timeline (cronológico inverso) + chips de stack
+    hero/                 → Above the fold: titular en 2 niveles + nombre + tagline + 3 links
+    projects/             → Cards de proyectos (lib-card, kanji watermark) — abre tras el hero
+    experience/           → lib-timeline (cronológico inverso) + stack en línea mono
     skills/               → Grid Core/Tooling/Familiar con lib-chip
-    education/            → Lista breve al final
+    colophon/             → Banda final compacta: educación + idiomas + ubicación + firma
     section-heading/      → Cabecera reutilizable (lib-eyebrow + h2)
-    gallery/ · katachi-switcher/ · languages/ · projects/ → Secciones del portfolio
+    gallery/ · katachi-switcher/ → Galería del portfolio de Sandra · selector de katachi
   typings.d.ts            → Tipos para imports ?raw, ?inline y *.svg
   styles.scss             → Base global (superficie/texto heredan tokens shizen)
   main.ts                 → Bootstrap + import @shibui-ui/ui

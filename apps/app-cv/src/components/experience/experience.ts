@@ -4,7 +4,7 @@ import { SectionHeading } from '../section-heading/section-heading';
 
 /**
  * Experiencia en timeline (cronológico inverso). Empresas destacadas
- * con nodo de acento. Por rol: stack (chips) + 1-2 logros.
+ * con nodo de acento. Por rol: 1-2 logros + stack en línea mono.
  * Dumb component.
  */
 @Component({
@@ -41,11 +41,9 @@ import { SectionHeading } from '../section-heading/section-heading';
               </ul>
             </div>
 
-            <div slot="meta" class="xp__stack">
-              @for (tech of job.stack; track tech) {
-                <lib-chip size="sm">{{ tech }}</lib-chip>
-              }
-            </div>
+            <!-- Stack como línea mono, no chips: el chip se reserva a la
+                 sección Stack para que allí conserve su peso visual. -->
+            <span slot="meta" class="xp__stack">{{ job.stack.join(' · ') }}</span>
           </lib-timeline-item>
         }
       </lib-timeline>
@@ -89,10 +87,13 @@ import { SectionHeading } from '../section-heading/section-heading';
         overflow-wrap: anywhere;
       }
       .xp__stack {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--lib-space-sm, 8px);
+        display: block;
         margin-top: var(--lib-space-md, 16px);
+        font-family: var(--lib-font-mono, monospace);
+        font-size: var(--text-xs, 0.6875rem);
+        letter-spacing: var(--tracking-wide, 0.08em);
+        text-transform: uppercase;
+        color: var(--text-muted);
       }
     `,
   ],

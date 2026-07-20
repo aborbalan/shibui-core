@@ -23,7 +23,9 @@ import {
   imports: [Gallery],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <lib-background variant="kaki-glow" class="bg">
+    <!-- Decisión: /sandra se queda en washi (papel neutro que no compite con
+         las fotos); el fondo kaki-glow del rediseño es solo de la home. -->
+    <lib-background theme="washi" class="bg">
       <main class="page">
         <!-- Hero -->
         <header class="intro">
