@@ -70,6 +70,8 @@ export interface ProjectItem {
   code?: string;
   /** Kanji watermark de la card (guiño del design system) */
   kanji?: string;
+  /** Decoraciones opt-in de lib-card (solo lucen en celadon) */
+  decoration?: string;
   /** Proyecto destacado → variante featured de la card */
   highlight?: boolean;
 }
@@ -241,6 +243,7 @@ export const projects: ProjectItem[] = [
     demo: 'https://shibui-showcase-storybook.web.app',
     code: `${REPO}/packages/shibui-ui`,
     kanji: '渋',
+    decoration: 'craquelure depth',
     highlight: true,
   },
   {
@@ -252,6 +255,7 @@ export const projects: ProjectItem[] = [
     demo: 'https://hanko-report.web.app',
     code: `${REPO}/packages/hanko`,
     kanji: '印',
+    decoration: 'condensation mist',
     highlight: true,
   },
 ];
