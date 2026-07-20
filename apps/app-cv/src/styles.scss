@@ -116,6 +116,18 @@ a {
     break-inside: avoid;
   }
 
+  /* Con Proyectos en primera página, las cards y los hitos del timeline
+   * pueden caer en el corte: cada pieza entera o a la página siguiente. */
+  cv-projects lib-card,
+  lib-timeline-item {
+    break-inside: avoid;
+  }
+
+  /* Un heading nunca se queda huérfano al pie de página. */
+  cv-section-heading {
+    break-after: avoid;
+  }
+
   /* Enlaces en tinta negra, sin adornos, para legibilidad impresa. */
   a {
     color: #000 !important;
