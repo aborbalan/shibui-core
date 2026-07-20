@@ -4,6 +4,7 @@ import {
   DestroyRef,
   ElementRef,
   afterNextRender,
+  computed,
   inject,
   input,
 } from '@angular/core';
@@ -33,7 +34,19 @@ import { Profile } from '@data/cv';
           [line1]="profile().firstName"
           [accent]="profile().lastName"
         >
-          <lib-eyebrow slot="eyebrow" tone="accent" size="lg">{{ profile().title }}</lib-eyebrow>
+          <div slot="eyebrow" class="hero__kicker">
+            <lib-eyebrow tone="accent" size="lg">{{ titleParts().head }}</lib-eyebrow>
+            @if (titleParts().meta.length) {
+              <p class="hero__kicker-meta">
+                @for (seg of titleParts().meta; track seg; let last = $last) {
+                  <span class="hero__kicker-seg">{{ seg }}</span>
+                  @if (!last) {
+                    <span aria-hidden="true">·</span>
+                  }
+                }
+              </p>
+            }
+          </div>
         </lib-display-heading>
 
         <p class="hero__tagline">{{ profile().tagline }}</p>
@@ -89,6 +102,27 @@ import { Profile } from '@data/cv';
         flex-direction: column;
         gap: var(--lib-space-lg, 24px);
         padding-block: var(--lib-space-xl, 32px);
+      }
+      .hero__kicker {
+        display: flex;
+        flex-direction: column;
+        gap: var(--lib-space-xs, 4px);
+      }
+      /* Segunda línea del titular: especialidades en mono muted. Cada
+         segmento es no-partible: los saltos caen siempre en los separadores. */
+      .hero__kicker-meta {
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--lib-space-xs, 4px) var(--lib-space-sm, 8px);
+        font-family: var(--lib-font-mono, monospace);
+        font-size: var(--text-xs, 0.6875rem);
+        letter-spacing: var(--tracking-wide, 0.08em);
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      .hero__kicker-seg {
+        white-space: nowrap;
       }
       .hero__tagline {
         margin: 0;
@@ -204,6 +238,12 @@ import { Profile } from '@data/cv';
 })
 export class Hero {
   readonly profile = input.required<Profile>();
+
+  /** Titular troceado por ' · ': head = rol (eyebrow), meta = especialidades. */
+  protected readonly titleParts = computed(() => {
+    const [head = '', ...meta] = this.profile().title.split(' · ');
+    return { head, meta };
+  });
 
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly destroyRef = inject(DestroyRef);

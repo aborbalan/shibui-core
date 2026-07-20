@@ -13,7 +13,10 @@ export interface Profile {
   firstName: string;
   /** Apellidos (acento itálico del titular) */
   lastName: string;
-  /** Mismo título que en LinkedIn — kicker sobre el nombre */
+  /**
+   * Titular completo, segmentos separados por ' · '. El hero lo trocea
+   * tipográficamente: 1er segmento = kicker eyebrow; el resto, línea meta.
+   */
   title: string;
   /** Tagline de una línea: qué hago y para qué sirve */
   tagline: string;
@@ -80,9 +83,10 @@ export interface ProjectItem {
 export const profile: Profile = {
   firstName: 'Alejandro',
   lastName: 'Borbalán Dueñas',
-  title: 'Programador Front-End Senior',
+  title:
+    'Senior Front-end Engineer · Angular & Web Components · Design Systems · Open to Remote',
   tagline:
-    'Más de 7 años construyendo frontend Angular a escala — librerías, arquitectura de componentes y código donde el diseño importa tanto como la estructura.',
+    'Diseño y construyo design systems — Web Components que viven idénticos en React, Angular y Svelte — con más de 7 años de frontend a escala donde el diseño importa tanto como la estructura.',
   location: 'Zaragoza, España',
   github: 'https://github.com/aborbalan', // TODO: verificar handle público
   linkedin: 'https://www.linkedin.com/in/alejandro-borbalan-duenas-a20142167',
