@@ -94,9 +94,19 @@ a {
     overflow: visible !important;
   }
 
-  /* Papel blanco puro bajo los componentes (el token cruza el Shadow DOM). */
+  /* Papel blanco y tinta oscura SIEMPRE, esté activo el katachi que esté:
+   * los katachi oscuros invierten los tokens de texto y dejarían un PDF de
+   * texto claro sobre papel blanco. !important para ganar a la especificidad
+   * de html[data-katachi="…"]. Los tokens cruzan el Shadow DOM. */
   :root {
-    --bg-base: #fff;
+    --bg-base: #fff !important;
+    --bg-surface: #f5f2ee !important;
+    --text-primary: #1a1613 !important;
+    --text-secondary: #4a443e !important;
+    --text-muted: #8a827a !important;
+    --text-accent: #9c4f1a !important;
+    --text-link: #1f5f54 !important;
+    --border-default: #d8d2c9 !important;
   }
 
   /* El hero ocupa el viewport completo en web; en papel, altura natural. */
@@ -126,8 +136,10 @@ a {
     break-inside: avoid;
   }
 
-  /* Un heading nunca se queda huérfano al pie de página. */
+  /* Un heading nunca se queda huérfano al pie de página ni se parte
+   * por dentro (eyebrow en una página, h2 en la siguiente). */
   cv-section-heading {
+    break-inside: avoid;
     break-after: avoid;
   }
 
