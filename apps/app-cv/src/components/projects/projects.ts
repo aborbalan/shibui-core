@@ -106,18 +106,12 @@ import { SectionHeading } from '../section-heading/section-heading';
         display: block;
         height: 100%;
       }
-      /* Hover con intención: la card se eleva y el cover se aviva.
-         Solo si el usuario no pidió reducir movimiento. */
+      /* Hover con intención: lib-card ya eleva la card (-2px + sombra); aquí
+         solo añadimos lo que la card no toca — el cover se aviva y su kanji
+         escala. Todo el movimiento bajo prefers-reduced-motion. */
       @media (prefers-reduced-motion: no-preference) {
-        .pr__card {
-          transition:
-            transform 0.2s ease,
-            box-shadow 0.2s ease;
-        }
-        .pr__card:hover {
-          transform: translateY(-4px);
-        }
-        .pr__cover {
+        .pr__cover,
+        .pr__cover-kanji {
           transition:
             background 0.3s ease,
             transform 0.3s ease;
@@ -128,9 +122,6 @@ import { SectionHeading } from '../section-heading/section-heading';
         .pr__card:hover .pr__cover-kanji {
           transform: scale(1.05);
         }
-      }
-      .pr__cover-kanji {
-        transition: transform 0.3s ease;
       }
       .pr__name {
         margin: 0;

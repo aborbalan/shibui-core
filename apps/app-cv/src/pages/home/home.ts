@@ -27,28 +27,28 @@ import { katachi, setKatachi } from '../../state/katachi.store';
         <cv-hero [profile]="profile" />
 
         <lib-divider></lib-divider>
-        <lib-stagger-container class="wide" direction="up">
+        <lib-stagger-container class="wide">
           <cv-projects [items]="projects" />
         </lib-stagger-container>
 
         <lib-divider class="no-print"></lib-divider>
-        <lib-stagger-container class="wide no-print" direction="up">
+        <lib-stagger-container class="wide no-print">
           <cv-katachi-band [value]="katachi()" (valueChange)="setKatachi($event)" />
           <cv-token-specimen [katachi]="katachi()" />
         </lib-stagger-container>
 
         <lib-divider></lib-divider>
-        <lib-stagger-container direction="up">
+        <lib-stagger-container>
           <cv-experience [items]="experience" />
         </lib-stagger-container>
 
         <lib-divider></lib-divider>
-        <lib-stagger-container direction="up">
+        <lib-stagger-container>
           <cv-skills [groups]="skills" [fullStack]="fullStack" />
         </lib-stagger-container>
 
         <lib-divider></lib-divider>
-        <lib-stagger-container direction="up">
+        <lib-stagger-container>
           <cv-colophon [education]="education" [languages]="languages" [profile]="profile" />
         </lib-stagger-container>
       </main>
