@@ -27,22 +27,30 @@ import { katachi, setKatachi } from '../../state/katachi.store';
         <cv-hero [profile]="profile" />
 
         <lib-divider></lib-divider>
-        <cv-projects [items]="projects" />
+        <lib-stagger-container class="wide">
+          <cv-projects [items]="projects" />
+        </lib-stagger-container>
 
         <lib-divider class="no-print"></lib-divider>
-        <div class="no-print">
+        <lib-stagger-container class="wide no-print">
           <cv-katachi-band [value]="katachi()" (valueChange)="setKatachi($event)" />
           <cv-token-specimen [katachi]="katachi()" />
-        </div>
+        </lib-stagger-container>
 
         <lib-divider></lib-divider>
-        <cv-experience [items]="experience" />
+        <lib-stagger-container>
+          <cv-experience [items]="experience" />
+        </lib-stagger-container>
 
         <lib-divider></lib-divider>
-        <cv-skills [groups]="skills" [fullStack]="fullStack" />
+        <lib-stagger-container>
+          <cv-skills [groups]="skills" [fullStack]="fullStack" />
+        </lib-stagger-container>
 
         <lib-divider></lib-divider>
-        <cv-colophon [education]="education" [languages]="languages" [profile]="profile" />
+        <lib-stagger-container>
+          <cv-colophon [education]="education" [languages]="languages" [profile]="profile" />
+        </lib-stagger-container>
       </main>
     </lib-background>
   `,
@@ -55,22 +63,38 @@ import { katachi, setKatachi } from '../../state/katachi.store';
         display: block;
         min-height: 100svh;
       }
+      /* Retícula editorial: columna de lectura centrada (~68ch) con dos
+         canales laterales. Por defecto todo va a la columna de lectura;
+         las secciones .wide sangran a todo el ancho (full) para romper la
+         monotonía de la columna única. */
       .page {
-        max-width: 760px;
+        max-width: 1140px;
         margin-inline: auto;
         padding-inline: var(--lib-space-lg, 24px);
         padding-bottom: var(--lib-space-xl, 32px);
+        display: grid;
+        grid-template-columns:
+          [full-start] minmax(0, 1fr)
+          [content-start] minmax(0, 68ch) [content-end]
+          minmax(0, 1fr) [full-end];
+      }
+      .page > * {
+        grid-column: content;
+        min-width: 0;
+      }
+      .page > .wide {
+        grid-column: full;
       }
       lib-divider {
         display: block;
         margin-block: var(--lib-space-xl, 32px);
       }
-      .page > cv-projects,
-      .page > cv-experience,
-      .page > cv-skills,
-      .page > cv-colophon {
-        display: block;
-        scroll-margin-top: var(--lib-space-xl, 32px);
+      /* En papel: una sola columna, sin la retícula de pantalla. */
+      @media print {
+        .page {
+          display: block;
+          max-width: 100%;
+        }
       }
     `,
   ],

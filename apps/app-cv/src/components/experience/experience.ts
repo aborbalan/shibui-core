@@ -14,17 +14,20 @@ import { SectionHeading } from '../section-heading/section-heading';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <section class="xp">
-      <cv-section-heading title="Experiencia" />
+      <cv-section-heading title="Experiencia" index="03" kanji="歴" />
 
       <lib-timeline size="lg">
         @for (job of items(); track job.company + job.period) {
+          <!-- Roles destacados: card + logros. Los demás, línea compacta
+               (empresa + rol + stack, sin card ni logros) para que la
+               sección no se coma media pantalla en móvil. -->
           <lib-timeline-item
             node-type="dot"
             [nodeColor]="job.highlight ? 'accent' : 'default'"
             [timestamp]="job.period"
-            card
+            [attr.card]="job.highlight ? '' : null"
           >
-            <div class="xp__body">
+            <div class="xp__body" [class.xp__body--compact]="!job.highlight">
               <!-- Empresa por interpolación (no [title]: colisiona con el
                    atributo nativo y rompe el escapado del '&' en 1&ABS) -->
               <h3 class="xp__company">{{ job.company }}</h3>
@@ -34,11 +37,13 @@ import { SectionHeading } from '../section-heading/section-heading';
                   <span class="xp__loc">· {{ job.location }}</span>
                 }
               </p>
-              <ul class="xp__achievements">
-                @for (a of job.achievements; track a) {
-                  <li>{{ a }}</li>
-                }
-              </ul>
+              @if (job.highlight) {
+                <ul class="xp__achievements">
+                  @for (a of job.achievements; track a) {
+                    <li>{{ a }}</li>
+                  }
+                </ul>
+              }
             </div>
 
             <!-- Stack como línea mono, no chips: el chip se reserva a la
@@ -62,6 +67,10 @@ import { SectionHeading } from '../section-heading/section-heading';
         line-height: var(--leading-tight, 1.2);
         color: var(--text-primary);
         overflow-wrap: anywhere;
+      }
+      /* Roles secundarios: empresa a menor escala, sin la presencia de card. */
+      .xp__body--compact .xp__company {
+        font-size: var(--text-md, 1.0625rem);
       }
       .xp__role {
         margin: 0 0 var(--lib-space-sm, 8px);

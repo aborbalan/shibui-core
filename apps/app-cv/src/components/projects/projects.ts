@@ -15,7 +15,7 @@ import { SectionHeading } from '../section-heading/section-heading';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <section class="pr">
-      <cv-section-heading title="Proyectos" />
+      <cv-section-heading title="Proyectos" index="01" kanji="作" />
 
       <div class="pr__grid">
         @for (p of items(); track p.name) {
@@ -105,6 +105,23 @@ import { SectionHeading } from '../section-heading/section-heading';
       .pr__card {
         display: block;
         height: 100%;
+      }
+      /* Hover con intención: lib-card ya eleva la card (-2px + sombra); aquí
+         solo añadimos lo que la card no toca — el cover se aviva y su kanji
+         escala. Todo el movimiento bajo prefers-reduced-motion. */
+      @media (prefers-reduced-motion: no-preference) {
+        .pr__cover,
+        .pr__cover-kanji {
+          transition:
+            background 0.3s ease,
+            transform 0.3s ease;
+        }
+        .pr__card:hover .pr__cover {
+          background: color-mix(in oklab, var(--text-accent) 14%, transparent);
+        }
+        .pr__card:hover .pr__cover-kanji {
+          transform: scale(1.05);
+        }
       }
       .pr__name {
         margin: 0;

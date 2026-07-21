@@ -20,7 +20,7 @@ import { SectionHeading } from '../section-heading/section-heading';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <section class="kb">
-      <cv-section-heading title="Sistema de diseño" kicker="Katachi" />
+      <cv-section-heading title="Sistema de diseño" kicker="Katachi" index="02" kanji="形" />
       <p class="kb__lede">{{ copy.lede }}</p>
 
       <div class="kb__grid" role="group" aria-label="Elegir katachi">

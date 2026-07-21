@@ -15,7 +15,7 @@ import { SectionHeading } from '../section-heading/section-heading';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <section class="sk">
-      <cv-section-heading title="Stack" />
+      <cv-section-heading title="Stack" index="04" kanji="技" />
 
       <div class="sk__grid">
         @for (group of groups(); track group.label) {
