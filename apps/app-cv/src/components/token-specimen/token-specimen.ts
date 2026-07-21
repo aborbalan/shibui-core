@@ -133,11 +133,14 @@ export class TokenSpecimen {
   protected readonly palette = signal<ColorSwatch[]>([]);
 
   constructor() {
-    effect(() => {
+    effect((onCleanup) => {
       this.katachi();
       // El effect de App escribe data-katachi en el mismo flush de CD;
-      // aplazamos la lectura un tick para medir el DOM ya actualizado.
-      setTimeout(() => this.read(), 0);
+      // aplazamos la lectura un tick para medir el DOM ya actualizado. El
+      // cleanup cancela el timeout pendiente si llega otro katachi antes o
+      // el componente se destruye (sin lecturas huérfanas ni apilamiento).
+      const t = setTimeout(() => this.read(), 0);
+      onCleanup(() => clearTimeout(t));
     });
   }
 
