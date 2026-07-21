@@ -1278,4 +1278,17 @@
        ─────────────────────────────────────────────────────────── */
 
     /* ─── /KATACHI ───────────────────────────────────────────── */
+
+    /* ── Print ───────────────────────────────────────────────────
+       Las superficies decorativas no imprimen: el papel lo pone el
+       documento del consumidor, no la librería — evita PDFs con
+       fondos art-directed (oscuros o texturados) y ahorra tinta.
+       El contenido sloteado (.bg-content) sí imprime. */
+    @media print {
+        .bg-base,
+        .bg-overlay,
+        .bg-canvas {
+            display: none;
+        }
+    }
 }

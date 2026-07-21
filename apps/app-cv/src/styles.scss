@@ -94,9 +94,26 @@ a {
     overflow: visible !important;
   }
 
-  /* Papel blanco puro bajo los componentes (el token cruza el Shadow DOM). */
+  /* Papel claro y tinta oscura SIEMPRE, esté activo el katachi que esté: los
+   * katachi oscuros invierten los tokens semánticos y darían un PDF oscuro.
+   * Se re-anclan a las primitivas shizen (los --color-* son estables, no
+   * cambian por katachi). Set COMPLETO — las cards pintan sobre --bg-elevated,
+   * no --bg-base, así que enumerar de menos deja fondos oscuros. !important
+   * gana a html[data-katachi="…"]; los tokens cruzan el Shadow DOM por herencia. */
   :root {
-    --bg-base: #fff;
+    --bg-base: var(--color-washi-50) !important;
+    --bg-surface: var(--color-washi-100) !important;
+    --bg-elevated: var(--color-white) !important;
+    --bg-inverse: var(--color-washi-900) !important;
+    --text-primary: var(--color-washi-900) !important;
+    --text-secondary: var(--color-washi-600) !important;
+    --text-muted: var(--color-washi-400) !important;
+    --text-inverse: var(--color-washi-50) !important;
+    --text-accent: var(--color-kaki-500) !important;
+    --text-link: var(--color-celadon-500) !important;
+    --border-subtle: var(--color-washi-200) !important;
+    --border-default: var(--color-washi-300) !important;
+    --border-strong: var(--color-washi-500) !important;
   }
 
   /* El hero ocupa el viewport completo en web; en papel, altura natural. */
@@ -126,8 +143,10 @@ a {
     break-inside: avoid;
   }
 
-  /* Un heading nunca se queda huérfano al pie de página. */
+  /* Un heading nunca se queda huérfano al pie de página ni se parte
+   * por dentro (eyebrow en una página, h2 en la siguiente). */
   cv-section-heading {
+    break-inside: avoid;
     break-after: avoid;
   }
 

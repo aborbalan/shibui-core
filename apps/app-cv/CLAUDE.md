@@ -98,12 +98,19 @@ src/
                             campos son placeholder (TODO) — rellenar antes de desplegar.
     katachi.ts            → Datos del switcher de katachi
     portfolio.ts          → Datos del portfolio de Sandra Ortega Arévalo
+  state/
+    katachi.store.ts      → Señal compartida del katachi activo (module-level, sin DI).
+                            App = único escritor de DOM/localStorage; switcher y banda
+                            son consumidores. Excepción justificada al «no stores».
   pages/
-    home/home.ts          → Smart: inyecta cv.ts y reparte a las secciones por inputs
+    home/home.ts          → Smart: inyecta cv.ts, reparte a las secciones por inputs y
+                            elige el tema de lib-background según el katachi (KATACHI_BG)
     portfolio/portfolio.ts → Página independiente del portfolio (ruta 'sandra')
   components/             → Secciones dumb (solo input())
     hero/                 → Above the fold: titular en 2 niveles + nombre + tagline + 3 links
     projects/             → Cards de proyectos (lib-card, kanji watermark) — abre tras el hero
+    katachi-band/         → Banda «Sistema de diseño»: los 6 katachi como swatches en vivo
+    token-specimen/       → Escala tipográfica + paleta leídas del computed style real
     experience/           → lib-timeline (cronológico inverso) + stack en línea mono
     skills/               → Grid Core/Tooling/Familiar con lib-chip
     colophon/             → Banda final compacta: educación + idiomas + ubicación + firma

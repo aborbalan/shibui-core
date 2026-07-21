@@ -23,9 +23,18 @@ import { SectionHeading } from '../section-heading/section-heading';
             class="pr__card"
             [attr.variant]="p.highlight ? 'featured' : 'solid'"
             [attr.kanji]="p.kanji ?? null"
+            [attr.decoration]="p.decoration ?? null"
           >
             <span slot="tag">{{ p.tag }}</span>
             <h3 slot="title" class="pr__name">{{ p.name }}</h3>
+
+            <!-- Cover tipográfico placeholder. TODO: captura real del proyecto
+                 (Storybook / Trust Report) en la iteración de imágenes. -->
+            @if (p.kanji) {
+              <div class="pr__cover" aria-hidden="true">
+                <span class="pr__cover-kanji">{{ p.kanji }}</span>
+              </div>
+            }
 
             <p class="pr__desc">{{ p.description }}</p>
             <div class="pr__chips">
@@ -60,8 +69,38 @@ import { SectionHeading } from '../section-heading/section-heading';
       }
       .pr__grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: 1fr;
         gap: var(--lib-space-lg, 24px);
+      }
+      /* Asimetría deliberada en desktop: el proyecto insignia manda. */
+      @media (min-width: 900px) {
+        .pr__grid {
+          grid-template-columns: 1.4fr 1fr;
+        }
+      }
+      .pr__cover {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 21 / 9;
+        margin-bottom: var(--lib-space-md, 16px);
+        border-radius: var(--lib-radius-sm, 4px);
+        background: color-mix(in oklab, var(--text-accent) 8%, transparent);
+        overflow: hidden;
+      }
+      .pr__cover-kanji {
+        font-family: var(--lib-font-body, serif);
+        font-size: clamp(3.5rem, 9vw, 6rem);
+        line-height: 1;
+        color: var(--text-accent);
+        opacity: 0.4;
+        user-select: none;
+      }
+      /* El cover es decorativo: en papel solo infla la card. */
+      @media print {
+        .pr__cover {
+          display: none;
+        }
       }
       .pr__card {
         display: block;
