@@ -50,6 +50,16 @@
     }
   }
 
+  /* ── Print — el contenido no intersectado quedaría en opacity:0 y no
+     imprimiría; en papel todo visible siempre, sin animación. ── */
+  @media print {
+    ::slotted(*) {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
   /* ─── KATACHI · ambient context ──────────────────────────────
      lib-stagger es un orquestador de animación en cascada. Sólo
      coordina entry transitions (opacity + transform) — sin
