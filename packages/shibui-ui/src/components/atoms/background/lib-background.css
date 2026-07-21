@@ -165,20 +165,54 @@
             repeating-linear-gradient(0deg, rgb(160, 140, 118, 0.08) 0, rgb(160, 140, 118, 0.08) 1px, transparent 1px, transparent 18px);
     }
 
-    /* 07 · sashiko — puntos de bordado */
+    /* 07 · sashiko — puntos de bordado
+       Orgánico: dos rejillas de puntada a escalas de ratio irracional
+       (16 y 22) → el punteado deja de caer en una única cuadrícula; y una
+       máscara de densidad hace que la puntada respire como bordado a mano. */
     :host([theme="sashiko"]) .bg-base {
         background-color: #F0EAE0;
-        background-image: radial-gradient(circle, rgb(130, 100, 70, 0.18) 1.5px, transparent 1.5px);
-        background-size: 16px 16px;
     }
 
-    /* 08 · komon — micro patrón */
+    :host([theme="sashiko"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(circle, rgb(130, 100, 70, 0.18) 1.5px, transparent 1.5px),
+            radial-gradient(circle, rgb(130, 100, 70, 0.13) 1.5px, transparent 1.5px);
+        background-size: 16px 16px, 22px 22px;
+        background-position: 0 0, 7px 9px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.45) 0 0),
+            radial-gradient(ellipse 55% 60% at 25% 30%, rgb(0, 0, 0, 0.55) 0%, transparent 72%),
+            radial-gradient(ellipse 48% 54% at 72% 68%, rgb(0, 0, 0, 0.5) 0%, transparent 70%);
+        mask-repeat: no-repeat;
+    }
+
+    /* 08 · komon — micro patrón
+       Orgánico: micro-punteado a dos escalas de ratio irracional (12 y 17)
+       + máscara de densidad → deja de ser una retícula uniforme perfecta. */
     :host([theme="komon"]) .bg-base {
         background-color: var(--color-washi-50);
+    }
+
+    :host([theme="komon"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         background-image:
             radial-gradient(circle at 2px 2px, rgb(160, 130, 100, 0.15) 1px, transparent 0),
-            radial-gradient(circle at 10px 10px, rgb(160, 130, 100, 0.08) 1px, transparent 0);
-        background-size: 12px 12px;
+            radial-gradient(circle at 10px 10px, rgb(160, 130, 100, 0.08) 1px, transparent 0),
+            radial-gradient(circle at 2px 2px, rgb(160, 130, 100, 0.11) 1px, transparent 0);
+        background-size: 12px 12px, 12px 12px, 17px 17px;
+        background-position: 0 0, 0 0, 5px 3px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.5) 0 0),
+            radial-gradient(ellipse 56% 60% at 28% 32%, rgb(0, 0, 0, 0.5) 0%, transparent 72%),
+            radial-gradient(ellipse 50% 54% at 70% 66%, rgb(0, 0, 0, 0.45) 0%, transparent 70%);
+        mask-repeat: no-repeat;
     }
 
     /* 09 · kasuri — trama irregular */
@@ -343,11 +377,28 @@
         mask-repeat: no-repeat;
     }
 
-    /* 15 · ink-dot */
+    /* 15 · ink-dot
+       Orgánico: dos rejillas de punto a ratio irracional (20 y 27) +
+       máscara de densidad → constelación despareja en vez de matriz. */
     :host([theme="ink-dot"]) .bg-base {
         background-color: var(--color-washi-950);
-        background-image: radial-gradient(circle, rgb(250, 247, 244, 0.07) 1px, transparent 1px);
-        background-size: 20px 20px;
+    }
+
+    :host([theme="ink-dot"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(circle, rgb(250, 247, 244, 0.07) 1px, transparent 1px),
+            radial-gradient(circle, rgb(250, 247, 244, 0.05) 1px, transparent 1px);
+        background-size: 20px 20px, 27px 27px;
+        background-position: 0 0, 9px 6px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.45) 0 0),
+            radial-gradient(ellipse 55% 60% at 26% 30%, rgb(0, 0, 0, 0.55) 0%, transparent 72%),
+            radial-gradient(ellipse 48% 54% at 72% 68%, rgb(0, 0, 0, 0.5) 0%, transparent 70%);
+        mask-repeat: no-repeat;
     }
 
     /* 16 · mokume — veteado de madera */
@@ -974,12 +1025,28 @@
         background-color: #080604;
     }
 
-    /* 44 · midnight — 深夜 fine dot matrix */
+    /* 44 · midnight — 深夜 fine dot matrix
+       Orgánico: dos rejillas de punto a ratio irracional (12 y 17) +
+       máscara de densidad → campo estelar despareja, no una matriz plana. */
     :host([theme="midnight"]) .bg-base {
         background-color: #090806;
-        background-image: radial-gradient(circle, rgb(250, 247, 244, 0.04) 1px, transparent 1px);
-        background-size: 12px 12px;
-        background-position: 0 0, 6px 6px;
+    }
+
+    :host([theme="midnight"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(circle, rgb(250, 247, 244, 0.04) 1px, transparent 1px),
+            radial-gradient(circle, rgb(250, 247, 244, 0.03) 1px, transparent 1px);
+        background-size: 12px 12px, 17px 17px;
+        background-position: 0 0, 5px 8px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.4) 0 0),
+            radial-gradient(ellipse 60% 65% at 30% 32%, rgb(0, 0, 0, 0.6) 0%, transparent 72%),
+            radial-gradient(ellipse 52% 56% at 72% 66%, rgb(0, 0, 0, 0.5) 0%, transparent 70%);
+        mask-repeat: no-repeat;
     }
 
     :host([theme="midnight"]) .bg-overlay {
