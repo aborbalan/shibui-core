@@ -97,27 +97,63 @@
                 rgb(180, 160, 140, 0.06) 4px);
     }
 
-    /* 04 · seigaiha — escamas de ola */
+    /* 04 · seigaiha — escamas de ola
+       Orgánico: dos lattices de olas a escalas de ratio irracional
+       (36×18 y 53×25 → MCM horizontal 1908px, mayor que un viewport ancho,
+       así no se ve una repetición completa) + máscara de densidad para que
+       la tinta module como en un textil estampado a mano. Sigue siendo
+       seigaiha: escamas de ola concéntricas. */
     :host([theme="seigaiha"]) .bg-base {
         background-color: var(--color-washi-50);
-        background-image: radial-gradient(ellipse 100% 90% at 50% 0%,
+    }
+
+    :host([theme="seigaiha"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(ellipse 100% 90% at 50% 0%,
                 transparent 60%,
                 rgb(180, 155, 130, 0.18) 60%,
                 rgb(180, 155, 130, 0.18) 64%,
+                transparent 64%),
+            radial-gradient(ellipse 100% 90% at 50% 0%,
+                transparent 60%,
+                rgb(180, 155, 130, 0.11) 60%,
+                rgb(180, 155, 130, 0.11) 64%,
                 transparent 64%);
-        background-size: 36px 18px;
-        background-position: 0 0, 18px 9px;
+        background-size: 36px 18px, 53px 25px;
+        background-position: 0 0, 13px 7px;
+        background-repeat: repeat;
+        mask-image:
+            radial-gradient(ellipse 88% 78% at 32% 28%, rgb(0, 0, 0, 1) 0%, rgb(0, 0, 0, 0.55) 100%);
+        mask-repeat: no-repeat;
     }
 
-    /* 05 · tatami — cuadrícula estructural */
+    /* 05 · tatami — cuadrícula estructural
+       Orgánico: la rejilla se conserva (es su identidad) pero una máscara de
+       densidad la modula como luz desigual sobre una estera envejecida, en
+       vez de un graph-paper CSS plano e infinito. */
     :host([theme="tatami"]) .bg-base {
         background-color: var(--color-washi-100);
+    }
+
+    :host([theme="tatami"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         background-image:
             linear-gradient(rgb(160, 140, 118, 0.12) 1px, transparent 1px),
             linear-gradient(90deg, rgb(160, 140, 118, 0.12) 1px, transparent 1px),
             linear-gradient(rgb(160, 140, 118, 0.06) 1px, transparent 1px),
             linear-gradient(90deg, rgb(160, 140, 118, 0.06) 1px, transparent 1px);
         background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.32) 0 0),
+            radial-gradient(ellipse 65% 70% at 24% 28%, rgb(0, 0, 0, 0.68) 0%, transparent 74%),
+            radial-gradient(ellipse 58% 62% at 74% 70%, rgb(0, 0, 0, 0.6) 0%, transparent 72%);
+        mask-repeat: no-repeat;
     }
 
     /* 06 · asanoha — estrella de cáñamo */
@@ -284,13 +320,27 @@
         mask-repeat: no-repeat;
     }
 
-    /* 14 · ash-grid — cuadrícula ceniza */
+    /* 14 · ash-grid — cuadrícula ceniza
+       Orgánico: rejilla intacta + máscara de densidad → la cuadrícula
+       respira con la luz en vez de leerse como una malla plana infinita. */
     :host([theme="ash-grid"]) .bg-base {
         background-color: var(--color-washi-950);
+    }
+
+    :host([theme="ash-grid"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         background-image:
             linear-gradient(rgb(250, 247, 244, 0.04) 1px, transparent 1px),
             linear-gradient(90deg, rgb(250, 247, 244, 0.04) 1px, transparent 1px);
         background-size: 40px 40px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.3) 0 0),
+            radial-gradient(ellipse 64% 70% at 26% 30%, rgb(0, 0, 0, 0.7) 0%, transparent 74%),
+            radial-gradient(ellipse 56% 60% at 74% 68%, rgb(0, 0, 0, 0.6) 0%, transparent 72%);
+        mask-repeat: no-repeat;
     }
 
     /* 15 · ink-dot */
@@ -541,41 +591,84 @@
        LIGHT — Nuevas (35–39)
     ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
 
-    /* 35 · kagome — 籠目 hexagonal basket weave */
+    /* 35 · kagome — 籠目 hexagonal basket weave
+       Orgánico: el trenzado hexagonal se conserva + máscara de densidad →
+       cestería con luz desigual, no una malla mecánica uniforme. */
     :host([theme="kagome"]) .bg-base {
         background-color: var(--color-washi-50);
+    }
+
+    :host([theme="kagome"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         background-image:
             linear-gradient(60deg, rgb(160, 140, 118, 0.11) 1px, transparent 1px),
             linear-gradient(120deg, rgb(160, 140, 118, 0.11) 1px, transparent 1px),
             linear-gradient(0deg, rgb(160, 140, 118, 0.07) 1px, transparent 1px);
         background-size: 22px 38px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.32) 0 0),
+            radial-gradient(ellipse 64% 68% at 25% 30%, rgb(0, 0, 0, 0.66) 0%, transparent 74%),
+            radial-gradient(ellipse 58% 60% at 74% 70%, rgb(0, 0, 0, 0.58) 0%, transparent 72%);
+        mask-repeat: no-repeat;
     }
 
-    /* 36 · shoji — 障子 paper screen */
+    /* 36 · shoji — 障子 paper screen
+       Orgánico: la retícula del biombo se conserva + máscara de densidad
+       suave → luz de washi filtrándose desigual, no una malla plana. */
     :host([theme="shoji"]) .bg-base {
         background-color: var(--color-washi-50);
+    }
+
+    :host([theme="shoji"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         background-image:
             linear-gradient(rgb(160, 140, 118, 0.07) 1px, transparent 1px),
             linear-gradient(90deg, rgb(160, 140, 118, 0.07) 1px, transparent 1px),
             linear-gradient(rgb(160, 140, 118, 0.13) 1px, transparent 1px),
             linear-gradient(90deg, rgb(160, 140, 118, 0.13) 1px, transparent 1px);
         background-size: 10px 10px, 10px 10px, 40px 40px, 40px 40px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.42) 0 0),
+            radial-gradient(ellipse 68% 74% at 28% 30%, rgb(0, 0, 0, 0.58) 0%, transparent 74%),
+            radial-gradient(ellipse 60% 64% at 74% 68%, rgb(0, 0, 0, 0.5) 0%, transparent 72%);
+        mask-repeat: no-repeat;
     }
 
-    /* 37 · shibori — 絞り tie-dye concentric circles */
+    /* 37 · shibori — 絞り tie-dye concentric circles
+       Orgánico: los anillos se conservan a dos escalas de ratio irracional
+       (48 y 67) + máscara de densidad fuerte → el anudado tie-dye es
+       irregular por naturaleza, así que la modulación lo hace más auténtico
+       y disuelve la cuadrícula de anillos idénticos. */
     :host([theme="shibori"]) .bg-base {
         background-color: var(--color-washi-50);
+    }
+
+    :host([theme="shibori"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         background-image:
             radial-gradient(circle at 0% 0%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
             radial-gradient(circle at 100% 0%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
             radial-gradient(circle at 0% 100%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
             radial-gradient(circle at 100% 100%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
             radial-gradient(circle at 50% 50%, transparent 28%, rgb(160, 140, 118, 0.07) 29%, transparent 30%),
-            radial-gradient(circle at 0% 0%, transparent 14%, rgb(160, 140, 118, 0.06) 15%, transparent 16%),
-            radial-gradient(circle at 100% 0%, transparent 14%, rgb(160, 140, 118, 0.06) 15%, transparent 16%),
-            radial-gradient(circle at 0% 100%, transparent 14%, rgb(160, 140, 118, 0.06) 15%, transparent 16%),
-            radial-gradient(circle at 100% 100%, transparent 14%, rgb(160, 140, 118, 0.06) 15%, transparent 16%);
-        background-size: 48px 48px;
+            radial-gradient(circle at 50% 50%, transparent 28%, rgb(160, 140, 118, 0.06) 29%, transparent 30%);
+        background-size: 48px 48px, 48px 48px, 48px 48px, 48px 48px, 48px 48px, 67px 67px;
+        background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 19px 27px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.28) 0 0),
+            radial-gradient(ellipse 60% 66% at 24% 30%, rgb(0, 0, 0, 0.7) 0%, transparent 72%),
+            radial-gradient(ellipse 54% 58% at 72% 68%, rgb(0, 0, 0, 0.62) 0%, transparent 70%),
+            radial-gradient(ellipse 40% 46% at 54% 14%, rgb(0, 0, 0, 0.5) 0%, transparent 74%);
+        mask-repeat: no-repeat;
     }
 
     /* 38 · ori — 織 diagonal woven textile */
@@ -895,16 +988,32 @@
                 rgb(184, 90, 30, 0.04) 100%);
     }
 
-    /* 46 · celadon — 青磁 deep jade surface */
+    /* 46 · celadon — 青磁 deep jade surface
+       Orgánico: el glow de jade central se mantiene sin máscara; la rejilla
+       se traslada a ::after con máscara de densidad → cerámica con luz
+       desigual en vez de una malla plana. */
     :host([theme="celadon"]) .bg-base {
         background-color: #050B09;
         background-image:
-            linear-gradient(rgb(78, 148, 130, 0.055) 1px, transparent 1px),
-            linear-gradient(90deg, rgb(78, 148, 130, 0.055) 1px, transparent 1px),
             radial-gradient(ellipse 60% 50% at 50% 50%,
                 rgb(78, 148, 130, 0.06) 0%,
                 transparent 70%);
-        background-size: 40px 40px, 40px 40px, auto;
+    }
+
+    :host([theme="celadon"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgb(78, 148, 130, 0.055) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(78, 148, 130, 0.055) 1px, transparent 1px);
+        background-size: 40px 40px, 40px 40px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.3) 0 0),
+            radial-gradient(ellipse 64% 68% at 28% 30%, rgb(0, 0, 0, 0.7) 0%, transparent 74%),
+            radial-gradient(ellipse 56% 60% at 74% 70%, rgb(0, 0, 0, 0.6) 0%, transparent 72%);
+        mask-repeat: no-repeat;
     }
 
     /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
