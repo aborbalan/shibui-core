@@ -278,7 +278,7 @@
        parches — como una pieza que se rompió de verdad, no una rejilla. */
     :host([theme="kintsugi-veins"]) .bg-base {
         --_veins-svg:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(140,108,50)' stroke-width='3' opacity='0.45'/%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(224,190,110)' stroke-width='1.1' opacity='0.9'/%3E%3C/g%3E%3C/svg%3E");
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cdefs%3E%3Cfilter id='k' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013' numOctaves='2' seed='7' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='11' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23k)' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M40,70 C70,110 60,150 100,175 C140,200 130,250 150,300 C165,345 135,380 165,415 M100,175 C150,160 190,185 235,165 M150,300 C195,285 245,315 300,295 M165,415 C205,398 255,415 300,390 M235,165 C270,150 290,185 330,170 M430,90 C385,130 405,180 355,215 C320,240 340,300 305,335 M405,180 C365,195 345,170 305,195' stroke='rgb(140,108,50)' stroke-width='3' opacity='0.45'/%3E%3Cpath d='M40,70 C70,110 60,150 100,175 C140,200 130,250 150,300 C165,345 135,380 165,415 M100,175 C150,160 190,185 235,165 M150,300 C195,285 245,315 300,295 M165,415 C205,398 255,415 300,390 M235,165 C270,150 290,185 330,170 M430,90 C385,130 405,180 355,215 C320,240 340,300 305,335 M405,180 C365,195 345,170 305,195' stroke='rgb(224,190,110)' stroke-width='1.1' opacity='0.9'/%3E%3Cellipse cx='100' cy='175' rx='7' ry='5' fill='rgb(224,190,110)' opacity='0.22'/%3E%3Cellipse cx='150' cy='300' rx='6' ry='5' fill='rgb(224,190,110)' opacity='0.22'/%3E%3Cellipse cx='355' cy='215' rx='6' ry='4' fill='rgb(224,190,110)' opacity='0.22'/%3E%3C/g%3E%3C/svg%3E");
 
         background-color: var(--color-washi-950);
         background-image:
@@ -290,8 +290,8 @@
         position: absolute;
         inset: 0;
         background-image: var(--_veins-svg), var(--_veins-svg);
-        background-size: 512px 512px, 702px 702px;
-        background-position: 0 0, 149px 97px;
+        background-size: 680px 680px, 1010px 1010px;
+        background-position: 0 0, 233px 151px;
         background-repeat: repeat;
         mask-image:
             radial-gradient(ellipse 48% 60% at 24% 34%, rgb(0, 0, 0, 1) 0%, rgb(0, 0, 0, 1) 26%, transparent 72%),
@@ -305,7 +305,7 @@
     :host([theme="kintsugi-gold"]) .bg-base {
         background-color: #0A0705;
         --_veins-svg:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(150,116,54)' stroke-width='3.2' opacity='0.5'/%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(240,210,140)' stroke-width='1.2' opacity='0.95'/%3E%3C/g%3E%3C/svg%3E");
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cdefs%3E%3Cfilter id='k' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='2' seed='4' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='12' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23k)' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M40,70 C70,110 60,150 100,175 C140,200 130,250 150,300 C165,345 135,380 165,415 M100,175 C150,160 190,185 235,165 M150,300 C195,285 245,315 300,295 M165,415 C205,398 255,415 300,390 M235,165 C270,150 290,185 330,170 M430,90 C385,130 405,180 355,215 C320,240 340,300 305,335 M405,180 C365,195 345,170 305,195' stroke='rgb(150,116,54)' stroke-width='3.2' opacity='0.5'/%3E%3Cpath d='M40,70 C70,110 60,150 100,175 C140,200 130,250 150,300 C165,345 135,380 165,415 M100,175 C150,160 190,185 235,165 M150,300 C195,285 245,315 300,295 M165,415 C205,398 255,415 300,390 M235,165 C270,150 290,185 330,170 M430,90 C385,130 405,180 355,215 C320,240 340,300 305,335 M405,180 C365,195 345,170 305,195' stroke='rgb(240,210,140)' stroke-width='1.2' opacity='0.95'/%3E%3Cellipse cx='100' cy='175' rx='9' ry='6' fill='rgb(240,210,140)' opacity='0.3'/%3E%3Cellipse cx='150' cy='300' rx='8' ry='6' fill='rgb(240,210,140)' opacity='0.3'/%3E%3Cellipse cx='355' cy='215' rx='7' ry='5' fill='rgb(240,210,140)' opacity='0.28'/%3E%3Cellipse cx='300' cy='295' rx='6' ry='5' fill='rgb(240,210,140)' opacity='0.26'/%3E%3C/g%3E%3C/svg%3E");
 
         background-image:
             radial-gradient(ellipse 55% 45% at 30% 35%, rgb(224, 190, 110, 0.10) 0%, transparent 60%),
@@ -318,8 +318,8 @@
         position: absolute;
         inset: 0;
         background-image: var(--_veins-svg), var(--_veins-svg);
-        background-size: 520px 520px, 712px 712px;
-        background-position: 0 0, 161px 103px;
+        background-size: 700px 700px, 1040px 1040px;
+        background-position: 0 0, 241px 157px;
         background-repeat: repeat;
         mask-image:
             radial-gradient(ellipse 52% 62% at 28% 36%, rgb(0, 0, 0, 1) 0%, rgb(0, 0, 0, 1) 30%, transparent 74%),
@@ -333,7 +333,7 @@
     :host([theme="kintsugi-light"]) .bg-base {
         background-color: var(--color-washi-100);
         --_veins-svg:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(120,85,38)' stroke-width='3' opacity='0.32'/%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(190,142,66)' stroke-width='1.1' opacity='0.7'/%3E%3C/g%3E%3C/svg%3E");
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cdefs%3E%3Cfilter id='k' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013' numOctaves='2' seed='11' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='11' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23k)' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M40,70 C70,110 60,150 100,175 C140,200 130,250 150,300 C165,345 135,380 165,415 M100,175 C150,160 190,185 235,165 M150,300 C195,285 245,315 300,295 M165,415 C205,398 255,415 300,390 M235,165 C270,150 290,185 330,170 M430,90 C385,130 405,180 355,215 C320,240 340,300 305,335 M405,180 C365,195 345,170 305,195' stroke='rgb(120,85,38)' stroke-width='3' opacity='0.32'/%3E%3Cpath d='M40,70 C70,110 60,150 100,175 C140,200 130,250 150,300 C165,345 135,380 165,415 M100,175 C150,160 190,185 235,165 M150,300 C195,285 245,315 300,295 M165,415 C205,398 255,415 300,390 M235,165 C270,150 290,185 330,170 M430,90 C385,130 405,180 355,215 C320,240 340,300 305,335 M405,180 C365,195 345,170 305,195' stroke='rgb(190,142,66)' stroke-width='1.1' opacity='0.7'/%3E%3Cellipse cx='100' cy='175' rx='7' ry='5' fill='rgb(190,142,66)' opacity='0.16'/%3E%3Cellipse cx='150' cy='300' rx='6' ry='5' fill='rgb(190,142,66)' opacity='0.16'/%3E%3Cellipse cx='355' cy='215' rx='6' ry='4' fill='rgb(190,142,66)' opacity='0.15'/%3E%3C/g%3E%3C/svg%3E");
 
         background-image:
             radial-gradient(ellipse 60% 50% at 40% 40%, rgb(212, 165, 86, 0.07) 0%, transparent 65%);
@@ -344,8 +344,8 @@
         position: absolute;
         inset: 0;
         background-image: var(--_veins-svg), var(--_veins-svg);
-        background-size: 480px 480px, 658px 658px;
-        background-position: 0 0, 149px 97px;
+        background-size: 640px 640px, 950px 950px;
+        background-position: 0 0, 219px 143px;
         background-repeat: repeat;
         mask-image:
             radial-gradient(ellipse 50% 58% at 30% 30%, rgb(0, 0, 0, 1) 0%, rgb(0, 0, 0, 1) 24%, transparent 72%),
