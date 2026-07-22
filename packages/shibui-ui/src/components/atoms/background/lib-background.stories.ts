@@ -41,18 +41,18 @@ function bgGrid(
     label: string;
     dark?: boolean;
   }>,
-  cols = 3,
+  cols = 1,
 ): TemplateResult {
   return html`
     <div
-      style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:12px;padding:24px;background:#F2EDE6;"
+      style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:16px;padding:24px;background:#F2EDE6;"
     >
       ${items.map(
         ({ variant, label, dark }) => html`
           <div style="display:flex;flex-direction:column;gap:4px;">
             <lib-background
               theme="${variant}"
-              style="height:180px;border-radius:2px;display:block;"
+              style="height:340px;border-radius:2px;display:block;"
             >
               ${dark ? DEMO_DARK : DEMO_LIGHT}
             </lib-background>
@@ -345,35 +345,13 @@ export const Celadon: Story = {
 /* ── Kintsugi ── */
 export const Kintsugi: Story = {
   name: "Kintsugi — 金継ぎ la grieta dorada (4)",
-  render: (): TemplateResult => html`
-    <div
-      style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:24px;background:#F2EDE6;"
-    >
-      ${(
-        [
-          { variant: "kintsugi",       label: "kintsugi · dark · filamentos sutiles",   dark: true  },
-          { variant: "kintsugi-veins", label: "kintsugi-veins · dark · vetas de oro",    dark: true  },
-          { variant: "kintsugi-gold",  label: "kintsugi-gold · dark · laca + oro rico",  dark: true  },
-          { variant: "kintsugi-light", label: "kintsugi-light · light · oro sobre washi", dark: false },
-        ] as Array<{ variant: LibBackgroundTheme; label: string; dark: boolean }>
-      ).map(
-        ({ variant, label, dark }) => html`
-          <div style="display:flex;flex-direction:column;gap:4px;">
-            <lib-background
-              theme="${variant}"
-              style="height:240px;border-radius:2px;display:block;"
-            >
-              ${dark ? DEMO_DARK : DEMO_LIGHT}
-            </lib-background>
-            <span
-              style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:#9A8878;"
-              >${label}</span
-            >
-          </div>
-        `,
-      )}
-    </div>
-  `,
+  render: (): TemplateResult =>
+    bgGrid([
+      { variant: "kintsugi",       label: "kintsugi · dark · filamentos sutiles",   dark: true },
+      { variant: "kintsugi-veins", label: "kintsugi-veins · dark · vetas de oro",    dark: true },
+      { variant: "kintsugi-gold",  label: "kintsugi-gold · dark · laca + oro rico",  dark: true },
+      { variant: "kintsugi-light", label: "kintsugi-light · light · oro sobre washi", dark: false },
+    ]),
 };
 
 /* ── Sabi ── */
@@ -393,7 +371,7 @@ export const Sabi: Story = {
       { variant: "rust", label: "64 · 錆 rust" },
       { variant: "aizome", label: "65 · 褪せ藍 aizome" },
       { variant: "craquele", label: "66 · 貫入 craquele" },
-    ], 2),
+    ]),
 };
 
 /* ── Shizen ── */
@@ -413,7 +391,7 @@ export const Shizen: Story = {
       { variant: "komorebi", label: "68 · 木漏れ日 komorebi" },
       { variant: "karesansui", label: "69 · 枯山水 karesansui" },
       { variant: "wakaba", label: "70 · 若葉 wakaba" },
-    ], 2),
+    ]),
 };
 
 /* ── Terminal · CRT ── */

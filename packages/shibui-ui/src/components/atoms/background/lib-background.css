@@ -97,27 +97,63 @@
                 rgb(180, 160, 140, 0.06) 4px);
     }
 
-    /* 04 · seigaiha — escamas de ola */
+    /* 04 · seigaiha — escamas de ola
+       Orgánico: dos lattices de olas a escalas de ratio irracional
+       (36×18 y 53×25 → MCM horizontal 1908px, mayor que un viewport ancho,
+       así no se ve una repetición completa) + máscara de densidad para que
+       la tinta module como en un textil estampado a mano. Sigue siendo
+       seigaiha: escamas de ola concéntricas. */
     :host([theme="seigaiha"]) .bg-base {
         background-color: var(--color-washi-50);
-        background-image: radial-gradient(ellipse 100% 90% at 50% 0%,
+    }
+
+    :host([theme="seigaiha"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(ellipse 100% 90% at 50% 0%,
                 transparent 60%,
                 rgb(180, 155, 130, 0.18) 60%,
                 rgb(180, 155, 130, 0.18) 64%,
+                transparent 64%),
+            radial-gradient(ellipse 100% 90% at 50% 0%,
+                transparent 60%,
+                rgb(180, 155, 130, 0.11) 60%,
+                rgb(180, 155, 130, 0.11) 64%,
                 transparent 64%);
-        background-size: 36px 18px;
-        background-position: 0 0, 18px 9px;
+        background-size: 36px 18px, 53px 25px;
+        background-position: 0 0, 13px 7px;
+        background-repeat: repeat;
+        mask-image:
+            radial-gradient(ellipse 88% 78% at 32% 28%, rgb(0, 0, 0, 1) 0%, rgb(0, 0, 0, 0.55) 100%);
+        mask-repeat: no-repeat;
     }
 
-    /* 05 · tatami — cuadrícula estructural */
+    /* 05 · tatami — cuadrícula estructural
+       Orgánico: la rejilla se conserva (es su identidad) pero una máscara de
+       densidad la modula como luz desigual sobre una estera envejecida, en
+       vez de un graph-paper CSS plano e infinito. */
     :host([theme="tatami"]) .bg-base {
         background-color: var(--color-washi-100);
+    }
+
+    :host([theme="tatami"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         background-image:
             linear-gradient(rgb(160, 140, 118, 0.12) 1px, transparent 1px),
             linear-gradient(90deg, rgb(160, 140, 118, 0.12) 1px, transparent 1px),
             linear-gradient(rgb(160, 140, 118, 0.06) 1px, transparent 1px),
             linear-gradient(90deg, rgb(160, 140, 118, 0.06) 1px, transparent 1px);
         background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.32) 0 0),
+            radial-gradient(ellipse 65% 70% at 24% 28%, rgb(0, 0, 0, 0.68) 0%, transparent 74%),
+            radial-gradient(ellipse 58% 62% at 74% 70%, rgb(0, 0, 0, 0.6) 0%, transparent 72%);
+        mask-repeat: no-repeat;
     }
 
     /* 06 · asanoha — estrella de cáñamo */
@@ -129,20 +165,54 @@
             repeating-linear-gradient(0deg, rgb(160, 140, 118, 0.08) 0, rgb(160, 140, 118, 0.08) 1px, transparent 1px, transparent 18px);
     }
 
-    /* 07 · sashiko — puntos de bordado */
+    /* 07 · sashiko — puntos de bordado
+       Orgánico: dos rejillas de puntada a escalas de ratio irracional
+       (16 y 22) → el punteado deja de caer en una única cuadrícula; y una
+       máscara de densidad hace que la puntada respire como bordado a mano. */
     :host([theme="sashiko"]) .bg-base {
         background-color: #F0EAE0;
-        background-image: radial-gradient(circle, rgb(130, 100, 70, 0.18) 1.5px, transparent 1.5px);
-        background-size: 16px 16px;
     }
 
-    /* 08 · komon — micro patrón */
+    :host([theme="sashiko"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(circle, rgb(130, 100, 70, 0.18) 1.5px, transparent 1.5px),
+            radial-gradient(circle, rgb(130, 100, 70, 0.13) 1.5px, transparent 1.5px);
+        background-size: 16px 16px, 22px 22px;
+        background-position: 0 0, 7px 9px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.45) 0 0),
+            radial-gradient(ellipse 55% 60% at 25% 30%, rgb(0, 0, 0, 0.55) 0%, transparent 72%),
+            radial-gradient(ellipse 48% 54% at 72% 68%, rgb(0, 0, 0, 0.5) 0%, transparent 70%);
+        mask-repeat: no-repeat;
+    }
+
+    /* 08 · komon — micro patrón
+       Orgánico: micro-punteado a dos escalas de ratio irracional (12 y 17)
+       + máscara de densidad → deja de ser una retícula uniforme perfecta. */
     :host([theme="komon"]) .bg-base {
         background-color: var(--color-washi-50);
+    }
+
+    :host([theme="komon"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         background-image:
             radial-gradient(circle at 2px 2px, rgb(160, 130, 100, 0.15) 1px, transparent 0),
-            radial-gradient(circle at 10px 10px, rgb(160, 130, 100, 0.08) 1px, transparent 0);
-        background-size: 12px 12px;
+            radial-gradient(circle at 10px 10px, rgb(160, 130, 100, 0.08) 1px, transparent 0),
+            radial-gradient(circle at 2px 2px, rgb(160, 130, 100, 0.11) 1px, transparent 0);
+        background-size: 12px 12px, 12px 12px, 17px 17px;
+        background-position: 0 0, 0 0, 5px 3px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.5) 0 0),
+            radial-gradient(ellipse 56% 60% at 28% 32%, rgb(0, 0, 0, 0.5) 0%, transparent 72%),
+            radial-gradient(ellipse 50% 54% at 70% 66%, rgb(0, 0, 0, 0.45) 0%, transparent 70%);
+        mask-repeat: no-repeat;
     }
 
     /* 09 · kasuri — trama irregular */
@@ -200,54 +270,135 @@
 
     /* 13a · kintsugi-veins — 金継ぎ脈 vetas de oro reparando la grieta
        Dos trazos por costura: underlay mate (anchura) + highlight brillante
-       (filo) → ilusión de laca dorada. SVG con grietas ramificadas. */
+       (filo) → ilusión de laca dorada. SVG con grietas ramificadas.
+       Orgánico (sin período visible): la red de vetas se superpone a dos
+       escalas de ratio irracional (512/702 ≈ 1.371) → el mínimo común
+       múltiplo de la costura se dispara; y una máscara de «zonas de
+       reparación» (radiales grandes, sin tiling) revela el oro solo por
+       parches — como una pieza que se rompió de verdad, no una rejilla. */
     :host([theme="kintsugi-veins"]) .bg-base {
+        --_veins-svg:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cdefs%3E%3Cfilter id='k' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013' numOctaves='2' seed='7' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='11' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23k)' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M40,70 C70,110 60,150 100,175 C140,200 130,250 150,300 C165,345 135,380 165,415 M100,175 C150,160 190,185 235,165 M150,300 C195,285 245,315 300,295 M165,415 C205,398 255,415 300,390 M235,165 C270,150 290,185 330,170 M430,90 C385,130 405,180 355,215 C320,240 340,300 305,335 M405,180 C365,195 345,170 305,195' stroke='rgb(140,108,50)' stroke-width='3' opacity='0.45'/%3E%3Cpath d='M40,70 C70,110 60,150 100,175 C140,200 130,250 150,300 C165,345 135,380 165,415 M100,175 C150,160 190,185 235,165 M150,300 C195,285 245,315 300,295 M165,415 C205,398 255,415 300,390 M235,165 C270,150 290,185 330,170 M430,90 C385,130 405,180 355,215 C320,240 340,300 305,335 M405,180 C365,195 345,170 305,195' stroke='rgb(224,190,110)' stroke-width='1.1' opacity='0.9'/%3E%3Cellipse cx='100' cy='175' rx='7' ry='5' fill='rgb(224,190,110)' opacity='0.22'/%3E%3Cellipse cx='150' cy='300' rx='6' ry='5' fill='rgb(224,190,110)' opacity='0.22'/%3E%3Cellipse cx='355' cy='215' rx='6' ry='4' fill='rgb(224,190,110)' opacity='0.22'/%3E%3C/g%3E%3C/svg%3E");
+
         background-color: var(--color-washi-950);
         background-image:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(140,108,50)' stroke-width='3' opacity='0.45'/%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(224,190,110)' stroke-width='1.1' opacity='0.9'/%3E%3C/g%3E%3C/svg%3E"),
             radial-gradient(ellipse 70% 60% at 50% 50%, rgb(184, 90, 30, 0.05) 0%, transparent 70%);
-        background-size: 480px 480px, auto;
-        background-position: center, center;
+    }
+
+    :host([theme="kintsugi-veins"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: var(--_veins-svg), var(--_veins-svg);
+        background-size: 680px 680px, 1010px 1010px;
+        background-position: 0 0, 233px 151px;
+        background-repeat: repeat;
+        mask-image:
+            radial-gradient(ellipse 48% 60% at 24% 34%, rgb(0, 0, 0, 1) 0%, rgb(0, 0, 0, 1) 26%, transparent 72%),
+            radial-gradient(ellipse 42% 52% at 72% 64%, rgb(0, 0, 0, 1) 0%, rgb(0, 0, 0, 1) 22%, transparent 70%),
+            radial-gradient(ellipse 32% 38% at 54% 12%, rgb(0, 0, 0, 1) 0%, transparent 74%);
+        mask-repeat: no-repeat;
     }
 
     /* 13b · kintsugi-gold — 金 laca negra con pooling de oro rico
        Más generoso: charcos de oro cálido + sheen diagonal + vetas brillantes. */
     :host([theme="kintsugi-gold"]) .bg-base {
         background-color: #0A0705;
+        --_veins-svg:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cdefs%3E%3Cfilter id='k' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='2' seed='4' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='12' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23k)' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M40,70 C70,110 60,150 100,175 C140,200 130,250 150,300 C165,345 135,380 165,415 M100,175 C150,160 190,185 235,165 M150,300 C195,285 245,315 300,295 M165,415 C205,398 255,415 300,390 M235,165 C270,150 290,185 330,170 M430,90 C385,130 405,180 355,215 C320,240 340,300 305,335 M405,180 C365,195 345,170 305,195' stroke='rgb(150,116,54)' stroke-width='3.2' opacity='0.5'/%3E%3Cpath d='M40,70 C70,110 60,150 100,175 C140,200 130,250 150,300 C165,345 135,380 165,415 M100,175 C150,160 190,185 235,165 M150,300 C195,285 245,315 300,295 M165,415 C205,398 255,415 300,390 M235,165 C270,150 290,185 330,170 M430,90 C385,130 405,180 355,215 C320,240 340,300 305,335 M405,180 C365,195 345,170 305,195' stroke='rgb(240,210,140)' stroke-width='1.2' opacity='0.95'/%3E%3Cellipse cx='100' cy='175' rx='9' ry='6' fill='rgb(240,210,140)' opacity='0.3'/%3E%3Cellipse cx='150' cy='300' rx='8' ry='6' fill='rgb(240,210,140)' opacity='0.3'/%3E%3Cellipse cx='355' cy='215' rx='7' ry='5' fill='rgb(240,210,140)' opacity='0.28'/%3E%3Cellipse cx='300' cy='295' rx='6' ry='5' fill='rgb(240,210,140)' opacity='0.26'/%3E%3C/g%3E%3C/svg%3E");
+
         background-image:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(150,116,54)' stroke-width='3.2' opacity='0.5'/%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(240,210,140)' stroke-width='1.2' opacity='0.95'/%3E%3C/g%3E%3C/svg%3E"),
             radial-gradient(ellipse 55% 45% at 30% 35%, rgb(224, 190, 110, 0.10) 0%, transparent 60%),
             radial-gradient(ellipse 50% 40% at 75% 70%, rgb(184, 90, 30, 0.10) 0%, transparent 60%),
             linear-gradient(135deg, transparent 30%, rgb(224, 190, 110, 0.05) 50%, transparent 70%);
-        background-size: 520px 520px, auto, auto, auto;
-        background-position: center, center, center, center;
+    }
+
+    :host([theme="kintsugi-gold"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: var(--_veins-svg), var(--_veins-svg);
+        background-size: 700px 700px, 1040px 1040px;
+        background-position: 0 0, 241px 157px;
+        background-repeat: repeat;
+        mask-image:
+            radial-gradient(ellipse 52% 62% at 28% 36%, rgb(0, 0, 0, 1) 0%, rgb(0, 0, 0, 1) 30%, transparent 74%),
+            radial-gradient(ellipse 46% 56% at 74% 62%, rgb(0, 0, 0, 1) 0%, rgb(0, 0, 0, 1) 26%, transparent 72%),
+            radial-gradient(ellipse 38% 44% at 52% 14%, rgb(0, 0, 0, 1) 0%, transparent 76%);
+        mask-repeat: no-repeat;
     }
 
     /* 13c · kintsugi-light — 金繕い costuras de oro sobre cerámica pálida
        Kintsugi en clave light: oro bronce más oscuro para leer sobre washi. */
     :host([theme="kintsugi-light"]) .bg-base {
         background-color: var(--color-washi-100);
+        --_veins-svg:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cdefs%3E%3Cfilter id='k' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013' numOctaves='2' seed='11' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='11' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23k)' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M40,70 C70,110 60,150 100,175 C140,200 130,250 150,300 C165,345 135,380 165,415 M100,175 C150,160 190,185 235,165 M150,300 C195,285 245,315 300,295 M165,415 C205,398 255,415 300,390 M235,165 C270,150 290,185 330,170 M430,90 C385,130 405,180 355,215 C320,240 340,300 305,335 M405,180 C365,195 345,170 305,195' stroke='rgb(120,85,38)' stroke-width='3' opacity='0.32'/%3E%3Cpath d='M40,70 C70,110 60,150 100,175 C140,200 130,250 150,300 C165,345 135,380 165,415 M100,175 C150,160 190,185 235,165 M150,300 C195,285 245,315 300,295 M165,415 C205,398 255,415 300,390 M235,165 C270,150 290,185 330,170 M430,90 C385,130 405,180 355,215 C320,240 340,300 305,335 M405,180 C365,195 345,170 305,195' stroke='rgb(190,142,66)' stroke-width='1.1' opacity='0.7'/%3E%3Cellipse cx='100' cy='175' rx='7' ry='5' fill='rgb(190,142,66)' opacity='0.16'/%3E%3Cellipse cx='150' cy='300' rx='6' ry='5' fill='rgb(190,142,66)' opacity='0.16'/%3E%3Cellipse cx='355' cy='215' rx='6' ry='4' fill='rgb(190,142,66)' opacity='0.15'/%3E%3C/g%3E%3C/svg%3E");
+
         background-image:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(120,85,38)' stroke-width='3' opacity='0.32'/%3E%3Cpath d='M60,50 L110,110 L95,180 L150,230 L130,300 L185,360 L170,430 M110,110 L175,90 L240,130 M150,230 L215,205 L270,255 M185,360 L250,335 L300,380 M430,70 L370,130 L390,200 L330,255 L350,330 M370,130 L300,150' stroke='rgb(190,142,66)' stroke-width='1.1' opacity='0.7'/%3E%3C/g%3E%3C/svg%3E"),
             radial-gradient(ellipse 60% 50% at 40% 40%, rgb(212, 165, 86, 0.07) 0%, transparent 65%);
-        background-size: 480px 480px, auto;
-        background-position: center, center;
     }
 
-    /* 14 · ash-grid — cuadrícula ceniza */
+    :host([theme="kintsugi-light"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: var(--_veins-svg), var(--_veins-svg);
+        background-size: 640px 640px, 950px 950px;
+        background-position: 0 0, 219px 143px;
+        background-repeat: repeat;
+        mask-image:
+            radial-gradient(ellipse 50% 58% at 30% 30%, rgb(0, 0, 0, 1) 0%, rgb(0, 0, 0, 1) 24%, transparent 72%),
+            radial-gradient(ellipse 44% 52% at 70% 68%, rgb(0, 0, 0, 1) 0%, rgb(0, 0, 0, 1) 20%, transparent 70%),
+            radial-gradient(ellipse 30% 36% at 58% 16%, rgb(0, 0, 0, 1) 0%, transparent 74%);
+        mask-repeat: no-repeat;
+    }
+
+    /* 14 · ash-grid — cuadrícula ceniza
+       Orgánico: rejilla intacta + máscara de densidad → la cuadrícula
+       respira con la luz en vez de leerse como una malla plana infinita. */
     :host([theme="ash-grid"]) .bg-base {
         background-color: var(--color-washi-950);
+    }
+
+    :host([theme="ash-grid"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         background-image:
             linear-gradient(rgb(250, 247, 244, 0.04) 1px, transparent 1px),
             linear-gradient(90deg, rgb(250, 247, 244, 0.04) 1px, transparent 1px);
         background-size: 40px 40px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.3) 0 0),
+            radial-gradient(ellipse 64% 70% at 26% 30%, rgb(0, 0, 0, 0.7) 0%, transparent 74%),
+            radial-gradient(ellipse 56% 60% at 74% 68%, rgb(0, 0, 0, 0.6) 0%, transparent 72%);
+        mask-repeat: no-repeat;
     }
 
-    /* 15 · ink-dot */
+    /* 15 · ink-dot
+       Orgánico: dos rejillas de punto a ratio irracional (20 y 27) +
+       máscara de densidad → constelación despareja en vez de matriz. */
     :host([theme="ink-dot"]) .bg-base {
         background-color: var(--color-washi-950);
-        background-image: radial-gradient(circle, rgb(250, 247, 244, 0.07) 1px, transparent 1px);
-        background-size: 20px 20px;
+    }
+
+    :host([theme="ink-dot"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(circle, rgb(250, 247, 244, 0.07) 1px, transparent 1px),
+            radial-gradient(circle, rgb(250, 247, 244, 0.05) 1px, transparent 1px);
+        background-size: 20px 20px, 27px 27px;
+        background-position: 0 0, 9px 6px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.45) 0 0),
+            radial-gradient(ellipse 55% 60% at 26% 30%, rgb(0, 0, 0, 0.55) 0%, transparent 72%),
+            radial-gradient(ellipse 48% 54% at 72% 68%, rgb(0, 0, 0, 0.5) 0%, transparent 70%);
+        mask-repeat: no-repeat;
     }
 
     /* 16 · mokume — veteado de madera */
@@ -491,41 +642,84 @@
        LIGHT — Nuevas (35–39)
     ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── */
 
-    /* 35 · kagome — 籠目 hexagonal basket weave */
+    /* 35 · kagome — 籠目 hexagonal basket weave
+       Orgánico: el trenzado hexagonal se conserva + máscara de densidad →
+       cestería con luz desigual, no una malla mecánica uniforme. */
     :host([theme="kagome"]) .bg-base {
         background-color: var(--color-washi-50);
+    }
+
+    :host([theme="kagome"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         background-image:
             linear-gradient(60deg, rgb(160, 140, 118, 0.11) 1px, transparent 1px),
             linear-gradient(120deg, rgb(160, 140, 118, 0.11) 1px, transparent 1px),
             linear-gradient(0deg, rgb(160, 140, 118, 0.07) 1px, transparent 1px);
         background-size: 22px 38px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.32) 0 0),
+            radial-gradient(ellipse 64% 68% at 25% 30%, rgb(0, 0, 0, 0.66) 0%, transparent 74%),
+            radial-gradient(ellipse 58% 60% at 74% 70%, rgb(0, 0, 0, 0.58) 0%, transparent 72%);
+        mask-repeat: no-repeat;
     }
 
-    /* 36 · shoji — 障子 paper screen */
+    /* 36 · shoji — 障子 paper screen
+       Orgánico: la retícula del biombo se conserva + máscara de densidad
+       suave → luz de washi filtrándose desigual, no una malla plana. */
     :host([theme="shoji"]) .bg-base {
         background-color: var(--color-washi-50);
+    }
+
+    :host([theme="shoji"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         background-image:
             linear-gradient(rgb(160, 140, 118, 0.07) 1px, transparent 1px),
             linear-gradient(90deg, rgb(160, 140, 118, 0.07) 1px, transparent 1px),
             linear-gradient(rgb(160, 140, 118, 0.13) 1px, transparent 1px),
             linear-gradient(90deg, rgb(160, 140, 118, 0.13) 1px, transparent 1px);
         background-size: 10px 10px, 10px 10px, 40px 40px, 40px 40px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.42) 0 0),
+            radial-gradient(ellipse 68% 74% at 28% 30%, rgb(0, 0, 0, 0.58) 0%, transparent 74%),
+            radial-gradient(ellipse 60% 64% at 74% 68%, rgb(0, 0, 0, 0.5) 0%, transparent 72%);
+        mask-repeat: no-repeat;
     }
 
-    /* 37 · shibori — 絞り tie-dye concentric circles */
+    /* 37 · shibori — 絞り tie-dye concentric circles
+       Orgánico: los anillos se conservan a dos escalas de ratio irracional
+       (48 y 67) + máscara de densidad fuerte → el anudado tie-dye es
+       irregular por naturaleza, así que la modulación lo hace más auténtico
+       y disuelve la cuadrícula de anillos idénticos. */
     :host([theme="shibori"]) .bg-base {
         background-color: var(--color-washi-50);
+    }
+
+    :host([theme="shibori"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
         background-image:
             radial-gradient(circle at 0% 0%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
             radial-gradient(circle at 100% 0%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
             radial-gradient(circle at 0% 100%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
             radial-gradient(circle at 100% 100%, transparent 28%, rgb(160, 140, 118, 0.10) 29%, transparent 30%),
             radial-gradient(circle at 50% 50%, transparent 28%, rgb(160, 140, 118, 0.07) 29%, transparent 30%),
-            radial-gradient(circle at 0% 0%, transparent 14%, rgb(160, 140, 118, 0.06) 15%, transparent 16%),
-            radial-gradient(circle at 100% 0%, transparent 14%, rgb(160, 140, 118, 0.06) 15%, transparent 16%),
-            radial-gradient(circle at 0% 100%, transparent 14%, rgb(160, 140, 118, 0.06) 15%, transparent 16%),
-            radial-gradient(circle at 100% 100%, transparent 14%, rgb(160, 140, 118, 0.06) 15%, transparent 16%);
-        background-size: 48px 48px;
+            radial-gradient(circle at 50% 50%, transparent 28%, rgb(160, 140, 118, 0.06) 29%, transparent 30%);
+        background-size: 48px 48px, 48px 48px, 48px 48px, 48px 48px, 48px 48px, 67px 67px;
+        background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 19px 27px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.28) 0 0),
+            radial-gradient(ellipse 60% 66% at 24% 30%, rgb(0, 0, 0, 0.7) 0%, transparent 72%),
+            radial-gradient(ellipse 54% 58% at 72% 68%, rgb(0, 0, 0, 0.62) 0%, transparent 70%),
+            radial-gradient(ellipse 40% 46% at 54% 14%, rgb(0, 0, 0, 0.5) 0%, transparent 74%);
+        mask-repeat: no-repeat;
     }
 
     /* 38 · ori — 織 diagonal woven textile */
@@ -663,8 +857,20 @@
        para dar profundidad de esmalte. */
     :host([theme="craquele"]) .bg-base {
         background-color: #EAE0CF;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cg fill='none' stroke-linejoin='round' stroke-linecap='round'%3E%3Cg transform='translate(0.8,0.8)' stroke='rgb(250,244,230)' stroke-width='0.9' opacity='0.35'%3E%3Cpath d='M0,56.3 L39.3,39.5 L105.5,39.5 L139.8,40.1 L189.2,58.3 L237.8,41.6 L300,56.3 M0,84.5 L60.6,104.9 L98.5,96.4 L148.4,92.9 L189.8,110.3 L244.1,102.4 L300,84.5 M0,138.4 L47.6,146 L89.9,160.1 L147,157.9 L184.2,152.2 L243,152.4 L300,138.4 M0,191.8 L50.9,201.7 L102.2,214.5 L157.7,189.5 L197.8,196.2 L248.1,199 L300,191.8 M0,237.3 L51.5,251.5 L104.5,235.9 L137.2,255.9 L192.3,233.4 L262.2,265.5 L300,237.3 M37.4,0 L39.3,39.5 L60.6,104.9 L47.6,146 L50.9,201.7 L51.5,251.5 L37.4,300 M91.8,0 L105.5,39.5 L98.5,96.4 L89.9,160.1 L102.2,214.5 L104.5,235.9 L91.8,300 M144.2,0 L139.8,40.1 L148.4,92.9 L147,157.9 L157.7,189.5 L137.2,255.9 L144.2,300 M190.8,0 L189.2,58.3 L189.8,110.3 L184.2,152.2 L197.8,196.2 L192.3,233.4 L190.8,300 M238.3,0 L237.8,41.6 L244.1,102.4 L243,152.4 L248.1,199 L262.2,265.5 L238.3,300'/%3E%3C/g%3E%3Cpath d='M0,56.3 L39.3,39.5 L105.5,39.5 L139.8,40.1 L189.2,58.3 L237.8,41.6 L300,56.3 M0,84.5 L60.6,104.9 L98.5,96.4 L148.4,92.9 L189.8,110.3 L244.1,102.4 L300,84.5 M0,138.4 L47.6,146 L89.9,160.1 L147,157.9 L184.2,152.2 L243,152.4 L300,138.4 M0,191.8 L50.9,201.7 L102.2,214.5 L157.7,189.5 L197.8,196.2 L248.1,199 L300,191.8 M0,237.3 L51.5,251.5 L104.5,235.9 L137.2,255.9 L192.3,233.4 L262.2,265.5 L300,237.3 M37.4,0 L39.3,39.5 L60.6,104.9 L47.6,146 L50.9,201.7 L51.5,251.5 L37.4,300 M91.8,0 L105.5,39.5 L98.5,96.4 L89.9,160.1 L102.2,214.5 L104.5,235.9 L91.8,300 M144.2,0 L139.8,40.1 L148.4,92.9 L147,157.9 L157.7,189.5 L137.2,255.9 L144.2,300 M190.8,0 L189.2,58.3 L189.8,110.3 L184.2,152.2 L197.8,196.2 L192.3,233.4 L190.8,300 M238.3,0 L237.8,41.6 L244.1,102.4 L243,152.4 L248.1,199 L262.2,265.5 L238.3,300' stroke='rgb(108,86,66)' stroke-width='0.9' opacity='0.55'/%3E%3Cpath d='M0,31.9 L36.3,30.2 L73.8,30.4 L117.6,37.8 L146.9,38.5 L185.7,38.6 L222.7,37 L264.4,30.4 L300,31.9 M0,67.6 L40.6,74.8 L69.1,68.2 L112.1,76.7 L142.1,81.9 L184.3,79.2 L226.7,76.7 L261.7,80 L300,67.6 M0,111 L31.4,117.7 L73.7,112.6 L109.4,108.6 L144,119 L185.5,111.1 L222.6,111.8 L265.3,113.2 L300,111 M0,142.2 L43.6,154.5 L82.6,142.9 L114.1,146.4 L149.8,155.1 L184.9,149.6 L218.2,143.9 L264,147.1 L300,142.2 M0,192.6 L30.4,182.4 L71.6,183.5 L115.9,186.6 L147.1,185.5 L189.6,188.2 L217.6,186 L267.4,187.9 L300,192.6 M0,224.6 L44,226.3 L69.2,220.3 L114.5,226.4 L146.4,227.4 L192.4,225.2 L222,224 L270.4,221.7 L300,224.6 M0,255.8 L37.4,265.5 L70.5,254.6 L110.9,256.4 L155.6,261.1 L187.8,262.8 L220.9,259.5 L254.7,267.2 L300,255.8 M40.1,0 L36.3,30.2 L40.6,74.8 L31.4,117.7 L43.6,154.5 L30.4,182.4 L44,226.3 L37.4,265.5 L40.1,300 M72.7,0 L73.8,30.4 L69.1,68.2 L73.7,112.6 L82.6,142.9 L71.6,183.5 L69.2,220.3 L70.5,254.6 L72.7,300 M106,0 L117.6,37.8 L112.1,76.7 L109.4,108.6 L114.1,146.4 L115.9,186.6 L114.5,226.4 L110.9,256.4 L106,300 M145.4,0 L146.9,38.5 L142.1,81.9 L144,119 L149.8,155.1 L147.1,185.5 L146.4,227.4 L155.6,261.1 L145.4,300 M181,0 L185.7,38.6 L184.3,79.2 L185.5,111.1 L184.9,149.6 L189.6,188.2 L192.4,225.2 L187.8,262.8 L181,300 M221.1,0 L222.7,37 L226.7,76.7 L222.6,111.8 L218.2,143.9 L217.6,186 L222,224 L220.9,259.5 L221.1,300 M267.5,0 L264.4,30.4 L261.7,80 L265.3,113.2 L264,147.1 L267.4,187.9 L270.4,221.7 L254.7,267.2 L267.5,300' stroke='rgb(126,106,86)' stroke-width='0.5' opacity='0.28'/%3E%3C/g%3E%3C/svg%3E");
-        background-size: 300px 300px;
+        --_craquele-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cg fill='none' stroke-linejoin='round' stroke-linecap='round'%3E%3Cg transform='translate(0.8,0.8)' stroke='rgb(250,244,230)' stroke-width='0.9' opacity='0.35'%3E%3Cpath d='M0,56.3 L39.3,39.5 L105.5,39.5 L139.8,40.1 L189.2,58.3 L237.8,41.6 L300,56.3 M0,84.5 L60.6,104.9 L98.5,96.4 L148.4,92.9 L189.8,110.3 L244.1,102.4 L300,84.5 M0,138.4 L47.6,146 L89.9,160.1 L147,157.9 L184.2,152.2 L243,152.4 L300,138.4 M0,191.8 L50.9,201.7 L102.2,214.5 L157.7,189.5 L197.8,196.2 L248.1,199 L300,191.8 M0,237.3 L51.5,251.5 L104.5,235.9 L137.2,255.9 L192.3,233.4 L262.2,265.5 L300,237.3 M37.4,0 L39.3,39.5 L60.6,104.9 L47.6,146 L50.9,201.7 L51.5,251.5 L37.4,300 M91.8,0 L105.5,39.5 L98.5,96.4 L89.9,160.1 L102.2,214.5 L104.5,235.9 L91.8,300 M144.2,0 L139.8,40.1 L148.4,92.9 L147,157.9 L157.7,189.5 L137.2,255.9 L144.2,300 M190.8,0 L189.2,58.3 L189.8,110.3 L184.2,152.2 L197.8,196.2 L192.3,233.4 L190.8,300 M238.3,0 L237.8,41.6 L244.1,102.4 L243,152.4 L248.1,199 L262.2,265.5 L238.3,300'/%3E%3C/g%3E%3Cpath d='M0,56.3 L39.3,39.5 L105.5,39.5 L139.8,40.1 L189.2,58.3 L237.8,41.6 L300,56.3 M0,84.5 L60.6,104.9 L98.5,96.4 L148.4,92.9 L189.8,110.3 L244.1,102.4 L300,84.5 M0,138.4 L47.6,146 L89.9,160.1 L147,157.9 L184.2,152.2 L243,152.4 L300,138.4 M0,191.8 L50.9,201.7 L102.2,214.5 L157.7,189.5 L197.8,196.2 L248.1,199 L300,191.8 M0,237.3 L51.5,251.5 L104.5,235.9 L137.2,255.9 L192.3,233.4 L262.2,265.5 L300,237.3 M37.4,0 L39.3,39.5 L60.6,104.9 L47.6,146 L50.9,201.7 L51.5,251.5 L37.4,300 M91.8,0 L105.5,39.5 L98.5,96.4 L89.9,160.1 L102.2,214.5 L104.5,235.9 L91.8,300 M144.2,0 L139.8,40.1 L148.4,92.9 L147,157.9 L157.7,189.5 L137.2,255.9 L144.2,300 M190.8,0 L189.2,58.3 L189.8,110.3 L184.2,152.2 L197.8,196.2 L192.3,233.4 L190.8,300 M238.3,0 L237.8,41.6 L244.1,102.4 L243,152.4 L248.1,199 L262.2,265.5 L238.3,300' stroke='rgb(108,86,66)' stroke-width='0.9' opacity='0.55'/%3E%3Cpath d='M0,31.9 L36.3,30.2 L73.8,30.4 L117.6,37.8 L146.9,38.5 L185.7,38.6 L222.7,37 L264.4,30.4 L300,31.9 M0,67.6 L40.6,74.8 L69.1,68.2 L112.1,76.7 L142.1,81.9 L184.3,79.2 L226.7,76.7 L261.7,80 L300,67.6 M0,111 L31.4,117.7 L73.7,112.6 L109.4,108.6 L144,119 L185.5,111.1 L222.6,111.8 L265.3,113.2 L300,111 M0,142.2 L43.6,154.5 L82.6,142.9 L114.1,146.4 L149.8,155.1 L184.9,149.6 L218.2,143.9 L264,147.1 L300,142.2 M0,192.6 L30.4,182.4 L71.6,183.5 L115.9,186.6 L147.1,185.5 L189.6,188.2 L217.6,186 L267.4,187.9 L300,192.6 M0,224.6 L44,226.3 L69.2,220.3 L114.5,226.4 L146.4,227.4 L192.4,225.2 L222,224 L270.4,221.7 L300,224.6 M0,255.8 L37.4,265.5 L70.5,254.6 L110.9,256.4 L155.6,261.1 L187.8,262.8 L220.9,259.5 L254.7,267.2 L300,255.8 M40.1,0 L36.3,30.2 L40.6,74.8 L31.4,117.7 L43.6,154.5 L30.4,182.4 L44,226.3 L37.4,265.5 L40.1,300 M72.7,0 L73.8,30.4 L69.1,68.2 L73.7,112.6 L82.6,142.9 L71.6,183.5 L69.2,220.3 L70.5,254.6 L72.7,300 M106,0 L117.6,37.8 L112.1,76.7 L109.4,108.6 L114.1,146.4 L115.9,186.6 L114.5,226.4 L110.9,256.4 L106,300 M145.4,0 L146.9,38.5 L142.1,81.9 L144,119 L149.8,155.1 L147.1,185.5 L146.4,227.4 L155.6,261.1 L145.4,300 M181,0 L185.7,38.6 L184.3,79.2 L185.5,111.1 L184.9,149.6 L189.6,188.2 L192.4,225.2 L187.8,262.8 L181,300 M221.1,0 L222.7,37 L226.7,76.7 L222.6,111.8 L218.2,143.9 L217.6,186 L222,224 L220.9,259.5 L221.1,300 M267.5,0 L264.4,30.4 L261.7,80 L265.3,113.2 L264,147.1 L267.4,187.9 L270.4,221.7 L254.7,267.2 L267.5,300' stroke='rgb(126,106,86)' stroke-width='0.5' opacity='0.28'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    :host([theme="craquele"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: var(--_craquele-svg), var(--_craquele-svg);
+        background-size: 300px 300px, 411px 411px;
+        background-position: 0 0, 129px 173px;
+        background-repeat: repeat;
+        mask-image:
+            radial-gradient(ellipse 96% 90% at 32% 30%, rgb(0, 0, 0, 1) 0%, rgb(0, 0, 0, 0.55) 100%);
+        mask-repeat: no-repeat;
     }
 
     /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
@@ -746,11 +952,30 @@
        con nervadura central) sobre papel con un leve lavado verde. */
     :host([theme="wakaba"]) .bg-base {
         background-color: #ECE6D5;
+        --_wakaba-svg:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cg transform='translate(44,216.6) rotate(221.2)'%3E%3Cpath d='M0,-24.9 Q12.5,0 0,24.9 Q-12.5,0 0,-24.9 Z' fill='rgb(150,170,112)' opacity='0.5'/%3E%3Cpath d='M0,-22.9 L0,22.9' fill='none' stroke='rgb(118,144,86)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(21.7,241.9) rotate(310.6)'%3E%3Cpath d='M0,-23.3 Q12.3,0 0,23.3 Q-12.3,0 0,-23.3 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-21.3 L0,21.3' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(321.7,241.9) rotate(310.6)'%3E%3Cpath d='M0,-23.3 Q12.3,0 0,23.3 Q-12.3,0 0,-23.3 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-21.3 L0,21.3' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(130,21.1) rotate(227.3)'%3E%3Cpath d='M0,-16.2 Q9.2,0 0,16.2 Q-9.2,0 0,-16.2 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-14.2 L0,14.2' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(130,321.1) rotate(227.3)'%3E%3Cpath d='M0,-16.2 Q9.2,0 0,16.2 Q-9.2,0 0,-16.2 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-14.2 L0,14.2' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(48.5,91.4) rotate(115.3)'%3E%3Cpath d='M0,-14.1 Q6.7,0 0,14.1 Q-6.7,0 0,-14.1 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-12.1 L0,12.1' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(128.6,80.8) rotate(311.1)'%3E%3Cpath d='M0,-24.3 Q13.9,0 0,24.3 Q-13.9,0 0,-24.3 Z' fill='rgb(132,156,98)' opacity='0.4'/%3E%3Cpath d='M0,-22.3 L0,22.3' fill='none' stroke='rgb(108,134,80)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(-34.7,2.4) rotate(222.4)'%3E%3Cpath d='M0,-14.6 Q6.3,0 0,14.6 Q-6.3,0 0,-14.6 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-12.6 L0,12.6' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(-34.7,302.4) rotate(222.4)'%3E%3Cpath d='M0,-14.6 Q6.3,0 0,14.6 Q-6.3,0 0,-14.6 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-12.6 L0,12.6' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(265.3,2.4) rotate(222.4)'%3E%3Cpath d='M0,-14.6 Q6.3,0 0,14.6 Q-6.3,0 0,-14.6 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-12.6 L0,12.6' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(265.3,302.4) rotate(222.4)'%3E%3Cpath d='M0,-14.6 Q6.3,0 0,14.6 Q-6.3,0 0,-14.6 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-12.6 L0,12.6' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(66,19.8) rotate(27.7)'%3E%3Cpath d='M0,-22.8 Q11.4,0 0,22.8 Q-11.4,0 0,-22.8 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-20.8 L0,20.8' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(66,319.8) rotate(27.7)'%3E%3Cpath d='M0,-22.8 Q11.4,0 0,22.8 Q-11.4,0 0,-22.8 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-20.8 L0,20.8' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(160.5,251) rotate(152.9)'%3E%3Cpath d='M0,-22.3 Q11.4,0 0,22.3 Q-11.4,0 0,-22.3 Z' fill='rgb(150,170,112)' opacity='0.3'/%3E%3Cpath d='M0,-20.3 L0,20.3' fill='none' stroke='rgb(118,144,86)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(172.3,120.4) rotate(90.1)'%3E%3Cpath d='M0,-17 Q9.4,0 0,17 Q-9.4,0 0,-17 Z' fill='rgb(150,170,112)' opacity='0.5'/%3E%3Cpath d='M0,-15 L0,15' fill='none' stroke='rgb(118,144,86)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(13,107.7) rotate(174.1)'%3E%3Cpath d='M0,-21.6 Q12,0 0,21.6 Q-12,0 0,-21.6 Z' fill='rgb(132,156,98)' opacity='0.5'/%3E%3Cpath d='M0,-19.6 L0,19.6' fill='none' stroke='rgb(108,134,80)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(313,107.7) rotate(174.1)'%3E%3Cpath d='M0,-21.6 Q12,0 0,21.6 Q-12,0 0,-21.6 Z' fill='rgb(132,156,98)' opacity='0.5'/%3E%3Cpath d='M0,-19.6 L0,19.6' fill='none' stroke='rgb(108,134,80)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(146.1,-24.9) rotate(315.2)'%3E%3Cpath d='M0,-18.3 Q9,0 0,18.3 Q-9,0 0,-18.3 Z' fill='rgb(132,156,98)' opacity='0.4'/%3E%3Cpath d='M0,-16.3 L0,16.3' fill='none' stroke='rgb(108,134,80)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(146.1,275.1) rotate(315.2)'%3E%3Cpath d='M0,-18.3 Q9,0 0,18.3 Q-9,0 0,-18.3 Z' fill='rgb(132,156,98)' opacity='0.4'/%3E%3Cpath d='M0,-16.3 L0,16.3' fill='none' stroke='rgb(108,134,80)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(214.5,87.8) rotate(262.7)'%3E%3Cpath d='M0,-16.4 Q8.7,0 0,16.4 Q-8.7,0 0,-16.4 Z' fill='rgb(150,170,112)' opacity='0.4'/%3E%3Cpath d='M0,-14.4 L0,14.4' fill='none' stroke='rgb(118,144,86)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3C/svg%3E");
+
         background-image:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cg transform='translate(44,216.6) rotate(221.2)'%3E%3Cpath d='M0,-24.9 Q12.5,0 0,24.9 Q-12.5,0 0,-24.9 Z' fill='rgb(150,170,112)' opacity='0.5'/%3E%3Cpath d='M0,-22.9 L0,22.9' fill='none' stroke='rgb(118,144,86)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(21.7,241.9) rotate(310.6)'%3E%3Cpath d='M0,-23.3 Q12.3,0 0,23.3 Q-12.3,0 0,-23.3 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-21.3 L0,21.3' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(321.7,241.9) rotate(310.6)'%3E%3Cpath d='M0,-23.3 Q12.3,0 0,23.3 Q-12.3,0 0,-23.3 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-21.3 L0,21.3' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(130,21.1) rotate(227.3)'%3E%3Cpath d='M0,-16.2 Q9.2,0 0,16.2 Q-9.2,0 0,-16.2 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-14.2 L0,14.2' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(130,321.1) rotate(227.3)'%3E%3Cpath d='M0,-16.2 Q9.2,0 0,16.2 Q-9.2,0 0,-16.2 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-14.2 L0,14.2' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(48.5,91.4) rotate(115.3)'%3E%3Cpath d='M0,-14.1 Q6.7,0 0,14.1 Q-6.7,0 0,-14.1 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-12.1 L0,12.1' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(128.6,80.8) rotate(311.1)'%3E%3Cpath d='M0,-24.3 Q13.9,0 0,24.3 Q-13.9,0 0,-24.3 Z' fill='rgb(132,156,98)' opacity='0.4'/%3E%3Cpath d='M0,-22.3 L0,22.3' fill='none' stroke='rgb(108,134,80)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(-34.7,2.4) rotate(222.4)'%3E%3Cpath d='M0,-14.6 Q6.3,0 0,14.6 Q-6.3,0 0,-14.6 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-12.6 L0,12.6' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(-34.7,302.4) rotate(222.4)'%3E%3Cpath d='M0,-14.6 Q6.3,0 0,14.6 Q-6.3,0 0,-14.6 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-12.6 L0,12.6' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(265.3,2.4) rotate(222.4)'%3E%3Cpath d='M0,-14.6 Q6.3,0 0,14.6 Q-6.3,0 0,-14.6 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-12.6 L0,12.6' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(265.3,302.4) rotate(222.4)'%3E%3Cpath d='M0,-14.6 Q6.3,0 0,14.6 Q-6.3,0 0,-14.6 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-12.6 L0,12.6' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(66,19.8) rotate(27.7)'%3E%3Cpath d='M0,-22.8 Q11.4,0 0,22.8 Q-11.4,0 0,-22.8 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-20.8 L0,20.8' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(66,319.8) rotate(27.7)'%3E%3Cpath d='M0,-22.8 Q11.4,0 0,22.8 Q-11.4,0 0,-22.8 Z' fill='rgb(164,178,116)' opacity='0.4'/%3E%3Cpath d='M0,-20.8 L0,20.8' fill='none' stroke='rgb(126,150,92)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(160.5,251) rotate(152.9)'%3E%3Cpath d='M0,-22.3 Q11.4,0 0,22.3 Q-11.4,0 0,-22.3 Z' fill='rgb(150,170,112)' opacity='0.3'/%3E%3Cpath d='M0,-20.3 L0,20.3' fill='none' stroke='rgb(118,144,86)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(172.3,120.4) rotate(90.1)'%3E%3Cpath d='M0,-17 Q9.4,0 0,17 Q-9.4,0 0,-17 Z' fill='rgb(150,170,112)' opacity='0.5'/%3E%3Cpath d='M0,-15 L0,15' fill='none' stroke='rgb(118,144,86)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(13,107.7) rotate(174.1)'%3E%3Cpath d='M0,-21.6 Q12,0 0,21.6 Q-12,0 0,-21.6 Z' fill='rgb(132,156,98)' opacity='0.5'/%3E%3Cpath d='M0,-19.6 L0,19.6' fill='none' stroke='rgb(108,134,80)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(313,107.7) rotate(174.1)'%3E%3Cpath d='M0,-21.6 Q12,0 0,21.6 Q-12,0 0,-21.6 Z' fill='rgb(132,156,98)' opacity='0.5'/%3E%3Cpath d='M0,-19.6 L0,19.6' fill='none' stroke='rgb(108,134,80)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(146.1,-24.9) rotate(315.2)'%3E%3Cpath d='M0,-18.3 Q9,0 0,18.3 Q-9,0 0,-18.3 Z' fill='rgb(132,156,98)' opacity='0.4'/%3E%3Cpath d='M0,-16.3 L0,16.3' fill='none' stroke='rgb(108,134,80)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(146.1,275.1) rotate(315.2)'%3E%3Cpath d='M0,-18.3 Q9,0 0,18.3 Q-9,0 0,-18.3 Z' fill='rgb(132,156,98)' opacity='0.4'/%3E%3Cpath d='M0,-16.3 L0,16.3' fill='none' stroke='rgb(108,134,80)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(214.5,87.8) rotate(262.7)'%3E%3Cpath d='M0,-16.4 Q8.7,0 0,16.4 Q-8.7,0 0,-16.4 Z' fill='rgb(150,170,112)' opacity='0.4'/%3E%3Cpath d='M0,-14.4 L0,14.4' fill='none' stroke='rgb(118,144,86)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(129.1,83.4) rotate(227.6)'%3E%3Cpath d='M0,-24.3 Q10.7,0 0,24.3 Q-10.7,0 0,-24.3 Z' fill='rgb(132,156,98)' opacity='0.4'/%3E%3Cpath d='M0,-22.3 L0,22.3' fill='none' stroke='rgb(108,134,80)' stroke-width='0.7' opacity='0.5'/%3E%3C/g%3E%3C/svg%3E"),
             radial-gradient(ellipse 90% 80% at 70% 20%, rgb(150, 166, 110, 0.10) 0%, transparent 70%);
-        background-repeat: repeat, no-repeat;
-        background-size: 300px 300px, auto;
+    }
+
+    :host([theme="wakaba"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: var(--_wakaba-svg), var(--_wakaba-svg);
+        background-size: 300px 300px, 417px 417px;
+        background-position: 0 0, 137px 91px;
+        background-repeat: repeat;
+        /* Máscara de densidad: base tenue + tres derivas radiales → las
+           hojas se acumulan en matas desiguales sobre claros de papel,
+           como hojarasca arrastrada, en vez de un scatter uniforme. */
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.34) 0 0),
+            radial-gradient(ellipse 48% 56% at 20% 30%, rgb(0, 0, 0, 0.8) 0%, transparent 70%),
+            radial-gradient(ellipse 44% 52% at 68% 66%, rgb(0, 0, 0, 0.72) 0%, transparent 68%),
+            radial-gradient(ellipse 36% 44% at 88% 20%, rgb(0, 0, 0, 0.62) 0%, transparent 72%);
+        mask-repeat: no-repeat;
     }
 
     /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
@@ -800,12 +1025,28 @@
         background-color: #080604;
     }
 
-    /* 44 · midnight — 深夜 fine dot matrix */
+    /* 44 · midnight — 深夜 fine dot matrix
+       Orgánico: dos rejillas de punto a ratio irracional (12 y 17) +
+       máscara de densidad → campo estelar despareja, no una matriz plana. */
     :host([theme="midnight"]) .bg-base {
         background-color: #090806;
-        background-image: radial-gradient(circle, rgb(250, 247, 244, 0.04) 1px, transparent 1px);
-        background-size: 12px 12px;
-        background-position: 0 0, 6px 6px;
+    }
+
+    :host([theme="midnight"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(circle, rgb(250, 247, 244, 0.04) 1px, transparent 1px),
+            radial-gradient(circle, rgb(250, 247, 244, 0.03) 1px, transparent 1px);
+        background-size: 12px 12px, 17px 17px;
+        background-position: 0 0, 5px 8px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.4) 0 0),
+            radial-gradient(ellipse 60% 65% at 30% 32%, rgb(0, 0, 0, 0.6) 0%, transparent 72%),
+            radial-gradient(ellipse 52% 56% at 72% 66%, rgb(0, 0, 0, 0.5) 0%, transparent 70%);
+        mask-repeat: no-repeat;
     }
 
     :host([theme="midnight"]) .bg-overlay {
@@ -814,16 +1055,32 @@
                 rgb(184, 90, 30, 0.04) 100%);
     }
 
-    /* 46 · celadon — 青磁 deep jade surface */
+    /* 46 · celadon — 青磁 deep jade surface
+       Orgánico: el glow de jade central se mantiene sin máscara; la rejilla
+       se traslada a ::after con máscara de densidad → cerámica con luz
+       desigual en vez de una malla plana. */
     :host([theme="celadon"]) .bg-base {
         background-color: #050B09;
         background-image:
-            linear-gradient(rgb(78, 148, 130, 0.055) 1px, transparent 1px),
-            linear-gradient(90deg, rgb(78, 148, 130, 0.055) 1px, transparent 1px),
             radial-gradient(ellipse 60% 50% at 50% 50%,
                 rgb(78, 148, 130, 0.06) 0%,
                 transparent 70%);
-        background-size: 40px 40px, 40px 40px, auto;
+    }
+
+    :host([theme="celadon"]) .bg-base::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgb(78, 148, 130, 0.055) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(78, 148, 130, 0.055) 1px, transparent 1px);
+        background-size: 40px 40px, 40px 40px;
+        background-repeat: repeat;
+        mask-image:
+            linear-gradient(rgb(0, 0, 0, 0.3) 0 0),
+            radial-gradient(ellipse 64% 68% at 28% 30%, rgb(0, 0, 0, 0.7) 0%, transparent 74%),
+            radial-gradient(ellipse 56% 60% at 74% 70%, rgb(0, 0, 0, 0.6) 0%, transparent 72%);
+        mask-repeat: no-repeat;
     }
 
     /* ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ── ──
