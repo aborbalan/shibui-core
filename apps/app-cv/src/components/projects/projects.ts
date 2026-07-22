@@ -15,7 +15,7 @@ import { SectionHeading } from '../section-heading/section-heading';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <section class="pr">
-      <cv-section-heading title="Proyectos" />
+      <cv-section-heading title="Proyectos" index="01" kanji="作" />
 
       <div class="pr__grid">
         @for (p of items(); track p.name) {
@@ -23,9 +23,18 @@ import { SectionHeading } from '../section-heading/section-heading';
             class="pr__card"
             [attr.variant]="p.highlight ? 'featured' : 'solid'"
             [attr.kanji]="p.kanji ?? null"
+            [attr.decoration]="p.decoration ?? null"
           >
             <span slot="tag">{{ p.tag }}</span>
             <h3 slot="title" class="pr__name">{{ p.name }}</h3>
+
+            <!-- Cover tipográfico placeholder. TODO: captura real del proyecto
+                 (Storybook / Trust Report) en la iteración de imágenes. -->
+            @if (p.kanji) {
+              <div class="pr__cover" aria-hidden="true">
+                <span class="pr__cover-kanji">{{ p.kanji }}</span>
+              </div>
+            }
 
             <p class="pr__desc">{{ p.description }}</p>
             <div class="pr__chips">
@@ -37,10 +46,14 @@ import { SectionHeading } from '../section-heading/section-heading';
             @if (p.demo || p.code) {
               <div slot="footer" class="pr__links">
                 @if (p.demo) {
-                  <a [href]="p.demo" target="_blank" rel="noopener noreferrer">Demo ↗</a>
+                  <a class="mono-link" [href]="p.demo" target="_blank" rel="noopener noreferrer"
+                    >Demo ↗</a
+                  >
                 }
                 @if (p.code) {
-                  <a [href]="p.code" target="_blank" rel="noopener noreferrer">Código ↗</a>
+                  <a class="mono-link" [href]="p.code" target="_blank" rel="noopener noreferrer"
+                    >Código ↗</a
+                  >
                 }
               </div>
             }
@@ -56,12 +69,59 @@ import { SectionHeading } from '../section-heading/section-heading';
       }
       .pr__grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: 1fr;
         gap: var(--lib-space-lg, 24px);
+      }
+      /* Asimetría deliberada en desktop: el proyecto insignia manda. */
+      @media (min-width: 900px) {
+        .pr__grid {
+          grid-template-columns: 1.4fr 1fr;
+        }
+      }
+      .pr__cover {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 21 / 9;
+        margin-bottom: var(--lib-space-md, 16px);
+        border-radius: var(--lib-radius-sm, 4px);
+        background: color-mix(in oklab, var(--text-accent) 8%, transparent);
+        overflow: hidden;
+      }
+      .pr__cover-kanji {
+        font-family: var(--lib-font-body, serif);
+        font-size: clamp(3.5rem, 9vw, 6rem);
+        line-height: 1;
+        color: var(--text-accent);
+        opacity: 0.4;
+        user-select: none;
+      }
+      /* El cover es decorativo: en papel solo infla la card. */
+      @media print {
+        .pr__cover {
+          display: none;
+        }
       }
       .pr__card {
         display: block;
         height: 100%;
+      }
+      /* Hover con intención: lib-card ya eleva la card (-2px + sombra); aquí
+         solo añadimos lo que la card no toca — el cover se aviva y su kanji
+         escala. Todo el movimiento bajo prefers-reduced-motion. */
+      @media (prefers-reduced-motion: no-preference) {
+        .pr__cover,
+        .pr__cover-kanji {
+          transition:
+            background 0.3s ease,
+            transform 0.3s ease;
+        }
+        .pr__card:hover .pr__cover {
+          background: color-mix(in oklab, var(--text-accent) 14%, transparent);
+        }
+        .pr__card:hover .pr__cover-kanji {
+          transform: scale(1.05);
+        }
       }
       .pr__name {
         margin: 0;
@@ -86,35 +146,7 @@ import { SectionHeading } from '../section-heading/section-heading';
         flex-wrap: wrap;
         gap: var(--lib-space-lg, 24px);
       }
-      .pr__links a {
-        position: relative;
-        font-family: var(--lib-font-mono, monospace);
-        font-size: var(--text-sm, 0.8125rem);
-        letter-spacing: var(--tracking-wide, 0.08em);
-        text-transform: uppercase;
-        text-decoration: none;
-        color: var(--text-primary);
-        padding-bottom: 2px;
-        transition: color 0.2s ease;
-      }
-      .pr__links a::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 1px;
-        background: var(--text-accent, currentColor);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.25s ease;
-      }
-      .pr__links a:hover {
-        color: var(--text-accent);
-      }
-      .pr__links a:hover::after {
-        transform: scaleX(1);
-      }
+      /* Los enlaces usan .mono-link global; aquí solo el layout del footer. */
     `,
   ],
 })

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Auditoría de diseño — shibui-cv (jul 2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  /* Paleta = tokens shizen reales medidos en shibui-cv.web.app (jul 2026) */
+  :root {
+    --bg: oklch(97.77% .003 68.35deg);
+    --surface: oklch(94.29% .007 72.91deg);
+    --ink: oklch(17.39% .01 83.02deg);
+    --ink-2: oklch(48.51% .014 76.22deg);
+    --muted: oklch(71.05% .013 74.74deg);
+    --accent: oklch(51.65% .134 46.13deg);
+    --link: oklch(45.54% .059 173.23deg);
+    --border: oklch(81.39% .01 74.43deg);
+    --good: oklch(55% .12 150deg);
+    --warn: oklch(62% .14 75deg);
+    --bad: oklch(52% .17 25deg);
+    --display: "Cormorant Garamond", serif;
+    --body: "Shippori Mincho", serif;
+    --mono: "DM Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--body); font-size: 16px; line-height: 1.75;
+  }
+  .wrap { max-width: 1080px; margin-inline: auto; padding: 48px 24px 96px; }
+  .col { max-width: 760px; }
+
+  .kicker {
+    font-family: var(--mono); font-size: .75rem; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 12px;
+  }
+  .kicker::before { content: ""; width: 32px; height: 1px; background: var(--accent); }
+  h1 {
+    font-family: var(--display); font-weight: 500; font-size: clamp(2.4rem, 5vw, 3.6rem);
+    line-height: 1.1; letter-spacing: -.02em; margin: .3em 0 .2em;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .lede { color: var(--ink-2); font-size: 1.1rem; max-width: 62ch; margin: 0 0 8px; }
+  .meta { font-family: var(--mono); font-size: .75rem; color: var(--muted); letter-spacing: .08em; }
+
+  h2 {
+    font-family: var(--display); font-weight: 500; font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+    letter-spacing: -.02em; line-height: 1.15; margin: 0 0 6px;
+  }
+  section { margin-top: 72px; }
+  .sec-head { margin-bottom: 28px; }
+  .sec-head p { margin: 6px 0 0; color: var(--ink-2); max-width: 68ch; }
+
+  /* Veredicto */
+  .verdict {
+    margin-top: 40px; border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    background: var(--surface); padding: 24px 28px; border-radius: 6px; max-width: 860px;
+  }
+  .verdict p { margin: 0; font-size: 1.05rem; }
+  .verdict strong { color: var(--accent); }
+
+  /* Scorecard */
+  .scores { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px 32px; max-width: 900px; }
+  .score { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: baseline; }
+  .score .lbl { font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+  .score .val { font-family: var(--display); font-size: 1.5rem; font-weight: 600; }
+  .bar { grid-column: 1 / -1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 2px; }
+  .g .val { color: var(--good); }  .g i { background: var(--good); }
+  .w .val { color: var(--warn); }  .w i { background: var(--warn); }
+  .b .val { color: var(--bad); }   .b i { background: var(--bad); }
+
+  /* Cards genéricas */
+  .grid { display: grid; gap: 18px; }
+  .grid.c2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .card {
+    border: 1px solid var(--border); border-radius: 6px; background: var(--surface);
+    padding: 20px 22px; position: relative; overflow: hidden;
+  }
+  .card h3 { font-family: var(--display); font-size: 1.35rem; font-weight: 600; margin: 0 0 6px; letter-spacing: -.01em; }
+  .card p { margin: 0; font-size: .95rem; color: var(--ink-2); }
+  .card .tag {
+    font-family: var(--mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); display: block; margin-bottom: 8px;
+  }
+  .card .kanji {
+    position: absolute; right: -8px; bottom: -26px; font-family: var(--body);
+    font-size: 6rem; line-height: 1; opacity: .07; pointer-events: none;
+  }
+
+  /* Diagnóstico */
+  .diag { border-left-width: 3px; }
+  .diag.sev-alta { border-left-color: var(--bad); }
+  .diag.sev-media { border-left-color: var(--warn); }
+  .diag.sev-baja { border-left-color: var(--muted); }
+  .sev {
+    font-family: var(--mono); font-size: .65rem; letter-spacing: .12em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 3px; border: 1px solid currentColor; float: right; margin-left: 12px;
+  }
+  .sev-alta .sev { color: var(--bad); }
+  .sev-media .sev { color: var(--warn); }
+  .sev-baja .sev { color: var(--muted); }
+  .ev { margin-top: 10px; font-family: var(--mono); font-size: .74rem; color: var(--ink-2);
+       background: color-mix(in oklab, var(--bg) 60%, white 0%); border: 1px dashed var(--border);
+       border-radius: 4px; padding: 8px 12px; }
+  .ev b { color: var(--accent); font-weight: 500; }
+
+  /* Bug box */
+  .bug { border: 1px solid var(--bad); border-radius: 6px; padding: 24px 28px; background: var(--surface); }
+  .bug h3 { font-family: var(--display); font-size: 1.5rem; margin: 0 0 10px; color: var(--bad); }
+  .bug code, .code {
+    font-family: var(--mono); font-size: .8rem; background: color-mix(in oklab, var(--ink) 6%, var(--bg));
+    padding: 1px 6px; border-radius: 3px;
+  }
+  pre.code { display: block; padding: 14px 16px; overflow-x: auto; line-height: 1.6; margin: 12px 0 0; }
+  .exp { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 16px; }
+  .exp .m { border: 1px solid var(--border); border-radius: 4px; padding: 10px 14px; background: var(--bg); }
+  .exp .m .k { font-family: var(--mono); font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: block; }
+  .exp .m .v { font-family: var(--mono); font-size: 1.05rem; color: var(--ink); }
+  .exp .m.crit .v { color: var(--bad); font-weight: 500; }
+
+  /* Wireframes before/after */
+  .wf-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; align-items: start; }
+  .wf-label { font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
+  .wf { border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 14px; }
+  .wf .vp { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 10px 0; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .wf .blk { border-radius: 3px; }
+  .wf .txt { background: color-mix(in oklab, var(--ink) 14%, var(--bg)); }
+  .wf .acc { background: color-mix(in oklab, var(--accent) 45%, var(--bg)); }
+  .wf .img { background: repeating-linear-gradient(45deg, color-mix(in oklab, var(--accent) 22%, var(--bg)) 0 6px, color-mix(in oklab, var(--accent) 10%, var(--bg)) 6px 12px); }
+  .wf .note { font-family: var(--mono); font-size: .68rem; color: var(--ink-2); margin-top: 10px; line-height: 1.5; }
+  .wf-row { display: flex; gap: 8px; width: 82%; }
+  .wf-row.full { width: 96%; }
+
+  /* Plan */
+  .phase { margin-top: 36px; }
+  .phase-head { display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 16px; }
+  .phase-head .n { font-family: var(--display); font-size: 2.2rem; font-weight: 600; color: var(--accent); font-style: italic; }
+  .phase-head h3 { font-family: var(--display); font-size: 1.5rem; font-weight: 500; margin: 0; }
+  .phase-head .fx { margin-left: auto; font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .todo { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .todo li { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: baseline; padding: 10px 14px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); }
+  .todo .id { font-family: var(--mono); font-size: .72rem; color: var(--accent); }
+  .todo .impact { font-family: var(--mono); font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+  .i-alto { color: var(--good); } .i-medio { color: var(--warn); } .i-bajo { color: var(--muted); }
+  .todo p { margin: 0; font-size: .93rem; }
+  .todo p b { font-weight: 600; }
+  .todo p small { display: block; color: var(--ink-2); font-size: .85rem; margin-top: 2px; }
+
+  footer { margin-top: 80px; border-top: 1px solid var(--border); padding-top: 20px;
+    font-family: var(--mono); font-size: .7rem; letter-spacing: .08em; color: var(--muted);
+    display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+  a { color: var(--link); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="kicker">Auditoría de diseño · shibui-cv.web.app</span>
+    <h1>De currículum a <em>portfolio de diseño</em></h1>
+    <p class="lede">Análisis del estado actual de <strong>app-cv</strong> (código + sitio en producción) y plan priorizado para que deje de leerse como un CV maquetado y pase a leerse como el portfolio de alguien que diseña sistemas.</p>
+    <p class="meta">20 · jul · 2026 — evidencia medida en vivo (tokens, layout, scroll) + lectura completa del fuente</p>
+
+    <div class="verdict">
+      <p><strong>Veredicto:</strong> la base es muy buena — tipografía editorial seria, paleta contenida, un design system propio debajo. Pero la página <em>estructura</em> el contenido como un documento: una sola columna de 760&nbsp;px, la experiencia laboral antes que el trabajo, y <strong>ni una sola imagen en toda la página</strong>. Un portfolio de diseño se juzga por lo que enseña, y ahora mismo todo se cuenta y nada se enseña. La buena noticia: el material visual ya existe (Storybook, hanko report, 3 showcase apps) — solo hay que ponerlo en escena.</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head">
+      <h2>Scorecard</h2>
+      <p>Valoración por dimensión, con el criterio «portfolio de diseño» (no «CV correcto», que aprobaría casi todo).</p>
+    </div>
+    <div class="scores">
+      <div class="score g"><span class="lbl">Tipografía</span><span class="val">9</span><span class="bar"><i style="width:90%"></i></span></div>
+      <div class="score g"><span class="lbl">Color & tokens</span><span class="val">8.5</span><span class="bar"><i style="width:85%"></i></span></div>
+      <div class="score g"><span class="lbl">Craft técnico</span><span class="val">8</span><span class="bar"><i style="width:80%"></i></span></div>
+      <div class="score w"><span class="lbl">Layout & retícula</span><span class="val">5</span><span class="bar"><i style="width:50%"></i></span></div>
+      <div class="score w"><span class="lbl">Narrativa / orden</span><span class="val">4</span><span class="bar"><i style="width:40%"></i></span></div>
+      <div class="score b"><span class="lbl">Motion</span><span class="val">3</span><span class="bar"><i style="width:30%"></i></span></div>
+      <div class="score b"><span class="lbl">Evidencia visual</span><span class="val">2</span><span class="bar"><i style="width:20%"></i></span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Lo que ya funciona</h2>
+      <p>Esto no se toca — es la identidad de la página y está por encima de la media.</p>
+    </div>
+    <div class="grid c2">
+      <div class="card"><span class="kanji">書</span><span class="tag">Tipografía</span><h3>Trío editorial serio</h3><p>Cormorant Garamond (display) + Shippori Mincho (cuerpo) + DM Mono (meta) con jerarquía consistente: eyebrows mono uppercase con tracking, display con acento itálico. Voz propia, nada de «Inter por defecto».</p></div>
+      <div class="card"><span class="kanji">色</span><span class="tag">Color</span><h3>Paleta shizen contenida</h3><p>Papel cálido <code>oklch(97.8%)</code>, tinta casi negra, un solo acento kaki. Disciplina cromática real: el acento se reserva para eyebrows, apellido y hovers.</p></div>
+      <div class="card"><span class="kanji">形</span><span class="tag">Diferenciador</span><h3>Katachi switcher</h3><p>6 pieles completas en vivo sobre el propio CV. Ningún CV al uso tiene esto — es la prueba tangible del design system. (Hoy está infrautilizado; ver diagnóstico D4.)</p></div>
+      <div class="card"><span class="kanji">印</span><span class="tag">Craft</span><h3>Detalle de sistema</h3><p>Todo corre sobre tokens semánticos, print stylesheet cuidada para el PDF, OG/Twitter cards completas (og-image verificada ✓), repo público enlazado ✓, arquitectura smart/dumb limpia.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Diagnóstico — por qué se lee como CV</h2>
+      <p>Ocho hallazgos, ordenados por impacto. Cada uno con su evidencia medida.</p>
+    </div>
+    <div class="grid">
+
+      <div class="card diag sev-alta"><span class="sev">Alta</span>
+        <h3>D1 · Cero evidencia visual</h3>
+        <p>No hay ni una imagen, captura o gráfico en toda la página. Los dos proyectos son tarjetas de solo texto. Un recruiter de diseño decide en ~30 segundos mirando, no leyendo — y aquí no hay nada que mirar. El material existe: Storybook showcase, hanko Trust Report, las tres showcase apps, el git-graph…</p>
+        <div class="ev">Medido: <b>0 &lt;img&gt;</b> en el DOM de producción. Proyectos = 2 cards de texto.</div>
+      </div>
+
+      <div class="card diag sev-alta"><span class="sev">Alta</span>
+        <h3>D2 · Orden de currículum, no de portfolio</h3>
+        <p>Tras el hero viene <em>Experiencia</em> — la sección más larga de la página — y solo después los proyectos. Es el orden de un CV para RR.HH. En un portfolio el trabajo abre: Proyectos debería ir justo después del hero, y la experiencia después, comprimida.</p>
+        <div class="ev">Medido en móvil (375×812): el timeline de experiencia mide <b>2.742 px ≈ 3,4 pantallas</b> que el visitante cruza antes de ver un solo proyecto.</div>
+      </div>
+
+      <div class="card diag sev-alta"><span class="sev">Alta</span>
+        <h3>D3 · Layout de documento</h3>
+        <p>Una única columna de 760 px, centrada, y las cinco secciones con el mismo patrón exacto (eyebrow + h2 + contenido + divider). Ritmo perfecto para leer un documento; monótono para un portfolio. Faltan los recursos que dicen «diseño»: momentos full-bleed, asimetría, contraste de escala, romper la retícula alguna vez.</p>
+        <div class="ev">Medido: <b>.page max-width = 760 px</b> constante; 5 secciones idénticas en estructura; en un monitor de 1440 px se usan ~53% de los píxeles.</div>
+      </div>
+
+      <div class="card diag sev-alta"><span class="sev">Alta</span>
+        <h3>D4 · El design system está escondido</h3>
+        <p>La mejor historia de diseño disponible — «este CV corre sobre mi propio design system: ~100 Web Components, 6 katachis, tokens sellados» — no se cuenta en ninguna parte. El switcher es un control flotante que muchos no descubrirán, y nada explica qué está pasando cuando cambias de piel. Es el case study estrella y aparece de figurante.</p>
+      </div>
+
+      <div class="card diag sev-media"><span class="sev">Media</span>
+        <h3>D5 · Jerarquía plana entre secciones</h3>
+        <p>Educación e Idiomas (contenido de pie de página: dos grados y dos idiomas) reciben exactamente el mismo tratamiento ceremonial —eyebrow, h2 gigante fluido, divider— que Proyectos. Todo importa lo mismo, así que nada destaca.</p>
+      </div>
+
+      <div class="card diag sev-media"><span class="sev">Media</span>
+        <h3>D6 · Identidad de movimiento mínima… y rota</h3>
+        <p>La única pieza de motion con firma (el parallax divergente del hero: contenido baja, sello 渋 sube y escala) <strong>no funciona en producción</strong> — ver el bug abajo. Lo que queda: subrayados en hover. Sin scroll-reveal, sin hover en cards, sin stagger. Para un perfil «design engineer», el motion es parte del argumento.</p>
+        <div class="ev">Verificado en vivo: tras scrollear 700 px, <b>--p = 0.000</b> (el parallax nunca se activa).</div>
+      </div>
+
+      <div class="card diag sev-media"><span class="sev">Media</span>
+        <h3>D7 · El titular posiciona «programador»</h3>
+        <p>«Programador Front-End Senior» dice desarrollo puro. Si el objetivo es que parezca un portfolio de diseño, el kicker debería llevar el diseño delante — «Design Engineer · Sistemas de diseño» o similar — y la tagline abrir con el design system, no con los años de Angular.</p>
+      </div>
+
+      <div class="card diag sev-baja"><span class="sev">Baja</span>
+        <h3>D8 · Sopa de chips</h3>
+        <p>El mismo recurso (chip) se usa tres secciones seguidas: stack por rol en Experiencia, stack por proyecto, y toda la sección Stack. Al tercer uso ya no significa nada. En Experiencia bastaría una línea de texto mono (<code>Angular · TypeScript · RxJS</code>) y reservar el chip para Stack.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Bug verificado — el parallax del hero está muerto</h2>
+    </div>
+    <div class="bug">
+      <h3>window.scrollY siempre es 0 en producción</h3>
+      <p style="margin:0 0 4px">En <code>styles.scss</code>, <code>html, body { height: 100%; overflow-x: hidden }</code> convierte al <code>&lt;body&gt;</code> en el contenedor de scroll (el guard anti-scroll-horizontal fuerza <code>overflow-y: auto</code> computado sobre un body de altura fija = viewport). El documento (<code>&lt;html&gt;</code>) nunca scrollea, así que <code>window.scrollY</code> queda clavado a 0, el listener de <code>window</code> no recibe eventos de scroll del body, y el <code>--p</code> del hero nunca pasa de 0: ni parallax, ni fade. La página funciona… pero la firma de motion que ya está programada es invisible para todo el mundo.</p>
+      <div class="exp">
+        <div class="m"><span class="k">html scrollHeight</span><span class="v">812 px</span></div>
+        <div class="m"><span class="k">body scrollHeight</span><span class="v">6.232 px</span></div>
+        <div class="m crit"><span class="k">window.scrollY tras scroll 700px</span><span class="v">0</span></div>
+        <div class="m crit"><span class="k">--p del hero</span><span class="v">0.000</span></div>
+      </div>
+      <p style="margin:14px 0 0">Arreglo mínimo (dos líneas): dejar que el documento vuelva a ser el scroller.</p>
+<pre class="code">html, body {
+  /* height: 100% ✂ — era lo que fijaba el body al viewport */
+  margin: 0;
+  padding: 0;
+}
+html { overflow-x: clip; }  /* clip no crea contenedor de scroll; hidden sí */</pre>
+      <p style="margin:10px 0 0; font-size:.9rem; color:var(--ink-2)">Alternativa si algo dependiera del body-scroller: escuchar el scroll en el contenedor real. Pero lo limpio es lo de arriba, y de paso <code>scroll-margin-top</code> y cualquier futuro <code>position: sticky</code> se comportan como se espera.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Estructura propuesta</h2>
+      <p>Mismo contenido, otra puesta en escena: el trabajo primero y con imagen, el design system como sección protagonista, y la cola administrativa comprimida en un colofón.</p>
+    </div>
+    <div class="wf-pair">
+      <div>
+        <div class="wf-label" style="color:var(--bad)">Ahora — documento</div>
+        <div class="wf"><div class="vp">
+          <div class="wf-row"><div class="blk acc" style="width:30%;height:8px"></div></div>
+          <div class="wf-row"><div class="blk txt" style="width:70%;height:22px"></div></div>
+          <div class="wf-row"><div class="blk txt" style="width:55%;height:8px"></div></div>
+          <div class="wf-row" style="margin-top:6px"><div class="blk txt" style="width:100%;height:1px;opacity:.4"></div></div>
+          <div class="wf-row"><div class="blk txt" style="width:40%;height:12px"></div></div>
+          <div class="wf-row"><div class="blk txt" style="width:90%;height:44px;opacity:.55"></div></div>
+          <div class="wf-row"><div class="blk txt" style="width:90%;height:44px;opacity:.55"></div></div>
+          <div class="wf-row"><div class="blk txt" style="width:90%;height:44px;opacity:.55"></div></div>
+          <div class="wf-row" style="margin-top:6px"><div class="blk txt" style="width:100%;height:1px;opacity:.4"></div></div>
+          <div class="wf-row"><div class="blk txt" style="width:40%;height:12px"></div></div>
+          <div class="wf-row"><div class="blk txt" style="width:44%;height:34px;opacity:.55"></div><div class="blk txt" style="width:44%;height:34px;opacity:.55"></div></div>
+          <div class="wf-row" style="margin-top:6px"><div class="blk txt" style="width:100%;height:1px;opacity:.4"></div></div>
+          <div class="wf-row"><div class="blk txt" style="width:40%;height:12px"></div></div>
+          <div class="wf-row"><div class="blk txt" style="width:80%;height:20px;opacity:.55"></div></div>
+        </div>
+        <div class="note">1 columna 760px · experiencia (3,4 pantallas) antes que proyectos · proyectos sin imagen · 5 secciones idénticas + educación/idiomas a tamaño completo</div>
+        </div>
+      </div>
+      <div>
+        <div class="wf-label" style="color:var(--good)">Propuesta — portfolio</div>
+        <div class="wf"><div class="vp">
+          <div class="wf-row full"><div class="blk acc" style="width:26%;height:8px"></div></div>
+          <div class="wf-row full"><div class="blk txt" style="width:84%;height:26px"></div></div>
+          <div class="wf-row full"><div class="blk txt" style="width:50%;height:8px"></div></div>
+          <div class="wf-row full" style="margin-top:8px"><div class="blk acc" style="width:22%;height:10px"></div></div>
+          <div class="wf-row full"><div class="blk img" style="width:58%;height:56px"></div><div class="blk txt" style="width:38%;height:56px;opacity:.55"></div></div>
+          <div class="wf-row full"><div class="blk txt" style="width:38%;height:56px;opacity:.55"></div><div class="blk img" style="width:58%;height:56px"></div></div>
+          <div class="wf-row full" style="margin-top:8px"><div class="blk acc" style="width:100%;height:38px;opacity:.75"></div></div>
+          <div class="wf-row full" style="margin-top:8px"><div class="blk txt" style="width:20%;height:10px"></div></div>
+          <div class="wf-row full"><div class="blk txt" style="width:96%;height:30px;opacity:.55"></div></div>
+          <div class="wf-row full" style="margin-top:8px"><div class="blk txt" style="width:44%;height:16px;opacity:.4"></div><div class="blk txt" style="width:44%;height:16px;opacity:.4"></div></div>
+        </div>
+        <div class="note">hero → proyectos con cover (bandas alternas full-bleed) → banda katachi interactiva a sangre → experiencia comprimida → colofón 2-col (stack+edu+idiomas+firma)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Plan priorizado</h2>
+      <p>Tres fases independientes; cada una deja la página mejor que la anterior. La fase 1 es una sesión corta.</p>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="n">01</span><h3>Reordenar y arreglar</h3><span class="fx">esfuerzo bajo · 1 sesión</span></div>
+      <ul class="todo">
+        <li><span class="id">1.1</span><p><b>Arreglar el scroller</b> (bug del parallax): quitar <code>height:100%</code> de html/body y pasar a <code>overflow-x: clip</code>. La firma de motion ya programada vuelve a la vida.<small>styles.scss — 2 líneas</small></p><span class="impact i-alto">impacto alto</span></li>
+        <li><span class="id">1.2</span><p><b>Reordenar secciones</b>: Hero → Proyectos → Experiencia → Stack → Colofón.<small>home.ts — mover 3 líneas de template</small></p><span class="impact i-alto">impacto alto</span></li>
+        <li><span class="id">1.3</span><p><b>Reposicionar el titular</b>: kicker «Design Engineer — Sistemas de diseño» (o equivalente) y tagline que abra con el design system.<small>cv.ts — profile.title / tagline</small></p><span class="impact i-alto">impacto alto</span></li>
+        <li><span class="id">1.4</span><p><b>Colofón compacto</b>: fusionar Educación + Idiomas (+ ubicación y firma «Construido con @shibui-ui/ui — ver código») en una banda de 2 columnas sin h2 ceremonial.<small>nuevo cv-colophon; elimina 2 secciones</small></p><span class="impact i-medio">impacto medio</span></li>
+        <li><span class="id">1.5</span><p><b>Des-chipificar Experiencia</b>: stack por rol como línea de texto mono; el chip se reserva para la sección Stack.<small>experience.ts</small></p><span class="impact i-bajo">impacto bajo</span></li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="n">02</span><h3>Enseñar el trabajo</h3><span class="fx">esfuerzo medio · el mayor salto</span></div>
+      <ul class="todo">
+        <li><span class="id">2.1</span><p><b>Covers reales en los proyectos</b>: captura de Storybook para @shibui-ui/ui, del Trust Report para hanko. Bandas alternas imagen/texto (58/38) en vez de dos cards gemelas.<small>capturas estáticas optimizadas (AVIF/WebP) — sin dependencias nuevas</small></p><span class="impact i-alto">impacto alto</span></li>
+        <li><span class="id">2.2</span><p><b>Ampliar el catálogo</b>: de 2 a 4–6 piezas — showcase triple-framework (React/Angular/Svelte, un mismo componente ×3), app-tauri, git-graph visualizer, módulo de charts.<small>cv.ts + capturas</small></p><span class="impact i-alto">impacto alto</span></li>
+        <li><span class="id">2.3</span><p><b>Sección «Sistema de diseño» protagonista</b>: banda full-bleed que narra el katachi switcher — los 6 katachis como swatches visibles con kanji y nombre, «este CV corre sobre él: pruébalo». El switcher flotante pasa a ser el atajo, no la historia.<small>promociona el diferenciador D4</small></p><span class="impact i-alto">impacto alto</span></li>
+        <li><span class="id">2.4</span><p><b>Specimen de tokens en vivo</b>: escala tipográfica y paleta pintadas desde las CSS vars reales — cambia con el katachi activo. Barato y muy «design systems».<small>lee --text-* y --bg/--text tokens del computed style</small></p><span class="impact i-medio">impacto medio</span></li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="n">03</span><h3>Editorializar</h3><span class="fx">esfuerzo medio-alto · pulido</span></div>
+      <ul class="todo">
+        <li><span class="id">3.1</span><p><b>Romper la columna única</b>: contenedor a ~1140px con retícula de 12; el texto sigue en columna de lectura (66–72ch) pero covers y banda katachi salen a sangre.<small>home.ts + secciones</small></p><span class="impact i-alto">impacto alto</span></li>
+        <li><span class="id">3.2</span><p><b>Desarrollar el motivo kanji</b>: numeración editorial de sección (01–05) + kanji watermark propio por sección (経歴 experiencia, 作品 proyectos…) — el sello del hero deja de ser un one-off.<small>section-heading.ts</small></p><span class="impact i-medio">impacto medio</span></li>
+        <li><span class="id">3.3</span><p><b>Scroll-reveal sobrio</b>: IntersectionObserver, fade+translate de 12–16px, stagger corto en chips/cards, siempre bajo <code>prefers-reduced-motion</code>.<small>directiva reutilizable</small></p><span class="impact i-medio">impacto medio</span></li>
+        <li><span class="id">3.4</span><p><b>Hover con intención en cards</b>: lift sutil + reacción del kanji watermark (escala/opacidad). Microdetalle que se nota sin verse.<small>projects.ts / lib-card</small></p><span class="impact i-bajo">impacto bajo</span></li>
+        <li><span class="id">3.5</span><p><b>Comprimir Experiencia</b>: 3 roles destacados con logro; el resto en línea compacta («también: 10 Labs · Indra · Hiberus») o colapsado.<small>reduce las 3,4 pantallas de móvil</small></p><span class="impact i-medio">impacto medio</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Notas de referencia</h2>
+      <p>Patrones comunes en portfolios de design engineers de referencia (rauno.me, emilkowal.ski, paco.me): <strong>el trabajo abre</strong> y ocupa &gt;60% de la página; <strong>pocas palabras, tipografía enorme</strong>; <strong>el motion es parte del argumento</strong> (cada interacción demuestra oficio); y <strong>la herramienta propia es el case study</strong> — exactamente el hueco que katachi puede ocupar aquí. La identidad japonesa-editorial de shibui ya es más distintiva que la de la mayoría de esas referencias; no hay que copiar su estética, solo su estructura.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>auditoría de diseño · app-cv · shibui ecosystem</span>
+    <span>evidencia: fuente completo + medición en vivo (viewport 800×450 y 375×812)</span>
+  </footer>
+
+</div>
+</body>
+</html>

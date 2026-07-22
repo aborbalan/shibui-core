@@ -1,11 +1,14 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, computed } from '@angular/core';
 import { Hero } from '@components/hero/hero';
 import { Experience } from '@components/experience/experience';
 import { Projects } from '@components/projects/projects';
 import { Skills } from '@components/skills/skills';
-import { Education } from '@components/education/education';
-import { Languages } from '@components/languages/languages';
+import { Colophon } from '@components/colophon/colophon';
+import { KatachiBand } from '@components/katachi-band/katachi-band';
+import { TokenSpecimen } from '@components/token-specimen/token-specimen';
 import { profile, experience, projects, skills, fullStack, education, languages } from '@data/cv';
+import { KATACHI_BG } from '@data/katachi';
+import { katachi, setKatachi } from '../../state/katachi.store';
 
 /**
  * Página única del CV. Smart component: inyecta los datos estáticos
@@ -14,32 +17,40 @@ import { profile, experience, projects, skills, fullStack, education, languages 
 @Component({
   selector: 'cv-home',
   standalone: true,
-  imports: [Hero, Experience, Projects, Skills, Education, Languages],
+  imports: [Hero, Experience, Projects, Skills, Colophon, KatachiBand, TokenSpecimen],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <lib-background variant="kaki-glow" class="bg">
+    <!-- Superficie art-directed afín al katachi activo (los temas de
+         lib-background no reaccionan solos al katachi). -->
+    <lib-background [attr.theme]="bgTheme()" class="bg">
       <main class="page">
         <cv-hero [profile]="profile" />
 
         <lib-divider></lib-divider>
-        <cv-experience [items]="experience" />
+        <lib-stagger-container class="wide">
+          <cv-projects [items]="projects" />
+        </lib-stagger-container>
+
+        <lib-divider class="no-print"></lib-divider>
+        <lib-stagger-container class="wide no-print">
+          <cv-katachi-band [value]="katachi()" (valueChange)="setKatachi($event)" />
+          <cv-token-specimen [katachi]="katachi()" />
+        </lib-stagger-container>
 
         <lib-divider></lib-divider>
-        <cv-projects [items]="projects" />
+        <lib-stagger-container>
+          <cv-experience [items]="experience" />
+        </lib-stagger-container>
 
         <lib-divider></lib-divider>
-        <cv-skills [groups]="skills" [fullStack]="fullStack" />
+        <lib-stagger-container>
+          <cv-skills [groups]="skills" [fullStack]="fullStack" />
+        </lib-stagger-container>
 
         <lib-divider></lib-divider>
-        <cv-education [items]="education" />
-
-        <lib-divider></lib-divider>
-        <cv-languages [items]="languages" />
-
-        <footer class="page__foot">
-          <span>© {{ year }} {{ profile.firstName }} {{ profile.lastName }}</span>
-          <span>{{ profile.location }}</span>
-        </footer>
+        <lib-stagger-container>
+          <cv-colophon [education]="education" [languages]="languages" [profile]="profile" />
+        </lib-stagger-container>
       </main>
     </lib-background>
   `,
@@ -52,35 +63,38 @@ import { profile, experience, projects, skills, fullStack, education, languages 
         display: block;
         min-height: 100svh;
       }
+      /* Retícula editorial: columna de lectura centrada (~68ch) con dos
+         canales laterales. Por defecto todo va a la columna de lectura;
+         las secciones .wide sangran a todo el ancho (full) para romper la
+         monotonía de la columna única. */
       .page {
-        max-width: 760px;
+        max-width: 1140px;
         margin-inline: auto;
         padding-inline: var(--lib-space-lg, 24px);
         padding-bottom: var(--lib-space-xl, 32px);
+        display: grid;
+        grid-template-columns:
+          [full-start] minmax(0, 1fr)
+          [content-start] minmax(0, 68ch) [content-end]
+          minmax(0, 1fr) [full-end];
+      }
+      .page > * {
+        grid-column: content;
+        min-width: 0;
+      }
+      .page > .wide {
+        grid-column: full;
       }
       lib-divider {
         display: block;
         margin-block: var(--lib-space-xl, 32px);
       }
-      .page > cv-experience,
-      .page > cv-projects,
-      .page > cv-skills,
-      .page > cv-education,
-      .page > cv-languages {
-        display: block;
-        scroll-margin-top: var(--lib-space-xl, 32px);
-      }
-      .page__foot {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: var(--lib-space-sm, 8px);
-        margin-top: var(--lib-space-xl, 32px);
-        padding-top: var(--lib-space-lg, 24px);
-        font-family: var(--lib-font-mono, monospace);
-        font-size: var(--text-xs, 0.6875rem);
-        letter-spacing: var(--tracking-wide, 0.08em);
-        color: var(--text-muted);
+      /* En papel: una sola columna, sin la retícula de pantalla. */
+      @media print {
+        .page {
+          display: block;
+          max-width: 100%;
+        }
       }
     `,
   ],
@@ -93,5 +107,8 @@ export class HomePage {
   protected readonly fullStack = fullStack;
   protected readonly education = education;
   protected readonly languages = languages;
-  protected readonly year = new Date().getFullYear();
+
+  protected readonly katachi = katachi;
+  protected readonly setKatachi = setKatachi;
+  protected readonly bgTheme = computed(() => KATACHI_BG[katachi()]);
 }
