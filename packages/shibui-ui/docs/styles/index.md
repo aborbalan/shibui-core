@@ -19,4 +19,5 @@ We utilize the `oklch()` color function for our design tokens. This modern appro
     *   [Spacing Scales](./spacing.md): Detailed explanation of the multimodal `rem` and `clamp()` spacing scales, including variable prefixes and usage guidelines.
 -   [Katachi (形) — Migration Guide](./katachi-migration.md): How to opt into the aesthetic-context system from consumer apps (React / Angular / Svelte / plain HTML).
 -   [CSS Nesting nativo](./css-nesting.md): Convenciones, patrones canónicos y hoja de progreso para la migración a CSS nesting en los componentes.
+-   [lib-background — capa de calidad](./background-quality-layer.md): Técnica anti-tiling (motivos no tileables con `cover`) + capa de acabado compartida `--bg-*` (grano fino + viñeta) de la que tiran todos los fondos.
 -   `index.css`: Main entry point for styles, importing shared styles and setting up global layers.
