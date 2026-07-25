@@ -87,7 +87,7 @@
     font-family: var(--lib-font-display);
     font-size: var(--text-3xl);
     font-weight: var(--weight-light);
-    color: color-mix(in oklch, var(--color-kaki-500), transparent 40%);
+    color: var(--text-accent);
     line-height: 1;
   }
 
