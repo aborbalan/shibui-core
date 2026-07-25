@@ -3,6 +3,7 @@
   import { route, navigate } from './lib/router';
   import { isAuthenticated } from './lib/auth';
   import Header from './lib/Header.svelte';
+  import Footer from './lib/Footer.svelte';
   import Hero from './routes/Hero.svelte';
   import About from './routes/About.svelte';
   import Philosophy from './routes/Philosophy.svelte';
@@ -54,19 +55,44 @@
   {/if}
 {:else}
   <Header />
-  <lib-background theme="washi" style="min-height:100vh;">
-    {#if path === '/about'}
-      <About />
-    {:else if path === '/philosophy'}
-      <Philosophy />
-    {:else if componentSlug}
-      <ComponenteDetail slug={componentSlug} />
-    {:else if path === '/componentes'}
-      <Componentes />
-    {:else if path === '/tokens'}
-      <Tokens />
-    {:else}
-      <Hero />
-    {/if}
+  <!-- `horizon` es el fondo afín a sabi: papel envejecido, degradado terroso.
+       Los temas de lib-background no reaccionan solos al katachi. -->
+  <lib-background theme="horizon" style="min-height:100vh;">
+    <div class="page">
+      {#if path === '/about'}
+        <About />
+      {:else if path === '/philosophy'}
+        <Philosophy />
+      {:else if componentSlug}
+        <ComponenteDetail slug={componentSlug} />
+      {:else if path === '/componentes'}
+        <Componentes />
+      {:else if path === '/tokens'}
+        <Tokens />
+      {:else}
+        <Hero />
+      {/if}
+    </div>
   </lib-background>
+
+  <!-- Barra inferior fija, simétrica al header -->
+  <div class="footer-bar">
+    <Footer />
+  </div>
 {/if}
+
+<style>
+  /* Reserva la altura de la barra fija para que el último contenido
+     no quede oculto tras ella. */
+  .page {
+    padding-bottom: var(--app-footer-h, 3.5rem);
+  }
+
+  .footer-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-overlay);
+  }
+</style>

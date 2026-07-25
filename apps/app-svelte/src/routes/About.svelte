@@ -83,7 +83,7 @@
         <lib-badge tone="success" dot>Open to Work</lib-badge>
       </div>
 
-      <lib-display-heading tag="h1" size="md" surface="dark" line1={PROFILE.name} accent={PROFILE.title}></lib-display-heading>
+      <lib-display-heading tag="h1" size="md" surface="light" line1={PROFILE.name} accent={PROFILE.title}></lib-display-heading>
 
       <div class="location">
         <span class="location-icon">⌖</span>
@@ -102,7 +102,7 @@
   <section class="exp-section">
     <div class="section-header">
       <lib-eyebrow tone="accent" size="sm" style="display:inline-flex;margin-bottom:var(--lib-space-md);">Experiencia · Work History</lib-eyebrow>
-      <lib-display-heading tag="h2" size="sm" surface="dark" line1="Trayectoria" accent="profesional"></lib-display-heading>
+      <lib-display-heading tag="h2" size="sm" surface="light" line1="Trayectoria" accent="profesional"></lib-display-heading>
     </div>
 
     <lib-timeline>
@@ -142,7 +142,7 @@
   <section class="skills-section">
     <div class="section-header">
       <lib-eyebrow tone="accent" size="sm" style="display:inline-flex;margin-bottom:var(--lib-space-md);">Skills · Stack técnico</lib-eyebrow>
-      <lib-display-heading tag="h2" size="sm" surface="dark" line1="Herramientas" accent="del oficio"></lib-display-heading>
+      <lib-display-heading tag="h2" size="sm" surface="light" line1="Herramientas" accent="del oficio"></lib-display-heading>
     </div>
 
     <div class="skills-grid">
@@ -221,7 +221,7 @@
     position:absolute; bottom:-4px; right:-4px;
     width:18px; height:18px; border-radius:50%;
     background: var(--color-success);
-    border: 2px solid var(--color-washi-950);
+    border: 2px solid var(--bg-base);
     box-shadow: 0 0 8px color-mix(in oklch, var(--color-success), transparent 40%);
   }
   .social-links { display:flex; gap:.5rem; }
@@ -240,7 +240,7 @@
   .section-header { margin-bottom:var(--lib-space-2xl); }
   .tl-content { display:flex; flex-direction:column; gap:.75rem; padding-bottom:2rem; }
   .meta-row { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
-  .company-name { font-family:var(--lib-font-mono); font-size:.6rem; letter-spacing:.22em; text-transform:uppercase; color:color-mix(in oklch, var(--color-kaki-500), transparent 45%); margin:0 0 .2rem; }
+  .company-name { font-family:var(--lib-font-mono); font-size:.6rem; letter-spacing:.22em; text-transform:uppercase; color:var(--text-accent); margin:0 0 .2rem; }
   .role { font-family:var(--lib-font-display); font-size:clamp(1.1rem,2vw,1.5rem); font-weight:var(--weight-regular); letter-spacing:-.01em; color:var(--text-primary); margin:0; }
   .loc { font-family:var(--lib-font-mono); font-size:.6rem; letter-spacing:.12em; color:var(--text-muted); margin:.25rem 0 0; }
   .dates-block { text-align:right; flex-shrink:0; }
@@ -252,19 +252,19 @@
   /* SkillsSection */
   .skills-section { padding:clamp(2.5rem,5vh,4rem) 0; }
   .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1px; background:var(--border-subtle); }
-  .skill-group { background:var(--color-washi-950); padding:var(--lib-space-lg) var(--lib-space-xl); display:flex; flex-direction:column; gap:var(--lib-space-md); }
+  .skill-group { background:var(--bg-elevated); padding:var(--lib-space-lg) var(--lib-space-xl); display:flex; flex-direction:column; gap:var(--lib-space-md); }
   .group-header { display:flex; align-items:center; gap:var(--lib-space-md); }
-  .group-kanji { font-family:var(--lib-font-display); font-size:1.8rem; font-weight:var(--weight-light); color:color-mix(in oklch, var(--color-kaki-500), transparent 75%); line-height:1; flex-shrink:0; }
-  .group-label { font-family:var(--lib-font-mono); font-size:.6rem; letter-spacing:.22em; text-transform:uppercase; color:color-mix(in oklch, var(--color-kaki-500), transparent 50%); }
+  .group-kanji { font-family:var(--lib-font-display); font-size:1.8rem; font-weight:var(--weight-light); color:color-mix(in oklch, var(--text-accent), transparent 60%); line-height:1; flex-shrink:0; }
+  .group-label { font-family:var(--lib-font-mono); font-size:.6rem; letter-spacing:.22em; text-transform:uppercase; color:var(--text-accent); }
   .skill-badges { display:flex; gap:.4rem; flex-wrap:wrap; }
 
   /* EducationSection */
   .edu-section { padding:clamp(2.5rem,5vh,4rem) 0; display:grid; grid-template-columns:1fr 1fr; gap:clamp(2rem,5vw,4rem); }
   .edu-col { display:flex; flex-direction:column; gap:1.75rem; }
   .edu-heading { font-family:var(--lib-font-display); font-size:clamp(1.6rem,3vw,2.4rem); font-weight:var(--weight-light); letter-spacing:-.02em; line-height:1.15; color:var(--text-primary); margin:0; }
-  .edu-heading em { font-style:italic; color:var(--color-kaki-400); }
-  .edu-item { display:flex; flex-direction:column; gap:.35rem; padding-left:1rem; border-left:1px solid color-mix(in oklch, var(--color-kaki-500), transparent 75%); }
-  .edu-years { font-family:var(--lib-font-mono); font-size:.6rem; letter-spacing:.18em; text-transform:uppercase; color:color-mix(in oklch, var(--color-kaki-500), transparent 50%); margin:0; }
+  .edu-heading em { font-style:italic; color:var(--text-accent); }
+  .edu-item { display:flex; flex-direction:column; gap:.35rem; padding-left:1rem; border-left:1px solid color-mix(in oklch, var(--text-accent), transparent 60%); }
+  .edu-years { font-family:var(--lib-font-mono); font-size:.6rem; letter-spacing:.18em; text-transform:uppercase; color:var(--text-accent); margin:0; }
   .edu-degree { font-family:var(--lib-font-display); font-size:1.15rem; font-weight:var(--weight-regular); color:var(--text-primary); margin:0; letter-spacing:-.01em; }
   .edu-field { font-family:var(--lib-font-body); font-size:.82rem; color:var(--text-secondary); line-height:1.6; margin:0; }
   .edu-inst { font-family:var(--lib-font-mono); font-size:.6rem; letter-spacing:.12em; color:var(--text-muted); margin:0; }
