@@ -31,7 +31,7 @@
     line1="Lo bello"
     accent="no se anuncia."
     description="Shibui (渋い) es una forma japonesa de percibir la belleza: austera, refinada, descubierta con pausa. Cada decisión de diseño en este sistema nace de tres conceptos que transforman la imperfección en intención."
-    surface="dark"
+    surface="light"
     size="lg"
     tag="h1"
     centered
@@ -49,7 +49,7 @@
       <lib-display-heading
         line1="Tres conceptos,"
         accent="una intención."
-        surface="dark"
+        surface="light"
         size="md"
         tag="h2"
       >
@@ -76,7 +76,7 @@
       <lib-display-heading
         line1="De la filosofía"
         accent="a la práctica."
-        surface="dark"
+        surface="light"
         size="md"
         tag="h2"
       >
@@ -126,10 +126,12 @@
     gap: clamp(1.5rem,3vw,2rem);
   }
 
+  /* Papel elevado, no cristal: sabi apaga el glass (--lib-glass-blur-amount:0)
+     y su única firma es la sombra sólida. */
   .pillar-card {
-    background: var(--bg-overlay);
+    background: var(--bg-elevated);
     border: 1px solid var(--border-subtle);
-    backdrop-filter: blur(12px);
+    box-shadow: var(--lib-effect-brutal-shadow, none);
     padding: clamp(1.75rem,4vw,2.5rem);
     position: relative;
     overflow: hidden;
@@ -142,7 +144,7 @@
     font-family: var(--lib-font-display);
     font-size: clamp(5rem,10vw,8rem);
     font-weight: var(--weight-light);
-    color: color-mix(in oklch, var(--color-kaki-500), transparent 92%);
+    color: color-mix(in oklch, var(--text-accent), transparent 88%);
     line-height: 1;
     user-select: none;
     pointer-events: none;
@@ -153,14 +155,14 @@
     font-size: 0.62rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: color-mix(in oklch, var(--color-kaki-500), transparent 40%);
+    color: var(--text-accent);
     margin: 0 0 1rem;
   }
 
   .pillar-desc {
     font-family: var(--lib-font-body);
     font-size: clamp(0.82rem,1.2vw,0.92rem);
-    color: var(--text-muted);
+    color: var(--text-secondary);
     line-height: 1.9;
     margin: 0;
   }
@@ -183,7 +185,7 @@
     font-family: var(--lib-font-mono);
     font-size: 0.6rem;
     letter-spacing: 0.15em;
-    color: color-mix(in oklch, var(--color-kaki-500), transparent 70%);
+    color: color-mix(in oklch, var(--text-accent), transparent 55%);
     line-height: 1;
     flex-shrink: 0;
     padding-top: 0.2rem;
@@ -201,7 +203,7 @@
   .principle-desc {
     font-family: var(--lib-font-body);
     font-size: clamp(0.82rem,1.2vw,0.92rem);
-    color: var(--text-muted);
+    color: var(--text-secondary);
     line-height: 1.9;
     margin: 0;
   }

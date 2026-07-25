@@ -6,6 +6,8 @@
     type ComponentDto,
     type ExampleDto,
   } from '../lib/api/components';
+  import ComponentApi from './componentes/ComponentApi.svelte';
+  import ComponentExamples from './componentes/ComponentExamples.svelte';
 
   let { slug }: { slug: string } = $props();
 
@@ -18,11 +20,27 @@
   let component = $state<ComponentDto | null>(null);
   let examples = $state<ExampleDto[]>([]);
   let loading = $state(true);
+  let loadingExamples = $state(true);
   let error = $state<string | null>(null);
+
+  /** Los ejemplos son accesorios: si fallan, la ficha se muestra igual. */
+  function loadExamples(componentId: string, forSlug: string): void {
+    getExamplesByComponent(componentId)
+      .then((ex) => {
+        if (forSlug === slug) examples = ex;
+      })
+      .catch(() => {
+        if (forSlug === slug) examples = [];
+      })
+      .finally(() => {
+        if (forSlug === slug) loadingExamples = false;
+      });
+  }
 
   $effect(() => {
     const currentSlug = slug;
     loading = true;
+    loadingExamples = true;
     error = null;
     component = null;
     examples = [];
@@ -31,16 +49,14 @@
       .then((c) => {
         if (currentSlug !== slug) return; // slug cambió mientras cargaba
         component = c;
-        return getExamplesByComponent(c.id);
-      })
-      .then((ex) => {
-        if (ex && currentSlug === slug) examples = ex;
+        loading = false;
+        loadExamples(c.id, currentSlug);
       })
       .catch((e) => {
-        if (currentSlug === slug) error = e instanceof Error ? e.message : 'No encontrado';
-      })
-      .finally(() => {
-        if (currentSlug === slug) loading = false;
+        if (currentSlug !== slug) return;
+        error = e instanceof Error ? e.message : 'No encontrado';
+        loading = false;
+        loadingExamples = false;
       });
   });
 </script>
@@ -64,6 +80,11 @@
         </lib-badge>
         <span class="meta">v{component.version}</span>
         {#if component.packageName}<span class="meta">{component.packageName}</span>{/if}
+        {#if component.docsUrl}
+          <a class="meta docs-link" href={component.docsUrl} target="_blank" rel="noreferrer">
+            Documentación ↗
+          </a>
+        {/if}
       </div>
 
       <h1 class="title">{component.name}</h1>
@@ -79,24 +100,16 @@
       {/if}
     </header>
 
+    <ComponentApi api={component.api} />
+
     <section class="examples">
       <h2 class="section-title">Ejemplos</h2>
       <lib-divider style="margin:0 0 1.25rem;"></lib-divider>
 
-      {#if examples.length === 0}
-        <lib-empty-state
-          title="Sin ejemplos"
-          description="Este componente no tiene ejemplos de código disponibles aún."
-          icon="code"
-        ></lib-empty-state>
+      {#if loadingExamples}
+        <div class="status-state"><lib-spinner size="md"></lib-spinner></div>
       {:else}
-        {#each examples as ex (ex.id)}
-          <div class="example">
-            {#if ex.title}<p class="example-title">{ex.title}</p>{/if}
-            {#if ex.description}<p class="example-desc">{ex.description}</p>{/if}
-            <lib-code-block code={ex.code} language="html"></lib-code-block>
-          </div>
-        {/each}
+        <ComponentExamples {examples} />
       {/if}
     </section>
   {/if}
@@ -134,7 +147,7 @@
   .meta {
     font-family: var(--lib-font-mono);
     font-size: 0.65rem;
-    color: var(--color-kaki-700);
+    color: var(--text-accent);
   }
 
   .title {
@@ -148,7 +161,7 @@
   .tag {
     font-family: var(--lib-font-mono);
     font-size: 0.85rem;
-    color: var(--color-kaki-600);
+    color: var(--text-accent);
     margin: 0 0 1rem;
   }
 
@@ -177,25 +190,13 @@
     font-size: 0.7rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--color-kaki-700);
+    color: var(--text-accent);
     margin: 0 0 0.75rem;
   }
 
-  .example {
-    margin-bottom: 1.5rem;
-  }
-
-  .example-title {
-    font-family: var(--lib-font-mono);
-    font-size: 0.72rem;
-    color: var(--color-kaki-700);
-    margin: 0 0 0.5rem;
-  }
-
-  .example-desc {
-    font-family: var(--lib-font-body);
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin: 0 0 0.75rem;
+  .docs-link {
+    text-decoration: none;
+    border-bottom: 1px solid currentcolor;
+    padding-bottom: 1px;
   }
 </style>

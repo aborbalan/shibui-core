@@ -23,16 +23,37 @@ src/
   lib/
     router.ts              → Store `route` + función `navigate()`
     auth.ts                → Store `isAuthenticated` + login/logout
-    Header.svelte          → Header compartido (rutas públicas)
+    lib-props.ts           → Action `libProps` para props complejas de lib-*
+    Header.svelte          → Header sabi compartido (rutas públicas)
+    Footer.svelte          → Footer sabi compacto, fijo abajo
     Counter.svelte         → (legacy, no usado en producción)
+    api/
+      client.ts            → `apiGet` (desempaqueta el ApiEnvelope)
+      components.ts        → Catálogo, detalle y ejemplos
+      tokens.ts            → Design tokens + `groupByCategory`
   routes/
-    Hero.svelte
+    Hero.svelte            → Landing de 12 bloques (paridad con app-react)
     About.svelte
     Philosophy.svelte
     Componentes.svelte
-    Tokens.svelte
+    ComponenteDetail.svelte
+    Tokens.svelte          → Layout sidebar + 9 secciones
     Login.svelte           → Login admin (password 'shibui-dev', sessionStorage)
     Kitchen.svelte         → Container del kitchen-sink con switcher Katachi
+    componentes/
+      ComponentCard.svelte     → lib-card + badge de estado + preview
+      ComponentPreview.svelte  → Marco de 120px o placeholder
+      AtomPreviews.svelte      → 41 previews (exporta ATOM_PREVIEW_TAGS)
+      MoleculePreviews.svelte  → 22 previews
+      OrganismPreviews.svelte  → 24 previews
+      ComponentApi.svelte      → Tablas props/slots/events
+      ComponentExamples.svelte → Segmented de framework + code blocks
+    tokens/
+      TokensSidebar.svelte     → Nav sticky con IntersectionObserver
+      TokenSection.svelte · TokenRow.svelte · SubHeader.svelte · DataStatus.svelte
+      ColorsSection.svelte · TypographySection.svelte · SpacingSection.svelte
+      RadiusSection.svelte · ShadowsSection.svelte · AnimationSection.svelte
+      ZIndexSection.svelte · GlassSection.svelte · SpotlightSection.svelte
     kitchen/
       KatachiSwitcher.svelte
       KitchenItem.svelte
@@ -42,6 +63,55 @@ src/
       MoleculesSink.svelte
       OrganismsSink.svelte
 ```
+
+---
+
+## Katachi — la app es `sabi`
+
+Cada showcase del ecosistema lleva su propio katachi: **react = celadon**,
+**angular = shizen**, **svelte = sabi** (寂び — papel washi envejecido, tinta y
+sombra brutal de 4px; sin glass y sin spotlight).
+
+- El contexto se declara una sola vez: `<html data-katachi="sabi">` en `index.html`.
+- Los estilos de la app **no** usan la paleta cruda (`--color-kaki-500`,
+  `--color-washi-950`): usan los tokens semánticos (`--text-accent`,
+  `--bg-surface`, `--border-subtle`…) para que el katachi los resuelva.
+- La firma sabi se pide con `box-shadow: var(--lib-effect-brutal-shadow, none)`,
+  que solo tiene valor bajo `sabi` y degrada a `none` en el resto.
+- `lib-header` y `lib-footer` van con `theme="sabi"`; el fondo del layout es
+  `<lib-background theme="horizon">` (el gradiente afín a sabi — los temas de
+  `lib-background` no reaccionan solos al katachi).
+- **Las «seis pieles» de la home son contextos `data-katachi`, no variantes de
+  card.** `LibCardVariant` hoy solo admite `solid | featured`; envolver cada
+  `lib-card` en un `<div data-katachi="…">` es la única forma real de mostrar
+  las seis expresiones del sistema.
+
+---
+
+## Props complejas en custom elements
+
+Los atributos HTML solo transportan strings y Svelte pinta atributo —no
+propiedad— mientras el elemento no esté actualizado (`@shibui-ui/ui` se importa
+de forma dinámica en `onMount`). Para arrays, objetos, números y booleanos en
+`false` hay que usar la action `libProps`:
+
+```svelte
+<lib-data-table use:libProps={{ columns, data }}></lib-data-table>
+<lib-bar-chart use:libProps={{ series, categories, showLegend: false }}></lib-bar-chart>
+```
+
+Las cadenas y los booleanos en `true` sí funcionan como atributo normal.
+
+---
+
+## Previews del catálogo
+
+Cada card del catálogo monta una mini-preview en vivo del componente. El
+registro son tres componentes con cadena `{#if}` que exportan su lista de tags
+desde `<script module>`. **Solo se montan los tags registrados**: los
+componentes data-driven de `@shibui-ui/ui` revientan si se montan sin datos
+válidos, así que los que no tienen preview caen a un placeholder de la misma
+altura.
 
 ---
 
@@ -74,6 +144,7 @@ navigate('/admin/login');
 | `/about` | Público | `About` |
 | `/philosophy` | Público | `Philosophy` |
 | `/componentes` | Público | `Componentes` |
+| `/componentes/:slug` | Público | `ComponenteDetail` |
 | `/tokens` | Público | `Tokens` |
 | `/admin/login` | Público | `Login` |
 | `/admin/kitchen-sink` | Protegido | `Kitchen` |
@@ -157,4 +228,12 @@ pnpm check                 # svelte-check (type-check de templates)
 
 ## Variables de entorno
 
-Sin variables de entorno configuradas. Los tokens CSS se cargan automáticamente desde `node_modules/@shibui-ui/ui/dist/` vía Vite (a diferencia de Angular, que requiere configuración explícita en `angular.json`).
+| Variable | Descripción |
+|---|---|
+| `VITE_API_URL` | Base URL de la API (`https://shibui-core.onrender.com` en `.env.production`) |
+
+El catálogo (`/componentes`) y los tokens (`/tokens`) se sirven desde esa API;
+sin la variable, el dev server cae a `localhost:3000` y hace falta
+`pnpm start:api`. Los tokens CSS sí se cargan automáticamente desde
+`node_modules/@shibui-ui/ui/dist/` vía Vite (a diferencia de Angular, que
+requiere configuración explícita en `angular.json`).
