@@ -1,0 +1,9 @@
+{
+  // React no publica servidor MCP oficial: https://github.com/ChromeDevTools/chrome-devtools-mcp
+  "servers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest", "--no-performance-crux"]
+    }
+  }
+}

@@ -1,0 +1,107 @@
+<title>Impacto estimado de los servidores MCP - shibui-ecosystem</title>
+<style>
+:root{
+ --bg:#f7f5f0; --panel:#fffdf8; --ink:#22201b; --muted:#6b6558; --line:#e5e0d5;
+ --accent:#5a7d6f; --code-bg:#f0ede4; --chip:#efe9dc;
+}
+@media (prefers-color-scheme: dark){
+ :root{--bg:#171613; --panel:#201e1a; --ink:#eae6dc; --muted:#a49d8d; --line:#33302a;
+  --accent:#8fb3a3; --code-bg:#26241f; --chip:#2b2822;}
+}
+:root[data-theme="dark"]{--bg:#171613; --panel:#201e1a; --ink:#eae6dc; --muted:#a49d8d; --line:#33302a; --accent:#8fb3a3; --code-bg:#26241f; --chip:#2b2822;}
+:root[data-theme="light"]{--bg:#f7f5f0; --panel:#fffdf8; --ink:#22201b; --muted:#6b6558; --line:#e5e0d5; --accent:#5a7d6f; --code-bg:#f0ede4; --chip:#efe9dc;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.01em}
+h2{font-size:19px;margin:38px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+h3{font-size:15px;margin:22px 0 8px}
+.sub{color:var(--muted);margin:0 0 22px;font-size:13.5px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 14px;text-align:center}
+.card .n{font-size:26px;font-weight:700;line-height:1.15}
+.card .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--panel);
+ border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--chip);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+.sev{display:inline-block;padding:1px 8px;border-radius:20px;color:#fff;font-size:11px;font-weight:600;white-space:nowrap}
+.pill{display:inline-block;padding:1px 8px;border-radius:6px;background:var(--chip);font-size:11.5px;color:var(--muted)}
+.mono{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12px}
+code,pre{font-family:"SF Mono",Menlo,Consolas,monospace}
+pre{background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:12.5px;line-height:1.5}
+.note{background:var(--code-bg);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin:12px 0;font-size:13.5px}
+.warn{border-left-color:#d1651a}
+.lane{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:4px 16px 12px;margin:14px 0}
+.bar{display:flex;align-items:center;gap:10px;margin:8px 0}
+.bar .lab{font-size:12.5px;color:var(--muted);width:72px;flex:none}
+.bar .fill{height:24px;border-radius:8px;display:flex;align-items:center;padding-left:10px;font-size:12px;color:#fff;white-space:nowrap}
+@media (max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="wrap">
+<h1>Impacto estimado de los servidores MCP</h1>
+<p class="sub">shibui-ecosystem &middot; 2026-07-25 &middot; <span class="mono">angular-cli</span> + <span class="mono">svelte</span> + <span class="mono">chrome-devtools</span> &middot; rama <span class="mono">claude/mcp-implementations-tech-deb4ec</span></p>
+
+<div class="note warn"><b>Aviso de metodo.</b> Solo dos cifras de este reporte estan <b>medidas</b>: las 38 tools registradas (verificadas con handshake JSON-RPC contra los tres servidores) y los conteos de componentes por app. <b>Todo lo demas son estimaciones</b> con supuestos explicitos, etiquetadas por confianza. Estan aqui para poder discutirlas, no para presumirlas.</div>
+
+<div class="grid">
+ <div class="card"><div class="n">6 &rarr; 2</div><div class="l">pasos por verificacion visual</div></div>
+ <div class="card"><div class="n">0% &rarr; 100%</div><div class="l">errores async visibles</div></div>
+ <div class="card"><div class="n">11k &rarr; 3k</div><div class="l">tokens por consulta de doc</div></div>
+ <div class="card"><div class="n" style="color:var(--accent)">38</div><div class="l">tools nuevas (medido)</div></div>
+</div>
+
+<h2>Ciclo de verificacion visual</h2>
+<p class="sub">Comprobar un cambio de CSS de shibui-ui en una app consumidora. Es la ganancia mas defendible del lote.</p>
+
+<div class="lane">
+ <div class="bar"><span class="lab">hoy</span><div class="fill" style="width:100%;background:#d1651a">~3&ndash;4 min &middot; 6 pasos manuales</div></div>
+ <div class="bar"><span class="lab">con MCP</span><div class="fill" style="width:27%;background:var(--accent)">~50 s &middot; 2 llamadas</div></div>
+</div>
+
+<table>
+ <tr><th>Hoy</th><th>Con <span class="mono">chrome-devtools</span></th></tr>
+ <tr>
+  <td>1. <span class="mono">build:shibui</span><br>2. reiniciar el dev server<br>3. lanzar Chrome headless con <span class="mono">--screenshot</span><br>4. localizar el fichero generado<br>5. <span class="mono">Read</span> del PNG/PDF<br>6. repetir el ciclo entero para otra ruta</td>
+  <td>1. <span class="mono">navigate_page</span><br>2. <span class="mono">take_screenshot</span><br><br>Para otra ruta, solo se repite el paso 1.<br>La consola sale de <span class="mono">list_console_messages</span>, sin escribir nada.</td>
+ </tr>
+</table>
+
+<h2>Estimaciones y de donde salen</h2>
+<table>
+ <tr><th>Estimacion</th><th>Calculo / supuesto</th><th>Confianza</th></tr>
+ <tr><td>6 pasos &rarr; 2</td><td>Aritmetica sobre el flujo actual documentado en el repo (Browser pane congelado &rarr; Chrome headless a mano)</td><td><span class="sev" style="background:var(--accent)">alta</span></td></tr>
+ <tr><td>~3&ndash;4 min &rarr; ~50 s</td><td>Cada arranque de Chrome headless son 10&ndash;20 s mas la orquestacion entre pasos. El rango real depende de si el dev server ya esta caliente</td><td><span class="sev" style="background:#b8960a">media</span></td></tr>
+ <tr><td>0% &rarr; 100% de errores async visibles</td><td>Cambio de categoria, no de grado: hoy un <span class="mono">pageerror</span> de Lit no llega salvo que alguien cablee a mano un <span class="mono">page.on('pageerror')</span></td><td><span class="sev" style="background:var(--accent)">alta</span></td></tr>
+ <tr><td>11k &rarr; 3k tokens por consulta de doc</td><td><span class="mono">WebSearch</span> (~3&ndash;5k) + <span class="mono">WebFetch</span> (~5&ndash;10k) frente a una seccion de <span class="mono">get-documentation</span> (~1&ndash;3k)</td><td><span class="sev" style="background:#b8960a">media</span></td></tr>
+ <tr><td>~2,5 min ahorrados por verificacion</td><td>Diferencia de las dos filas de tiempo. A 10 verificaciones/semana &rarr; ~25 min/semana &rarr; ~1,7 h/mes</td><td><span class="sev" style="background:#b8960a">media</span></td></tr>
+ <tr><td>1&ndash;2 rondas menos en un caso tipo hanko</td><td>Ver precedente abajo. No todo el coste de aquella calibracion es atribuible a falta de herramienta</td><td><span class="sev" style="background:#b8960a">media</span></td></tr>
+ <tr><td>~60&ndash;70% menos de analisis en la migracion a v22</td><td><span class="mono">onpush_zoneless_migration</span> devuelve plan sobre los 57 componentes Angular en vez de auditarlos uno a uno</td><td><span class="sev" style="background:#5a6b7a">baja</span></td></tr>
+ <tr><td>~2 iteraciones ahorradas cada 20 fragmentos Svelte</td><td>Supuesto: 1 de cada 8&ndash;12 fragmentos generados lleva patron de v4 o rune mal usada, y cada uno cuesta una ida y vuelta</td><td><span class="sev" style="background:#5a6b7a">baja</span></td></tr>
+</table>
+
+<div class="note"><b>El precedente que sostiene la fila mas fuerte.</b> En hanko hubo <b>24 <span class="mono">pageerror</span></b> que ni CI, ni los hooks, ni las stories, ni los consumer tests detectaban: el <span class="mono">try/catch</span> sincrono no captura lo que Lit lanza en async, asi que el Trust Report salia <b>verde en falso</b>. Costo cuatro PRs de calibracion (#546, #549, #551, #552) llegar al fondo. La fase de <i>&laquo;esto sale optimista y no se por que&raquo;</i> es exactamente lo que <span class="mono">list_console_messages</span> responde en una llamada.</div>
+
+<h2>Por superficie del repo</h2>
+<p class="sub">Los conteos de componentes son reales, medidos sobre el arbol actual.</p>
+<table>
+ <tr><th>App</th><th>Piezas</th><th>Que recibe</th><th>Efecto estimado</th></tr>
+ <tr><td><span class="mono">app-angular</span> + <span class="mono">app-cv</span></td><td>57 componentes</td><td><span class="pill">angular-cli</span> <span class="pill">chrome-devtools</span></td><td>Docs de v21 al escribir; plan automatico de OnPush para la migracion a v22 pendiente</td></tr>
+ <tr><td><span class="mono">app-svelte</span></td><td>40 ficheros <span class="mono">.svelte</span></td><td><span class="pill">svelte</span> <span class="pill">chrome-devtools</span></td><td>Autofixer sobre todo lo generado: es el unico de los tres que ademas <b>corrige</b></td></tr>
+ <tr><td><span class="mono">app-react</span></td><td>70 ficheros <span class="mono">.tsx</span></td><td><span class="pill">chrome-devtools</span></td><td>Nada en el eje documentacion &mdash; React no publica MCP oficial</td></tr>
+</table>
+
+<h2>Lo que NO va a mejorar</h2>
+<table>
+ <tr><th>Expectativa</th><th>Realidad</th></tr>
+ <tr><td>Salto en la calidad general del codigo</td><td>Angular 21 y Svelte 5 no son posteriores al corte de conocimiento del modelo. No es el caso clasico de &laquo;el modelo no conoce el framework&raquo;: la ganancia esta en el detalle de release concreto, no en los fundamentos</td></tr>
+ <tr><td>CI mas rapido o mas verde</td><td>Cero efecto. Ningun filtro del orchestrator toca estos ficheros: no hay pipeline nuevo ni mas lento</td></tr>
+ <tr><td>Menos errores con <span class="mono">@shibui-ui/ui</span></td><td>Cero efecto. El fallo mas caro del mes &mdash; <span class="mono">app-angular</span> midiendo 83/102 componentes por un <span class="mono">&quot;*&quot;</span> de npm en vez de <span class="mono">workspace:*</span> &mdash; no lo habria evitado ninguno de los tres. Eso es territorio del MCP propio sobre el CEM</td></tr>
+ <tr><td>Sin coste añadido</td><td>Dos descargas de <span class="mono">npx</span> en el primer arranque de cada sesion (luego cache) y una ventana de Chrome real abierta durante la verificacion</td></tr>
+</table>
+
+<div class="note"><b>Resumen en una frase.</b> El <b>80% del valor es <span class="mono">chrome-devtools</span></b>, que es justamente el que no pertenece a ninguno de los tres frameworks. Angular y Svelte son baratos de tener &mdash; cero dependencias nuevas &mdash; y se pagan solos en la migracion a v22, pero no son la palanca.</div>
+
+</div>
