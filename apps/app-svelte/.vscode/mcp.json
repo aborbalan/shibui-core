@@ -1,9 +1,9 @@
 {
-  // For more information, visit: https://angular.dev/ai/mcp
+  // For more information, visit: https://svelte.dev/docs/mcp
   "servers": {
-    "angular-cli": {
+    "svelte": {
       "command": "npx",
-      "args": ["-y", "@angular/cli", "mcp"]
+      "args": ["-y", "@sveltejs/mcp"]
     },
     "chrome-devtools": {
       "command": "npx",

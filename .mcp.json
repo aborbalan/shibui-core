@@ -1,9 +1,12 @@
 {
-  // For more information, visit: https://angular.dev/ai/mcp
-  "servers": {
+  "mcpServers": {
     "angular-cli": {
+      "command": "node",
+      "args": ["${CLAUDE_PROJECT_DIR:-.}/scripts/mcp/angular-mcp.mjs"]
+    },
+    "svelte": {
       "command": "npx",
-      "args": ["-y", "@angular/cli", "mcp"]
+      "args": ["-y", "@sveltejs/mcp"]
     },
     "chrome-devtools": {
       "command": "npx",

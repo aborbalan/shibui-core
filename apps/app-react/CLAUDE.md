@@ -4,6 +4,21 @@ App React que actúa como showcase público de la librería y panel de administr
 
 ---
 
+## MCP — solo `chrome-devtools`
+
+A diferencia de Angular y Svelte, **React no publica servidor MCP oficial**: el equipo de React
+no mantiene ninguno, y lo que hay en la comunidad son proyectos individuales sin garantías.
+
+Consecuencias prácticas para esta app:
+
+- Verificación en navegador → `chrome-devtools` (declarado en el `.mcp.json` de la raíz): DOM,
+  consola, red, performance y capturas sobre un Chrome real
+- API de React 19, React Router v7 o TanStack Query v5 → no hay atajo. Leer el código de la app
+  o la documentación; no dar por buena la memoria del modelo, que tiende a escribir patrones
+  pre-19 (`forwardRef` innecesario, `useEffect` donde va un Action)
+
+---
+
 ## Stack
 
 - **React 19** + **TypeScript estricto**

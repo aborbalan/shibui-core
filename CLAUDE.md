@@ -16,6 +16,51 @@ de cuándo usar cada tool.
 
 ---
 
+## MCP — servidores declarados
+
+`.mcp.json` en la raíz declara tres servidores en **project scope**. La primera vez que se
+abre el repo, Claude Code los muestra como `⏸ Pending approval`: hay que aprobarlos una vez
+desde una sesión interactiva (`claude`). No añaden dependencias al `package.json`.
+
+| Servidor | Qué aporta | Cuándo usarlo |
+|---|---|---|
+| `angular-cli` | Oficial de Angular 21 (va dentro del CLI). `search_documentation`, `get_best_practices`, `list_projects`, `ai_tutor`, `onpush_zoneless_migration` | Antes de escribir Angular en `app-angular` o `app-cv`. Preferirlo a buscar en la web |
+| `svelte` | Oficial de Svelte 5. `list-sections`, `get-documentation`, `svelte-autofixer`, `playground-link` | Antes de escribir Svelte en `app-svelte`, y **siempre** para revisar código Svelte generado |
+| `chrome-devtools` | Oficial del equipo Chrome DevTools. DOM, consola, red, performance y capturas sobre un Chrome real | Verificación visual de cualquier app. Sustituye al apaño de Chrome headless a mano y esquiva el Browser pane congelado |
+
+Regla general: si la duda es sobre **la API de un framework**, preguntar a su servidor MCP
+antes que tirar de memoria del modelo — las tres apps van en versiones muy recientes
+(Angular 21.2, Svelte 5.55, React 19.2).
+
+**React no tiene servidor MCP oficial** — el equipo de React no publica ninguno. Se cubre
+con `chrome-devtools` para la parte de navegador; para la API de React 19 no hay atajo,
+se lee el código o la documentación.
+
+Las tools experimentales del servidor de Angular (`build`, `test`, `e2e`, `devserver.*`)
+están detrás del flag `-E` y **no** están activadas a propósito: los builds se lanzan con
+los scripts de pnpm, no desde el agente.
+
+### Detalles de arranque (verificados)
+
+- **`angular-cli` no se invoca directo**, va por la lanzadera `scripts/mcp/angular-mcp.mjs`.
+  Dos motivos, los dos comprobados: el CLI necesita arrancar dentro de `apps/app-angular` o
+  `list_projects` no encuentra el `angular.json`, y `ng.js` está parcheado por la extensión
+  Console Ninja, que imprime un banner **por stdout** que rompería el framing JSON-RPC. La
+  lanzadera fija el cwd y desvía a stderr todo lo que no sea JSON.
+- **Desde un worktree, `angular-cli` no arranca**: los worktrees no tienen `node_modules`
+  (ver `reference_dev_environment`). La lanzadera falla con un mensaje explícito en vez de
+  colgarse. `svelte` y `chrome-devtools` sí funcionan desde cualquier sitio porque van por npx.
+- **`find_examples` no aparece en la lista de tools**: el servidor de Angular lo registra solo
+  con Node >= 22.16 y el entorno va con 22.13. Las otras cinco tools sí están.
+- **`chrome-devtools` lleva `--no-performance-crux`** a propósito: sin ese flag, las tools de
+  performance mandan las URLs trazadas a la API CrUX de Google. Quitarlo solo si hace falta
+  contrastar con datos de usuario real.
+
+Existe además config espejo en `apps/app-{angular,svelte,react}/.vscode/mcp.json` para
+VS Code y Copilot. Ojo al formato: allí la clave raíz es `servers`, aquí es `mcpServers`.
+
+---
+
 ## Monorepo
 
 Gestionado con **pnpm workspaces** (pnpm@9.15.0, Node >=20).

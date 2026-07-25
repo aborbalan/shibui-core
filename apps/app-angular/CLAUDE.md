@@ -4,6 +4,25 @@ App Angular que actúa como consumidora real de `@shibui-ui/ui` y ofrece un pane
 
 ---
 
+## MCP — `angular-cli`
+
+Angular 21 trae servidor MCP oficial dentro del CLI, declarado en el `.mcp.json` de la raíz.
+Consultarlo **antes** de escribir signals, routing, control flow o formularios: la memoria del
+modelo va por detrás de la versión que corre aquí.
+
+- `search_documentation` / `get_best_practices` → API real de v21, no patrones de v16
+- `list_projects` → lee `angular.json` (este workspace declara un único proyecto, `app-angular`)
+- `onpush_zoneless_migration` → analiza y planifica la migración a OnPush; es la herramienta
+  para la deuda de zoneless y para la migración pendiente a v22
+
+Las tools que ejecutan cosas (`build`, `test`, `e2e`, `devserver.*`) van detrás del flag `-E`
+y están desactivadas a propósito — los builds se lanzan con los scripts de pnpm.
+
+`find_examples` (ejemplos de código) existe en el servidor pero **no se registra**: pide
+Node >= 22.16 y el entorno va con 22.13. Para ejemplos, `search_documentation`.
+
+---
+
 ## Stack
 
 - **Angular 21** — standalone components, sin NgModules
