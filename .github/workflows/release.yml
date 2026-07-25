@@ -49,7 +49,13 @@ jobs:
       - name: 🚀 Run Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm exec semantic-release --config .config/.releaserc.json
+        # `--extends`, no `--config`: semantic-release no tiene flag para el
+        # fichero de configuración. Las opciones que no reconoce se vuelven
+        # globales y se heredan a los plugins, así que `--config` (a) dejaba el
+        # releaserc sin cargar —corría con los defaults— y (b) llegaba a
+        # commit-analyzer como el módulo del parser preset, que reventaba con
+        # `Cannot find module '.config/.releaserc.json'`.
+        run: pnpm exec semantic-release --extends ./.config/.releaserc.json
 
       - name: 🏗️ Build UI lib (versión bumpeada)
         run: pnpm --filter @shibui-ui/ui build
