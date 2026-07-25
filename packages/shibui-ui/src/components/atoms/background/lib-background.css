@@ -71,7 +71,7 @@
        material (film grain), y que se INTEGRA con el fondo en vez de
        flotar encima (ver .bg-finish).
        Contrato de custom property (ajustable por tema con
-       :host([theme="X"]) { --bg-grain: … }):
+       :host([theme=…]) { --bg-grain: … }):
          --bg-grain  0..1  intensidad del grano (default 0.6)
        Como el grano usa `multiply` sobre un ruido casi-blanco, sobre
        superficie oscura se desvanece solo; los temas CRT/terminal y
