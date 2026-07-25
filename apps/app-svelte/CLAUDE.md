@@ -4,6 +4,21 @@ App Svelte 5 que actúa como consumidora real de `@shibui-ui/ui` y ofrece un kit
 
 ---
 
+## MCP — `svelte`
+
+Svelte publica servidor MCP oficial (`@sveltejs/mcp`), declarado en el `.mcp.json` de la raíz.
+
+- `list-sections` / `get-documentation` → docs vivas de Svelte 5 y SvelteKit por sección
+- `svelte-autofixer` → **pasar por aquí todo código Svelte generado antes de darlo por bueno**.
+  Es análisis estático pensado justo para lo que fallan los LLM: runes mal usadas y patrones
+  de Svelte 4 colados en un proyecto v5
+- `playground-link` → URL de playground para probar un snippet sin escribir fichero
+
+Ojo con SvelteKit: el servidor documenta ambos, pero esta app **no usa SvelteKit** — el router
+es propio (`src/lib/router.ts`). Descartar cualquier respuesta que asuma `+page.svelte`.
+
+---
+
 ## Stack
 
 - **Svelte 5** — runes (`$derived`, `$effect`), stores de Svelte para estado global
