@@ -5,6 +5,7 @@
     getCategoriesWithComponents,
     type CategoryWithComponentsDto,
   } from '../lib/api/components';
+  import ComponentCard from './componentes/ComponentCard.svelte';
 
   // Kanji decorativo por categoría (fallback 形).
   const CATEGORY_KANJI: Record<string, string> = {
@@ -100,18 +101,14 @@
             <span class="category-count">{cat.components.length}</span>
           </div>
 
-          <div class="components-grid">
+          <lib-component-grid transparent>
             {#each cat.components as comp (comp.id)}
-              <button
-                class="component-card"
-                type="button"
-                onclick={() => navigate(`/componentes/${comp.slug}`)}
-              >
-                <p class="component-name">{comp.name}</p>
-                <p class="component-tag">&lt;{comp.tagName}&gt;</p>
-              </button>
+              <ComponentCard
+                component={comp}
+                onselect={(slug) => navigate(`/componentes/${slug}`)}
+              />
             {/each}
-          </div>
+          </lib-component-grid>
         </section>
 
         <lib-divider style-variant="hairline" style="margin:0;"></lib-divider>
@@ -173,7 +170,7 @@
     font-size: clamp(3rem, 6vw, 4.5rem);
     font-weight: var(--weight-light);
     line-height: 1;
-    color: color-mix(in oklch, var(--color-kaki-500), transparent 60%);
+    color: color-mix(in oklch, var(--text-accent), transparent 45%);
     flex-shrink: 0;
   }
 
@@ -199,51 +196,13 @@
     font-family: var(--lib-font-mono);
     font-size: 0.6rem;
     letter-spacing: 0.1em;
-    color: color-mix(in oklch, var(--color-kaki-500), transparent 50%);
+    color: var(--text-accent);
     border: 1px solid var(--border-subtle);
     padding: 0.25rem 0.6rem;
     margin-left: auto;
     flex-shrink: 0;
     align-self: flex-start;
     margin-top: 0.25rem;
-  }
-
-  .components-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1px;
-    background: var(--border-subtle);
-    border: 1px solid var(--border-subtle);
-  }
-
-  .component-card {
-    background: var(--bg-base);
-    padding: clamp(1rem, 2vw, 1.5rem);
-    transition: background 200ms ease;
-    cursor: pointer;
-    border: none;
-    text-align: left;
-    width: 100%;
-    font: inherit;
-  }
-
-  .component-card:hover {
-    background: var(--bg-overlay);
-  }
-
-  .component-name {
-    font-family: var(--lib-font-body);
-    font-size: 0.82rem;
-    color: var(--text-secondary);
-    margin: 0 0 0.3rem;
-  }
-
-  .component-tag {
-    font-family: var(--lib-font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.05em;
-    color: color-mix(in oklch, var(--color-kaki-500), transparent 45%);
-    margin: 0;
   }
 
   .empty-state {
@@ -255,7 +214,7 @@
     font-family: var(--lib-font-display);
     font-size: clamp(4rem, 10vw, 7rem);
     font-weight: var(--weight-light);
-    color: color-mix(in oklch, var(--color-kaki-500), transparent 80%);
+    color: color-mix(in oklch, var(--text-accent), transparent 65%);
     margin: 0 0 1rem;
     line-height: 1;
   }
