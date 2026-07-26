@@ -75,11 +75,10 @@ arranque por defecto de Claude Code son 30 s, así que **sin subirlo el servidor
 
 ### Detalles de arranque (verificados)
 
-- **La ruta de la lanzadera es ABSOLUTA a propósito**, y es lo único que funciona aquí.
-  `${CLAUDE_PROJECT_DIR:-.}` **no vale**: la variable no existe en el entorno de Claude Code
-  (avisa con `Missing environment variables: CLAUDE_PROJECT_DIR`) y el fallback `.` tampoco,
-  porque el cwd del spawn no es la raíz del proyecto. Una ruta relativa falla por lo mismo.
-  Contrapartida asumida: si el repo se clona en otra ruta, hay que editar esa línea.
+- **Las rutas de las lanzaderas usan `${CLAUDE_PROJECT_DIR:-.}` y funcionan.** El `:-.` no es
+  decorativo: **sin el valor por defecto**, Claude Code aborta el servidor con
+  `Missing environment variables: CLAUDE_PROJECT_DIR`. Con él, resuelve. Si un servidor de
+  estos falla, mirar el timeout antes que la ruta — es la causa mucho más probable.
 - **`angular-cli` no se invoca directo**, va por la lanzadera `scripts/mcp/angular-mcp.mjs`.
   Dos motivos, los dos comprobados: el CLI necesita arrancar dentro de `apps/app-angular` o
   `list_projects` no encuentra el `angular.json`, y `ng.js` está parcheado por la extensión

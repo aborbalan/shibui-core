@@ -2,11 +2,11 @@
   "mcpServers": {
     "angular-cli": {
       "command": "node",
-      "args": ["D:/PROYECTOS/shibui-ecosystem/scripts/mcp/angular-mcp.mjs"]
+      "args": ["${CLAUDE_PROJECT_DIR:-.}/scripts/mcp/angular-mcp.mjs"]
     },
     "shibui-cem": {
       "command": "node",
-      "args": ["D:/PROYECTOS/shibui-ecosystem/scripts/mcp/shibui-cem-mcp.mjs"]
+      "args": ["${CLAUDE_PROJECT_DIR:-.}/scripts/mcp/shibui-cem-mcp.mjs"]
     },
     "svelte": {
       "command": "npx",
