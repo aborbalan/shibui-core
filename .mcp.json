@@ -4,6 +4,10 @@
       "command": "node",
       "args": ["D:/PROYECTOS/shibui-ecosystem/scripts/mcp/angular-mcp.mjs"]
     },
+    "shibui-cem": {
+      "command": "node",
+      "args": ["D:/PROYECTOS/shibui-ecosystem/scripts/mcp/shibui-cem-mcp.mjs"]
+    },
     "svelte": {
       "command": "npx",
       "args": ["-y", "@sveltejs/mcp"]
