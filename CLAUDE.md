@@ -40,8 +40,21 @@ Las tools experimentales del servidor de Angular (`build`, `test`, `e2e`, `devse
 están detrás del flag `-E` y **no** están activadas a propósito: los builds se lanzan con
 los scripts de pnpm, no desde el agente.
 
+### Requisito de entorno: `MCP_TIMEOUT`
+
+El servidor de Angular tarda **~41 s** en responder al `initialize` (medido: 37 s de silencio
+que no son Console Ninja —cuesta 0,4 s—, ni analytics, ni el update-notifier). El timeout de
+arranque por defecto de Claude Code son 30 s, así que **sin subirlo el servidor sale
+`✘ failed`**. Está puesto en `MCP_TIMEOUT` de la settings.json de usuario; si en otra máquina
+`angular-cli` falla y los otros dos conectan, es esto.
+
 ### Detalles de arranque (verificados)
 
+- **La ruta de la lanzadera es ABSOLUTA a propósito**, y es lo único que funciona aquí.
+  `${CLAUDE_PROJECT_DIR:-.}` **no vale**: la variable no existe en el entorno de Claude Code
+  (avisa con `Missing environment variables: CLAUDE_PROJECT_DIR`) y el fallback `.` tampoco,
+  porque el cwd del spawn no es la raíz del proyecto. Una ruta relativa falla por lo mismo.
+  Contrapartida asumida: si el repo se clona en otra ruta, hay que editar esa línea.
 - **`angular-cli` no se invoca directo**, va por la lanzadera `scripts/mcp/angular-mcp.mjs`.
   Dos motivos, los dos comprobados: el CLI necesita arrancar dentro de `apps/app-angular` o
   `list_projects` no encuentra el `angular.json`, y `ng.js` está parcheado por la extensión

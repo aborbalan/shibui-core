@@ -2,7 +2,7 @@
   "mcpServers": {
     "angular-cli": {
       "command": "node",
-      "args": ["${CLAUDE_PROJECT_DIR:-.}/scripts/mcp/angular-mcp.mjs"]
+      "args": ["D:/PROYECTOS/shibui-ecosystem/scripts/mcp/angular-mcp.mjs"]
     },
     "svelte": {
       "command": "npx",
