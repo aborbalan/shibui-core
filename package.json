@@ -34,12 +34,13 @@
     "test:consumers:react": "pnpm --filter @shibui/consumer-tests test:react",
     "test:consumers:svelte": "pnpm --filter @shibui/consumer-tests test:svelte",
     "test:consumers:angular": "pnpm --filter @shibui/consumer-tests test:angular",
-"worker:cf:deploy": "pnpm --filter @shibui-api/cf-cache-worker cf:deploy",
-"worker:cf:dev": "pnpm --filter @shibui-api/cf-cache-worker dev"
+    "worker:cf:deploy": "pnpm --filter @shibui-api/cf-cache-worker cf:deploy",
+    "worker:cf:dev": "pnpm --filter @shibui-api/cf-cache-worker dev"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",
+    "@pwrs/cem": "^0.11.0",
     "@types/node": "^25.3.5",
     "concurrently": "^9.2.1",
     "firebase-tools": "^15.14.0",

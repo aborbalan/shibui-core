@@ -27,6 +27,31 @@ desde una sesión interactiva (`claude`). No añaden dependencias al `package.js
 | `angular-cli` | Oficial de Angular 21 (va dentro del CLI). `search_documentation`, `get_best_practices`, `list_projects`, `ai_tutor`, `onpush_zoneless_migration` | Antes de escribir Angular en `app-angular` o `app-cv`. Preferirlo a buscar en la web |
 | `svelte` | Oficial de Svelte 5. `list-sections`, `get-documentation`, `svelte-autofixer`, `playground-link` | Antes de escribir Svelte en `app-svelte`, y **siempre** para revisar código Svelte generado |
 | `chrome-devtools` | Oficial del equipo Chrome DevTools. DOM, consola, red, performance y capturas sobre un Chrome real | Verificación visual de cualquier app. Sustituye al apaño de Chrome headless a mano y esquiva el Browser pane congelado |
+| `shibui-cem` | `cem` de bennypowers sobre el manifiesto de `@shibui-ui/ui`. Es el único que conoce los ~1.700 puntos de API de la librería | **Validar markup `lib-*` antes de darlo por bueno**, en la librería y en las apps consumidoras |
+
+### `shibui-cem` — qué esperar y qué no
+
+Es un **linter de uso del design system**, no un servidor de documentación. Expone cuatro
+tools y el reparto de calidad es muy desigual:
+
+- **`validate_html` es la buena.** Valida markup contra el manifiesto y nombra el fallo:
+  `<lib-footer variant="sabi">` → `Unknown attribute 'variant' for element <lib-footer>`.
+  Sin falso positivo con la forma correcta (`theme`). Cubre justo la trampa de los 13
+  componentes que aceptan `variant` frente a los 12 que aceptan `theme`, sin solape.
+- **`generate_html` no es de fiar.** Genera el elemento vacío, sin atributos, y su propio
+  bloque «What to Avoid» repite ese mismo HTML como ejemplo de lo que no hay que hacer.
+  Lo único aprovechable es el «Element Overview» del final, que sí lista la API real.
+- El detalle por elemento vive en *resources* (`cem://elements`, ~10k tokens y solo
+  resúmenes), no en tools: **no sirve para ahorrar contexto**, solo para validar.
+
+**Requisito:** lee `packages/shibui-ui/dist/custom-elements.json`, que es build output
+gitignorado. En un clon fresco no existe → generar con `pnpm --filter @shibui-ui/ui analyze`.
+La lanzadera falla ruidosamente si falta o está vacío, a propósito: un servidor que valida
+contra un manifiesto vacío aprobaría cualquier cosa en silencio.
+
+**Trampa de nombres:** el binario `cem` del PATH es `@custom-elements-manifest/analyzer`
+(el que usa el script `analyze`), que es **otra herramienta distinta**. Por eso la lanzadera
+invoca el entry JS `node_modules/@pwrs/cem/bin/cem.js` y nunca el comando `cem`.
 
 Regla general: si la duda es sobre **la API de un framework**, preguntar a su servidor MCP
 antes que tirar de memoria del modelo — las tres apps van en versiones muy recientes
@@ -40,8 +65,20 @@ Las tools experimentales del servidor de Angular (`build`, `test`, `e2e`, `devse
 están detrás del flag `-E` y **no** están activadas a propósito: los builds se lanzan con
 los scripts de pnpm, no desde el agente.
 
+### Requisito de entorno: `MCP_TIMEOUT`
+
+El servidor de Angular tarda **~41 s** en responder al `initialize` (medido: 37 s de silencio
+que no son Console Ninja —cuesta 0,4 s—, ni analytics, ni el update-notifier). El timeout de
+arranque por defecto de Claude Code son 30 s, así que **sin subirlo el servidor sale
+`✘ failed`**. Está puesto en `MCP_TIMEOUT` de la settings.json de usuario; si en otra máquina
+`angular-cli` falla y los otros dos conectan, es esto.
+
 ### Detalles de arranque (verificados)
 
+- **Las rutas de las lanzaderas usan `${CLAUDE_PROJECT_DIR:-.}` y funcionan.** El `:-.` no es
+  decorativo: **sin el valor por defecto**, Claude Code aborta el servidor con
+  `Missing environment variables: CLAUDE_PROJECT_DIR`. Con él, resuelve. Si un servidor de
+  estos falla, mirar el timeout antes que la ruta — es la causa mucho más probable.
 - **`angular-cli` no se invoca directo**, va por la lanzadera `scripts/mcp/angular-mcp.mjs`.
   Dos motivos, los dos comprobados: el CLI necesita arrancar dentro de `apps/app-angular` o
   `list_projects` no encuentra el `angular.json`, y `ng.js` está parcheado por la extensión
