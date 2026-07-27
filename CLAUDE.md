@@ -67,11 +67,28 @@ los scripts de pnpm, no desde el agente.
 
 ### Requisito de entorno: `MCP_TIMEOUT`
 
-El servidor de Angular tarda **~41 s** en responder al `initialize` (medido: 37 s de silencio
-que no son Console Ninja —cuesta 0,4 s—, ni analytics, ni el update-notifier). El timeout de
-arranque por defecto de Claude Code son 30 s, así que **sin subirlo el servidor sale
-`✘ failed`**. Está puesto en `MCP_TIMEOUT` de la settings.json de usuario; si en otra máquina
-`angular-cli` falla y los otros dos conectan, es esto.
+`MCP_TIMEOUT` (settings.json de usuario, 120000) da margen al arranque en frío de los
+servidores que van por `npx` — `svelte` y `chrome-devtools` pueden pasarse de los 30 s por
+defecto la primera vez de cada sesión. No es obligatorio, pero evita rojos espurios.
+
+**Corrección histórica.** Este fichero afirmó que `angular-cli` tardaba ~41 s en responder al
+`initialize` y que la causa **no** era Console Ninja. Ambas cosas eran falsas. La causa era
+exactamente esa extensión, que inyecta un `build-hook` en el `bin` de cada herramienta que
+soporta. Medido en A/B sobre el mismo fichero:
+
+| Comando | Con el hook | Sin el hook |
+|---|---|---|
+| `ng version` | 42,6 s | 1,7 s |
+| `vite --version` | 47,7 s | 3,3 s |
+
+No afectaba solo al MCP: pagaban el peaje los dos CLIs de Angular (`app-angular`, `app-cv`) y
+las tres instalaciones de Vite (`app-react`, `app-svelte`, `shibui-ui`), o sea **cada
+`pnpm start:*`, cada build y cada arranque de Storybook**. La extensión se desinstaló el
+2026-07-27 y se limpiaron los hooks ya escritos en el store de pnpm.
+
+Si algún día vuelven los arranques de 40 s: buscar `build-hook-start` en el `bin` de la
+herramienta lenta. Desactivar la extensión en el editor **no basta** — el hook es un `require`
+que ejecuta Node, no el editor, y sigue resolviendo mientras los ficheros existan en disco.
 
 ### Detalles de arranque (verificados)
 
