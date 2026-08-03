@@ -31,7 +31,6 @@ packages/shibui-ui/
     .eslintrc.json
     .prettierrc.json
     .stylelintrc.json
-    commitlint.config.cjs
     lighthouserc.cjs
   .storybook/             → Configuración visual de Storybook
   .lighthouseci/          → Configuración de Lighthouse CI
