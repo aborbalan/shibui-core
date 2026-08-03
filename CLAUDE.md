@@ -84,9 +84,12 @@ arranque por defecto de Claude Code son 30 s, así que **sin subirlo el servidor
   `list_projects` no encuentra el `angular.json`, y `ng.js` está parcheado por la extensión
   Console Ninja, que imprime un banner **por stdout** que rompería el framing JSON-RPC. La
   lanzadera fija el cwd y desvía a stderr todo lo que no sea JSON.
+  **La extensión ya está desinstalada, pero el parche sigue en el `ng.js`** (verificado
+  2026-08-03: línea 2 en `app-angular` y en `app-cv`) — la lanzadera sigue haciendo falta,
+  no la retires por creerla obsoleta.
 - **Desde un worktree, `angular-cli` no arranca**: los worktrees no tienen `node_modules`
-  (ver `reference_dev_environment`). La lanzadera falla con un mensaje explícito en vez de
-  colgarse. `svelte` y `chrome-devtools` sí funcionan desde cualquier sitio porque van por npx.
+  (ver «Entorno de ejecución» más abajo). La lanzadera falla con un mensaje explícito en vez
+  de colgarse. `svelte` y `chrome-devtools` sí funcionan desde cualquier sitio porque van por npx.
 - **`find_examples` no aparece en la lista de tools**: el servidor de Angular lo registra solo
   con Node >= 22.16 y el entorno va con 22.13. Las otras cinco tools sí están.
 - **`chrome-devtools` lleva `--no-performance-crux`** a propósito: sin ese flag, las tools de
@@ -95,6 +98,19 @@ arranque por defecto de Claude Code son 30 s, así que **sin subirlo el servidor
 
 Existe además config espejo en `apps/app-{angular,svelte,react}/.vscode/mcp.json` para
 VS Code y Copilot. Ojo al formato: allí la clave raíz es `servers`, aquí es `mcpServers`.
+
+---
+
+## Consumo de `@shibui-ui/ui` desde las apps
+
+Las apps consumidoras **no estilan** los componentes `lib-*`. Son Web Components de Lit con
+Shadow DOM: una regla desde fuera no atraviesa el límite, así que además de saltarse la
+convención **no funciona**.
+
+- ¿Hace falta que se vea distinto? Añadir variante/prop **en `packages/shibui-ui`**.
+- ¿Distinguir instancias? Por contenido/slots (un icono, otro texto), no por CSS en el host.
+- Lo único admisible alrededor de un `lib-*` es **layout**: `display`, `gap`, `grid`, tamaño
+  del contenedor.
 
 ---
 
@@ -111,6 +127,41 @@ Workspaces declarados en `pnpm-workspace.yaml`:
 
 TypeScript base compartido en `tsconfig.base.json`.  
 Path alias `@shibui-ui/ui` → `packages/shibui-ui/dist/index.d.ts`.
+
+---
+
+## Entorno de ejecución — Windows + worktrees
+
+> Se trabaja desde el **repo principal** `D:\PROYECTOS\shibui-ecosystem`. Los worktrees de
+> `.claude/worktrees/` sirven para **escribir** código, no para construirlo.
+
+- **Un worktree nace sin `node_modules`.** `node_modules` está gitignored y `git worktree add`
+  solo materializa ficheros trackeados. No es un bug ni cosa de Windows.
+- **`pnpm install` completo cuelga** en el worktree (EPERM en la fase de link). Sí funciona
+  `pnpm install --lockfile-only` (~12 s), que basta para arreglos de dependencias.
+- **No dar por bueno un `build` o `type-check` corrido desde un worktree.** Escribir el código
+  en la rama y dejar la verificación a la CI o al usuario desde el principal.
+
+### ⛔ Junctions — dos trampas, una destructiva
+
+Para construir desde un worktree se junctan los `node_modules` del principal:
+
+1. **NUNCA retirar un junction con `rm -rf` ni `Remove-Item -Recurse`.** Siguen el enlace y
+   **borran el `node_modules` del repo principal**, que en esta máquina no se puede reinstalar
+   porque el install cuelga. Retirarlos con `.Delete()` de PowerShell filtrando por
+   `LinkType -eq 'Junction'`, o con `cmd /c rmdir`.
+2. **Junctar de más mide el árbol equivocado.** `apps/<app>/node_modules/@shibui-ui/ui` es un
+   symlink a `<principal>/packages/shibui-ui`: junctar la carpeta entera arrastra la librería
+   del principal, que suele ir en **otra rama con un `dist` viejo**. El síntoma es un
+   diagnóstico convencido y falso sobre código que en tu rama está bien. Junctar dentro cada
+   entrada **excepto** `@shibui-ui`.
+
+### Verificación visual
+
+El **Browser pane** (`mcp__Claude_Browser`) tiene el compositor congelado: `screenshot` da
+timeout, `requestAnimationFrame` no dispara nunca y las transiciones CSS se quedan a `t=0`
+→ **`getComputedStyle` devuelve valores intermedios estancados**: medir color o transform de
+un elemento con `transition` da resultados falsos. Para comprobación visual, `chrome-devtools`.
 
 ---
 
