@@ -18,7 +18,14 @@ packages/hanko/hanko-report/
 *.claude/*
 .nx/cache
 .nx/workspace-data.claude/
-.claude/
+# .claude/ va casi entero fuera de git. La excepcion son las definiciones de
+# agentes, que deben viajar a cada worktree (un worktree es su propia raiz de
+# proyecto: sin trackear, el agente solo existe donde se creo).
+# Negacion OPT-IN: anadir un `!` por cada hijo que se quiera trackear, NUNCA
+# `!.claude/**` — arrastraria worktrees/ (copias de trabajo completas del repo)
+# y settings.local.json (config de maquina).
+.claude/*
+!.claude/agents/
 
 # tooling local
 .codegraph/
