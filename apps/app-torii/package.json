@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "validate:markup": "node scripts/validate-lib-markup.mjs",
     "deploy": "firebase deploy --only hosting:torii --project lib-ui-b67c5"
   },
   "dependencies": {

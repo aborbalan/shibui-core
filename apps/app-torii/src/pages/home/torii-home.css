@@ -1,4 +1,123 @@
 :host {
   display: block;
-  padding: clamp(3rem, 10vh, 6rem) var(--space-6, 1.5rem) var(--space-16, 4rem);
+  position: relative;
+}
+
+lib-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.wrap {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 12vh, 8rem) var(--space-6, 1.5rem) var(--space-20, 5rem);
+}
+
+.lede {
+  max-width: 46ch;
+  margin: var(--space-6, 1.5rem) 0 0;
+  color: var(--text-secondary, #555);
+  line-height: 1.7;
+}
+
+.kpis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  margin: var(--space-12, 3rem) 0;
+}
+
+.section-label {
+  display: flex;
+  align-items: baseline;
+  gap: 1ch;
+  margin: var(--space-16, 4rem) 0 var(--space-6, 1.5rem);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted, #888);
+}
+
+/* ── Celda del bento ── */
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: var(--space-2, 0.5rem);
+  text-decoration: none;
+  color: inherit;
+}
+
+.cell__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1ch;
+}
+
+.cell__kanji {
+  font-family: var(--font-serif, serif);
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--text-accent, #b85a1e);
+}
+
+.cell__name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-primary, #222);
+}
+
+.cell__lede {
+  margin: 0;
+  flex: 1;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #555);
+}
+
+.cell__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1ch;
+  margin-top: var(--space-3, 0.75rem);
+  /* El stack puede ser largo; que no se solape con el indicador de la derecha. */
+  min-width: 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted, #888);
+}
+
+.cell__foot > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cell__go {
+  flex: none;
+  color: var(--text-accent, #b85a1e);
+}
+
+a.cell:hover .cell__name {
+  color: var(--text-accent, #b85a1e);
+}
+
+a.cell:focus-visible {
+  outline: 2px solid var(--border-focus, #b85a1e);
+  outline-offset: 4px;
+}
+
+@media (max-width: 48rem) {
+  .kpis {
+    gap: 1.5rem;
+  }
 }
