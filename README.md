@@ -31,7 +31,7 @@ Workspaces declarados en [`pnpm-workspace.yaml`](pnpm-workspace.yaml):
 | `app-angular` | `app-angular` | Angular | Showcase de consumo en Angular |
 | `app-svelte` | `app-svelte` | Svelte 5 + Vite | Showcase de consumo en Svelte |
 | `app-cv` | `app-cv` | Angular | CV / portfolio (deploy a `shibui-cv`) |
-| `app-opencells` | `app-opencells` | OpenCells | Showcase / laboratorio de consumo |
+| `app-torii` | `app-torii` | Open Cells | **Hub del ecosistema** (deploy a `shibui-torii`) |
 | `app-tauri` | `@shibui/app-tauri` | Tauri 2 + React 19 + **Rust** | App de escritorio nativa |
 | `shibui-api` | `@shibui-ui/api` | NestJS | API backend |
 
@@ -96,12 +96,12 @@ pnpm dev:all          # React + Svelte + Angular en paralelo
 | `pnpm start:svelte` | Dev app Svelte |
 | `pnpm start:angular` | Dev app Angular |
 | `pnpm start:cv` | Dev app CV (Angular) |
-| `pnpm start:opencells` | Dev app OpenCells |
+| `pnpm start:torii` | Dev app torii (hub del ecosistema) |
 | `pnpm start:api` | Dev server NestJS |
 | `pnpm start:tauri` | Dev app Tauri (Vite + ventana nativa) — requiere Rust |
 | `pnpm dev:all` | React + Svelte + Angular en paralelo (sin Tauri) |
 | `pnpm build:shibui` | Build de `@shibui-ui/ui` |
-| `pnpm build:api` · `build:react` · `build:cv` · `build:opencells` | Builds individuales |
+| `pnpm build:api` · `build:react` · `build:cv` · `build:torii` | Builds individuales |
 | `pnpm type-check` | `tsc --noEmit` sobre shibui-ui |
 | `pnpm lint` | ESLint sobre shibui-ui |
 | `pnpm test:consumers` | Consumer contract tests (build + Playwright) |
@@ -157,7 +157,7 @@ Punto de entrada único: [`.github/workflows/orchestrator.yml`](.github/workflow
 | `packages/shibui-ui/**` · `packages/hanko/**` · `packages/consumer-tests*/**` | `ci-lib.yml` + `ci-apps.yml` |
 | `apps/app-react\|angular\|svelte/**` | `ci-apps.yml` |
 | `apps/app-cv/**` | `ci-apps.yml` (deploy a `shibui-cv.web.app`) |
-| `apps/app-opencells/**` | `ci-apps.yml` |
+| `apps/app-torii/**` | `ci-apps.yml` (deploy a `shibui-torii.web.app`) |
 | `apps/shibui-api/**` | `ci-api.yml` |
 | `apps/app-tauri/**` | `ci-tauri.yml` (fmt + clippy + tests crate `core/`) |
 | `packages/sukashi/**` | `ci-sukashi.yml` (deploy demo a `sukashi.web.app`, solo `main`) |

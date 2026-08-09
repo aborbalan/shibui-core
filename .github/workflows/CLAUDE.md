@@ -12,7 +12,7 @@ un `workflow_call`.
 ```
 orchestrator.yml          ← único trigger externo (push / PR / dispatch)
   ├── ci-lib.yml           ← UI library: quality + build + tests + deploy Storybook + hanko (test/seal/report)
-  ├── ci-apps.yml          ← Apps: build React/Angular/Svelte/CV/OpenCells + deploy Firebase
+  ├── ci-apps.yml          ← Apps: build React/Angular/Svelte/CV/torii + deploy Firebase
   ├── ci-api.yml           ← NestJS API: lint + build + test + deploy docs (Firebase Hosting)
   ├── ci-tauri.yml         ← Rust core: fmt + clippy + cargo test
   ├── ci-sukashi.yml       ← Sukashi: type-check + tests + deploy demo (sukashi.web.app, solo main)
@@ -38,7 +38,7 @@ Los outputs del job `detect-changes` son la API pública hacia los pipelines.
 | `angular` | `apps/app-angular/**` | Activa ci-apps para Angular |
 | `svelte` | `apps/app-svelte/**` | Activa ci-apps para Svelte |
 | `cv` | `apps/app-cv/**` | Activa ci-apps para CV (deploy a `shibui-cv`) |
-| `opencells` | `apps/app-opencells/**` | Activa ci-apps para OpenCells |
+| `torii` | `apps/app-torii/**` | Activa ci-apps para torii |
 | `api` | `apps/shibui-api/**` | Activa ci-api |
 | `tauri` | `apps/app-tauri/**` | Activa ci-tauri |
 | `sukashi` | `packages/sukashi/**` | Activa ci-sukashi (type-check + tests; deploy demo solo en main) |
@@ -95,7 +95,7 @@ if: |
 | `force_angular` | Activa ci-apps para Angular |
 | `force_svelte` | Activa ci-apps para Svelte |
 | `force_cv` | Activa ci-apps para CV |
-| `force_opencells` | Activa ci-apps para OpenCells |
+| `force_torii` | Activa ci-apps para torii |
 | `force_api` | Activa ci-api |
 | `force_tauri` | Activa ci-tauri |
 | `force_sukashi` | Activa ci-sukashi |

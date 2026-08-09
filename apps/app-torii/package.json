@@ -1,0 +1,25 @@
+{
+  "name": "app-torii",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "torii 鳥居 — hub del ecosistema shibui (Open Cells: routing + channels + page controllers)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "firebase deploy --only hosting:torii --project lib-ui-b67c5"
+  },
+  "dependencies": {
+    "@shibui-ui/ui": "workspace:*",
+    "@open-cells/core": "^1.2.1",
+    "@open-cells/page-controller": "^1.0.6",
+    "@open-cells/element-controller": "^1.0.6",
+    "lit": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "~5.9.3",
+    "vite": "^6.4.3"
+  }
+}
