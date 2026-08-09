@@ -1,0 +1,87 @@
+:host {
+  display: block;
+}
+
+.wrap {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 10vh, 6rem) var(--space-6, 1.5rem) var(--space-20, 5rem);
+}
+
+.lede {
+  max-width: 52ch;
+  margin: var(--space-6, 1.5rem) 0 0;
+  color: var(--text-secondary, #555);
+  line-height: 1.7;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  margin: var(--space-12, 3rem) 0;
+}
+
+@media (max-width: 56rem) {
+  .summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.section-label {
+  display: flex;
+  align-items: baseline;
+  gap: 1ch;
+  margin: var(--space-12, 3rem) 0 var(--space-4, 1rem);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted, #888);
+}
+
+.stamped {
+  margin: 0 0 var(--space-6, 1.5rem);
+  max-width: 60ch;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #555);
+}
+
+.meta {
+  margin-top: var(--space-8, 2rem);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted, #888);
+}
+
+/* ── Drawer de hallazgos ── */
+
+.findings {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-3, 0.75rem);
+}
+
+.findings li {
+  padding-left: 1.2ch;
+  border-left: 2px solid var(--border-default, #ccc);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #555);
+}
+
+.findings__empty {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #555);
+}
+
+.drawer-tag {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  color: var(--text-muted, #888);
+}

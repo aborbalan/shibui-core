@@ -119,7 +119,7 @@ convención **no funciona**.
 Gestionado con **pnpm workspaces** (pnpm@9.15.0, Node >=20).
 
 Workspaces declarados en `pnpm-workspace.yaml`:
-- `apps/*` — app-react, app-angular, app-svelte, app-cv, app-opencells, app-tauri, shibui-api (`@shibui-ui/api`)
+- `apps/*` — app-react, app-angular, app-svelte, app-cv, app-torii, app-tauri, shibui-api (`@shibui-ui/api`)
 - `packages/*` — shibui-ui (`@shibui-ui/ui`), sukashi (`@shibui-ui/sukashi`), hanko (`@shibui-ui/hanko`), consumer-tests (`@shibui/consumer-tests`), consumer-tests-angular
 - `cloudflare/*` — cf-cache-worker (`@shibui-api/cf-cache-worker`)
 
@@ -193,7 +193,7 @@ Cada app/package gestiona las suyas.
 | `pnpm start:svelte` | Dev app Svelte |
 | `pnpm start:angular` | Dev app Angular |
 | `pnpm start:cv` | Dev app CV (Angular) |
-| `pnpm start:opencells` | Dev app OpenCells |
+| `pnpm start:torii` | Dev app torii (hub del ecosistema) |
 | `pnpm start:api` | Dev server NestJS |
 | `pnpm start:tauri` | Dev app Tauri (Vite + ventana nativa) — requiere Rust |
 | `pnpm dev:all` | Las tres apps web frontend en paralelo (sin Tauri) |
@@ -201,7 +201,7 @@ Cada app/package gestiona las suyas.
 | `pnpm build:api` | Build de `@shibui-ui/api` |
 | `pnpm build:react` | Build app React |
 | `pnpm build:cv` | Build app CV |
-| `pnpm build:opencells` | Build app OpenCells |
+| `pnpm build:torii` | Build app torii |
 | `pnpm type-check` | `tsc --noEmit` sobre shibui-ui |
 | `pnpm lint` | ESLint sobre shibui-ui |
 | `pnpm test:consumers` | Consumer contract tests (React × Svelte × Angular) |
@@ -299,13 +299,13 @@ Punto de entrada único: `.github/workflows/orchestrator.yml`
 | `packages/shibui-ui/**` · `packages/hanko/**` · `packages/consumer-tests*/**` | `ci-lib.yml` + `ci-apps.yml` |
 | `apps/app-react\|angular\|svelte/**` | `ci-apps.yml` |
 | `apps/app-cv/**` | `ci-apps.yml` (deploy a `shibui-cv.web.app`) |
-| `apps/app-opencells/**` | `ci-apps.yml` |
+| `apps/app-torii/**` | `ci-apps.yml` (deploy a `shibui-torii.web.app`) |
 | `apps/shibui-api/**` | `ci-api.yml` |
 | `apps/app-tauri/**` | `ci-tauri.yml` (fmt + clippy + tests sobre crate `core/`) |
 | `packages/sukashi/**` | `ci-sukashi.yml` (type-check + tests; deploy demo a `sukashi.web.app` solo en `main`) |
 | `main` + UI cambiada | `release.yml` (tras `ci-lib` exitoso) |
 
-Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_cv`, `force_opencells`, `force_api`, `force_tauri`, `force_sukashi`, `force_hanko_issues`.
+Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_cv`, `force_torii`, `force_api`, `force_tauri`, `force_sukashi`, `force_hanko_issues`.
 
 Secretos necesarios en GitHub repo: `FIREBASE_TOKEN` (deploys Firebase), `VITE_API_URL` (build React en `ci-apps.yml`), `NPM_SECRET` (publish en `release.yml`), `DISCORD_WEBHOOK` (`notify.yml`).
 

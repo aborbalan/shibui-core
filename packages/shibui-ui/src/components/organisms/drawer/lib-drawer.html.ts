@@ -24,7 +24,7 @@ export function drawerTemplate(ctx: LibDrawer): TemplateResult {
         part="panel"
         role="dialog"
         aria-modal="true"
-        aria-label="${ctx.drawerLabel}"
+        aria-label="${ctx.effectiveDrawerLabel}"
         tabindex="-1"
       >
         <!-- RGB ghost layers (glitch variants únicamente) -->

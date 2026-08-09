@@ -81,8 +81,8 @@
       ]
     },
     {
-      "target": "opencells",
-      "public": "apps/app-opencells/dist",
+      "target": "torii",
+      "public": "apps/app-torii/dist",
       "ignore": ["**/node_modules/**"],
       "rewrites": [
         {

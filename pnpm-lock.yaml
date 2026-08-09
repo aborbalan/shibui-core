@@ -191,34 +191,6 @@ importers:
         specifier: '>=4.1.8 <5'
         version: 4.1.10(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(happy-dom@20.9.0)(jsdom@27.4.0(@noble/hashes@1.8.0))(msw@2.14.3(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.6(@types/node@25.6.0)(jiti@2.6.1)(sass@1.99.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
 
-  apps/app-opencells:
-    dependencies:
-      '@open-cells/core':
-        specifier: ^1.1.2
-        version: 1.1.2
-      '@open-cells/element-controller':
-        specifier: ^1.0.4
-        version: 1.0.4
-      '@open-cells/page-controller':
-        specifier: ^1.0.4
-        version: 1.0.4
-      '@shibui-ui/ui':
-        specifier: workspace:*
-        version: link:../../packages/shibui-ui
-      lit:
-        specifier: ^3.0.0
-        version: 3.3.2
-    devDependencies:
-      '@types/node':
-        specifier: ^24.10.1
-        version: 24.12.2
-      typescript:
-        specifier: ~5.9.3
-        version: 5.9.3
-      vite:
-        specifier: ^6.4.3
-        version: 6.4.3(@types/node@24.12.2)(jiti@2.6.1)(sass@1.99.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)
-
   apps/app-react:
     dependencies:
       '@shibui-ui/ui':
@@ -374,6 +346,34 @@ importers:
       vite:
         specifier: ^7.3.5
         version: 7.3.6(@types/node@25.6.0)(jiti@2.6.1)(sass@1.99.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)
+
+  apps/app-torii:
+    dependencies:
+      '@open-cells/core':
+        specifier: ^1.2.1
+        version: 1.2.1
+      '@open-cells/element-controller':
+        specifier: ^1.0.6
+        version: 1.0.6
+      '@open-cells/page-controller':
+        specifier: ^1.0.6
+        version: 1.0.6
+      '@shibui-ui/ui':
+        specifier: workspace:*
+        version: link:../../packages/shibui-ui
+      lit:
+        specifier: ^3.0.0
+        version: 3.3.2
+    devDependencies:
+      '@types/node':
+        specifier: ^24.10.1
+        version: 24.12.2
+      typescript:
+        specifier: ~5.9.3
+        version: 5.9.3
+      vite:
+        specifier: ^6.4.3
+        version: 6.4.3(@types/node@24.12.2)(jiti@2.6.1)(sass@1.99.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)
 
   apps/shibui-api:
     dependencies:
@@ -2641,18 +2641,18 @@ packages:
   '@octokit/types@16.0.0':
     resolution: {integrity: sha512-sKq+9r1Mm4efXW1FCk7hFSeJo4QKreL/tTbR0rz/qx/r1Oa2VV83LTA/H/MuCOX7uCIJmQVRKBcbmWoySjAnSg==}
 
-  '@open-cells/core-plugin@1.2.2':
-    resolution: {integrity: sha512-dfCt+lJwb77jLbkdr6ZhAmmXBe0UlZppJipklpS+dumxZPlhDptWrlCezjqO5xHZFsZDcDjUDQC6HEozUmymUA==}
+  '@open-cells/core-plugin@1.2.4':
+    resolution: {integrity: sha512-7tmfd61uthNxuQMGDUZ5URvZAFVFIPJeUxMKRTJ2A+MIk+v5hQxLyDCmjPguX08T6mnBQH7wY2ENBUvuJnXRrw==}
 
-  '@open-cells/core@1.1.2':
-    resolution: {integrity: sha512-cUQlWAK6wrbnEKCM5LrDopPNmk1CbxDTuV2TcxT1gfN2BAAZhXlh8VUP4gQR9vu1+NV2grD6dfPbO6VpTeMmqA==}
-    engines: {node: '>=16.0.0'}
+  '@open-cells/core@1.2.1':
+    resolution: {integrity: sha512-WcswpXlqMiTJjdIhP4Fo2i0H1DRk9VWfUES0Noc2osznVoGNqFk0/Vm2sd7DwfyNZ9S1GLAkGGxHMGEDP9aIJQ==}
+    engines: {node: '>=22.0.0'}
 
-  '@open-cells/element-controller@1.0.4':
-    resolution: {integrity: sha512-cO9m4ltPJAm+sj6pNiWmU0iF/w4nViym77LP/HhIWpxStXn3ZTaFEQ/hfSRR8YsBHZWIplRYNQWKZ6vZtgRqXg==}
+  '@open-cells/element-controller@1.0.6':
+    resolution: {integrity: sha512-X3oQWcGgI4oHK5z9CkG4CBVRW3XUr4fS7u+EKjHd0NRKf7uyBGN42P8Xy0SpK9DoPXa4UTETZeIUtz7cMfaZWg==}
 
-  '@open-cells/page-controller@1.0.4':
-    resolution: {integrity: sha512-KO2ZPLwtgvGyK4QGVuxbPyS3MHriRWvzmHLJSRJ+YKF69qVvlHx0jKUAfZBe8VQr/T5hMG/9DgTKdYzJ526SAA==}
+  '@open-cells/page-controller@1.0.6':
+    resolution: {integrity: sha512-BoMbBU5dl+8Vq/RAa8mqoCeYV0DqVGMnzDGSMv6cIJi3ZKo63whA6f2UCbxnCUE2rlkdSF50lr7h0myO5ZHb6w==}
 
   '@open-draft/deferred-promise@2.2.0':
     resolution: {integrity: sha512-CecwLWx3rhxVQF6V4bAgPS5t+So2sTbPgAzafKkVizyi7tlwpcFpdFqq+wqF2OwNBmqFuu6tOyouTuxgpMfzmA==}
@@ -5991,6 +5991,7 @@ packages:
   git-raw-commits@5.0.1:
     resolution: {integrity: sha512-Y+csSm2GD/PCSh6Isd/WiMjNAydu0VBiG9J7EdQsNA5P9uXvLayqjmTsNlK5Gs9IhblFZqOU0yid5Il5JPoLiQ==}
     engines: {node: '>=18'}
+    deprecated: Deprecated and no longer maintained. Use @conventional-changelog/git-client instead.
     hasBin: true
 
   glob-parent@5.1.2:
@@ -8060,6 +8061,7 @@ packages:
 
   react-grid-layout@1.5.3:
     resolution: {integrity: sha512-KaG6IbjD6fYhagUtIvOzhftXG+ViKZjCjADe86X1KHl7C/dsBN2z0mi14nbvZKTkp0RKiil9RPcJBgq3LnoA8g==}
+    deprecated: 'Ships stray files that were never in the repo: an ip_fetcher binary and its curl-sample source (1.5.0-1.5.3), plus a yarn-error.log containing local paths (1.5.3). Upgrade to 1.5.4, which is byte-identical apart from removing them. See https://github.com/react-grid-layout/react-grid-layout/issues/2269'
     peerDependencies:
       react: '>= 16.3.0'
       react-dom: '>= 16.3.0'
@@ -11985,21 +11987,21 @@ snapshots:
     dependencies:
       '@octokit/openapi-types': 27.0.0
 
-  '@open-cells/core-plugin@1.2.2':
+  '@open-cells/core-plugin@1.2.4':
     dependencies:
-      '@open-cells/core': 1.1.2
+      '@open-cells/core': 1.2.1
 
-  '@open-cells/core@1.1.2':
+  '@open-cells/core@1.2.1':
     dependencies:
       rxjs: 7.8.2
 
-  '@open-cells/element-controller@1.0.4':
+  '@open-cells/element-controller@1.0.6':
     dependencies:
-      '@open-cells/core-plugin': 1.2.2
+      '@open-cells/core-plugin': 1.2.4
 
-  '@open-cells/page-controller@1.0.4':
+  '@open-cells/page-controller@1.0.6':
     dependencies:
-      '@open-cells/element-controller': 1.0.4
+      '@open-cells/element-controller': 1.0.6
 
   '@open-draft/deferred-promise@2.2.0': {}
 

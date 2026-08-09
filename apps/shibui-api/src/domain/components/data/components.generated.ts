@@ -3392,6 +3392,11 @@ export const COMPONENTS_GENERATED: GeneratedComponent[] = [
           "default": "''",
           "description": "— Aria-label del dialog (default = label)",
           "attribute": "drawer-label"
+        },
+        {
+          "name": "effectiveDrawerLabel",
+          "type": "string",
+          "description": "Aria-label efectivo: el explícito, si no el título, si no un genérico.\n\nSe deriva al renderizar en lugar de escribir `drawerLabel` desde\n`updated()`. Aquello asignaba una propiedad reactiva después de terminar\nun ciclo, lo que encadenaba un render extra en cada apertura y hacía saltar\nel aviso `change-in-update` de Lit en la consola del consumidor."
         }
       ],
       "slots": [
