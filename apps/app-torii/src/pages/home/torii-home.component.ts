@@ -3,10 +3,11 @@ import { customElement, state } from 'lit/decorators.js';
 import { PageController } from '@open-cells/page-controller';
 import { toriiHomeTemplate } from './torii-home.html';
 import pageCss from './torii-home.css?inline';
-import { CH_CATALOG, CH_KATACHI, CH_TRUST_REPORT } from '../../channels';
+import { CH_CATALOG, CH_DEPLOYS, CH_KATACHI, CH_TRUST_REPORT } from '../../channels';
 import { FRAMEWORK_COUNT } from '../../data/ecosystem';
 import { readStoredKatachi, type KatachiId } from '../../data/katachi';
 import type { CatalogSummary } from '../../data/loaders/catalog.loader';
+import type { ProbeResult } from '../../data/loaders/deploys.loader';
 import type { TrustReport } from '../../data/trust-report';
 
 /**
@@ -43,6 +44,9 @@ export class ToriiHome extends LitElement {
   /** El último resumen del catálogo, para decidir si pisa o no al del report. */
   private catalog: CatalogSummary | null = null;
 
+  /** Veredicto de la sonda por id, para el punto de estado de cada celda. */
+  @state() probes = new Map<string, ProbeResult>();
+
   override connectedCallback(): void {
     super.connectedCallback();
     this.pageController.subscribe(CH_KATACHI, (value: KatachiId) => {
@@ -56,6 +60,10 @@ export class ToriiHome extends LitElement {
       }
     });
 
+    this.pageController.subscribe(CH_DEPLOYS, (results: ProbeResult[]) => {
+      this.probes = new Map(results.map((r) => [r.id, r]));
+    });
+
     this.pageController.subscribe(CH_CATALOG, (summary: CatalogSummary) => {
       this.catalog = summary;
       if (summary.source === 'api') {
@@ -65,7 +73,7 @@ export class ToriiHome extends LitElement {
   }
 
   override disconnectedCallback(): void {
-    this.pageController.unsubscribe([CH_KATACHI, CH_TRUST_REPORT, CH_CATALOG]);
+    this.pageController.unsubscribe([CH_KATACHI, CH_TRUST_REPORT, CH_CATALOG, CH_DEPLOYS]);
     super.disconnectedCallback();
   }
 

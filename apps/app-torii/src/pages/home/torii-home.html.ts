@@ -1,6 +1,7 @@
-import { html, type TemplateResult } from 'lit';
+import { html, nothing, type TemplateResult } from 'lit';
 import { ECOSYSTEM, type EcosystemEntry } from '../../data/ecosystem';
 import { KATACHI_BG } from '../../data/katachi';
+import { VERDICT_DOT, VERDICT_LABEL } from '../../data/loaders/deploys.loader';
 import type { ToriiHome } from './torii-home.component';
 
 export function toriiHomeTemplate(host: ToriiHome): TemplateResult {
@@ -29,7 +30,7 @@ export function toriiHomeTemplate(host: ToriiHome): TemplateResult {
       </p>
 
       <lib-bento-grid columns="4" gap="md" row-height="180px">
-        ${ECOSYSTEM.map((entry) => cell(entry))}
+        ${ECOSYSTEM.map((entry) => cell(entry, host))}
       </lib-bento-grid>
     </div>
   `;
@@ -58,10 +59,11 @@ function kpi(value: number | null, label: string, tone = 'default'): TemplateRes
       ></lib-counter>`;
 }
 
-function cell(entry: EcosystemEntry): TemplateResult {
+function cell(entry: EcosystemEntry, host: ToriiHome): TemplateResult {
   const inner = html`
     <div class="cell__head">
       <h3 class="cell__name">${entry.name}</h3>
+      ${statusDot(entry, host)}
       <span class="cell__kanji" aria-hidden="true">${entry.kanji}</span>
     </div>
     <p class="cell__lede">${entry.lede}</p>
@@ -87,4 +89,19 @@ function cell(entry: EcosystemEntry): TemplateResult {
         : html`<div class="cell">${inner}</div>`}
     </lib-bento-item>
   `;
+}
+
+/**
+ * El punto de estado de una celda. Mientras la sonda no ha contestado no se
+ * pinta nada: un punto gris seria decir "offline" antes de saberlo.
+ */
+function statusDot(entry: EcosystemEntry, host: ToriiHome): TemplateResult | typeof nothing {
+  const result = host.probes.get(entry.id);
+  if (!result) return nothing;
+
+  return html`<lib-status-dot
+    status=${VERDICT_DOT[result.verdict]}
+    size="sm"
+    title=${VERDICT_LABEL[result.verdict]}
+  ></lib-status-dot>`;
 }

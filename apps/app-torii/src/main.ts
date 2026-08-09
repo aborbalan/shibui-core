@@ -9,6 +9,7 @@ import { startApp } from '@open-cells/core';
 import { routes } from './router/routes';
 import { loadTrustReport } from './data/loaders/trust-report.loader';
 import { loadCatalog } from './data/loaders/catalog.loader';
+import { loadDeploys } from './data/loaders/deploys.loader';
 
 // El orden importa: el shell instancia un ElementController, que necesita el
 // bridge ya montado. `startApp` es síncrono, así que basta con arrancarlo antes
@@ -23,3 +24,4 @@ await import('./chrome/torii-chrome.component');
 // navegación no se bloquea por una API dormida.
 void loadTrustReport();
 void loadCatalog();
+void loadDeploys();

@@ -59,6 +59,10 @@ lib-background {
   gap: 1ch;
 }
 
+.cell__head lib-status-dot {
+  flex: none;
+}
+
 .cell__kanji {
   font-family: var(--font-serif, serif);
   font-size: 1.5rem;
@@ -68,6 +72,8 @@ lib-background {
 
 .cell__name {
   margin: 0;
+  flex: 1;
+  min-width: 0;
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--text-primary, #222);
