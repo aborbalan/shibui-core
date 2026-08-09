@@ -36,28 +36,26 @@ export function toriiHomeTemplate(host: ToriiHome): TemplateResult {
 }
 
 function kpis(host: ToriiHome): TemplateResult {
+  // Mientras no ha llegado el dato se pinta un skeleton, no un cero: un cero
+  // es una afirmacion, y aqui todavia no sabemos nada.
   return html`
-    <lib-counter
-      .value=${host.componentCount}
-      label="Componentes"
-      size="lg"
-      play-on-visible
-    ></lib-counter>
-    <lib-counter
-      .value=${host.trustedCount}
-      label="Con sello de confianza"
-      size="lg"
-      tone="accent"
-      play-on-visible
-    ></lib-counter>
-    <lib-counter
-      .value=${host.frameworkCount}
-      label="Entornos que la consumen"
-      size="lg"
-      play-on-visible
-    ></lib-counter>
-    <lib-counter value="0" label="Dependencias de framework" size="lg" play-on-visible></lib-counter>
+    ${kpi(host.componentCount, 'Componentes')}
+    ${kpi(host.trustedCount, 'Con sello de confianza', 'accent')}
+    ${kpi(host.frameworkCount, 'Entornos que la consumen')}
+    ${kpi(0, 'Dependencias de framework')}
   `;
+}
+
+function kpi(value: number | null, label: string, tone = 'default'): TemplateResult {
+  return value === null
+    ? html`<lib-skeleton width="7rem" height="3.5rem"></lib-skeleton>`
+    : html`<lib-counter
+        .value=${value}
+        label=${label}
+        size="lg"
+        tone=${tone}
+        play-on-visible
+      ></lib-counter>`;
 }
 
 function cell(entry: EcosystemEntry): TemplateResult {

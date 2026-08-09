@@ -1,84 +1,3869 @@
 {
-  "generatedAt": "2026-06-28T09:00:00.000Z",
-  "total": 6,
-  "trusted": 3,
-  "untrusted": 3,
+  "_note": "Fixture de DESARROLLO. Reales: generatedAt, total, trusted, untrusted y la lista de tagName con su booleano trusted (snapshot del Trust Report de hanko del 2026-06-21, el mismo que usa packages/sukashi/demo). El desglose por capa y los findings son andamiaje determinista derivado de trusted, NO datos reales: existen para poder desarrollar la pagina de salud sin red. En produccion la app pide https://hanko-report.web.app/trust-report.json y esto no se usa.",
+  "generatedAt": "2026-06-21T20:03:17.753Z",
+  "total": 102,
+  "trusted": 4,
+  "untrusted": 98,
   "components": [
     {
-      "tagName": "lib-button",
-      "source": { "kind": "cem" },
+      "tagName": "lib-accordion-item",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-aspect-ratio",
+      "source": {
+        "kind": "cem"
+      },
       "trusted": true,
       "layers": [
-        { "layer": "floor", "status": "pass", "violations": 0, "warnings": 0 },
-        { "layer": "contract", "status": "pass", "violations": 0, "warnings": 0 },
-        { "layer": "a11y", "status": "pass", "violations": 0, "warnings": 1 },
-        { "layer": "resilience", "status": "pass", "violations": 0, "warnings": 0 }
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        }
       ],
       "findings": []
     },
     {
-      "tagName": "lib-card",
-      "source": { "kind": "cem" },
-      "trusted": true,
+      "tagName": "lib-avatar",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
       "layers": [
-        { "layer": "floor", "status": "pass", "violations": 0, "warnings": 0 },
-        { "layer": "contract", "status": "pass", "violations": 0, "warnings": 0 },
-        { "layer": "a11y", "status": "pass", "violations": 0, "warnings": 0 },
-        { "layer": "resilience", "status": "pass", "violations": 0, "warnings": 0 }
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
       ],
-      "findings": []
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-background",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
     },
     {
       "tagName": "lib-badge",
-      "source": { "kind": "cem" },
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-bento-item",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-burger",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-button",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-canvas",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-card",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-checkbox",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-close-button",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-code-block",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-color-scale",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-content-pillar",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-copy-button",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-display-heading",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-divider",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-eyebrow",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-icon",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-kbd",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-label",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-counter",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-button-liquid",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-magnetic",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-progress",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-progress-circle",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-quote",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-radio",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-rating",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-reading-progress",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-ripple",
+      "source": {
+        "kind": "cem"
+      },
       "trusted": true,
       "layers": [
-        { "layer": "floor", "status": "pass", "violations": 0, "warnings": 0 },
-        { "layer": "contract", "status": "pass", "violations": 0, "warnings": 0 },
-        { "layer": "a11y", "status": "pass", "violations": 0, "warnings": 0 },
-        { "layer": "resilience", "status": "skipped", "violations": 0, "warnings": 0 }
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        }
       ],
       "findings": []
     },
     {
-      "tagName": "lib-rating",
-      "source": { "kind": "cem" },
+      "tagName": "lib-select-option",
+      "source": {
+        "kind": "cem"
+      },
       "trusted": false,
       "layers": [
-        { "layer": "floor", "status": "pass", "violations": 0, "warnings": 0 },
-        { "layer": "contract", "status": "pass", "violations": 0, "warnings": 0 },
-        { "layer": "a11y", "status": "fail", "violations": 1, "warnings": 0 },
-        { "layer": "resilience", "status": "pass", "violations": 0, "warnings": 0 }
-      ],
-      "findings": ["a11y/name: el control no expone un nombre accesible"]
-    },
-    {
-      "tagName": "lib-bar-chart",
-      "source": { "kind": "cem" },
-      "trusted": false,
-      "layers": [
-        { "layer": "floor", "status": "pass", "violations": 0, "warnings": 0 },
-        { "layer": "contract", "status": "fail", "violations": 2, "warnings": 0 },
-        { "layer": "a11y", "status": "skipped", "violations": 0, "warnings": 0 },
-        { "layer": "resilience", "status": "fail", "violations": 1, "warnings": 0 }
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
       ],
       "findings": [
-        "contract/property: 'series' declarada en el CEM no se refleja en el shadow DOM",
-        "contract/reflect: 'mode' marcado reflect:true sin atributo observable",
-        "resilience/empty: montar sin datos lanza 'series.flatMap is not a function'"
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-skeleton",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-spacer",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-sparkline",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-spinner",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-status-dot",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-step",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-switch",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-text-glitch",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-text-list",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-tooltip",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-visually-hidden",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": true,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        }
+      ],
+      "findings": []
+    },
+    {
+      "tagName": "lib-breadcrumb",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-button-group",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-button-sep",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-button-split",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-checkbox-card",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-chip",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-color-picker",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-color-swatches",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-dropdown",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-editor-toolbar",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-empty-state",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-file-uploader",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-header",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-input",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-alert",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-metric-bar",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-modal",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-pagination",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-range-slider",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-segmented-control",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-select",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-tabs",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
       ]
     },
     {
       "tagName": "lib-tree-select",
-      "source": { "kind": "inferred" },
+      "source": {
+        "kind": "cem"
+      },
       "trusted": false,
       "layers": [
-        { "layer": "floor", "status": "pass", "violations": 0, "warnings": 0 },
-        { "layer": "contract", "status": "skipped", "violations": 0, "warnings": 0 },
-        { "layer": "a11y", "status": "fail", "violations": 1, "warnings": 0 },
-        { "layer": "resilience", "status": "skipped", "violations": 0, "warnings": 0 }
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
       ],
-      "findings": ["a11y/name: el combobox no tiene etiqueta asociada"]
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-accordion",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-bar-chart",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-bento-grid",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-bubble-chart",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-carousel",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-combo-chart",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-cursor-follower",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-data-table",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-dialog",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-drawer",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-file-browser",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-footer",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-funnel-chart",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-gadget-frame",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-gauge",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-git-graph",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-horizontal-scroll-section",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-line-chart",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-login-form",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-parallax-container",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-parallax-text-stack",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-pie-chart",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-radar-chart",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-scatter-chart",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-scatter-chart-3d",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-sidebar",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-stagger-container",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-stepper",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-text-editor",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-timeline-item",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-timeline",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-toast-manager",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": true,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        }
+      ],
+      "findings": []
+    },
+    {
+      "tagName": "lib-component-grid",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-glass-card",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
+    },
+    {
+      "tagName": "lib-spotlight-card",
+      "source": {
+        "kind": "cem"
+      },
+      "trusted": false,
+      "layers": [
+        {
+          "layer": "floor",
+          "status": "pass",
+          "violations": 0,
+          "warnings": 0
+        },
+        {
+          "layer": "contract",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "a11y",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        },
+        {
+          "layer": "resilience",
+          "status": "fail",
+          "violations": 1,
+          "warnings": 0
+        }
+      ],
+      "findings": [
+        "contract/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "a11y/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)",
+        "resilience/ (fixture de desarrollo: el detalle de hallazgos solo existe en el Trust Report real)"
+      ]
     }
   ]
 }
