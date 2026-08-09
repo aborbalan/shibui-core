@@ -225,6 +225,12 @@ jobs:
       - name: 🚀 Deploy CV App
         if: needs.build-cv.result == 'success'
         run: pnpm exec firebase deploy --only hosting:cv --non-interactive --project lib-ui-b67c5
-      # NOTA: el deploy de Open Cells está deshabilitado a propósito mientras la app
-      # está en desarrollo por hitos. build-torii sigue corriendo (valida el build);
-      # solo se omite el despliegue a Firebase. Reactivar cuando la app esté lista.
+      - name: 📥 Download torii dist artifact
+        if: needs.build-torii.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: torii-dist-${{ github.run_id }}
+          path: apps/app-torii/dist/
+      - name: 🚀 Deploy torii
+        if: needs.build-torii.result == 'success'
+        run: pnpm exec firebase deploy --only hosting:torii --non-interactive --project lib-ui-b67c5
