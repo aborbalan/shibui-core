@@ -1,46 +1,87 @@
-# app-opencells — Contexto operativo para Claude
+# app-torii — Contexto operativo para Claude
 
-> Este fichero se auto-carga cuando se trabaja en `apps/app-opencells/`. Es la
-> **puerta de entrada** para cualquier sesión nueva. Léelo entero antes de actuar.
+> Se auto-carga al trabajar en `apps/app-torii/`.
 
 ## Qué es esto
 
-Un **proyecto guiado para aprender Open Cells** (framework SPA de BBVA: `startApp` +
-routing + page controllers + **channels** pub/sub RxJS), construido como producto real:
-un **cockpit** que agrega la salud del monorepo shibui leyendo el `trust-report.json` de
-**hanko** (`https://hanko-report.web.app/trust-report.json`). Es consumidor **nativo** de
-`@shibui-ui/ui` (Lit, sin wrapper).
+**torii 鳥居** — el torii es la puerta del recinto; esta app es la puerta al ecosistema
+shibui. Un hub que presenta las propiedades desplegadas (Storybook, los tres showcases
+espejo, el CV, las docs de la API, hanko, sukashi, la app de escritorio), agrega datos
+vivos y muestra el estado de cada deploy.
 
-## Modo de trabajo — NO romperlo
+Construida con **Open Cells** (framework SPA de BBVA: `startApp` + routing + page
+controllers + channels pub/sub). Es el consumidor **nativo** de `@shibui-ui/ui`: usa los
+web components directamente, sin wrapper, porque Open Cells y la librería son ambos Lit.
 
-- **Claude = tutor por hitos.** En cada hito: explico el concepto → propongo el ejercicio
-  con criterios de aceptación → **el usuario escribe el código** → reviso y corrijo.
-- **Claude NO escribe el código Open Cells de la app.** El usuario escribe `startApp`,
-  rutas, page controllers, channels y los widgets con `@shibui-ui/ui`. Claude solo hace
-  **plomería** (workspace, build, CI, deploy, fixtures, tipos/tooling) y **review**.
-- **Learning in public:** cada hito cierra con un **post de LinkedIn** que redacta el
-  **usuario** (Claude lo revisa) en `docs/linkedin/hito-N.md`.
+> Esta app fue `app-opencells`, un proyecto guiado de aprendizaje con un pacto de tutor
+> («Claude no escribe el código Open Cells»). **Ese pacto está derogado**: torii se escribe
+> entera. El currículo se conserva en `docs/opencells-curriculum/` para la futura app de
+> aprendizaje, que podrá usar torii como referencia.
 
-## Al empezar una sesión — leer en este orden
+## Open Cells — convenciones que hay que respetar
 
-1. **`docs/HANDOFF.md`** — estado vivo: qué está hecho, decisiones, y el **siguiente
-   ejercicio** ya detallado. Es la fuente de verdad de "dónde estamos".
-2. **`docs/CURRICULUM.md`** — el plan completo de los 6 hitos y el protocolo de continuidad.
-3. Memoria del proyecto: `project_opencells.md`.
+Fuente de verdad: el `CLAUDE.md` del fork propio, **`aborbalan/open-cells`**. No BBVA.
+Estas cinco son las que se rompen por intuición:
+
+- **Se navega por nombre de ruta, nunca por path**: `navigate('salud')`. Dos rutas con el
+  mismo nombre se pisan.
+- **La página 404 es la ruta con `notFound: true`.** Sin una, un path desconocido no
+  renderiza nada.
+- **El estado va por channels**, atados con `static inbounds` / `static outbounds`. Los
+  channels reproducen su último valor, así que el orden de suscripción da igual.
+- **Los `inbounds` son getters en runtime**, así que TypeScript no los ve en la clase:
+  hay que declararlos (`declare _trustReport: TrustReport | null;`) o el build falla.
+- **Los nodos de página se reutilizan entre visitas.** `firstUpdated` no vuelve a correr:
+  el trabajo por visita va en `onPageEnter`, y la reacción a params en `willUpdate`.
+
+### El MCP server del fork
+
+`aborbalan/open-cells` tiene un `packages/mcp-server` con `open_cells_api_reference`,
+`open_cells_docs_search`, `open_cells_list_routes`, `open_cells_validate_routes`,
+`open_cells_list_channels` y `open_cells_scaffold_page`. **Preferirlo a grepear** — y
+`validate_routes` + `list_channels` son la verificación de esta app: cazan rutas duplicadas,
+`action` que no resuelve, falta de 404 y channels huérfanos.
+
+No está publicado en npm (ficha 6A del backlog del fork), así que se usa desde un checkout:
+`npm run build -w @open-cells/mcp-server`, apuntando `project_root` a `apps/app-torii`.
+
+### Nada va a `BBVA/open-cells`
+
+Ni PR, ni issue, ni comentario. Todo, incluidos los defectos que sean suyos, va a
+`aborbalan/open-cells`. Es la norma del fork y aplica también desde aquí.
+
+## Estructura
+
+| Ruta | Qué es |
+|---|---|
+| `index.html` | `<torii-chrome>` (shell persistente) + `<app-index id="app-content">` (nodo del router) |
+| `src/main.ts` | `startApp` + arranque de los loaders |
+| `src/router/routes.ts` | Mapa de rutas (con nombre) |
+| `src/chrome/` | Header, footer y switcher de katachi — fuera del nodo del router |
+| `src/pages/` | Page controllers |
+| `src/data/` | Manifiesto del ecosistema, katachi, tipos y loaders |
+
+Convención de ficheros, igual que la librería: `x.component.ts` + `x.html.ts` + `x.css`
++ `x.types.ts`.
+
+## Datos
+
+- **Trust Report de hanko** — dev: `src/data/trust-report.fixture.json`; prod:
+  `https://hanko-report.web.app/trust-report.json` (tiene CORS `*`).
+- **Catálogo de componentes** — `{VITE_API_URL}/components`. Ojo al *cold start* de Render.
+- **Estado de deploys** — sonda propia. Firebase Hosting no manda CORS, así que los sitios
+  se comprueban con `fetch(mode:'no-cors')`: eso dice *alcanzable*, no *200*. No pintar como
+  health check lo que no lo es.
+
+## Arranque
+
+```bash
+pnpm install
+pnpm build:shibui   # la app consume el dist/ de la librería
+pnpm start:torii
+```
 
 ## Reglas duras
 
-- **No adelantes el código del usuario.** Si el siguiente paso es escribir Open Cells,
-  explica y espera; no lo implementes tú.
-- **Cierre de hito = 3 pasos:** revisar código → revisar post → reescribir `HANDOFF.md`
-  (con el siguiente ejercicio) y actualizar la memoria. No empieces un hito sin cerrar el
-  handoff del anterior.
 - **GitFlow absoluto:** ramas desde `develop`, merge `--no-ff`, `main` solo vía PR.
-- **Entorno Windows:** `pnpm install` / `pnpm start:opencells` desde el **repo principal**
-  (en worktree cuelga). Antes de arrancar: `pnpm build:shibui`.
-
-## Gotcha conocido
-
-`@open-cells/core` publica su API de runtime **sin tipos** (`startApp`, `publish`, … no
-tienen `.d.ts`). Workaround: `src/open-cells.d.ts` (ambient `declare module`). Ver
-`docs/CURRICULUM.md` §Gotchas. (Issue upstream: pendiente de abrir.)
+- Antes de dar por bueno markup `lib-*`, pasarlo por `validate_html` del MCP `shibui-cem`.

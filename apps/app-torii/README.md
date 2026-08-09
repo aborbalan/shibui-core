@@ -1,39 +1,68 @@
-# app-opencells — Cockpit del ecosistema
+# torii 鳥居 — hub del ecosistema shibui
 
-App de **aprendizaje de [Open Cells](https://www.opencells.dev)** (framework SPA de BBVA:
-`startApp` + routing + page controllers + **channels** pub/sub) construida como un producto
-real: un **cockpit** que agrega la salud del monorepo shibui a partir del Trust Report de
-**hanko**.
+> El torii es la puerta del recinto. Esta es la puerta al ecosistema.
 
-Es un consumidor **nativo** de `@shibui-ui/ui`: usa los web components (`<lib-button>`, …)
-directamente, sin wrapper, porque Open Cells y la librería son ambos Lit.
+Las propiedades de shibui —Storybook, los tres showcases espejo, el CV, las docs de la API,
+hanko, sukashi, la app de escritorio— viven cada una en su sitio. torii las presenta juntas,
+agrega los datos que publican y muestra cuáles responden.
 
-## Cómo se trabaja aquí
+Construida con **[Open Cells](https://www.opencells.dev)** (SPA de BBVA: `startApp` +
+routing + page controllers + channels pub/sub). Es el consumidor **nativo** de
+`@shibui-ui/ui`: web components directamente, sin wrapper, porque Open Cells y la librería
+son ambos Lit.
 
-Proyecto guiado por hitos (ver el `HANDOFF.md` para el estado vivo y el siguiente ejercicio).
-La **plomería** (workspace, build, deploy, fixtures) está hecha; el **código Open Cells**
-(rutas, páginas, channels) se escribe hito a hito.
+## Arranque
 
 ```bash
-# desde la raíz del monorepo (repo principal en Windows)
 pnpm install
-pnpm build:shibui      # @shibui-ui/ui necesita su dist para los tipos
-pnpm start:opencells   # dev server (Vite)
+pnpm build:shibui      # @shibui-ui/ui necesita su dist
+pnpm start:torii
 ```
+
+## Rutas
+
+| Nombre | Path | Qué muestra |
+|---|---|---|
+| `home` | `/` | Las propiedades del ecosistema en bento, con KPIs vivos |
+| `salud` | `/salud` | El Trust Report de hanko en detalle |
+| `deploys` | `/deploys` | Qué sitios responden |
+| `not-found` | `/404` | `notFound: true` |
+
+La navegación es **por nombre**, nunca por path: `navigate('salud')`.
 
 ## Estructura
 
 | Ruta | Qué es |
 |---|---|
-| `index.html` | Monta `<app-index id="app-content">` (nodo del router) |
-| `src/main.ts` | Plomería: registra `@shibui-ui/ui` + tokens. **El Hito 1 empieza aquí.** |
-| `src/router/routes.ts` | Mapa de rutas de Open Cells |
-| `src/pages/` | Páginas (page controllers LitElement) |
-| `src/data/` | Tipos + fixture del Trust Report |
-| `docs/HANDOFF.md` | Estado vivo del proyecto (se actualiza cada hito) |
-| `docs/linkedin/` | Posts de la serie "aprendiendo Open Cells" |
+| `index.html` | `<torii-chrome>` + `<app-index id="app-content">` (nodo del router) |
+| `src/main.ts` | `startApp` + arranque de loaders |
+| `src/router/routes.ts` | Mapa de rutas |
+| `src/chrome/` | Shell persistente: header, footer, switcher de katachi |
+| `src/pages/` | Page controllers |
+| `src/data/` | Manifiesto del ecosistema, katachi, tipos y loaders |
 
 ## Datos
 
 - **Dev**: fixture local `src/data/trust-report.fixture.json`.
-- **Prod**: `https://hanko-report.web.app/trust-report.json` (Trust Report real).
+- **Prod**: `https://hanko-report.web.app/trust-report.json` (Trust Report real) y el
+  catálogo de `{VITE_API_URL}/components`.
+- **Estado de deploys**: Firebase Hosting no manda cabeceras CORS, así que la sonda usa
+  `fetch(mode:'no-cors')` para los sitios de Firebase. Eso dice **alcanzable**, no *200*:
+  la UI lo etiqueta como lo que es.
+
+## Deploy
+
+Firebase Hosting, target `torii` → **shibui-torii.web.app**.
+
+```bash
+pnpm --filter app-torii deploy
+```
+
+## Sobre Open Cells
+
+Las convenciones del framework (navegación por nombre, `notFound`, `inbounds` como getters,
+reutilización de nodos de página) están en `CLAUDE.md`, y su fuente es el fork propio
+**`aborbalan/open-cells`**, que además trae un servidor MCP para analizar rutas y channels.
+
+El currículo del antiguo proyecto guiado de aprendizaje se conserva en
+[`docs/opencells-curriculum/`](../../docs/opencells-curriculum/).
