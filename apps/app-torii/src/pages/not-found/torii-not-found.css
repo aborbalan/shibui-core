@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  padding: clamp(4rem, 14vh, 9rem) var(--space-6, 1.5rem);
+  text-align: center;
+}
+
+.kanji {
+  margin: 0 0 var(--space-6, 1.5rem);
+  font-family: var(--font-serif, serif);
+  font-size: clamp(3rem, 12vw, 6rem);
+  line-height: 1;
+  color: var(--text-muted, #999);
+}
+
+lib-button {
+  margin-top: var(--space-6, 1.5rem);
+}

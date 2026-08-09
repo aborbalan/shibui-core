@@ -1,0 +1,4 @@
+:host {
+  display: block;
+  padding: clamp(3rem, 10vh, 6rem) var(--space-6, 1.5rem) var(--space-16, 4rem);
+}

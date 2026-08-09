@@ -1,17 +1,46 @@
-// ─────────────────────────────────────────────────────────────────────────
-// HITO 1 — define aquí el mapa de rutas de Open Cells.
-//
-// Cada ruta es un objeto: { path, name, component, action }
-//   - path:      la URL (p.ej. '/')
-//   - name:      identificador interno de la ruta
-//   - component: el tag del custom element de la página (p.ej. 'home-page')
-//   - action:    función async que hace el import dinámico (lazy) de la página
-//                → await import('../pages/home/home-page.component')  (sin extensión)
-//
-// TODO(H1.3): añade la ruta '/' → 'home-page'.
-// Más adelante (Hito 2) añadiremos '/hanko' y '/deploys'.
-// ─────────────────────────────────────────────────────────────────────────
+import type { RouteDefinition } from '@open-cells/core/types';
 
-export const routes: object[] = [
-  // TODO(H1): tu primera ruta aquí
+/**
+ * Mapa de rutas de torii.
+ *
+ * Dos cosas que Open Cells no perdona:
+ *  - Se navega por `name`, nunca por `path`. Dos rutas con el mismo nombre se
+ *    pisan la una a la otra.
+ *  - La 404 es la ruta con `notFound: true`. Sin ella, un path desconocido no
+ *    renderiza nada — ni error, ni página en blanco con aviso: nada.
+ */
+export const routes: RouteDefinition[] = [
+  {
+    path: '/',
+    name: 'home',
+    component: 'torii-home',
+    action: async () => {
+      await import('../pages/home/torii-home.component');
+    },
+  },
+  {
+    path: '/salud',
+    name: 'salud',
+    component: 'torii-health',
+    action: async () => {
+      await import('../pages/health/torii-health.component');
+    },
+  },
+  {
+    path: '/deploys',
+    name: 'deploys',
+    component: 'torii-deploys',
+    action: async () => {
+      await import('../pages/deploys/torii-deploys.component');
+    },
+  },
+  {
+    path: '/404',
+    name: 'not-found',
+    notFound: true,
+    component: 'torii-not-found',
+    action: async () => {
+      await import('../pages/not-found/torii-not-found.component');
+    },
+  },
 ];
