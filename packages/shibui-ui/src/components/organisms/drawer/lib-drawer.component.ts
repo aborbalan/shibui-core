@@ -91,11 +91,18 @@ export class LibDrawer extends LitElement {
     } else {
       document.body.style.overflow = '';
     }
+  }
 
-    // Sync aria-label si no se pasó drawer-label explícito
-    if (!this.drawerLabel) {
-      this.drawerLabel = this.label || 'Panel';
-    }
+  /**
+   * Aria-label efectivo: el explícito, si no el título, si no un genérico.
+   *
+   * Se deriva al renderizar en lugar de escribir `drawerLabel` desde
+   * `updated()`. Aquello asignaba una propiedad reactiva después de terminar
+   * un ciclo, lo que encadenaba un render extra en cada apertura y hacía saltar
+   * el aviso `change-in-update` de Lit en la consola del consumidor.
+   */
+  get effectiveDrawerLabel(): string {
+    return this.drawerLabel || this.label || 'Panel';
   }
 
   /* ════════════════════════════════════════
