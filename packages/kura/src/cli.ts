@@ -32,9 +32,11 @@ Uso:
 
 Comandos:
   targets            Lista los targets de Hosting y el estado de su build local
+  status             Añade qué hay publicado en cada sitio y si falta desplegar
 
 Opciones:
   --format <f>       table | json | ndjson  (por defecto: table con TTY, ndjson sin él)
+  --target <t>       Restringe la salida a un target (solo status)
   --root <ruta>      Raíz del repo (por defecto: se busca hacia arriba desde el cwd)
   -h, --help         Esta ayuda
 
@@ -48,11 +50,17 @@ Sin él, pnpm escribe su banner en stdout y rompe el NDJSON.`;
 
 const OPTIONS = {
   format: { type: 'string' },
+  target: { type: 'string' },
   root: { type: 'string' },
   help: { type: 'boolean', short: 'h' },
 } as const;
 
-type Values = { format?: string | undefined; root?: string | undefined; help?: boolean | undefined };
+type Values = {
+  format?: string | undefined;
+  target?: string | undefined;
+  root?: string | undefined;
+  help?: boolean | undefined;
+};
 
 function parse(args: string[]): { values: Values; positionals: string[] } {
   try {
@@ -75,6 +83,18 @@ async function dispatch(command: string, values: Values): Promise<unknown> {
     case 'targets': {
       const root = values.root ?? findRepoRoot(process.cwd());
       return reportTargets(readHostingConfig(root));
+    }
+    case 'status': {
+      const root = values.root ?? findRepoRoot(process.cwd());
+      const config = readHostingConfig(root);
+      const local = reportTargets(config);
+      // Import diferido: adapter.ts arrastra node:child_process y la resolución
+      // de firebase-tools, y ningún comando sin red debe pagar eso.
+      const [{ createFirebaseAdapter }, { reportStatus }] = await Promise.all([
+        import('./adapter'),
+        import('./commands/status'),
+      ]);
+      return reportStatus(config, local, createFirebaseAdapter(), values.target);
     }
     default:
       throw new KuraError('USAGE', `Comando desconocido: ${command}`, 'Comandos disponibles: targets');

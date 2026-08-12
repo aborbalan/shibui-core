@@ -129,3 +129,41 @@ Seguir con el plan completo, con tres ajustes:
    de F1: `targets` debe responder en ~60 ms, no en un segundo.
 3. Cablear `firebase mcp` en `.mcp.json` sale del alcance de `kura`. No aporta nada a
    Hosting; si se añade, será por Firestore o Auth y con su propia justificación.
+
+---
+
+# Corrección (F2) — el punto 1 era erróneo
+
+Al implementar F2 se cayó la premisa central de este documento. Se deja escrita en vez de
+reescribir la historia, porque el error tiene una lección.
+
+**La API programática solo tolera dos invocaciones por proceso.** A partir de la tercera
+lanza, desde dentro de `commander@5.1.0`:
+
+```
+TypeError: Cannot read properties of undefined (reading 'indexOf')
+  at new Option            (commander/index.js:23:27)
+  at Command.register      (firebase-tools/lib/command.js:77:22)
+  at load                  (firebase-tools/lib/commands/index.js:9:17)
+```
+
+Los comandos se registran de forma **perezosa en un programa de `commander` compartido**, y
+el registro repetido corrompe ese estado global. Medido sobre los nueve sitios: en serie
+funcionan las dos primeras llamadas y fallan las siete restantes; lanzadas en paralelo
+fallan las nueve en 1 ms, es decir, antes de tocar la red.
+
+Para un CLI que consulta nueve sitios, eso lo hace inservible.
+
+**Lo que F0 no vio y por qué.** La sonda de F0 se limitó a inspeccionar la FORMA del objeto
+exportado. Comprobó que `hosting.channel.list` era una función, no que se pudiera llamar dos
+veces. Un reconocimiento que solo mira firmas no distingue una API usable de una que se
+autodestruye al tercer uso: hay que ejercitarla.
+
+**Y el fallback sí existía.** Este documento concluyó que no había salida por subproceso
+porque faltaba `node_modules/.bin` en la raíz. Ese defecto se reparó después con un
+`pnpm install --frozen-lockfile`, así que la alternativa que aquí se daba por muerta es
+justo la que F2 acabó usando. Un hallazgo de entorno no es un hallazgo de arquitectura.
+
+**Decisión vigente:** el adaptador invoca el entry JS con `process.execPath` (sin shell, sin
+depender de `.bin`) y lee el sobre `--json`. Se paga ~2,7-4 s por llamada, mitigado con un
+límite de cuatro consultas en paralelo. Detalle en la cabecera de `src/adapter.ts`.
