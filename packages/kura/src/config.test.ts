@@ -50,9 +50,25 @@ describe('lectura de la configuración de hosting', () => {
     const config = readHostingConfig(fixture(RC, FIREBASE));
     expect(config.project).toBe('lib-ui-b67c5');
     expect(config.targets).toEqual([
-      { target: 'cv', sites: ['shibui-cv'], publicDir: 'apps/app-cv/dist/app-cv/browser' },
-      { target: 'sukashi', sites: ['sukashi'], publicDir: 'packages/sukashi/demo/dist' },
+      { target: 'cv', sites: ['shibui-cv'], publicDir: 'apps/app-cv/dist/app-cv/browser', spa: false },
+      { target: 'sukashi', sites: ['sukashi'], publicDir: 'packages/sukashi/demo/dist', spa: false },
     ]);
+  });
+
+  it('detecta la reescritura a index.html en sus dos formas', () => {
+    const conRewrite = {
+      hosting: [
+        { target: 'cv', public: 'dist', rewrites: [{ source: '**', destination: '/index.html' }] },
+        { target: 'sukashi', public: 'dist', rewrites: [{ glob: '**', path: '/index.html' }] },
+      ],
+    };
+    const config = readHostingConfig(fixture(RC, conRewrite));
+    expect(config.targets.map((target) => target.spa)).toEqual([true, true]);
+  });
+
+  it('no marca como SPA una reescritura que no apunta al index', () => {
+    const otra = { hosting: [{ target: 'cv', public: 'dist', rewrites: [{ source: '/api/**', destination: '/api.html' }] }] };
+    expect(readHostingConfig(fixture(RC, otra)).targets[0]?.spa).toBe(false);
   });
 
   it('acepta hosting como objeto suelto, no solo como array', () => {

@@ -33,10 +33,12 @@ Uso:
 Comandos:
   targets            Lista los targets de Hosting y el estado de su build local
   status             Añade qué hay publicado en cada sitio y si falta desplegar
+  verify             Comprueba por HTTP lo que se está sirviendo (sin credenciales)
 
 Opciones:
   --format <f>       table | json | ndjson  (por defecto: table con TTY, ndjson sin él)
-  --target <t>       Restringe la salida a un target (solo status)
+  --target <t>       Restringe la salida a un target
+  --expect-origin <s>  Exige que el bundle servido contenga esa cadena (solo verify)
   --root <ruta>      Raíz del repo (por defecto: se busca hacia arriba desde el cwd)
   -h, --help         Esta ayuda
 
@@ -51,6 +53,7 @@ Sin él, pnpm escribe su banner en stdout y rompe el NDJSON.`;
 const OPTIONS = {
   format: { type: 'string' },
   target: { type: 'string' },
+  'expect-origin': { type: 'string' },
   root: { type: 'string' },
   help: { type: 'boolean', short: 'h' },
 } as const;
@@ -58,6 +61,7 @@ const OPTIONS = {
 type Values = {
   format?: string | undefined;
   target?: string | undefined;
+  'expect-origin'?: string | undefined;
   root?: string | undefined;
   help?: boolean | undefined;
 };
@@ -78,11 +82,17 @@ function resolveFormat(requested: string | undefined): Format {
   return requested;
 }
 
-async function dispatch(command: string, values: Values): Promise<unknown> {
+interface CommandResult {
+  data: unknown;
+  /** El comando produjo un informe con comprobaciones fallidas: exit 6. */
+  failed?: boolean;
+}
+
+async function dispatch(command: string, values: Values): Promise<CommandResult> {
   switch (command) {
     case 'targets': {
       const root = values.root ?? findRepoRoot(process.cwd());
-      return reportTargets(readHostingConfig(root));
+      return { data: reportTargets(readHostingConfig(root)) };
     }
     case 'status': {
       const root = values.root ?? findRepoRoot(process.cwd());
@@ -94,16 +104,30 @@ async function dispatch(command: string, values: Values): Promise<unknown> {
         import('./adapter'),
         import('./commands/status'),
       ]);
-      return reportStatus(config, local, createFirebaseAdapter(), values.target);
+      return { data: await reportStatus(config, local, createFirebaseAdapter(), values.target) };
+    }
+    case 'verify': {
+      const root = values.root ?? findRepoRoot(process.cwd());
+      const config = readHostingConfig(root);
+      const [{ createHttpClient }, { reportVerify }] = await Promise.all([
+        import('./http'),
+        import('./commands/verify'),
+      ]);
+      const rows = await reportVerify(config, createHttpClient(), {
+        onlyTarget: values.target,
+        expectOrigin: values['expect-origin'],
+      });
+      return { data: rows, failed: rows.some((row) => !row.ok) };
     }
     default:
-      throw new KuraError('USAGE', `Comando desconocido: ${command}`, 'Comandos disponibles: targets');
+      throw new KuraError('USAGE', `Comando desconocido: ${command}`, 'Comandos disponibles: targets · status · verify');
   }
 }
 
 async function main(): Promise<void> {
   let format: Format = defaultFormat(process.stdout.isTTY === true);
   let envelope: Envelope<unknown>;
+  let verificationFailed = false;
 
   try {
     const { values, positionals } = parse(process.argv.slice(2));
@@ -122,15 +146,20 @@ async function main(): Promise<void> {
       return;
     }
 
-    envelope = ok(await dispatch(command, values));
+    const result = await dispatch(command, values);
+    envelope = ok(result.data);
+    verificationFailed = result.failed === true;
   } catch (err) {
     envelope = fail(err);
   }
 
   const output = render(envelope, format);
   if (output !== '') process.stdout.write(`${output}\n`);
+  // Un informe de verificación con filas en rojo es un ÉXITO del comando (el
+  // sobre va con ok:true y los datos completos) pero un FALLO del sistema
+  // verificado, y eso se comunica por el código de salida.
   // exitCode en vez de process.exit(): evita truncar stdout en tuberías de Windows.
-  process.exitCode = exitCodeFor(envelope);
+  process.exitCode = verificationFailed ? EXIT.verification : exitCodeFor(envelope);
 }
 
 await main();

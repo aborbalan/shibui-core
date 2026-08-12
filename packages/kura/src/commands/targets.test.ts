@@ -35,10 +35,10 @@ function fixtureRoot(): HostingConfig {
     root,
     project: 'lib-ui-b67c5',
     targets: [
-      { target: 'ausente', sites: ['a'], publicDir: 'dist-que-no-existe' },
-      { target: 'vacio', sites: ['b'], publicDir: 'dist-vacio' },
-      { target: 'sin-index', sites: ['c'], publicDir: 'dist-sin-index' },
-      { target: 'listo', sites: ['d'], publicDir: 'dist-listo' },
+      { target: 'ausente', sites: ['a'], publicDir: 'dist-que-no-existe', spa: true },
+      { target: 'vacio', sites: ['b'], publicDir: 'dist-vacio', spa: true },
+      { target: 'sin-index', sites: ['c'], publicDir: 'dist-sin-index', spa: true },
+      { target: 'listo', sites: ['d'], publicDir: 'dist-listo', spa: true },
     ],
   };
 }

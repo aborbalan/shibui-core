@@ -25,6 +25,12 @@ export interface HostingTarget {
   sites: string[];
   /** Directorio servido, relativo a la raíz del repo. */
   publicDir: string;
+  /**
+   * El target reescribe cualquier ruta a /index.html, es decir, es una SPA.
+   * Storybook, la API y el informe de hanko no lo hacen, y comprobarles el
+   * enrutado de cliente daría un fallo que no lo es.
+   */
+  spa: boolean;
 }
 
 export interface HostingConfig {
@@ -126,13 +132,28 @@ function readTargets(firebaseJson: unknown, sitesByTarget: Map<string, string[]>
       );
     }
 
-    targets.push({ target, sites, publicDir });
+    targets.push({ target, sites, publicDir, spa: rewritesToIndex(entry['rewrites']) });
   }
 
   if (targets.length === 0) {
     throw new KuraError('PRECONDITION', 'firebase.json no declara ningún target de hosting');
   }
   return targets;
+}
+
+/**
+ * ¿Hay una regla que mande todo a /index.html? En firebase.json las reglas
+ * son `source`/`destination`; la API de Hosting devuelve las mismas como
+ * `glob`/`path`, así que se aceptan las dos formas.
+ */
+function rewritesToIndex(value: unknown): boolean {
+  if (!Array.isArray(value)) return false;
+  return (value as unknown[]).some((rule) => {
+    if (!isRecord(rule)) return false;
+    const source = rule['source'] ?? rule['glob'];
+    const destination = rule['destination'] ?? rule['path'];
+    return source === '**' && typeof destination === 'string' && destination.endsWith('/index.html');
+  });
 }
 
 function readJson(path: string): unknown {
