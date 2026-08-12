@@ -274,8 +274,6 @@ jobs:
         with:
           name: storybook-static-${{ github.run_id }}
           path: packages/shibui-ui/storybook-static/
-      - name: 🔧 Copy .firebaserc to config dir
-        run: cp .firebaserc .config/.firebaserc
       - name: 🚀 Deploy Storybook
         run: pnpm exec firebase deploy --only hosting:storybook --non-interactive --project lib-ui-b67c5
 
@@ -351,8 +349,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: pnpm --filter @shibui-ui/hanko issues
-      - name: 🔧 Copy .firebaserc to config dir
-        run: cp .firebaserc .config/.firebaserc
       - name: 🚀 Deploy Trust Report → hanko-report.web.app
         run: pnpm exec firebase deploy --only hosting:hanko-report --non-interactive --project lib-ui-b67c5
       - name: 判 Gate de regresión (4 capas) — falla si un sello del baseline se cae
