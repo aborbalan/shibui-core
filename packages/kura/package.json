@@ -1,0 +1,19 @@
+{
+  "name": "@shibui-ui/kura",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "蔵 — CLI de Firebase Hosting para el ecosistema shibui, usable por humano y por agente.",
+  "scripts": {
+    "kura": "tsx src/cli.ts",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3",
+    "vitest": "4.1.10"
+  }
+}
