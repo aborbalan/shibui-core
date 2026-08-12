@@ -62,6 +62,8 @@ export interface DeployResult {
 export interface HostingAdapter {
   listSites(project: string): Promise<HostingSite[]>;
   liveRelease(project: string, site: string): Promise<LiveRelease | null>;
+  /** Aprovisiona un sitio nuevo en el proyecto. Aditivo y reversible con hosting:sites:delete. */
+  createSite(project: string, site: string): Promise<HostingSite>;
   /** Publica en un canal de preview. `cwd` debe ser la raíz: firebase lee firebase.json de ahí. */
   deployChannel(project: string, target: string, channel: string, cwd: string): Promise<DeployResult>;
   deployLive(project: string, target: string, site: string, cwd: string): Promise<DeployResult>;
@@ -92,12 +94,19 @@ export function parseSites(payload: unknown): HostingSite[] {
     throw shapeChanged('hosting:sites:list', 'se esperaba un objeto con la clave `sites`');
   }
 
-  return (sites as unknown[]).map((entry) => {
-    if (!isRecord(entry)) throw shapeChanged('hosting:sites:list', 'una entrada de `sites` no es un objeto');
-    const name = entry['name'];
-    if (typeof name !== 'string') throw shapeChanged('hosting:sites:list', 'falta `name` en una entrada');
-    return { site: lastSegment(name), url: asString(entry['defaultUrl']) ?? '' };
-  });
+  return (sites as unknown[]).map((entry) => parseSiteEntry(entry, 'hosting:sites:list'));
+}
+
+/** `hosting:sites:create` devuelve el recurso Site suelto, con la misma forma. */
+export function parseSite(payload: unknown): HostingSite {
+  return parseSiteEntry(payload, 'hosting:sites:create');
+}
+
+function parseSiteEntry(entry: unknown, api: string): HostingSite {
+  if (!isRecord(entry)) throw shapeChanged(api, 'la entrada de sitio no es un objeto');
+  const name = entry['name'];
+  if (typeof name !== 'string') throw shapeChanged(api, 'falta `name` en la entrada de sitio');
+  return { site: lastSegment(name), url: asString(entry['defaultUrl']) ?? '' };
 }
 
 export function parseLiveRelease(payload: unknown): LiveRelease | null {
@@ -170,6 +179,10 @@ export function createFirebaseAdapter(): HostingAdapter {
         `leer los canales de ${site}`,
       );
       return parseLiveRelease(result);
+    },
+    async createSite(project, site) {
+      const result = await runFirebase(['hosting:sites:create', site, '--project', project], `crear el sitio ${site}`);
+      return parseSite(result);
     },
     async deployChannel(project, target, channel, cwd) {
       const result = await runFirebase(

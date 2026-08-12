@@ -24,6 +24,7 @@ import { exitCodeFor, fail, ok, EXIT, KuraError, type Envelope } from './envelop
 import { defaultFormat, isFormat, render, FORMATS, type Format } from './format';
 import { findRepoRoot, readHostingConfig } from './config';
 import { reportTargets } from './commands/targets';
+import { PARSE_OPTIONS, helpSpec } from './spec';
 
 const USAGE = `kura — CLI de Firebase Hosting del ecosistema shibui
 
@@ -34,6 +35,8 @@ Comandos:
   targets            Lista los targets de Hosting y el estado de su build local
   status             Añade qué hay publicado en cada sitio y si falta desplegar
   verify             Comprueba por HTTP lo que se está sirviendo (sin credenciales)
+  sites              Inventario de sitios: declarados sin crear y huérfanos
+  sites create       Aprovisiona los sitios que faltan. Simula sin --execute
   deploy             Publica un target. Simula por defecto; preview salvo --live
 
 Opciones:
@@ -41,7 +44,12 @@ Opciones:
   --target <t>       Restringe la salida a un target (obligatorio en deploy)
   --expect-origin <s>  Exige que el bundle servido contenga esa cadena
   --root <ruta>      Raíz del repo (por defecto: se busca hacia arriba desde el cwd)
-  -h, --help         Esta ayuda
+  -h, --help         Esta ayuda. Con --format json|ndjson devuelve el spec maquinable
+
+Opciones de sites create:
+  --site <id>        Sitio concreto a crear
+  --missing          Crea todo lo que .firebaserc declara y no existe
+  --execute          Crea de verdad. Sin esto solo simula
 
 Opciones de deploy:
   --execute          Sube de verdad. Sin esto solo simula y cuenta qué haría
@@ -60,22 +68,12 @@ Desde la raíz del monorepo, usa --silent:
   pnpm --silent kura targets
 Sin él, pnpm escribe su banner en stdout y rompe el NDJSON.`;
 
-const OPTIONS = {
-  format: { type: 'string' },
-  target: { type: 'string' },
-  'expect-origin': { type: 'string' },
-  channel: { type: 'string' },
-  live: { type: 'boolean' },
-  confirm: { type: 'string' },
-  execute: { type: 'boolean' },
-  root: { type: 'string' },
-  help: { type: 'boolean', short: 'h' },
-} as const;
-
 type Values = {
   format?: string | undefined;
   target?: string | undefined;
   'expect-origin'?: string | undefined;
+  site?: string | undefined;
+  missing?: boolean | undefined;
   channel?: string | undefined;
   live?: boolean | undefined;
   confirm?: string | undefined;
@@ -86,7 +84,9 @@ type Values = {
 
 function parse(args: string[]): { values: Values; positionals: string[] } {
   try {
-    return parseArgs({ args, options: OPTIONS, allowPositionals: true, strict: true });
+    // Las opciones salen del spec (F5), no de una lista paralela que pueda divergir.
+    const parsed = parseArgs({ args, options: PARSE_OPTIONS, allowPositionals: true, strict: true });
+    return { values: parsed.values as Values, positionals: parsed.positionals };
   } catch (err) {
     throw new KuraError('USAGE', err instanceof Error ? err.message : String(err), 'Prueba: kura --help');
   }
@@ -106,7 +106,8 @@ interface CommandResult {
   failed?: boolean;
 }
 
-async function dispatch(command: string, values: Values): Promise<CommandResult> {
+async function dispatch(positionals: readonly string[], values: Values): Promise<CommandResult> {
+  const command = positionals[0] === 'sites' ? `sites ${positionals[1] ?? ''}`.trim() : positionals[0];
   switch (command) {
     case 'targets': {
       const root = values.root ?? findRepoRoot(process.cwd());
@@ -137,6 +138,27 @@ async function dispatch(command: string, values: Values): Promise<CommandResult>
       });
       return { data: rows, failed: rows.some((row) => !row.ok) };
     }
+    case 'sites': {
+      const config = readHostingConfig(values.root ?? findRepoRoot(process.cwd()));
+      const [{ createFirebaseAdapter }, { reportSites }] = await Promise.all([
+        import('./adapter'),
+        import('./commands/sites'),
+      ]);
+      return { data: await reportSites(config, createFirebaseAdapter()) };
+    }
+    case 'sites create': {
+      const config = readHostingConfig(values.root ?? findRepoRoot(process.cwd()));
+      const [{ createFirebaseAdapter }, { createSites }] = await Promise.all([
+        import('./adapter'),
+        import('./commands/sites'),
+      ]);
+      const { rows, failed } = await createSites(config, createFirebaseAdapter(), {
+        site: values.site,
+        missing: values.missing,
+        execute: values.execute,
+      });
+      return { data: rows, failed };
+    }
     case 'deploy': {
       const root = values.root ?? findRepoRoot(process.cwd());
       const config = readHostingConfig(root);
@@ -159,8 +181,8 @@ async function dispatch(command: string, values: Values): Promise<CommandResult>
     default:
       throw new KuraError(
         'USAGE',
-        `Comando desconocido: ${command}`,
-        'Comandos disponibles: targets · status · verify · deploy',
+        `Comando desconocido: ${command ?? '(ninguno)'}`,
+        'Comandos disponibles: targets · status · verify · sites · sites create · deploy',
       );
   }
 }
@@ -175,21 +197,23 @@ async function main(): Promise<void> {
     format = resolveFormat(values.format);
 
     if (values.help === true) {
-      process.stdout.write(`${USAGE}\n`);
-      process.exitCode = EXIT.ok;
-      return;
-    }
-
-    const command = positionals[0];
-    if (command === undefined) {
+      // Con TTY delante hay un humano y se imprime la prosa; en json/ndjson va el
+      // spec maquinable, para que un agente descubra la superficie sin parsear texto.
+      if (format === 'table') {
+        process.stdout.write(`${USAGE}\n`);
+        process.exitCode = EXIT.ok;
+        return;
+      }
+      envelope = ok(helpSpec());
+    } else if (positionals.length === 0) {
       process.stderr.write(`${USAGE}\n`);
       process.exitCode = EXIT.usage;
       return;
+    } else {
+      const result = await dispatch(positionals, values);
+      envelope = ok(result.data);
+      verificationFailed = result.failed === true;
     }
-
-    const result = await dispatch(command, values);
-    envelope = ok(result.data);
-    verificationFailed = result.failed === true;
   } catch (err) {
     envelope = fail(err);
   }

@@ -32,6 +32,9 @@ function fakeAdapter(record: string[]): HostingAdapter {
   return {
     listSites: async () => [],
     liveRelease: async () => null,
+    createSite: async () => {
+      throw new Error('deploy no debe crear sitios');
+    },
     deployChannel: async (project, target, channel, cwd) => {
       record.push(`channel ${project} ${target} ${channel} ${cwd}`);
       return { url: URL_CANAL, expiresAt: '2026-08-19T00:00:00.000Z', version: 'abc123' };
