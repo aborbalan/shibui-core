@@ -19,7 +19,14 @@ import type { HostingConfig, HostingTarget } from '../config';
 import type { HttpClient } from '../http';
 import { KuraError } from '../envelope';
 
-export type CheckName = 'root-200' | 'spa-rewrite' | 'no-localhost' | 'expect-origin';
+export type CheckName =
+  | 'root-200'
+  | 'spa-rewrite'
+  | 'no-localhost'
+  | 'expect-origin'
+  /* Las emite `kura deploy`, que reutiliza esta misma fila para su informe. */
+  | 'dry-run'
+  | 'deploy';
 
 export interface CheckRow {
   target: string;
@@ -74,18 +81,48 @@ async function verifyTarget(
   expectOrigin: string | undefined,
 ): Promise<CheckRow[]> {
   const site = target.sites[0];
-  const url = site === undefined ? '' : `https://${site}.web.app`;
+  if (site === undefined) {
+    return [
+      {
+        target: target.target,
+        url: '',
+        check: 'root-200',
+        ok: false,
+        detail: 'el target no declara ningún sitio en .firebaserc',
+      },
+    ];
+  }
+  return verifyUrl(http, {
+    label: target.target,
+    url: `https://${site}.web.app`,
+    spa: target.spa,
+    expectOrigin,
+  });
+}
+
+export interface UrlCheckOptions {
+  /** Qué se está comprobando; va en la columna `target` del informe. */
+  label: string;
+  /** Origen sin barra final, p.ej. `https://shibui-cv.web.app`. */
+  url: string;
+  spa: boolean;
+  expectOrigin?: string | undefined;
+}
+
+/**
+ * Comprueba una URL suelta. Existe separado de `reportVerify` porque
+ * `kura deploy` la reutiliza contra el canal de preview recién creado, cuya
+ * URL no está en ninguna configuración: la devuelve Firebase al desplegar.
+ */
+export async function verifyUrl(http: HttpClient, options: UrlCheckOptions): Promise<CheckRow[]> {
+  const { label, url, spa, expectOrigin } = options;
   const row = (check: CheckName, ok: boolean, detail: string): CheckRow => ({
-    target: target.target,
+    target: label,
     url,
     check,
     ok,
     detail,
   });
-
-  if (site === undefined) {
-    return [row('root-200', false, 'el target no declara ningún sitio en .firebaserc')];
-  }
 
   const root = await http.get(`${url}/`);
   if (root.failure !== null) {
@@ -100,7 +137,7 @@ async function verifyTarget(
 
   const rows: CheckRow[] = [row('root-200', true, `200 · ${root.body.length} bytes de HTML`)];
 
-  if (target.spa) {
+  if (spa) {
     const probe = await http.get(`${url}${RUTA_INEXISTENTE}`);
     const served = probe.status === 200 && /<html/i.test(probe.body);
     rows.push(

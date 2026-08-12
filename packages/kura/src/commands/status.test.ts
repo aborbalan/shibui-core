@@ -23,6 +23,13 @@ function adapter(sites: string[], releases: Record<string, LiveRelease | null>):
   return {
     listSites: async (_project: string) => sites.map((site) => ({ site, url: `https://${site}.web.app` })),
     liveRelease: async (_project: string, site: string) => releases[site] ?? null,
+    // status nunca despliega; si alguna vez lo intentara, el test se entera.
+    deployChannel: async () => {
+      throw new Error('status no debe desplegar');
+    },
+    deployLive: async () => {
+      throw new Error('status no debe desplegar');
+    },
   };
 }
 

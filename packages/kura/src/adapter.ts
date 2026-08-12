@@ -52,9 +52,19 @@ export interface LiveRelease {
   tool: string | null;
 }
 
+export interface DeployResult {
+  url: string;
+  /** Caducidad del canal de preview en ISO; los canales live no caducan. */
+  expiresAt: string | null;
+  version: string | null;
+}
+
 export interface HostingAdapter {
   listSites(project: string): Promise<HostingSite[]>;
   liveRelease(project: string, site: string): Promise<LiveRelease | null>;
+  /** Publica en un canal de preview. `cwd` debe ser la raíz: firebase lee firebase.json de ahí. */
+  deployChannel(project: string, target: string, channel: string, cwd: string): Promise<DeployResult>;
+  deployLive(project: string, target: string, site: string, cwd: string): Promise<DeployResult>;
 }
 
 /* ---------- parseadores puros ---------- */
@@ -116,6 +126,25 @@ export function parseLiveRelease(payload: unknown): LiveRelease | null {
   };
 }
 
+/**
+ * `hosting:channel:deploy` devuelve un objeto indexado por target (o por sitio),
+ * con la URL del canal recién creado dentro. Esa URL no está en ninguna
+ * configuración —la inventa Firebase—, así que es el único sitio de donde
+ * sacarla para poder verificar lo que se acaba de publicar.
+ */
+export function parseChannelDeploy(payload: unknown): DeployResult {
+  if (!isRecord(payload)) {
+    throw shapeChanged('hosting:channel:deploy', 'el resultado no es un objeto');
+  }
+  for (const entry of Object.values(payload)) {
+    if (!isRecord(entry)) continue;
+    const url = asString(entry['url']);
+    if (url === null) continue;
+    return { url, expiresAt: asString(entry['expireTime']), version: asString(entry['version']) };
+  }
+  throw shapeChanged('hosting:channel:deploy', 'ninguna entrada del resultado trae `url`');
+}
+
 /** Traduce el mensaje de error de firebase a una clase con código de salida propio. */
 export function classify(message: string, what: string): KuraError {
   if (/authenticat|credential|not logged in|permission|Request had insufficient/i.test(message)) {
@@ -142,6 +171,23 @@ export function createFirebaseAdapter(): HostingAdapter {
       );
       return parseLiveRelease(result);
     },
+    async deployChannel(project, target, channel, cwd) {
+      const result = await runFirebase(
+        ['hosting:channel:deploy', channel, '--only', target, '--project', project],
+        `desplegar ${target} al canal ${channel}`,
+        cwd,
+      );
+      return parseChannelDeploy(result);
+    },
+    async deployLive(project, target, site, cwd) {
+      await runFirebase(
+        ['deploy', '--only', `hosting:${target}`, '--project', project],
+        `desplegar ${target} a live`,
+        cwd,
+      );
+      // La URL de live es determinista, así que no hay que parsearla del resultado.
+      return { url: `https://${site}.web.app`, expiresAt: null, version: null };
+    },
   };
 }
 
@@ -163,11 +209,13 @@ function firebaseBin(): string {
   }
 }
 
-function runFirebase(args: string[], what: string): Promise<unknown> {
+function runFirebase(args: string[], what: string, cwd: string = process.cwd()): Promise<unknown> {
   const argv = [firebaseBin(), ...args, '--json', '--non-interactive'];
 
   return new Promise((resolve, reject) => {
-    execFile(process.execPath, argv, { maxBuffer: 32 * 1024 * 1024 }, (err, stdout, stderr) => {
+    // Los despliegues tardan bastante más que las consultas: sin techo propio,
+    // el timeout por defecto de execFile cortaría una subida legítima.
+    execFile(process.execPath, argv, { cwd, maxBuffer: 32 * 1024 * 1024, timeout: 15 * 60 * 1000 }, (err, stdout, stderr) => {
       // firebase escribe su sobre JSON en stdout tanto en éxito como en error,
       // así que se intenta parsear ANTES de mirar el código de salida.
       let payload: unknown;

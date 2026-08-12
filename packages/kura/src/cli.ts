@@ -34,13 +34,23 @@ Comandos:
   targets            Lista los targets de Hosting y el estado de su build local
   status             Añade qué hay publicado en cada sitio y si falta desplegar
   verify             Comprueba por HTTP lo que se está sirviendo (sin credenciales)
+  deploy             Publica un target. Simula por defecto; preview salvo --live
 
 Opciones:
   --format <f>       table | json | ndjson  (por defecto: table con TTY, ndjson sin él)
-  --target <t>       Restringe la salida a un target
-  --expect-origin <s>  Exige que el bundle servido contenga esa cadena (solo verify)
+  --target <t>       Restringe la salida a un target (obligatorio en deploy)
+  --expect-origin <s>  Exige que el bundle servido contenga esa cadena
   --root <ruta>      Raíz del repo (por defecto: se busca hacia arriba desde el cwd)
   -h, --help         Esta ayuda
+
+Opciones de deploy:
+  --execute          Sube de verdad. Sin esto solo simula y cuenta qué haría
+  --channel <c>      Canal de preview (por defecto: preview)
+  --live             Destino producción. Exige además --confirm <target>
+  --confirm <t>      Repite el nombre del target para autorizar el deploy a live
+
+  Publicar en estos sitios es publicar en internet. La forma corta del
+  comando es la inofensiva, y llegar a producción cuesta dos flags.
 
 Códigos de salida:
   0 ok · 1 inesperado · 2 uso incorrecto · 3 no encontrado
@@ -54,6 +64,10 @@ const OPTIONS = {
   format: { type: 'string' },
   target: { type: 'string' },
   'expect-origin': { type: 'string' },
+  channel: { type: 'string' },
+  live: { type: 'boolean' },
+  confirm: { type: 'string' },
+  execute: { type: 'boolean' },
   root: { type: 'string' },
   help: { type: 'boolean', short: 'h' },
 } as const;
@@ -62,6 +76,10 @@ type Values = {
   format?: string | undefined;
   target?: string | undefined;
   'expect-origin'?: string | undefined;
+  channel?: string | undefined;
+  live?: boolean | undefined;
+  confirm?: string | undefined;
+  execute?: boolean | undefined;
   root?: string | undefined;
   help?: boolean | undefined;
 };
@@ -119,8 +137,31 @@ async function dispatch(command: string, values: Values): Promise<CommandResult>
       });
       return { data: rows, failed: rows.some((row) => !row.ok) };
     }
+    case 'deploy': {
+      const root = values.root ?? findRepoRoot(process.cwd());
+      const config = readHostingConfig(root);
+      const local = reportTargets(config);
+      const [{ createFirebaseAdapter }, { createHttpClient }, { runDeploy }] = await Promise.all([
+        import('./adapter'),
+        import('./http'),
+        import('./commands/deploy'),
+      ]);
+      const { rows, failed } = await runDeploy(config, local, createFirebaseAdapter(), createHttpClient(), {
+        target: values.target,
+        channel: values.channel,
+        live: values.live,
+        confirm: values.confirm,
+        execute: values.execute,
+        expectOrigin: values['expect-origin'],
+      });
+      return { data: rows, failed };
+    }
     default:
-      throw new KuraError('USAGE', `Comando desconocido: ${command}`, 'Comandos disponibles: targets · status · verify');
+      throw new KuraError(
+        'USAGE',
+        `Comando desconocido: ${command}`,
+        'Comandos disponibles: targets · status · verify · deploy',
+      );
   }
 }
 
