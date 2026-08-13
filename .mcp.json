@@ -8,6 +8,10 @@
       "command": "node",
       "args": ["${CLAUDE_PROJECT_DIR:-.}/scripts/mcp/shibui-cem-mcp.mjs"]
     },
+    "kura": {
+      "command": "node",
+      "args": ["${CLAUDE_PROJECT_DIR:-.}/scripts/mcp/kura-mcp.mjs"]
+    },
     "svelte": {
       "command": "npx",
       "args": ["-y", "@sveltejs/mcp"]

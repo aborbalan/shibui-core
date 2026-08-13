@@ -78,6 +78,17 @@ mitad siga siendo parseable.
 banderas `network`, `credentials` y `mutates`, para decidir qué es seguro ejecutar sin leer
 prosa.
 
+## Servidor MCP
+
+Las mismas seis operaciones se exponen como herramientas MCP, declaradas en el `.mcp.json` de
+la raíz. Para un agente es la vía preferente: llegan descritas, con esquema de entrada tipado
+y con anotaciones que dicen cuáles salen a la red, cuáles piden credenciales y cuáles mutan
+algo. Mismo núcleo, mismos guardarraíles y el mismo sobre de salida que el CLI.
+
+```bash
+pnpm --filter @shibui-ui/kura mcp   # arranque manual por stdio
+```
+
 ## Autenticación
 
 Por la sesión de `firebase-tools`, fuera de banda:

@@ -28,6 +28,7 @@ desde una sesión interactiva (`claude`). No añaden dependencias al `package.js
 | `svelte` | Oficial de Svelte 5. `list-sections`, `get-documentation`, `svelte-autofixer`, `playground-link` | Antes de escribir Svelte en `app-svelte`, y **siempre** para revisar código Svelte generado |
 | `chrome-devtools` | Oficial del equipo Chrome DevTools. DOM, consola, red, performance y capturas sobre un Chrome real | Verificación visual de cualquier app. Sustituye al apaño de Chrome headless a mano y esquiva el Browser pane congelado |
 | `shibui-cem` | `cem` de bennypowers sobre el manifiesto de `@shibui-ui/ui`. Es el único que conoce los ~1.700 puntos de API de la librería | **Validar markup `lib-*` antes de darlo por bueno**, en la librería y en las apps consumidoras |
+| `kura` | Propio (`packages/kura`). Seis herramientas sobre Firebase Hosting: `targets`, `status`, `verify`, `sites`, `sites create`, `deploy` | Cualquier pregunta sobre qué hay publicado, qué falta desplegar o si un sitio existe. Preferirlo al CLI por Bash |
 
 ### `shibui-cem` — qué esperar y qué no
 
@@ -233,6 +234,11 @@ mutan, simulan por defecto y exigen `--execute`.
 
 **Nunca ejecutes `kura deploy --live`**: publicar en estos sitios es publicar en internet y lo
 autoriza el usuario en cada ocasión.
+
+Existe además como **servidor MCP** (`kura` en `.mcp.json`), que es la vía preferente para un
+agente: las seis operaciones llegan como herramientas descritas y anotadas, sin tener que
+recordar rutas ni formatos. Mismo núcleo y mismos guardarraíles que el CLI — de hecho, mismo
+sobre de salida.
 
 Detalle y trampas en [`packages/kura/CLAUDE.md`](packages/kura/CLAUDE.md); estado vivo en
 [`packages/kura/docs/HANDOFF.md`](packages/kura/docs/HANDOFF.md).

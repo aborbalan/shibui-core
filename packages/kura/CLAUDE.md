@@ -49,7 +49,10 @@ comillas que escapar y sin depender de que `node_modules/.bin` exista.
 
 ```
 cli.ts            → ÚNICO fichero que toca process, imprime o decide códigos de salida
+mcp.ts            → segundo transporte: servidor MCP sobre el mismo núcleo
+mcp-run.ts        → arranque por stdio (aparte, para que los tests importen mcp.ts sin conectar)
 spec.ts           → superficie maquinable; de aquí se DERIVAN los flags de parseArgs
+                    del CLI y las anotaciones de las herramientas MCP
 envelope.ts       → sobre {ok,data}/{ok,error} + códigos de salida
 format.ts         → table | json | ndjson
 config.ts         → .firebaserc × firebase.json → modelo de targets (sin red)
@@ -77,6 +80,31 @@ pnpm exec tsx packages/kura/src/cli.ts <comando>   # desde la raíz, en desarrol
 
 Desde la raíz hay `pnpm kura`, pero **para uso maquinal hace falta `pnpm --silent kura`**:
 sin `--silent`, pnpm escribe su banner en stdout y rompe el NDJSON.
+
+---
+
+## Los dos transportes
+
+El mismo núcleo se sirve por dos caminos, y ninguno reimplementa nada:
+
+| | CLI (`cli.ts`) | MCP (`mcp.ts`) |
+|---|---|---|
+| Para quién | humano y Bash | agente |
+| Salida | tabla o NDJSON, mismo sobre | mismo sobre, en un bloque de texto |
+| Fallo de verificación | código de salida 6 | `isError: true` |
+| Entrada inválida | `USAGE`, código 2 | lo rechaza el esquema **antes** del manejador |
+
+Las anotaciones MCP (`readOnlyHint`, `openWorldHint`, `destructiveHint`, `idempotentHint`)
+**se derivan** de las banderas `network`/`credentials`/`mutates` de `spec.ts`. No se escriben
+a mano y `mcp.test.ts` falla si una herramienta se queda sin entrada en el spec.
+
+El servidor se declara en el `.mcp.json` de la raíz y arranca por
+`scripts/mcp/kura-mcp.mjs`, que fija el cwd a la raíz del repo y resuelve tsx por ruta
+absoluta. Verificado con un cliente MCP real: handshake, `tools/list` y `tools/call`.
+
+**Única dependencia del paquete:** `@modelcontextprotocol/sdk` (más `zod`, que es su par).
+Se aceptó porque el protocolo lo mantiene otro y porque ya estaba en el lockfile como
+dependencia de `firebase-tools`.
 
 ---
 
