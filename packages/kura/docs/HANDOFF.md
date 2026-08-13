@@ -3,10 +3,12 @@
 `kura` (蔵) es el CLI de Firebase Hosting del ecosistema, pensado para que lo usen por igual
 un humano en la terminal y un agente por Bash.
 
-**Rama:** `feature/kura-f0-recon`, ramificada de `origin/develop` en `4a35fc0`. Ocho commits,
+**Rama:** `feature/kura-f0-recon`, ramificada de `origin/develop` en `4a35fc0`. Diez commits,
 sin PR. **Destino: `develop`, con `--no-ff`. Nunca `main`.**
 
 ```
+bb2c29b  feat(kura): servidor MCP sobre el mismo nucleo (F7)
+2b03732  docs: anunciar kura en el contexto raiz
 84a3237  feat(kura): cablear el pipeline de CI y documentar el paquete (F6)
 8092558  feat(kura): inventario y aprovisionamiento de sitios + spec maquinable (F5)
 951618e  docs(kura): handoff con el estado tras cerrar F4
@@ -32,8 +34,15 @@ Plan original: `C:\Users\aborb\.claude\plans\haz-primero-el-planing-crispy-wave.
 | F4 `deploy` | ✅ | Guardarraíles + deploy real validado a canal de preview |
 | F5 superficie de agente | ✅ | `src/spec.ts`, `--help --json`, y `kura sites` |
 | F6 CI y documentación | ✅ | `ci-kura.yml`, orchestrator, `CLAUDE.md`, `README.md` |
+| F7 servidor MCP | ✅ | `src/mcp.ts`, lanzadera y entrada en `.mcp.json` |
 
-**119 tests en verde y type-check limpio.** Ninguna prueba sale a la red ni usa credenciales.
+**129 tests en verde y type-check limpio.** Ninguna prueba sale a la red ni usa credenciales.
+
+**F7 no estaba en el plan**; salió de preguntar cómo hacer kura más accesible para un agente.
+Es un segundo transporte sobre el mismo núcleo: las seis operaciones llegan como herramientas
+MCP con el mismo sobre de salida, y las anotaciones (`readOnlyHint`, `destructiveHint`…) se
+derivan de las banderas de `src/spec.ts` en vez de escribirse a mano. Verificado con un
+cliente MCP real y, aparte, hablando JSON-RPC por stdio contra la lanzadera.
 
 **Fuera del plan, a petición explícita del usuario:** `kura sites` y `kura sites create`. El
 argumento fue que un CLI cuyo objetivo es que futuras sesiones manejen Firebase sin que él
@@ -97,11 +106,17 @@ sin `--force`.
 
 ## Lo que queda, y por qué no lo hice yo
 
-**1. Registrar `packages/kura` en `pnpm-lock.yaml`. Ahora bloquea CI.** Desde que existe
-`ci-kura.yml`, el job falla en `pnpm install --frozen-lockfile`. **No se puede hacer desde el
-worktree:** `pnpm install --lockfile-only` detecta los junctions de `node_modules` y pide
-purgar los directorios de módulos, lo que apuntaría al repo principal. Se abortó sin daño y se
-verificó paquete a paquete. Hacerlo desde el repo principal con esta rama checkouteada.
+**1. Registrar `packages/kura` en `pnpm-lock.yaml`. Ahora bloquea CI, y también el MCP.**
+Desde que existe `ci-kura.yml`, el job falla en `pnpm install --frozen-lockfile`. Y desde F7 el
+paquete declara dos dependencias — `@modelcontextprotocol/sdk@1.26.0` y `zod` — que sin install
+no estarán en su sitio, así que **el servidor MCP no arrancará en una máquina limpia hasta
+entonces**. Las dos versiones ya están en el store como dependencias de `firebase-tools`, así
+que no añaden resolución nueva.
+
+**No se puede hacer desde el worktree:** `pnpm install --lockfile-only` detecta los junctions
+de `node_modules` y pide purgar los directorios de módulos, lo que apuntaría al repo principal.
+Se abortó sin daño y se verificó paquete a paquete. Hacerlo desde el repo principal con esta
+rama checkouteada.
 
 **2. Crear el sitio `shibui-torii`.** `.firebaserc` declara `torii → shibui-torii` y ese sitio
 no existe, así que un deploy de `torii` falla hoy. Lo detectan `kura status` (`drift: no-site`),
@@ -132,8 +147,14 @@ node_modules
 packages\shibui-ui\node_modules
 packages\shibui-ui\dist            (para construir app-react)
 packages\kura\node_modules         → apunta a packages\hanko\node_modules
+packages\node_modules              → dir REAL con @modelcontextprotocol y zod del store
 apps\app-react\node_modules
 ```
+
+`packages\node_modules` merece explicación: es un directorio real, no un junction, y aprovecha
+que Node consulta ese nivel al resolver desde `packages/kura/src` **antes** de subir a la raíz.
+Fue la forma de alcanzar el SDK de MCP sin escribir dentro de un junction —lo que habría
+ensuciado el `node_modules` de hanko en el repo principal— ni tocar la raíz.
 
 `packages\kura\node_modules` es un **andamio**: presta las dependencias de hanko (vitest,
 typescript, tsx) porque kura aún no está en el lockfile. En CI, con instalación limpia, se
