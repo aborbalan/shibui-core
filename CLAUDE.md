@@ -207,6 +207,35 @@ Cada app/package gestiona las suyas.
 | `pnpm test:consumers` | Consumer contract tests (React × Svelte × Angular) |
 | `pnpm test:consumers:react` · `:svelte` · `:angular` | Consumer tests por framework |
 | `pnpm worker:cf:dev` · `worker:cf:deploy` | Dev/deploy del Cloudflare cache worker |
+| `pnpm --silent kura <cmd>` | CLI de Firebase Hosting (ver abajo) |
+
+---
+
+## kura — el CLI de Firebase Hosting
+
+`packages/kura` responde sin abrir la consola de Firebase lo que antes había que mirar a mano:
+qué hay publicado en cada uno de los nueve sitios, si el build local coincide con lo servido,
+y si lo desplegado se llevó por delante la configuración de la API.
+
+```bash
+pnpm --silent kura targets   # sin red ni credenciales
+pnpm --silent kura status    # + qué hay publicado
+pnpm --silent kura verify    # comprueba por HTTP lo que se sirve
+pnpm --silent kura sites     # inventario: declarados sin crear y huérfanos
+```
+
+**`--silent` no es cosmético:** sin él, pnpm escribe su banner en stdout y rompe el NDJSON.
+
+`kura --help --format json` devuelve la superficie completa —comandos, flags y códigos de
+salida— con banderas `network`, `credentials` y `mutates` por comando, pensadas para decidir
+qué es seguro ejecutar sin leer prosa. `targets` no toca nada; `deploy` y `sites create`
+mutan, simulan por defecto y exigen `--execute`.
+
+**Nunca ejecutes `kura deploy --live`**: publicar en estos sitios es publicar en internet y lo
+autoriza el usuario en cada ocasión.
+
+Detalle y trampas en [`packages/kura/CLAUDE.md`](packages/kura/CLAUDE.md); estado vivo en
+[`packages/kura/docs/HANDOFF.md`](packages/kura/docs/HANDOFF.md).
 
 ---
 
