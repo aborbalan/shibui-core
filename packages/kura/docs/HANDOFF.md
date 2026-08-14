@@ -106,17 +106,20 @@ sin `--force`.
 
 ## Lo que queda, y por qué no lo hice yo
 
-**1. Registrar `packages/kura` en `pnpm-lock.yaml`. Ahora bloquea CI, y también el MCP.**
-Desde que existe `ci-kura.yml`, el job falla en `pnpm install --frozen-lockfile`. Y desde F7 el
-paquete declara dos dependencias — `@modelcontextprotocol/sdk@1.26.0` y `zod` — que sin install
-no estarán en su sitio, así que **el servidor MCP no arrancará en una máquina limpia hasta
-entonces**. Las dos versiones ya están en el store como dependencias de `firebase-tools`, así
-que no añaden resolución nueva.
+**1. ~~Registrar `packages/kura` en `pnpm-lock.yaml`~~ — HECHO (commit `4545924`).**
 
-**No se puede hacer desde el worktree:** `pnpm install --lockfile-only` detecta los junctions
-de `node_modules` y pide purgar los directorios de módulos, lo que apuntaría al repo principal.
-Se abortó sin daño y se verificó paquete a paquete. Hacerlo desde el repo principal con esta
-rama checkouteada.
+Se dio por imposible desde el worktree y era falso. El bloqueo no era el worktree: era que el
+`.modules.yaml` visible describía el árbol del repo principal —porque `node_modules` es un
+junction a él— y por eso pnpm proponía purgar los directorios de módulos.
+
+**Receta, por si vuelve a hacer falta:** retirar SOLO el junction raíz de `node_modules`
+(`(Get-Item ... -Force).Delete()` guardando por `LinkType -eq 'Junction'`), correr
+`pnpm install --lockfile-only` sobre el árbol limpio (16 s, nada descargado) y restaurar el
+junction. Verificado después: `--frozen-lockfile` exit 0, repo principal intacto paquete a
+paquete y 129 tests en verde.
+
+`--config.node-linker=none` NO sirve: la comprobación de purga corre antes de decidir el
+linker.
 
 **2. Crear el sitio `shibui-torii`.** `.firebaserc` declara `torii → shibui-torii` y ese sitio
 no existe, así que un deploy de `torii` falla hoy. Lo detectan `kura status` (`drift: no-site`),
