@@ -26,6 +26,7 @@
     "build:cv": "pnpm --filter app-cv build",
     "build:torii": "pnpm --filter app-torii build",
     "prepare": "husky",
+    "kura": "tsx packages/kura/src/cli.ts",
     "type-check": "pnpm exec tsc --noEmit --project packages/shibui-ui/tsconfig.json",
     "storybook": "pnpm --filter @shibui-ui/ui storybook",
     "build-storybook": "pnpm --filter @shibui-ui/ui build-storybook",

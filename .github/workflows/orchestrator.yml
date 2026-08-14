@@ -50,6 +50,10 @@ on:
         description: "Forzar pipeline Sukashi"
         type: boolean
         default: false
+      force_kura:
+        description: "蔵 Forzar pipeline kura (CLI de Firebase Hosting)"
+        type: boolean
+        default: false
       force_hanko_issues:
         description: "判 Crear/actualizar issues de GitHub desde el Trust Report de hanko (solo main)"
         type: boolean
@@ -80,6 +84,7 @@ jobs:
       api:         ${{ steps.resolve.outputs.api }}
       tauri:       ${{ steps.resolve.outputs.tauri }}
       sukashi:     ${{ steps.resolve.outputs.sukashi }}
+      kura:        ${{ steps.resolve.outputs.kura }}
     steps:
       - uses: actions/checkout@v4
 
@@ -110,6 +115,7 @@ jobs:
             api:     'apps/shibui-api/**'
             tauri:   'apps/app-tauri/**'
             sukashi: 'packages/sukashi/**'
+            kura:    'packages/kura/**'
 
       # OR lógico: cambio detectado ó forzado manualmente
       - name: 🎛️ Resolve outputs (auto + manual override)
@@ -125,6 +131,7 @@ jobs:
           echo "api=$([[ '${{ steps.filter.outputs.api }}' == 'true' || '${{ inputs.force_api }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "tauri=$([[ '${{ steps.filter.outputs.tauri }}' == 'true' || '${{ inputs.force_tauri }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "sukashi=$([[ '${{ steps.filter.outputs.sukashi }}' == 'true' || '${{ inputs.force_sukashi }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "kura=$([[ '${{ steps.filter.outputs.kura }}' == 'true' || '${{ inputs.force_kura }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
 
   # ─────────────────────────────────────────
   # JOB 2 — Pipeline UI & Apps
@@ -222,6 +229,21 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.sukashi == 'true'
     uses: ./.github/workflows/ci-sukashi.yml
+    with:
+      ref: ${{ github.ref }}
+    secrets: inherit
+
+  # ─────────────────────────────────────────
+  # JOB 6 — Pipeline kura
+  # type-check + tests del CLI de Firebase Hosting.
+  # No despliega: sus comandos con efectos exigen --execute y
+  # credenciales, y aquí no hay ninguna de las dos cosas.
+  # ─────────────────────────────────────────
+  run-kura-pipeline:
+    name: 蔵 kura Pipeline
+    needs: detect-changes
+    if: needs.detect-changes.outputs.kura == 'true'
+    uses: ./.github/workflows/ci-kura.yml
     with:
       ref: ${{ github.ref }}
     secrets: inherit

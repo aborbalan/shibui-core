@@ -16,6 +16,7 @@ orchestrator.yml          ← único trigger externo (push / PR / dispatch)
   ├── ci-api.yml           ← NestJS API: lint + build + test + deploy docs (Firebase Hosting)
   ├── ci-tauri.yml         ← Rust core: fmt + clippy + cargo test
   ├── ci-sukashi.yml       ← Sukashi: type-check + tests + deploy demo (sukashi.web.app, solo main)
+  ├── ci-kura.yml          ← kura: type-check + tests + humo del CLI. NO despliega
   └── release.yml          ← NPM publish (solo main + ci-lib exitoso)
 
 notify.yml                 ← workflow_run: notifica a Discord al completar el orquestador
@@ -42,6 +43,7 @@ Los outputs del job `detect-changes` son la API pública hacia los pipelines.
 | `api` | `apps/shibui-api/**` | Activa ci-api |
 | `tauri` | `apps/app-tauri/**` | Activa ci-tauri |
 | `sukashi` | `packages/sukashi/**` | Activa ci-sukashi (type-check + tests; deploy demo solo en main) |
+| `kura` | `packages/kura/**` | Activa ci-kura (type-check + tests + humo del CLI, sin red ni secretos) |
 
 Cada output tiene lógica OR con su flag `force_*` de `workflow_dispatch`.
 
@@ -99,6 +101,7 @@ if: |
 | `force_api` | Activa ci-api |
 | `force_tauri` | Activa ci-tauri |
 | `force_sukashi` | Activa ci-sukashi |
+| `force_kura` | Activa ci-kura |
 | `force_hanko_issues` | Activa la emisión de issues del harness hanko en ci-lib |
 
 ---

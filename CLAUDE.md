@@ -28,6 +28,7 @@ desde una sesión interactiva (`claude`). No añaden dependencias al `package.js
 | `svelte` | Oficial de Svelte 5. `list-sections`, `get-documentation`, `svelte-autofixer`, `playground-link` | Antes de escribir Svelte en `app-svelte`, y **siempre** para revisar código Svelte generado |
 | `chrome-devtools` | Oficial del equipo Chrome DevTools. DOM, consola, red, performance y capturas sobre un Chrome real | Verificación visual de cualquier app. Sustituye al apaño de Chrome headless a mano y esquiva el Browser pane congelado |
 | `shibui-cem` | `cem` de bennypowers sobre el manifiesto de `@shibui-ui/ui`. Es el único que conoce los ~1.700 puntos de API de la librería | **Validar markup `lib-*` antes de darlo por bueno**, en la librería y en las apps consumidoras |
+| `kura` | Propio (`packages/kura`). Seis herramientas sobre Firebase Hosting: `targets`, `status`, `verify`, `sites`, `sites create`, `deploy` | Cualquier pregunta sobre qué hay publicado, qué falta desplegar o si un sitio existe. Preferirlo al CLI por Bash |
 
 ### `shibui-cem` — qué esperar y qué no
 
@@ -156,6 +157,45 @@ Para construir desde un worktree se junctan los `node_modules` del principal:
    diagnóstico convencido y falso sobre código que en tu rama está bien. Junctar dentro cada
    entrada **excepto** `@shibui-ui`.
 
+### Regenerar el lockfile desde un worktree
+
+**Síntoma:** CI falla en `pnpm install --frozen-lockfile` con `ERR_PNPM_OUTDATED_LOCKFILE`
+(«Cannot install with "frozen-lockfile" because pnpm-lock.yaml is not up to date with
+\<manifest\>»). Ocurre siempre que se añade un workspace nuevo o se cambian las dependencias
+de uno existente.
+
+**Por qué parece imposible desde el worktree.** `pnpm install --lockfile-only` responde
+*«The modules directories will be removed and reinstalled from scratch. Proceed?»* y, sin TTY,
+aborta. **La causa no es el worktree**: es que su `node_modules` es un junction al del repo
+principal, así que el `.modules.yaml` que pnpm lee describe **otro árbol, con otras rutas**, y
+concluye que hay que purgar. Aceptar esa purga apuntaría al repo principal.
+
+`--config.node-linker=none` **no** lo esquiva: la comprobación de purga corre antes de elegir
+el linker.
+
+**Receta (verificada 2026-08-12 registrando `packages/kura`; ~17 s, nada descargado):**
+
+1. Retirar **solo** el junction raíz, guardando por `LinkType`:
+   ```powershell
+   $i = Get-Item "$wt\node_modules" -Force
+   if ($i.LinkType -ne 'Junction') { throw 'no es un junction: no tocar' }
+   $i.Delete()
+   ```
+   Los demás junctions (`packages/*/node_modules`, `dist`, `apps/*/node_modules`) **no** se
+   tocan: el que confunde a pnpm es el de la raíz, que es donde vive `.modules.yaml`.
+2. **Verificar en el acto** que el repo principal sigue entero (cuenta de `node_modules` y de
+   `node_modules/.bin`). Si bajó, parar: `.Delete()` sobre un junction no debe tocar el destino.
+3. `pnpm install --lockfile-only` — sobre el árbol limpio no pregunta nada.
+4. Comprobar el diff: debe tocar **un solo importer**. Si toca otros, revisar antes de commitear.
+5. Verificar como lo hace CI: `pnpm install --lockfile-only --frozen-lockfile` debe dar
+   **exit 0**.
+6. Restaurar: `New-Item -ItemType Junction -Path "$wt\node_modules" -Target "<main>\node_modules"`.
+7. Volver a correr `type-check` y `test` del paquete tocado.
+
+> Antes de 2026-08-12 esto figuraba como «hay que hacerlo desde el repo principal». Era falso, y
+> nació de un único intento fallido. Si vuelves a leer esa versión en algún sitio, es esta la
+> que vale.
+
 ### Verificación visual
 
 El **Browser pane** (`mcp__Claude_Browser`) tiene el compositor congelado: `screenshot` da
@@ -207,6 +247,40 @@ Cada app/package gestiona las suyas.
 | `pnpm test:consumers` | Consumer contract tests (React × Svelte × Angular) |
 | `pnpm test:consumers:react` · `:svelte` · `:angular` | Consumer tests por framework |
 | `pnpm worker:cf:dev` · `worker:cf:deploy` | Dev/deploy del Cloudflare cache worker |
+| `pnpm --silent kura <cmd>` | CLI de Firebase Hosting (ver abajo) |
+
+---
+
+## kura — el CLI de Firebase Hosting
+
+`packages/kura` responde sin abrir la consola de Firebase lo que antes había que mirar a mano:
+qué hay publicado en cada uno de los nueve sitios, si el build local coincide con lo servido,
+y si lo desplegado se llevó por delante la configuración de la API.
+
+```bash
+pnpm --silent kura targets   # sin red ni credenciales
+pnpm --silent kura status    # + qué hay publicado
+pnpm --silent kura verify    # comprueba por HTTP lo que se sirve
+pnpm --silent kura sites     # inventario: declarados sin crear y huérfanos
+```
+
+**`--silent` no es cosmético:** sin él, pnpm escribe su banner en stdout y rompe el NDJSON.
+
+`kura --help --format json` devuelve la superficie completa —comandos, flags y códigos de
+salida— con banderas `network`, `credentials` y `mutates` por comando, pensadas para decidir
+qué es seguro ejecutar sin leer prosa. `targets` no toca nada; `deploy` y `sites create`
+mutan, simulan por defecto y exigen `--execute`.
+
+**Nunca ejecutes `kura deploy --live`**: publicar en estos sitios es publicar en internet y lo
+autoriza el usuario en cada ocasión.
+
+Existe además como **servidor MCP** (`kura` en `.mcp.json`), que es la vía preferente para un
+agente: las seis operaciones llegan como herramientas descritas y anotadas, sin tener que
+recordar rutas ni formatos. Mismo núcleo y mismos guardarraíles que el CLI — de hecho, mismo
+sobre de salida.
+
+Detalle y trampas en [`packages/kura/CLAUDE.md`](packages/kura/CLAUDE.md); estado vivo en
+[`packages/kura/docs/HANDOFF.md`](packages/kura/docs/HANDOFF.md).
 
 ---
 
