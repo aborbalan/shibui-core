@@ -95,8 +95,24 @@ export async function createSites(
   const inventario = await reportSites(config, adapter);
   const objetivos = options.site === undefined ? porCrear(inventario) : [unoSolo(inventario, options.site)];
 
+  // No devolver filas sería ambiguo: tras un comando con --execute, el silencio
+  // no distingue «no había nada que hacer» de «falló sin decirlo». Se responde
+  // con una fila que lo diga.
   if (objetivos.length === 0) {
-    return { rows: [], failed: false };
+    const declarados = inventario.filter((row) => row.target !== null).length;
+    return {
+      rows: [
+        {
+          site: '(ninguno)',
+          target: null,
+          action: 'exists',
+          url: null,
+          ok: true,
+          detail: `nada que crear: los ${declarados} sitios declarados en .firebaserc ya existen`,
+        },
+      ],
+      failed: false,
+    };
   }
 
   const rows: SiteActionRow[] = [];

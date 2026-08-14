@@ -112,14 +112,20 @@ describe('kura sites create · ejecución', () => {
     ]);
   });
 
-  it('--missing sin nada que crear no devuelve filas ni llama al adaptador', async () => {
+  it('--missing sin nada que crear lo DICE, en vez de callarse', async () => {
+    // El silencio tras un --execute es ambiguo: no distingue «no había nada que
+    // hacer» de «falló sin decirlo». Con la tabla vacía salía «(sin resultados)».
     const creados: string[] = [];
-    const { rows } = await createSites(config(), adapter(['shibui-cv', 'shibui-torii'], creados), {
+    const { rows, failed } = await createSites(config(), adapter(['shibui-cv', 'shibui-torii'], creados), {
       missing: true,
       execute: true,
     });
-    expect(rows).toEqual([]);
     expect(creados).toEqual([]);
+    expect(failed).toBe(false);
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({ action: 'exists', ok: true });
+    expect(rows[0]?.detail).toContain('nada que crear');
+    expect(rows[0]?.detail).toContain('2 sitios declarados');
   });
 
   it('permite aprovisionar un sitio que aún no declara ningún target', async () => {
