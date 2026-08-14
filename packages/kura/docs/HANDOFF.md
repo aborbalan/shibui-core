@@ -121,7 +121,16 @@ paquete y 129 tests en verde.
 `--config.node-linker=none` NO sirve: la comprobación de purga corre antes de decidir el
 linker.
 
-**2. Crear el sitio `shibui-torii`.** `.firebaserc` declara `torii → shibui-torii` y ese sitio
+**2. ~~Crear el sitio `shibui-torii`~~ — HECHO.** Existe y `kura sites` lo da `in-use`.
+`kura status --target torii` reporta ahora `drift: no-build`, que es lo correcto: el sitio está
+aprovisionado y vacío hasta que CI despliegue `app-torii`.
+
+De rebote salió un defecto de legibilidad, ya corregido: con todo creado,
+`sites create --missing --execute` devolvía cero filas y la tabla imprimía «(sin resultados)».
+Tras un comando con `--execute`, ese silencio no distingue «no había nada que hacer» de «falló
+sin decirlo». Ahora responde con una fila que lo nombra.
+
+**Instrucción histórica, ya innecesaria:** `.firebaserc` declara `torii → shibui-torii` y ese sitio
 no existe, así que un deploy de `torii` falla hoy. Lo detectan `kura status` (`drift: no-site`),
 `kura verify` (404) y `kura sites` (`declared-missing`). **kura ya sabe arreglarlo**, pero la
 ejecución quedó bloqueada por el clasificador de permisos. La orden es:
