@@ -44,6 +44,8 @@ export function toriiChromeTemplate(host: ToriiChrome): TemplateResult {
       brand-tagline="la puerta al ecosistema shibui"
       logo-href="#!/"
       .links=${NAV_LINKS.map((link) => ({ ...link, active: link.id === host.activeRoute }))}
+      @ui-lib-header-link=${(e: Event): void =>
+        host.goTo((e as CustomEvent<{ id: string }>).detail.id)}
     ></lib-header>
 
     <slot></slot>
