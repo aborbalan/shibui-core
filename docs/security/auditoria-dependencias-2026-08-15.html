@@ -1,0 +1,273 @@
+<title>Auditoría de dependencias — shibui-ecosystem</title>
+<style>
+:root{
+ --bg:#f7f5f0; --panel:#fffdf8; --ink:#22201b; --muted:#6b6558; --line:#e5e0d5;
+ --accent:#5a7d6f; --code-bg:#f0ede4; --chip:#efe9dc;
+ --hi:#b4553a; --mid:#b08b3c; --lo:#7d8a72;
+}
+@media (prefers-color-scheme: dark){
+ :root{--bg:#171613; --panel:#201e1a; --ink:#eae6dc; --muted:#a49d8d; --line:#33302a;
+  --accent:#8fb3a3; --code-bg:#26241f; --chip:#2b2822;
+  --hi:#d98164; --mid:#d4ac5e; --lo:#9fb094;}
+}
+:root[data-theme="dark"]{--bg:#171613; --panel:#201e1a; --ink:#eae6dc; --muted:#a49d8d; --line:#33302a; --accent:#8fb3a3; --code-bg:#26241f; --chip:#2b2822; --hi:#d98164; --mid:#d4ac5e; --lo:#9fb094;}
+:root[data-theme="light"]{--bg:#f7f5f0; --panel:#fffdf8; --ink:#22201b; --muted:#6b6558; --line:#e5e0d5; --accent:#5a7d6f; --code-bg:#f0ede4; --chip:#efe9dc; --hi:#b4553a; --mid:#b08b3c; --lo:#7d8a72;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.01em}
+h2{font-size:19px;margin:38px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+h3{font-size:15px;margin:22px 0 8px}
+.sub{color:var(--muted);margin:0 0 22px;font-size:13.5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 14px;text-align:center}
+.card .n{font-size:30px;font-weight:700;line-height:1}
+.card .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:6px}
+.bar{display:flex;height:14px;border-radius:8px;overflow:hidden;margin:8px 0 26px;border:1px solid var(--line)}
+.bar span{display:block}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--panel);
+ border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--chip);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;
+ background:var(--code-bg);padding:1px 5px;border-radius:4px}
+pre{background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+ overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5}
+.chip{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:99px;
+ padding:1px 9px;font-size:11.5px;color:var(--muted);letter-spacing:.03em}
+.hi{color:var(--hi);font-weight:600}
+.mid{color:var(--mid);font-weight:600}
+.lo{color:var(--lo);font-weight:600}
+.note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);
+ border-radius:0 10px 10px 0;padding:12px 16px;margin:18px 0;font-size:13.5px}
+ul{padding-left:20px} li{margin:5px 0}
+.muted{color:var(--muted)}
+footer{margin-top:50px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+</style>
+
+<div class="wrap">
+
+<h1>Auditoría de dependencias</h1>
+<p class="sub">
+  shibui-ecosystem · 15 de agosto de 2026 · rama <code>develop</code> en <code>fed210c</code><br>
+  Fuentes: <code>pnpm outdated -r</code>, <code>pnpm audit</code>, lectura del <code>pnpm-lock.yaml</code>
+  y <code>cargo update --dry-run</code>. Ningún dato de memoria: todo medido hoy.
+</p>
+
+<div class="grid">
+  <div class="card"><div class="n">14</div><div class="l">workspaces pnpm</div></div>
+  <div class="card"><div class="n">227</div><div class="l">dependencias declaradas</div></div>
+  <div class="card"><div class="n">90</div><div class="l">desactualizadas</div></div>
+  <div class="card"><div class="n">49</div><div class="l">avisos de seguridad</div></div>
+  <div class="card"><div class="n">259</div><div class="l">paquetes duplicados</div></div>
+  <div class="card"><div class="n">137</div><div class="l">crates Rust al día</div></div>
+</div>
+
+<div class="bar" title="26 high · 20 moderate · 3 low">
+  <span style="background:var(--hi);width:53%"></span>
+  <span style="background:var(--mid);width:41%"></span>
+  <span style="background:var(--lo);width:6%"></span>
+</div>
+<p class="sub" style="margin-top:-18px">
+  <span class="hi">26 high</span> · <span class="mid">20 moderate</span> · <span class="lo">3 low</span> ·
+  <strong>0 critical</strong>. Ninguno en código propio; todos entran por dependencias transitivas.
+</p>
+
+<div class="note">
+  <strong>El titular.</strong> De los 49 avisos, <strong>solo tres llegan al usuario final</strong>: los de
+  <code>@angular/*</code>, que van dentro del bundle de las apps Angular. Y esos tres se arreglan sin
+  tocar un solo <code>package.json</code>, porque el parche cae dentro del rango ya declarado. El resto
+  es herramienta de desarrollo, CI y despliegue: hay que arreglarlo, pero no es lo mismo.
+</div>
+
+<h2>1 · Lo que arreglaría esta semana</h2>
+
+<h3>1.1 · Angular 21.2.18 → 21.2.19 <span class="chip">único con impacto en usuario</span></h3>
+<div class="tablewrap">
+<table>
+  <tr><th>Aviso</th><th>Paquete</th><th>Dónde</th></tr>
+  <tr><td class="hi">XSS vía atributos de manejador de evento en i18n</td><td><code>@angular/core</code>, <code>@angular/compiler</code></td><td>app-angular · app-cv · consumer-tests-angular</td></tr>
+  <tr><td class="hi">Ambigüedad de clave de caché en <code>HttpTransferCache</code></td><td><code>@angular/common</code></td><td>ídem</td></tr>
+</table>
+</div>
+<p>Los tres manifests declaran <code>^21.2.17</code>, así que <strong>21.2.19 ya está dentro del rango</strong>:
+no hay que editar nada, solo mover el lockfile.</p>
+<pre>pnpm -r update "@angular/*"</pre>
+
+<h3>1.2 · Overrides que se han quedado cortos <span class="chip">falsa sensación de cobertura</span></h3>
+<p>Estos <code>pnpm.overrides</code> ya existen en la raíz desde la auditoría de julio, pero el suelo que
+fijan <strong>ya no alcanza al aviso vigente</strong>. Es el caso peor: parece cubierto y no lo está.</p>
+<div class="tablewrap">
+<table>
+  <tr><th>Override</th><th>Suelo actual</th><th>Suelo necesario</th><th>Aviso</th></tr>
+  <tr><td><code>undici</code></td><td><code>&gt;=7.28.0 &lt;8</code></td><td><code>&gt;=7.29.0 &lt;8</code></td><td class="hi">divulgación de información entre usuarios</td></tr>
+  <tr><td><code>fast-uri</code></td><td><code>&gt;=3.1.2</code></td><td><code>&gt;=3.1.5</code></td><td class="hi">confusión de host con barra invertida</td></tr>
+  <tr><td><code>ip-address</code></td><td><code>&gt;=10.1.1</code></td><td><code>&gt;=10.3.1</code></td><td class="hi">octetos con cero a la izquierda leídos como decimal</td></tr>
+  <tr><td><code>js-yaml@3</code></td><td><code>&gt;=3.15.0 &lt;4</code></td><td><code>&gt;=3.15.1 &lt;4</code></td><td class="hi">consumo cuadrático de CPU en <code>!!omap</code></td></tr>
+  <tr><td><code>js-yaml@4</code></td><td><code>&gt;=4.2.0 &lt;5</code></td><td><code>&gt;=4.3.1 &lt;5</code></td><td class="hi">ídem</td></tr>
+</table>
+</div>
+
+<h3>1.3 · Overrides que faltan</h3>
+<div class="tablewrap">
+<table>
+  <tr><th>Paquete</th><th>Override propuesto</th><th>Entra por</th></tr>
+  <tr><td><code>brace-expansion</code></td><td><code>&gt;=5.0.9 &lt;6</code></td><td>firebase-tools → rimraf → glob → minimatch</td></tr>
+  <tr><td><code>@grpc/grpc-js</code></td><td><code>&gt;=1.14.4 &lt;2</code></td><td>firebase-tools → @google-cloud/pubsub</td></tr>
+  <tr><td><code>protobufjs</code></td><td><code>&gt;=7.6.3 &lt;8</code></td><td>ídem</td></tr>
+  <tr><td><code>immutable</code></td><td><code>&gt;=5.1.8 &lt;6</code></td><td>@angular/build → vite → sass</td></tr>
+  <tr><td><code>@opentelemetry/core</code></td><td><code>&gt;=2.8.0 &lt;3</code></td><td>NestJS / firebase-tools</td></tr>
+</table>
+</div>
+<p class="muted"><strong>Regla que ya costó una vez:</strong> nunca un <code>&gt;=X</code> abierto — salta de major
+(<code>uuid</code> se fue a 14 y <code>@babel/core</code> a 8 en julio). Siempre con tope
+<code>&lt;siguiente-major</code>, y comprobando antes con <code>pnpm view &lt;pkg&gt;@&lt;major&gt;</code> que el parche
+existe dentro del major actual.</p>
+
+<h3>1.4 · <code>firebase-tools</code> 15.14.0 → 15.27.0 <span class="chip">17 de los 49 avisos</span></h3>
+<p>Es, con diferencia, la dependencia que más superficie mete: <code>basic-ftp</code>, <code>@grpc/grpc-js</code>,
+<code>protobufjs</code>, <code>ip-address</code>, <code>brace-expansion</code>, <code>js-yaml@3</code>… todos vienen
+detrás de ella. Está declarada en la raíz y en <code>packages/kura</code> (esta última <em>pineada exacta</em>,
+<code>15.14.0</code>, que habrá que mover a la vez). Subirla puede hacer innecesarios varios de los
+overrides de arriba: <strong>bumpar primero, medir después</strong>, y quitar los que sobren.</p>
+
+<h3>1.5 · Rust: <code>cargo update</code> en app-tauri</h3>
+<p>137 crates tienen versión nueva <strong>dentro de semver</strong>, incluida la cadena de Tauri
+(<code>tauri 2.11.2 → 2.11.5</code>). Es un comando y no toca ningún <code>Cargo.toml</code>.</p>
+<pre>cd apps/app-tauri && cargo update --manifest-path core/Cargo.toml</pre>
+<p class="muted"><code>glib</code> sigue sin moverse, como en julio: <code>gtk 0.18</code> exige <code>^0.18</code> y
+rechaza 0.20. Es el backend gtk3 de Linux (Windows va con WebView2), así que <strong>no reintentar</strong>
+hasta que Tauri suelte gtk3.</p>
+
+<h2>2 · Deriva de versiones</h2>
+<p>19 paquetes se declaran con rangos distintos según el workspace. La mayoría es cosmética; estas
+cuatro no lo son.</p>
+
+<h3>2.1 · <code>@types/node</code>: cuatro versiones, y ninguna es la de producción</h3>
+<div class="tablewrap">
+<table>
+  <tr><th>Rango declarado</th><th>Workspaces</th></tr>
+  <tr><td><code>^25.3.5</code></td><td>(raíz) · consumer-tests</td></tr>
+  <tr><td><code>^24.10.1</code></td><td>app-react · app-svelte · app-torii</td></tr>
+  <tr><td><code>^24.0.0</code></td><td>shibui-api</td></tr>
+  <tr><td><code>^22.10.2</code></td><td>hanko · kura</td></tr>
+  <tr><td><code>^20.10.0</code></td><td>shibui-ui</td></tr>
+</table>
+</div>
+<p><strong>CI corre Node 22.14.0</strong> (<code>NODE_VERSION</code> en los tres workflows) y la raíz declara
+<code>engines.node &gt;=20</code>. Tipar contra <code>@types/node@25</code> mientras se ejecuta en Node 22 significa
+que el compilador acepta APIs que en ejecución no existen — el tipo de fallo que no salta hasta
+producción. Además, las cuatro copias hacen que <code>@inquirer/*</code> se materialice cuatro veces en el
+lockfile, una por cada peer.</p>
+<p><strong>Cómo:</strong> converger todos a <code>^22</code> (la versión que realmente corre), o subir CI y engines a
+Node 24 LTS y converger ahí. Lo que no vale es que sigan siendo cuatro.</p>
+
+<h3>2.2 · <code>packages/shibui-ui</code> arrastra el toolchain más viejo del monorepo</h3>
+<p>Es el paquete que se publica a npm y el que más manos tocan, y va por detrás de todos los demás:</p>
+<div class="tablewrap">
+<table>
+  <tr><th>Herramienta</th><th>shibui-ui declara</th><th>Resuelve a</th><th>El resto del repo</th></tr>
+  <tr><td><code>eslint</code></td><td><code>^8.56.0</code></td><td>8.57.1</td><td>9.39.x</td></tr>
+  <tr><td><code>@typescript-eslint/*</code></td><td><code>^6.x</code></td><td>6.21.0</td><td>8.58.x</td></tr>
+  <tr><td><code>@types/react</code></td><td><code>^18.0.0</code></td><td>18.3.28</td><td>19.2.x</td></tr>
+  <tr><td><code>@types/node</code></td><td><code>^20.10.0</code></td><td>20.x</td><td>22 · 24 · 25</td></tr>
+  <tr><td><code>prettier</code></td><td><code>^3.1.1</code></td><td>3.8.2 ✔</td><td>3.8.2</td></tr>
+  <tr><td><code>typescript</code></td><td><code>^5.3.3</code></td><td>5.9.3 ✔</td><td>5.9.3</td></tr>
+</table>
+</div>
+<p>ESLint 8 <strong>no recibe soporte desde octubre de 2024</strong>, y <code>@typescript-eslint 6</code> ni siquiera
+declara compatibilidad con el TypeScript 5.9 que el paquete acaba usando. El resultado es que la
+librería se lint-ea con reglas de hace dos majors mientras las apps que la consumen usan las nuevas.
+<strong>Los rangos de <code>typescript</code> y <code>prettier</code> son ruido</strong> —el caret ya los sube—, pero
+los otros cuatro son reales: el rango los está frenando.</p>
+
+<h3>2.3 · <code>app-tauri</code>, la isla</h3>
+<p>Es el único en <code>vite ^7</code> (el resto en <code>^6.4.3</code>), y a la vez el único que se quedó atrás en
+React (<code>19.1</code> frente a <code>19.2</code>) y en <code>@vitejs/plugin-react</code> (<code>4</code> frente a <code>5</code>).
+Deriva en las dos direcciones a la vez.</p>
+
+<h3>2.4 · <code>vitest</code>: tres rangos, una sola copia</h3>
+<p><code>4.1.10</code> exacto en cuatro workspaces, <code>^4.0.8</code> en dos, <code>^4.0.18</code> en uno — pero el
+lockfile materializa <strong>una sola versión</strong>, porque el override <code>vitest: "&gt;=4.1.8 &lt;5"</code>
+de la raíz los alinea. Funciona, pero la alineación vive en un sitio que nadie mira al editar un
+<code>package.json</code>. Vale la pena unificar los rangos y quedarse con el override solo como red.</p>
+
+<h2>3 · Consolidaciones que valen más que un bump</h2>
+
+<h3>3.1 · Un runner de tests de más</h3>
+<p><code>shibui-api</code> es el único que usa <strong>jest</strong> (30.3.0) con <code>ts-jest</code>; los otros trece
+workspaces van con <strong>vitest 4</strong>. Es un árbol de dependencias entero y una configuración distinta
+que mantener, a cambio de nada que vitest no haga — NestJS funciona con vitest sin drama.
+<strong>Cómo:</strong> migrar los specs (el cambio real suele ser <code>jest.fn()</code> → <code>vi.fn()</code> y
+el config), y borrar jest + ts-jest.</p>
+<p class="muted"><strong>Aquí el argumento de seguridad no vale:</strong> lo comprobé y por jest pasan 3
+avisos, pero <strong>ninguno entra solo por ahí</strong> (llegan también por otros caminos). Quitar jest no
+cierra un solo aviso; se hace por mantenimiento, no por seguridad.</p>
+
+<h3>3.2 · <code>wrangler</code> 3.114.17 → 4.x</h3>
+<p>Wrangler 3 arrastra <code>sharp@0.33.5</code> con vulnerabilidades heredadas de libvips
+(<span class="hi">high</span>). Es un major, pero el worker es pequeño (un solo fichero de caché) y la
+migración 3→4 es principalmente de <code>wrangler.toml</code>. También hay <code>@cloudflare/workers-types</code>
+4 → 5 esperando.</p>
+
+<h3>3.3 · pnpm 9.15.0 → 11.x <span class="chip">evaluar, no urgente</span></h3>
+<p><code>packageManager</code> fija <code>pnpm@9.15.0</code>, la máquina de desarrollo tiene 9.15.9 y el último
+publicado es <strong>11.22.0</strong>: dos majors de distancia. pnpm 10 cambió por defecto la ejecución de
+scripts de instalación (<code>ignore-scripts</code>), que en este entorno ya ha dado guerra con binarios
+nativos — hay que hacerlo con calma y verificando CI, no de pasada.</p>
+
+<h2>4 · Majors que NO tocaría ahora</h2>
+<div class="tablewrap">
+<table>
+  <tr><th>Salto</th><th>Por qué esperar</th></tr>
+  <tr><td><code>@angular/*</code> 21 → 22</td><td>Ya hay plan escrito: primero app-cv, y solo cuando 22 sea estable. No mezclarlo con un PR de seguridad.</td></tr>
+  <tr><td><code>typescript</code> 5.9 → 7</td><td>Compilador reescrito. Un monorepo con seis <code>tsconfig</code> distintos no es donde se estrena.</td></tr>
+  <tr><td><code>vite</code> 6 → 8</td><td>Arrastraría los cinco plugins de framework a la vez. Antes, unificar en 7 al menos con app-tauri.</td></tr>
+  <tr><td><code>eslint</code> 9 → 10</td><td>Primero sacar a shibui-ui del 8; tener tres majors de ESLint vivos a la vez sería peor.</td></tr>
+  <tr><td><code>semantic-release</code> 24 → 25</td><td>El pipeline de release ya falla por otra causa (<code>--config</code> donde debía ir <code>--extends</code>). Arreglar eso antes de bumpar.</td></tr>
+  <tr><td><code>jsdom</code> 27 → 30 · <code>lint-staged</code> 16 → 17 · <code>concurrently</code> 9 → 10</td><td>Herramienta de desarrollo sin aviso abierto. Cuando toque.</td></tr>
+</table>
+</div>
+
+<h2>5 · Orden sugerido</h2>
+<div class="tablewrap">
+<table>
+  <tr><th>#</th><th>PR</th><th>Contenido</th><th>Riesgo</th></tr>
+  <tr><td>1</td><td><code>fix/deps-security-2026-08</code></td><td>Angular 21.2.19 · suelos de overrides caducados · overrides nuevos · firebase-tools</td><td class="lo">bajo — todo dentro de major</td></tr>
+  <tr><td>2</td><td><code>chore/cargo-update</code></td><td>137 crates dentro de semver, Tauri 2.11.5</td><td class="lo">bajo — lo valida <code>ci-tauri</code></td></tr>
+  <tr><td>3</td><td><code>chore/toolchain-shibui-ui</code></td><td>ESLint 9 + typescript-eslint 8 + @types/react 19 en la librería; converger <code>@types/node</code></td><td class="mid">medio — saldrán reglas nuevas</td></tr>
+  <tr><td>4</td><td><code>chore/api-vitest</code> · <code>chore/wrangler-4</code></td><td>Quitar jest; subir wrangler</td><td class="mid">medio — migración real</td></tr>
+</table>
+</div>
+
+<div class="note">
+  <strong>Cómo se ejecuta esto desde un worktree.</strong> Cualquiera de estos PRs mueve
+  <code>pnpm-lock.yaml</code>, y <code>pnpm install --lockfile-only</code> aquí pide purgar el árbol porque el
+  <code>node_modules</code> es un junction al del repo principal. La receta —retirar solo el junction raíz con
+  <code>.Delete()</code>, regenerar, verificar con <code>--frozen-lockfile</code>, restaurar— está en la sección
+  «Regenerar el lockfile desde un worktree» del <code>CLAUDE.md</code> raíz. <strong>Nunca</strong> retirar un
+  junction con <code>rm -rf</code>.
+</div>
+
+<h2>Limitaciones de esta auditoría</h2>
+<ul>
+  <li><code>pnpm outdated</code> devuelve <code>current: undefined</code> para los paquetes que no están
+    instalados en este worktree (open-cells, typescript, vite, zod…). Para esos he leído el rango
+    declarado y la resolución del lockfile, no la instalación.</li>
+  <li>No he verificado que subir <code>firebase-tools</code> cierre efectivamente sus 17 avisos: hay que
+    bumpar y volver a correr <code>pnpm audit</code>.</li>
+  <li>La atribución «quién introduce el aviso» usa la primera dependencia directa de cada ruta; un
+    paquete que entra por dos caminos aparece contado en los dos.</li>
+  <li>Sin datos de Dependabot: es la vista de <code>pnpm audit</code> contra el registro, que puede
+    diferir en unos días de lo que muestre GitHub.</li>
+</ul>
+
+<footer>
+  Generado el 15 de agosto de 2026 sobre <code>develop@fed210c</code>.
+  Auditoría anterior: <code>docs/security/dependabot-audit-2026-07-16.html</code>.
+</footer>
+
+</div>
