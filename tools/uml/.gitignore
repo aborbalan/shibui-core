@@ -1,0 +1,5 @@
+node_modules/
+
+# Salida del renderizado: se regenera desde los .puml, no se versiona.
+ejemplos/*.svg
+ejemplos/*.png

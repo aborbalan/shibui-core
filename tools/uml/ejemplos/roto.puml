@@ -1,0 +1,4 @@
+@startuml
+Alice -> Bob : esta linea esta bien
+%%%%esta no lo esta%%%%
+@enduml

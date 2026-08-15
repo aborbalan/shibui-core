@@ -100,6 +100,20 @@ arranque por defecto de Claude Code son 30 s, así que **sin subirlo el servidor
 Existe además config espejo en `apps/app-{angular,svelte,react}/.vscode/mcp.json` para
 VS Code y Copilot. Ojo al formato: allí la clave raíz es `servers`, aquí es `mcpServers`.
 
+### `uml` — diagramas PlantUML, en `tools/uml`
+
+Motor PlantUML en local **sin Java y sin servidor externo**: nada del diagrama sale de la
+máquina. Viene en dos formas sobre el mismo motor — CLI (`node tools/uml/uml.mjs x.puml`)
+y servidor MCP (`render_uml`, `render_uml_file`, `check_uml`, `explain_uml`), cuya gracia
+es que **devuelve la imagen**, no el marcado: los solapes de layout de PlantUML no se ven
+leyendo el fuente.
+
+- **No está en `.mcp.json`**: se registra en ámbito de usuario, así que sirve en todos los
+  proyectos y no se duplica con el del repo. Instrucciones en `tools/uml/README.md`.
+- **No es workspace de pnpm** (`tools/` no entra en los globs, a propósito). Sus deps se
+  instalan con `npm install` dentro de su directorio, una sola vez.
+- Primer consumidor: la ruta `/arquitectura` de `app-torii`.
+
 ---
 
 ## Consumo de `@shibui-ui/ui` desde las apps

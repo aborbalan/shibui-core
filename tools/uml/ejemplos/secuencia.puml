@@ -1,0 +1,30 @@
+@startuml
+autonumber
+actor Usuario
+participant "App web" as App
+participant "API de pedidos" as API
+database "Postgres" as DB
+queue "Cola de eventos" as MQ
+
+Usuario -> App : confirma el carrito
+activate App
+App -> API : POST /pedidos
+activate API
+
+API -> DB : insert pedido (pendiente)
+activate DB
+DB --> API : id = 4821
+deactivate DB
+
+alt stock disponible
+  API -> MQ : PedidoCreado(4821)
+  API --> App : 201 Created
+else sin stock
+  API -> DB : update pedido (rechazado)
+  API --> App : 409 Conflict
+end
+deactivate API
+
+App --> Usuario : muestra confirmacion
+deactivate App
+@enduml
