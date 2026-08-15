@@ -450,7 +450,6 @@ export const Clickable: Story = {
       <lib-timeline
         @ui-lib-timeline-item-click="${(e: CustomEvent<TimelineItemClickDetail>): void => {
           // En un CV real: router.navigate(e.detail.value) o abrir e.detail.href
-          // eslint-disable-next-line no-console
           console.log('timeline-item-click →', e.detail.value, e.detail);
         }}"
       >
