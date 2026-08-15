@@ -13,9 +13,13 @@ import { defineConfig, globalIgnores } from 'eslint/config';
  * config, así que desde `.config/` un `dist` apuntaría a `.config/dist`. Es el
  * mismo sitio donde la tiene `apps/app-react`.
  *
- * El linteo con tipos se limita a `src/**` —igual que hacía el `.eslintignore`
- * de antes con su `!src/**/*`— porque fuera de ahí hay ficheros que no entran
- * en el tsconfig y el parser con `project` fallaría al no encontrarlos.
+ * El linteo con tipos se limita al directorio `src`, igual que hacía el
+ * `.eslintignore` de antes con su patrón de negación, porque fuera de ahí hay
+ * ficheros que no entran en el tsconfig y el parser con `project` fallaría al
+ * no encontrarlos.
+ *
+ * Ojo al escribir estos comentarios: un patrón glob con asterisco seguido de
+ * barra cierra el bloque antes de tiempo y el fichero deja de parsear.
  */
 export default defineConfig([
   globalIgnores([
