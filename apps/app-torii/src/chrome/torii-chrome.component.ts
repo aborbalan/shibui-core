@@ -1,5 +1,6 @@
 import { LitElement, css, unsafeCSS, type TemplateResult } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { navigate } from '@open-cells/core';
 import { ElementController } from '@open-cells/element-controller';
 import { toriiChromeTemplate } from './torii-chrome.html';
 import chromeCss from './torii-chrome.css?inline';
@@ -49,6 +50,21 @@ export class ToriiChrome extends LitElement {
     super.disconnectedCallback();
   }
 
+  /**
+   * `lib-header` hace `preventDefault()` sobre sus links y delega en el evento
+   * `ui-lib-header-link`: el `href` que se le pasa es solo para que el enlace
+   * tenga destino visible y para abrir en pestaña nueva. **Sin este handler no
+   * navega ninguna pestaña** — ni en escritorio ni en el drawer móvil. Los
+   * showcases de Angular y Svelte hacen lo mismo con sus routers.
+   *
+   * Los `id` de los links son los nombres de ruta, que es como se navega en
+   * Open Cells. `navigate` actualiza el hash, así que `activeRoute` se pone al
+   * día solo por el `hashchange` de abajo.
+   */
+  goTo(id: string): void {
+    navigate(id);
+  }
+
   togglePanel(): void {
     this.panelOpen = !this.panelOpen;
   }
@@ -76,7 +92,14 @@ export class ToriiChrome extends LitElement {
    */
   private syncActiveRoute = (): void => {
     const path = window.location.hash.replace(/^#!?\/?/, '').split('?')[0];
-    this.activeRoute = path === '' ? 'home' : path;
+    const next = path === '' ? 'home' : path;
+    const changed = next !== this.activeRoute;
+    this.activeRoute = next;
+
+    // Los nodos de página conviven en el DOM y el navegador se queda donde
+    // estaba: sin esto, saltar desde el pie de una página larga aterriza a
+    // media altura de la siguiente.
+    if (changed) window.scrollTo(0, 0);
   };
 
   protected override render(): TemplateResult {

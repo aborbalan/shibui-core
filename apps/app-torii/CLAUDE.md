@@ -33,6 +33,20 @@ Estas cinco son las que se rompen por intuición:
   hay que declararlos (`declare _trustReport: TrustReport | null;`) o el build falla.
 - **Los nodos de página se reutilizan entre visitas.** `firstUpdated` no vuelve a correr:
   el trabajo por visita va en `onPageEnter`, y la reacción a params en `willUpdate`.
+- **El router NO borra la página anterior.** Deja todos los nodos visitados dentro de
+  `#app-content` y solo les cambia el atributo `state` (`active` · `cached` · `inactive`).
+  Esconder los que no están activos es cosa de la app: la regla vive en `src/styles.css`.
+  **Si se toca eso, la navegación parece rota sin estarlo** — el hash cambia y el link se
+  marca, pero la página nueva se apila debajo de la anterior, fuera de la vista.
+
+### El header no navega solo
+
+`lib-header` hace `preventDefault()` sobre sus links y delega en el evento
+`ui-lib-header-link` (`detail.id`); el `href` es solo destino visible. **Sin handler no
+navega ninguna pestaña**, ni en escritorio ni en el drawer móvil. Lo cablea
+`torii-chrome`, que llama a `navigate(id)` porque los ids de `NAV_LINKS` son nombres de
+ruta. Los showcases de Angular y Svelte hacen lo mismo con sus routers. Los links del pie
+y el logo, en cambio, son anclas normales y navegan por el hash sin ayuda.
 
 ### El MCP server del fork
 
