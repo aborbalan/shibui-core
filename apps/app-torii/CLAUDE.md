@@ -60,9 +60,25 @@ Ni PR, ni issue, ni comentario. Todo, incluidos los defectos que sean suyos, va 
 | `src/chrome/` | Header, footer y switcher de katachi — fuera del nodo del router |
 | `src/pages/` | Page controllers |
 | `src/data/` | Manifiesto del ecosistema, katachi, tipos y loaders |
+| `docs/arquitectura/` | Fuente `.puml` del diagrama de `/arquitectura` |
+| `public/arquitectura/` | Su `.svg` renderizado — generado, pero versionado a propósito |
 
 Convención de ficheros, igual que la librería: `x.component.ts` + `x.html.ts` + `x.css`
 + `x.types.ts`.
+
+## El diagrama de `/arquitectura`
+
+La única página sin datos vivos. El diagrama se escribe en PlantUML y se renderiza
+con `tools/uml` (repo raíz): sin Java y sin mandar nada fuera de la máquina.
+
+- Tocar el diagrama = tocar `docs/arquitectura/ecosistema.puml` y **regenerar**:
+  `pnpm --filter app-torii diagrama`. Editar el `.svg` a mano es dejarlos desalineados.
+- **Mirar el resultado, no solo el fuente.** PlantUML coloca los elementos por su
+  cuenta; los solapes y las flechas cruzando texto solo se ven en la imagen. El MCP
+  `uml` (`render_uml_file`) la devuelve en la respuesta.
+- El fichero debe **abrir** con `@startuml`: un comentario por encima lo rompe.
+- El SVG lleva sus colores dentro y no reacciona al katachi. Por eso la página lo
+  enmarca en una lámina de papel claro fija en vez de intentar tematizarlo.
 
 ## Datos
 

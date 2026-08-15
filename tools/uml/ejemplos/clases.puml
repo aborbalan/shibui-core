@@ -1,0 +1,42 @@
+@startuml
+' Este ejemplo existe para probar el camino de Graphviz: los diagramas de
+' clases pasan por el puente Viz.js/WASM, los de secuencia no. Si este
+' renderiza, el arranque del motor esta completo.
+skinparam classAttributeIconSize 0
+
+interface Repositorio<T> {
+  +buscar(id: string): T
+  +guardar(entidad: T): void
+}
+
+abstract class EntidadBase {
+  #id: string
+  #creadoEn: Date
+  +equals(otra: EntidadBase): boolean
+}
+
+class Pedido extends EntidadBase {
+  -estado: EstadoPedido
+  -lineas: List<Linea>
+  +total(): Dinero
+  +confirmar(): void
+}
+
+class Linea {
+  -sku: string
+  -cantidad: int
+  -precio: Dinero
+}
+
+enum EstadoPedido {
+  PENDIENTE
+  CONFIRMADO
+  RECHAZADO
+}
+
+class PedidoRepositorioSql implements Repositorio
+
+Pedido "1" *-- "1..n" Linea
+Pedido --> EstadoPedido
+PedidoRepositorioSql ..> Pedido : gestiona
+@enduml

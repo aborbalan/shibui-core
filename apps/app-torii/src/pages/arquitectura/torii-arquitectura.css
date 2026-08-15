@@ -1,0 +1,181 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+lib-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.wrap {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 12vh, 8rem) var(--space-6, 1.5rem) var(--space-20, 5rem);
+}
+
+.lede {
+  max-width: 52ch;
+  margin: var(--space-6, 1.5rem) 0 0;
+  color: var(--text-secondary, #555);
+  line-height: 1.7;
+}
+
+.section-label {
+  display: flex;
+  align-items: baseline;
+  gap: 1ch;
+  margin: var(--space-16, 4rem) 0 var(--space-6, 1.5rem);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted, #888);
+}
+
+/* ── La plancha ──
+ *
+ * El SVG lleva sus colores dentro y no reacciona al katachi: en shizen se ve
+ * bien y en terminal sería texto casi negro sobre fondo fosforito. Así que no
+ * se pelea con el tema — se enmarca. Papel claro fijo, borde y sombra: una
+ * lámina técnica colgada en la pared, que es lo que es.
+ */
+
+.plate {
+  margin: 0;
+}
+
+.plate__frame {
+  /* El diagrama es ancho de verdad (casi 2:1). En una pantalla estrecha se
+   * mira desplazando, que es preferible a encogerlo hasta que no se lea. */
+  overflow-x: auto;
+  padding: clamp(1rem, 3vw, 2rem);
+  background: #fffdf9;
+  border: 1px solid var(--border-subtle, rgb(0 0 0 / 0.12));
+  border-radius: var(--radius-lg, 0.75rem);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.06), 0 12px 32px rgb(0 0 0 / 0.12);
+}
+
+.plate__img {
+  display: block;
+  /* Por debajo de este ancho las etiquetas dejan de leerse: mejor scroll. */
+  min-width: 44rem;
+  width: 100%;
+  height: auto;
+}
+
+.plate__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1ch;
+  margin-top: var(--space-3, 0.75rem);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted, #888);
+}
+
+.plate__caption a,
+.colofon a {
+  color: var(--text-accent, #b85a1e);
+  text-decoration: none;
+}
+
+.plate__caption a:hover,
+.colofon a:hover {
+  text-decoration: underline;
+}
+
+.plate__frame:focus-visible,
+.plate__caption a:focus-visible,
+.colofon a:focus-visible,
+.longdesc summary:focus-visible {
+  outline: 2px solid var(--border-focus, #b85a1e);
+  outline-offset: 3px;
+}
+
+/* ── Leyenda ── */
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: var(--space-8, 2rem);
+  margin: 0;
+}
+
+.legend__item dt {
+  display: flex;
+  align-items: center;
+  gap: 0.75ch;
+  font-weight: 500;
+  color: var(--text-primary, #222);
+}
+
+.legend__line {
+  flex: none;
+  width: 3rem;
+  height: 0.5rem;
+  color: var(--text-muted, #888);
+}
+
+.legend__item dd {
+  margin: var(--space-2, 0.5rem) 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #555);
+}
+
+/* ── Descripción larga y colofón ── */
+
+.longdesc {
+  margin-top: var(--space-10, 2.5rem);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-secondary, #555);
+}
+
+.longdesc summary {
+  cursor: pointer;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted, #888);
+}
+
+.longdesc ul {
+  max-width: 68ch;
+  margin: var(--space-4, 1rem) 0 0;
+  padding-left: 1.25rem;
+}
+
+.longdesc li + li {
+  margin-top: var(--space-3, 0.75rem);
+}
+
+.longdesc strong {
+  color: var(--text-primary, #222);
+  font-weight: 500;
+}
+
+.colofon {
+  max-width: 60ch;
+  margin: var(--space-12, 3rem) 0 0;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-muted, #888);
+}
+
+code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.92em;
+}
+
+@media (max-width: 48rem) {
+  .plate__frame {
+    padding: 1rem;
+  }
+}
