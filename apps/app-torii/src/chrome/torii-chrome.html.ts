@@ -4,6 +4,7 @@ import type { ToriiChrome } from './torii-chrome.component';
 
 const NAV_LINKS = [
   { id: 'home', label: 'Ecosistema', href: '#!/' },
+  { id: 'arquitectura', label: 'Arquitectura', href: '#!/arquitectura' },
   { id: 'salud', label: 'Salud', href: '#!/salud' },
   { id: 'deploys', label: 'Deploys', href: '#!/deploys' },
 ];

@@ -9,6 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "validate:markup": "node scripts/validate-lib-markup.mjs",
+    "diagrama": "node ../../tools/uml/uml.mjs docs/arquitectura/ecosistema.puml --format svg --out public/arquitectura",
     "deploy": "firebase deploy --only hosting:torii --project lib-ui-b67c5"
   },
   "dependencies": {

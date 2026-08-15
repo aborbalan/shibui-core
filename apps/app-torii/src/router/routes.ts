@@ -19,6 +19,14 @@ export const routes: RouteDefinition[] = [
     },
   },
   {
+    path: '/arquitectura',
+    name: 'arquitectura',
+    component: 'torii-arquitectura',
+    action: async () => {
+      await import('../pages/arquitectura/torii-arquitectura.component');
+    },
+  },
+  {
     path: '/salud',
     name: 'salud',
     component: 'torii-health',
