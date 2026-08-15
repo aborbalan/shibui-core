@@ -50,7 +50,7 @@ package "apps/ — consumidores de la librería" as APPS {
 
 package "packages/" as PKGS {
   package "núcleo y verificación" as CORE {
-    [**consumer-tests**\ncontratos R×N×S] as CT
+    [**consumer-tests**\ncontratos R×N×S · 2 paquetes] as CT
     [**shibui/ui**\n102 web components · Lit 3] as UI #FDF6E7
     [**hanko**\nsello de confianza] as HANKO
   }

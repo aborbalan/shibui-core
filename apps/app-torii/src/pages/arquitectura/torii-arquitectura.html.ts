@@ -6,8 +6,15 @@ import type { ToriiArquitectura } from './torii-arquitectura.component';
 const PUML_HREF =
   'https://github.com/aborbalan/shibui-core/blob/develop/apps/app-torii/docs/arquitectura/ecosistema.puml';
 
-/** Ruta del asset generado, servido tal cual desde `public/`. */
-const SVG_HREF = 'arquitectura/ecosistema.svg';
+/**
+ * Ruta del asset generado, servido tal cual desde `public/`.
+ *
+ * Absoluta desde la raíz a propósito: el hosting reescribe `**` a /index.html,
+ * así que la app puede quedar servida bajo cualquier path (`/algo/otro`). Con
+ * una ruta relativa, el diagrama se buscaría en `/algo/arquitectura/…` y esta
+ * página se quedaría sin su único contenido.
+ */
+const SVG_HREF = '/arquitectura/ecosistema.svg';
 
 export function toriiArquitecturaTemplate(host: ToriiArquitectura): TemplateResult {
   return html`
@@ -23,20 +30,33 @@ export function toriiArquitecturaTemplate(host: ToriiArquitectura): TemplateResu
       ></lib-display-heading>
 
       <p class="lede">
-        Trece piezas en un solo monorepo: una librería de web components, las apps que la
-        consumen desde cinco entornos distintos, las herramientas que la verifican y los
+        Catorce paquetes en un solo monorepo: una librería de web components, las apps que
+        la consumen desde cinco entornos distintos, las herramientas que la verifican y los
         servicios que la publican. Esto es el mapa de quién depende de quién.
       </p>
 
       <p class="section-label"><span>01</span><span>El plano</span></p>
 
       <figure class="plate">
-        <div class="plate__frame">
+        <!--
+          El marco desplaza en horizontal, así que tiene que poder recibir el
+          foco: sin tabindex, con teclado y sin ratón no hay forma de ver la
+          mitad derecha del diagrama en una pantalla estrecha.
+        -->
+        <div
+          class="plate__frame"
+          tabindex="0"
+          role="region"
+          aria-label="Diagrama de la estructura del ecosistema, desplazable en horizontal"
+        >
+          <!--
+            Sin width/height: el SVG los trae dentro, así que el navegador ya
+            reserva el hueco con la proporción correcta. Ponerlos a mano sería
+            un número que hay que recordar actualizar en cada regeneración.
+          -->
           <img
             class="plate__img"
             src=${SVG_HREF}
-            width="963"
-            height="499"
             alt="Diagrama de componentes del ecosistema shibui: las apps de apps/, los paquetes de packages/ y los servicios, con las dependencias entre ellos. La descripción en texto está justo debajo."
           />
         </div>

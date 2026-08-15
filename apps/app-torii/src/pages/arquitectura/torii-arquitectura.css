@@ -89,6 +89,7 @@ lib-background {
   text-decoration: underline;
 }
 
+.plate__frame:focus-visible,
 .plate__caption a:focus-visible,
 .colofon a:focus-visible,
 .longdesc summary:focus-visible {
