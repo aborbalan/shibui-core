@@ -12,10 +12,11 @@ un `workflow_call`.
 ```
 orchestrator.yml          ← único trigger externo (push / PR / dispatch)
   ├── ci-lib.yml           ← UI library: quality + build + tests + deploy Storybook + hanko (test/seal/report)
-  ├── ci-apps.yml          ← Apps: build React/Angular/Svelte/CV/OpenCells + deploy Firebase
+  ├── ci-apps.yml          ← Apps: build React/Angular/Svelte/CV/torii + deploy Firebase
   ├── ci-api.yml           ← NestJS API: lint + build + test + deploy docs (Firebase Hosting)
   ├── ci-tauri.yml         ← Rust core: fmt + clippy + cargo test
   ├── ci-sukashi.yml       ← Sukashi: type-check + tests + deploy demo (sukashi.web.app, solo main)
+  ├── ci-kura.yml          ← kura: type-check + tests + humo del CLI. NO despliega
   └── release.yml          ← NPM publish (solo main + ci-lib exitoso)
 
 notify.yml                 ← workflow_run: notifica a Discord al completar el orquestador
@@ -38,10 +39,11 @@ Los outputs del job `detect-changes` son la API pública hacia los pipelines.
 | `angular` | `apps/app-angular/**` | Activa ci-apps para Angular |
 | `svelte` | `apps/app-svelte/**` | Activa ci-apps para Svelte |
 | `cv` | `apps/app-cv/**` | Activa ci-apps para CV (deploy a `shibui-cv`) |
-| `opencells` | `apps/app-opencells/**` | Activa ci-apps para OpenCells |
+| `torii` | `apps/app-torii/**` | Activa ci-apps para torii |
 | `api` | `apps/shibui-api/**` | Activa ci-api |
 | `tauri` | `apps/app-tauri/**` | Activa ci-tauri |
 | `sukashi` | `packages/sukashi/**` | Activa ci-sukashi (type-check + tests; deploy demo solo en main) |
+| `kura` | `packages/kura/**` | Activa ci-kura (type-check + tests + humo del CLI, sin red ni secretos) |
 
 Cada output tiene lógica OR con su flag `force_*` de `workflow_dispatch`.
 
@@ -95,10 +97,11 @@ if: |
 | `force_angular` | Activa ci-apps para Angular |
 | `force_svelte` | Activa ci-apps para Svelte |
 | `force_cv` | Activa ci-apps para CV |
-| `force_opencells` | Activa ci-apps para OpenCells |
+| `force_torii` | Activa ci-apps para torii |
 | `force_api` | Activa ci-api |
 | `force_tauri` | Activa ci-tauri |
 | `force_sukashi` | Activa ci-sukashi |
+| `force_kura` | Activa ci-kura |
 | `force_hanko_issues` | Activa la emisión de issues del harness hanko en ci-lib |
 
 ---

@@ -263,7 +263,8 @@ export class LibBackground extends LitElement {
           + Math.sin(angle * 5 + phase * 1.4) * b.r * 0.05;
         const x = b.cx * W + (b.r + noise) * Math.cos(angle);
         const y = b.cy * H + (b.r + noise) * Math.sin(angle);
-        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
       }
       ctx.closePath();
       ctx.fillStyle = b.color;
@@ -363,7 +364,8 @@ export class LibBackground extends LitElement {
                      + Math.cos((r / ROWS + t * 0.7) * Math.PI * 2) * 8;
           const x = c * cw;
           const y = r * ch + wave;
-          c === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          if (c === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
         }
         ctx.strokeStyle = `rgba(160,140,118,${0.08 + Math.sin(r / ROWS * Math.PI) * 0.06})`;
         ctx.lineWidth = 0.8;
@@ -376,7 +378,8 @@ export class LibBackground extends LitElement {
                      + Math.cos((r / ROWS + t * 0.7) * Math.PI * 2) * 8;
           const x = c * cw;
           const y = r * ch + wave;
-          r === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          if (r === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
         }
         ctx.strokeStyle = `rgba(160,140,118,${0.06 + Math.sin(c / COLS * Math.PI) * 0.04})`;
         ctx.lineWidth = 0.8;

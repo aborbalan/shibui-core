@@ -10,6 +10,11 @@ on:
         type: string
         required: true
 
+# Solo lectura: ningún job de aquí escribe en el repo ni usa el GITHUB_TOKEN.
+# Lo que despliega lo hace con secretos propios, no con permisos del token.
+permissions:
+  contents: read
+
 env:
   NODE_VERSION: "22.14.0"
   PNPM_VERSION: "9.15.0"
@@ -41,6 +46,15 @@ jobs:
 
       - name: 🧹 Lint
         run: pnpm --filter @shibui-ui/api lint
+
+      # Los tests de la API no se ejecutaban en ningún sitio: estaban escritos
+      # y nadie los corría, ni en local ni aquí. Un test que no corre no es una
+      # red, es decoración.
+      - name: 🧪 Tests
+        run: pnpm --filter @shibui-ui/api test
+
+      - name: 🧪 Tests E2E
+        run: pnpm --filter @shibui-ui/api test:e2e
 
   # ─────────────────────────────────────────
   # JOB 2 — Generar spec OpenAPI

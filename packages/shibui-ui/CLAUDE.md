@@ -26,12 +26,11 @@ El design system se basa en **CSS custom properties (tokens)** organizados en ca
 
 ```
 packages/shibui-ui/
+  eslint.config.js        → Config plana de ESLint 9 (va en la raíz del paquete, no en .config/:
+                            en config plana los `ignores` se resuelven contra la carpeta del fichero)
   .config/                → Configuración local del paquete
-    .eslintignore
-    .eslintrc.json
     .prettierrc.json
     .stylelintrc.json
-    commitlint.config.cjs
     lighthouserc.cjs
   .storybook/             → Configuración visual de Storybook
   .lighthouseci/          → Configuración de Lighthouse CI

@@ -1,0 +1,112 @@
+:host {
+  display: block;
+}
+
+.wrap {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 10vh, 6rem) var(--space-6, 1.5rem) var(--space-20, 5rem);
+}
+
+.lede {
+  max-width: 54ch;
+  margin: var(--space-6, 1.5rem) 0 0;
+  color: var(--text-secondary, #555);
+  line-height: 1.7;
+}
+
+.caveat {
+  max-width: 54ch;
+  margin: var(--space-6, 1.5rem) 0 0;
+  padding-left: 1.2ch;
+  border-left: 2px solid var(--border-default, #ccc);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-muted, #888);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  gap: var(--space-4, 1rem);
+  margin-top: var(--space-12, 3rem);
+}
+
+.site {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 0.5rem);
+  padding: var(--space-5, 1.25rem);
+  background: var(--bg-elevated, #fff);
+  border: 1px solid var(--border-subtle, #ddd);
+}
+
+.site__head {
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+}
+
+.site__name {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary, #222);
+}
+
+.site__verdict {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #555);
+}
+
+.site__url {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.72rem;
+  color: var(--text-muted, #888);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.site__url:hover {
+  color: var(--text-accent, #b85a1e);
+}
+
+.site__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1ch;
+  margin-top: var(--space-2, 0.5rem);
+  padding-top: var(--space-2, 0.5rem);
+  border-top: 1px solid var(--border-subtle, #ddd);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.68rem;
+  color: var(--text-muted, #888);
+}
+
+.legend {
+  margin-top: var(--space-12, 3rem);
+  font-size: 0.8rem;
+  line-height: 1.8;
+  color: var(--text-muted, #888);
+}
+
+.legend dt {
+  display: inline;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: var(--text-secondary, #555);
+}
+
+.legend dd {
+  display: inline;
+  margin: 0 0 0 0.5ch;
+}
+
+.legend div + div {
+  margin-top: var(--space-2, 0.5rem);
+}

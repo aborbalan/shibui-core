@@ -1,0 +1,52 @@
+name: CI — kura
+
+# Reusable: lo invoca el orchestrator cuando cambia packages/kura/**.
+#
+# SOLO quality. kura no despliega nada desde CI, y es deliberado: sus
+# comandos con efectos exigen --execute Y credenciales de Firebase, y aquí
+# no hay ninguna de las dos cosas. Los deploys del ecosistema siguen
+# saliendo de ci-apps/ci-lib/ci-api/ci-sukashi, no de aquí.
+#
+# Toda la suite corre sin red y sin secretos: los comandos son funciones
+# puras que reciben su adaptador, y los tests le pasan uno falso.
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: true
+
+# Solo lectura: la suite corre sin red y sin secretos, y kura no despliega
+# nada desde CI.
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "22.14.0"
+  PNPM_VERSION: "9.15.0"
+
+jobs:
+  quality:
+    name: 蔵 kura — type-check + tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: 🔎 Type Check
+        run: pnpm --filter @shibui-ui/kura type-check
+      - name: 🧪 Unit tests (node)
+        run: pnpm --filter @shibui-ui/kura test
+      # Humo del CLI de verdad, no solo de sus piezas: `targets` no toca la red
+      # ni pide credenciales, así que se puede ejercitar entero aquí. Si el
+      # contrato de salida se rompe, esto falla antes que ningún consumidor.
+      - name: 🗺️ Humo del contrato de E/S
+        run: pnpm exec tsx packages/kura/src/cli.ts targets --format json

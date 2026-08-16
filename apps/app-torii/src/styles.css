@@ -1,0 +1,39 @@
+/* Plomería de estilos globales. Los componentes shibui traen sus propios
+   estilos (Shadow DOM); aquí solo el reset y el lienzo de la app. Los colores
+   salen de los tokens de @shibui/ui según el data-katachi del <html>. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+body {
+  font-family: var(--lib-font-sans, system-ui, sans-serif);
+  background: var(--bg-base, #0c0c0c);
+  color: var(--text-base, #e8e8e8);
+}
+
+/* Contenedor del router de Open Cells: ocupa el alto y deja respirar. */
+#app-content {
+  display: block;
+  min-height: 100vh;
+}
+
+/* El router NO borra la página anterior: deja todos los nodos visitados dentro
+   de #app-content y solo les cambia el atributo `state` (active · cached ·
+   inactive). Esconder los que no están activos es cosa de la app.
+
+   Sin esta regla, la navegación *parece* rota: el hash cambia y el link se
+   marca, pero la página nueva se apila DEBAJO de la anterior, fuera de la
+   vista, y quien mira la pantalla sigue viendo la de antes. */
+#app-content > [state='inactive'],
+#app-content > [state='cached'] {
+  display: none;
+}

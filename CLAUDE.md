@@ -28,6 +28,7 @@ desde una sesión interactiva (`claude`). No añaden dependencias al `package.js
 | `svelte` | Oficial de Svelte 5. `list-sections`, `get-documentation`, `svelte-autofixer`, `playground-link` | Antes de escribir Svelte en `app-svelte`, y **siempre** para revisar código Svelte generado |
 | `chrome-devtools` | Oficial del equipo Chrome DevTools. DOM, consola, red, performance y capturas sobre un Chrome real | Verificación visual de cualquier app. Sustituye al apaño de Chrome headless a mano y esquiva el Browser pane congelado |
 | `shibui-cem` | `cem` de bennypowers sobre el manifiesto de `@shibui-ui/ui`. Es el único que conoce los ~1.700 puntos de API de la librería | **Validar markup `lib-*` antes de darlo por bueno**, en la librería y en las apps consumidoras |
+| `kura` | Propio (`packages/kura`). Seis herramientas sobre Firebase Hosting: `targets`, `status`, `verify`, `sites`, `sites create`, `deploy` | Cualquier pregunta sobre qué hay publicado, qué falta desplegar o si un sitio existe. Preferirlo al CLI por Bash |
 
 ### `shibui-cem` — qué esperar y qué no
 
@@ -84,9 +85,12 @@ arranque por defecto de Claude Code son 30 s, así que **sin subirlo el servidor
   `list_projects` no encuentra el `angular.json`, y `ng.js` está parcheado por la extensión
   Console Ninja, que imprime un banner **por stdout** que rompería el framing JSON-RPC. La
   lanzadera fija el cwd y desvía a stderr todo lo que no sea JSON.
+  **La extensión ya está desinstalada, pero el parche sigue en el `ng.js`** (verificado
+  2026-08-03: línea 2 en `app-angular` y en `app-cv`) — la lanzadera sigue haciendo falta,
+  no la retires por creerla obsoleta.
 - **Desde un worktree, `angular-cli` no arranca**: los worktrees no tienen `node_modules`
-  (ver `reference_dev_environment`). La lanzadera falla con un mensaje explícito en vez de
-  colgarse. `svelte` y `chrome-devtools` sí funcionan desde cualquier sitio porque van por npx.
+  (ver «Entorno de ejecución» más abajo). La lanzadera falla con un mensaje explícito en vez
+  de colgarse. `svelte` y `chrome-devtools` sí funcionan desde cualquier sitio porque van por npx.
 - **`find_examples` no aparece en la lista de tools**: el servidor de Angular lo registra solo
   con Node >= 22.16 y el entorno va con 22.13. Las otras cinco tools sí están.
 - **`chrome-devtools` lleva `--no-performance-crux`** a propósito: sin ese flag, las tools de
@@ -96,6 +100,33 @@ arranque por defecto de Claude Code son 30 s, así que **sin subirlo el servidor
 Existe además config espejo en `apps/app-{angular,svelte,react}/.vscode/mcp.json` para
 VS Code y Copilot. Ojo al formato: allí la clave raíz es `servers`, aquí es `mcpServers`.
 
+### `uml` — diagramas PlantUML, en `tools/uml`
+
+Motor PlantUML en local **sin Java y sin servidor externo**: nada del diagrama sale de la
+máquina. Viene en dos formas sobre el mismo motor — CLI (`node tools/uml/uml.mjs x.puml`)
+y servidor MCP (`render_uml`, `render_uml_file`, `check_uml`, `explain_uml`), cuya gracia
+es que **devuelve la imagen**, no el marcado: los solapes de layout de PlantUML no se ven
+leyendo el fuente.
+
+- **No está en `.mcp.json`**: se registra en ámbito de usuario, así que sirve en todos los
+  proyectos y no se duplica con el del repo. Instrucciones en `tools/uml/README.md`.
+- **No es workspace de pnpm** (`tools/` no entra en los globs, a propósito). Sus deps se
+  instalan con `npm install` dentro de su directorio, una sola vez.
+- Primer consumidor: la ruta `/arquitectura` de `app-torii`.
+
+---
+
+## Consumo de `@shibui-ui/ui` desde las apps
+
+Las apps consumidoras **no estilan** los componentes `lib-*`. Son Web Components de Lit con
+Shadow DOM: una regla desde fuera no atraviesa el límite, así que además de saltarse la
+convención **no funciona**.
+
+- ¿Hace falta que se vea distinto? Añadir variante/prop **en `packages/shibui-ui`**.
+- ¿Distinguir instancias? Por contenido/slots (un icono, otro texto), no por CSS en el host.
+- Lo único admisible alrededor de un `lib-*` es **layout**: `display`, `gap`, `grid`, tamaño
+  del contenedor.
+
 ---
 
 ## Monorepo
@@ -103,7 +134,7 @@ VS Code y Copilot. Ojo al formato: allí la clave raíz es `servers`, aquí es `
 Gestionado con **pnpm workspaces** (pnpm@9.15.0, Node >=20).
 
 Workspaces declarados en `pnpm-workspace.yaml`:
-- `apps/*` — app-react, app-angular, app-svelte, app-cv, app-opencells, app-tauri, shibui-api (`@shibui-ui/api`)
+- `apps/*` — app-react, app-angular, app-svelte, app-cv, app-torii, app-tauri, shibui-api (`@shibui-ui/api`)
 - `packages/*` — shibui-ui (`@shibui-ui/ui`), sukashi (`@shibui-ui/sukashi`), hanko (`@shibui-ui/hanko`), consumer-tests (`@shibui/consumer-tests`), consumer-tests-angular
 - `cloudflare/*` — cf-cache-worker (`@shibui-api/cf-cache-worker`)
 
@@ -111,6 +142,80 @@ Workspaces declarados en `pnpm-workspace.yaml`:
 
 TypeScript base compartido en `tsconfig.base.json`.  
 Path alias `@shibui-ui/ui` → `packages/shibui-ui/dist/index.d.ts`.
+
+---
+
+## Entorno de ejecución — Windows + worktrees
+
+> Se trabaja desde el **repo principal** `D:\PROYECTOS\shibui-ecosystem`. Los worktrees de
+> `.claude/worktrees/` sirven para **escribir** código, no para construirlo.
+
+- **Un worktree nace sin `node_modules`.** `node_modules` está gitignored y `git worktree add`
+  solo materializa ficheros trackeados. No es un bug ni cosa de Windows.
+- **`pnpm install` completo cuelga** en el worktree (EPERM en la fase de link). Sí funciona
+  `pnpm install --lockfile-only` (~12 s), que basta para arreglos de dependencias.
+- **No dar por bueno un `build` o `type-check` corrido desde un worktree.** Escribir el código
+  en la rama y dejar la verificación a la CI o al usuario desde el principal.
+
+### ⛔ Junctions — dos trampas, una destructiva
+
+Para construir desde un worktree se junctan los `node_modules` del principal:
+
+1. **NUNCA retirar un junction con `rm -rf` ni `Remove-Item -Recurse`.** Siguen el enlace y
+   **borran el `node_modules` del repo principal**, que en esta máquina no se puede reinstalar
+   porque el install cuelga. Retirarlos con `.Delete()` de PowerShell filtrando por
+   `LinkType -eq 'Junction'`, o con `cmd /c rmdir`.
+2. **Junctar de más mide el árbol equivocado.** `apps/<app>/node_modules/@shibui-ui/ui` es un
+   symlink a `<principal>/packages/shibui-ui`: junctar la carpeta entera arrastra la librería
+   del principal, que suele ir en **otra rama con un `dist` viejo**. El síntoma es un
+   diagnóstico convencido y falso sobre código que en tu rama está bien. Junctar dentro cada
+   entrada **excepto** `@shibui-ui`.
+
+### Regenerar el lockfile desde un worktree
+
+**Síntoma:** CI falla en `pnpm install --frozen-lockfile` con `ERR_PNPM_OUTDATED_LOCKFILE`
+(«Cannot install with "frozen-lockfile" because pnpm-lock.yaml is not up to date with
+\<manifest\>»). Ocurre siempre que se añade un workspace nuevo o se cambian las dependencias
+de uno existente.
+
+**Por qué parece imposible desde el worktree.** `pnpm install --lockfile-only` responde
+*«The modules directories will be removed and reinstalled from scratch. Proceed?»* y, sin TTY,
+aborta. **La causa no es el worktree**: es que su `node_modules` es un junction al del repo
+principal, así que el `.modules.yaml` que pnpm lee describe **otro árbol, con otras rutas**, y
+concluye que hay que purgar. Aceptar esa purga apuntaría al repo principal.
+
+`--config.node-linker=none` **no** lo esquiva: la comprobación de purga corre antes de elegir
+el linker.
+
+**Receta (verificada 2026-08-12 registrando `packages/kura`; ~17 s, nada descargado):**
+
+1. Retirar **solo** el junction raíz, guardando por `LinkType`:
+   ```powershell
+   $i = Get-Item "$wt\node_modules" -Force
+   if ($i.LinkType -ne 'Junction') { throw 'no es un junction: no tocar' }
+   $i.Delete()
+   ```
+   Los demás junctions (`packages/*/node_modules`, `dist`, `apps/*/node_modules`) **no** se
+   tocan: el que confunde a pnpm es el de la raíz, que es donde vive `.modules.yaml`.
+2. **Verificar en el acto** que el repo principal sigue entero (cuenta de `node_modules` y de
+   `node_modules/.bin`). Si bajó, parar: `.Delete()` sobre un junction no debe tocar el destino.
+3. `pnpm install --lockfile-only` — sobre el árbol limpio no pregunta nada.
+4. Comprobar el diff: debe tocar **un solo importer**. Si toca otros, revisar antes de commitear.
+5. Verificar como lo hace CI: `pnpm install --lockfile-only --frozen-lockfile` debe dar
+   **exit 0**.
+6. Restaurar: `New-Item -ItemType Junction -Path "$wt\node_modules" -Target "<main>\node_modules"`.
+7. Volver a correr `type-check` y `test` del paquete tocado.
+
+> Antes de 2026-08-12 esto figuraba como «hay que hacerlo desde el repo principal». Era falso, y
+> nació de un único intento fallido. Si vuelves a leer esa versión en algún sitio, es esta la
+> que vale.
+
+### Verificación visual
+
+El **Browser pane** (`mcp__Claude_Browser`) tiene el compositor congelado: `screenshot` da
+timeout, `requestAnimationFrame` no dispara nunca y las transiciones CSS se quedan a `t=0`
+→ **`getComputedStyle` devuelve valores intermedios estancados**: medir color o transform de
+un elemento con `transition` da resultados falsos. Para comprobación visual, `chrome-devtools`.
 
 ---
 
@@ -130,6 +235,35 @@ pnpm install
 No añadir dependencias al `package.json` raíz salvo que sean devDeps globales (husky, commitlint, concurrently).  
 Cada app/package gestiona las suyas.
 
+### ⚠️ Los `pnpm.overrides` de seguridad son suelos vivos, y caducan en silencio
+
+Un override como `"undici": ">=7.28.0 <8"` **no** mantiene el paquete al día. pnpm
+satisface el rango una vez, el lockfile congela esa versión, y ahí se queda para
+siempre: **Dependabot no sabe editar `pnpm.overrides`**, así que nunca abre un PR
+para subirla, y `pnpm install` tampoco la mueve porque el rango ya se cumple. El
+override deja de ser una mitigación y pasa a ser un *pin que bloquea el parche*.
+
+El síntoma es inconfundible: **el paquete resuelve exactamente a su propio suelo**.
+En la auditoría de agosto de 2026, seis overrides estaban así (`fast-uri` con
+`>=3.1.2` resuelto en 3.1.2, `undici` con `>=7.28.0` en 7.28.0…) y entre los seis
+explicaban 16 de las 34 alertas abiertas.
+
+Reglas:
+
+- Al añadir un override de seguridad, **anotar la versión parcheada**, no una
+  versión cualquiera que funcione.
+- **Acotar siempre el major** (`">=7.29.0 <8"`, no `">=7.29.0"`), para que subir el
+  suelo no se lleve por delante un cambio de API.
+- Para paquetes con varias ramas vivas, una entrada por major (`js-yaml@3`,
+  `js-yaml@4`), porque el parche de cada rama es distinto.
+- El chequeo semanal `.github/workflows/audit-overrides.yml` cruza `pnpm audit`
+  con estas claves y **rompe** si algún suelo se ha quedado corto. Se puede correr
+  a mano, y con `--input` sobre un JSON guardado para probarlo sin red:
+
+```bash
+node scripts/audit/check-override-freshness.mjs
+```
+
 ---
 
 ## Scripts raíz
@@ -142,7 +276,7 @@ Cada app/package gestiona las suyas.
 | `pnpm start:svelte` | Dev app Svelte |
 | `pnpm start:angular` | Dev app Angular |
 | `pnpm start:cv` | Dev app CV (Angular) |
-| `pnpm start:opencells` | Dev app OpenCells |
+| `pnpm start:torii` | Dev app torii (hub del ecosistema) |
 | `pnpm start:api` | Dev server NestJS |
 | `pnpm start:tauri` | Dev app Tauri (Vite + ventana nativa) — requiere Rust |
 | `pnpm dev:all` | Las tres apps web frontend en paralelo (sin Tauri) |
@@ -150,12 +284,46 @@ Cada app/package gestiona las suyas.
 | `pnpm build:api` | Build de `@shibui-ui/api` |
 | `pnpm build:react` | Build app React |
 | `pnpm build:cv` | Build app CV |
-| `pnpm build:opencells` | Build app OpenCells |
+| `pnpm build:torii` | Build app torii |
 | `pnpm type-check` | `tsc --noEmit` sobre shibui-ui |
 | `pnpm lint` | ESLint sobre shibui-ui |
 | `pnpm test:consumers` | Consumer contract tests (React × Svelte × Angular) |
 | `pnpm test:consumers:react` · `:svelte` · `:angular` | Consumer tests por framework |
 | `pnpm worker:cf:dev` · `worker:cf:deploy` | Dev/deploy del Cloudflare cache worker |
+| `pnpm --silent kura <cmd>` | CLI de Firebase Hosting (ver abajo) |
+
+---
+
+## kura — el CLI de Firebase Hosting
+
+`packages/kura` responde sin abrir la consola de Firebase lo que antes había que mirar a mano:
+qué hay publicado en cada uno de los nueve sitios, si el build local coincide con lo servido,
+y si lo desplegado se llevó por delante la configuración de la API.
+
+```bash
+pnpm --silent kura targets   # sin red ni credenciales
+pnpm --silent kura status    # + qué hay publicado
+pnpm --silent kura verify    # comprueba por HTTP lo que se sirve
+pnpm --silent kura sites     # inventario: declarados sin crear y huérfanos
+```
+
+**`--silent` no es cosmético:** sin él, pnpm escribe su banner en stdout y rompe el NDJSON.
+
+`kura --help --format json` devuelve la superficie completa —comandos, flags y códigos de
+salida— con banderas `network`, `credentials` y `mutates` por comando, pensadas para decidir
+qué es seguro ejecutar sin leer prosa. `targets` no toca nada; `deploy` y `sites create`
+mutan, simulan por defecto y exigen `--execute`.
+
+**Nunca ejecutes `kura deploy --live`**: publicar en estos sitios es publicar en internet y lo
+autoriza el usuario en cada ocasión.
+
+Existe además como **servidor MCP** (`kura` en `.mcp.json`), que es la vía preferente para un
+agente: las seis operaciones llegan como herramientas descritas y anotadas, sin tener que
+recordar rutas ni formatos. Mismo núcleo y mismos guardarraíles que el CLI — de hecho, mismo
+sobre de salida.
+
+Detalle y trampas en [`packages/kura/CLAUDE.md`](packages/kura/CLAUDE.md); estado vivo en
+[`packages/kura/docs/HANDOFF.md`](packages/kura/docs/HANDOFF.md).
 
 ---
 
@@ -248,13 +416,13 @@ Punto de entrada único: `.github/workflows/orchestrator.yml`
 | `packages/shibui-ui/**` · `packages/hanko/**` · `packages/consumer-tests*/**` | `ci-lib.yml` + `ci-apps.yml` |
 | `apps/app-react\|angular\|svelte/**` | `ci-apps.yml` |
 | `apps/app-cv/**` | `ci-apps.yml` (deploy a `shibui-cv.web.app`) |
-| `apps/app-opencells/**` | `ci-apps.yml` |
+| `apps/app-torii/**` | `ci-apps.yml` (deploy a `shibui-torii.web.app`) |
 | `apps/shibui-api/**` | `ci-api.yml` |
 | `apps/app-tauri/**` | `ci-tauri.yml` (fmt + clippy + tests sobre crate `core/`) |
 | `packages/sukashi/**` | `ci-sukashi.yml` (type-check + tests; deploy demo a `sukashi.web.app` solo en `main`) |
 | `main` + UI cambiada | `release.yml` (tras `ci-lib` exitoso) |
 
-Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_cv`, `force_opencells`, `force_api`, `force_tauri`, `force_sukashi`, `force_hanko_issues`.
+Override manual disponible vía `workflow_dispatch` con flags `force_ui`, `force_react`, `force_angular`, `force_svelte`, `force_cv`, `force_torii`, `force_api`, `force_tauri`, `force_sukashi`, `force_hanko_issues`.
 
 Secretos necesarios en GitHub repo: `FIREBASE_TOKEN` (deploys Firebase), `VITE_API_URL` (build React en `ci-apps.yml`), `NPM_SECRET` (publish en `release.yml`), `DISCORD_WEBHOOK` (`notify.yml`).
 

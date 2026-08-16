@@ -1,0 +1,88 @@
+@startuml
+' Estructura del ecosistema shibui — fuente del diagrama que pinta /arquitectura.
+'
+' El motor exige que el fichero ABRA con @startuml: un comentario por encima lo
+' rompe con "The input must start with a @start... directive".
+'
+' `public/arquitectura/ecosistema.svg` es salida generada, pero SE VERSIONA: la
+' app lo sirve como asset y el build de Vite no renderiza PlantUML. Regenerar
+' tras tocar este fichero:
+'
+'     pnpm --filter app-torii diagrama
+'
+title Ecosistema shibui — estructura del monorepo
+
+skinparam backgroundColor #FFFDF9
+skinparam shadowing false
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 12
+skinparam nodesep 20
+skinparam ranksep 50
+skinparam ArrowColor #8A8276
+skinparam ArrowFontSize 10
+skinparam ArrowFontColor #5C564C
+skinparam componentStyle rectangle
+skinparam component {
+  BorderColor #B9AFA0
+  BackgroundColor #FFFFFF
+  FontColor #2B2721
+}
+skinparam package {
+  BorderColor #C9BFB0
+  FontColor #6B6255
+  BackgroundColor #F6F2EB
+}
+skinparam note {
+  BorderColor #C9BFB0
+  BackgroundColor #FFFFFF
+  FontColor #5C564C
+  FontSize 10
+}
+
+package "apps/ — consumidores de la librería" as APPS {
+  [**app-react**\nShowcase] as REACT
+  [**app-angular**\nShowcase] as NG
+  [**app-svelte**\nShowcase] as SV
+  [**app-cv**\nportfolio] as CV
+  [**app-tauri**\nescritorio · Rust] as TAURI
+  [**app-torii**\nhub · Open Cells] as TORII #EAF2EE
+}
+
+package "packages/" as PKGS {
+  package "núcleo y verificación" as CORE {
+    [**consumer-tests**\ncontratos R×N×S · 2 paquetes] as CT
+    [**shibui/ui**\n102 web components · Lit 3] as UI #FDF6E7
+    [**hanko**\nsello de confianza] as HANKO
+  }
+  package "independientes" as TOOLS {
+    [**sukashi**\npatrones por capas] as SUKASHI
+    [**kura**\nCLI + MCP de Hosting] as KURA
+  }
+}
+
+package "servicios" as SVC {
+  [**cf-cache-worker**\ncaché en el borde] as WORKER
+  [**shibui-api**\ncatálogo · NestJS] as API
+}
+
+' Dependencia de build: `@shibui-ui/ui` como workspace:* en el package.json.
+REACT -down-> UI
+NG -down-> UI
+SV -down-> UI
+CV -down-> UI
+TAURI -down-> UI
+TORII -down-> UI : nativo
+
+CT -right-> UI : verifica contrato
+HANKO -left-> UI : audita
+API -up-> UI : cataloga el manifiesto
+WORKER -right-> API : cachea
+
+' Discontinua: consumo de datos en runtime, no dependencia de código.
+TORII .down.> HANKO : trust-report
+TORII .down.> API : /components
+KURA .up.> APPS : despliega los sitios
+
+note bottom of SUKASHI : no depende de la librería;\ntiene su propio sitio
+
+@enduml

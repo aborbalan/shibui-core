@@ -39,7 +39,6 @@ yarn-error.log*
 .config/
 .firebase/
 .github/
-.husky/
 .lighthouseci/
 .storybook/
 

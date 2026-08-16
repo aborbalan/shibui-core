@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es" data-katachi="celadon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9B%A9%3C/text%3E%3C/svg%3E"
+    />
+    <title>torii 鳥居 · la puerta al ecosistema shibui</title>
+    <meta
+      name="description"
+      content="Hub del ecosistema shibui: la librería de web components, sus showcases en React, Angular y Svelte, y los satélites hanko y sukashi."
+    />
+  </head>
+  <body>
+    <!--
+      <app-index id="app-content"> es el nodo que sustituye el router de Open
+      Cells en cada navegación (el `mainNode` de startApp). No es un componente
+      definido: es solo el contenedor.
+
+      Va dentro de <torii-chrome> para que header, footer y switcher queden
+      fuera del nodo que el router reemplaza y sobrevivan a la navegación.
+    -->
+    <torii-chrome>
+      <app-index id="app-content"></app-index>
+    </torii-chrome>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -4,7 +4,9 @@ import { create } from 'storybook/theming';
 const shibuiTheme = create({
   base: 'light',
   brandTitle: 'shibui 渋い',
-  brandUrl: 'https://lib-ui-b67c5.web.app',
+  // El hub del ecosistema. Antes apuntaba al dominio por defecto del
+  // proyecto de Firebase, que no sirve ninguna pagina.
+  brandUrl: 'https://shibui-torii.web.app',
 
   // Brand
   colorPrimary:   '#B85A1E',  // kaki-500

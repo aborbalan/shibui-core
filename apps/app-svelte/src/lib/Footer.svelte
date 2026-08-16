@@ -3,8 +3,9 @@
 
   /** Barra inferior compacta, simétrica al header fijo. */
   const LEGAL_LINKS = [
-    { label: 'mit.md',  href: 'https://opensource.org/license/mit' },
-    { label: 'github',  href: 'https://github.com/aborbalan' },
+    { label: 'ecosistema', href: 'https://shibui-torii.web.app' },
+    { label: 'mit.md',     href: 'https://opensource.org/license/mit' },
+    { label: 'github',     href: 'https://github.com/aborbalan' },
   ];
 </script>
 

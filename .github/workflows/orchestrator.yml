@@ -34,8 +34,8 @@ on:
         description: "Forzar pipeline CV App"
         type: boolean
         default: false
-      force_opencells:
-        description: "Forzar pipeline Open Cells App (Cockpit)"
+      force_torii:
+        description: "Forzar pipeline torii (hub del ecosistema)"
         type: boolean
         default: false
       force_api:
@@ -50,6 +50,10 @@ on:
         description: "Forzar pipeline Sukashi"
         type: boolean
         default: false
+      force_kura:
+        description: "蔵 Forzar pipeline kura (CLI de Firebase Hosting)"
+        type: boolean
+        default: false
       force_hanko_issues:
         description: "判 Crear/actualizar issues de GitHub desde el Trust Report de hanko (solo main)"
         type: boolean
@@ -59,6 +63,14 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+# Techo por defecto para todos los jobs: solo lectura del repo.
+# Los jobs que necesitan más lo declaran explícitamente (run-lib-pipeline,
+# run-release). Ojo: esto es un techo, no un suelo — un workflow llamado
+# nunca obtiene más permisos que su caller, así que bajar esto rompe a los
+# reusables que escriben.
+permissions:
+  contents: read
 
 # ─────────────────────────────────────────
 # JOB 1 — Detección de cambios
@@ -76,10 +88,11 @@ jobs:
       angular:     ${{ steps.resolve.outputs.angular }}
       svelte:      ${{ steps.resolve.outputs.svelte }}
       cv:          ${{ steps.resolve.outputs.cv }}
-      opencells:   ${{ steps.resolve.outputs.opencells }}
+      torii:       ${{ steps.resolve.outputs.torii }}
       api:         ${{ steps.resolve.outputs.api }}
       tauri:       ${{ steps.resolve.outputs.tauri }}
       sukashi:     ${{ steps.resolve.outputs.sukashi }}
+      kura:        ${{ steps.resolve.outputs.kura }}
     steps:
       - uses: actions/checkout@v4
 
@@ -106,10 +119,11 @@ jobs:
             angular: 'apps/app-angular/**'
             svelte:  'apps/app-svelte/**'
             cv:      'apps/app-cv/**'
-            opencells: 'apps/app-opencells/**'
+            torii:   'apps/app-torii/**'
             api:     'apps/shibui-api/**'
             tauri:   'apps/app-tauri/**'
             sukashi: 'packages/sukashi/**'
+            kura:    'packages/kura/**'
 
       # OR lógico: cambio detectado ó forzado manualmente
       - name: 🎛️ Resolve outputs (auto + manual override)
@@ -121,10 +135,11 @@ jobs:
           echo "angular=$([[ '${{ steps.filter.outputs.angular }}' == 'true' || '${{ inputs.force_angular }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "svelte=$([[ '${{ steps.filter.outputs.svelte }}' == 'true' || '${{ inputs.force_svelte }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "cv=$([[ '${{ steps.filter.outputs.cv }}' == 'true' || '${{ inputs.force_cv }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
-          echo "opencells=$([[ '${{ steps.filter.outputs.opencells }}' == 'true' || '${{ inputs.force_opencells }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "torii=$([[ '${{ steps.filter.outputs.torii }}' == 'true' || '${{ inputs.force_torii }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "api=$([[ '${{ steps.filter.outputs.api }}' == 'true' || '${{ inputs.force_api }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "tauri=$([[ '${{ steps.filter.outputs.tauri }}' == 'true' || '${{ inputs.force_tauri }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
           echo "sukashi=$([[ '${{ steps.filter.outputs.sukashi }}' == 'true' || '${{ inputs.force_sukashi }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
+          echo "kura=$([[ '${{ steps.filter.outputs.kura }}' == 'true' || '${{ inputs.force_kura }}' == 'true' ]] && echo true || echo false)" >> $GITHUB_OUTPUT
 
   # ─────────────────────────────────────────
   # JOB 2 — Pipeline UI & Apps
@@ -159,7 +174,7 @@ jobs:
       needs.detect-changes.outputs.angular == 'true' ||
       needs.detect-changes.outputs.svelte == 'true' ||
       needs.detect-changes.outputs.cv == 'true' ||
-      needs.detect-changes.outputs.opencells == 'true'
+      needs.detect-changes.outputs.torii == 'true'
     uses: ./.github/workflows/ci-apps.yml
     with:
       ui:        ${{ needs.detect-changes.outputs.ui }}
@@ -167,7 +182,7 @@ jobs:
       angular:   ${{ needs.detect-changes.outputs.angular }}
       svelte:    ${{ needs.detect-changes.outputs.svelte }}
       cv:        ${{ needs.detect-changes.outputs.cv }}
-      opencells: ${{ needs.detect-changes.outputs.opencells }}
+      torii:     ${{ needs.detect-changes.outputs.torii }}
       ref: ${{ github.ref }}
     secrets: inherit
 
@@ -178,6 +193,15 @@ jobs:
       github.ref == 'refs/heads/main' &&
       needs.detect-changes.outputs.ui == 'true' &&
       needs.run-lib-pipeline.result == 'success'
+    # Techo para release.yml, que necesita los cuatro: id-token para la firma
+    # sigstore de --provenance, y contents/issues/pull-requests para el tag,
+    # el changelog y los comentarios de semantic-release. Sin este bloque, el
+    # `permissions: contents: read` de arriba lo capa y el publish falla.
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+      issues: write
     uses: ./.github/workflows/release.yml
     with:
       ref: ${{ github.ref }}
@@ -222,6 +246,21 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.sukashi == 'true'
     uses: ./.github/workflows/ci-sukashi.yml
+    with:
+      ref: ${{ github.ref }}
+    secrets: inherit
+
+  # ─────────────────────────────────────────
+  # JOB 6 — Pipeline kura
+  # type-check + tests del CLI de Firebase Hosting.
+  # No despliega: sus comandos con efectos exigen --execute y
+  # credenciales, y aquí no hay ninguna de las dos cosas.
+  # ─────────────────────────────────────────
+  run-kura-pipeline:
+    name: 蔵 kura Pipeline
+    needs: detect-changes
+    if: needs.detect-changes.outputs.kura == 'true'
+    uses: ./.github/workflows/ci-kura.yml
     with:
       ref: ${{ github.ref }}
     secrets: inherit

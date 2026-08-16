@@ -24,42 +24,59 @@ interface FooterProps {
   runtimeLines?: { key: string; value: string }[];
 }
 
+/**
+ * Destinos reales del ecosistema. Estas columnas eran `href: '#'` de principio
+ * a fin, asi que el footer prometia una red de sitios y no llevaba a ninguno.
+ * Solo se enlaza lo que existe: sukashi no esta en npm, y no hay pagina de
+ * roadmap, asi que esas entradas no estan en vez de apuntar a la nada.
+ */
+const ECOSYSTEM = {
+  torii:     'https://shibui-torii.web.app',
+  storybook: 'https://shibui-showcase-storybook.web.app',
+  apiDocs:   'https://shibui-api.web.app',
+  hanko:     'https://hanko-report.web.app',
+  sukashi:   'https://sukashi.web.app',
+  github:    'https://github.com/aborbalan/shibui-core',
+  npm:       'https://www.npmjs.com/package/@shibui-ui/ui',
+  releases:  'https://github.com/aborbalan/shibui-core/releases',
+} as const;
+
 const DEFAULT_COLUMNS: FooterColumn[] = [
   {
     heading: 'Librería',
     links: [
-      { label: 'Componentes', href: '#' },
-      { label: 'Tokens',      href: '#' },
-      { label: 'Estilos',     href: '#' },
+      { label: 'Componentes', href: '/componentes' },
+      { label: 'Tokens',      href: '/tokens' },
+      { label: 'Storybook',   href: ECOSYSTEM.storybook },
     ],
   },
   {
     heading: 'Ecosistema',
     links: [
-      { label: 'GitHub',     href: '#' },
-      { label: 'NPM',        href: '#' },
-      { label: 'Storybook',  href: '#' },
+      { label: 'torii 鳥居',    href: ECOSYSTEM.torii },
+      { label: 'hanko 判子',    href: ECOSYSTEM.hanko },
+      { label: 'sukashi 透かし', href: ECOSYSTEM.sukashi },
     ],
   },
   {
     heading: 'Recursos',
     links: [
-      { label: 'Docs',      href: '#' },
-      { label: 'Changelog', href: '#' },
-      { label: 'Roadmap',   href: '#' },
+      { label: 'API',       href: ECOSYSTEM.apiDocs },
+      { label: 'GitHub',    href: ECOSYSTEM.github },
+      { label: 'npm',       href: ECOSYSTEM.npm },
     ],
   },
 ];
 
 const DEFAULT_NAV_LINKS: FooterLink[] = [
-  { label: 'Componentes', href: '#' },
-  { label: 'Tokens',      href: '#' },
-  { label: 'MIT License', href: '#' },
+  { label: 'Componentes', href: '/componentes' },
+  { label: 'Tokens',      href: '/tokens' },
+  { label: 'MIT License', href: `${ECOSYSTEM.github}/blob/main/LICENSE` },
 ];
 
 const DEFAULT_LEGAL_LINKS: FooterLink[] = [
-  { label: 'privacy.md', href: '#' },
-  { label: 'terms.md',   href: '#' },
+  { label: 'Ecosistema', href: ECOSYSTEM.torii },
+  { label: 'Changelog',  href: ECOSYSTEM.releases },
 ];
 
 const DEFAULT_RUNTIME_LINES = [
@@ -71,10 +88,10 @@ const DEFAULT_RUNTIME_LINES = [
 ];
 
 const GLITCH_NAV_LINKS: FooterLink[] = [
-  { label: 'components.css', href: '#' },
-  { label: 'tokens.json',    href: '#' },
-  { label: 'changelog.md',   href: '#' },
-  { label: 'license.md',     href: '#' },
+  { label: 'components.css', href: '/componentes' },
+  { label: 'tokens.json',    href: '/tokens' },
+  { label: 'changelog.md',   href: ECOSYSTEM.releases },
+  { label: 'license.md',     href: `${ECOSYSTEM.github}/blob/main/LICENSE` },
 ];
 
 export const Footer: React.FC<FooterProps> = ({
@@ -86,7 +103,7 @@ export const Footer: React.FC<FooterProps> = ({
   location     = 'Zaragoza',
   version      = '1.0.0',
   nodeVersion  = 'v22.0.0',
-  githubHref   = '#',
+  githubHref   = ECOSYSTEM.github,
   linkedinHref = '#',
   rssHref      = '#',
   email        = 'hola@shibui.dev',
