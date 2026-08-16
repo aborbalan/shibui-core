@@ -8,6 +8,13 @@ export interface LibInputEventDetail {
   value: string;
 }
 
+// Contador de instancias para el id que asocia <label> con <input>.
+// Antes salía de Math.random(), que CodeQL marcaba como aleatoriedad insegura
+// y que además podía colisionar. Un contador no colisiona nunca, es estable
+// entre servidor y cliente, y no depende de crypto.randomUUID(), que no existe
+// fuera de contexto seguro (http:// plano) y dejaría tirados a los consumidores.
+let instanceCount = 0;
+
 /**
  * @element lib-input
  * @fires ui-lib-input - Evento disparado al cambiar el valor del input.
@@ -32,7 +39,7 @@ export class LibInput extends LitElement {
 
   @state() private _showPassword = false;
 
-  private readonly _uuid = `lib-input-${Math.random().toString(36).slice(2, 9)}`;
+  private readonly _uuid = `lib-input-${++instanceCount}`;
 
   override render(): TemplateResult {
     return inputTemplate({
