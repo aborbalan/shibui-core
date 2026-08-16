@@ -60,7 +60,7 @@
     "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.20.1",
     "@vitest/browser": "4.1.10",
     "@vitest/browser-playwright": "4.1.10",
     "axe-core": "^4.10.0",

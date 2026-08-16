@@ -42,6 +42,15 @@ jobs:
       - name: 🧹 Lint
         run: pnpm --filter @shibui-ui/api lint
 
+      # Los tests de la API no se ejecutaban en ningún sitio: estaban escritos
+      # y nadie los corría, ni en local ni aquí. Un test que no corre no es una
+      # red, es decoración.
+      - name: 🧪 Tests
+        run: pnpm --filter @shibui-ui/api test
+
+      - name: 🧪 Tests E2E
+        run: pnpm --filter @shibui-ui/api test:e2e
+
   # ─────────────────────────────────────────
   # JOB 2 — Generar spec OpenAPI
   # ─────────────────────────────────────────
