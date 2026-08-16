@@ -64,6 +64,14 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Techo por defecto para todos los jobs: solo lectura del repo.
+# Los jobs que necesitan más lo declaran explícitamente (run-lib-pipeline,
+# run-release). Ojo: esto es un techo, no un suelo — un workflow llamado
+# nunca obtiene más permisos que su caller, así que bajar esto rompe a los
+# reusables que escriben.
+permissions:
+  contents: read
+
 # ─────────────────────────────────────────
 # JOB 1 — Detección de cambios
 # Única fuente de verdad sobre qué ha cambiado.
@@ -185,6 +193,15 @@ jobs:
       github.ref == 'refs/heads/main' &&
       needs.detect-changes.outputs.ui == 'true' &&
       needs.run-lib-pipeline.result == 'success'
+    # Techo para release.yml, que necesita los cuatro: id-token para la firma
+    # sigstore de --provenance, y contents/issues/pull-requests para el tag,
+    # el changelog y los comentarios de semantic-release. Sin este bloque, el
+    # `permissions: contents: read` de arriba lo capa y el publish falla.
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+      issues: write
     uses: ./.github/workflows/release.yml
     with:
       ref: ${{ github.ref }}

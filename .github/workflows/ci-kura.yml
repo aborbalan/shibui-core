@@ -17,6 +17,11 @@ on:
         type: string
         required: true
 
+# Solo lectura: la suite corre sin red y sin secretos, y kura no despliega
+# nada desde CI.
+permissions:
+  contents: read
+
 env:
   NODE_VERSION: "22.14.0"
   PNPM_VERSION: "9.15.0"

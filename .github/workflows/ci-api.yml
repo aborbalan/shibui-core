@@ -10,6 +10,11 @@ on:
         type: string
         required: true
 
+# Solo lectura: ningún job de aquí escribe en el repo ni usa el GITHUB_TOKEN.
+# Lo que despliega lo hace con secretos propios, no con permisos del token.
+permissions:
+  contents: read
+
 env:
   NODE_VERSION: "22.14.0"
   PNPM_VERSION: "9.15.0"

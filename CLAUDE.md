@@ -235,6 +235,35 @@ pnpm install
 No añadir dependencias al `package.json` raíz salvo que sean devDeps globales (husky, commitlint, concurrently).  
 Cada app/package gestiona las suyas.
 
+### ⚠️ Los `pnpm.overrides` de seguridad son suelos vivos, y caducan en silencio
+
+Un override como `"undici": ">=7.28.0 <8"` **no** mantiene el paquete al día. pnpm
+satisface el rango una vez, el lockfile congela esa versión, y ahí se queda para
+siempre: **Dependabot no sabe editar `pnpm.overrides`**, así que nunca abre un PR
+para subirla, y `pnpm install` tampoco la mueve porque el rango ya se cumple. El
+override deja de ser una mitigación y pasa a ser un *pin que bloquea el parche*.
+
+El síntoma es inconfundible: **el paquete resuelve exactamente a su propio suelo**.
+En la auditoría de agosto de 2026, seis overrides estaban así (`fast-uri` con
+`>=3.1.2` resuelto en 3.1.2, `undici` con `>=7.28.0` en 7.28.0…) y entre los seis
+explicaban 16 de las 34 alertas abiertas.
+
+Reglas:
+
+- Al añadir un override de seguridad, **anotar la versión parcheada**, no una
+  versión cualquiera que funcione.
+- **Acotar siempre el major** (`">=7.29.0 <8"`, no `">=7.29.0"`), para que subir el
+  suelo no se lleve por delante un cambio de API.
+- Para paquetes con varias ramas vivas, una entrada por major (`js-yaml@3`,
+  `js-yaml@4`), porque el parche de cada rama es distinto.
+- El chequeo semanal `.github/workflows/audit-overrides.yml` cruza `pnpm audit`
+  con estas claves y **rompe** si algún suelo se ha quedado corto. Se puede correr
+  a mano, y con `--input` sobre un JSON guardado para probarlo sin red:
+
+```bash
+node scripts/audit/check-override-freshness.mjs
+```
+
 ---
 
 ## Scripts raíz
