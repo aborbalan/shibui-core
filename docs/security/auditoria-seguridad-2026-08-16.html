@@ -1,0 +1,212 @@
+<title>Auditoría de seguridad — shibui-ecosystem</title>
+<style>
+:root{
+ --bg:#f7f5f0; --panel:#fffdf8; --ink:#22201b; --muted:#6b6558; --line:#e5e0d5;
+ --accent:#5a7d6f; --code-bg:#f0ede4; --chip:#efe9dc;
+ --hi:#b4553a; --mid:#b08b3c; --lo:#7d8a72;
+}
+@media (prefers-color-scheme: dark){
+ :root{--bg:#171613; --panel:#201e1a; --ink:#eae6dc; --muted:#a49d8d; --line:#33302a;
+  --accent:#8fb3a3; --code-bg:#26241f; --chip:#2b2822;
+  --hi:#d98164; --mid:#d4ac5e; --lo:#9fb094;}
+}
+:root[data-theme="dark"]{--bg:#171613; --panel:#201e1a; --ink:#eae6dc; --muted:#a49d8d; --line:#33302a; --accent:#8fb3a3; --code-bg:#26241f; --chip:#2b2822; --hi:#d98164; --mid:#d4ac5e; --lo:#9fb094;}
+:root[data-theme="light"]{--bg:#f7f5f0; --panel:#fffdf8; --ink:#22201b; --muted:#6b6558; --line:#e5e0d5; --accent:#5a7d6f; --code-bg:#f0ede4; --chip:#efe9dc; --hi:#b4553a; --mid:#b08b3c; --lo:#7d8a72;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 22px 80px}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.01em}
+h2{font-size:19px;margin:38px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+h3{font-size:15px;margin:22px 0 8px}
+.sub{color:var(--muted);margin:0 0 22px;font-size:13.5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 14px;text-align:center}
+.card .n{font-size:30px;font-weight:700;line-height:1}
+.card .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:6px}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--panel);
+ border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--chip);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;
+ background:var(--code-bg);padding:1px 5px;border-radius:4px}
+pre{background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+ overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5}
+.chip{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:99px;
+ padding:1px 9px;font-size:11.5px;color:var(--muted);letter-spacing:.03em}
+.hi{color:var(--hi);font-weight:600}
+.mid{color:var(--mid);font-weight:600}
+.lo{color:var(--lo);font-weight:600}
+.note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);
+ border-radius:0 10px 10px 0;padding:12px 16px;margin:18px 0;font-size:13.5px}
+.warn{border-left-color:var(--hi)}
+ul{padding-left:20px} li{margin:5px 0}
+.muted{color:var(--muted)}
+footer{margin-top:50px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+</style>
+
+<div class="wrap">
+
+<h1>Auditoría de seguridad</h1>
+<p class="sub">
+  shibui-ecosystem · 16 de agosto de 2026 · <code>develop</code> en <code>6d069c9</code><br>
+  Fuentes: API de alertas de GitHub (Dependabot y code scanning), <code>pnpm audit</code>,
+  lectura del <code>pnpm-lock.yaml</code> y del <code>Cargo.lock</code> de Tauri.
+</p>
+
+<div class="grid">
+  <div class="card"><div class="n">34</div><div class="l">alertas Dependabot</div></div>
+  <div class="card"><div class="n hi">32</div><div class="l">ya corregidas en develop</div></div>
+  <div class="card"><div class="n mid">19</div><div class="l">de code scanning</div></div>
+  <div class="card"><div class="n lo">2</div><div class="l">sin parche alcanzable</div></div>
+</div>
+
+<div class="note warn">
+  <strong>El hallazgo principal no es una vulnerabilidad, es una brecha de ramas.</strong>
+  Dependabot informa sobre la <strong>rama por defecto</strong>, que es <code>main</code>.
+  Las 32 alertas npm <strong>ya estaban corregidas en <code>develop</code></strong> desde los
+  PRs #665–#671. <code>main</code> iba <strong>65 commits por detrás</strong>, todavía con los
+  overrides caducados. No había que arreglar dependencias: había que promover
+  <code>develop</code> a <code>main</code>.
+</div>
+
+<h2>Cómo se reparten las 34</h2>
+
+<div class="tablewrap">
+<table>
+  <tr><th>Grupo</th><th>Nº</th><th>Estado real</th></tr>
+  <tr><td>Suelos de override caducados en <code>main</code></td><td>16</td>
+      <td><span class="lo">Corregido en develop</span> — <code>fast-uri</code> ×3, <code>undici</code> ×5, <code>ip-address</code> ×3, <code>hono</code> ×3, <code>js-yaml</code> ×2</td></tr>
+  <tr><td>Sin override en <code>main</code></td><td>16</td>
+      <td><span class="lo">Corregido en develop</span> — <code>postcss</code>, <code>nanoid</code>, <code>re2</code>, <code>sharp</code>, <code>immutable</code>, <code>brace-expansion</code>, <code>react-router</code>, <code>@hono/node-server</code>, <code>@angular/*</code></td></tr>
+  <tr><td><code>glib</code> (Rust / Tauri)</td><td>2</td>
+      <td><span class="mid">Descartadas</span> como <code>tolerable_risk</code></td></tr>
+</table>
+</div>
+
+<h2>El mecanismo: por qué los overrides caducan en silencio</h2>
+
+<p>Un override de seguridad se escribe como suelo. pnpm lo satisface <strong>una vez</strong>,
+el lockfile congela esa versión, y ahí se queda para siempre: <strong>Dependabot no sabe editar
+<code>pnpm.overrides</code></strong>, así que nunca abre un PR, y <code>pnpm install</code> tampoco
+la mueve porque el rango ya se cumple. El override deja de mitigar y pasa a <em>bloquear</em> el parche.</p>
+
+<p>El síntoma es inconfundible: en <code>main</code>, <strong>cada override caducado había resuelto
+exactamente a su propio suelo</strong>.</p>
+
+<div class="tablewrap">
+<table>
+  <tr><th>Paquete</th><th>Suelo escrito</th><th>Resuelto</th><th>Necesario</th><th>Alertas</th></tr>
+  <tr><td><code>fast-uri</code></td><td><code>&gt;=3.1.2</code></td><td class="hi">3.1.2</td><td><code>&gt;=3.1.5</code></td><td>3</td></tr>
+  <tr><td><code>undici</code></td><td><code>&gt;=7.28.0 &lt;8</code></td><td class="hi">7.28.0</td><td><code>&gt;=7.29.0</code></td><td>5</td></tr>
+  <tr><td><code>ip-address</code></td><td><code>&gt;=10.1.1</code></td><td>10.2.0</td><td><code>&gt;=10.3.1</code></td><td>3</td></tr>
+  <tr><td><code>hono</code></td><td><code>&gt;=4.12.25</code></td><td>4.12.30</td><td><code>&gt;=4.12.34</code></td><td>3</td></tr>
+  <tr><td><code>js-yaml@3</code></td><td><code>&gt;=3.15.0 &lt;4</code></td><td class="hi">3.15.0</td><td><code>&gt;=3.15.1</code></td><td>1</td></tr>
+  <tr><td><code>js-yaml@4</code></td><td><code>&gt;=4.2.0 &lt;5</code></td><td>4.3.0</td><td><code>&gt;=4.3.1</code></td><td>1</td></tr>
+</table>
+</div>
+
+<h2>Exposición real frente a la etiqueta de GitHub</h2>
+
+<p>GitHub marcaba 18 alertas como <code>runtime</code>. Rastreando en el lockfile quién trae cada
+paquete, <strong>solo 8 se ejecutan de verdad</strong>:</p>
+
+<ul>
+  <li><strong>Llega al navegador:</strong> <code>@angular/core</code>, <code>@angular/common</code>,
+      <code>@angular/compiler</code> — XSS por atributos de evento en i18n (CVE-2026-69151) y
+      ambigüedad de clave en <code>HttpTransferCache</code> con fuga entre peticiones (CVE-2026-68945).</li>
+  <li><strong>Runtime Node de la API:</strong> <code>undici</code> ×5 — inyección CRLF, inyección de
+      atributos de cookie y divulgación entre usuarios (CVE-2026-13697).</li>
+  <li><strong>Solo build, pese a la etiqueta <code>runtime</code>:</strong> <code>sharp</code> es
+      <code>optionalDependency</code> de wrangler; <code>re2</code> lo es de firebase-tools;
+      <code>immutable</code> viene de <code>sass</code>; <code>postcss</code> y <code>nanoid@3</code>
+      del pipeline de build.</li>
+  <li><strong>Función no usada:</strong> la de <code>react-router</code> es un bypass de CSRF exclusivo
+      del modo RSC, y las apps van en modo SPA.</li>
+</ul>
+
+<h2>Lo que cambió esta auditoría</h2>
+
+<p>Como las dependencias ya estaban, el trabajo real fueron las <strong>19 alertas de code
+scanning</strong>, que seguían sin tocar, más el mecanismo para que la parte de dependencias no
+vuelva a pudrirse. PR <strong>#672</strong> hacia <code>develop</code>:</p>
+
+<div class="tablewrap">
+<table>
+  <tr><th>Cambio</th><th>Cierra</th><th>Detalle</th></tr>
+  <tr><td>Permisos del <code>GITHUB_TOKEN</code></td><td>18</td>
+      <td><code>contents: read</code> a nivel raíz en <code>orchestrator</code> y los cinco reusables</td></tr>
+  <tr><td><code>Math.random()</code> en <code>lib-input</code></td><td>1</td>
+      <td>Contador de módulo; falso positivo de seguridad, pero evitaba colisiones y roturas de hidratación</td></tr>
+  <tr><td>Chequeo semanal de overrides</td><td>—</td>
+      <td>Convierte el fallo silencioso en uno ruidoso</td></tr>
+  <tr><td><code>tsx</code> en <code>shibui-ui</code></td><td>—</td>
+      <td>Encontrado al chocar con ello: <code>pnpm build:shibui</code> estaba roto</td></tr>
+</table>
+</div>
+
+<div class="note warn">
+  <strong>La trampa de los permisos.</strong> Un workflow llamado nunca obtiene más permisos que su
+  caller. <code>run-release</code> no tenía bloque propio, así que poner <code>contents: read</code>
+  en la raíz del orquestador lo habría <strong>capado y roto el publish</strong>. Necesita un bloque
+  explícito con los cuatro permisos de <code>release.yml</code>: <code>id-token</code> para la firma
+  sigstore de <code>--provenance</code>, y <code>contents</code>/<code>issues</code>/<code>pull-requests</code>
+  para tag, changelog y comentarios.
+</div>
+
+<h2>El guard contra la tercera recaída</h2>
+
+<p><code>scripts/audit/check-override-freshness.mjs</code> cruza <code>pnpm audit</code> con las claves
+de <code>pnpm.overrides</code> y separa dos casos: vulnerabilidad en un paquete <strong>con</strong>
+override (suelo caducado, rompe el build, porque nadie más lo va a ver) y <strong>sin</strong> override
+(informa, que de eso ya avisa Dependabot). Corre cada lunes desde
+<code>.github/workflows/audit-overrides.yml</code>, y abre o comenta un issue.</p>
+
+<p>Acepta <code>--input</code> con un JSON guardado para ejercitarlo sin red — un guard que nadie ha
+visto saltar no es un guard:</p>
+
+<pre>node scripts/audit/check-override-freshness.mjs
+node scripts/audit/check-override-freshness.mjs --input informe.json</pre>
+
+<h2>Las dos de <code>glib</code>, y por qué se descartan</h2>
+
+<p>El aviso pide <code>glib</code> 0.20 y el árbol está en 0.18.5. No es un bump: <strong>toda la
+familia de bindings gtk3 está fijada en la generación 0.18</strong> — <code>atk</code> 0.18.2,
+<code>cairo-rs</code> 0.18.5, <code>gdk</code> 0.18.2, <code>gdk-pixbuf</code> 0.18.5,
+<code>gdkx11</code> 0.18.2, <code>gio</code> 0.18.4, <code>gtk</code> 0.18.2, <code>pango</code> 0.18.3 —
+junto con <code>webkit2gtk</code> 2.0.2. Subir <code>glib</code> obliga a subirlas en bloque, que es una
+migración de Tauri aguas arriba.</p>
+
+<p>Además es una cuestión de <em>unsoundness</em> en los impls de <code>Iterator</code> de
+<code>glib::VariantStrIter</code>, en una ruta de GUI que solo se compila en Linux. Descartadas como
+<code>tolerable_risk</code>, con el motivo escrito en la alerta. Revisar si Tauri pasa a gtk4.</p>
+
+<h2>Verificación</h2>
+
+<ul>
+  <li><code>pnpm install --frozen-lockfile</code> limpio sobre <code>develop</code></li>
+  <li><code>pnpm audit</code> → <strong>0 vulnerabilidades</strong> sobre 1922 dependencias</li>
+  <li><code>type-check</code> en verde</li>
+  <li>Los 6 workflows parsean; 21 jobs cubiertos y los 2 con escritura conservan su override</li>
+  <li>Detección del guard ejercitada con payloads sintéticos, incluidos scoped
+      (<code>@hono/node-server@1</code>) y selector de major (<code>js-yaml@3</code>/<code>@4</code>)</li>
+</ul>
+
+<div class="note warn">
+  <strong>Antes de mergear <code>develop</code> → <code>main</code> (#673).</strong> Entre los 65
+  commits va #649, que arregla <code>release.yml</code>. Hasta ahora el job de release moría siempre
+  en <code>main</code>, así que nunca llegaba al publish. Con el arreglo promovido,
+  <strong>este merge publicará <code>@shibui-ui/ui</code> en npm por primera vez</strong> — el
+  <code>npmPublish: false</code> del releaserc no lo impide, porque el workflow tiene su propio paso
+  <code>npm publish --provenance</code>. Es una decisión aparte de la de seguridad.
+</div>
+
+<footer>
+  Generado el 16 de agosto de 2026 · PRs <strong>#672</strong> (code scanning + guard, hacia
+  <code>develop</code>) y <strong>#673</strong> (<code>develop</code> → <code>main</code>, cierra las 32).
+  Continúa <a href="auditoria-dependencias-2026-08-15.html">la auditoría del 15 de agosto</a>.
+</footer>
+
+</div>
