@@ -1,0 +1,87 @@
+name: Audit — frescura de overrides
+
+# Por qué existe este workflow
+# ----------------------------
+# Los `pnpm.overrides` de seguridad son suelos, y los suelos caducan en silencio:
+# pnpm satisface el rango una vez, el lockfile congela esa versión y Dependabot
+# no sabe editar `pnpm.overrides`, así que nunca abre PR para subirla. El override
+# deja de proteger y pasa a bloquear el parche sin que salte ninguna alarma.
+#
+# Ha pasado dos veces. En la auditoría de agosto de 2026, seis overrides habían
+# resuelto exactamente a su propio suelo y explicaban 16 de las 34 alertas abiertas.
+# Este chequeo semanal es lo que convierte ese fallo silencioso en uno ruidoso.
+
+on:
+  schedule:
+    # Lunes a las 06:00 UTC. Semanal basta: el objetivo es detectar deriva,
+    # no reaccionar en caliente — de lo urgente ya avisa Dependabot.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "22.14.0"
+  PNPM_VERSION: "9.15.0"
+
+jobs:
+  overrides:
+    name: 🧊 Suelos de override
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      # Con `--frozen-lockfile` a propósito: se audita exactamente el árbol que
+      # describe el lockfile, no uno recalculado que podría enmascarar la deriva.
+      - name: 📦 Install
+        run: pnpm install --frozen-lockfile
+
+      - name: 🧊 Chequear frescura de los overrides
+        id: check
+        run: |
+          set +e
+          node scripts/audit/check-override-freshness.mjs | tee informe.txt
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: 📣 Abrir o actualizar el issue
+        if: steps.check.outputs.code != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITULO: "Suelos de pnpm.overrides caducados"
+        run: |
+          set -euo pipefail
+          {
+            echo "El chequeo semanal ha encontrado overrides de seguridad cuyo suelo"
+            echo "se ha quedado por debajo de la versión parcheada."
+            echo ""
+            echo "**Dependabot no va a arreglar esto**: no sabe editar \`pnpm.overrides\`."
+            echo "Hay que subir el suelo a mano en el \`package.json\` de la raíz."
+            echo ""
+            echo '```'
+            cat informe.txt
+            echo '```'
+            echo ""
+            echo "_Generado por [\`audit-overrides.yml\`](../blob/main/.github/workflows/audit-overrides.yml)._"
+          } > cuerpo.md
+
+          EXISTENTE=$(gh issue list --state open --search "$TITULO in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTENTE" ]; then
+            gh issue comment "$EXISTENTE" --body-file cuerpo.md
+          else
+            gh issue create --title "$TITULO" --body-file cuerpo.md --label dependencies
+          fi
+
+      - name: ❌ Fallar si hay suelos caducados
+        if: steps.check.outputs.code != '0'
+        run: exit 1
