@@ -36,8 +36,11 @@ const GALLERY_URL = `${BASE}content-icon--gallery`;
  *          +2 sistema (cpu, terminal)
  *          +8 aliases (paperclip, house, leaf, globe, shield-check,
  *                      thermometer, map-pin, list)
+ *   136 → +3 merge develop (plus, add, new)
+ *   139 → +3 comunes (gear, heart, star), que las stories katachi de lib-icon
+ *          ya usaban por nombre sin estar registrados: renderizaban vacío
  */
-const EXPECTED_ICON_COUNT = 136; // +3 merge develop (plus, add, new)
+const EXPECTED_ICON_COUNT = 139;
 
 /**
  * Pares [alias, canónico] que deben apuntar exactamente al mismo SVG.

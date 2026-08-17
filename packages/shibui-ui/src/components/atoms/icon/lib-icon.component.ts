@@ -31,13 +31,17 @@ export class LibIcon extends LitElement {
   private _loadIcon(): void {
     //const icon = ICON_REGISTRY[this.name];
     const iconNominale = getIcon(this.name);
-    console.log(iconNominale);
     if (iconNominale) {
       this._svgContent = iconNominale ?? '';
       this.requestUpdate();
     } else {
       this._svgContent = ''; // Si no existe, limpiamos
-      //console.warn(`Icono "${this.name}" no encontrado.`);
+      // Sin nombre no hay nada que buscar: `<lib-icon>` sin `name` es el estado
+      // por defecto, no un error. Solo avisamos de un nombre que sí se pidió y
+      // no existe, que si no falla en silencio dejando el hueco vacío.
+      if (this.name) {
+        console.warn(`[lib-icon] Icono "${this.name}" no encontrado. Revisa el nombre o regístralo con registerIcons().`);
+      }
     }
   }
 

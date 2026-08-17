@@ -123,6 +123,10 @@ import circle        from '@phosphor-icons/core/assets/regular/circle.svg?raw';
 // ── Sistema / interfaz — usados en stories y ejemplos JSDoc ─────────────────
 import cpu           from '@phosphor-icons/core/assets/regular/cpu.svg?raw';
 import terminal      from '@phosphor-icons/core/assets/regular/terminal.svg?raw';
+// ── Comunes — usados en las stories katachi de lib-icon ─────────────────────
+import gear          from '@phosphor-icons/core/assets/regular/gear.svg?raw';
+import heart         from '@phosphor-icons/core/assets/regular/heart.svg?raw';
+import star          from '@phosphor-icons/core/assets/regular/star.svg?raw';
 
 
 
@@ -263,6 +267,11 @@ export const ICON_REGISTRY: Record<string, string> = {
 'cpu':            cpu,
 'terminal':       terminal,
 
+// ── Comunes — usados en las stories katachi de lib-icon ──────────────────────
+'gear':           gear,
+'heart':          heart,
+'star':           star,
+
 // ── Aliases — iconos ya importados, nuevas claves canónicas ──────────────────
 'paperclip':      paperclip,   // lib-file-uploader usa name="paperclip"
 'house':          house,        // lib-icon stories usan name="house" (canónico: 'home')
@@ -397,6 +406,10 @@ export {
   // Sistema / interfaz
   cpu,
   terminal,
+  // Comunes
+  gear,
+  heart,
+  star,
 };
 
 declare global {
