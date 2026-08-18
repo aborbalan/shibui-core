@@ -260,7 +260,6 @@ export class LibTabs extends LitElement {
 
   _handleClick(e: CustomEvent): void {
     const targetId = (e.target as HTMLElement).id;
-    console.log("target:", (e.target as HTMLElement).id);
 
     const tabs = Array.from(
       this.shadowRoot?.querySelectorAll<HTMLButtonElement>(
@@ -269,7 +268,6 @@ export class LibTabs extends LitElement {
     );
 
     const selectedTab = tabs.find((tab) => tab.id === targetId);
-    console.log(selectedTab);
 
     if (!selectedTab) return; // Si no lo encuentra, abortamos la función
 
@@ -326,13 +324,6 @@ export class LibTabs extends LitElement {
 
   /* ── Render principal ── */
   protected override render(): TemplateResult {
-    console.log(
-      "lib-tabs render, items:",
-      this.items?.length,
-      "active:",
-      this.active,
-    );
-
     return tabsTemplate(this);
   }
 }

@@ -20,11 +20,7 @@ export class LibRipple extends LitElement {
 
   // 1. Aseguramos la conexión al padre cuando el componente entra al DOM
   override firstUpdated(): void {
-    console.log('LibRipple: ¡Estoy vivo y montado!');
-    
     if (this.parentElement) {
-      console.log('LibRipple: Padre detectado ->', this.parentElement.tagName);
-      
       // Forzamos que el padre sea relativo si no lo es
       const parentStyle = window.getComputedStyle(this.parentElement);
       if (parentStyle.position === 'static') {
@@ -43,8 +39,6 @@ export class LibRipple extends LitElement {
   }
 
   private createRipple = (event: MouseEvent): void => {
-    console.log('LibRipple: Click detectado en coordenadas:', event.clientX, event.clientY);
-    
     if (!this.parentElement) return;
 
     const rect: DOMRect = this.parentElement.getBoundingClientRect();

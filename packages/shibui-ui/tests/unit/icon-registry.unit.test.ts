@@ -20,7 +20,7 @@ import { ICON_REGISTRY } from '../../src/shared/icons/icon-registry';
    ───────────────────────────────────────────────────────────────────── */
 
 /** Total de claves registradas. */
-const EXPECTED_COUNT = 136; // +3 merge develop (plus, add, new)
+const EXPECTED_COUNT = 139; // +3 comunes (gear, heart, star)
 
 /** Alias → canónico: deben apuntar al mismo SVG. */
 const ALIAS_PAIRS: ReadonlyArray<readonly [string, string]> = [
