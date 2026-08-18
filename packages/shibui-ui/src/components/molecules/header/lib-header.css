@@ -452,11 +452,22 @@
         flex: 1;
     }
 
+    /* El input de dentro apaga su outline nativo, así que la señal de foco la
+       da el contenedor — mismo patrón que .input-wrapper en lib-input. Sin
+       esto, tabular hasta el buscador no producía ninguna pista visual. */
+    .hdr-search:focus-within {
+        border-color: var(--lib-comp-border-focus, var(--border-focus));
+    }
+
     :host([theme="app-bar"][compact]) .hdr-search {
         border-color: rgb(255, 255, 255, .07);
         background: rgb(255, 255, 255, .03);
         height: 26px;
         max-width: 260px;
+    }
+
+    :host([theme="app-bar"][compact]) .hdr-search:focus-within {
+        border-color: var(--lib-comp-border-focus, var(--border-focus));
     }
 
     .hdr-search input {

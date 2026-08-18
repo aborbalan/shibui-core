@@ -50,6 +50,44 @@
 
 
 /* ════════════════════════════════════════════════════════════
+   FAMILIA DARK · superficies de estado
+   ════════════════════════════════════════════════════════════
+   Los subtle/border de error, aviso, éxito e info que declara _state.css
+   están calculados para papel (luminosidad 0.83–0.98). Ningún katachi los
+   redefinía, así que en los cuatro oscuros un mensaje de error se pintaba
+   como una caja rosa pálido sobre fondo casi negro.
+
+   Aquí se invierte la relación: misma familia de tono, luminosidad por
+   debajo de la superficie del katachi en vez de por encima. Un solo bloque
+   para los cuatro porque sus superficies caben todas en 0.10–0.19 de
+   luminosidad; el tono neutro de cada estado funciona sobre las cuatro.
+
+   Va ANTES de los bloques individuales a propósito: misma especificidad,
+   así que si un katachi quiere afinar su propio jade o su propio phosphor,
+   lo declara en su bloque y gana por orden.
+
+   No incluye a shizen ni a sabi — son claros y usan los valores de papel. */
+
+[data-katachi="celadon"],
+[data-katachi="kintsugi"],
+[data-katachi="wabi"],
+[data-katachi="terminal"],
+:host([data-katachi="celadon"]),
+:host([data-katachi="kintsugi"]),
+:host([data-katachi="wabi"]),
+:host([data-katachi="terminal"]) {
+  --color-error-subtle:   oklch(24% 0.045 28.52deg);
+  --color-error-border:   oklch(38% 0.080 28.52deg);
+  --color-warning-subtle: oklch(24% 0.038 77.58deg);
+  --color-warning-border: oklch(38% 0.070 77.58deg);
+  --color-success-subtle: oklch(23% 0.035 147.16deg);
+  --color-success-border: oklch(36% 0.060 147.16deg);
+  --color-info-subtle:    oklch(23% 0.032 171.21deg);
+  --color-info-border:    oklch(36% 0.055 171.21deg);
+}
+
+
+/* ════════════════════════════════════════════════════════════
    SHIZEN · 自然 · natural, limpio, el default
    ════════════════════════════════════════════════════════════
    Es el estado base/reset. Mantiene los defaults de _semantic

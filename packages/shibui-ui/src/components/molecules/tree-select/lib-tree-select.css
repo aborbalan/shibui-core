@@ -159,6 +159,12 @@
     flex-shrink: 0;
   }
 
+  /* El input apaga su outline nativo, así que la pista de foco la da el
+     contenedor — mismo patrón que .input-wrapper en lib-input. */
+  .ts-search-wrap:focus-within {
+    border-bottom-color: var(--lib-comp-border-focus, var(--border-focus));
+  }
+
   .ts-search-icon {
     color: var(--text-muted);
     flex-shrink: 0;
