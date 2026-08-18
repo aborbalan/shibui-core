@@ -329,9 +329,9 @@
   /* ── error ── */
   :host([tone="error"]) .chip,
   :host([tone="error"]) .chip-input {
-    background: var(--color-error-light);
+    background: var(--color-error-subtle);
     color: var(--color-error);
-    border-color: var(--color-error-light);
+    border-color: var(--color-error-border);
   }
 
   :host([tone="error"]) .chip-remove::part(close-btn):hover {

@@ -61,6 +61,19 @@
     &:active:not(:disabled) {
       transform: translateY(1px);
     }
+
+    /* Foco de teclado — el outline nativo se apaga arriba, así que hay que
+       reponerlo o el usuario de teclado no ve dónde está (WCAG 2.4.7).
+       Se usa `outline` y no el box-shadow de lib-input a propósito: aquí el
+       box-shadow ya lo ocupan glass, hover y la sombra brutal de sabi, y no
+       se acumula entre reglas — un anillo por esa vía los borraría. El
+       outline se dibuja fuera del borde, así que tampoco lo recorta el
+       `overflow: hidden` de arriba.
+       --border-focus ya es katachi-aware: el anillo cambia de color solo. */
+    &:focus-visible {
+      outline: 2px solid var(--lib-comp-border-focus, var(--border-focus));
+      outline-offset: 2px;
+    }
   }
 
   /* ── Sizes ── */

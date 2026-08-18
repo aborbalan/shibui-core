@@ -1,21 +1,42 @@
-:host {
-  display: inline-block;
-  touch-action: none; /* Importante para no interferir con el scroll en móvil */
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-MAGNETIC — Shibui UI
+   Wrapper de transformación: atrae su contenido hacia el cursor.
+   Sin superficie propia — el hijo slotted hereda el katachi.
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-block;
+    touch-action: none; /* Importante para no interferir con el scroll en móvil */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.magnetic-wrapper {
-  display: inline-block;
-  will-change: transform;
-  /* El secreto está en esta transición suave */
-  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+@layer components {
+  .magnetic-wrapper {
+    display: inline-block;
+    will-change: transform;
+    /* Expo-out propia del efecto magnético: la vuelta al reposo tiene que
+       frenar más largo que cualquier easing del set de tokens. */
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .magnetic-wrapper {
+      transition: none;
+    }
+  }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-magnetic es un wrapper de transformación que aplica
+     atracción al cursor. No tiene superficie propia — su hijo
+     slotted hereda el katachi del ancestro.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
-
-/* ─── KATACHI · ambient context ──────────────────────────────
-   lib-magnetic es un wrapper de transformación que aplica
-   atracción al cursor. No tiene superficie propia — su hijo
-   slotted hereda el katachi del ancestro.
-
-   Bloque marcador para discoverability.
-   ─────────────────────────────────────────────────────────── */
-
-/* ─── /KATACHI ───────────────────────────────────────────── */

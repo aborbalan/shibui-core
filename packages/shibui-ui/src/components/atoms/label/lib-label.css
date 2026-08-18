@@ -1,28 +1,40 @@
-/* lib-label.css */
-:host {
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-LABEL — Shibui UI
+   Etiqueta de formulario. Delega color y tipografía a los
+   tokens generales; no tiene superficie propia.
+   ============================================================ */
+
+@layer reset {
+  :host {
     display: inline-block;
-    margin-bottom: var(--lib-space-xs, 4px);
+    margin-bottom: var(--lib-space-xs);
   }
-  
+
+  *, *::before, *::after { box-sizing: border-box; }
+}
+
+@layer components {
   label {
     display: flex;
     align-items: center;
-    gap: 4px;
-    font-family: var(--lib-font-family);
-    font-size: var(--lib-font-size-sm); /* Usamos el token pequeño para etiquetas */
-    font-weight: 600;
+    gap: var(--lib-space-xs);
+    font-family: var(--lib-font-family-base);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
     color: var(--lib-color-text);
     cursor: pointer;
   }
-  
+
   .required-indicator {
-    color: var(--lib-color-danger); /* Usamos el token de peligro para el asterisco */
-    font-weight: bold;
+    color: var(--color-error);
+    font-weight: var(--weight-bold);
   }
 
   /* ─── KATACHI · ambient context ──────────────────────────────
      lib-label es un form helper minimal que delega su color a
-     tokens generales (--lib-color-text, --lib-color-danger). Vive
+     tokens generales (--lib-color-text, --color-error). Vive
      siempre dentro de un form/field y hereda el contexto del
      contenedor.
 
@@ -33,3 +45,4 @@
      ─────────────────────────────────────────────────────────── */
 
   /* ─── /KATACHI ───────────────────────────────────────────── */
+}

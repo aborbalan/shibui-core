@@ -46,7 +46,15 @@ export class LibIcon extends LitElement {
   }
 
   protected override render(): TemplateResult {
-    const sizeVar: string = `var(--lib-font-size-${this.size})`;
+    /* `size` llega en dos formas y las dos tienen que funcionar:
+       un peldaño de la escala tipográfica ("xs", "sm", "md", "lg", "xl"…)
+       o un número en px ("18", "32"), que es como lo llaman 19 sitios entre
+       la librería y las apps.
+       Antes se interpolaba --lib-font-size-*, familia de la que solo existe
+       `base`, así que ningún tamaño resolvía y todos caían al fallback 1em. */
+    const sizeVar: string = /^\d+$/.test(this.size)
+      ? `${this.size}px`
+      : `var(--text-${this.size}, 1em)`;
     const variantClass: string = this.variant !== 'default' ? `variant-${this.variant}` : '';
     
 

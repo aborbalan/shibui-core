@@ -56,19 +56,22 @@
     padding-block: 5px;
     border-radius: var(--radius-sm, 4px);
     color: var(--text-secondary);
-    font-family: var(--font-sans);
+    font-family: var(--lib-font-body);
     font-size: 0.75rem;
     line-height: 1;
     transition: background 120ms ease, color 120ms ease;
     white-space: nowrap;
 
     &:hover {
-      background: var(--bg-subtle);
+      background: var(--bg-surface);
       color: var(--text-primary);
     }
 
     &:active {
-      background: var(--bg-muted);
+      /* Un peldaño más hondo que el hover. No hay token de "pressed", así que
+         se deriva de la superficie hacia el texto para que adapte por katachi
+         en vez de fijar un tono claro. */
+      background: color-mix(in oklch, var(--bg-surface), var(--text-primary) 8%);
     }
 
     &[disabled] {
@@ -144,16 +147,19 @@
      del comportamiento por defecto.
      ─────────────────────────────────────────────────────────── */
 
-  :host-context([data-katachi='terminal']) {
-    .toolbar {
-      border-bottom-color: var(--border-default);
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi='terminal']) {
+      .toolbar {
+        border-bottom-color: var(--border-default);
+      }
+
+      .toolbar__btn-label {
+        font-family: var(--lib-font-mono, monospace);
+        font-size: 0.7rem;
+        letter-spacing: 0.02em;
+      }
     }
 
-    .toolbar__btn-label {
-      font-family: var(--font-mono, monospace);
-      font-size: 0.7rem;
-      letter-spacing: 0.02em;
-    }
   }
 
   /* ── /KATACHI ────────────────────────────────────────────── */

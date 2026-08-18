@@ -226,7 +226,7 @@
   }
 
   ::slotted(.dd-item.is-danger:hover) {
-    background: var(--color-error-light);
+    background: var(--color-error-subtle);
     color: var(--color-error);
   }
 

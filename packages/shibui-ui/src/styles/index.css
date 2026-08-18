@@ -46,7 +46,7 @@
 
 body {
   margin: 0;
-  font-family: var(--lib-font-family); /* Use the globally defined font */
+  font-family: var(--lib-font-family-base); /* Use the globally defined font */
   min-height: 100vh;
 }
 
@@ -63,7 +63,7 @@ body {
   background-color: oklch(95% 0.01 270deg); /* Light background for sidebar */
   padding: var(--lib-space-lg);
   color: var(--lib-color-text);
-  border-right: 1px solid var(--lib-color-border);
+  border-right: 1px solid var(--border-default);
 }
 
 .sidebar h2 {
@@ -89,7 +89,7 @@ body {
   padding: var(--lib-space-xs) var(--lib-space-sm);
   display: block;
   border-radius: var(--lib-radius-sm);
-  transition: background-color var(--lib-transition-base);
+  transition: background-color var(--transition-base);
 }
 
 .sidebar a:hover {
@@ -104,7 +104,7 @@ body {
 .demo-section {
   margin-bottom: var(--lib-space-xl);
   padding-bottom: var(--lib-space-xl);
-  border-bottom: 1px solid var(--lib-color-border);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .demo-section:last-of-type {

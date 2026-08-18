@@ -1,41 +1,58 @@
-/* lib-icon.css */
-:host {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  line-height: 0;
+@layer tokens, reset, components;
+
+/* ============================================================
+   LIB-ICON — Shibui UI
+   Variant : default · primary · secondary · success · danger
+   Size    : peldaño de la escala tipográfica ("sm", "md", "lg"…)
+             o un número en px ("18", "32"). Lo resuelve el
+             componente y lo inyecta como --lib-icon-size.
+   ============================================================ */
+
+@layer reset {
+  :host {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    line-height: 0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
 }
 
-.icon-wrapper {
-  display: flex;
-  /* El tamaño se aplica aquí, donde la variable es visible */
-  width: var(--lib-icon-size, 1em);
-  height: var(--lib-icon-size, 1em);
-  color: currentcolor;
+@layer components {
+  .icon-wrapper {
+    display: flex;
+    /* El tamaño se aplica aquí, donde la variable es visible */
+    width: var(--lib-icon-size, 1em);
+    height: var(--lib-icon-size, 1em);
+    color: currentcolor;
+  }
+
+  svg {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    fill: currentcolor;
+  }
+
+  /* Variantes de color — roles semánticos.
+     Antes apuntaban a --lib-color-secondary/success/danger, que no existen
+     en ninguna capa de tokens: tres de las cuatro variantes no pintaban nada
+     y el icono se quedaba con el color heredado. */
+  .variant-primary   { color: var(--lib-color-primary); }
+  .variant-secondary { color: var(--text-secondary); }
+  .variant-success   { color: var(--color-success); }
+  .variant-danger    { color: var(--color-error); }
+
+  /* ─── KATACHI · ambient context ──────────────────────────────
+     lib-icon usa `color: currentcolor` — hereda el color del
+     ancestro automáticamente. Las clases variant-* mapean a
+     tokens semánticos por uso. El icon es un primitivo neutro
+     respecto al katachi.
+
+     Bloque marcador para discoverability.
+     ─────────────────────────────────────────────────────────── */
+
+  /* ─── /KATACHI ───────────────────────────────────────────── */
 }
-
-svg {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
-  fill: currentcolor;
-}
-
-
-/* Clases de variante vinculadas a tus tokens de color */
-.variant-primary { color: var(--lib-color-primary); }
-.variant-secondary { color: var(--lib-color-secondary); }
-.variant-success { color: var(--lib-color-success); }
-.variant-danger { color: var(--lib-color-danger); }
-
-/* ─── KATACHI · ambient context ──────────────────────────────
-   lib-icon usa `color: currentcolor` — hereda el color del
-   ancestro automáticamente. Las clases variant-* mapean a
-   --lib-color-* (tokens semánticos por uso). El icon es un
-   primitivo neutro respecto al katachi.
-
-   Bloque marcador para discoverability.
-   ─────────────────────────────────────────────────────────── */
-
-/* ─── /KATACHI ───────────────────────────────────────────── */
