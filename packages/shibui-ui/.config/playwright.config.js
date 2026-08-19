@@ -18,6 +18,21 @@ export default defineConfig({
   reporter: 'html',
   use: {
     trace: 'on-first-retry',
+    baseURL: 'http://localhost:6006',
+  },
+
+  // Los specs de atoms/, molecules/ y organisms/ instancian los componentes
+  // desde Storybook (`/iframe.html?id=…`), así que necesitan el server vivo.
+  // Sin esta entrada fallaban todos por ECONNREFUSED — y como encima no los
+  // ejecutaba ningún workflow, nadie se enteró. El suite de visual/ no lo
+  // necesita: carga un fixture por file://.
+  webServer: {
+    command: 'pnpm storybook --ci --quiet',
+    url: 'http://localhost:6006',
+    reuseExistingServer: !process.env.CI,
+    timeout: 180_000,
+    stdout: 'ignore',
+    stderr: 'pipe',
   },
   projects: [
     {

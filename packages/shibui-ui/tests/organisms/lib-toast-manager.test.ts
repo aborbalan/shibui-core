@@ -1,12 +1,13 @@
-import { test, expect } from '@playwright/test';
+import pw from '@playwright/test';
+const { test, expect } = pw;
 
-const STORY = 'http://localhost:6006/iframe.html?id=feedback-toast-manager--playground';
+const STORY = 'http://localhost:6006/iframe.html?id=universal-feedback-toast-manager--playground';
 
 test.describe('lib-toast-manager', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto(STORY);
-    await page.waitForSelector('lib-toast-manager');
+    await page.waitForSelector('lib-toast-manager', { state: 'attached' });
   });
 
   test('add() añade un toast al DOM', async ({ page }) => {

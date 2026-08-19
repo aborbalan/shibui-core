@@ -12,7 +12,9 @@
  *     → handler padre (_toggleMobile / onToggleClick) → actualiza _mobileOpen
  */
 
-import { test, expect, type Page } from '@playwright/test';
+import pw from '@playwright/test';
+import type { Page } from '@playwright/test';
+const { test, expect } = pw;
 
 const BASE = 'http://localhost:6006/iframe.html?id=';
 
@@ -43,7 +45,7 @@ async function clickBurgerBtn(
 test.describe('lib-sidebar · hamburger (lib-burger)', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${BASE}navigation-sidebar--playground`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}universal-navigation-sidebar--playground`, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => customElements.get('lib-sidebar') !== undefined);
   });
 
@@ -181,7 +183,7 @@ test.describe('lib-header · hamburger (lib-burger)', () => {
   test.beforeEach(async ({ page }) => {
     // Viewport móvil (≤640px) — el burger es visible y el drawer aplica estilos correctos
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(`${BASE}layout-header--classic`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}universal-layout-header--classic`, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => customElements.get('lib-header') !== undefined);
   });
 

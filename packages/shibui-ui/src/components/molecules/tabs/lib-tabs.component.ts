@@ -1,4 +1,5 @@
 import { html, css, unsafeCSS, TemplateResult, LitElement } from "lit";
+import '../../atoms/icon/lib-icon.component'; // registra <lib-icon>: el template lo usa y sin esto no se actualiza
 import { customElement, property, state } from "lit/decorators.js";
 import '../../atoms/close-button/lib-close-button.component';
 import { tabsTemplate } from "./lib-tabs.html";

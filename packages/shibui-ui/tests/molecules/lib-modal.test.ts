@@ -1,6 +1,7 @@
-import { test, expect } from '@playwright/test';
+import pw from '@playwright/test';
+const { test, expect } = pw;
 
-const STORY = 'http://localhost:6006/iframe.html?id=overlay-modal--playground';
+const STORY = 'http://localhost:6006/iframe.html?id=universal-overlay-modal--playground';
 
 test.describe('lib-modal', () => {
 

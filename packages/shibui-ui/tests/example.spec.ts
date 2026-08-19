@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import pw from '@playwright/test';
+const { test, expect } = pw;
 
 test('has title', async ({ page }) => {
   await page.goto('https://playwright.dev/');

@@ -1,4 +1,5 @@
 import { LitElement, css, unsafeCSS, TemplateResult } from 'lit';
+import '../icon/lib-icon.component'; // registra <lib-icon>: el template lo usa y sin esto no se actualiza
 import { customElement, property } from 'lit/decorators.js';
 import textListCss from './lib-text-list.css?inline';
 import sharedTokens from '../../../styles/shared/tokens.css?inline';
