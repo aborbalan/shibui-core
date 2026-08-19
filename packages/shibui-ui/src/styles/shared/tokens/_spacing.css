@@ -25,7 +25,25 @@
   --radius-xl:   16px;
   --radius-full: 9999px;
 
-  /* --- Radios brutalistas --- */
+  /* --- Radios brutalistas ---
+     Escala deliberadamente casi cuadrada (0-2px), para los componentes que
+     quieren esquina viva: badge, bento-item, burger-button, code-block y
+     tree-select.
+
+     ⚠️ TRAMPA CONOCIDA: comparte los sufijos -sm/-md/-lg con la escala de
+     arriba y los valores no tienen nada que ver — `--radius-sm` son 2px y
+     `--lib-radius-sm` son 0px. Ya se la comió app-cv, que escribía
+     `var(--lib-radius-sm, 4px)` esperando 4px y recibía 0px: renderizó
+     esquinas vivas durante meses sin que nadie lo notara.
+
+     Antes de usar uno de estos, comprueba que quieres esquina CUADRADA.
+     Si buscas una esquina redondeada, la escala es `--radius-*`.
+
+     Renombrarlos a `--radius-brutal-*` quitaría la trampa de raíz, pero no
+     es un cambio interno: `apps/shibui-api` los publica en su catálogo de
+     tokens y los showcases de React y Svelte filtran por el prefijo
+     `lib-radius-`. Exige tocar cuatro paquetes y coordinar el redespliegue
+     de la API, así que queda como decisión aparte. */
   --lib-radius-xs: 0px;
   --lib-radius-sm: 0px;
   --lib-radius-md: 1px;

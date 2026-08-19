@@ -160,7 +160,7 @@ import { Profile } from '@data/cv';
         color: var(--text-primary);
         background: transparent;
         border: 1px solid var(--border-default, currentColor);
-        border-radius: var(--lib-radius-sm, 4px);
+        border-radius: var(--radius-md);
         padding: 8px 16px;
         cursor: pointer;
         transition:

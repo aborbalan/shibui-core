@@ -144,7 +144,7 @@ interface FlatPhoto {
         cursor: pointer;
         background: var(--surface-subtle, rgba(0, 0, 0, 0.04));
         border: 1px solid var(--border-default, currentColor);
-        border-radius: var(--lib-radius-sm, 4px);
+        border-radius: var(--radius-md);
         transition:
           border-color 0.2s ease,
           transform 0.2s ease;
@@ -256,7 +256,7 @@ interface FlatPhoto {
         max-width: 100%;
         max-height: 76vh;
         object-fit: contain;
-        border-radius: var(--lib-radius-sm, 4px);
+        border-radius: var(--radius-md);
         background: rgba(255, 255, 255, 0.03);
       }
       .lb__img[data-failed] {
