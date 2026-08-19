@@ -20,10 +20,12 @@
  * Prerequisito: Storybook corriendo en http://localhost:6006
  */
 
-import { test, expect, type Page } from '@playwright/test';
+import pw from '@playwright/test';
+import type { Page } from '@playwright/test';
+const { test, expect } = pw;
 
 const BASE        = 'http://localhost:6006/iframe.html?id=';
-const GALLERY_URL = `${BASE}content-icon--gallery`;
+const GALLERY_URL = `${BASE}universal-content-icon--gallery`;
 
 /**
  * Total de claves en ICON_REGISTRY.
@@ -304,6 +306,23 @@ test.describe('lib-icon · iconos críticos en contexto de componente', () => {
     hostSelector: string,
     iconName: string,
   ): Promise<string> {
+    // Se espera al icono ya pintado, no solo a que el custom element esté
+    // registrado. `customElements.get(...)` resuelve en cuanto se define la
+    // clase, que es antes de que la instancia tenga shadow DOM: era una
+    // carrera que unos componentes ganaban y otros no, y hacía fallar a
+    // lib-file-uploader de forma aparentemente aleatoria.
+    await page.waitForFunction(
+      ({ host, name }: { host: string; name: string }): boolean => {
+        const el = document.querySelector(host) as HTMLElement | null;
+        const libIcon = el?.shadowRoot?.querySelector(
+          `lib-icon[name="${name}"]`,
+        ) as HTMLElement | null;
+        const wrapper = libIcon?.shadowRoot?.querySelector('.icon-wrapper');
+        return !!wrapper && wrapper.innerHTML.includes('<svg');
+      },
+      { host: hostSelector, name: iconName },
+    );
+
     return page.evaluate(
       ({ host, name }: { host: string; name: string }): string => {
         const el = document.querySelector(host) as HTMLElement | null;
@@ -318,7 +337,7 @@ test.describe('lib-icon · iconos críticos en contexto de componente', () => {
 
   /* ── lib-copy-button · icono "check" ── */
   test('"check" se renderiza correctamente en lib-copy-button', async ({ page }) => {
-    await page.goto(`${BASE}actions-copy-button--playground`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}universal-actions-copy-button--playground`, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => customElements.get('lib-copy-button') !== undefined);
 
     const svgContent = await getIconSvgInComponent(page, 'lib-copy-button', 'check');
@@ -327,7 +346,7 @@ test.describe('lib-icon · iconos críticos en contexto de componente', () => {
 
   /* ── lib-breadcrumb · icono "caret-right" ── */
   test('"caret-right" se renderiza correctamente en lib-breadcrumb con separador chevron', async ({ page }) => {
-    await page.goto(`${BASE}navigation-breadcrumb--separators`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}universal-navigation-breadcrumb--separators`, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => customElements.get('lib-breadcrumb') !== undefined);
 
     // Hay múltiples lib-breadcrumb en la story; el chevron está en el segundo
@@ -346,7 +365,7 @@ test.describe('lib-icon · iconos críticos en contexto de componente', () => {
 
   /* ── lib-file-uploader · icono "cloud-arrow-up" ── */
   test('"cloud-arrow-up" se renderiza correctamente en lib-file-uploader', async ({ page }) => {
-    await page.goto(`${BASE}forms-file-uploader--zone-default`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}universal-forms-file-uploader--zone-default`, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => customElements.get('lib-file-uploader') !== undefined);
 
     const svgContent = await getIconSvgInComponent(page, 'lib-file-uploader', 'cloud-arrow-up');
@@ -356,7 +375,7 @@ test.describe('lib-icon · iconos críticos en contexto de componente', () => {
   /* ── lib-file-uploader · icono "check-circle" — estado done ── */
   test('"check-circle" existe en el registry y tiene SVG válido', async ({ page }) => {
     // Verificamos el registro global (cargado por cualquier story de la galería)
-    await page.goto(`${BASE}content-icon--gallery`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}universal-content-icon--gallery`, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => customElements.get('lib-icon') !== undefined);
     await waitForAllIcons(page, EXPECTED_ICON_COUNT);
 
@@ -369,7 +388,7 @@ test.describe('lib-icon · iconos críticos en contexto de componente', () => {
 
   /* ── lib-file-uploader · icono "warning-circle" ── */
   test('"warning-circle" existe en el registry y tiene SVG válido', async ({ page }) => {
-    await page.goto(`${BASE}content-icon--gallery`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}universal-content-icon--gallery`, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => customElements.get('lib-icon') !== undefined);
     await waitForAllIcons(page, EXPECTED_ICON_COUNT);
 
@@ -382,7 +401,7 @@ test.describe('lib-icon · iconos críticos en contexto de componente', () => {
 
   /* ── lib-file-uploader · icono "warning" ── */
   test('"warning" existe en el registry y tiene SVG válido', async ({ page }) => {
-    await page.goto(`${BASE}content-icon--gallery`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}universal-content-icon--gallery`, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => customElements.get('lib-icon') !== undefined);
     await waitForAllIcons(page, EXPECTED_ICON_COUNT);
 
@@ -395,7 +414,7 @@ test.describe('lib-icon · iconos críticos en contexto de componente', () => {
 
   /* ── lib-timeline-item · icono "circle" ── */
   test('"circle" existe en el registry y tiene SVG válido', async ({ page }) => {
-    await page.goto(`${BASE}content-icon--gallery`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}universal-content-icon--gallery`, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => customElements.get('lib-icon') !== undefined);
     await waitForAllIcons(page, EXPECTED_ICON_COUNT);
 
@@ -408,7 +427,7 @@ test.describe('lib-icon · iconos críticos en contexto de componente', () => {
 
   /* ── Alias "paperclip" → mismo SVG que "attachment" ── */
   test('alias "paperclip" apunta al mismo SVG que "attachment" (lib-file-uploader)', async ({ page }) => {
-    await page.goto(`${BASE}content-icon--gallery`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}universal-content-icon--gallery`, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => customElements.get('lib-icon') !== undefined);
     await waitForAllIcons(page, EXPECTED_ICON_COUNT);
 

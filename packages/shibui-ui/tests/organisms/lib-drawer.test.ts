@@ -1,12 +1,13 @@
-import { test, expect } from '@playwright/test';
+import pw from '@playwright/test';
+const { test, expect } = pw;
 
-const STORY = 'http://localhost:6006/iframe.html?id=overlay-drawer--playground';
+const STORY = 'http://localhost:6006/iframe.html?id=universal-overlay-drawer--playground';
 
 test.describe('lib-drawer', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto(STORY);
-    await page.waitForSelector('lib-drawer');
+    await page.waitForSelector('lib-drawer', { state: 'attached' });
 
     // Open the drawer programmatically
     await page.evaluate(() => {

@@ -248,7 +248,7 @@ import {
         max-width: 320px;
         aspect-ratio: 3 / 4;
         object-fit: cover;
-        border-radius: var(--lib-radius-md, 8px);
+        border-radius: var(--radius-lg);
         border: 1px solid var(--border-default, currentColor);
       }
 

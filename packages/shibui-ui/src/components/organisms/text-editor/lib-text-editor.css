@@ -115,23 +115,26 @@
      [data-katachi]. Solo ajustes visuales específicos del editor.
      ─────────────────────────────────────────────────────────── */
 
-  :host-context([data-katachi='terminal']) {
-    .editor__textarea {
-      font-size: 0.8rem;
-      letter-spacing: 0.03em;
-      line-height: 1.6;
+  @supports selector(:host-context(a)) {
+    :host-context([data-katachi='terminal']) {
+      .editor__textarea {
+        font-size: 0.8rem;
+        letter-spacing: 0.03em;
+        line-height: 1.6;
+      }
+
+      .editor__empty-text {
+        font-size: 0.8rem;
+        letter-spacing: 0.03em;
+      }
     }
 
-    .editor__empty-text {
-      font-size: 0.8rem;
-      letter-spacing: 0.03em;
+    :host-context([data-katachi='kintsugi']) {
+      .editor {
+        border-color: var(--border-default);
+      }
     }
-  }
 
-  :host-context([data-katachi='kintsugi']) {
-    .editor {
-      border-color: var(--border-default);
-    }
   }
 
   /* ── /KATACHI ────────────────────────────────────────────── */

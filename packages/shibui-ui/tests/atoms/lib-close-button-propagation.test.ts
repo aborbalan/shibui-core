@@ -9,7 +9,9 @@
  *   click (inner <button>) → lib-close (composed) → handler del padre → ui-lib-*-close
  */
 
-import { test, expect, type Page } from '@playwright/test';
+import pw from '@playwright/test';
+import type { Page } from '@playwright/test';
+const { test, expect } = pw;
 
 const BASE = 'http://localhost:6006/iframe.html?id=';
 
@@ -37,8 +39,8 @@ async function clickInnerCloseBtn(
 test.describe('lib-drawer › close-button propagation', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${BASE}overlay-drawer--playground`);
-    await page.waitForSelector('lib-drawer');
+    await page.goto(`${BASE}universal-overlay-drawer--playground`);
+    await page.waitForSelector('lib-drawer', { state: 'attached' });
 
     // Open the drawer before each test
     await page.evaluate(() => {
@@ -81,7 +83,7 @@ test.describe('lib-drawer › close-button propagation', () => {
 test.describe('lib-dialog › close-button propagation', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${BASE}overlay-dialog--playground`);
+    await page.goto(`${BASE}universal-overlay-dialog--playground`);
     await page.waitForSelector('lib-dialog');
 
     // Open the dialog before each test
@@ -126,7 +128,7 @@ test.describe('lib-dialog › close-button propagation', () => {
 test.describe('lib-gadget-frame › close-button propagation', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${BASE}layout-gadget-frame--playground`);
+    await page.goto(`${BASE}desktop-layout-gadget-frame--playground`);
     await page.waitForSelector('lib-gadget-frame');
   });
 
@@ -167,14 +169,12 @@ test.describe('lib-gadget-frame › close-button propagation', () => {
 test.describe('lib-tabs › close-button propagation', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${BASE}navigation-tabs--playground`);
+    // Se usa la story `Closable`, que ya trae tabs con botón de cierre.
+    // Antes se cargaba `Playground` (que tiene closable: false) y se intentaba
+    // activar la prop en caliente; no renderizaba ningún `.tb-close`, así que
+    // los dos tests de este bloque no tenían nada que pulsar.
+    await page.goto(`${BASE}universal-navigation-tabs--closable`);
     await page.waitForSelector('lib-tabs');
-
-    // Enable closable mode so close buttons render
-    await page.evaluate(() => {
-      const tabs = document.querySelector('lib-tabs') as HTMLElement & { closable: boolean };
-      tabs.closable = true;
-    });
     await page.waitForTimeout(150);
   });
 
@@ -235,7 +235,7 @@ test.describe('lib-tabs › close-button propagation', () => {
 test.describe('lib-chip › close-button propagation', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${BASE}actions-chip--playground`);
+    await page.goto(`${BASE}universal-actions-chip--playground`);
     await page.waitForSelector('lib-chip');
 
     // Switch to kind=input so the remove button is rendered

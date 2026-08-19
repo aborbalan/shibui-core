@@ -68,7 +68,7 @@ const COLOR_TOKENS = [
         gap: var(--lib-space-xl, 32px);
         padding: var(--lib-space-lg, 24px);
         border: 1px solid var(--border-default, currentColor);
-        border-radius: var(--lib-radius-sm, 4px);
+        border-radius: var(--radius-md);
       }
       .ts__col {
         display: flex;

@@ -63,7 +63,7 @@ import { SectionHeading } from '../section-heading/section-heading';
         padding: var(--lib-space-md, 16px);
         background: var(--bg-surface, transparent);
         border: 1px solid var(--border-default, currentColor);
-        border-radius: var(--lib-radius-sm, 4px);
+        border-radius: var(--radius-md);
         cursor: pointer;
         transition:
           border-color 0.2s ease,

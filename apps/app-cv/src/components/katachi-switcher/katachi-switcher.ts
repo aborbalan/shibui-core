@@ -70,7 +70,7 @@ import { KATACHI_IDS, KATACHI_KANJI, KATACHI_LABEL, type KatachiId } from '../..
         cursor: pointer;
         padding: 8px 10px;
         border: 1px solid var(--border-default, currentColor);
-        border-radius: var(--lib-radius-sm, 6px);
+        border-radius: var(--radius-lg);
         background: var(--bg-elevated, var(--bg-base));
         color: var(--text-primary, inherit);
         box-shadow: var(--shadow-sm, 0 1px 3px rgb(0 0 0 / 0.12));
@@ -102,7 +102,7 @@ import { KATACHI_IDS, KATACHI_KANJI, KATACHI_LABEL, type KatachiId } from '../..
         flex-direction: column;
         padding: 4px;
         border: 1px solid var(--border-default, currentColor);
-        border-radius: var(--lib-radius-md, 8px);
+        border-radius: var(--radius-lg);
         background: var(--bg-elevated, var(--bg-base));
         box-shadow: var(--shadow-md, 0 8px 24px rgb(0 0 0 / 0.18));
       }
@@ -117,7 +117,7 @@ import { KATACHI_IDS, KATACHI_KANJI, KATACHI_LABEL, type KatachiId } from '../..
         text-align: left;
         padding: 8px 10px;
         border: none;
-        border-radius: var(--lib-radius-sm, 6px);
+        border-radius: var(--radius-lg);
         background: transparent;
         color: var(--text-primary, inherit);
         font: inherit;

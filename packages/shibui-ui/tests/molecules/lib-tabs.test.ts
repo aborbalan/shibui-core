@@ -1,6 +1,7 @@
-import { test, expect } from '@playwright/test';
+import pw from '@playwright/test';
+const { test, expect } = pw;
 
-const STORY = 'http://localhost:6006/iframe.html?id=navigation-tabs--playground';
+const STORY = 'http://localhost:6006/iframe.html?id=universal-navigation-tabs--playground';
 
 test.describe('lib-tabs', () => {
 
@@ -16,10 +17,12 @@ test.describe('lib-tabs', () => {
       }, { once: true });
     });
 
-    // Click the 'code' tab inside shadow DOM
+    // Click the 'code' tab inside shadow DOM.
+    // Los tabs se marcan con `data-id`, no con `id`: el `#code` de antes no
+    // casaba con nada y el click nunca ocurría.
     await page.evaluate(() => {
       const tabs = document.querySelector('lib-tabs');
-      const codeTab = tabs?.shadowRoot?.querySelector('#code') as HTMLElement;
+      const codeTab = tabs?.shadowRoot?.querySelector('.tb-tab[data-id="code"]') as HTMLElement;
       codeTab?.click();
     });
 

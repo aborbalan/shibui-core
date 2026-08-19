@@ -84,7 +84,7 @@ import { SectionHeading } from '../section-heading/section-heading';
         justify-content: center;
         aspect-ratio: 21 / 9;
         margin-bottom: var(--lib-space-md, 16px);
-        border-radius: var(--lib-radius-sm, 4px);
+        border-radius: var(--radius-md);
         background: color-mix(in oklab, var(--text-accent) 8%, transparent);
         overflow: hidden;
       }

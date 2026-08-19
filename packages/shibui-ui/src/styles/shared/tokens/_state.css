@@ -3,19 +3,31 @@
   --color-error:   oklch(36.16% 0.106 28.52deg);  /* #8C2A1A */
   --color-warning: oklch(47.53% 0.088 77.58deg);  /* #8C6A1A */
   --color-success: oklch(38.41% 0.063 147.16deg); /* #2A5C3A */
-  --color-info:    oklch(58.33% 0.068 171.21deg); /* #4E9482 */
+  --color-info:    var(--color-celadon-400);      /* mismo valor: una sola fuente */
 
-  /* --- Fondos y bordes sutiles --- */
-  --color-error-subtle:    #FFF0EE;
-  --color-error-border:    #F5C4BC;
-  --color-warning-subtle:  #FDF8EE;
-  --color-warning-border:  #F5E0A0;
-  --color-success-subtle:  #EFF5F1;
-  --color-success-border:  #BDD8C5;
-  --color-info-subtle:     #EFF5F3;
-  --color-info-border:     #A8D0C4;
+  /* --- Fondos y bordes sutiles · familia CLARA ---
+     Eran los únicos hex de toda la capa de tokens; convertidos a OKLCH con
+     los mismos valores (el hex original queda como referencia).
 
-  /* --- Textos de estado --- */
+     Los katachis oscuros los sobreescriben en el bloque de familia dark de
+     _katachi.css. Antes no lo hacía ninguno, así que en celadon, kintsugi,
+     wabi y terminal un error se pintaba como una caja rosa pálido sobre
+     fondo casi negro. */
+  --color-error-subtle:   oklch(96.64% 0.017 26.64deg);  /* #FFF0EE */
+  --color-error-border:   oklch(86.13% 0.057 29.02deg);  /* #F5C4BC */
+  --color-warning-subtle: oklch(98.03% 0.014 84.41deg);  /* #FDF8EE */
+  --color-warning-border: oklch(90.90% 0.085 92.01deg);  /* #F5E0A0 */
+  --color-success-subtle: oklch(96.45% 0.008 156.85deg); /* #EFF5F1 */
+  --color-success-border: oklch(85.70% 0.039 154.79deg); /* #BDD8C5 */
+  --color-info-subtle:    oklch(96.51% 0.007 174.18deg); /* #EFF5F3 */
+  --color-info-border:    oklch(82.54% 0.045 174.92deg); /* #A8D0C4 */
+
+  /* --- Textos de estado ---
+     OJO: los cuatro colores base rondan el 36-58% de luminosidad, pensados
+     para leerse sobre papel. Sobre los katachis oscuros el contraste queda
+     corto. Queda fuera de esta pasada — el informe dejó el cálculo de
+     contraste por par color/fondo como trabajo aparte — pero es el siguiente
+     paso natural aquí. */
   --text-error:   var(--color-error);
   --text-warning: var(--color-warning);
   --text-success: var(--color-success);

@@ -30,6 +30,18 @@
 }
 
 @layer components {
+  @media (prefers-reduced-motion: reduce) {
+    /* Se colapsa la duración en vez de apagar la animación: las de entrada y
+       salida llevan `forwards` o `both`, y un `animation: none` las congelaría
+       en su primer fotograma — el elemento se quedaría invisible o desplazado.
+       Con 1ms y una sola iteración se va el movimiento y se conserva el estado
+       final, y las decorativas infinitas se detienen. */
+    *, *::before, *::after {
+      animation-duration: 1ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+    }
+  }
 
   /* ────────────────────────────────────────
      BASE COMPARTIDA — las tres familias
@@ -329,9 +341,9 @@
   /* ── error ── */
   :host([tone="error"]) .chip,
   :host([tone="error"]) .chip-input {
-    background: var(--color-error-light);
+    background: var(--color-error-subtle);
     color: var(--color-error);
-    border-color: var(--color-error-light);
+    border-color: var(--color-error-border);
   }
 
   :host([tone="error"]) .chip-remove::part(close-btn):hover {

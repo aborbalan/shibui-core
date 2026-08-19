@@ -191,6 +191,20 @@ jobs:
         # atributo y que cada opción cambia el render. Caza selectores
         # :host([attr=…]) huérfanos tras los renames que el Nivel 1 no ve.
         run: pnpm --filter @shibui-ui/ui test:conformance
+      - name: 🎭 E2E de comportamiento (Playwright)
+        # 63 aserciones sobre eventos, foco, ARIA y propagación a través del
+        # Shadow DOM: modal, tabs, accordion, drawer, toast-manager, chip,
+        # dialog, gadget-frame y el registro de iconos.
+        #
+        # No corrían en ningún workflow. Al reactivarlas apareció que seis
+        # componentes usaban <lib-icon> en su template sin importar el módulo
+        # que lo registra, así que el icono no se pintaba. Este paso existe
+        # para que eso no vuelva a pasar inadvertido.
+        #
+        # --project=chromium es obligatorio: el paso de arriba solo instala
+        # ese navegador, y el config declara además firefox y webkit.
+        # Playwright levanta Storybook solo (webServer en el config).
+        run: pnpm --filter @shibui-ui/ui exec playwright test --config .config/playwright.config.js atoms/ molecules/ organisms/ --project=chromium
 
   # ─────────────────────────────────────────────────────────────────────────
   # Consumer Contract Tests

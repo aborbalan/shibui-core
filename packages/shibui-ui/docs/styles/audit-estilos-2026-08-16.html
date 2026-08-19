@@ -1,0 +1,276 @@
+<title>Auditoría de estilos · @shibui-ui/ui</title>
+<style>
+  :root{
+    --ink:#221C16; --ink-soft:#5C4E42; --ink-mute:#7A6A5C;
+    --paper:#FAF7F4; --surface:#fff; --line:#E5DDD3; --line-soft:#F2EDE6;
+    --red:#8C2A1A; --red-bg:#FFF0EE; --red-line:#F5C4BC;
+    --amber:#8C6A1A; --amber-bg:#FDF8EE; --amber-line:#F5E0A0;
+    --jade:#2A5C3A; --jade-bg:#EFF5F1; --jade-line:#BDD8C5;
+    --mono:"DM Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--ink:#F2EDE6;--ink-soft:#D3C8BC;--ink-mute:#B8A99A;--paper:#120E0A;--surface:#221C16;--line:#3D332A;--line-soft:#2A231C;
+      --red-bg:#2E1512;--red-line:#5C2A22;--amber-bg:#2A2011;--amber-line:#5C4A1E;--jade-bg:#13251A;--jade-line:#2A4A34;
+      --red:#E89080;--amber:#E0BE70;--jade:#8FC9A2;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font:400 16px/1.65 "Shippori Mincho",Georgia,serif;}
+  .wrap{max-width:900px;margin:0 auto;padding:3rem 1.5rem 5rem}
+  h1{font:500 2rem/1.2 "Cormorant Garamond",Georgia,serif;margin:0 0 .25rem;letter-spacing:.01em}
+  .sub{color:var(--ink-mute);font-size:.9rem;margin:0 0 2.5rem}
+  h2{font:500 1.35rem/1.3 "Cormorant Garamond",Georgia,serif;margin:3rem 0 1rem;
+    padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+  h3{font-size:1rem;font-weight:500;margin:2rem 0 .5rem}
+  p{margin:0 0 1rem}
+  code,.mono{font-family:var(--mono);font-size:.85em;background:var(--line-soft);
+    padding:.12em .38em;border-radius:3px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.75rem;margin:0 0 2rem}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem}
+  .card .n{font-size:1.6rem;font-weight:500;line-height:1.1}
+  .card .l{font-size:.78rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em}
+  .f{background:var(--surface);border:1px solid var(--line);border-radius:8px;
+    padding:1.1rem 1.25rem;margin:0 0 1rem}
+  .f.p0{border-left:4px solid var(--red)}
+  .f.p1{border-left:4px solid var(--amber)}
+  .f.p2{border-left:4px solid var(--ink-mute)}
+  .f h4{margin:0 0 .5rem;font-size:1.02rem;font-weight:500;display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap}
+  .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;padding:.16em .5em;
+    border-radius:3px;text-transform:uppercase;white-space:nowrap}
+  .t0{background:var(--red-bg);color:var(--red);border:1px solid var(--red-line)}
+  .t1{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-line)}
+  .t2{background:var(--line-soft);color:var(--ink-mute);border:1px solid var(--line)}
+  .f p{margin:0 0 .6rem;font-size:.95rem}
+  .f p:last-child{margin-bottom:0}
+  .ev{background:var(--line-soft);border-radius:6px;padding:.7rem .9rem;margin:.7rem 0 0;
+    font-family:var(--mono);font-size:.78rem;line-height:1.6;overflow-x:auto;white-space:pre}
+  .lbl{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-mute);
+    display:block;margin:.9rem 0 .3rem}
+  table{border-collapse:collapse;width:100%;font-size:.88rem;margin:1rem 0}
+  th,td{text-align:left;padding:.5rem .7rem;border-bottom:1px solid var(--line)}
+  th{font-weight:500;font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-mute)}
+  td.mono{font-family:var(--mono);font-size:.8rem;background:none}
+  .ok{color:var(--jade)}.bad{color:var(--red)}
+  ul{margin:0 0 1rem;padding-left:1.2rem}li{margin:.3rem 0;font-size:.95rem}
+  .note{background:var(--jade-bg);border:1px solid var(--jade-line);border-radius:8px;
+    padding:.9rem 1.1rem;font-size:.9rem;margin:1.5rem 0}
+  .phase{border-left:2px solid var(--line);padding:0 0 0 1.1rem;margin:0 0 1.5rem}
+  .phase h3{margin-top:0}
+  footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);
+    font-size:.8rem;color:var(--ink-mute)}
+</style>
+
+<div class="wrap">
+
+<h1>Auditoría de estilos · @shibui-ui/ui</h1>
+<p class="sub">16 de agosto de 2026 · rama <code>claude/component-library-audit-31ad93</code> · 99 componentes · 113 ficheros CSS · ~30.600 líneas</p>
+
+<div class="cards">
+  <div class="card"><div class="n">11</div><div class="l">Hallazgos</div></div>
+  <div class="card"><div class="n" style="color:var(--red)">2</div><div class="l">Bloqueantes</div></div>
+  <div class="card"><div class="n" style="color:var(--amber)">5</div><div class="l">Altos</div></div>
+  <div class="card"><div class="n" style="color:var(--ink-mute)">4</div><div class="l">Consistencia</div></div>
+</div>
+
+<p>El sistema de tokens está bien diseñado: cuatro capas (primitivos → semánticos → katachi → componente), OKLCH en la paleta, y una regla explícita —documentada en el <code>CLAUDE.md</code> del paquete— de que la herencia de custom properties es lo que atraviesa el Shadow DOM. Los problemas no están en el diseño del sistema sino en <strong>la distancia entre lo que el sistema documenta y lo que los componentes hacen</strong>.</p>
+
+<p>Dos defectos son bloqueantes porque producen fallo funcional, no fealdad: un foco de teclado inexistente en el componente más usado, y una prop pública que no hace nada.</p>
+
+<div class="note">
+<strong>Revisión del 17/08/2026.</strong> La primera versión de este informe presentaba
+<code>:host-context()</code> como tercer bloqueante, por fallo silencioso de theming fuera de
+Chromium. Al abrir los ficheros para diseñar el reemplazo se vio que <strong>17 de los 20
+envuelven el bloque en <code>@supports selector(:host-context(a))</code></strong>: en Firefox y
+Safari se salta entero y el componente cae al estilo base por tokens semánticos. Es mejora
+progresiva deliberada y bien hecha. El barrido inicial contó los usos del selector pero no
+comprobó si estaban guardados. El hallazgo se ha reescrito a su tamaño real más abajo.
+</div>
+
+<h2>Metodología</h2>
+<p>Barrido estático sobre <code>packages/shibui-ui/src</code>: cruce del conjunto de tokens definidos contra el de tokens consumidos, conteo de literales de color por fichero, inventario de selectores <code>:host-context()</code> y <code>[data-katachi]</code>, cobertura de <code>prefers-reduced-motion</code> y de <code>@layer</code>, y rastreo de reglas de foco. El comportamiento de <code>lib-icon</code> se verificó <strong>ejecutando un repro en Chrome</strong>, no por inspección. El soporte de <code>:host-context()</code> se verificó contra MDN y caniuse, no de memoria.</p>
+<p><em>Fuera de alcance:</em> regresión visual real (requiere baselines de Playwright), contraste calculado por par color/fondo, y el CSS de las apps consumidoras.</p>
+
+<h2>Bloqueantes</h2>
+
+<div class="f p0">
+<h4><span class="tag t0">P0</span> <code>lib-button</code> no tiene indicador de foco</h4>
+<p><code>lib-button.css</code> tiene 335 líneas y la palabra <code>focus</code> aparece <strong>cero veces</strong>. La línea 44 apaga el outline del navegador sin poner nada en su lugar:</p>
+<div class="ev">lib-button.css:44
+    outline: none;</div>
+<p>No hay <code>:focus</code>, ni <code>:focus-visible</code>, ni box-shadow de foco, ni en el fichero ni en las hojas compartidas que se inyectan (los <code>_*.css</code> solo declaran custom properties, no reglas). Existe el token <code>--border-focus</code> y 12 componentes lo consumen; el botón no es uno de ellos.</p>
+<p>Un usuario de teclado no puede saber dónde está. Es un incumplimiento de <strong>WCAG 2.4.7 (Focus Visible), nivel AA</strong>, en el componente más usado de la librería y en los seis katachis a la vez.</p>
+</div>
+
+<div class="f p0">
+<h4><span class="tag t0">P0</span> La prop <code>size</code> de <code>lib-icon</code> no hace nada</h4>
+<p>El componente construye el tamaño por interpolación de string:</p>
+<div class="ev">lib-icon.component.ts:45
+  const sizeVar: string = `var(--lib-font-size-${this.size})`;</div>
+<p>Con <code>size</code> por defecto <code>'md'</code> eso produce <code>var(--lib-font-size-md)</code>. El único token de esa familia que existe en toda la librería es <code>--lib-font-size-base</code>. Storybook ofrece un control con <code>sm · md · lg · xl</code>: <strong>ninguno de los cuatro resuelve</strong>.</p>
+<span class="lbl">Verificado en navegador, no inferido</span>
+<p>Repro de la mecánica exacta del componente, con el contenedor a <code>font-size: 40px</code> para distinguir el fallback:</p>
+<div class="ev">size="md"    → width: 40px   (fallback 1em)
+size="sm"    → width: 40px   (fallback 1em)
+sin atributo → width: 40px   (fallback 1em)
+size="base"  → width: 14px   ← el único token que existe</div>
+<p>Es decir: pedir cualquier tamaño da <em>exactamente</em> el mismo resultado que no pedir ninguno. La prop es inerte y <code>lib-icon</code> se usa dentro de buena parte de la librería.</p>
+</div>
+
+<h2>Altos</h2>
+
+<div class="f p1">
+<h4><span class="tag t1">P1</span> <code>:host-context()</code> — deprecado, y tres bloques sin guarda</h4>
+<p>111 usos en 21 ficheros. El CSSWG <strong>retiró <code>:host-context()</code> de la especificación</strong>: Firefox lo marcó won't-fix y Safari se negó a implementarlo y pidió su eliminación. Solo funciona en Chromium.</p>
+<p>La librería lo trata, en su mayoría, como corresponde: <strong>17 de los 20 componentes</strong> envuelven el bloque en <code>@supports selector(:host-context(a))</code>, de modo que en Firefox y Safari se salta entero y queda el estilo base por tokens semánticos, que sí heredan el katachi. Eso es mejora progresiva correcta, y el propio <code>_katachi.css:171</code> explica el porqué del mecanismo:</p>
+<div class="ev">/* Hereda al Shadow DOM, así que es cross-browser
+   sin :host-context ni JS. */</div>
+<span class="lbl">Lo que sí es problema</span>
+<p><strong>Tres ficheros usan <code>:host-context()</code> sin guarda:</strong> <code>lib-skeleton.css:226</code>, <code>lib-editor-toolbar.css:147</code> y <code>lib-text-editor.css:118</code>. En los dos últimos se pierden ajustes menores de tipografía y borde. El primero sí rompe:</p>
+<div class="ev">lib-skeleton.css:38   .sk base   → --color-washi-200   (claro, hardcodeado)
+lib-skeleton.css:226  override   → oklch(22% 0.030 175deg)  (jade oscuro)
+                                   ↑ dentro del bloque sin guarda</div>
+<p>En Firefox o Safari con katachi <code>celadon</code>, el override se descarta y queda el fondo claro: <strong>un skeleton casi blanco sobre fondo jade oscuro</strong>. Es el único de los tres visiblemente roto, y la causa de fondo es que el <code>.sk</code> base asume superficie clara con un primitivo en vez de un token semántico.</p>
+<span class="lbl">Deuda estratégica</span>
+<p>Estar fuera de la especificación significa que la capa de mejora está a plazo <em>también</em> en Chromium. El sucesor designado son las container style queries (<code>@container style()</code>). Migrar 111 usos merece plan propio, no un apaño dentro de este.</p>
+<span class="lbl">Y el camino de fallback nunca se ha mirado</span>
+<p><code>.config/playwright.config.js</code> declara tres proyectos (chromium, firefox, webkit), pero <code>ci-lib.yml:185</code> instala uno:</p>
+<div class="ev">run: pnpm --filter @shibui-ui/ui exec playwright install chromium --with-deps</div>
+<p>Las guardas <code>@supports</code> están bien puestas, pero <strong>nadie ha verificado nunca cómo se ve lo que queda cuando saltan</strong>. La matriz cross-browser existe sobre el papel y no se ejecuta; eso es lo que dejó pasar el caso del skeleton.</p>
+</div>
+
+<div class="f p1">
+<h4><span class="tag t1">P1</span> Once tokens inexistentes consumidos sin fallback</h4>
+<p>De 331 tokens usados, 38 no están definidos en ninguna parte. La mayoría son propiedades de API que el componente inyecta por JS y llevan fallback, así que degradan bien. Once no lo llevan: la declaración entera se descarta.</p>
+<table>
+<tr><th>Token</th><th>Dónde</th><th>Debería ser</th></tr>
+<tr><td class="mono">--lib-color-secondary</td><td class="mono">lib-icon.css:28</td><td>— no existe la familia</td></tr>
+<tr><td class="mono">--lib-color-success</td><td class="mono">lib-icon.css:29</td><td class="mono">--color-success</td></tr>
+<tr><td class="mono">--lib-color-danger</td><td class="mono">lib-icon.css:30 · lib-label.css:19</td><td class="mono">--color-error</td></tr>
+<tr><td class="mono">--lib-font-family</td><td class="mono">lib-label.css:11 · index.css:49</td><td class="mono">--lib-font-family-base</td></tr>
+<tr><td class="mono">--lib-font-size-sm</td><td class="mono">lib-label.css:12</td><td class="mono">--text-sm</td></tr>
+<tr><td class="mono">--lib-color-border</td><td class="mono">index.css:66, 107</td><td class="mono">--border-default</td></tr>
+<tr><td class="mono">--lib-transition-base</td><td class="mono">index.css:92</td><td class="mono">--transition-base</td></tr>
+<tr><td class="mono">--color-error-light</td><td class="mono">lib-chip.css:332,334 · lib-dropdown.css:229</td><td class="mono">--color-error-subtle</td></tr>
+<tr><td class="mono">--bg-subtle</td><td class="mono">lib-editor-toolbar.css:66</td><td class="mono">--bg-surface</td></tr>
+<tr><td class="mono">--bg-muted</td><td class="mono">lib-editor-toolbar.css:71</td><td class="mono">--bg-elevated</td></tr>
+<tr><td class="mono">--font-sans</td><td class="mono">lib-editor-toolbar.css:59</td><td class="mono">--lib-font-body</td></tr>
+</table>
+<p>La consecuencia visible más clara: <code>lib-icon</code> declara cuatro variantes de color y <strong>solo funciona <code>primary</code></strong>. <code>secondary</code>, <code>success</code> y <code>danger</code> heredan el color del padre, es decir, no hacen nada.</p>
+<p>Los tres ficheros que además son los únicos sin <code>@layer</code> de la librería —<code>lib-icon</code>, <code>lib-label</code>, <code>lib-magnetic</code>— son también los que concentran estos tokens fantasma. Son código anterior al sistema de tokens que nunca se migró; conviene tratarlos como un lote.</p>
+</div>
+
+<div class="f p1">
+<h4><span class="tag t1">P1</span> El bloque de modo oscuro nunca se activa</h4>
+<p><code>_semantic.css</code> dedica 24 líneas (60–83) a redefinir fondos, textos, bordes y sombras para oscuro, todo bajo:</p>
+<div class="ev">_semantic.css:60
+:host([data-theme="dark"]) { … }</div>
+<p><code>data-theme</code> no lo escribe nadie: en todo el monorepo la única aparición fuera de este bloque es un comentario en <code>token.entity.ts</code> de la API. Además el selector es <code>:host(…)</code>, que exige el atributo <strong>en cada componente</strong>, no en un ancestro — no se propagaría aunque se pusiera en el <code>&lt;html&gt;</code>.</p>
+<p>Son tokens muertos. El modo oscuro real lo dan los cuatro katachis oscuros, por otra vía. Mantener ambos invita a que alguien "arregle" el oscuro en el sitio que no se ejecuta.</p>
+</div>
+
+<div class="f p1">
+<h4><span class="tag t1">P1</span> Los colores de estado no se adaptan a ningún katachi</h4>
+<p><code>_state.css</code> define los fondos y bordes sutiles de error/aviso/éxito/info como hex literales pensados para fondo claro:</p>
+<div class="ev">_state.css:9
+  --color-error-subtle:   #FFF0EE;
+  --color-error-border:   #F5C4BC;
+  --color-warning-subtle: #FDF8EE;
+  --color-success-subtle: #EFF5F1;</div>
+<p><code>_katachi.css</code> no redefine ninguno de ellos en ninguno de los seis bloques. En <code>celadon</code>, <code>kintsugi</code>, <code>wabi</code> y <code>terminal</code> —los cuatro oscuros— un mensaje de error se pinta como una caja rosa pálido sobre fondo casi negro. Afecta a <code>lib-step</code>, <code>lib-select</code> y <code>lib-dialog</code>.</p>
+<p>De paso, son los únicos hex de toda la capa de tokens (el resto es OKLCH), y <code>--color-info</code> repite como literal el valor exacto de <code>--color-celadon-400</code> en lugar de referenciarlo.</p>
+</div>
+
+<div class="f p1">
+<h4><span class="tag t1">P1</span> 22 de 38 componentes animados ignoran <code>prefers-reduced-motion</code></h4>
+<p>Poco más de la mitad de lo que anima respeta la preferencia del sistema. Entre los que no: <code>lib-modal</code>, <code>lib-dialog</code>, <code>lib-toast-manager</code>, <code>lib-tabs</code>, <code>lib-data-table</code>, <code>lib-card</code>, <code>lib-ripple</code>, <code>lib-liquid-button</code>, <code>lib-background</code>.</p>
+<p>Los de overlay son los que más pesan: modal, dialog y toast animan entradas a pantalla completa, que es justo el caso que la preferencia existe para evitar.</p>
+</div>
+
+<h2>Consistencia</h2>
+
+<div class="f p2">
+<h4><span class="tag t2">P2</span> La paleta reescrita a mano en RGB, saltándose los tokens</h4>
+<p>Fuera de <code>lib-background</code> (excepción documentada: las texturas son recursos gráficos), varios componentes grandes reescriben los valores de la paleta como literales:</p>
+<table>
+<tr><th>Literal</th><th>Es exactamente</th><th>Apariciones</th></tr>
+<tr><td class="mono">rgb(184, 90, 30, …)</td><td class="mono">--color-kaki-500</td><td>header, footer, drawer</td></tr>
+<tr><td class="mono">rgb(250, 247, 244, …)</td><td class="mono">--color-washi-50</td><td>header, drawer, tabs</td></tr>
+<tr><td class="mono">rgb(18, 14, 10, …)</td><td class="mono">--color-washi-950</td><td>header</td></tr>
+<tr><td class="mono">rgb(26, 20, 14, …)</td><td class="mono">base ink</td><td>header, drawer, tabs</td></tr>
+</table>
+<p>Concentración: <code>lib-header</code> 90, <code>lib-footer</code> 87, <code>lib-drawer</code> 71, <code>lib-color-picker</code> 63, <code>lib-data-table</code> 59, <code>lib-tabs</code> 52. Cada uno pinta a mano el aspecto que debería derivar de los tokens, así que un cambio en la paleta no los alcanza. Es la deuda más voluminosa del informe, pero también la menos urgente: se ve raro, no se rompe.</p>
+</div>
+
+<div class="f p2">
+<h4><span class="tag t2">P2</span> Dos escalas de radio compitiendo</h4>
+<p><code>_spacing.css</code> declara <code>--radius-*</code> (2/4/8/16px) y <code>--lib-radius-*</code> ("brutalistas", 0/0/1/2px). Uso real: 117 referencias a la primera, 10 a la segunda. La escala brutalista está prácticamente muerta pero sigue disponible, y las dos comparten sufijos (<code>-sm</code>, <code>-md</code>, <code>-lg</code>) con valores que no tienen nada que ver — <code>--radius-sm</code> son 2px y <code>--lib-radius-sm</code> son 0px. Es una trampa de autocompletado.</p>
+</div>
+
+<div class="f p2">
+<h4><span class="tag t2">P2</span> Tres ficheros sin <code>@layer</code></h4>
+<p>94 de 97 CSS de componente abren con <code>@layer</code>, como pide la convención. Los tres que no —<code>lib-icon</code>, <code>lib-label</code>, <code>lib-magnetic</code>— son los mismos del lote pre-tokens del P1. Se arreglan juntos.</p>
+</div>
+
+<div class="f p2">
+<h4><span class="tag t2">P2</span> <code>outline: none</code> sin sustituto en dos ficheros más</h4>
+<p>Nueve ficheros apagan el outline. Siete lo reemplazan con <code>:focus-within</code> o box-shadow y están bien. Aparte de <code>lib-button</code> (P0), conviene revisar <code>lib-checkbox-card</code> y <code>lib-color-picker</code>, donde el sustituto no es evidente.</p>
+</div>
+
+<h2>Plan propuesto</h2>
+
+<div class="note">
+El orden no es por esfuerzo sino por riesgo. Primero lo que está funcionalmente roto, que
+además es barato; al final la deuda voluminosa, que se ve rara pero no rompe nada.
+</div>
+
+<div class="phase">
+<h3>Fase 1 · Fallos funcionales</h3>
+<ul>
+<li><strong>Foco en <code>lib-button</code></strong> — el más barato y el de mayor impacto: un <code>:focus-visible</code> con el patrón de <code>lib-input.css:66</code>, consumiendo <code>--border-focus</code>, que ya existe y ya es katachi-aware.</li>
+<li><strong><code>size</code> de <code>lib-icon</code></strong> — la escala <code>--text-*</code> ya define <code>sm</code>, <code>md</code>, <code>lg</code> y <code>xl</code>, justo los cuatro valores del control. Basta cambiar la familia interpolada; no hace falta crear una quinta escala.</li>
+<li><strong>Guarda en los tres bloques sueltos</strong> — y arreglar el <code>.sk</code> base del skeleton, que asume superficie clara.</li>
+</ul>
+</div>
+
+<div class="phase">
+<h3>Fase 2 · Tokens fantasma</h3>
+<ul>
+<li>Reasignar los once tokens sin fallback a su equivalente real (tabla del P1).</li>
+<li>Migrar el lote pre-tokens <code>lib-icon</code> · <code>lib-label</code> · <code>lib-magnetic</code>: tokens + <code>@layer</code> de una pasada, ya que son los mismos tres ficheros.</li>
+</ul>
+</div>
+
+<div class="phase">
+<h3>Fase 3 · Coherencia de la capa de tokens</h3>
+<ul>
+<li>Decidir sobre <code>data-theme</code>: borrar el bloque muerto, o cablearlo de verdad. Hoy es ambigüedad pura.</li>
+<li>Dar a los colores de estado una variante por katachi oscuro, y pasar esos hex a OKLCH.</li>
+</ul>
+</div>
+
+<div class="phase">
+<h3>Fase 4 · Deuda de fondo</h3>
+<ul>
+<li><code>prefers-reduced-motion</code> en los 22 pendientes, empezando por los overlays.</li>
+<li>Reconvertir los literales RGB a tokens, componente por componente, empezando por header y footer.</li>
+<li>Retirar o justificar la escala <code>--lib-radius-*</code>.</li>
+</ul>
+</div>
+
+<div class="phase">
+<h3>Fase 5 · Guardas automáticas</h3>
+<ul>
+<li>Test estático siguiendo el precedente de <code>scripts/__tests__/manifest-cohesion.test.ts</code>, que falle ante un <code>var()</code> sin fallback a token inexistente, un <code>:host-context()</code> sin <code>@supports</code>, o un <code>outline: none</code> sin foco en el mismo fichero.</li>
+<li>Resolver la matriz de navegadores: instalar los tres en CI, o recortar la config a chromium. El estado actual —declarar tres y correr uno— es lo único que no vale.</li>
+</ul>
+</div>
+
+<div class="note">
+<strong>Sugerencia de control:</strong> tres de los hallazgos (tokens sin definir, <code>:host-context()</code>, <code>outline:none</code> sin foco) son detectables con un grep. Una regla de stylelint o un test de conformidad los convierte en fallo de CI y evita que vuelvan — el paquete ya tiene <code>test:conformance</code> donde encajarían.
+</div>
+
+<footer>
+Generado el 16 de agosto de 2026 · revisado el 17 de agosto (severidad de <code>:host-context()</code>) · rama <code>claude/component-library-audit-31ad93</code> · evidencia recogida por barrido estático sobre <code>packages/shibui-ui/src</code>; comportamiento de <code>lib-icon</code> verificado en Chrome; soporte de <code>:host-context()</code> contrastado con MDN y caniuse.
+</footer>
+
+</div>

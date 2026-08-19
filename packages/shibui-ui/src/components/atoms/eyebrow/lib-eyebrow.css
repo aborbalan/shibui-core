@@ -51,6 +51,18 @@
 }
 
 @layer components {
+  @media (prefers-reduced-motion: reduce) {
+    /* Se colapsa la duración en vez de apagar la animación: las de entrada y
+       salida llevan `forwards` o `both`, y un `animation: none` las congelaría
+       en su primer fotograma — el elemento se quedaría invisible o desplazado.
+       Con 1ms y una sola iteración se va el movimiento y se conserva el estado
+       final, y las decorativas infinitas se detienen. */
+    *, *::before, *::after {
+      animation-duration: 1ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+    }
+  }
 
     /* ── Host: display inline ── */
     :host {
